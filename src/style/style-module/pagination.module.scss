@@ -1,0 +1,38 @@
+.pagination{
+    display: flex;
+    justify-content: center;
+
+    .box{
+        display: flex;
+        align-items: center;
+    }
+
+
+    ol{
+        display: flex;
+    }
+
+    li.active{
+        background-color: #999;
+        color: #fff;
+    }
+
+    .mx{
+        margin: 0;
+    }
+
+
+    button, li{
+        width: 30px;
+        height: 30px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+}

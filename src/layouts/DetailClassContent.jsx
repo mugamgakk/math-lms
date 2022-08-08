@@ -1,7 +1,6 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
-import SelectBase from '../components/ui/SelectBase';
-import SelectTextbook from '../components/ui/SelectTextbook';
+import Pagination from '../components/ui/Pagination'
 import ClassTabs from './classTabs/ClassTabs';
 
 
@@ -17,6 +16,8 @@ function DetailClassContent() {
                 ? <DetailClassAlert/>
                 : <ClassTabs/>
             }
+
+            <Pagination/>
 
         </div>
      );

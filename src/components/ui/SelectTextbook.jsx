@@ -45,7 +45,7 @@ function SelectTextbook(props) {
             {
                 book.map(item=>{
                     return (
-                        <div className='option-item'>
+                        <div className='option-item' key={item}>
                             <input 
                             type="checkbox" 
                             id={item} 
