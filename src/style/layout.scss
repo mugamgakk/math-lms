@@ -1,0 +1,47 @@
+.content-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #000;
+    margin-top: 20px;
+
+    .title{
+        font-size: 20px;
+    }
+
+    .location-list{
+        display: flex;
+        align-items: center;
+    }
+}
+
+.day-wrap{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+
+
+    strong{
+        vertical-align:middle;
+    }
+
+    button{
+        margin: 0 20px;
+        font-size: 30px;
+        vertical-align:middle;
+    }
+}
+
+
+.students-search{
+    width: 320px;
+    margin-right: 10px;
+    border-right: 1px solid #000;
+    padding-right: 10px;
+}
+
+.students-contents{
+    width: 840px;
+}
+

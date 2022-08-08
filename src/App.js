@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { lazy, Suspense, useEffect } from 'react';
+import './reset.scss';
+import './style/layout.scss';
+import './style/component.scss'
+import { Routes, Route } from 'react-router-dom';
+import Home from './Pages/Home';
+
+const Attendance = lazy(()=> import('./Pages/Attendance') )
+const DetailClass = lazy(()=> import('./Pages/DetailClass'))
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+
+  return ( 
+    <div>
+      <Suspense fallback={<div>로딩</div>}>
+      <Routes>
+        <Route path="/" element={<Home/>} />
+        <Route path="/attendance" element={<Attendance/>}/>
+        <Route path="/detail-class" element={<DetailClass/>}/>
+      </Routes>
+      </Suspense>
     </div>
-  );
+   );
 }
 
 export default App;

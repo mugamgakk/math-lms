@@ -1,0 +1,68 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+li{
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
+    color: inherit;
+}
+
+button{
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+}
+
+table{
+    text-align: center;
+    border-collapse: collapse;
+    width: 100%;
+
+    th,td{
+        border: 1px solid #ccc;
+    }
+    td{
+        padding: 10px;
+    }
+}
+
+.row{
+    display: flex;
+}
+
+.container{
+    width: 1200px;
+    padding: 0 20px;
+    margin: 0 auto;
+}
+
+input{
+    border: none;
+
+    &:active{
+        border: none;
+    }
+    &:focus{
+        border: none;
+        outline: none;
+    }
+}
+
+input[type="checkbox"]{
+    background-color: #fff;
+    width: 13px;
+    height: 13px;
+    border-radius: 0;
+    appearance: none;
+    border: 1px solid #999;
+
+    &:checked {
+        background-color: #000;
+    }
+}
