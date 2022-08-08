@@ -9,7 +9,6 @@ function SelectTextbook(props) {
     return ( 
         <div className={'select-wrap' + `${selectState ? ' active' : ''}`} style={{width : props.width}}>
         <div className='select-show' onClick={()=>{setSelectState(!selectState)}}>
-
         </div>
         <button className='select-btn' onClick={()=>{setSelectState(!selectState)}}>
             
