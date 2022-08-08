@@ -18,9 +18,6 @@ function DetailClassContent() {
                 : <ClassTabs/>
             }
 
-            <SelectTextbook/>
-            {/* <SelectBase/> */}
-                
         </div>
      );
 }

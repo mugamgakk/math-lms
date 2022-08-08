@@ -4,7 +4,7 @@ import LbtModal from '../../components/ui/modal/LbtModal';
 
 function LearningBreakdownTable() {
 
-    let [modal, setModal] = useState(true);
+    let [modal, setModal] = useState(false);
 
 
     return ( 
@@ -27,7 +27,6 @@ function LearningBreakdownTable() {
                     <button className='btn'>생성</button>
                 </div>
             </div>
-
 
             <button>선택 삭제</button> 
             <p>[분석표 삭제 유의 !] 분석 결과는 생성일에 따라 달라질 수 있습니다</p>
