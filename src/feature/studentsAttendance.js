@@ -9,7 +9,7 @@ export const studentsAttendance = createSlice({
       { id : 2, name: "강시후(kshhhh)", 사유: "@@@@@@@" },
       { id : 3, name: "김민찬(minck)", 사유: "@@@@@@@" },
       { id : 4, name: "박연아(parkya)", 사유: "@@@@@@@" },
-      { id : 5, name: "오지연(yonnii)", 사유: "@@@@@@@" }
+      { id : 5, name: "오지연(yonnii)", 사유: "@@@@@@@" },
   ]
   },
   reducers: {
