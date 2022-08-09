@@ -13,6 +13,7 @@ let LbtBookArea = styled.div`
 
 const 과목 = ["수학", "영어", "도덕", "체육", "미술", "김치"];
 
+
 function LearningBreakdownTable() {
     let [modal, setModal] = useState(false);
     let [startDay, setStartDay] = useState("");
@@ -123,6 +124,7 @@ function LearningBreakdownTable() {
                         className="btn"
                         onClick={() => {
                             setOption(false);
+                            setSubjectArr([]);
                         }}
                     >
                         초기화

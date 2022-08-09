@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {useSelector} from 'react-redux';
 import SelectTextbook from '../../components/ui/SelectTextbook';
+import AttendanceManagement from './AttendanceManagement';
 import LearningBreakdownTable from './LearningBreakdownTable';
 
 
@@ -53,7 +54,7 @@ function ClassTabs() {
                     0 : <div>1</div>,
                     1 : <div>2</div>,
                     2 : <LearningBreakdownTable/>,
-                    3 : <div>4</div>
+                    3 : <AttendanceManagement/>
                 }[tabState]
             }
         </div>
