@@ -12,6 +12,8 @@ function LearningBreakdownTable() {
             {
                 modal && <LbtModal setModal={setModal}/>
             }
+
+            
             <div className="lbt-option">
                 <div className="row">
                     <div className="left">
@@ -22,7 +24,7 @@ function LearningBreakdownTable() {
                         <input type={"date"} /> ~ <input type={"date"}/>
                     </div>
                 </div>
-                <div>
+                <div style={{textAlign : "center"}}>
                     <button className='btn'>초기화</button>
                     <button className='btn'>생성</button>
                 </div>

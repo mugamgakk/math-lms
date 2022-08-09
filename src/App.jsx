@@ -18,6 +18,7 @@ function App() {
         <Route path="/" element={<Home/>} />
         <Route path="/attendance" element={<Attendance/>}/>
         <Route path="/detail-class" element={<DetailClass/>}/>
+        <Route path="*" element={<div>페이지 없습니둥</div>} />
       </Routes>
       </Suspense>
     </div>

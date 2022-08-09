@@ -4,6 +4,7 @@ import Pagination from '../components/ui/Pagination'
 import ClassTabs from './classTabs/ClassTabs';
 
 
+
 function DetailClassContent() {
 
     let {clickStudent} = useSelector((state)=> state.studentList)
@@ -11,6 +12,7 @@ function DetailClassContent() {
 
     return ( 
         <div className="students-contents">
+            
             {
                 clickStudent.name === ''
                 ? <DetailClassAlert/>
