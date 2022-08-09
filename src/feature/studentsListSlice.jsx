@@ -59,9 +59,7 @@ export const getStudentsList = (amount) => (dispatch) => {
         },
     ]
 
-    setTimeout(() => {
       dispatch(setStudentsList(user))
-    }, 1000)
 }
 
 export default studentsListSlice.reducer

@@ -33,9 +33,9 @@ function AttendanceManagement() {
             <div style={{display : 'flex' , flexWrap : 'wrap'}}>
 
                 {
-                    been.map(a=>{
+                    been.map((a,i)=>{
                         return(
-                            <div style={{width: 'calc(100% / 7)', height : '110px', backgroundColor : '#ccc'}}>
+                            <div style={{width: 'calc(100% / 7)', height : '110px', backgroundColor : '#ccc'}} key={i}>
                             </div>
                         )
                     })
@@ -45,7 +45,7 @@ function AttendanceManagement() {
                 {
                     week.map((a,i)=>{
                         return(
-                            <div style={{width: 'calc(100% / 7)', height : '110px', backgroundColor : '#eee'}}>
+                            <div key={i} style={{width: 'calc(100% / 7)', height : '110px', backgroundColor : '#eee'}}>
                                     {i + 1}
                             </div>
                         )
