@@ -4,6 +4,7 @@ import ContentHeader from '../layouts/ContentHeader';
 import { useSelector, useDispatch } from 'react-redux'
 import {getStudentsList, setClickStudent} from '../feature/studentsListSlice';
 import DetailClassContent from '../layouts/DetailClassContent';
+import '../style/detail-class.scss';
 
 
 

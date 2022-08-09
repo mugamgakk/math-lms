@@ -61,7 +61,7 @@ function LbtModal(props) {
 
                     <div className="contentGroup">
                         {dataLists.map((list,i) => {
-                            return <LbtCheckbox dataLists={list} allCheckBtn={allCheckBtn} />;
+                            return <LbtCheckbox dataLists={list} allCheckBtn={allCheckBtn} key={i} />;
                         })}
                     </div>
                 </div>

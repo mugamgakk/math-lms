@@ -49,9 +49,9 @@ function LbtCheckbox({allCheckBtn, dataLists}) {
             <label htmlFor={dataLists[0].data + "title"}>{dataLists[0].data + "title"}</label>
             <ul className={style.contentList}>
                 {
-                    dataLists.map(list=>{
+                    dataLists.map((list,i)=>{
                         return (
-                            <li>
+                            <li key={i}>
                                 <input
                                     type="checkbox"
                                     id={list.data}
