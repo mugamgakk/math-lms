@@ -9,9 +9,10 @@ const Login = lazy(()=> import('./Pages/Login') )
 const Attendance = lazy(()=> import('./Pages/Attendance') )
 const DetailClass = lazy(()=> import('./Pages/DetailClass'))
 
+
+
+
 function App() {
-
-
   return ( 
     <div>
       <Suspense fallback={<div>로딩</div>}>
@@ -23,6 +24,7 @@ function App() {
         <Route path="*" element={<div>페이지 없습니둥</div>} />
       </Routes>
       </Suspense>
+
     </div>
    );
 }
