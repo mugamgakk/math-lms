@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import ChangeDate from "../components/ui/ChangeDate";
-import ContentHeader from "../layouts/ContentHeader";
-import SelectBox from "../components/ui/SelectBox";
+import React, { useState } from "react";
+import ChangeDate from "../components/ChangeDate";
+import ContentHeader from "../components/ContentHeader";
+import SelectBox from '../components/ui/select/SelectBox';
 import SearchBtn from "../components/ui/button/SearchBtn";
 import "../style/attendance.scss";
-import AttendanceItem from "../components/AttendanceItem";
+import AttendanceItem from "./Attendance/AttendanceItem";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 

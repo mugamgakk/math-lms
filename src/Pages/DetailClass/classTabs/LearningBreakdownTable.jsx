@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import LbtModal from "../../components/ui/modal/LbtModal";
+import LbtModal from "../modal/LbtModal";
 import styled from "styled-components";
 
 let LbtBookArea = styled.div`
@@ -12,6 +12,8 @@ let LbtBookArea = styled.div`
 `;
 
 const 과목 = ["수학", "영어", "도덕", "체육", "미술", "김치"];
+
+const arr = ['강호동', '이수근', '김제동', '빠다쿠키', '김교사', '추사랑']
 
 
 function LearningBreakdownTable() {
@@ -54,6 +56,12 @@ function LearningBreakdownTable() {
             setSubjectArr(subjectArr.filter((ele) => ele !== book));
         }
     };
+
+    const isRemove = (checked,ele)=>{
+        if(checked){
+            console.log(ele)
+        }
+    }
 
     return (
         <div>
@@ -129,7 +137,11 @@ function LearningBreakdownTable() {
                     >
                         초기화
                     </button>
-                    <button className="btn">생성</button>
+                    <button className="btn"
+                    onClick={()=>{
+                        setModal(true)
+                    }}
+                    >생성</button>
                 </div>
             </div>
 
@@ -156,16 +168,16 @@ function LearningBreakdownTable() {
                     </tr>
                 </thead>
                 <tbody>
-                    {subjectArr.map((a) => {
+                    {arr.map((a) => {
                         return (
-                            <tr>
+                            <tr key={a}>
                                 <td>
-                                    <input type="checkbox" />
+                                    <input type="checkbox" onChange={(checked)=>{isRemove(checked,a)}}/>
                                 </td>
                                 <td>2022-06-12 ~ 2022-07-25</td>
                                 <td>2021-07-02</td>
                                 <td>중2-1 노벰, 중2-2 엑사스</td>
-                                <td>김교사</td>
+                                <td>{a}</td>
                                 <td>
                                     <button
                                         onClick={() => {

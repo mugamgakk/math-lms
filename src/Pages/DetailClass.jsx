@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import SelectBox from '../components/ui/SelectBox';
-import ContentHeader from '../layouts/ContentHeader';
+import SelectBox from '../components/ui/select/SelectBox';
+import ContentHeader from '../components/ContentHeader';
 import { useSelector, useDispatch } from 'react-redux'
 import {getStudentsList, setClickStudent} from '../feature/studentsListSlice';
-import DetailClassContent from '../layouts/DetailClassContent';
+import DetailClassContent from './DetailClass/DetailClassContent';
 import '../style/detail-class.scss';
 
 

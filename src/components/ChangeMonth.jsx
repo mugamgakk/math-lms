@@ -7,10 +7,12 @@ function ChangeMonth({setWeek, setBeen}) {
     let [count,setCount] = useState(0);
     const today = new Date();
 
+
     const setTime = new Date(today.setMonth(today.getMonth() + count));
 
+
     let year = setTime.getFullYear(),
-        month = setTime.getMonth() + 1
+        month = setTime.getMonth()
 
         // 마지막 일수 구하기
     let monthLastDate = new Date(year, month, 0);
@@ -37,7 +39,7 @@ function ChangeMonth({setWeek, setBeen}) {
         }
     }
 
-    let 날짜 = `${year}. ${month < 10 ? '0' + month : month}`
+    let 날짜 = `${year}. ${month < 10 ? '0' + (month + 1) : (month + 1)}`
 
     return ( 
         <div className="day-wrap">

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {useSelector} from 'react-redux';
-import SelectTextbook from '../../components/ui/SelectTextbook';
+import SelectTextbook from '../../../components/ui/select/SelectTextbook';
 import AttendanceManagement from './AttendanceManagement';
 import LearningBreakdownTable from './LearningBreakdownTable';
 

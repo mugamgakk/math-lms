@@ -18,12 +18,10 @@ function Login() {
             userPw
         }
 
-
         axios.post('/login', data)
         .then(a=>{
 
             alert("토큰생성 : " +a.data.token)
-
 
             console.log(a)
         })
@@ -59,10 +57,8 @@ function Login() {
             <button className='btn'>로그인</button>
             </form>
             
-
-
             <button type="button" onClick={isLogin} className="btn">
-                토큰생성확인
+                토큰인증확인
             </button>
         </div>
      );

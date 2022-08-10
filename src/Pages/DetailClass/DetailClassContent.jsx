@@ -1,6 +1,6 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
-import Pagination from '../components/ui/Pagination'
+import Pagination from '../../components/Pagination'
 import ClassTabs from './classTabs/ClassTabs';
 
 

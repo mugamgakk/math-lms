@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
-import style from '../../style/style-module/pagination.module.scss';
+import style from '../style/style-module/pagination.module.scss';
 
 
 

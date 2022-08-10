@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import SelectBase from "./ui/SelectBase";
+import SelectBase from "../../components/ui/select/SelectBase";
 import {useDispatch} from 'react-redux';
-import {saveInput} from '../feature/studentsAttendance';
+import {saveInput} from '../../feature/studentsAttendance';
 
 
 const dd = ["선택", "출석", "지각", "조퇴", "결석"];
