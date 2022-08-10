@@ -21,9 +21,8 @@ function Login() {
         axios.post('/login', data)
         .then(a=>{
 
-            alert("토큰생성 : " +a.data.token)
+            localStorage.setItem('token', a.data.token)
 
-            console.log(a)
         })
 
 
@@ -32,12 +31,17 @@ function Login() {
 
 
     const isLogin = ()=>{
+
+        let 토큰 = localStorage.getItem('token');
+
         axios.get('/payload' , {
             headers : {
-                "Authorization" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiSldUIiwiaWQiOiJqa2pzNzkiLCJwdyI6IjEyMzQiLCJpYXQiOjE2NjAwOTc3MjAsImV4cCI6MTY2MDA5Nzc4MCwiaXNzIjoi7Yag7YGw67Cc6riJ7J6QIn0.e8_dvZhrR8KRFihAXNdD9qQb_saV_RM4CEduRg7DNG8"
+                "Authorization" : 토큰
             }
         })
         .then(res=>{
+
+            alert(res.data.message)
             console.log(res)
         })
     }
