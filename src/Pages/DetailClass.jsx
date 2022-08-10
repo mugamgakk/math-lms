@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import {getStudentsList} from '../feature/studentsListSlice';
 import DetailClassContent from './DetailClass/DetailClassContent';
 import DetailClassSearch from './DetailClass/DetailClassSearch';
-import '../style/detail-class.scss';
+import '../style/DetailClass/detail-class.scss';
 
 
 
@@ -14,14 +14,9 @@ function DetailClass() {
     let {user} = useSelector(state=>state.studentList);
     let dispatch = useDispatch();
 
-    
-
     useEffect(()=>{
         dispatch(getStudentsList())
     },[])
-
-    
-
 
     return ( 
         <div className='container'>

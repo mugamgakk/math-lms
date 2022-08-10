@@ -3,7 +3,7 @@ import ChangeDate from "../components/ChangeDate";
 import ContentHeader from "../components/ContentHeader";
 import SelectBox from '../components/ui/select/SelectBox';
 import SearchBtn from "../components/ui/button/SearchBtn";
-import "../style/attendance.scss";
+import "../style/Attendance/attendance.scss";
 import AttendanceItem from "./Attendance/AttendanceItem";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";

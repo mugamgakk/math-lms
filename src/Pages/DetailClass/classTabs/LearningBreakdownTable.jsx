@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import LbtModal from "../modal/LbtModal";
 import LbtDayOption from "../LbtDayOption";
 
@@ -57,6 +57,7 @@ function LearningBreakdownTable() {
                                 <td>{a}</td>
                                 <td>
                                     <button
+                                        className="btn"
                                         onClick={() => {
                                             setModal(true);
                                         }}

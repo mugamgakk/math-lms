@@ -1,5 +1,5 @@
-import React, { lazy, Suspense, useEffect } from 'react';
-import './reset.scss';
+import React, { lazy, Suspense } from 'react';
+import './style/reset.scss';
 import './style/layout.scss';
 import './style/component.scss'
 import { Routes, Route } from 'react-router-dom';
@@ -8,8 +8,6 @@ import Home from './Pages/Home';
 const Login = lazy(()=> import('./Pages/Login') )
 const Attendance = lazy(()=> import('./Pages/Attendance') )
 const DetailClass = lazy(()=> import('./Pages/DetailClass'))
-
-
 
 
 function App() {
