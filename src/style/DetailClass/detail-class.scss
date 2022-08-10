@@ -17,3 +17,11 @@ input.form-control{
     padding: 0 10px;
     border: 1px solid #ccc;
 }
+
+
+.AttendanceManagement{
+    &-header{
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+}

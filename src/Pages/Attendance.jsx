@@ -5,13 +5,12 @@ import SelectBox from '../components/ui/select/SelectBox';
 import SearchBtn from "../components/ui/button/SearchBtn";
 import "../style/Attendance/attendance.scss";
 import AttendanceItem from "./Attendance/AttendanceItem";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import axios from "axios";
 
 function Attendance() {
     let [allCheck, setAllCheck] = useState(0);
     let { attendanceList } = useSelector((state) => state.studentsAttendance);
-    let dispatch = useDispatch();
 
     return (
         <div className="container Attendance">

@@ -8,6 +8,7 @@ import Home from './Pages/Home';
 const Login = lazy(()=> import('./Pages/Login') )
 const Attendance = lazy(()=> import('./Pages/Attendance') )
 const DetailClass = lazy(()=> import('./Pages/DetailClass'))
+const PlusLearning = lazy(()=> import('./Pages/PlusLearning') )
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path="/login" element={<Login/>} />
         <Route path="/attendance" element={<Attendance/>}/>
         <Route path="/detail-class" element={<DetailClass/>}/>
+        <Route path="/plus-learning" element={<PlusLearning/>}/>
         <Route path="*" element={<div>페이지 없습니둥</div>} />
       </Routes>
       </Suspense>
