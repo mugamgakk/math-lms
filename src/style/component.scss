@@ -239,32 +239,33 @@ input[type="text"].form-control{
        
     }
 
-    .user-info{
+    
+}
+
+.user-info{
         
-        border-top: 2px solid #000;
-        border-bottom: 2px solid #000;
-        margin-bottom: 20px;
+    border-top: 2px solid #000;
+    border-bottom: 2px solid #000;
+    margin-bottom: 20px;
 
-        & > div {
-            width: 33.33333%;
+    & > div {
+        width: 33.33333%;
+        display: flex;
+
+        dt{
+            background-color: rgb(85, 85, 85);
+            color: #fff;
+            padding-left: 10px;
+        }
+
+        dt,dd { 
             display: flex;
-
-            dt{
-                background-color: rgb(85, 85, 85);
-                color: #fff;
-                padding-left: 10px;
-            }
-
-            dt,dd { 
-                display: flex;
-                height: 100%;
-                align-items: center;
-                width: 100%
-            }
+            height: 100%;
+            align-items: center;
+            width: 100%
         }
     }
 }
-
 
 .searchBtn{
     width: 30px;

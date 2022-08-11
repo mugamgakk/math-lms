@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import {useSelector} from 'react-redux';
-import SelectTextbook from '../../../components/ui/select/SelectTextbook';
+import UserInfo from '../../../components/UserInfo';
 import AttendanceManagement from './AttendanceManagement';
 import LearningBreakdownTable from './LearningBreakdownTable';
 
@@ -8,7 +7,6 @@ import LearningBreakdownTable from './LearningBreakdownTable';
 function ClassTabs() {
 
     let [tabState, setTabState] = useState(0);
-    let {clickStudent} = useSelector(state => state.studentList);
 
 
     return ( 
@@ -32,22 +30,7 @@ function ClassTabs() {
                 >출결 관리</button>
             </div>
 
-            <dl className='row user-info'>
-                <div>
-                    <dt>학생이름</dt>
-                    <dd>{clickStudent.name}</dd>
-                </div>
-                <div>
-                    <dt>교재</dt>
-                    <dd>
-                        <SelectTextbook/>
-                    </dd>
-                </div>
-                <div>
-                    <dt>학년</dt>
-                    <dd>{clickStudent.age}</dd>
-                </div>
-            </dl>
+            <UserInfo/>
 
             {
                 {

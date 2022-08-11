@@ -20,6 +20,7 @@ function Login() {
 
         axios.post('/login', data)
         .then(a=>{
+            console.log(a.data)
 
             localStorage.setItem('token', a.data.token)
 
@@ -40,9 +41,10 @@ function Login() {
             }
         })
         .then(res=>{
-
             alert(res.data.message)
-            console.log(res)
+        })
+        .catch(err=>{
+            alert(err.response.data.message)
         })
     }
 
