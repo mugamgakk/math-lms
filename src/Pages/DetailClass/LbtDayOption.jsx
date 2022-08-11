@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import styled from "styled-components";
+import DatePicker from "react-date-picker"; // 데이트 피커
 
 let LbtBookArea = styled.div`
     width: 100%;
@@ -15,8 +16,8 @@ const 과목 = ["수학", "영어", "도덕", "체육", "미술", "김치"];
 
 function LbtDayOption({setModal}) {
 
-    let [startDay, setStartDay] = useState("");
-    let [lastDay, setLastDay] = useState("");
+    let [startDay, setStartDay] = useState(new Date());
+    let [lastDay, setLastDay] = useState(new Date());
     let [subjectArr, setSubjectArr] = useState([]);
     let [option, setOption] = useState(false);
 
@@ -66,20 +67,24 @@ function LbtDayOption({setModal}) {
                         <p>2. 학습 분석표를 생성할 교재를 선택해 주세요.</p>
                     </div>
                     <div className="right">
-                        <input
-                            type={"date"}
-                            className="form-control"
-                            onChange={(e) => {
-                                setStartDay(e.target.value);
-                            }}
+                        <DatePicker
+                            className="datepicker-base"
+                            onChange={(day)=>{setStartDay(day)}}
+                            value={startDay}
+                            maxDate={new Date()}
+                            clearIcon={null}
+                            openCalendarOnFocus={false}
+                            format={"yyyy-MM-dd"}
                         />
                         ~
-                        <input
-                            type={"date"}
-                            className="form-control"
-                            onChange={(e) => {
-                                setLastDay(e.target.value);
-                            }}
+                        <DatePicker
+                            className="datepicker-base"
+                            onChange={(day)=>{setLastDay(day)}}
+                            value={lastDay}
+                            maxDate={new Date()}
+                            clearIcon={null}
+                            openCalendarOnFocus={false}
+                            format={"yyyy-MM-dd"}
                         />
                         <button className="btn" onClick={optionBtn}>
                             설정
