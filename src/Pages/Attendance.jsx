@@ -5,17 +5,37 @@ import SelectBox from '../components/ui/select/SelectBox';
 import SearchBtn from "../components/ui/button/SearchBtn";
 import "../style/Attendance/attendance.scss";
 import AttendanceItem from "./Attendance/AttendanceItem";
+import DatePicker from "react-date-picker";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
 function Attendance() {
     let [allCheck, setAllCheck] = useState(0);
     let { attendanceList } = useSelector((state) => state.studentsAttendance);
+    const [value, onChange] = useState(new Date());
+    const [openCalendar, setOpenCalendar] = useState(false);
 
     return (
         <div className="container Attendance">
             <ContentHeader title={"출석 체크"} />
-            <ChangeDate />
+            <ChangeDate value={value} onChange={onChange} />
+            <DatePicker
+                    className="datepicker-base"
+                    onChange={(day)=>{onChange(day)}}
+                    value={value}
+                    maxDate={new Date()}
+                    clearIcon={null}
+                    isOpen={openCalendar}
+                    openCalendarOnFocus={false}
+                    format={"yyyy-MM-dd"}
+                />
+                <button
+                    onClick={() => {
+                        setOpenCalendar(!openCalendar);
+                    }}
+                >
+                    캘린더 아이콘
+                </button>
 
             <header className="table-header row">
                 <div>

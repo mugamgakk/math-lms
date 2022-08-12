@@ -1,13 +1,13 @@
 import * as React from "react";
 import PrismaZoom from "react-prismazoom"; // 이미지 확대 축소
 import DatePicker from "react-date-picker"; // 데이트 피커
+import ChangeDate from '../components/ChangeDate';
 
 function Components() {
     let prizmaZoom = React.useRef();
     const [value, onChange] = React.useState(new Date());
-    const [cal, setCal] = React.useState(false);
+    const [openCalendar, setOpenCalendar] = React.useState(false);
 
-    console.log(value);
 
     return (
         <div className="container">
@@ -41,6 +41,8 @@ function Components() {
             <br />
                 
 
+            <ChangeDate value={value} onChange={onChange} />
+
 
             <div>
                 <DatePicker
@@ -49,13 +51,13 @@ function Components() {
                     value={value}
                     maxDate={new Date()}
                     clearIcon={null}
-                    isOpen={cal}
+                    isOpen={openCalendar}
                     openCalendarOnFocus={false}
                     format={"yyyy-MM-dd"}
                 />
                 <button
                     onClick={() => {
-                        setCal(!cal);
+                        setOpenCalendar(!openCalendar);
                     }}
                 >
                     캘린더 아이콘
