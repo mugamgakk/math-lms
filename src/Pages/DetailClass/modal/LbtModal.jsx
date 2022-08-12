@@ -1,6 +1,8 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, createRef, useEffect } from "react";
 import style from "../../../style/style-module/lbtModal.module.scss";
 import LbtCheckbox from "../LbtCheckbox";
+import ReactToPdf from "react-to-pdf";
+const ref = React.createRef();
 
 const dataLists = [
     [
@@ -19,10 +21,17 @@ const dataLists = [
     ],
 ];
 
+const options = {
+    format : "a4",
+    unit : "mm"
+}
+
+const arr = new Array(10).fill(1)
+
 function LbtModal(props) {
     const [allCheckBtn, setAllCheckBtn] = useState(false);
 
-    console.log(allCheckBtn)
+    console.log(allCheckBtn);
 
     return (
         <div
@@ -33,39 +42,109 @@ function LbtModal(props) {
                 }
             }}
         >
-            <div className={style.content + " row"}>
-                <div className={style.left}>
-                    <strong>
-                        평균 표시(
-                        <input
-                            type="checkbox"
-                            className={style.formConrol}
-                            defaultChecked
-                            disabled
-                        />
-                        Y
-                        <input type="checkbox" className={style.formConrol} disabled />
-                        N)
-                    </strong>
+            <div className={style.content}>
+                <div className="row">
+                    <div className={style.left}>
+                        <strong>
+                            평균 표시(
+                            <input
+                                type="checkbox"
+                                className={style.formConrol}
+                                defaultChecked
+                                disabled
+                            />
+                            Y
+                            <input type="checkbox" className={style.formConrol} disabled />
+                            N)
+                        </strong>
 
-                    <div>
-                        <button
-                            className="btn"
-                            onClick={() => {
-                                setAllCheckBtn(!allCheckBtn);
-                            }}
-                        >
-                            모두 선택 / 해제
-                        </button>
+                        <div>
+                            <button
+                                className="btn"
+                                onClick={() => {
+                                    setAllCheckBtn(!allCheckBtn);
+                                }}
+                            >
+                                모두 선택 / 해제
+                            </button>
+                        </div>
+
+                        <div className="contentGroup">
+                            {dataLists.map((list, i) => {
+                                return (
+                                    <LbtCheckbox
+                                        dataLists={list}
+                                        allCheckBtn={allCheckBtn}
+                                        key={i}
+                                    />
+                                );
+                            })}
+                        </div>
                     </div>
+                    <div className={style.rightWrap}>
+                    <div className={style.right} ref={ref} >
+                        
+                            <h1 style={{backgroundColor : "orangered", color : "#fff", fontSize : "20px" , textAlign : "center", marginBottom : "20px"}}>사고하고 질문하라</h1>
+                            <h2 style={{textAlign : "center", marginBottom : "20px"}}>2022년 4월 강수학의 패럴랙스 수학 종합 학습 분석표</h2>
 
-                    <div className="contentGroup">
-                        {dataLists.map((list,i) => {
-                            return <LbtCheckbox dataLists={list} allCheckBtn={allCheckBtn} key={i} />;
-                        })}
+                            <table style={{marginBottom : "20px"}}>
+                                <tbody>
+                                    <tr>
+                                        <td>캠퍼스</td>
+                                        <td>대치 캠퍼스</td>
+                                        <td>학년</td>
+                                        <td>중2</td>
+                                        <td>학습 기간</td>
+                                        <td>2021년 4월 1일 ~ 2021년 4월 30일</td>
+                                    </tr>
+                                    <tr>
+                                        <td>학습 교재</td>
+                                        <td colSpan={5}>중 2-1 개념서, 중 2-1 뜨레스, 중 2-1 노벰</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            {
+                                arr.map(a=>{
+                                    return (
+                                        <table style={{marginBottom : "20px"}} key={a}>
+                                        <tbody>
+                                            <tr>
+                                                <td>교재 학습 문제 수</td>
+                                                <td>540 문항</td>
+                                                <td>맞힌 문제 수</td>
+                                                <td>478 문항</td>
+                                                <td>정답률</td>
+                                                <td>88.5%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>컬러닉 학습 문제 수</td>
+                                                <td>88 문항</td>
+                                                <td>맞힌 문제 수</td>
+                                                <td>76문항</td>
+                                                <td>정답률</td>
+                                                <td>88.5%</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    )
+                                })
+                            }
+
+                            
+
+                    </div>
                     </div>
                 </div>
-                <div className={style.right}>asdfasdf</div>
+                <div className={style.btnGroup}>
+                <ReactToPdf targetRef={ref} x={0} y={0} options={options}>
+                    {({ toPdf }) => (
+                        <button className="btn" onClick={toPdf} >
+                            PDF 파일 만들기
+                        </button>
+                    )}
+                </ReactToPdf>
+                </div>
             </div>
         </div>
     );
