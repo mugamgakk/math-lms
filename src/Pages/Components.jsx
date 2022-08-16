@@ -125,7 +125,7 @@ function Components() {
                     {({ toPdf }) => <button className="btn" onClick={toPdf}>PDF 파일 만들기</button>}
                 </ReactToPdf>
 
-                <div ref={ref}>
+                <div ref={ref}> // 이곳을 pdf로 만듦
                     <h1>Props</h1>
                     <p>filename : 다운로드 되는 파일 이름 (default : "download.pdf")</p>
                     <p>targetRef : pdf를 만들 대상</p>
@@ -146,6 +146,10 @@ function Components() {
                 />
 
                 <button onClick={start}>재생 버튼</button>
+
+                <div>
+                    <p></p>
+                </div>
             </div>
         </div>
     );

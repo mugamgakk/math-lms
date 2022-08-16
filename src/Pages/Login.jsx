@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import {useDispatch} from 'react-redux';
 import {logintAsync} from '../feature/loginSlice';
 
@@ -8,6 +9,7 @@ function Login() {
 
     let [userId , setuserId] = useState('');
     let [userPw , setuserPw] = useState('');
+    let [picture, setPictrue] = useState([]);
     let dispatch = useDispatch();
 
     const loginAction = (e)=>{
@@ -18,7 +20,7 @@ function Login() {
             userPw
         }
 
-        axios.post('/login', data)
+        axios.post('http://192.168.11.201:5000/login', data)
         .then(a=>{
             console.log(a.data)
 
@@ -29,6 +31,13 @@ function Login() {
 
         // dispatch(logintAsync(data))
     }
+
+    // useEffect(()=>{
+    //     axios.post("http://192.168.11.201:5000/login", {data : "hello"})
+    //     .then(function(res){
+    //         console.log(res)
+    //     })
+    // },[])
 
 
     const isLogin = ()=>{
@@ -48,6 +57,7 @@ function Login() {
         })
     }
 
+
     return ( 
         <div className='container'>
 
@@ -66,6 +76,7 @@ function Login() {
             <button type="button" onClick={isLogin} className="btn">
                 토큰인증확인
             </button>
+
         </div>
      );
 }
