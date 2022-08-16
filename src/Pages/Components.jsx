@@ -3,6 +3,8 @@ import PrismaZoom from "react-prismazoom"; // 이미지 확대 축소
 import DatePicker from "react-date-picker"; // 데이트 피커
 import ChangeDate from "../components/ChangeDate";
 
+import ReactAudioPlayer from 'react-audio-player';
+
 // pdf 만들기
 import ReactToPdf from "react-to-pdf";
 const ref = React.createRef();
@@ -11,6 +13,21 @@ function Components() {
     let prizmaZoom = React.useRef();
     const [value, onChange] = React.useState(new Date());
     const [openCalendar, setOpenCalendar] = React.useState(false);
+
+
+//  오디오 
+    let audio = React.useRef();
+    let [playState,setPlaystate] = React.useState(true);
+
+
+    const start = ()=>{
+
+        let 오디오 = audio.current.audioEl.current;
+
+        playState ? 오디오.play() : 오디오.pause();
+        setPlaystate(!playState);
+
+    }
 
     return (
         <div className="container">
@@ -42,12 +59,9 @@ function Components() {
             </button>
             {/* 이미지 축소 확대 */}
 
-            <br />
-            <br />
-            <br />
-            <br />
 
-            <div>
+
+            <div style={{marginTop : "100px"}}>
                 <h2>DatePicker</h2>
                 <ChangeDate value={value} onChange={onChange} />
 
@@ -102,12 +116,9 @@ function Components() {
                 </p>
             </div>
 
-            <br />
-            <br />
-            <br />
-            <br />
+    
 
-            <div>
+            <div style={{marginTop : "100px"}}>
                 <h2>Pdf 만들기</h2>
 
                 <ReactToPdf targetRef={ref}>
@@ -122,6 +133,19 @@ function Components() {
                     <p>y: pdf를 만들 시작 대상의 y좌표</p>
                     <p>scale : 이미지 크기 (default : 1) </p>
                 </div>
+            </div>
+
+            <div style={{marginTop : "100px"}}>
+                <h2>오디오 테스트</h2>
+
+                <ReactAudioPlayer
+                src="test.mp3"
+                autoPlay
+                ref={audio}
+                controls
+                />
+
+                <button onClick={start}>재생 버튼</button>
             </div>
         </div>
     );
