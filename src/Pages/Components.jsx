@@ -2,17 +2,18 @@ import * as React from "react";
 import PrismaZoom from "react-prismazoom"; // 이미지 확대 축소
 import DatePicker from "react-date-picker"; // 데이트 피커
 import ChangeDate from "../components/ChangeDate";
-
 import ReactAudioPlayer from 'react-audio-player';
+import ReactToPrint from 'react-to-print'; // pdf, 인쇄
 
-// pdf 만들기
-import ReactToPdf from "react-to-pdf";
-const ref = React.createRef();
+
 
 function Components() {
     let prizmaZoom = React.useRef();
     const [value, onChange] = React.useState(new Date());
     const [openCalendar, setOpenCalendar] = React.useState(false);
+
+    // 인쇄될 컴포넌트를 가져온다
+    const printComponent = React.useRef();
 
 
 //  오디오 
@@ -120,24 +121,20 @@ function Components() {
 
             <div style={{marginTop : "100px"}}>
                 <h2>Pdf 만들기</h2>
+                <ReactToPrint
+                    trigger={() => <button className="btn">프린트 버튼</button>} //  trigger : 인쇄를 명령할 컴포넌트를 넣어주기
+                    content={() => printComponent.current} // content : 인쇄 대상 ref를 넘겨주기
+                />
 
-                <ReactToPdf targetRef={ref}>
-                    {({ toPdf }) => <button className="btn" onClick={toPdf}>PDF 파일 만들기</button>}
-                </ReactToPdf>
-
-                <div ref={ref}> // 이곳을 pdf로 만듦
-                    <h1>Props</h1>
-                    <p>filename : 다운로드 되는 파일 이름 (default : "download.pdf")</p>
-                    <p>targetRef : pdf를 만들 대상</p>
-                    <p>x: pdf를 만들 시작 대상의 x좌표 (패딩같이 줄수있음) </p>
-                    <p>y: pdf를 만들 시작 대상의 y좌표</p>
-                    <p>scale : 이미지 크기 (default : 1) </p>
+            {/* // A4 사이즈를 width 210 mm 를 px로 793.701px 이다 */}
+                <div ref={printComponent} style={{width : "793.701px"}}>
+                    인쇄나 pdf로 만들 요소
                 </div>
+
             </div>
 
             <div style={{marginTop : "100px"}}>
                 <h2>오디오 테스트</h2>
-
                 <ReactAudioPlayer
                 src="test.mp3"
                 autoPlay
@@ -145,7 +142,7 @@ function Components() {
                 controls
                 />
 
-                <button onClick={start}>재생 버튼</button>
+                <button className="btn" onClick={start}>재생 버튼</button>
 
                 <div>
                     <p></p>

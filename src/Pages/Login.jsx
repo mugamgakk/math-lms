@@ -44,7 +44,7 @@ function Login() {
 
         let 토큰 = localStorage.getItem('token');
 
-        axios.get('/payload' , {
+        axios.get('http://192.168.11.201:5000/payload' , {
             headers : {
                 "Authorization" : 토큰
             }
