@@ -12,6 +12,7 @@ const Login = lazy(()=> import('./Pages/Login') )
 const Attendance = lazy(()=> import('./Pages/Attendance') )
 const DetailClass = lazy(()=> import('./Pages/DetailClass'))
 const PlusLearning = lazy(()=> import('./Pages/PlusLearning') )
+const TodayClass = lazy(()=> import('./Pages/TodayClass') )
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           <li style={{marginRight : "20px"}}><Link to="/attendance">attendance</Link></li>
           <li style={{marginRight : "20px"}}><Link to="/detail-class">Detail class</Link></li>
           <li style={{marginRight : "20px"}}><Link to="/plus-learning">plus-learning</Link></li>
+          <li style={{marginRight : "20px"}}><Link to="/today-class">today-class</Link></li>
           <li><Link to="/components">components guide</Link></li>
         </ul>
       </div>
@@ -37,6 +39,7 @@ function App() {
         <Route path="/attendance" element={<Attendance/>}/>
         <Route path="/detail-class" element={<DetailClass/>}/>
         <Route path="/plus-learning" element={<PlusLearning/>}/>
+        <Route path="/today-class" element={<TodayClass/>}/>
         <Route path="/components" element={<Components/>}/>
         <Route path="*" element={<div>페이지 없습니둥</div>} />
       </Routes>

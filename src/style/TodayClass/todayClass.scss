@@ -1,0 +1,16 @@
+.TodayClass{
+    .date-area{
+        display: flex;
+        margin-top: 10px;
+        .react-date-picker__wrapper{
+            display: none;
+        }
+    }
+        .table-header{
+            justify-content: flex-end;
+            .update{
+                vertical-align: middle;
+                margin-left: 5px;
+            }
+        }
+}
