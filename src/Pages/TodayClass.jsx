@@ -4,40 +4,126 @@ import SelectBox from "../components/ui/select/SelectBox";
 import SearchBtn from "../components/ui/button/SearchBtn";
 import DatePicker from "react-date-picker"; // 데이트 피커
 import ChangeDate from "../components/ChangeDate";
+import TodayClassItem from "./TodayClass/TodayClassItem";
+import AssessmentModal from './TodayClass/AssessmentModal';
+import AttModal from './TodayClass/AttModal';
 import "../style/TodayClass/todayClass.scss";
 import axios from "axios";
 
 function TodayClass(){
 
+    let [todayClassList,setTodayClassList] = useState([
+        {
+          id : 1,
+          name : '강수학',
+          nickName : 'kangsh',
+          thum : null,
+          book : '중1-1 아르케 1',
+          class : '1-2. (진분수) ÷ (자연수)',
+          state1 : '100%',
+          state2 : '25/30',
+          state3 : undefined,
+          state4 : undefined,
+          state5 : null,
+      },
+      {
+          id : 2,
+          name : '강시후',
+          nickName : 'kshhhh',
+          thum : null,
+          book : '중1-1 뜨레스',
+          class : 'ㅣ-3. (가분수) ÷ (자연수)',
+          state1 : '100%',
+          state2 : '10/12',
+          state3 : {
+            assessment : false,
+            newplay : true,
+          },
+          state4 : '25/25',
+          state5 : 'Pass',
+      },
+      {
+          id : 3,
+          name : '김민찬',
+          nickName : 'minck',
+          thum : null,
+          class : '중2-2 엑사스',
+          book : 'Ⅱ-3. 공배수와 최소공배수',
+          state1 : '33%',
+          state2 : '-/12',
+          state3 : {
+            assessment : true,
+            uds : 5,
+            send : 10
+          },
+          state4 : '5/25',
+          state5 : '-/4',
+      },
+      {
+          id : 4,
+          name : '김민찬',
+          nickName : 'minck',
+          thum : null,
+          class : '중2-2 엑사스',
+          book : 'Ⅱ-3. 공배수와 최소공배수',
+          state1 : undefined,
+          state2 : undefined,
+          state3 : {
+            assessment : true,
+            uds : 5,
+            send : 10
+          },
+          state4 : '5/25',
+          state5 : null,
+      },
+    ]);
+
+    let [modalCondition,setModalCondition] = useState({
+        attModal : false,
+        assessmentModal : false
+    });
+
     const [reloadState,setReloadState] = useState(false);
+    
     useEffect(()=>{},[reloadState])
+    
+    const modalOpen = (target) => {
+        setModalCondition({
+            ...modalCondition,
+            [target] : !modalCondition[target],            
+        });
+    }
+    
     const [value, onChange] = React.useState(new Date());
     const [openCalendar, setOpenCalendar] = React.useState(false);
+
+
+  
     return(
         <div className="container TodayClass">
             <ContentHeader title={"오늘의 수업"} />
             <div className="date-area">
-            <ChangeDate value={value} onChange={onChange} />
-            <DatePicker
-                className="datepicker-base"
-                onChange={(day) => {
-                    onChange(day);
-                }}
-                value={value}
-                maxDate={new Date()}
-                clearIcon={null}
-                isOpen={openCalendar}
-                openCalendarOnFocus={false}
-                format={"yyyy-MM-dd"}
-            />
-            <button
-                className="btn"
-                onClick={() => {
-                    setOpenCalendar(!openCalendar);
-                }}
-            >
-                캘린더 아이콘
-            </button>
+                <ChangeDate value={value} onChange={onChange} />
+                <DatePicker
+                    className="datepicker-base"
+                    onChange={(day) => {
+                        onChange(day);
+                    }}
+                    value={value}
+                    maxDate={new Date()}
+                    clearIcon={null}
+                    isOpen={openCalendar}
+                    openCalendarOnFocus={false}
+                    format={"yyyy-MM-dd"}
+                />
+                <button
+                    className="btn"
+                    onClick={() => {
+                        setOpenCalendar(!openCalendar);
+                    }}
+                >
+                    캘린더 아이콘
+                </button>
             </div>
             <header className="table-header row">
                 <div>
@@ -73,16 +159,33 @@ function TodayClass(){
                     </tr>
                     <tr>
                         <th>개념 강의</th>
-                        <th>개념 확인/기본 문제</th>
+                        <th>개념 확인/<br />기본 문제</th>
                         <th>개념 설명</th>
                         <th>유형 학습</th>
                         <th>맞춤 클리닉</th>
                     </tr>
                 </thead>
                 <tbody>
-                  
+
+                    {
+                        todayClassList.map(list=>{
+                            return <TodayClassItem 
+                            list={list} 
+                            key={list.id}
+                            modalOpen={modalOpen}
+                            />
+                        })
+                    }
+
                 </tbody>
             </table>
+            {
+                modalCondition.assessmentModal ? <AssessmentModal /> : null
+            }
+            {
+                modalCondition.attModal ? <AttModal /> : null
+
+            }
         </div>
     )
 }
