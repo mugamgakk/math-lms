@@ -28,16 +28,9 @@ function Login() {
 
         })
 
-
         // dispatch(logintAsync(data))
     }
 
-    // useEffect(()=>{
-    //     axios.post("http://192.168.11.201:5000/login", {data : "hello"})
-    //     .then(function(res){
-    //         console.log(res)
-    //     })
-    // },[])
 
 
     const isLogin = ()=>{

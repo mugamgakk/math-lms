@@ -1,12 +1,17 @@
+import axios from "axios";
 import React, { useMemo, useEffect, useState, useCallback } from "react";
 import Pagination from "../../components/Pagination";
 import SelectBase from "../../components/ui/select/SelectBase";
 import UserInfo from "../../components/UserInfo";
 import data from '../../plusdata';
 
-const 단원 = ["대단원", "수와 식의 계산",  "덧셈과 뺄셈", "제곱근의 수", "일 더하기 일은"];
+const 단원 = ["대단원", "수와 식의 계산"];
 const 상태 = ["상태","오픈전", "학습중", "학습완료"];
 
+function long(){
+    console.log("@@@@@@@@@@@@@@@@@@@")
+    return 123
+}
 
 function Narrative() {
     let [selectOneState, setSelectOneState] = useState(false);
@@ -15,13 +20,21 @@ function Narrative() {
     let [selectTwoText, setSelectTwoText] = useState(상태[0]);
     let [plusData, setPlusData] = useState(data);
 
-    const findData = ()=>{
-        setPlusData(data.filter(list=>list.대단원 === selectOneText))
+    const findData = useCallback(()=>{
+
+        let 대단원 = data.filter(list=>list.대단원 === selectOneText);
+        let filterData = 대단원.filter(list=>list.상태 === selectTwoText);
+
+
+        setPlusData(filterData)
 
         if(selectOneText === "대단원" && selectTwoText === "상태"){
             setPlusData(data)
         }
-    }
+
+    },[selectOneText,selectTwoText])
+
+
 
 
     return (
@@ -86,13 +99,28 @@ function Narrative() {
                                             }
                                         
                                         </td>
-                                        <td>{res.채점}</td>
+                                        <td>
+                                            {
+                                            typeof res.채점 === "string"
+                                            ? (
+                                                <>
+                                                <p>{res.채점}</p>
+                                                <button className="btn">채점하기</button>
+                                                </>
+                                                )
+                                            : (
+                                                <>
+                                                <p>{res.채점.point}/10점</p>
+                                                <button className="btn">재응시({res.채점.재응시})</button>
+                                                </>
+                                            )
+                                            }
+                                        </td>
                                         <td><button className="btn" disabled={res.시험지 ? false : true}>인쇄</button></td>
                                     </tr>
                                 )
                             })
                         }
-                        
                     </tbody>
                 </table>
 

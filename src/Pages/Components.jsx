@@ -4,6 +4,7 @@ import DatePicker from "react-date-picker"; // 데이트 피커
 import ChangeDate from "../components/ChangeDate";
 import ReactAudioPlayer from 'react-audio-player';
 import ReactToPrint from 'react-to-print'; // pdf, 인쇄
+import img from '../assets/logo.svg'
 
 
 
@@ -37,7 +38,7 @@ function Components() {
             <div style={{ width: "300px", height: "200px", overflow: "hidden" }}>
                 <PrismaZoom ref={prizmaZoom}>
                     <img
-                        src="https://img.insight.co.kr/static/2018/02/12/700/vrk5z3a409vt02d3jvb7.jpg"
+                        src={img}
                         style={{ width: "300px", height: "200px", objectFit: "cover" }}
                     />
                 </PrismaZoom>
@@ -57,6 +58,9 @@ function Components() {
                 }}
             >
                 마이너스
+            </button>
+            <button className="btn">
+                <a href={img} download="이미지다운">이미지다운</a>
             </button>
             {/* 이미지 축소 확대 */}
 

@@ -8,13 +8,19 @@ const arr = ['강호동', '이수근', '김제동', '빠다쿠키', '김교사',
 
 function LearningBreakdownTable() {
     let [modal, setModal] = useState(false);
+    let [aa,b] = useState([...arr]);
+    let [choiceArr, setChoiceArr] = useState([]);
 
 
-    const isRemove = (checked,ele)=>{
+    const isChecked = (checked,ele)=>{
         if(checked){
-            console.log(ele)
+            setChoiceArr([...choiceArr, ele])
+        }else{
+            setChoiceArr(choiceArr.filter(list=> list !== ele ))
         }
     }
+
+    console.log(choiceArr)
 
     return (
         <div>
@@ -22,7 +28,19 @@ function LearningBreakdownTable() {
 
             <LbtDayOption setModal={setModal}/>
 
-            <button className="btn">선택 삭제</button>
+            <button className="btn" onClick={()=>{
+
+                // 삭제
+
+                let copy = [...aa];
+
+                choiceArr.forEach(function(asdf){
+                    copy.splice(copy.indexOf(asdf),1);
+                })
+                setChoiceArr([]);
+                b(copy);
+
+            }}>선택 삭제</button>
             <p>[분석표 삭제 유의 !] 분석 결과는 생성일에 따라 달라질 수 있습니다</p>
 
             <table>
@@ -45,11 +63,11 @@ function LearningBreakdownTable() {
                     </tr>
                 </thead>
                 <tbody>
-                    {arr.map((a) => {
+                    {aa.map((a) => {
                         return (
                             <tr key={a}>
                                 <td>
-                                    <input type="checkbox" onChange={(checked)=>{isRemove(checked,a)}}/>
+                                    <input type="checkbox" onChange={(checked)=>{isChecked(checked,a)}}/>
                                 </td>
                                 <td>2022-06-12 ~ 2022-07-25</td>
                                 <td>2021-07-02</td>
