@@ -124,6 +124,7 @@ function Components() {
                 <ReactToPrint
                     trigger={() => <button className="btn">프린트 버튼</button>} //  trigger : 인쇄를 명령할 컴포넌트를 넣어주기
                     content={() => printComponent.current} // content : 인쇄 대상 ref를 넘겨주기
+                    // documentTitle= "pdf이름" //pdf 로 저장할때 이름
                 />
 
             {/* // A4 사이즈를 width 210 mm 를 px로 793.701px 이다 */}

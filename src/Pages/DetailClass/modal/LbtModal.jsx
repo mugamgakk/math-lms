@@ -1,8 +1,8 @@
-import React, { useState, createRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import style from "../../../style/style-module/lbtModal.module.scss";
 import LbtCheckbox from "../LbtCheckbox";
-import ReactToPdf from "react-to-pdf";
-const ref = React.createRef();
+import ReactToPrint from 'react-to-print'; // pdf, 인쇄
+
 
 const dataLists = [
     [
@@ -21,17 +21,13 @@ const dataLists = [
     ],
 ];
 
-const options = {
-    format : "a4",
-    unit : "mm"
-}
 
 const arr = new Array(10).fill(1)
 
 function LbtModal(props) {
     const [allCheckBtn, setAllCheckBtn] = useState(false);
+    const printComponent = useRef();
 
-    console.log(allCheckBtn);
 
     return (
         <div
@@ -82,7 +78,9 @@ function LbtModal(props) {
                         </div>
                     </div>
                     <div className={style.rightWrap}>
-                    <div className={style.right} ref={ref} >
+
+                        
+                    <div className={style.right} ref={printComponent} style={{width : "793.701px"}} >
                         
                             <h1 style={{backgroundColor : "orangered", color : "#fff", fontSize : "20px" , textAlign : "center", marginBottom : "20px"}}>사고하고 질문하라</h1>
                             <h2 style={{textAlign : "center", marginBottom : "20px"}}>2022년 4월 강수학의 패럴랙스 수학 종합 학습 분석표</h2>
@@ -105,9 +103,9 @@ function LbtModal(props) {
                             </table>
 
                             {
-                                arr.map(a=>{
+                                arr.map((a,i)=>{
                                     return (
-                                        <table style={{marginBottom : "20px"}} key={a}>
+                                        <table style={{marginBottom : "20px"}} key={i}>
                                         <tbody>
                                             <tr>
                                                 <td>교재 학습 문제 수</td>
@@ -131,19 +129,19 @@ function LbtModal(props) {
                                 })
                             }
 
-                            
 
                     </div>
                     </div>
                 </div>
                 <div className={style.btnGroup}>
-                <ReactToPdf targetRef={ref} x={0} y={0} options={options}>
-                    {({ toPdf }) => (
-                        <button className="btn" onClick={toPdf} >
-                            PDF 파일 만들기
-                        </button>
-                    )}
-                </ReactToPdf>
+                    <ReactToPrint
+                    trigger={() => <button className="btn">프린트 버튼</button>} //  trigger : 인쇄를 명령할 컴포넌트를 넣어주기
+                    content={() => printComponent.current} // content : 인쇄 대상 ref를 넘겨주기
+                    // onAfterPrint={()=>{alert("@@@@@@@@@@@@@@@@@@@@")}} // 인쇄창 닫을때
+                    // onBeforeGetContent={()=>{alert("@@@@@@@@@@@@@@@")}} // 인쇄창 열때
+                    // onBeforePrint={()=>{alert("@@@@@@@@@@@")}}
+                    documentTitle="강호동"
+                    />
                 </div>
             </div>
         </div>
