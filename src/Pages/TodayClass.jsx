@@ -10,11 +10,14 @@ import AttModal from './TodayClass/AttModal';
 import "../style/TodayClass/todayClass.scss";
 import axios from "axios";
 
+
+
+
 function TodayClass(){
 
     let [todayClassList,setTodayClassList] = useState([
         {
-          id : 1,
+          id : 0,
           name : '강수학',
           nickName : 'kangsh',
           thum : null,
@@ -25,9 +28,10 @@ function TodayClass(){
           state3 : undefined,
           state4 : undefined,
           state5 : null,
+          sodanwon: '1.소인수분해',
       },
       {
-          id : 2,
+          id : 1,
           name : '강시후',
           nickName : 'kshhhh',
           thum : null,
@@ -41,9 +45,11 @@ function TodayClass(){
           },
           state4 : '25/25',
           state5 : 'Pass',
+          sodanwon: '2.소인수분해',
+          
       },
       {
-          id : 3,
+          id : 2,
           name : '김민찬',
           nickName : 'minck',
           thum : null,
@@ -58,9 +64,11 @@ function TodayClass(){
           },
           state4 : '5/25',
           state5 : '-/4',
+          sodanwon: '3.소인수분해',
+
       },
       {
-          id : 4,
+          id : 3,
           name : '김민찬',
           nickName : 'minck',
           thum : null,
@@ -75,17 +83,26 @@ function TodayClass(){
           },
           state4 : '5/25',
           state5 : null,
+          sodanwon: '5.소인수분해',
+
       },
     ]);
 
+    let [modalCount, setModalCount] = useState(0);
+    let [checkState, setCheckState] = useState([]);
+
+    // 모달들 상태관리
     let [modalCondition,setModalCondition] = useState({
         attModal : false,
         assessmentModal : false
     });
 
-    const [reloadState,setReloadState] = useState(false);
-    
-    useEffect(()=>{},[reloadState])
+    const closeModal = (target) => {
+        setModalCondition({
+            ...modalCondition,
+            [target] : false,
+        })
+    }
     
     const modalOpen = (target) => {
         setModalCondition({
@@ -93,6 +110,11 @@ function TodayClass(){
             [target] : !modalCondition[target],            
         });
     }
+
+
+    const [reloadState,setReloadState] = useState(false);
+    useEffect(()=>{},[reloadState])
+    
     
     const [value, onChange] = React.useState(new Date());
     const [openCalendar, setOpenCalendar] = React.useState(false);
@@ -127,7 +149,7 @@ function TodayClass(){
             </div>
             <header className="table-header row">
                 <div>
-                    <SelectBox width={"200px"} />
+                    <SelectBox width={"200px"} checkState={checkState} setCheckState={setCheckState}  />
                     <input
                         type="text"
                         className="form-control"
@@ -173,6 +195,7 @@ function TodayClass(){
                             list={list} 
                             key={list.id}
                             modalOpen={modalOpen}
+                            setModalCount={setModalCount}
                             />
                         })
                     }
@@ -180,11 +203,20 @@ function TodayClass(){
                 </tbody>
             </table>
             {
-                modalCondition.assessmentModal ? <AssessmentModal /> : null
+                modalCondition.assessmentModal ? 
+                <AssessmentModal 
+                modalCount={modalCount} 
+                todayClassList={todayClassList} /> 
+                : null
             }
             {
-                modalCondition.attModal ? <AttModal /> : null
-
+                modalCondition.attModal ? 
+                <AttModal 
+                modalCount={modalCount}
+                todayClassList={todayClassList}
+                closeModal={closeModal}
+                /> 
+                : null
             }
         </div>
     )

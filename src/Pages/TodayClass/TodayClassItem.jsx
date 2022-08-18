@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-function TodayClassItem ({list,modalOpen}) {
+function TodayClassItem ({list,modalOpen,setModalCount}) {
 
- 
+    
     let [newplay,setNewPlay] = useState(false);
 
     useEffect(()=>{
         if(!list.state3?.newplay) return;
         setNewPlay(true);
     },[])
-
+    
     const tdStateFunc = (data) => {
         if(!data) return;
 
@@ -52,7 +52,10 @@ function TodayClassItem ({list,modalOpen}) {
                 </td>
                 <td className={checkDisabled(list.state4)}>{list.state4}</td>
                 <td className={checkDisabled(list.state5)}>{tdPrintFunc(list.state5)}</td>
-                <td><button className="attBtn btn" onClick={()=>modalOpen('attModal')}>학습 태도</button></td>
+                <td><button className="attBtn btn" onClick={() => {
+                    modalOpen('attModal')
+                    setModalCount(list.id)
+                   }}>학습 태도</button></td>
             </tr>
     )
 }
