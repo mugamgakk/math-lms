@@ -1,19 +1,11 @@
 import React, { useEffect, useState } from "react";
 
-const arr = [
-    "중등 월화수 A",
-    "중등 월화수 B",
-    "중등 월화수 C",
-    "중등 화목토 A",
-    "중등 화목토 B",
-    "중등 화목토 C"
-]
 
 
-function SelectTest(props) {
+
+function SelectTest({width, checkState, setCheckState, arr}) {
 
     let [selectState, setSelectState] = useState(false);
-    let [checkState, setCheckState] = useState(arr);
     let [choiceItem, setChiceItem] = useState('반 선택 (전체)');
 
     const allCheck = (checked)=>{
@@ -62,7 +54,7 @@ function SelectTest(props) {
     return (
         <div
             className={"select-wrap" + `${selectState ? " active" : ""}`}
-            style={{width : props.width}}
+            style={{width : width}}
         >
             <div className="select-show"
                 onClick={()=>{setSelectState(!selectState)}}

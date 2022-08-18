@@ -30,9 +30,7 @@ function LearningBreakdownTable() {
 
             <button className="btn" onClick={()=>{
 
-                // 삭제
-
-                let copy = [...aa];
+                let copy = [...aa]; //삭제
 
                 choiceArr.forEach(function(asdf){
                     copy.splice(copy.indexOf(asdf),1);

@@ -19,15 +19,15 @@ function Components() {
 
 //  오디오 
     let audio = React.useRef();
-    let [playState,setPlaystate] = React.useState(true);
 
 
     const start = ()=>{
 
         let 오디오 = audio.current.audioEl.current;
 
-        playState ? 오디오.play() : 오디오.pause();
-        setPlaystate(!playState);
+        console.log(오디오.paused)
+
+        오디오.paused ? 오디오.play() : 오디오.pause();
 
     }
 
@@ -96,7 +96,7 @@ function Components() {
 
                 <h4>calendar props</h4>
                 <p>
-                    autoFocus : 마운트 시 포커스 될지 말지 (boolean) <br />
+                    {/* autoFocus : 마운트 시 포커스 될지 말지 (boolean) <br />
                     calendarIcon : 기본 아이콘 숨기기 (null) <br />
                     maxDate : 최대 선택할수 있는 날짜 설정 <br />
                     clearIcon : 클리어 해주는 아이콘 삭제 (null) <br />
@@ -117,7 +117,7 @@ function Components() {
                     format : 날짜 포맷 <br />
                     closeCalendar : 값 선택후 닫을지 말지 (boolean) <br />
                     minDetail : 최소 선택할수 있는 날짜 범위 ("month", "year", "decade" or
-                    "century".)
+                    "century".) */}
                 </p>
             </div>
 

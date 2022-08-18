@@ -8,10 +8,6 @@ import data from '../../plusdata';
 const 단원 = ["대단원", "수와 식의 계산"];
 const 상태 = ["상태","오픈전", "학습중", "학습완료"];
 
-function long(){
-    console.log("@@@@@@@@@@@@@@@@@@@")
-    return 123
-}
 
 function Narrative() {
     let [selectOneState, setSelectOneState] = useState(false);

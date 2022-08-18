@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import styled from "styled-components";
 import DatePicker from "react-date-picker"; // 데이트 피커
+import { useMemo } from 'react';
 
 let LbtBookArea = styled.div`
     width: 100%;
@@ -14,12 +15,20 @@ let LbtBookArea = styled.div`
 const 과목 = ["수학", "영어", "도덕", "체육", "미술", "김치"];
 
 
+
 function LbtDayOption({setModal}) {
 
-    let [startDay, setStartDay] = useState(new Date());
-    let [lastDay, setLastDay] = useState(new Date());
-    let [subjectArr, setSubjectArr] = useState([]);
-    let [option, setOption] = useState(false);
+    let oneMonthAgo = useMemo(()=>{
+        var now = new Date();
+        var oneMonthAgo = new Date(now.setMonth(now.getMonth() - 1));
+        return oneMonthAgo
+    },[])
+
+    let [startDay, setStartDay] = useState(oneMonthAgo),
+        [lastDay, setLastDay] = useState(new Date()),
+        [subjectArr, setSubjectArr] = useState([]),
+        [option, setOption] = useState(false)
+
 
 
     useEffect(() => {
