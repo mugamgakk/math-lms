@@ -7,14 +7,7 @@ import { useEffect } from "react";
 import { useCallback } from "react";
 
 
-const arr = [
-    "중등 월화수 A",
-    "중등 월화수 B",
-    // "중등 월화수 C",
-    // "중등 화목토 A",
-    // "중등 화목토 B",
-    // "중등 화목토 C"
-]
+
 
 
 
@@ -22,7 +15,7 @@ function DetailClassSearch({ user }) {
 
 
     let dispatch = useDispatch();
-    let [checkState, setCheckState] = useState(arr);
+    let [checkState, setCheckState] = useState([]);
     let [userList, setUserList] = useState([]);
     let [nameSearch, setNameSearch] = useState('');
 
@@ -90,7 +83,7 @@ function DetailClassSearch({ user }) {
     return (
         <div className="students-search">
             <header className="row" style={{ padding: "10px 0" }}>
-                <SelectBox width={"150px"} checkState={checkState} setCheckState={setCheckState} arr={arr} />
+                <SelectBox width={"150px"} checkState={checkState} setCheckState={setCheckState} />
                 <input
                     type={"text"}
                     placeholder="이름"
@@ -137,7 +130,7 @@ function DetailClassSearch({ user }) {
             <button className="btn" onClick={()=>{
                 setUserList(user);
                 setNameSearch('');
-                setCheckState(arr);
+                setCheckState([]);
                 }}>초기화</button>
         </div>
     );
