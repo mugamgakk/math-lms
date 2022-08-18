@@ -15,7 +15,8 @@ function Attendance() {
     let [allCheck, setAllCheck] = useState(0),
         { attendanceList } = useSelector((state) => state.studentsAttendance),
         [value, onChange] = useState(new Date()),
-        [openCalendar, setOpenCalendar] = useState(false)
+        [openCalendar, setOpenCalendar] = useState(false);
+    let [checkState, setCheckState] = useState([]);
 
     return (
         <div className="container Attendance">
@@ -51,8 +52,8 @@ function Attendance() {
                     </button>
                 </div>
                 <div>
-                    <SelectBox width={"200px"} />
-
+                    <SelectBox width={"200px"} checkState={checkState} setCheckState={setCheckState} />
+                    
                     <input
                         type="text"
                         className="form-control"

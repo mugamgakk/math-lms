@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import SelectBox from '../../components/ui/select/SelectBox';
 import {useDispatch} from 'react-redux';
 import {setClickStudent} from '../../feature/studentsListSlice'
@@ -6,6 +6,8 @@ import {setClickStudent} from '../../feature/studentsListSlice'
 function PlusLearningSearch({user}) {
 
     let dispatch = useDispatch();
+    let [checkState, setCheckState] = useState([]);
+    
 
     const getUser = (e)=>{
 
@@ -24,7 +26,7 @@ function PlusLearningSearch({user}) {
     return ( 
         <div className="students-search">
                 <header className='row' style={{padding : '10px 0'}}>
-                    <SelectBox width={'150px'}/>
+                    <SelectBox width={'150px'} checkState={checkState} setCheckState={setCheckState}/>
                     <input type={"text"} placeholder="이름" className="form-control" style={{width : "100px", marginLeft : "10px"}}/>
                     <button>찾기</button>
                 </header>
