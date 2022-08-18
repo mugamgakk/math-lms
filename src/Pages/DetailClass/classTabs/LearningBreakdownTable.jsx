@@ -3,7 +3,7 @@ import LbtModal from "../modal/LbtModal";
 import LbtDayOption from "../LbtDayOption";
 
 
-const arr = ['강호동', '이수근', '김제동', '빠다쿠키', '김교사', '추사랑']
+const arr = ['강호동', '이수근', '김제동', '빠다쿠키', '김교사', '추사랑'];
 
 
 function LearningBreakdownTable() {
@@ -30,13 +30,19 @@ function LearningBreakdownTable() {
 
             <button className="btn" onClick={()=>{
 
-                let copy = [...aa]; //삭제
+                if(window.confirm("삭제하시겠습니까?")){
+                    let copy = [...aa]; //삭제
 
-                choiceArr.forEach(function(asdf){
-                    copy.splice(copy.indexOf(asdf),1);
-                })
-                setChoiceArr([]);
-                b(copy);
+                    choiceArr.forEach(function(asdf){
+                        copy.splice(copy.indexOf(asdf),1);
+                    })
+                    setChoiceArr([]);
+                    b(copy);
+                }else{
+                    return 
+                }
+
+                
 
             }}>선택 삭제</button>
             <p>[분석표 삭제 유의 !] 분석 결과는 생성일에 따라 달라질 수 있습니다</p>

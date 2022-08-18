@@ -10,10 +10,10 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 
 function Attendance() {
-    let [allCheck, setAllCheck] = useState(0);
-    let { attendanceList } = useSelector((state) => state.studentsAttendance);
-    const [value, onChange] = useState(new Date());
-    const [openCalendar, setOpenCalendar] = useState(false);
+    let [allCheck, setAllCheck] = useState(0),
+        { attendanceList } = useSelector((state) => state.studentsAttendance),
+        [value, onChange] = useState(new Date()),
+        [openCalendar, setOpenCalendar] = useState(false)
 
     return (
         <div className="container Attendance">
