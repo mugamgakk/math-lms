@@ -53,8 +53,8 @@ function TodayClass(){
           name : '김민찬',
           nickName : 'minck',
           thum : null,
-          class : '중2-2 엑사스',
-          book : 'Ⅱ-3. 공배수와 최소공배수',
+          book : '중2-2 엑사스',
+          class : 'Ⅱ-3. 공배수와 최소공배수',
           state1 : '33%',
           state2 : '-/12',
           state3 : {
@@ -91,7 +91,7 @@ function TodayClass(){
     let [modalCount, setModalCount] = useState(0);
     let [checkState, setCheckState] = useState([]);
 
-    // 모달들 상태관리
+    // 모달 상태관리
     let [modalCondition,setModalCondition] = useState({
         attModal : false,
         assessmentModal : false
@@ -104,7 +104,7 @@ function TodayClass(){
         })
     }
     
-    const modalOpen = (target) => {
+    const openModal = (target) => {
         setModalCondition({
             ...modalCondition,
             [target] : !modalCondition[target],            
@@ -194,7 +194,7 @@ function TodayClass(){
                             return <TodayClassItem 
                             list={list} 
                             key={list.id}
-                            modalOpen={modalOpen}
+                            openModal={openModal}
                             setModalCount={setModalCount}
                             />
                         })
@@ -206,7 +206,8 @@ function TodayClass(){
                 modalCondition.assessmentModal ? 
                 <AssessmentModal 
                 modalCount={modalCount} 
-                todayClassList={todayClassList} /> 
+                todayClassList={todayClassList}
+                closeModal={closeModal} /> 
                 : null
             }
             {

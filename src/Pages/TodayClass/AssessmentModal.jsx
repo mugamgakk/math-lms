@@ -1,45 +1,68 @@
 import React, { useEffect, useState } from "react";
-import ReactAudioPlayer from 'react-audio-player';
+import ScoreItem from './ScoreItem'
 
-function AssessmentModal () {
-    let audio = React.useRef();
-    let [playState,setPlaystate] = React.useState(true);
 
-    const start = ()=>{
+function AssessmentModal ({modalCount,todayClassList,closeModal}) {
+    let barArray = new Array(11).fill().map((v,i)=> i );
+    let assTit = [
+       '개념 이해력',
+       '전달력',
+    ];
+    
+    let [totalData, setTotalData] = useState({
+        q1: 7,
+        q2: 7,
+    });
 
-        let 오디오 = audio.current.audioEl.current;
-
-        playState ? 오디오.play() : 오디오.pause();
-        setPlaystate(!playState);
-
+    const numClick = (idx,num) => {
+        setTotalData({
+            ...totalData,
+            [`q${idx}`]: num
+        });
     }
-
+ 
+    
     return (
         <>
-            <div className='assessModal'>
-                <div className="assessModal-head">
-                     <div className="tit"></div>
-                     <button className="close"></button>
+        <div className="modal">
+            <div className="dim"></div>
+            <div className='asseModal cmmnModal'>
+                <div className="asseModal-head cmmnModal-head">
+                    <div className="tit">
+                        <strong>[학습 태도 평가]</strong>
+                        <ul>
+                            <li>{todayClassList[modalCount].name}/</li>
+                            <li>{todayClassList[modalCount].book}/</li>
+                            <li>{todayClassList[modalCount].class}/</li>
+                            <li>{todayClassList[modalCount].sodanwon}</li>
+                        </ul>
+                    </div>
+                    <button className="close" onClick={() => closeModal('assessmentModal')}>X</button>
                 </div>
-                <div className="assessModal-body">
-                    <div className="audio-area">
+                <div className="asseModal-body cmmnModal-body">
+                    <h5>학생의 개념 이해력과 전달력 점수를 입력해 주세요.</h5>
+                    <table>
+                        {
+                            assTit.map((tit,idx)=> {
+                                return(
+                                    <tr>
+                                        <th>{tit}</th>
+                                        <td>
+                                            <ScoreItem key={idx} numClick={numClick} idx={idx+1} style={totalData[`q${idx+1}`]}/>
+                                        </td>
+                                    </tr>
+                                    )
+                                })
+                        }
+                    </table>
+                </div>
+                <div className="asseModal-foot cmmnModal-foot">
+                    <button className='btn' onClick={() => closeModal('assessmentModal')}>취소</button>
+                    <button className='btn' >저장</button>
+                </div>
+            </div>
 
-                <div style={{marginTop : "100px"}}>
-                <ReactAudioPlayer
-                src="test.mp3"
-                autoPlay
-                ref={audio}
-                controls
-                />
-                <button className="btn" onClick={start}>재생 버튼</button>
-                    
-                </div>
-                <div className=''>
-                    <p></p>
-                </div>
-            </div>
-                </div>
-            </div>
+        </div>
         </>
     )
 }

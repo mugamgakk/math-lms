@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-function TodayClassItem ({list,modalOpen,setModalCount}) {
+function TodayClassItem ({list,openModal,setModalCount}) {
 
     
     let [newplay,setNewPlay] = useState(false);
@@ -12,8 +12,16 @@ function TodayClassItem ({list,modalOpen,setModalCount}) {
     const tdStateFunc = (data) => {
         if(!data) return;
 
-        if(data.assessment) return <button className='evalBtn btn' onClick={()=>modalOpen('assessmentModal')}>이해:{data.uds} 전달:{data.send}</button>;
-        return <button className='evalBtn btn' onClick={()=>modalOpen('assessmentModal')}>수행 평가</button>;
+        if(data.assessment){
+            return(
+                <button 
+                className='evalBtn btn'
+                onClick={()=>openModal('assessmentModal')}>
+                이해:{data.uds} 전달:{data.send}
+                </button>
+            )
+        }
+        return <button className='evalBtn btn' onClick={()=>openModal('assessmentModal')}>수행 평가</button>;
     }
 
     const tdPrintFunc = (data) => {
@@ -53,7 +61,7 @@ function TodayClassItem ({list,modalOpen,setModalCount}) {
                 <td className={checkDisabled(list.state4)}>{list.state4}</td>
                 <td className={checkDisabled(list.state5)}>{tdPrintFunc(list.state5)}</td>
                 <td><button className="attBtn btn" onClick={() => {
-                    modalOpen('attModal')
+                    openModal('attModal')
                     setModalCount(list.id)
                    }}>학습 태도</button></td>
             </tr>

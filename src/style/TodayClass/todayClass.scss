@@ -68,10 +68,20 @@
         }
         .modal{
             .dim{
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                background: #000;
+                opacity: .3;
                 
             }
+         
         }
-        .assessModal{
+
+        
+        .cmmnModal{
             background: #fff;
             position: absolute;
             top: 50%;
@@ -79,12 +89,12 @@
             transform: translate(-50%,-50%);
             width: 700px;
             &-head{
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
                 background: rgb(143, 0, 0);
                 padding: 10px;
                 border-radius: 10px 10px 0 0;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
                 .tit{
                     display: flex;
                     align-items: center;
@@ -102,8 +112,6 @@
             }
             &-body{
                 padding: 10px;
-                ul{
-                    li{
                         .bar{
                             // padding: 0 20px;
                             border: 1px solid;
@@ -112,28 +120,38 @@
                             &-num{
                                 position: absolute;
                                 top: -25px;
-                                left: 0;
-                                width: 100%;
+                                left: -6px;
+                                width: 102%;
                                 display: flex;
                                 justify-content: space-between;
                             }
+                            &-gage{
+                                position: absolute;
+                                left: 0;
+                                top: 0;
+                                height: 100%;
+                                // width: 50%;
+                                background: red;
+                                transition: .2s;
+
+                            }
                             .clickScore{
-                                background: yellowgreen;
                                 border-right: 1px solid;
+                                display: inline-block;
                                 width: 10%;
+                                z-index: 1;
+                                position: relative;
+                                opacity: 0;
                             }
                             .halfArea{
                                 width: 5%;
                             }
-
-                            
-                        }
-                    }
                 }
             }
             &-foot{
                 display: flex;
                 justify-content: center;
+                padding-bottom: 10px;
             }
 
         }
