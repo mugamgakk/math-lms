@@ -16,7 +16,7 @@ const 과목 = ["수학", "영어", "도덕", "체육", "미술", "김치"];
 
 
 
-function LbtDayOption({setModal}) {
+function LbtDayOption({setModal, setModalState}) {
 
     let oneMonthAgo = useMemo(()=>{
         var now = new Date();
@@ -145,7 +145,8 @@ function LbtDayOption({setModal}) {
                     </button>
                     <button className="btn"
                     onClick={()=>{
-                        setModal(true)
+                        setModal(true);
+                        setModalState("생성")
                     }}
                     >생성</button>
                 </div>

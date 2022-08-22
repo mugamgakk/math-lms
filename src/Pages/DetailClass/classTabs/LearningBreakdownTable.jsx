@@ -10,6 +10,7 @@ function LearningBreakdownTable() {
     let [modal, setModal] = useState(false);
     let [aa,b] = useState([...arr]);
     let [choiceArr, setChoiceArr] = useState([]);
+    let [modalState, setModalState] = useState();
 
 
     const isChecked = (checked,ele)=>{
@@ -20,15 +21,19 @@ function LearningBreakdownTable() {
         }
     }
 
-    console.log(choiceArr)
 
     return (
         <div>
-            {modal && <LbtModal setModal={setModal} />}
+            {modal && <LbtModal setModal={setModal} modalState={modalState} />}
 
-            <LbtDayOption setModal={setModal}/>
+            <LbtDayOption setModal={setModal} setModalState={setModalState} />
 
             <button className="btn" onClick={()=>{
+
+                if(choiceArr.length === 0){
+                    alert("학습 분석표를 선택하세요");
+                    return
+                }
 
                 if(window.confirm("삭제하시겠습니까?")){
                     let copy = [...aa]; //삭제
@@ -82,6 +87,7 @@ function LearningBreakdownTable() {
                                         className="btn"
                                         onClick={() => {
                                             setModal(true);
+                                            setModalState("인쇄")
                                         }}
                                     >
                                         보기

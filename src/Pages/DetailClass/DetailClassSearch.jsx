@@ -1,14 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import SelectBox from "../../components/ui/select/SelectBox";
 import { useDispatch } from "react-redux";
 import { setClickStudent } from "../../feature/studentsListSlice";
 import SearchBtn from "../../components/ui/button/SearchBtn";
-import { useEffect } from "react";
-import { useCallback } from "react";
-
-
-
-
 
 
 function DetailClassSearch({ user }) {
@@ -48,22 +42,22 @@ function DetailClassSearch({ user }) {
 
     // 검색
     const searchStudents = useCallback(() => {
-        let arr = [];
+        let initialArray = [];
 
         // 반 검사
         checkState.forEach(function(a){
             let 반검사 = user.filter(stu=> stu.반이름 === a );
-            arr = [...arr, ...반검사];
+            initialArray = [...initialArray, ...반검사];
         })
 
         //  이름 검사
         if(nameSearch !== ''){
             let regex = new RegExp(nameSearch) 
 
-            setUserList(arr.filter((stu)=> regex.test(stu.name) ));
+            setUserList(initialArray.filter((stu)=> regex.test(stu.name) ));
         }else{
 
-            let copy = [...arr];
+            let copy = [...initialArray];
 
             copy.sort((a,b)=>{
                 if(a.name < b.name){

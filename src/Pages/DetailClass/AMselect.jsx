@@ -3,26 +3,25 @@ import React from 'react';
 
 const item = ["출석", "지각", "조퇴", "결석"]
 
-function AMselect({selectState , setSelectState, selectText, setSelectText, width}) {
+function AMselect({selectTest, setSelectTest, width}) {
 
     return (
         <div
-            className={"select-wrap" + `${selectState ? " active" : ""}`}
+            className={"select-wrap" + `${selectTest.state ? " active" : ""}`}
             style={{ width: width }}
         >
             <div
                 className="select-show"
                 onClick={() => {
-                    setSelectState(!selectState);
-                    console.log(selectText)
+                    setSelectTest({...selectTest, state : !selectTest.state});
                 }}
             >
-                {selectText}
+                {selectTest.text}
             </div>
             <button
                 className="select-btn"
                 onClick={() => {
-                    setSelectState(!selectState);
+                    setSelectTest({...selectTest, state : !selectTest.state});
                 }}
             ></button>
             <div className="textbook-select-option">
@@ -32,8 +31,7 @@ function AMselect({selectState , setSelectState, selectText, setSelectText, widt
                             className="option-item"
                             key={i}
                             onClick={(e) => {
-                                setSelectText(e.target.innerText);
-                                setSelectState(false);
+                                setSelectTest({...selectTest, text : a, state : false});
                             }}
                         >
                             {a}

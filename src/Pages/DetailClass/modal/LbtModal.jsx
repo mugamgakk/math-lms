@@ -39,8 +39,18 @@ function LbtModal(props) {
             }}
         >
             <div className={style.content}>
+                {
+                    props.modalState === "생성"
+                    ? <h4>종합 학습 분석표 생성하기</h4>
+                    : <h4>종합 학습 분석표 보기 / 인쇄</h4>
+                }
                 <div className="row">
                     <div className={style.left}>
+
+                        {
+                            props.modalState === "인쇄" && <div className={style.disabled}></div>
+                        }
+
                         <strong>
                             평균 표시(
                             <input
@@ -134,14 +144,29 @@ function LbtModal(props) {
                     </div>
                 </div>
                 <div className={style.btnGroup}>
-                    <ReactToPrint
-                    trigger={() => <button className="btn">프린트 버튼</button>} //  trigger : 인쇄를 명령할 컴포넌트를 넣어주기
-                    content={() => printComponent.current} // content : 인쇄 대상 ref를 넘겨주기
-                    // onAfterPrint={()=>{alert("@@@@@@@@@@@@@@@@@@@@")}} // 인쇄창 닫을때
-                    // onBeforeGetContent={()=>{alert("@@@@@@@@@@@@@@@")}} // 인쇄창 열때
-                    // onBeforePrint={()=>{alert("@@@@@@@@@@@")}}
-                    documentTitle="강호동"
-                    />
+                    {
+                        props.modalState === "생성"
+                        ? (
+                            <>
+                                <button className="btn">생성</button>
+                                <button className="btn" onClick={()=>{props.setModal(false);}}>닫기</button>
+                            </>
+                        )
+                        : (
+                            <>
+                            <ReactToPrint
+                            trigger={() => <button className="btn">인쇄하기</button>} 
+                            content={() => printComponent.current} 
+                            />
+                            <ReactToPrint
+                            trigger={() => <button className="btn">다운로드</button>} 
+                            content={() => printComponent.current} 
+                            />
+                            <button className="btn" onClick={()=>{props.setModal(false);}}>닫기</button>
+                            </>
+                        )
+                    }
+                    
                 </div>
             </div>
         </div>

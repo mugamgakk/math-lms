@@ -17,17 +17,13 @@ for(let i = 1; i <= 31; i++ ){
 
 
 const AttendanceModal = styled.div`
-    width : 300px;
-    height : 150px;
     border : 1px solid #ccc;
     position : absolute;
     background-color : #fff;
     right: 100px;
     bottom : 100px;
     padding : 20px;
-    padding-bottom : 0;
 `
-
 
 
 function AttendanceManagement() {
@@ -35,7 +31,7 @@ function AttendanceManagement() {
     let [been, setBeen] = useState([]);
     let [day, setDay] = useState(팔월);
     let [modal, setModal] = useState(false);
-    let [exnum, setExnum] = useState(12);
+    let [exnum, setExnum] = useState();
 
     return (
         <div className="AttendanceManagement">
@@ -52,8 +48,6 @@ function AttendanceManagement() {
                 )
             }
             
-
-
 
             <div className="row AttendanceManagement-header">
                 <div>

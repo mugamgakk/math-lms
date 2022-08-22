@@ -6,11 +6,13 @@ import AMselect from './AMselect';
 function AttendanceDay ({date, setModal, setExnum}){
 
 
-    let [selectState, setSelectState] = useState(false);
-    let [selectText, setSelectText] = useState('');
+    // let [selectState, setSelectState] = useState(false);
+    // let [selectText, setSelectText] = useState('');
+
+    let [selectTest, setSelectTest] = useState({state : false, text : ''})
 
     useEffect(()=>{
-        setSelectText(date.state)
+        setSelectTest({...selectTest, text : date.state})
     },[date.state])
 
 
@@ -28,7 +30,7 @@ function AttendanceDay ({date, setModal, setExnum}){
                         <div>
                             {date.day}
 
-                            <AMselect setSelectState={setSelectState} selectState={selectState} selectText={selectText} setSelectText={setSelectText} />
+                            <AMselect selectTest={selectTest} setSelectTest={setSelectTest} />
 
                             <br/>
                             {

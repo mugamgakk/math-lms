@@ -6,15 +6,12 @@ function ChangeMonth({setWeek, setBeen}) {
 
     let [count,setCount] = useState(0);
     const today = new Date();
-
-
     const setTime = new Date(today.setMonth(today.getMonth() + count));
-
 
     let year = setTime.getFullYear(),
         month = setTime.getMonth()
 
-        // 마지막 일수 구하기
+    // 마지막 일수 구하기
     let monthLastDate = new Date(year, month, 0);
     let monthStartDate = new Date(year, month, 1);
 
@@ -33,6 +30,7 @@ function ChangeMonth({setWeek, setBeen}) {
             setCount(count -1)
         }else if(param === 'next'){
             if(count === 0){
+                alert("마지막 달입니다.")
                 return
             }
             setCount(count + 1)
