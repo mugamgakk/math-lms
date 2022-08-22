@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import {getStudentsList} from '../feature/studentsListSlice';
 import DetailClassContent from './DetailClass/DetailClassContent';
 import DetailClassSearch from './DetailClass/DetailClassSearch';
-import '../style/DetailClass/detail-class.scss';
 
 
 

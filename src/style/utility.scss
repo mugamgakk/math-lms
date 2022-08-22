@@ -1,0 +1,20 @@
+// 유틸리티 클래스
+
+.justify-content-between{
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn{
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid #999;
+    min-width: 100px;
+    padding: 0 10px;
+    background: linear-gradient(to bottom, white 45%, rgb(187, 187, 187));
+
+    &.active{
+        border: 1px solid orangered;
+        background: linear-gradient(to bottom, white 45%, orangered)
+    }
+}

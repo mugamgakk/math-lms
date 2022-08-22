@@ -1,19 +1,4 @@
 
-.btn{
-    height: 30px;
-    border-radius: 5px;
-    border: 1px solid #999;
-    min-width: 100px;
-    padding: 0 10px;
-    background: linear-gradient(to bottom, white 45%, rgb(187, 187, 187));
-
-    &.active{
-        border: 1px solid orangered;
-        background: linear-gradient(to bottom, white 45%, orangered)
-    }
-}
-
-
 .select-wrap{
 
     position: relative;
@@ -232,15 +217,6 @@ input[type="text"].form-control{
     }
 }
 
-.class-tabs{
-
-    .btn-group{
-
-       
-    }
-
-    
-}
 
 .user-info{
         
@@ -282,4 +258,110 @@ input[type="text"].form-control{
         padding: 2px;
         padding-left: 20px;
     }
+}
+
+.Attendance{
+
+    .table-header{
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+
+    table{
+        margin-top: 20px;
+
+        thead{
+            background-color: rgb(226, 226, 226);
+        }
+
+        th,td{
+            padding: 5px;
+        }
+    }
+}
+
+.lbt-option{
+
+    .left,.right{
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .lbt-bookarea{
+        
+    }
+
+}
+
+input.form-control{
+    height: 30px;
+    border-radius: 5px;
+    padding: 0 10px;
+    border: 1px solid #ccc;
+}
+
+.content-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #000;
+    margin-top: 20px;
+
+    .title{
+        font-size: 20px;
+    }
+
+    .location-list{
+        display: flex;
+        align-items: center;
+    }
+}
+
+.day-wrap{
+    display: flex;
+    justify-content: center;
+
+
+    strong{
+        vertical-align:middle;
+    }
+
+    button{
+        margin: 0 20px;
+        font-size: 30px;
+        vertical-align:middle;
+    }
+}
+
+
+.students-search{
+    width: 320px;
+    margin-right: 10px;
+    border-right: 1px solid #000;
+    padding-right: 10px;
+}
+
+.students-contents{
+    width: 840px;
+}
+
+
+
+.AttendanceManagement{
+    &-header{
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+}
+
+.PlusLearningPrintModal{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.3);
+    z-index: 10;
+    left: 0;
+    top: 0;
 }

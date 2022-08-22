@@ -25,10 +25,7 @@ function Components() {
 
         let 오디오 = audio.current.audioEl.current;
 
-        console.log(오디오.paused)
-
         오디오.paused ? 오디오.play() : 오디오.pause();
-
     }
 
     return (
@@ -142,7 +139,7 @@ function Components() {
                 <h2>오디오 테스트</h2>
                 <ReactAudioPlayer
                 src="test.mp3"
-                autoPlay
+                // autoPlay
                 ref={audio}
                 controls
                 />

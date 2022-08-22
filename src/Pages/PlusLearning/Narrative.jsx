@@ -2,6 +2,7 @@ import React, { useState, useCallback } from "react";
 import Pagination from "../../components/Pagination";
 import SelectBase from "../../components/ui/select/SelectBase";
 import UserInfo from "../../components/UserInfo";
+import PlusLearningPrintModal from "./PlusLearningPrintModal";
 
 const data = [
     {
@@ -69,6 +70,9 @@ function Narrative() {
 
     return (
         <div className="Narrative">
+
+            <PlusLearningPrintModal/>
+
             <UserInfo />
             <p>
                 학습하는 교재의 학년, 학기에 해당하는 서술형 문제를 오픈, 출력할 수

@@ -1,8 +1,8 @@
 import React, { lazy, Suspense,  } from 'react';
 import './style/reset.scss';
-import './style/layout.scss';
 import './style/component.scss';
 import './style/common.scss';
+import './style/utility.scss'
 import { Routes, Route, Link } from 'react-router-dom';
 import Home from './Pages/Home';
 
