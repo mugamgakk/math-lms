@@ -45,25 +45,24 @@ const 상태 = ["상태","오픈전", "학습중", "학습완료"];
 
 
 function Narrative() {
-    let [selectOneState, setSelectOneState] = useState(false),
-        [selectTwoState, setSelectTwoState] = useState(false),
-        [selectOneText, setSelectOneText] = useState(단원[0]),
-        [selectTwoText, setSelectTwoText] = useState(상태[0]),
-        [plusData, setPlusData] = useState(data);
+    let [selectBase, setSelectBase] = useState({state : false, text : "선택"}),
+        [selectBase2, setSelectBase2] = useState({state : false, text : "선택"}),
+        [plusData, setPlusData] = useState(data),
+        [modal,setModal] = useState(false);
 
     const findData = useCallback(()=>{
 
-        let 대단원 = data.filter(list=>list.대단원 === selectOneText);
-        let filterData = 대단원.filter(list=>list.상태 === selectTwoText);
+        let 대단원 = data.filter(list=>list.대단원 === selectBase.text);
+        let filterData = 대단원.filter(list=>list.상태 === selectBase2.text);
 
 
         setPlusData(filterData)
 
-        if(selectOneText === "대단원" && selectTwoText === "상태"){
+        if(selectBase.text === "대단원" && selectBase2.text === "상태"){
             setPlusData(data)
         }
 
-    },[selectOneText,selectTwoText])
+    },[selectBase,selectBase2])
 
 
 
@@ -71,7 +70,10 @@ function Narrative() {
     return (
         <div className="Narrative">
 
-            <PlusLearningPrintModal/>
+            {
+                modal && <PlusLearningPrintModal setModal={setModal} />
+            }
+            
 
             <UserInfo />
             <p>
@@ -85,18 +87,14 @@ function Narrative() {
                 </div>
                 <div className="row">
                     <SelectBase
-                        selectState={selectOneState}
-                        setSelectState={setSelectOneState}
-                        selectText={selectOneText}
-                        setSelectText={setSelectOneText}
+                        selectBase={selectBase}
+                        setSelectBase={setSelectBase}
                         width={'150px'}
                         item={단원}
                     />
                     <SelectBase
-                        selectState={selectTwoState}
-                        setSelectState={setSelectTwoState}
-                        selectText={selectTwoText}
-                        setSelectText={setSelectTwoText}
+                        selectBase={selectBase2}
+                        setSelectBase={setSelectBase2}
                         width={'150px'}
                         item={상태}
                     />
@@ -139,7 +137,7 @@ function Narrative() {
                                             ? (
                                                 <>
                                                 <p>{res.채점}</p>
-                                                <button className="btn">채점하기</button>
+                                                <button className="btn" onClick={()=>{setModal(true)}}>채점하기</button>
                                                 </>
                                                 )
                                             : (

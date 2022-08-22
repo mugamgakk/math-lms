@@ -7,14 +7,13 @@ import {saveInput} from '../../feature/studentsAttendance';
 const dd = ["선택", "출석", "지각", "조퇴", "결석"];
 
 function AttendanceItem({ item, allCheck, index }) {
-    let [selectState, setSelectState] = useState(false);
-    let [selectText, setSelectText] = useState("선택");
+    let [selectBase, setSelectBase] = useState({state : false, text : "선택"});
     let dispatch = useDispatch();
 
 
     useEffect(()=>{
         if(allCheck !== 0){
-            setSelectText('출석')
+            setSelectBase({...selectBase, text : "출석"})
         }
     },[allCheck]);
 
@@ -25,10 +24,8 @@ function AttendanceItem({ item, allCheck, index }) {
             <td>
                 <SelectBase
                     item={dd}
-                    selectState={selectState}
-                    setSelectState={setSelectState}
-                    selectText={selectText}
-                    setSelectText={setSelectText}
+                    selectBase={selectBase}
+                    setSelectBase={setSelectBase}
                 />
             </td>
             <td>
@@ -38,7 +35,7 @@ function AttendanceItem({ item, allCheck, index }) {
                 placeholder="사유입력 50자 이내" 
                 defaultValue={item.사유}
                 onChange={(e)=>{dispatch(saveInput({value : e.target.value , index}))}}
-                disabled={selectText === '출석' ? true : false}
+                disabled={selectBase.text === '출석' ? true : false}
                 />
             </td>
         </tr>

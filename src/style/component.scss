@@ -367,4 +367,50 @@ input.form-control{
     z-index: 10;
     left: 0;
     top: 0;
+
+    .modal{
+        width: 1500px;
+        height: 100vh;
+        overflow: auto;
+        background-color: #fff;
+        @include pos-center();
+
+        header{
+            @include flex(sb);
+            background-color: orangered;
+            color: #fff;
+            padding: 10px;
+        }
+    }
+    
+    .content{
+        padding: 10px;
+
+        &-left{
+            width: calc(45% - 10px);
+            margin-right: 10px;
+
+            .problem-box{
+                height: 300px;
+                border: 1px solid #ccc;
+                overflow: auto;
+                margin-top: 20px;
+                padding: 10px;
+
+                img{
+                    width: 100%;
+                }
+            }
+
+            .file-wrap{
+                width: 60%;
+                border: 1px solid #ccc;
+                padding: 10px;
+                min-height: 80px;
+            }
+        }
+        &-right{
+            width: 55%;
+        }
+    }
 }

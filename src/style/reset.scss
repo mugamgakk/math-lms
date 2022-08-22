@@ -49,7 +49,15 @@ input{
         border: none;
     }
     &:focus{
-        border: none;
+        outline: none;
+    }
+}
+
+textarea{
+    width: 100%;
+    border: 1px solid #ccc;
+    resize: none;
+    &:focus{
         outline: none;
     }
 }

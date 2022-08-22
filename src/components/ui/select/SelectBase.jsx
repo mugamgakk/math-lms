@@ -1,24 +1,24 @@
 import React from 'react';
-function SelectBase({selectState , setSelectState, selectText, setSelectText, item, width}) {
+function SelectBase({selectBase, setSelectBase, item, width}) {
     
 
     return (
         <div
-            className={"select-wrap" + `${selectState ? " active" : ""}`}
+            className={"select-wrap" + `${selectBase.state ? " active" : ""}`}
             style={{ width: width }}
         >
             <div
                 className="select-show"
                 onClick={() => {
-                    setSelectState(!selectState);
+                    setSelectBase({...selectBase, state : !selectBase.state});
                 }}
             >
-                {selectText}
+                {selectBase.text}
             </div>
             <button
                 className="select-btn"
                 onClick={() => {
-                    setSelectState(!selectState);
+                    setSelectBase({...selectBase, state : !selectBase.state});
                 }}
             ></button>
             <div className="textbook-select-option">
@@ -28,8 +28,7 @@ function SelectBase({selectState , setSelectState, selectText, setSelectText, it
                             className="option-item"
                             key={i}
                             onClick={(e) => {
-                                setSelectText(e.target.innerText);
-                                setSelectState(false);
+                                setSelectBase({...selectBase, state : false, text : e.target.innerText});
                             }}
                         >
                             {a}
