@@ -7,6 +7,7 @@ import ChangeDate from "../components/ChangeDate";
 import TodayClassItem from "./TodayClass/TodayClassItem";
 import AssessmentModal from './TodayClass/AssessmentModal';
 import AttModal from './TodayClass/AttModal';
+import PrintModal from './TodayClass/PrintModal';
 import "../style/TodayClass/todayClass.scss";
 import axios from "axios";
 
@@ -94,7 +95,8 @@ function TodayClass(){
     // 모달 상태관리
     let [modalCondition,setModalCondition] = useState({
         attModal : false,
-        assessmentModal : false
+        assessmentModal : false,
+        printModal : false,
     });
 
     const closeModal = (target) => {
@@ -213,6 +215,15 @@ function TodayClass(){
             {
                 modalCondition.attModal ? 
                 <AttModal 
+                modalCount={modalCount}
+                todayClassList={todayClassList}
+                closeModal={closeModal}
+                /> 
+                : null
+            }
+            {
+                modalCondition.printModal ? 
+                <PrintModal 
                 modalCount={modalCount}
                 todayClassList={todayClassList}
                 closeModal={closeModal}

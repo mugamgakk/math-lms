@@ -30,7 +30,7 @@ function TodayClassItem ({list,openModal,setModalCount}) {
         return (
             <>
                 <div>{data}</div>
-                <button className='printBtn btn'>인쇄</button>
+                <button className='printBtn btn' onClick={()=>openModal('printModal')}>인쇄</button>
             </>
         );
     }
