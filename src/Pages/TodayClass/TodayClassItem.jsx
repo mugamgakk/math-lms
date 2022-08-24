@@ -4,14 +4,19 @@ import AttModal from './AttModal';
 import PrintModal from './PrintModal';
 
 function TodayClassItem ({list}) {
-    console.log(list);
     let [modalCondition,setModalCondition] = useState({
         attModal : false,
         assessmentModal : false,
         printModal : false,
     });
+    
+    let [newplay,setNewPlay] = useState(false);
 
-
+    useEffect(()=>{
+        if(!list.state3?.newplay) return;
+        setNewPlay(true);
+    },[])
+    
     const closeModal = (target) => {
         setModalCondition({
             ...modalCondition,
@@ -26,12 +31,7 @@ function TodayClassItem ({list}) {
         });
     }
 
-    let [newplay,setNewPlay] = useState(false);
 
-    useEffect(()=>{
-        if(!list.state3?.newplay) return;
-        setNewPlay(true);
-    },[])
     
     const tdStateFunc = (data) => {
         if(!data) return;
@@ -62,8 +62,6 @@ function TodayClassItem ({list}) {
     const checkDisabled = (data) => {
         if(data === undefined) return 'disabled';
     }
-    
-    console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
 
     return(
         <>
@@ -89,8 +87,45 @@ function TodayClassItem ({list}) {
                 <td className={checkDisabled(list.state5)}>{tdPrintFunc(list.state5)}</td>
                 <td><button className="attBtn btn" onClick={() => {
                     openModal('attModal')
-                    setModalCount(list.id)
-                   }}>학습 태도</button></td>
+                    
+                }}>학습 태도</button>
+                {
+                    modalCondition.attModal ? 
+                    <AttModal 
+                    list={list}
+                    name={list.name}
+                    book={list.book}
+                    cl={list.class}
+                    sodanwon={list.sodanwon}
+                    closeModal={closeModal}
+                    /> 
+                    : null
+                }
+                {
+                    modalCondition.assessmentModal ? 
+                    <AssessmentModal 
+                    list={list}
+                    name={list.name}
+                    book={list.book}
+                    cl={list.class}
+                    sodanwon={list.sodanwon}
+                    closeModal={closeModal} /> 
+                    : null
+                }
+                {
+                    modalCondition.printModal ? 
+                    <PrintModal 
+                    list={list}
+                    name={list.name}
+                    book={list.book}
+                    cl={list.class}
+                    sodanwon={list.sodanwon}
+                    closeModal={closeModal}
+                    /> 
+                    : null
+                }
+                   
+                   </td>
             </tr>
         </>
 
