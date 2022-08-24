@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import ScoreItem from './ScoreItem'
 
 
-function AssessmentModal ({modalCount,todayClassList,closeModal}) {
+function AssessmentModal ({closeModal,name,book,cl,sodanwon}) {
     let assTit = [
        '개념 이해력',
        '전달력',
@@ -30,10 +30,10 @@ function AssessmentModal ({modalCount,todayClassList,closeModal}) {
                     <div className="tit">
                         <strong>[학습 태도 평가]</strong>
                         <ul>
-                            <li>{todayClassList[modalCount].name}/</li>
-                            <li>{todayClassList[modalCount].book}/</li>
-                            <li>{todayClassList[modalCount].class}/</li>
-                            <li>{todayClassList[modalCount].sodanwon}</li>
+                            <li>{name}/</li>
+                            <li>{book}/</li>
+                            <li>{cl}/</li>
+                            <li>{sodanwon}</li>
                         </ul>
                     </div>
                     <button className="close" onClick={() => closeModal('assessmentModal')}>X</button>

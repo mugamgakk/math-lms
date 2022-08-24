@@ -6,9 +6,7 @@ import SearchBtn from "../components/ui/button/SearchBtn";
 import DatePicker from "react-date-picker"; // 데이트 피커
 import ChangeDate from "../components/ChangeDate";
 import TodayClassItem from "./TodayClass/TodayClassItem";
-import AssessmentModal from './TodayClass/AssessmentModal';
-import AttModal from './TodayClass/AttModal';
-import PrintModal from './TodayClass/PrintModal';
+
 import "../style/TodayClass/todayClass.scss";
 import axios from "axios";
 
@@ -18,30 +16,7 @@ import axios from "axios";
 function TodayClass(){
 
     let todayClassList = useSelector(state => state.todayClassList);
-    let [modalCount, setModalCount] = useState(0);
     let [checkState, setCheckState] = useState([]);
-
-    // 모달 상태관리
-    let [modalCondition,setModalCondition] = useState({
-        attModal : false,
-        assessmentModal : false,
-        printModal : false,
-    });
-
-    const closeModal = (target) => {
-        setModalCondition({
-            ...modalCondition,
-            [target] : false,
-        })
-    }
-    
-    const openModal = (target) => {
-        setModalCondition({
-            ...modalCondition,
-            [target] : !modalCondition[target],            
-        });
-    }
-
 
     const [reloadState,setReloadState] = useState(false);
     useEffect(()=>{},[reloadState])
@@ -50,7 +25,7 @@ function TodayClass(){
     const [value, onChange] = React.useState(new Date());
     const [openCalendar, setOpenCalendar] = React.useState(false);
 
-
+    console.log('asdf');
   
     return(
         <div className="container TodayClass">
@@ -125,40 +100,13 @@ function TodayClass(){
                             return <TodayClassItem 
                             list={list} 
                             key={list.id}
-                            openModal={openModal}
-                            setModalCount={setModalCount}
                             />
                         })
                     }
 
                 </tbody>
             </table>
-            {
-                modalCondition.assessmentModal ? 
-                <AssessmentModal 
-                modalCount={modalCount} 
-                todayClassList={todayClassList}
-                closeModal={closeModal} /> 
-                : null
-            }
-            {
-                modalCondition.attModal ? 
-                <AttModal 
-                modalCount={modalCount}
-                todayClassList={todayClassList}
-                closeModal={closeModal}
-                /> 
-                : null
-            }
-            {
-                modalCondition.printModal ? 
-                <PrintModal 
-                modalCount={modalCount}
-                todayClassList={todayClassList}
-                closeModal={closeModal}
-                /> 
-                : null
-            }
+         
         </div>
     )
 }

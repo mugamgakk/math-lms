@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-function PrintModal({modalCount,todayClassList,closeModal}) {
+function PrintModal({closeModal,name,book,cl,sodanwon}) {
     return ( 
         <>
           <div className="modal">
@@ -9,10 +9,10 @@ function PrintModal({modalCount,todayClassList,closeModal}) {
                 <div className="tit">
                         <strong>[학습 태도 평가]</strong>
                         <ul>
-                            <li>{todayClassList[modalCount].name}/</li>
-                            <li>{todayClassList[modalCount].book}/</li>
-                            <li>{todayClassList[modalCount].class}/</li>
-                            <li>{todayClassList[modalCount].sodanwon}</li>
+                            <li>{name}/</li>
+                            <li>{book}/</li>
+                            <li>{cl}/</li>
+                            <li>{sodanwon}</li>
                         </ul>
                     </div>
                     <button className="close" onClick={() => closeModal('printModal')}>X</button>

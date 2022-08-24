@@ -1,7 +1,31 @@
 import React, { useEffect, useState } from "react";
-function TodayClassItem ({list,openModal,setModalCount}) {
+import AssessmentModal from './AssessmentModal';
+import AttModal from './AttModal';
+import PrintModal from './PrintModal';
 
+function TodayClassItem ({list}) {
+    console.log(list);
+    let [modalCondition,setModalCondition] = useState({
+        attModal : false,
+        assessmentModal : false,
+        printModal : false,
+    });
+
+
+    const closeModal = (target) => {
+        setModalCondition({
+            ...modalCondition,
+            [target] : false,
+        })
+    }
     
+    const openModal = (target) => {
+        setModalCondition({
+            ...modalCondition,
+            [target] : !modalCondition[target],            
+        });
+    }
+
     let [newplay,setNewPlay] = useState(false);
 
     useEffect(()=>{
@@ -40,6 +64,7 @@ function TodayClassItem ({list,openModal,setModalCount}) {
     }
 
     return(
+        <>
             <tr>
                 <td>{list.name}({list.nickName}){list.thum}</td>
                 <td>{list.book}</td>
@@ -62,9 +87,48 @@ function TodayClassItem ({list,openModal,setModalCount}) {
                 <td className={checkDisabled(list.state5)}>{tdPrintFunc(list.state5)}</td>
                 <td><button className="attBtn btn" onClick={() => {
                     openModal('attModal')
-                    setModalCount(list.id)
-                   }}>학습 태도</button></td>
+                    
+                }}>학습 태도</button>
+                {
+                    modalCondition.attModal ? 
+                    <AttModal 
+                    list={list}
+                    name={list.name}
+                    book={list.book}
+                    cl={list.class}
+                    sodanwon={list.sodanwon}
+                    closeModal={closeModal}
+                    /> 
+                    : null
+                }
+                {
+                    modalCondition.assessmentModal ? 
+                    <AssessmentModal 
+                    list={list}
+                    name={list.name}
+                    book={list.book}
+                    cl={list.class}
+                    sodanwon={list.sodanwon}
+                    closeModal={closeModal} /> 
+                    : null
+                }
+                {
+                    modalCondition.printModal ? 
+                    <PrintModal 
+                    list={list}
+                    name={list.name}
+                    book={list.book}
+                    cl={list.class}
+                    sodanwon={list.sodanwon}
+                    closeModal={closeModal}
+                    /> 
+                    : null
+                }
+                   
+                   </td>
             </tr>
+        </>
+
     )
 }
 export default TodayClassItem;
