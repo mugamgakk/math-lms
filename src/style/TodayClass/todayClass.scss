@@ -1,3 +1,5 @@
+@import '../mixin';
+
 .TodayClass{
     .date-area{
         display: flex;
@@ -88,6 +90,7 @@
             left: 50%;
             transform: translate(-50%,-50%);
             width: 700px;
+            z-index: 1;
             &-head{
                 background: rgb(143, 0, 0);
                 padding: 10px;
@@ -101,9 +104,7 @@
                     justify-content: flex-start;
                     color: #fff;
                     ul{
-                        display: flex;
-                        align-items: center;
-                        justify-content: flex-start;
+                        @include flex(center,start);
                     }
                 }
                 .close{
@@ -153,6 +154,12 @@
                 justify-content: center;
                 padding-bottom: 10px;
             }
-
+        }
+        .printModal{
+            &-body{
+                .btn-area{
+                    @include flex(sb,center);
+                }
+            }
         }
 }

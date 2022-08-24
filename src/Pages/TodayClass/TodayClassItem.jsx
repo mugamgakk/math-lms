@@ -4,14 +4,19 @@ import AttModal from './AttModal';
 import PrintModal from './PrintModal';
 
 function TodayClassItem ({list}) {
-    console.log(list);
     let [modalCondition,setModalCondition] = useState({
         attModal : false,
         assessmentModal : false,
         printModal : false,
     });
+    
+    let [newplay,setNewPlay] = useState(false);
 
-
+    useEffect(()=>{
+        if(!list.state3?.newplay) return;
+        setNewPlay(true);
+    },[])
+    
     const closeModal = (target) => {
         setModalCondition({
             ...modalCondition,
@@ -26,12 +31,7 @@ function TodayClassItem ({list}) {
         });
     }
 
-    let [newplay,setNewPlay] = useState(false);
 
-    useEffect(()=>{
-        if(!list.state3?.newplay) return;
-        setNewPlay(true);
-    },[])
     
     const tdStateFunc = (data) => {
         if(!data) return;
