@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import ScoreItem from './ScoreItem'
 
 
-function AssessmentModal ({modalCount,todayClassList,closeModal}) {
-    let barArray = new Array(11).fill().map((v,i)=> i );
+function AssessmentModal ({closeModal,name,book,cl,sodanwon}) {
     let assTit = [
        '개념 이해력',
        '전달력',
@@ -31,10 +30,10 @@ function AssessmentModal ({modalCount,todayClassList,closeModal}) {
                     <div className="tit">
                         <strong>[학습 태도 평가]</strong>
                         <ul>
-                            <li>{todayClassList[modalCount].name}/</li>
-                            <li>{todayClassList[modalCount].book}/</li>
-                            <li>{todayClassList[modalCount].class}/</li>
-                            <li>{todayClassList[modalCount].sodanwon}</li>
+                            <li>{name}/</li>
+                            <li>{book}/</li>
+                            <li>{cl}/</li>
+                            <li>{sodanwon}</li>
                         </ul>
                     </div>
                     <button className="close" onClick={() => closeModal('assessmentModal')}>X</button>
@@ -42,23 +41,25 @@ function AssessmentModal ({modalCount,todayClassList,closeModal}) {
                 <div className="asseModal-body cmmnModal-body">
                     <h5>학생의 개념 이해력과 전달력 점수를 입력해 주세요.</h5>
                     <table>
+                        <tbody>
                         {
                             assTit.map((tit,idx)=> {
                                 return(
-                                    <tr>
+                                    <tr key={idx}>
                                         <th>{tit}</th>
                                         <td>
-                                            <ScoreItem key={idx} numClick={numClick} idx={idx+1} style={totalData[`q${idx+1}`]}/>
+                                            <ScoreItem numClick={numClick} idx={idx+1} style={totalData[`q${idx+1}`]}/>
                                         </td>
                                     </tr>
                                     )
                                 })
                         }
+                        </tbody>
                     </table>
                 </div>
                 <div className="asseModal-foot cmmnModal-foot">
                     <button className='btn' onClick={() => closeModal('assessmentModal')}>취소</button>
-                    <button className='btn' >저장</button>
+                    <button className='btn'>저장</button>
                 </div>
             </div>
 
