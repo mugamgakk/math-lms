@@ -25,7 +25,6 @@ function TodayClass(){
     const [value, onChange] = React.useState(new Date());
     const [openCalendar, setOpenCalendar] = React.useState(false);
 
-    console.log('asdf');
   
     return(
         <div className="container TodayClass">
@@ -55,7 +54,7 @@ function TodayClass(){
             </div>
             <header className="table-header row">
                 <div>
-                    <SelectBox width={"200px"} checkState={checkState} setCheckState={setCheckState} />
+                    <SelectBox width={"200px"} checkState={checkState} setCheckState={setCheckState}  />
                     <input
                         type="text"
                         className="form-control"
@@ -111,5 +110,3 @@ function TodayClass(){
     )
 }
 export default TodayClass;
-
-
