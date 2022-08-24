@@ -1,11 +1,17 @@
 import React, { useState, useMemo } from "react";
 import SelectBase from "../../components/ui/select/SelectBase";
 import styled from "styled-components";
+import PrismaZoom from "react-prismazoom"; // 이미지 확대 축소
+import { useDispatch, useSelector } from "react-redux";
+import { updateScore } from "../../feature/plusLearningSlice";
 
 const ResultTitle = styled.h4`
-    padding : 10px;
-    background-color : ${props=>props.bgColor}
-`
+    padding: 10px;
+    background-color: ${(props) => props.bgColor};
+    display : flex;
+    justify-content: space-between;
+    align-items: center
+`;
 
 const 채점 = [
     { 채점기준: "가분수로 바꾸어 계산을 하였다.", 배점: 2, 점수: 1 },
@@ -14,7 +20,6 @@ const 채점 = [
 ];
 
 function 총합(param) {
-    console.log("호출됨");
     let count = 0;
     if (param === "배점") {
         채점.forEach((a) => {
@@ -29,21 +34,42 @@ function 총합(param) {
     return count;
 }
 
-function PlusLearningPrintModal({setModal}) {
+function PlusLearningPrintModal({ setModal }) {
     let [uploadFile, setUploadFile] = useState([]);
     let [checkFile, setCheckFile] = useState([]);
+    let [allScore,setAllScore] = useState(총합("점수"))
+    let prizmaZoom = React.useRef();
+    let {upAllScore} = useSelector(state=>state.plusLearningSlice)
+    
 
     let 배점총합 = useMemo(() => {
         return 총합("배점");
     }, []);
 
-    let 점수총합 = useMemo(() => {
-        return 총합("점수");
-    }, []);
+   
+
 
     // 파일 업로드
     const upload = (e) => {
         let files = e.target.files;
+
+        // 파일 중복 막기
+        let 중복파일 = false;
+
+        uploadFile.forEach(a=>{
+
+            for(let key of files){
+                if(a.name === key.name){
+                    alert("이미 업로드된 파일이 있습니다.");
+                    중복파일 = true;
+                    return false;
+                }
+            }
+        })
+
+        if(중복파일){
+            return 
+        }
 
         let arr = [];
 
@@ -55,39 +81,35 @@ function PlusLearningPrintModal({setModal}) {
     };
 
     // 체크된 파일
-    const checkedFile = (checked, fileName)=>{
-        if(checked){
-            setCheckFile([...checkFile, fileName])
-        }else{
-            setCheckFile(checkFile.filter(a=>a !== fileName))
+    const checkedFile = (checked, fileName) => {
+        if (checked) {
+            setCheckFile([...checkFile, fileName]);
+        } else {
+            setCheckFile(checkFile.filter((a) => a !== fileName));
         }
-    }
+    };
 
     // 업로드한 파일 지우기
     const removeFile = () => {
-
-        if(checkFile.length === 0){
+        if (checkFile.length === 0) {
             alert("파일을 선택하세요");
         }
 
-        if(window.confirm("정말로 삭제하시겠습니까?")){
+        if (window.confirm("정말로 삭제하시겠습니까?")) {
             let arr = [...uploadFile];
 
-            checkFile.forEach(el=>{
-
-                for(let i = 0; i < arr.length; i++){
-                    if(arr[i].name === el){
-                        arr.splice(i,1);
-                        i--
+            checkFile.forEach((el) => {
+                for (let i = 0; i < arr.length; i++) {
+                    if (arr[i].name === el) {
+                        arr.splice(i, 1);
+                        i--;
                     }
                 }
-
-            })
+            });
             setCheckFile([]);
-            setUploadFile([...arr])
-
-        }else{
-            return 
+            setUploadFile([...arr]);
+        } else {
+            return;
         }
     };
 
@@ -96,7 +118,14 @@ function PlusLearningPrintModal({setModal}) {
             <div className="modal">
                 <header>
                     <h2>[서술형 따라잡기] 강수학/중2-1/ㅣ. 수와 식의 계산/주제</h2>
-                    <button className="btn" onClick={()=>{setModal(false)}}>X</button>
+                    <button
+                        className="btn"
+                        onClick={() => {
+                            setModal(false);
+                        }}
+                    >
+                        X
+                    </button>
                 </header>
                 <div className="content d-flex">
                     <div className="content-left">
@@ -120,19 +149,25 @@ function PlusLearningPrintModal({setModal}) {
                             </thead>
                             <tbody>
                                 {채점.map((a, i) => {
-                                    return <SolveTable item={a} key={i} />;
+                                    return <SolveTable item={a} key={i} index={i} />;
                                 })}
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <td>합계</td>
                                     <td>{배점총합}점</td>
-                                    <td>{점수총합}점</td>
+                                    <td>{upAllScore}점</td>
                                 </tr>
                             </tfoot>
                         </table>
                         <label htmlFor="explane">선생님 의결 (첨삭)</label>
-                        <textarea name="" id="explane" rows="10" placeholder="입력하세요!!!!!!!"></textarea>
+                        <textarea
+                            name=""
+                            id="explane"
+                            rows="10"
+                            placeholder="입력하세요!!!!!!!"
+                            onChange={()=>{console.log("asdfasdfasdf")}}
+                        ></textarea>
                         <div className="d-flex mt-10">
                             <input
                                 type="file"
@@ -142,20 +177,21 @@ function PlusLearningPrintModal({setModal}) {
                                 className="d-none"
                             />
                             <div className="file-wrap">
-                                {
-                                    uploadFile.map((a, i) => {
-                                        return (
-                                            <div key={i}>
-                                                <input 
-                                                type="checkbox" 
+                                {uploadFile.map((a, i) => {
+                                    return (
+                                        <div key={i}>
+                                            <input
+                                                type="checkbox"
                                                 id={a.name}
-                                                onChange={(e)=>{checkedFile(e.target.checked, a.name)}} 
+                                                onChange={(e) => {
+                                                    checkedFile(e.target.checked, a.name);
+                                                }}
                                                 checked={checkFile.includes(a.name)}
-                                                />
-                                                <label htmlFor={a.name}>{a.name}</label>
-                                            </div>
-                                        );
-                                    })}
+                                            />
+                                            <label htmlFor={a.name}>{a.name}</label>
+                                        </div>
+                                    );
+                                })}
                             </div>
                             <label htmlFor="file" className="btn">
                                 파일업로드
@@ -166,14 +202,42 @@ function PlusLearningPrintModal({setModal}) {
                         </div>
                     </div>
                     <div className="content-right">
-
-                        <ResultTitle bgColor="rgb(132, 188, 241);">
-                            asdsadsadsad
-                        </ResultTitle>
+                        <ResultTitle bgColor="rgb(132, 188, 241);">모범 답안</ResultTitle>
+                        <div className="result-box">
+                            <img
+                                src="https://s3.orbi.kr/data/file/cheditor4/1405/NS2jcorpKxPuCM4DT3UxgL.jpg"
+                                alt=""
+                            />
+                        </div>
                         <ResultTitle bgColor="orange">
-                            asdsadsadsad
+                            학생 답안지
+                            <div className="btn-group">
+                                <button
+                                    className="btn"
+                                    onClick={() => {
+                                        prizmaZoom.current.zoomIn(1);
+                                    }}
+                                >
+                                    플러스
+                                </button>
+                                <button
+                                    className="btn"
+                                    onClick={() => {
+                                        prizmaZoom.current.zoomOut(1);
+                                    }}
+                                >
+                                    마이너스
+                                </button>
+                            </div>
                         </ResultTitle>
-
+                        <div style={{ width: "100%", height: "300px", overflow: "hidden" }}>
+                            <PrismaZoom ref={prizmaZoom}>
+                                <img
+                                    src="https://s3.orbi.kr/data/file/cheditor4/1405/NS2jcorpKxPuCM4DT3UxgL.jpg"
+                                    style={{ width: "100%", height: "300px", objectFit: "contain" }}
+                                />
+                            </PrismaZoom>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -181,12 +245,26 @@ function PlusLearningPrintModal({setModal}) {
     );
 }
 
-function SolveTable({ item }) {
+function SolveTable({ item, index }) {
+    let dispatch = useDispatch();
     let [selectBase, setSelectBase] = useState({ state: false, text: item.점수 + "점" });
-    const 점수 = ["선택"];
+    const 점수 = [];
 
     for (let i = 0; i <= item.배점; i += 0.5) {
         점수.push(i + "점");
+    }
+
+    const selectChange = (a)=>{
+        let 점수 = parseFloat(a.replace(/점/, ''));
+
+        let obj = {
+            index,
+            score : 점수
+        }
+
+        dispatch(updateScore(obj))
+
+
     }
 
     return (
@@ -194,7 +272,7 @@ function SolveTable({ item }) {
             <td>{item.채점기준}</td>
             <td>{item.배점}</td>
             <td>
-                <SelectBase item={점수} selectBase={selectBase} setSelectBase={setSelectBase} />
+                <SelectBase item={점수} selectBase={selectBase} setSelectBase={setSelectBase} onChange={selectChange} />
             </td>
         </tr>
     );

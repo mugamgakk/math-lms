@@ -1,5 +1,5 @@
 import React from 'react';
-function SelectBase({selectBase, setSelectBase, item, width}) {
+function SelectBase({selectBase, setSelectBase, item, width, onChange}) {
     
 
     return (
@@ -29,6 +29,7 @@ function SelectBase({selectBase, setSelectBase, item, width}) {
                             key={i}
                             onClick={(e) => {
                                 setSelectBase({...selectBase, state : false, text : e.target.innerText});
+                                onChange(e.target.innerText)
                             }}
                         >
                             {a}

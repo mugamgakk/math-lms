@@ -38,6 +38,8 @@ function TodayClassItem ({list,openModal,setModalCount}) {
     const checkDisabled = (data) => {
         if(data === undefined) return 'disabled';
     }
+    
+    console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
 
     return(
             <tr>
@@ -63,7 +65,9 @@ function TodayClassItem ({list,openModal,setModalCount}) {
                 <td><button className="attBtn btn" onClick={() => {
                     openModal('attModal')
                     setModalCount(list.id)
-                   }}>학습 태도</button></td>
+                   }}>학습 태도</button>
+                   
+                   </td>
             </tr>
     )
 }

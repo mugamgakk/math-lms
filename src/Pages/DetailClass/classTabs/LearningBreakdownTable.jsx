@@ -1,55 +1,55 @@
 import React, { useState } from "react";
 import LbtModal from "../modal/LbtModal";
 import LbtDayOption from "../LbtDayOption";
+import { useCallback } from "react";
 
-
-const arr = ['강호동', '이수근', '김제동', '빠다쿠키', '김교사', '추사랑'];
-
+const arr = new Array(50).fill("강호동");
 
 function LearningBreakdownTable() {
-    let [modal, setModal] = useState(false);
-    let [aa,b] = useState([...arr]);
+    let [data, setData] = useState([...arr]);
     let [choiceArr, setChoiceArr] = useState([]);
-    let [modalState, setModalState] = useState();
 
+    // 체크박스
+    const isChecked = useCallback((checked, ele) => {
 
-    const isChecked = (checked,ele)=>{
-        if(checked){
-            setChoiceArr([...choiceArr, ele])
-        }else{
-            setChoiceArr(choiceArr.filter(list=> list !== ele ))
+        if (checked) {
+            setChoiceArr([...choiceArr, ele]);
+        } else {
+            setChoiceArr(choiceArr.filter((list) => list !== ele));
         }
-    }
+    },[choiceArr]);
+
+    // 삭제 버튼
+    const deleteLBT = useCallback(() => {
+        if (choiceArr.length === 0) {
+            alert("학습 분석표를 선택하세요");
+            return;
+        }
+
+        if (window.confirm("삭제하시겠습니까?")) {
+            let copy = [...data]; //삭제
+
+            choiceArr.forEach(function (item) {
+                copy.splice(copy.indexOf(item), 1);
+            });
+
+            setChoiceArr([]);
+            setData(copy);
+        } else {
+            return;
+        }
+    },[choiceArr]);
 
 
     return (
         <div>
-            {modal && <LbtModal setModal={setModal} modalState={modalState} />}
 
-            <LbtDayOption setModal={setModal} setModalState={setModalState} />
+            <LbtDayOption />
 
-            <button className="btn" onClick={()=>{
+            <button className="btn" onClick={deleteLBT}>
+                선택 삭제
+            </button>
 
-                if(choiceArr.length === 0){
-                    alert("학습 분석표를 선택하세요");
-                    return
-                }
-
-                if(window.confirm("삭제하시겠습니까?")){
-                    let copy = [...aa]; //삭제
-
-                    choiceArr.forEach(function(asdf){
-                        copy.splice(copy.indexOf(asdf),1);
-                    })
-                    setChoiceArr([]);
-                    b(copy);
-                }else{
-                    return 
-                }
-
-                
-
-            }}>선택 삭제</button>
             <p>[분석표 삭제 유의 !] 분석 결과는 생성일에 따라 달라질 수 있습니다</p>
 
             <table>
@@ -72,34 +72,51 @@ function LearningBreakdownTable() {
                     </tr>
                 </thead>
                 <tbody>
-                    {aa.map((a) => {
+                    {data.map((a,i) => {
                         return (
-                            <tr key={a}>
-                                <td>
-                                    <input type="checkbox" onChange={(checked)=>{isChecked(checked,a)}}/>
-                                </td>
-                                <td>2022-06-12 ~ 2022-07-25</td>
-                                <td>2021-07-02</td>
-                                <td>중2-1 노벰, 중2-2 엑사스</td>
-                                <td>{a}</td>
-                                <td>
-                                    <button
-                                        className="btn"
-                                        onClick={() => {
-                                            setModal(true);
-                                            setModalState("인쇄")
-                                        }}
-                                    >
-                                        보기
-                                    </button>
-                                </td>
-                            </tr>
+                            <LbtTr item={a} key={i} isChecked={isChecked} />
                         );
                     })}
                 </tbody>
             </table>
         </div>
     );
+}
+
+
+const LbtTr = ({item, isChecked})=>{
+    let [modal, setModal] = useState(false);
+    let [modalState, setModalState] = useState();
+
+    
+    return(
+        <tr>
+            <td>
+                <input
+                    type="checkbox"
+                    onChange={(e) => {
+                        isChecked(e.target.checked, item);
+                    }}
+                />
+            </td>
+            <td>2022-06-12 ~ 2022-07-25</td>
+            <td>2021-07-02</td>
+            <td>중2-1 노벰, 중2-2 엑사스</td>
+            <td>{item}</td>
+            <td>
+                <button
+                    className="btn"
+                    onClick={() => {
+                        setModal(true);
+                        setModalState("인쇄");
+                    }}
+                >
+                    보기
+                </button>
+                {modal && <LbtModal setModal={setModal} modalState={modalState} />}
+            </td>
+        </tr>
+    )
 }
 
 export default LearningBreakdownTable;

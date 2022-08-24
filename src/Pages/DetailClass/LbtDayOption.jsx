@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import styled from "styled-components";
 import DatePicker from "react-date-picker"; // 데이트 피커
 import { useMemo } from 'react';
+import LbtModal from './modal/LbtModal';
 
 let LbtBookArea = styled.div`
     width: 100%;
@@ -16,7 +17,7 @@ const 과목 = ["수학", "영어", "도덕", "체육", "미술", "김치"];
 
 
 
-function LbtDayOption({setModal, setModalState}) {
+function LbtDayOption() {
 
     let oneMonthAgo = useMemo(()=>{
         var now = new Date();
@@ -28,6 +29,9 @@ function LbtDayOption({setModal, setModalState}) {
         [lastDay, setLastDay] = useState(new Date()),
         [subjectArr, setSubjectArr] = useState([]),
         [option, setOption] = useState(false)
+
+    let [modal, setModal] = useState(false);
+    let [modalState, setModalState] = useState();
 
 
 
@@ -70,6 +74,8 @@ function LbtDayOption({setModal, setModalState}) {
 
     return ( 
         <div className="lbt-option">
+                {modal && <LbtModal setModal={setModal} modalState={modalState} />}
+
                 <div className="row">
                     <div className="left">
                         <p>1. 학습 기간을 설정해 주세요</p>

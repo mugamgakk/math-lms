@@ -149,7 +149,7 @@ function TodayClass(){
             </div>
             <header className="table-header row">
                 <div>
-                    <SelectBox width={"200px"} checkState={checkState} setCheckState={setCheckState}  />
+                    <SelectBox width={"200px"} checkState={checkState} setCheckState={setCheckState} />
                     <input
                         type="text"
                         className="form-control"
@@ -223,3 +223,5 @@ function TodayClass(){
     )
 }
 export default TodayClass;
+
+

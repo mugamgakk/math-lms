@@ -28,7 +28,6 @@ function LbtModal(props) {
     const [allCheckBtn, setAllCheckBtn] = useState(false);
     const printComponent = useRef();
 
-
     return (
         <div
             className={style.modal}
