@@ -1,41 +1,42 @@
-import React from 'react';
-function SelectBase({selectBase, setSelectBase, item, width, onChange}) {
-    
+import React from "react";
+import { useState } from "react";
+
+function SelectBase({ width, onChange, options, value }) {
+    let [selectOpen, setSelectOpen] = useState(false);
 
     return (
-        <div
-            className={"select-wrap" + `${selectBase.state ? " active" : ""}`}
-            style={{ width: width }}
-        >
+        <div className={"select-wrap" + `${selectOpen ? " active" : ""}`} style={{ width: width }}>
             <div
                 className="select-show"
                 onClick={() => {
-                    setSelectBase({...selectBase, state : !selectBase.state});
+                    setSelectOpen(!selectOpen);
+                    // setSelectTest({...selectTest, state : !selectTest.state});
                 }}
             >
-                {selectBase.text}
+                {value ? value : "선택하세요"}
             </div>
             <button
                 className="select-btn"
                 onClick={() => {
-                    setSelectBase({...selectBase, state : !selectBase.state});
+                    setSelectOpen(!selectOpen);
                 }}
             ></button>
             <div className="textbook-select-option">
-                {item.map((a, i) => {
-                    return (
-                        <div
-                            className="option-item"
-                            key={i}
-                            onClick={(e) => {
-                                setSelectBase({...selectBase, state : false, text : e.target.innerText});
-                                onChange(e.target.innerText)
-                            }}
-                        >
-                            {a}
-                        </div>
-                    );
-                })}
+                {options &&
+                    options.map((a, i) => {
+                        return (
+                            <div
+                                className="option-item"
+                                key={i}
+                                onClick={(e) => {
+                                    setSelectOpen(false);
+                                    onChange && onChange(a);
+                                }}
+                            >
+                                {a}
+                            </div>
+                        );
+                    })}
             </div>
         </div>
     );

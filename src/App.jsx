@@ -7,6 +7,11 @@ import { Routes, Route, Link } from 'react-router-dom';
 import Home from './Pages/Home';
 
 import Components from './Pages/Components';
+import PrismaZoomPage from './Pages/ComponentsPage/PrismaZoomPage';
+import DatePickerPage from './Pages/ComponentsPage/DatePickerPage';
+import PrintPage from './Pages/ComponentsPage/PrintPage';
+import AudioPage from './Pages/ComponentsPage/AudioPage';
+import SelectPage from './Pages/ComponentsPage/SelectPage';
 
 const Login = lazy(()=> import('./Pages/Login') )
 const Attendance = lazy(()=> import('./Pages/Attendance') )
@@ -40,8 +45,14 @@ function App() {
         <Route path="/detail-class" element={<DetailClass/>}/>
         <Route path="/plus-learning" element={<PlusLearning/>}/>
         <Route path="/today-class" element={<TodayClass/>}/>
-        <Route path="/components" element={<Components/>}/>
-        <Route path="*" element={<div>페이지 없습니둥</div>} />
+        <Route path="/components" element={<Components/>}>
+            <Route path="prismazoom" element={<PrismaZoomPage/>} />
+            <Route path="datepicker" element={<DatePickerPage/>} />
+            <Route path="print" element={<PrintPage/>} />
+            <Route path="audio" element={<AudioPage/>} />
+            <Route path="select" element={<SelectPage/>} />
+        </Route>
+        <Route path="*" element={<div style={{textAlign : "center"}}>페이지 없습니둥</div>} />
       </Routes>
       </Suspense>
 
