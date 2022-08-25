@@ -4,7 +4,7 @@ export const attendanceSlice = createSlice({
   name: 'students',
   initialState: {
     data: [
-        {id : 1, name : "강수학", userId : "kangsh",출결 : '', 사유 : "", 반이름 : "중등 월화수 A" },
+        {id : 1, name : "강수학", userId : "kangsh",출결 : '', 사유 : "ㅁㄴㅇㅁㄴㅇㅁㄴㅇ", 반이름 : "중등 월화수 A" },
         {id : 2, name : "강시후", userId : "kshhhh",출결 : '', 사유 : "", 반이름 : "중등 월화수 A" },
         {id : 3, name : "김민찬", userId : "minck",출결 : '', 사유 : "", 반이름 : "중등 월화수 A" },
         {id : 4, name : "박연아", userId : "parkya",출결 : '', 사유 : "", 반이름 : "중등 월화수 B" },

@@ -24,7 +24,7 @@ function Attendance() {
     useEffect(()=>{
         setChulCheckList(data)
 
-    },[data])
+    },[])
 
 
     return (

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {memo, useState} from 'react';
 import { useEffect } from 'react';
 import SelectBase from '../../components/ui/select/SelectBase';
 import {useDispatch} from "react-redux"
@@ -9,12 +9,14 @@ const options = [
 ]
 
 
-function AttendanceItem({list, allCheck}) {
+const AttendanceItem = memo(({list, allCheck})=> {
     let [selectOption, setSelectOption] = useState(null);
     let [reasonDisabled, setReasonDisabled] = useState(false);
     let [reason, setReaSon] = useState(list.사유);
     let dispatch = useDispatch();
-    
+
+    console.log("재 랜더링")
+
     useEffect(()=>{
         // 선택/출석 사유 입력 영역 비활성화
         if(selectOption === null || selectOption === "출석"){
@@ -62,6 +64,6 @@ function AttendanceItem({list, allCheck}) {
             </td>
         </tr>
      );
-}
+})
 
 export default AttendanceItem;
