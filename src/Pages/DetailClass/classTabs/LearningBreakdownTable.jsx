@@ -42,7 +42,6 @@ function LearningBreakdownTable() {
         }
     }, [choiceArr]);
 
-    console.log(choiceArr);
 
     return (
         <div>
