@@ -13,7 +13,7 @@ function DetailClassContent() {
         <div className="students-contents">
             
             {
-                clickStudent.name === ''
+                clickStudent === null
                 ? <DetailClassAlert/>
                 : <ClassTabs/>
             }

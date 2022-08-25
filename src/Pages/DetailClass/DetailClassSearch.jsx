@@ -31,13 +31,9 @@ function DetailClassSearch({ user }) {
     },[user])
 
 //  클릭한 데이터
-    const getUser = (e) => {
-        let ele = e.target;
-        let data = {
-            name: ele.innerHTML,
-            age: ele.nextSibling.innerHTML,
-        };
-        dispatch(setClickStudent(data));
+    const getUser = (list) => {
+   
+        dispatch(setClickStudent(list));
     };
 
     // 검색
@@ -108,7 +104,7 @@ function DetailClassSearch({ user }) {
                         return (
                             <tr key={res.id}>
                                 <td>{i + 1}</td>
-                                <td onClick={getUser}>
+                                <td onClick={()=>{getUser(res)}}>
                                     {res.name}({res.nickName})
                                 </td>
                                 <td>{res.age}</td>

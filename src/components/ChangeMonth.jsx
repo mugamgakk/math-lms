@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 
 
 
-function ChangeMonth({setWeek, setBeen}) {
+function ChangeMonth({setWeek, setBeforeDays}) {
 
     let [count,setCount] = useState(0);
     const today = new Date();
@@ -21,7 +21,7 @@ function ChangeMonth({setWeek, setBeen}) {
 
     useEffect(()=>{
         setWeek(new Array(마지막일수).fill(마지막일수))
-        setBeen(new Array(첫날요일).fill(첫날요일))
+        setBeforeDays(new Array(첫날요일).fill(첫날요일))
     },[count])
 
 

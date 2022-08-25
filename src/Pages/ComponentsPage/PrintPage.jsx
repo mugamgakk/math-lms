@@ -5,8 +5,8 @@ import ReactToPrint from 'react-to-print'; // pdf, 인쇄
 
 function PrintPage() {
 
-    // 인쇄될 컴포넌트를 가져온다
     const printComponent = React.useRef();
+
 
     return ( 
         <div style={{marginTop : "100px"}}>

@@ -5,7 +5,7 @@ export const studentsListSlice = createSlice({
   name: 'studentsList',
   initialState: {
     user: [],
-    clickStudent : {name : '', age : ''}
+    clickStudent : null,
   },
   reducers: {
     setStudentsList: (state, action) => {

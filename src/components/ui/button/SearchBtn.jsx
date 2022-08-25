@@ -3,10 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 
 
-function SearchBtn(props) {
+function SearchBtn({onClick}) {
 
     return ( 
-        <button type='button' className='searchBtn' onClick={props.onClick}>
+        <button type='button' className='searchBtn' 
+        onClick={onClick && onClick}
+        >
             <FontAwesomeIcon icon={faMagnifyingGlass} />
         </button>
      );

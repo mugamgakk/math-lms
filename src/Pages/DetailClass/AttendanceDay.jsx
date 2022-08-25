@@ -1,49 +1,44 @@
-import React, { useEffect, useState } from "react";
-import AMselect from "./AMselect";
+import React, { useState } from "react";
+import { useEffect } from "react";
+import SelectBase from "../../components/ui/select/SelectBase";
 
 const options = ["출석", "지각", "조퇴", "결석"];
 
 function AttendanceDay({ date, setModal, setExnum }) {
-    let [selectOption, setSelectOption] = useState(options[0]);
+    let [selectOption, setSelectOption] = useState(date.state);
 
-    const changeFn = (ele) => {
-        setSelectOption(ele);
+    useEffect(() => {
+        setSelectOption(date.state);
+    }, [date.state]);
+
+    const findReason = () => {
+        setModal(true);
+        setExnum(date.day - 1);
     };
 
     return (
-        <div
-            style={{
-                width: "calc(100% / 7)",
-                height: "110px",
-                backgroundColor: "#eee",
-            }}
-        >
-            <select name="" id="">
-                <option value="">1</option>
-                <option value="">2</option>
-                <option value="">3</option>
-            </select>
-
-
-            {date.day ? (
-                <div>
+        <div>
+            {date.state ? (
+                <>
                     {date.day}
-
-                    <AMselect value={selectOption} onChange={changeFn} options={options} />
-
-                    <br />
+                    <SelectBase
+                        onChange={(ele) => {
+                            setSelectOption(ele);
+                        }} // 파라미터에 option이 들이있음
+                        options={options} // 모든 옵션들
+                        value={selectOption}
+                    />
                     {date.설명 && (
                         <button
                             className="btn"
                             onClick={() => {
-                                setModal(true);
-                                setExnum(date.day);
+                                findReason(date.day);
                             }}
                         >
-                            사유
+                            사유보기
                         </button>
                     )}
-                </div>
+                </>
             ) : (
                 date
             )}

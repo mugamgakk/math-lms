@@ -1,21 +1,30 @@
 import React, { useState } from "react";
 import ChangeDate from "../components/ChangeDate";
 import ContentHeader from "../components/ContentHeader";
-import SelectBox from '../components/ui/select/SelectBox';
-import SearchBtn from "../components/ui/button/SearchBtn";
-import AttendanceItem from "./Attendance/AttendanceItem";
 import DatePicker from "react-date-picker";
+import AttendanceItem from './Attendance/AttendanceItem';
+import AttendanceSearch from "./Attendance/AttendanceSearch";
 import { useSelector } from "react-redux";
-import axios from "axios";
+import { useEffect } from "react";
+
+
 
 
 
 function Attendance() {
-    let [allCheck, setAllCheck] = useState(0),
-        { attendanceList } = useSelector((state) => state.studentsAttendance),
-        [value, onChange] = useState(new Date()),
-        [openCalendar, setOpenCalendar] = useState(false);
-    let [checkState, setCheckState] = useState([]);
+    // 전체 체크
+    let [allCheck, setAllCheck] = useState(0) 
+    let [value, onChange] = useState(new Date())
+    // 캘린더 버튼
+    let [openCalendar, setOpenCalendar] = useState(false)
+    // 반 리스트
+    let [chulCheckList, setChulCheckList] = useState(null);
+    let {data} = useSelector(state=>state.attendanceSlice);
+
+    useEffect(()=>{
+        setChulCheckList(data)
+
+    },[data])
 
 
     return (
@@ -41,27 +50,17 @@ function Attendance() {
                 </button>
 
             <header className="table-header row">
-                <div>
+                <div>    
                     <button
                         className="btn"
-                        onClick={()=>{
-                            axios.post('/test', {data : attendanceList})
-                        }}
+                        onClick={()=>{console.log(data)}}
                     >
                         저장
                     </button>
                 </div>
-                <div>
-                    <SelectBox width={"200px"} checkState={checkState} setCheckState={setCheckState} />
-                    
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="학생"
-                        style={{ width: "200px", margin: "0 5px" }}
-                    />
-                    <SearchBtn />
-                </div>
+
+                <AttendanceSearch data={data} setChulCheckList={setChulCheckList} />
+                
             </header>
 
             <table>
@@ -88,16 +87,13 @@ function Attendance() {
                     </tr>
                 </thead>
                 <tbody>
-                    {attendanceList.map((item, i) => {
-                        return (
-                            <AttendanceItem
-                                item={item}
-                                key={item.id}
-                                index={i}
-                                allCheck={allCheck}
-                            />
-                        );
-                    })}
+                    {
+                        chulCheckList && chulCheckList.map(list=>{
+                            return (
+                                <AttendanceItem list={list} key={list.id} allCheck={allCheck}/>
+                            )
+                        })
+                    }
                 </tbody>
             </table>
         </div>
