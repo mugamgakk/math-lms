@@ -3,21 +3,23 @@ import LbtModal from "../modal/LbtModal";
 import LbtDayOption from "../LbtDayOption";
 import { useCallback } from "react";
 
-const arr = new Array(50).fill("강호동");
+const arr = ["강호동", "이수근", "오징어", "꽃게", "떡볶이"]
 
 function LearningBreakdownTable() {
     let [data, setData] = useState([...arr]);
     let [choiceArr, setChoiceArr] = useState([]);
 
     // 체크박스
-    const isChecked = useCallback((checked, ele) => {
-
-        if (checked) {
-            setChoiceArr([...choiceArr, ele]);
-        } else {
-            setChoiceArr(choiceArr.filter((list) => list !== ele));
-        }
-    },[choiceArr]);
+    const isChecked = useCallback(
+        (checked, ele) => {
+            if (checked) {
+                setChoiceArr([...choiceArr, ele]);
+            } else {
+                setChoiceArr(choiceArr.filter((list) => list !== ele));
+            }
+        },
+        [choiceArr]
+    );
 
     // 삭제 버튼
     const deleteLBT = useCallback(() => {
@@ -38,12 +40,12 @@ function LearningBreakdownTable() {
         } else {
             return;
         }
-    },[choiceArr]);
+    }, [choiceArr]);
 
+    console.log(choiceArr);
 
     return (
         <div>
-
             <LbtDayOption />
 
             <button className="btn" onClick={deleteLBT}>
@@ -52,48 +54,51 @@ function LearningBreakdownTable() {
 
             <p>[분석표 삭제 유의 !] 분석 결과는 생성일에 따라 달라질 수 있습니다</p>
 
+                <table>
+                    <colgroup>
+                        <col style={{ width: "auto" }} />
+                        <col style={{ width: "auto" }} />
+                        <col style={{ width: "auto" }} />
+                        <col style={{ width: "auto" }} />
+                        <col style={{ width: "auto" }} />
+                        <col style={{ width: "auto" }} />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>선택</th>
+                            <th>학습기간</th>
+                            <th>분석표 생성일</th>
+                            <th>학습한 교재</th>
+                            <th>생성자</th>
+                            <th>학습 분석표</th>
+                        </tr>
+                    </thead>
+                </table>
+            <div style={{ height: "400px", overflow: "auto" }}>
+
             <table>
-                <colgroup>
-                    <col style={{ width: "auto" }} />
-                    <col style={{ width: "auto" }} />
-                    <col style={{ width: "auto" }} />
-                    <col style={{ width: "auto" }} />
-                    <col style={{ width: "auto" }} />
-                    <col style={{ width: "auto" }} />
-                </colgroup>
-                <thead>
-                    <tr>
-                        <th>선택</th>
-                        <th>학습기간</th>
-                        <th>분석표 생성일</th>
-                        <th>학습한 교재</th>
-                        <th>생성자</th>
-                        <th>학습 분석표</th>
-                    </tr>
-                </thead>
                 <tbody>
-                    {data.map((a,i) => {
-                        return (
-                            <LbtTr item={a} key={i} isChecked={isChecked} />
-                        );
+                    {data.map((a, i) => {
+                            return <LbtTr item={a} key={i} isChecked={isChecked} choiceArr={choiceArr} />;
                     })}
                 </tbody>
             </table>
+            </div>
+
         </div>
     );
 }
 
-
-const LbtTr = ({item, isChecked})=>{
+const LbtTr = ({ item, isChecked, choiceArr }) => {
     let [modal, setModal] = useState(false);
     let [modalState, setModalState] = useState();
 
-    
-    return(
+    return (
         <tr>
             <td>
                 <input
                     type="checkbox"
+                    checked={choiceArr.includes(item) ? true : false}
                     onChange={(e) => {
                         isChecked(e.target.checked, item);
                     }}
@@ -116,7 +121,7 @@ const LbtTr = ({item, isChecked})=>{
                 {modal && <LbtModal setModal={setModal} modalState={modalState} />}
             </td>
         </tr>
-    )
-}
+    );
+};
 
 export default LearningBreakdownTable;
