@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import ContentHeader from '../components/ContentHeader';
 import { useSelector, useDispatch } from 'react-redux'
-import {getStudentsList} from '../feature/studentsListSlice';
+import {setStudentsList} from '../feature/studentsListSlice';
 import DetailClassContent from './DetailClass/DetailClassContent';
 import DetailClassSearch from './DetailClass/DetailClassSearch';
 
@@ -14,7 +14,7 @@ function DetailClass() {
     let dispatch = useDispatch();
 
     useEffect(()=>{
-        dispatch(getStudentsList())
+        dispatch(setStudentsList())
     },[])
 
     return ( 

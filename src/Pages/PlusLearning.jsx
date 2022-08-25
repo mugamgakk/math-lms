@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import ContentHeader from '../components/ContentHeader';
-import {getStudentsList} from '../feature/studentsListSlice';
+import {setStudentsList} from '../feature/studentsListSlice';
 import { useSelector, useDispatch } from 'react-redux'
 import PlusLearningSearch from './PlusLearning/PlusLearningSearch';
 import PlusLearningContent from './PlusLearning/PlusLearningContent';
@@ -13,7 +13,7 @@ function PlusLearning() {
     let [tab, setTab] = useState("서술형");
 
     useEffect(()=>{
-        dispatch(getStudentsList())
+        dispatch(setStudentsList())
     },[])
 
     return ( 
