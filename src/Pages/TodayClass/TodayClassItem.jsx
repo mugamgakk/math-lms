@@ -75,7 +75,7 @@ function TodayClassItem ({list}) {
                     {
                         list.state3 ? (
                             <div className="btn-wrap">
-                                <button className={newplay ? 'btnPlay new' : 'btnPlay'}>play</button>
+                                <button className={newplay ? 'btnPlay new' : 'btnPlay'} onClick={()=> openModal('attModal')}>play</button>
                                 <button className='btnDown'>down</button>
                            </div>
                             )
@@ -85,10 +85,7 @@ function TodayClassItem ({list}) {
                 </td>
                 <td className={checkDisabled(list.state4)}>{list.state4}</td>
                 <td className={checkDisabled(list.state5)}>{tdPrintFunc(list.state5)}</td>
-                <td><button className="attBtn btn" onClick={() => {
-                    openModal('attModal')
-                    
-                }}>학습 태도</button>
+                <td><button className="attBtn btn" onClick={() => {openModal('attModal')}}>학습 태도</button>
                 {
                     modalCondition.attModal ? 
                     <AttModal 

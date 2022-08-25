@@ -1,9 +1,42 @@
 import React, { useEffect, useState } from "react";
 import Pagination from "../../components/Pagination";
+import ReactToPrint from 'react-to-print'; // pdf, 인쇄
 
 function PrintModal({closeModal,name,book,cl,sodanwon}) {
+    const printComponent = React.useRef();
+
     let [viewState,setViewState] = useState('question');
     let [checkData, setCheckData] = useState([]);
+    // let [printState, setPrintState] = useState();
+
+    const printCheck = () => {
+        if(checkData.length === 1 && checkData.indexOf('question') !== -1){
+            return (
+                <div style={{ display: 'none' }}>
+                    <div ref={printComponent} style={{width : "793.701px"}}>문제111</div>
+                </div>
+            ) 
+        }
+        if(checkData.length === 1 && checkData.indexOf('solution') !== -1){
+            return (
+                <div style={{ display: 'none' }}>
+                    <div ref={printComponent} style={{width : "793.701px"}}>풀이111</div>
+                </div>
+
+            ) 
+        }
+        if(checkData.length === 2){
+            return (
+                <div style={{ display: 'none' }}>
+                    <div ref={printComponent} style={{width : "793.701px"}}>
+                        <div>문제1</div>
+                        <div>풀이1</div>
+                    </div>
+                </div>
+            )
+        }
+    }
+
         
     const checkState = (e) => {
         if(e.target.checked){
@@ -15,7 +48,7 @@ function PrintModal({closeModal,name,book,cl,sodanwon}) {
 
     useEffect(()=>{
         console.log(checkData);
-    },[checkData])
+    },[checkData]);
 
     const viewContents = (state) => {
         switch(state){
@@ -54,7 +87,12 @@ function PrintModal({closeModal,name,book,cl,sodanwon}) {
                         <div className="btn-area__right">
                             <input type="checkbox" name='question' onChange={checkState}/>문제지
                             <input type="checkbox" name='solution' onChange={checkState}/>풀이지
-                            <button className='btn'>인쇄하기</button>
+                                <ReactToPrint
+                                    trigger={() => <button className="btn">인쇄하기</button>} //  trigger : 인쇄를 명령할 컴포넌트를 넣어주기
+                                    content={() => printComponent.current} // content : 인쇄 대상 ref를 넘겨주기
+                                    // documentTitle= "pdf이름" //pdf 로 저장할때 이름
+                                />
+                                {printCheck()}
                         </div>
                     </div>
                     <div className="contents">
