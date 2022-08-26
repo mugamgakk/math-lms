@@ -1,18 +1,20 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, memo } from "react";
 import style from "../../style/style-module/lbtModal.module.scss";
+import { choiceLbt } from "../../feature/studentsListSlice";
+import { useDispatch } from "react-redux";
 
 
 
-function LbtCheckbox({allCheckBtn, dataLists}) {
+
+const LbtCheckbox = memo(({allCheckBtn, list, create})=> {
 
 
     const [checkedList, setCheckedList] = useState([]);
+    let dispatch = useDispatch();
 
     const allCheck = (checked) => {
         if (checked) {
-            const arr = [];
-            dataLists.forEach((list) => arr.push(list));
-            setCheckedList(arr);
+            setCheckedList([...list.optionItem])
         } else {
             setCheckedList([]);
         }
@@ -27,40 +29,56 @@ function LbtCheckbox({allCheckBtn, dataLists}) {
     };
 
     useEffect(()=>{
-
         if(allCheckBtn){
-            setCheckedList([...dataLists]);
+            // console.log(list.optionItem)
+            setCheckedList([...list.optionItem]);
         }else{
             setCheckedList([]);
         }
 
     },[allCheckBtn])
 
+    // 적용 눌렀을시
+    useEffect(()=>{
+        if(create !== 0){
+            let st = list.option
+            dispatch(choiceLbt({ name : list.option , arr : checkedList}))
+        }
+
+    },[create])
+
+
+
+    useEffect(()=>{
+            setCheckedList([...list.optionItem])
+    },[])
+
 
     return (
         <div className="captionGroup">
             <input
                 type="checkbox"
-                id={dataLists[0].data + "title"}
+                id={list.option}
                 className={style.formConrol}
-                checked={checkedList.length === dataLists.length}
+                checked={checkedList.length === list.optionItem?.length}
                 onChange={(e)=>{allCheck(e.target.checked)}}
             />
-            <label htmlFor={dataLists[0].data + "title"}>{dataLists[0].data + "title"}</label>
+            <label htmlFor={list.option}>{list.option}</label>
+        
             <ul className={style.contentList}>
                 {
-                    dataLists.map((list,i)=>{
+                    list.optionItem?.map((a,i)=>{
                         return (
                             <li key={i}>
                                 <input
                                     type="checkbox"
-                                    id={list.data}
+                                    id={a}
                                     className={style.formConrol}
-                                    onChange={(e)=>{oneCheck(e.target.checked,list)}}
-                                    checked={checkedList.includes(list)}
+                                    onChange={(e)=>{oneCheck(e.target.checked,a)}}
+                                    checked={checkedList.includes(a)}
                                 />
 
-                                <label htmlFor={list.data}>{list.data}</label>
+                                <label htmlFor={a}>{a}</label>
                             </li>
                         )
                     })
@@ -69,6 +87,6 @@ function LbtCheckbox({allCheckBtn, dataLists}) {
             </ul>
         </div>
     );
-}
+})
 
 export default LbtCheckbox;

@@ -4,6 +4,7 @@ import plusLearningSlice from './feature/plusLearningSlice'
 import loginSlice from './feature/loginSlice'
 import todayClassListSlice from './feature/todayClassListSlice'
 import attendanceSlice from './feature/attendanceSlice'
+import learningBreakdownTableSlice from './feature/learningBreakdownTableSlice'
 
 const store = configureStore({
   reducer: {
@@ -11,7 +12,8 @@ const store = configureStore({
     todayClassList : todayClassListSlice,
     loginSlice,
     plusLearningSlice,
-    attendanceSlice
+    attendanceSlice,
+    learningBreakdownTableSlice
   },
 })
 

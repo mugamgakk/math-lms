@@ -1,32 +1,42 @@
 import React, { useState, useRef, useEffect } from "react";
 import style from "../../../style/style-module/lbtModal.module.scss";
 import LbtCheckbox from "../LbtCheckbox";
-import ReactToPrint from 'react-to-print'; // pdf, 인쇄
-
+import CreateLbt from "../CreateLbt/CreateLbt";
 
 const dataLists = [
-    [
-        { id: 1, data: "단원 학습 현황" },
-        { id: 2, data: "단원별 정답률 및 향상도/수행평가" },
-        { id: 3, data: "행동 영역 분석" },
-        { id: 4, data: "내용 영역 분석" },
-    ],
-    [
-        { id: 5, data: "서술형 따라잡기" },
-        { id: 6, data: "교과서 적중문제" },
-    ],
-    [
-        { id: 7, data: "학원 출결 상황" },
-        { id: 8, data: "온라인 학습 분석" },
-    ],
+    {
+        option: "교재 학습 분석",
+        optionItem: [
+            "단원 학습 현황",
+            "단원별 정답률 및 향상도/수행평가",
+            "행동 영역 분석",
+            "내용 영역 분석",
+        ],
+    },
+    {
+        option: "플러스 학습 분석",
+        optionItem: ["서술형 따라잡기", "교과서별 내신적중"],
+    },
+    {
+        option: "평가 분석",
+        optionItem: ["단원평가 분석", "총괄평가 분석"],
+    },
+    {
+        option: "학습 태도 분석",
+        optionItem: ["학원 출경 상황", "온라인 학습 분석", "획득한 학습 포인트", "학습 태도 평가"],
+    },
+    {
+        option: "선생님의견",
+        optionItem : ["123"]
+    },
 ];
 
-
-const arr = new Array(10).fill(1)
 
 function LbtModal(props) {
     const [allCheckBtn, setAllCheckBtn] = useState(false);
     const printComponent = useRef();
+    const [create, setCreate] = useState(0);
+
 
     return (
         <div
@@ -38,17 +48,12 @@ function LbtModal(props) {
             }}
         >
             <div className={style.content}>
-                {
-                    props.modalState === "생성"
-                    ? <h4>종합 학습 분석표 생성하기</h4>
-                    : <h4>종합 학습 분석표 보기 / 인쇄</h4>
-                }
+                <h4>종합 학습 분석표 생성하기</h4>
                 <div className="row">
                     <div className={style.left}>
-
-                        {
+                        {/* {
                             props.modalState === "인쇄" && <div className={style.disabled}></div>
-                        }
+                        } */}
 
                         <strong>
                             평균 표시(
@@ -78,94 +83,31 @@ function LbtModal(props) {
                             {dataLists.map((list, i) => {
                                 return (
                                     <LbtCheckbox
-                                        dataLists={list}
+                                        list={list}
                                         allCheckBtn={allCheckBtn}
+                                        create={create}
                                         key={i}
                                     />
                                 );
                             })}
                         </div>
+
+                        <button className="btn" onClick={()=>{setCreate(create + 1)}}>적용</button>
                     </div>
                     <div className={style.rightWrap}>
-
-                        
-                    <div className={style.right} ref={printComponent} style={{width : "793.701px"}} >
-                        
-                            <h1 style={{backgroundColor : "orangered", color : "#fff", fontSize : "20px" , textAlign : "center", marginBottom : "20px"}}>사고하고 질문하라</h1>
-                            <h2 style={{textAlign : "center", marginBottom : "20px"}}>2022년 4월 강수학의 패럴랙스 수학 종합 학습 분석표</h2>
-
-                            <table style={{marginBottom : "20px"}}>
-                                <tbody>
-                                    <tr>
-                                        <td>캠퍼스</td>
-                                        <td>대치 캠퍼스</td>
-                                        <td>학년</td>
-                                        <td>중2</td>
-                                        <td>학습 기간</td>
-                                        <td>2021년 4월 1일 ~ 2021년 4월 30일</td>
-                                    </tr>
-                                    <tr>
-                                        <td>학습 교재</td>
-                                        <td colSpan={5}>중 2-1 개념서, 중 2-1 뜨레스, 중 2-1 노벰</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                            {
-                                arr.map((a,i)=>{
-                                    return (
-                                        <table style={{marginBottom : "20px"}} key={i}>
-                                        <tbody>
-                                            <tr>
-                                                <td>교재 학습 문제 수</td>
-                                                <td>540 문항</td>
-                                                <td>맞힌 문제 수</td>
-                                                <td>478 문항</td>
-                                                <td>정답률</td>
-                                                <td>88.5%</td>
-                                            </tr>
-                                            <tr>
-                                                <td>컬러닉 학습 문제 수</td>
-                                                <td>88 문항</td>
-                                                <td>맞힌 문제 수</td>
-                                                <td>76문항</td>
-                                                <td>정답률</td>
-                                                <td>88.5%</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    )
-                                })
-                            }
-
-
-                    </div>
+                        <CreateLbt printComponent={printComponent} />
                     </div>
                 </div>
                 <div className={style.btnGroup}>
-                    {
-                        props.modalState === "생성"
-                        ? (
-                            <>
-                                <button className="btn">생성</button>
-                                <button className="btn" onClick={()=>{props.setModal(false);}}>닫기</button>
-                            </>
-                        )
-                        : (
-                            <>
-                            <ReactToPrint
-                            trigger={() => <button className="btn">인쇄하기</button>} 
-                            content={() => printComponent.current} 
-                            />
-                            <ReactToPrint
-                            trigger={() => <button className="btn">다운로드</button>} 
-                            content={() => printComponent.current} 
-                            />
-                            <button className="btn" onClick={()=>{props.setModal(false);}}>닫기</button>
-                            </>
-                        )
-                    }
-                    
+                    <button className="btn">생성</button>
+                    <button
+                        className="btn"
+                        onClick={() => {
+                            props.setModal(false);
+                        }}
+                    >
+                        닫기
+                    </button>
                 </div>
             </div>
         </div>
