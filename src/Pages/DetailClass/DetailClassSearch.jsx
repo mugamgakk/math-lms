@@ -5,6 +5,21 @@ import { setClickStudent } from "../../feature/studentsListSlice";
 import SearchBtn from "../../components/ui/button/SearchBtn";
 
 
+const userNameSort = (userArr)=>{
+    let copy = [...userArr];
+
+    copy.sort((a,b)=>{
+        if(a.name < b.name){
+            return -1
+        }else{
+            return 1
+        }
+    })
+
+    return copy
+}
+
+
 function DetailClassSearch({ user }) {
 
 
@@ -15,19 +30,7 @@ function DetailClassSearch({ user }) {
 
     // redux에서 받은 초기값
     useEffect(()=>{
-
-        let copy = [...user];
-
-        copy.sort((a,b)=>{
-            if(a.name < b.name){
-                return -1
-            }else{
-                return 1
-            }
-        })
-
-
-        setUserList(copy)
+        setUserList(userNameSort(user))
     },[user])
 
 //  클릭한 데이터
@@ -53,18 +56,7 @@ function DetailClassSearch({ user }) {
             setUserList(initialArray.filter((stu)=> regex.test(stu.name) ));
         }else{
 
-            let copy = [...initialArray];
-
-            copy.sort((a,b)=>{
-                if(a.name < b.name){
-                    return -1
-                }else{
-                    return 1
-                }
-            })
-
-
-            setUserList(copy);
+            setUserList(userNameSort(initialArray));
         }
 
 
@@ -104,12 +96,12 @@ function DetailClassSearch({ user }) {
                         return (
                             <tr key={res.id}>
                                 <td>{i + 1}</td>
-                                <td onClick={()=>{getUser(res)}}>
+                                <td style={{cursor: "pointer"}} onClick={()=>{getUser(res)}}>
                                     {res.name}({res.nickName})
                                 </td>
                                 <td>{res.age}</td>
                                 <td>
-                                    <button>로그인</button>
+                                    <button className="btn">로그인</button>
                                 </td>
                             </tr>
                         );
@@ -118,7 +110,7 @@ function DetailClassSearch({ user }) {
             </table>
 
             <button className="btn" onClick={()=>{
-                setUserList(user);
+                setUserList(userNameSort(user));
                 setNameSearch('');
                 setCheckState([]);
                 }}>초기화</button>

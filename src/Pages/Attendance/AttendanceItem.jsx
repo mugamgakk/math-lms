@@ -10,12 +10,11 @@ const options = [
 
 
 const AttendanceItem = memo(({list, allCheck})=> {
-    let [selectOption, setSelectOption] = useState(null);
+    let [selectOption, setSelectOption] = useState(list.출결);
     let [reasonDisabled, setReasonDisabled] = useState(false);
     let [reason, setReaSon] = useState(list.사유);
     let dispatch = useDispatch();
 
-    console.log("재 랜더링")
 
     useEffect(()=>{
         // 선택/출석 사유 입력 영역 비활성화

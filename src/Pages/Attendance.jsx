@@ -27,6 +27,7 @@ function Attendance() {
     },[])
 
 
+
     return (
         <div className="container Attendance">
             <ContentHeader title={"출석 체크"} />
