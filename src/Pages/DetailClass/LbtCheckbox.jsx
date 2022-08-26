@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, memo } from "react";
+import React, { useState, useCallback, useEffect, memo, useRef } from "react";
 import style from "../../style/style-module/lbtModal.module.scss";
 import { choiceLbt } from "../../feature/studentsListSlice";
 import { useDispatch } from "react-redux";
@@ -6,10 +6,11 @@ import { useDispatch } from "react-redux";
 
 
 
-const LbtCheckbox = memo(({allCheckBtn, list, create})=> {
+const LbtCheckbox = ({allCheckBtn, list, create})=> {
 
+    const [checkedList, setCheckedList] = useState([...list.optionItem]);
 
-    const [checkedList, setCheckedList] = useState([]);
+    const didMount = useRef(false);
     let dispatch = useDispatch();
 
     const allCheck = (checked) => {
@@ -29,45 +30,44 @@ const LbtCheckbox = memo(({allCheckBtn, list, create})=> {
     };
 
     useEffect(()=>{
-        if(allCheckBtn){
-            // console.log(list.optionItem)
-            setCheckedList([...list.optionItem]);
+
+    // useEffect 마운트시 실행 막기
+        if(didMount.current){
+            if(allCheckBtn){
+                // console.log(list.optionItem)
+                setCheckedList([...list.optionItem]);
+            }else{
+                setCheckedList([]);
+            }
         }else{
-            setCheckedList([]);
+            didMount.current = true;
         }
 
     },[allCheckBtn])
 
     // 적용 눌렀을시
     useEffect(()=>{
-        if(create !== 0){
-            let st = list.option
-            dispatch(choiceLbt({ name : list.option , arr : checkedList}))
-        }
+        dispatch(choiceLbt({ name : list.option , arr : checkedList}))
 
     },[create])
 
 
 
-    useEffect(()=>{
-            setCheckedList([...list.optionItem])
-    },[])
-
-
     return (
         <div className="captionGroup">
+         
             <input
                 type="checkbox"
                 id={list.option}
                 className={style.formConrol}
-                checked={checkedList.length === list.optionItem?.length}
+                checked={checkedList.length === list.optionItem.length}
                 onChange={(e)=>{allCheck(e.target.checked)}}
             />
             <label htmlFor={list.option}>{list.option}</label>
         
             <ul className={style.contentList}>
                 {
-                    list.optionItem?.map((a,i)=>{
+                    list.optionItem.map((a,i)=>{
                         return (
                             <li key={i}>
                                 <input
@@ -87,6 +87,6 @@ const LbtCheckbox = memo(({allCheckBtn, list, create})=> {
             </ul>
         </div>
     );
-})
+}
 
 export default LbtCheckbox;

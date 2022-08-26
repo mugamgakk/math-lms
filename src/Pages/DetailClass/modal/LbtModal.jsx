@@ -27,16 +27,14 @@ const dataLists = [
     },
     {
         option: "선생님의견",
-        optionItem : ["123"]
+        optionItem: ["123"],
     },
 ];
-
 
 function LbtModal(props) {
     const [allCheckBtn, setAllCheckBtn] = useState(false);
     const printComponent = useRef();
     const [create, setCreate] = useState(0);
-
 
     return (
         <div
@@ -82,17 +80,19 @@ function LbtModal(props) {
                         <div className="contentGroup">
                             {dataLists.map((list, i) => {
                                 return (
-                                    <LbtCheckbox
-                                        list={list}
-                                        allCheckBtn={allCheckBtn}
-                                        create={create}
-                                        key={i}
-                                    />
+                                    <LbtCheckbox list={list} create={create} allCheckBtn={allCheckBtn} key={i} />
                                 );
                             })}
                         </div>
 
-                        <button className="btn" onClick={()=>{setCreate(create + 1)}}>적용</button>
+                        <button
+                            className="btn"
+                            onClick={() => {
+                                setCreate(create + 1);
+                            }}
+                        >
+                            적용
+                        </button>
                     </div>
                     <div className={style.rightWrap}>
                         <CreateLbt printComponent={printComponent} />

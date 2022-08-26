@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import ContentHeader from '../components/ContentHeader';
-import {setStudentsList} from '../feature/studentsListSlice';
 import { useSelector, useDispatch } from 'react-redux'
 import PlusLearningSearch from './PlusLearning/PlusLearningSearch';
 import PlusLearningContent from './PlusLearning/PlusLearningContent';
@@ -9,12 +8,8 @@ import PlusLearningContent from './PlusLearning/PlusLearningContent';
 function PlusLearning() {
 
     let {user} = useSelector(state=>state.studentList);
-    let dispatch = useDispatch();
     let [tab, setTab] = useState("서술형");
 
-    useEffect(()=>{
-        dispatch(setStudentsList())
-    },[])
 
     return ( 
         <div className='container'>
