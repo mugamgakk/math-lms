@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import ContentHeader from "../components/ContentHeader";
 import SelectBox from "../components/ui/select/SelectBox";
 import SearchBtn from "../components/ui/button/SearchBtn";
@@ -15,7 +14,6 @@ import axios from "axios";
 
 function TodayClass(){
 
-    let todayClassList = useSelector(state => state.todayClassList);
     let [checkState, setCheckState] = useState([]);
 
     const [reloadState,setReloadState] = useState(false);
@@ -92,18 +90,7 @@ function TodayClass(){
                         <th>맞춤 클리닉</th>
                     </tr>
                 </thead>
-                <tbody>
-
-                    {
-                        todayClassList.map(list=>{
-                            return <TodayClassItem 
-                            list={list} 
-                            key={list.id}
-                            />
-                        })
-                    }
-
-                </tbody>
+              <TodayClassItem />
             </table>
          
         </div>
