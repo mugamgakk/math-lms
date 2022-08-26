@@ -345,6 +345,12 @@ input.form-control{
     margin-right: 10px;
     border-right: 1px solid #000;
     padding-right: 10px;
+
+    table{
+        .active{
+            background-color: yellow;
+        }
+    }
 }
 
 .students-contents{

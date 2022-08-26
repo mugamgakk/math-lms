@@ -18,6 +18,16 @@ function SelectPage() {
             onChange={(ele)=>{setSelectOption(ele)}} // 파라미터에 option이 들이있음
             options={options} // 모든 옵션들
             value={selectOption}/>   {/* //현재 값 */}
+
+
+            <h2>props</h2>
+            <pre>
+                {`
+             onChange={(ele)=>{setSelectOption(ele)}} // 파라미터에 option이 들이있음<br/>
+             options={options} // 모든 옵션들 <br/>
+             value={selectOption}  //현재 값 <br/>
+            `}
+          </pre>
         </div>
      );
 }

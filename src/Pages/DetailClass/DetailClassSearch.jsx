@@ -1,41 +1,37 @@
 import React, { useState, useEffect, useCallback } from "react";
 import SelectBox from "../../components/ui/select/SelectBox";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setClickStudent } from "../../feature/studentsListSlice";
 import SearchBtn from "../../components/ui/button/SearchBtn";
 
-
-const userNameSort = (userArr)=>{
+const userNameSort = (userArr) => {
     let copy = [...userArr];
 
-    copy.sort((a,b)=>{
-        if(a.name < b.name){
-            return -1
-        }else{
-            return 1
+    copy.sort((a, b) => {
+        if (a.name < b.name) {
+            return -1;
+        } else {
+            return 1;
         }
-    })
+    });
 
-    return copy
-}
-
+    return copy;
+};
 
 function DetailClassSearch({ user }) {
-
-
     let dispatch = useDispatch();
     let [checkState, setCheckState] = useState([]);
     let [userList, setUserList] = useState([]);
-    let [nameSearch, setNameSearch] = useState('');
+    let [nameSearch, setNameSearch] = useState("");
+    let {clickStudent} = useSelector(state=>state.studentList);
 
     // redux에서 받은 초기값
-    useEffect(()=>{
-        setUserList(userNameSort(user))
-    },[user])
+    useEffect(() => {
+        setUserList(userNameSort(user));
+    }, [user]);
 
-//  클릭한 데이터
+    //  클릭한 데이터
     const getUser = (list) => {
-   
         dispatch(setClickStudent(list));
     };
 
@@ -44,23 +40,20 @@ function DetailClassSearch({ user }) {
         let initialArray = [];
 
         // 반 검사
-        checkState.forEach(function(a){
-            let 반검사 = user.filter(stu=> stu.반이름 === a );
+        checkState.forEach(function (a) {
+            let 반검사 = user.filter((stu) => stu.반이름 === a);
             initialArray = [...initialArray, ...반검사];
-        })
+        });
 
         //  이름 검사
-        if(nameSearch !== ''){
-            let regex = new RegExp(nameSearch) 
+        if (nameSearch !== "") {
+            let regex = new RegExp(nameSearch);
 
-            setUserList(initialArray.filter((stu)=> regex.test(stu.name) ));
-        }else{
-
+            setUserList(initialArray.filter((stu) => regex.test(stu.name)));
+        } else {
             setUserList(userNameSort(initialArray));
         }
-
-
-    },[nameSearch, userList]);
+    }, [nameSearch, userList]);
 
     return (
         <div className="students-search">
@@ -72,7 +65,9 @@ function DetailClassSearch({ user }) {
                     className="form-control"
                     style={{ width: "100px", marginLeft: "10px" }}
                     value={nameSearch}
-                    onChange={(e)=>{setNameSearch(e.target.value)}}
+                    onChange={(e) => {
+                        setNameSearch(e.target.value);
+                    }}
                 />
                 <SearchBtn onClick={searchStudents} />
             </header>
@@ -92,11 +87,17 @@ function DetailClassSearch({ user }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {userList.map((res,i) => {
+                    {userList.map((res, i) => {
                         return (
                             <tr key={res.id}>
                                 <td>{i + 1}</td>
-                                <td style={{cursor: "pointer"}} onClick={()=>{getUser(res)}}>
+                                <td
+                                    style={{ cursor: "pointer" }}
+                                    className={res.name === clickStudent?.name ? "active" : ''}
+                                    onClick={() => {
+                                        getUser(res);
+                                    }}
+                                >
                                     {res.name}({res.nickName})
                                 </td>
                                 <td>{res.age}</td>
@@ -109,11 +110,16 @@ function DetailClassSearch({ user }) {
                 </tbody>
             </table>
 
-            <button className="btn" onClick={()=>{
-                setUserList(userNameSort(user));
-                setNameSearch('');
-                setCheckState([]);
-                }}>초기화</button>
+            <button
+                className="btn"
+                onClick={() => {
+                    setUserList(userNameSort(user));
+                    setNameSearch("");
+                    setCheckState([]);
+                }}
+            >
+                초기화
+            </button>
         </div>
     );
 }
