@@ -30,7 +30,7 @@ function App() {
         <ul className='row'>
           <li style={{marginRight : "20px"}}><Link to="/attendance">attendance</Link></li>
           <li style={{marginRight : "20px"}}><Link to="/detail-class">Detail class</Link></li>
-          <li style={{marginRight : "20px"}}><Link to="/plus-learning">plus-learning</Link></li>
+          {/* <li style={{marginRight : "20px"}}><Link to="/plus-learning">plus-learning</Link></li> */}
           <li style={{marginRight : "20px"}}><Link to="/today-class">today-class</Link></li>
           <li><Link to="/components">components guide</Link></li>
         </ul>
@@ -43,7 +43,7 @@ function App() {
         <Route path="/login" element={<Login/>} />
         <Route path="/attendance" element={<Attendance/>}/>
         <Route path="/detail-class" element={<DetailClass/>}/>
-        <Route path="/plus-learning" element={<PlusLearning/>}/>
+        {/* <Route path="/plus-learning" element={<PlusLearning/>}/> */}
         <Route path="/today-class" element={<TodayClass/>}/>
         <Route path="/components" element={<Components/>}>
             <Route path="prismazoom" element={<PrismaZoomPage/>} />
