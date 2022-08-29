@@ -7,7 +7,7 @@ import PlusLearningContent from './PlusLearning/PlusLearningContent';
 
 function PlusLearning() {
 
-    let {user} = useSelector(state=>state.studentList);
+    let {user} = useSelector(state=>state.plusLearningSlice);
     let [tab, setTab] = useState("서술형");
 
 
@@ -26,7 +26,7 @@ function PlusLearning() {
             </div>
             <div className="row">
                 <PlusLearningSearch user={user} />
-                <PlusLearningContent tab={tab}/>
+                <PlusLearningContent tab={tab} />
             </div>
         </div>
      );

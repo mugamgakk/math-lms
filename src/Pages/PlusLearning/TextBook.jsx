@@ -1,21 +1,14 @@
 import React from 'react';
-import { useEffect } from 'react';
 import UserInfo from '../../components/UserInfo';
+import {useSelector} from 'react-redux';
 
 
 function TextBook() {
-
-    useEffect(()=>{
-        fetch("/image-post")
-        .then(res=>res.json())
-        .then(data=>{
-            console.log(data)
-        })
-    },[])
+    let {clickStudent} = useSelector(state=>state.plusLearningSlice)
 
     return ( 
         <div>
-            <UserInfo/>
+            <UserInfo clickStudent={clickStudent} />
             asdasd
         </div>
      );

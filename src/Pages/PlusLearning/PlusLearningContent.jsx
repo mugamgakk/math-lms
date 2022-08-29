@@ -6,16 +6,15 @@ import TextBook from './TextBook';
 
 
 
-function PlusLearningContent({tab}) {
+function PlusLearningContent({tab, user}) {
 
-    let {clickStudent} = useSelector((state)=> state.studentList)
-
+    let {clickStudent} = useSelector((state)=> state.plusLearningSlice)
 
     return ( 
         <div className="students-contents">
             
             {
-                clickStudent.name === ''
+                clickStudent === null
                 ? <PlusLearningAlert contentName={tab} />
                 : (
                     {

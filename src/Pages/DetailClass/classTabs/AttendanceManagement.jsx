@@ -30,7 +30,7 @@ function AttendanceManagement() {
     let [beforeDays, setBeforeDays] = useState();
     let [week, setWeek] = useState();
 
-    console.log(week)
+    console.log(day)
 
     useEffect(()=>{
         setReason(day[exnum]?.설명)
@@ -106,10 +106,10 @@ function AttendanceManagement() {
                     );
                 })}
 
-                {week && week.map((a, i) => {
+                {day.map((a, i) => {
                     return (
                         <AttendanceDay 
-                        date={i + 1} 
+                        date={a} 
                         key={i} 
                         setModal={setModal} 
                         setExnum={setExnum} />

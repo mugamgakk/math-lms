@@ -64,6 +64,7 @@ function Attendance() {
                 
             </header>
 
+
             <table>
                 <colgroup>
                     <col style={{ width: "20%" }} />

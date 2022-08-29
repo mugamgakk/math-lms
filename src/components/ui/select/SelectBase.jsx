@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 
-function SelectBase({ width, onChange, options, value }) {
+function SelectBase({ width, onChange, options, value, defaultValue }) {
     let [selectOpen, setSelectOpen] = useState(false);
 
     return (
@@ -13,7 +13,13 @@ function SelectBase({ width, onChange, options, value }) {
                     // setSelectTest({...selectTest, state : !selectTest.state});
                 }}
             >
-                {value ? value : "선택하세요"}
+                {
+                value 
+                ? value 
+                : !defaultValue
+                ? "선택하세요"
+                : defaultValue
+                }
             </div>
             <button
                 className="select-btn"

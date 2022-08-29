@@ -1,12 +1,9 @@
 import React from 'react';
-import {useSelector} from 'react-redux';
 import SelectTextbook from './ui/select/SelectTextbook';
 
 
 
-function UserInfo() {
-
-    let {clickStudent} = useSelector(state => state.studentList);
+function UserInfo({clickStudent}) {
 
     return ( 
         <dl className='row user-info'>

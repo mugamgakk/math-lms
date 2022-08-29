@@ -12,12 +12,11 @@ function ChangeMonth({setWeek, setBeforeDays}) {
         month = setTime.getMonth()
 
     // 마지막 일수 구하기
-    let monthLastDate = new Date(year, month, 0);
-    let monthStartDate = new Date(year, month, 1);
+    let monthLastDate = new Date(year, month, 0); // 마지막날
+    let monthStartDate = new Date(year, month, 1); // 시작날
 
     let 마지막일수 = monthLastDate.getDate();
     let 첫날요일 = monthStartDate.getDay();
-
 
     useEffect(()=>{
         setWeek(new Array(마지막일수).fill(마지막일수))

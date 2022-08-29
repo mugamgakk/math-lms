@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import UserInfo from '../../../components/UserInfo';
 import AttendanceManagement from './AttendanceManagement';
 import LearningBreakdownTable from './LearningBreakdownTable';
@@ -7,6 +8,7 @@ import LearningBreakdownTable from './LearningBreakdownTable';
 function ClassTabs() {
 
     let [tabState, setTabState] = useState(0);
+    let {clickStudent} = useSelector(state=>state.studentList)
 
 
     return ( 
@@ -30,7 +32,7 @@ function ClassTabs() {
                 >출결 관리</button>
             </div>
 
-            <UserInfo/>
+            <UserInfo clickStudent={clickStudent}/>
 
             {
                 {

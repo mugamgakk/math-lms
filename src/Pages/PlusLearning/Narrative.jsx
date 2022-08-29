@@ -3,6 +3,7 @@ import Pagination from "../../components/Pagination";
 import SelectBase from "../../components/ui/select/SelectBase";
 import UserInfo from "../../components/UserInfo";
 import PlusTrData from "./PlusTrData";
+import {useSelector} from 'react-redux';
 
 const data = [
     {
@@ -39,15 +40,16 @@ const data = [
     },
 ];
 
-const 단원 = ["대단원", "수와 식의 계산"];
-const 상태 = ["상태", "오픈전", "학습중", "학습완료"];
+const 단원 = ["수와 식의 계산", "가나다라 마바사"];
+const 상태 = ["오픈전", "학습중", "학습완료"];
 
 function Narrative() {
-      let [plusData, setPlusData] = useState(data);
+    let [plusData, setPlusData] = useState(data);
+    let {clickStudent} = useSelector(state=>state.plusLearningSlice)
 
     return (
         <div className="Narrative">
-            <UserInfo />
+            <UserInfo clickStudent={clickStudent} />
             <p>
                 학습하는 교재의 학년, 학기에 해당하는 서술형 문제를 오픈, 출력할 수
                 있습니다.(학년-학기별 공통)
@@ -57,7 +59,7 @@ function Narrative() {
                     <button className="btn">선택 오픈</button>
                     <button className="btn">선택 인쇄</button>
                 </div>
-                <SelectGroup setPlusData={setPlusData}/>
+                <SelectGroup data={data} setPlusData={setPlusData}/>
             </div>
             <table>
                 <thead>
@@ -83,38 +85,37 @@ function Narrative() {
 }
 
 
-function SelectGroup ({setPlusData}){
+function SelectGroup ({data, setPlusData}){
+    let [unit, setUnit] = useState(); // 단원
+    let [situation, setSituation] = useState(); // 상태
 
-    let [selectBase, setSelectBase] = useState({ state: false, text: "선택" })
-    let [selectBase2, setSelectBase2] = useState({ state: false, text: "선택" })
+    const findPlusData = ()=>{
 
-    const findData = () => {
-        let 대단원 = data.filter((list) => list.대단원 === selectBase.text);
-        let filterData = 대단원.filter((list) => list.상태 === selectBase2.text);
+        let 조회결과 = (data.filter(a=>a.대단원 === unit)).filter(a=>a.상태 === situation);
 
-        setPlusData(filterData);
+        console.log(조회결과)
 
-        if (selectBase.text === "대단원" && selectBase2.text === "상태") {
-            setPlusData(data);
-        }
+        setPlusData(조회결과)
+
     }
-
 
     return (
         <div className="row">
             <SelectBase
-                selectBase={selectBase}
-                setSelectBase={setSelectBase}
-                width={"150px"}
-                item={단원}
+            width="200px"
+            options={단원}
+            value={unit}
+            onChange={(ele)=>{setUnit(ele)}}
+            defaultValue="대단원"
             />
             <SelectBase
-                selectBase={selectBase2}
-                setSelectBase={setSelectBase2}
-                width={"150px"}
-                item={상태}
+            width="100px"
+            options={상태}
+            value={situation}
+            onChange={(ele)=>{setSituation(ele)}}
+            defaultValue="상태"
             />
-            <button className="btn" onClick={findData}>
+            <button className="btn" onClick={findPlusData}>
                 조회
             </button>
         </div>

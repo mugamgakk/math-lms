@@ -21,14 +21,14 @@ const userNameSort = (userArr) => {
 function DetailClassSearch({ user }) {
     let dispatch = useDispatch();
     let [checkState, setCheckState] = useState([]);
-    let [userList, setUserList] = useState([]);
+    let [userList, setUserList] = useState(userNameSort(user));
     let [nameSearch, setNameSearch] = useState("");
     let {clickStudent} = useSelector(state=>state.studentList);
 
     // redux에서 받은 초기값
-    useEffect(() => {
-        setUserList(userNameSort(user));
-    }, [user]);
+    // useEffect(() => {
+    //     setUserList(userNameSort(user));
+    // }, [user]);
 
     //  클릭한 데이터
     const getUser = (list) => {
