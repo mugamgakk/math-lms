@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import ContentHeader from "../components/ContentHeader";
-import SelectBox from "../components/ui/select/SelectBox";
-import SearchBtn from "../components/ui/button/SearchBtn";
 import DatePicker from "react-date-picker"; // 데이트 피커
 import ChangeDate from "../components/ChangeDate";
 import TodayClassItem from "./TodayClass/TodayClassItem";
-
+import TodayClassSearch from "./TodayClass/TodayClassSearch"
+import { useSelector } from 'react-redux'
 import "../style/TodayClass/todayClass.scss";
 import axios from "axios";
 
@@ -13,6 +12,15 @@ import axios from "axios";
 
 
 function TodayClass(){
+    const students = useSelector(state=>state.todayClassList);
+
+    let [findTodayList, setFindList] = useState(null);
+    
+    useEffect(()=>{
+        setFindList(students);
+    },[])
+
+    console.log(findTodayList);
 
     let [checkState, setCheckState] = useState([]);
 
@@ -51,15 +59,16 @@ function TodayClass(){
                 </button>
             </div>
             <header className="table-header row">
-                <div>
-                    <SelectBox width={"200px"} checkState={checkState} setCheckState={setCheckState}  />
+                <div style={{ display:'flex' }}>
+                    {/* <SelectBox width={"200px"} checkState={checkState} setCheckState={setCheckState}  />
                     <input
                         type="text"
                         className="form-control"
                         placeholder="학생"
                         style={{ width: "200px", margin: "0 5px" }}
                     />
-                    <SearchBtn />
+                    <SearchBtn /> */}
+                    <TodayClassSearch data={students} setFindList={setFindList}/>
                     <button
                         className="btn update"
                         onClick={() => setReloadState(!reloadState)}
@@ -70,7 +79,7 @@ function TodayClass(){
             </header>
             <table style={{ margin: '5px 0 0 0' }}>
                 <colgroup>
-                    <col style={{ width: "20%" }} />
+                    <col style={{ width: "10%" }} />
                     <col style={{ width: "15%" }} />
                     <col style={{ width: "auto" }} />
                 </colgroup>
@@ -90,7 +99,8 @@ function TodayClass(){
                         <th>맞춤 클리닉</th>
                     </tr>
                 </thead>
-              <TodayClassItem />
+                { findTodayList && <TodayClassItem findTodayList={findTodayList}/> }
+                
             </table>
          
         </div>

@@ -7,7 +7,7 @@ function AssessmentModal ({closeModal,name,book,cl,sodanwon}) {
        '개념 이해력',
        '전달력',
     ];
-    
+    console.log(name,book,cl,sodanwon);
     let [totalData, setTotalData] = useState({
         q1: 7,
         q2: 7,
