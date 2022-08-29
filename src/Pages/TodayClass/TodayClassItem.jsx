@@ -48,7 +48,7 @@ const TodayClass = () => {
         return (
             <>
                 <div>{data}</div>
-                <button className='printBtn btn'>인쇄</button>
+                <button className='printBtn btn'onClick={()=>openModal('printModal')}>인쇄</button>
             </>
         );
     }
@@ -79,11 +79,11 @@ const TodayClass = () => {
         
         const firstRow = books.map((book,v)=>{ 
             const { className : classes} = book;
-            console.log(classes.length);
-            
+           
+           
             const classList = classes.map((_class,i)=>{
+                const name = (i === 0 && v === 0) ? <td rowSpan={trLength}>{student.name}({student.nickName})</td> : null;
                 const bookTd = i === 0 ? <td rowSpan={classes.length}>{book.bookTit}</td> : null;
-                const name = i === 0 ? <td rowSpan={trLength}>{student.name}({student.nickName})</td> : null;
                 
                 // classlist의 개수만큼 book td 의 rowspan 을 정해준다 i===0일때 book td 존재
                 
@@ -98,7 +98,7 @@ const TodayClass = () => {
                                 {
                                 _class.state3 ? (
                                     <div className="btn-wrap">
-                                        <button className='btnPlay'>play</button>
+                                        <button className='btnPlay' onClick={()=>openModal('assessmentModal')}>play</button>
                                         <button className='btnDown'>down</button>
                                     </div>
                                     )
@@ -108,7 +108,7 @@ const TodayClass = () => {
                             </td>
                             <td className={checkDisabled(_class.state4)}>{_class.state4}</td>
                             <td className={checkDisabled(_class.state5)}>{tdPrintFunc(_class.state5)}</td>
-                            <td><button className="attBtn btn">학습 태도</button>
+                            <td><button className="attBtn btn"onClick={()=>openModal('attModal')}>학습 태도</button>
                              {
                     modalCondition.attModal ? 
                     <AttModal 
@@ -144,11 +144,10 @@ const TodayClass = () => {
                     /> 
                     : null
                 }
-                            </td>
-                        </tr>
+                        </td>
+                    </tr>
                 )
            })
-           
            return classList;
         });
 
