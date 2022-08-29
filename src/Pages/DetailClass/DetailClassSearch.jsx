@@ -47,6 +47,12 @@ function DetailClassSearch({ user }) {
 
         //  이름 검사
         if (nameSearch !== "") {
+
+            if(nameSearch.length < 2){
+                alert("두글자 이상 검색하세요");
+                return
+            }
+
             let regex = new RegExp(nameSearch);
 
             setUserList(initialArray.filter((stu) => regex.test(stu.name)));
@@ -67,6 +73,11 @@ function DetailClassSearch({ user }) {
                     value={nameSearch}
                     onChange={(e) => {
                         setNameSearch(e.target.value);
+                    }}
+                    onKeyUp={(e)=>{
+                        if(e.key === "Enter"){
+                            searchStudents()
+                        }
                     }}
                 />
                 <SearchBtn onClick={searchStudents} />

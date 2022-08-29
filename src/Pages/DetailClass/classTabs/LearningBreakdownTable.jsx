@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import LbtModal from "../modal/LbtModal";
 import LbtDayOption from "../LbtDayOption";
 import { useCallback } from "react";
 
-const arr = ["강호동", "이수근", "오징어", "꽃게", "떡볶이"]
+const arr = ["강호동", "이수근", "오징어", "꽃게", "떡볶이"];
+
 
 function LearningBreakdownTable() {
     let [data, setData] = useState([...arr]);
@@ -89,8 +89,6 @@ function LearningBreakdownTable() {
 }
 
 const LbtTr = ({ item, isChecked, choiceArr }) => {
-    let [modal, setModal] = useState(false);
-    let [modalState, setModalState] = useState();
 
     return (
         <tr>
@@ -111,13 +109,10 @@ const LbtTr = ({ item, isChecked, choiceArr }) => {
                 <button
                     className="btn"
                     onClick={() => {
-                        setModal(true);
-                        setModalState("인쇄");
                     }}
                 >
                     보기
                 </button>
-                {modal && <LbtModal setModal={setModal} modalState={modalState} />}
             </td>
         </tr>
     );

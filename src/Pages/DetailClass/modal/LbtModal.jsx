@@ -36,6 +36,7 @@ function LbtModal(props) {
     const printComponent = useRef();
     const [create, setCreate] = useState(0);
 
+
     return (
         <div
             className={style.modal}

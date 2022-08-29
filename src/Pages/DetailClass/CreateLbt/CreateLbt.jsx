@@ -13,11 +13,12 @@ function CreateLbt({ printComponent }) {
         (state) => state.studentList
     );
 
-    console.log(교재학습분석);
-    console.log(플러스학습분석);
-    console.log(평가분석);
-    console.log(학습태도분석);
-    console.log(선생님의견);
+    // console.log(교재학습분석);
+    // console.log(플러스학습분석);
+    // console.log(평가분석);
+    // console.log(학습태도분석);
+    // console.log(선생님의견);
+
 
     // console.log(clickStudent ,lastDay , startDay, subjectArr )
 
