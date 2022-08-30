@@ -9,35 +9,6 @@ function PrintModal({closeModal,name,book,cl,sodanwon}) {
     let [checkData, setCheckData] = useState([]);
     // let [printState, setPrintState] = useState();
 
-    const printCheck = () => {
-        if(checkData.length === 1 && checkData.indexOf('question') !== -1){
-            return (
-                <div style={{ display: 'none' }}>
-                    <div ref={printComponent} style={{width : "793.701px"}}>문제111</div>
-                </div>
-            ) 
-        }
-        if(checkData.length === 1 && checkData.indexOf('solution') !== -1){
-            return (
-                <div style={{ display: 'none' }}>
-                    <div ref={printComponent} style={{width : "793.701px"}}>풀이111</div>
-                </div>
-
-            ) 
-        }
-        if(checkData.length === 2){
-            return (
-                <div style={{ display: 'none' }}>
-                    <div ref={printComponent} style={{width : "793.701px"}}>
-                        <div>문제1</div>
-                        <div>풀이1</div>
-                    </div>
-                </div>
-            )
-        }
-    }
-
-        
     const checkState = (e) => {
         if(e.target.checked){
             setCheckData([...checkData, e.target.name]);
@@ -50,16 +21,6 @@ function PrintModal({closeModal,name,book,cl,sodanwon}) {
         console.log(checkData);
     },[checkData]);
 
-    const viewContents = (state) => {
-        switch(state){
-            case 'question'
-            : return <div>문제</div>;
-            case 'solution'
-            : return <div>풀이</div>;
-            default
-            : return <div>문제</div>;
-        }
-    }
 
     return ( 
         <>
@@ -92,11 +53,28 @@ function PrintModal({closeModal,name,book,cl,sodanwon}) {
                                     content={() => printComponent.current} // content : 인쇄 대상 ref를 넘겨주기
                                     // documentTitle= "pdf이름" //pdf 로 저장할때 이름
                                 />
-                                {printCheck()}
+                                
+                                {   
+                                    checkData.includes('question') &&  
+                                    <div style={{ display: 'none' }}>
+                                    <div ref={printComponent} style={{width : "793.701px"}}>문제111</div>
+                                    </div>
+                                }
+                                {   
+                                    checkData.includes('solution') &&  
+                                    <div style={{ display: 'none' }}>
+                                    <div ref={printComponent} style={{width : "793.701px"}}>풀이111</div>
+                                    </div>
+                                }
                         </div>
                     </div>
                     <div className="contents">
-                       {viewContents(viewState)}
+                       {
+                        {
+                            question : <div>문제1</div>,
+                            solution : <div>풀이1</div>
+                        }[viewState]
+                       }
                     </div>
                 </div>
                 <div className="printModal-foot cmmnModal-foot">

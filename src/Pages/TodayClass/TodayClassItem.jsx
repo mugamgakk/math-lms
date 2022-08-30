@@ -19,20 +19,16 @@ const TodayClass = ({findTodayList}) => {
 
         // rowspan 값 추출
         let trLength = Number(getNameRowspan(student));
-        
         const { book : books} = student;
        
         // 교재 추출
         const firstRow = books.map((book,v)=>{ 
-
             const { className : classes} = book;
            
             //  단원 추출
             const classList = classes.map((_class,i)=>{
-
                     // 교재 = 단원 === 0 일때 학생명 td 존재 , 위에서 구한 단원의 총 개수로 rowspan 값
                     const name = (i === 0 && v === 0) ? <td rowSpan={trLength}>{student.name}({student.nickName})</td> : null;
-
                     // 단원 i = 0 교재명 td 존재 , 단원 개수로 rowspan 값
                     const bookTd = i === 0 ? <td rowSpan={classes.length}>{book.bookTit}</td> : null;
 
