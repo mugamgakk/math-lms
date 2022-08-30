@@ -7,8 +7,8 @@ const options = [
 ]
 
 
-let 중딩 = options.filter(item=> /(중)\s?[1-6]/.test(item));
-let 초딩 = options.filter(item=> /(초)\s?[1-6]/.test(item));
+const 중딩 = options.filter(item=> /(중)\s?[1-6]/.test(item));
+const 초딩 = options.filter(item=> /(초)\s?[1-6]/.test(item));
 
 
 중딩.sort((a,b)=>{
@@ -26,7 +26,7 @@ let 초딩 = options.filter(item=> /(초)\s?[1-6]/.test(item));
     return b-a
 })
 
-let 잼민 = [...중딩, ...초딩];
+const 잼민 = [...중딩, ...초딩];
 
 
 function UserInfo({clickStudent}) {

@@ -1,9 +1,10 @@
-import React, {memo, useState} from 'react';
-import PlusLearningPrintModal from './PlusLearningPrintModal';
-
+import React, { memo, useState } from "react";
+import PlusLearningGradingModal from "./PlusLearningGradingModal";
+import PlusLearningPrintModal from "./PlusLearningPrintModal";
 
 const PlusTrData = memo(({ res }) => {
-    let [modal, setModal] = useState(false);
+    let [gradingModal, setGradingModal] = useState(false);
+    let [printModal, setPrintModal] = useState(false);
 
     return (
         <tr>
@@ -20,11 +21,12 @@ const PlusTrData = memo(({ res }) => {
             <td>
                 {typeof res.채점 === "string" ? (
                     <>
+                        {gradingModal && <PlusLearningGradingModal setGradingModal ={setGradingModal} />}
                         <p>{res.채점}</p>
                         <button
                             className="btn"
                             onClick={() => {
-                                setModal(true);
+                                setGradingModal(true);
                             }}
                         >
                             채점하기
@@ -33,14 +35,17 @@ const PlusTrData = memo(({ res }) => {
                 ) : (
                     <>
                         <p>{res.채점.point}/10점</p>
+                        
                         <button className="btn">재응시({res.채점.재응시})</button>
                     </>
                 )}
             </td>
             <td>
-                {modal && <PlusLearningPrintModal setModal={setModal} />}
-
-                <button className="btn" disabled={res.시험지 ? false : true}>
+                {
+                    printModal && <PlusLearningPrintModal res={res} setPrintModal={setPrintModal} />
+                }
+                
+                <button className="btn" disabled={res.시험지 ? false : true} onClick={()=>{setPrintModal(true)}}>
                     인쇄
                 </button>
             </td>
@@ -48,4 +53,4 @@ const PlusTrData = memo(({ res }) => {
     );
 });
 
-export default PlusTrData
+export default PlusTrData;
