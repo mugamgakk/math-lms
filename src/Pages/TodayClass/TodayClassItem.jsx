@@ -4,9 +4,11 @@ import AssessmentModal from './AssessmentModal';
 import AttModal from './AttModal';
 import PrintModal from './PrintModal';
 
-const TodayClass = () => {
-    const list = useSelector(state=>state.todayClassList);
+const TodayClass = ({findTodayList}) => {
+    const list = findTodayList;
+    console.log(list);
     
+    // 모달 상태 관리
     let [modalCondition,setModalCondition] = useState({
         attModal : false,
         assessmentModal : false,
@@ -43,7 +45,7 @@ const TodayClass = () => {
     }
 
     const tdPrintFunc = (data) => {
-        if(!data) return '-';
+        if(!data) return;
         if(data === 'Pass') return 'Pass';
         return (
             <>
@@ -81,14 +83,15 @@ const TodayClass = () => {
             const { className : classes} = book;
            
            
-            const classList = classes.map((_class,i)=>{
-                const name = (i === 0 && v === 0) ? <td rowSpan={trLength}>{student.name}({student.nickName})</td> : null;
-                const bookTd = i === 0 ? <td rowSpan={classes.length}>{book.bookTit}</td> : null;
-                
-                // classlist의 개수만큼 book td 의 rowspan 을 정해준다 i===0일때 book td 존재
+            const classList = (a) => { 
+                console.log(a);
+                const aa = classes.map((_class,i)=>{
+                    const name = (i === 0 && v === 0) ? <td rowSpan={trLength}>{student.name}({student.nickName})</td> : null;
+                    const bookTd = i === 0 ? <td rowSpan={classes.length}>{book.bookTit}</td> : null;
+                // classlist의 개수만큼 book td 의 rowspan 값 / classList의 i===0 일때 book td 존재
                 
                 return (
-                        <tr>
+                        <tr key={i}>
                             {name}
                             {bookTd}
                             <td>{_class.tit}</td>
@@ -98,7 +101,7 @@ const TodayClass = () => {
                                 {
                                 _class.state3 ? (
                                     <div className="btn-wrap">
-                                        <button className='btnPlay' onClick={()=>openModal('assessmentModal')}>play</button>
+                                        <button className={ _class.state3.newplay ? 'btnPlay new' : 'btnPlay'} onClick={()=>openModal('assessmentModal')}>play</button>
                                         <button className='btnDown'>down</button>
                                     </div>
                                     )
@@ -108,47 +111,46 @@ const TodayClass = () => {
                             </td>
                             <td className={checkDisabled(_class.state4)}>{_class.state4}</td>
                             <td className={checkDisabled(_class.state5)}>{tdPrintFunc(_class.state5)}</td>
-                            <td><button className="attBtn btn"onClick={()=>openModal('attModal')}>학습 태도</button>
+                            <td><button className="attBtn btn" onClick={()=>openModal('attModal')}>학습 태도</button>
                              {
-                    modalCondition.attModal ? 
-                    <AttModal 
-                    list={list}
-                    name={list.name}
-                    book={list.book}
-                    cl={list.class}
-                    sodanwon={list.sodanwon}
-                    closeModal={closeModal}
-                    /> 
-                    : null
-                }
-                {
-                    modalCondition.assessmentModal ? 
-                    <AssessmentModal 
-                    list={list}
-                    name={list.name}
-                    book={list.book}
-                    cl={list.class}
-                    sodanwon={list.sodanwon}
-                    closeModal={closeModal} /> 
-                    : null
-                }
-                {
-                    modalCondition.printModal ? 
-                    <PrintModal 
-                    list={list}
-                    name={list.name}
-                    book={list.book}
-                    cl={list.class}
-                    sodanwon={list.sodanwon}
-                    closeModal={closeModal}
-                    /> 
-                    : null
-                }
+                                modalCondition.attModal ? 
+                                <AttModal 
+                                name={student.name}
+                                book={a.bookTit}
+                                cl={_class.tit}
+                                sodanwon={_class.sodanwon}
+                                closeModal={closeModal}
+                                /> 
+                                : null
+                            }
+                            {
+                                modalCondition.assessmentModal ? 
+                                <AssessmentModal 
+                                name={list.name}
+                                book={a.bookTit}
+                                cl={_class.tit}
+                                sodanwon={_class.sodanwon}
+                                closeModal={closeModal} /> 
+                                : null
+                            }
+                            {
+                                modalCondition.printModal ? 
+                                <PrintModal 
+                                name={list.name}
+                                book={book.bookTit}
+                                cl={_class.tit}
+                                sodanwon={_class.sodanwon}
+                                closeModal={closeModal}
+                                /> 
+                                : null
+                            }
                         </td>
                     </tr>
                 )
-           })
-           return classList;
+            });
+            return aa;
+           };
+           return classList(book);
         });
 
          return(
@@ -157,10 +159,6 @@ const TodayClass = () => {
                 </tbody> 
         )
     }) 
-    return(
-        <>
-            {tbodies}
-        </>
-    )
+    return tbodies;
 }
 export default TodayClass;
