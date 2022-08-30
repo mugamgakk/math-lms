@@ -93,8 +93,6 @@ function SelectGroup ({data, setPlusData}){
 
         let 조회결과 = (data.filter(a=>a.대단원 === unit)).filter(a=>a.상태 === situation);
 
-        console.log(조회결과)
-
         setPlusData(조회결과)
 
     }

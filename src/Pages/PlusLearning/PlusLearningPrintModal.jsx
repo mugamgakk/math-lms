@@ -93,6 +93,7 @@ function PlusLearningPrintModal({ setModal }) {
     const removeFile = () => {
         if (checkFile.length === 0) {
             alert("파일을 선택하세요");
+            return
         }
 
         if (window.confirm("정말로 삭제하시겠습니까?")) {
@@ -200,6 +201,12 @@ function PlusLearningPrintModal({ setModal }) {
                                 파일선택삭제
                             </button>
                         </div>
+                        <div className="btn-group">
+                            <button className="btn" onClick={() => {
+                            setModal(false);
+                        }}>취소</button>
+                            <button className="btn">채점 완료</button>
+                        </div>
                     </div>
                     <div className="content-right">
                         <ResultTitle bgColor="rgb(132, 188, 241);">모범 답안</ResultTitle>
@@ -247,23 +254,23 @@ function PlusLearningPrintModal({ setModal }) {
 
 function SolveTable({ item, index }) {
     let dispatch = useDispatch();
-    let [selectBase, setSelectBase] = useState({ state: false, text: item.점수 + "점" });
+    let [selectOption, setSelectOption] = useState(null);
     const 점수 = [];
 
     for (let i = 0; i <= item.배점; i += 0.5) {
         점수.push(i + "점");
     }
 
-    const selectChange = (a)=>{
-        let 점수 = parseFloat(a.replace(/점/, ''));
+    const selectChange = (ele)=>{
+        let 점수 = parseFloat(ele.replace(/점/, ''));
 
         let obj = {
             index,
             score : 점수
         }
 
-        dispatch(updateScore(obj))
-
+        setSelectOption(ele);
+        dispatch(updateScore(obj));
 
     }
 
@@ -272,7 +279,12 @@ function SolveTable({ item, index }) {
             <td>{item.채점기준}</td>
             <td>{item.배점}</td>
             <td>
-                <SelectBase item={점수} selectBase={selectBase} setSelectBase={setSelectBase} onChange={selectChange} />
+            <SelectBase 
+                onChange={selectChange} 
+                options={점수}
+                value={selectOption} // /* //현재 값 */
+            />  
+                
             </td>
         </tr>
     );

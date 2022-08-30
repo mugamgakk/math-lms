@@ -72,7 +72,6 @@ export const plusLearningSlice = createSlice({
       })
 
       state.upAllScore = allScore
-
     },
   },
 })

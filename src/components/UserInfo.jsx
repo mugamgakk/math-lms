@@ -1,9 +1,12 @@
-import React from 'react';
-import SelectTextbook from './ui/select/SelectTextbook';
+import React, {useState} from 'react';
+import MultiSelect from './ui/select/MultiSelect';
 
-
+const options = [
+    "수학", "국어", "영어", "역사", "도덕", "체육"
+]
 
 function UserInfo({clickStudent}) {
+    let [multiSelect, setMultiSelect] = useState([options[0]]);
 
     return ( 
         <dl className='row user-info'>
@@ -14,7 +17,14 @@ function UserInfo({clickStudent}) {
                 <div>
                     <dt>교재</dt>
                     <dd>
-                        <SelectTextbook/>
+                        <MultiSelect
+                        options={options}
+                        onChange={(arr) => {
+                            setMultiSelect(arr)
+                        }}
+                        value={multiSelect}
+                        limit={3}
+                        />
                     </dd>
                 </div>
                 <div>
