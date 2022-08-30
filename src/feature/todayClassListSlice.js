@@ -119,7 +119,12 @@ const todayClassList = createSlice({
         },
     ]
   },
-  ]
+  ],
+  reducers: {
+    setModalHead : (state,action) => {
+    }
+    
+  }
 })
 
 export default todayClassList.reducer;
