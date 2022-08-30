@@ -4,6 +4,8 @@ import AssessmentModal from './AssessmentModal';
 import AttModal from './AttModal';
 import PrintModal from './PrintModal';
 
+
+
 const TodayClass = ({findTodayList}) => {
     const list = findTodayList;
     console.log(list);
@@ -14,7 +16,7 @@ const TodayClass = ({findTodayList}) => {
         assessmentModal : false,
         printModal : false,
     });
-
+    
     const closeModal = (target) => {
         setModalCondition({
             ...modalCondition,
@@ -28,7 +30,7 @@ const TodayClass = ({findTodayList}) => {
             [target] : !modalCondition[target],            
         });
     }
-
+    
 
     const tdStateFunc = (data) => {
         if(!data) return;
@@ -75,21 +77,18 @@ const TodayClass = ({findTodayList}) => {
         // console.log(trArray);
 
        
-        
         const { book : books} = student;
-        console.log(books);
         
         const firstRow = books.map((book,v)=>{ 
+
             const { className : classes} = book;
            
-           
             const classList = (a) => { 
-                console.log(a);
                 const aa = classes.map((_class,i)=>{
                     const name = (i === 0 && v === 0) ? <td rowSpan={trLength}>{student.name}({student.nickName})</td> : null;
                     const bookTd = i === 0 ? <td rowSpan={classes.length}>{book.bookTit}</td> : null;
                 // classlist의 개수만큼 book td 의 rowspan 값 / classList의 i===0 일때 book td 존재
-                
+                console.log(student.name,a.bookTit,_class.tit);
                 return (
                         <tr key={i}>
                             {name}
@@ -123,7 +122,7 @@ const TodayClass = ({findTodayList}) => {
                                 /> 
                                 : null
                             }
-                            {
+                            {/* {
                                 modalCondition.assessmentModal ? 
                                 <AssessmentModal 
                                 name={list.name}
@@ -143,7 +142,7 @@ const TodayClass = ({findTodayList}) => {
                                 closeModal={closeModal}
                                 /> 
                                 : null
-                            }
+                            } */}
                         </td>
                     </tr>
                 )
