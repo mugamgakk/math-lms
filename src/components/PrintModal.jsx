@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Pagination from "./Pagination";
 import ReactToPrint from 'react-to-print'; // pdf, 인쇄
 
-function PrintModal({title,setPrintModal}) {
+function PrintModal({title,closeModal}) {
     const printComponent = React.useRef();
 
     let [viewState,setViewState] = useState('question');
@@ -32,7 +32,7 @@ function PrintModal({title,setPrintModal}) {
                         <strong>[학습 태도 평가]</strong>
                         {title}
                     </div>
-                    <button className="close" onClick={() => setPrintModal()}>X</button>
+                    <button className="close" onClick={() => closeModal(false)}>X</button>
                 </div>
                 <div className="printModal-body cmmnModal-body">
                     <div className="btn-area">
