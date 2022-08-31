@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import ProgressModal from '../modal/progressModal';
+import { useSelector } from 'react-redux';
 
 let daedanwon = { 
       tit : 'I. 수와 연산',
@@ -42,12 +44,25 @@ let daedanwon = {
     }
 
 function ClassManagement(){
+    let [modalState, setModalState] = useState();
+    let {clickStudent} = useSelector(state=>state.studentsSearchSlice)
+    console.log(clickStudent);
+
     
     return(
-        <>
-            <table style={{ margin: '5px 0 0 0' }}>
+        <div className='detailClass classManagement'>
+
+            <div className="progress fj" >
+                <p>※ 메인 관리 교재를 체크 표시해 두면 오늘의 수업에서 학습 관리하기 편리합니다. (최대 6 종)</p>
+                <button className="btn" onClick={()=>setModalState(true)}>학습 진행률 보기</button>
+            </div>
+            {
+                modalState && <ProgressModal setModalState={setModalState} name={clickStudent.name}/>
+            }
+            
+            <table className='mt-5'>
             <colgroup>
-               
+               <col style={{ width : '150px'}}/>
             </colgroup>
             <thead>
                 <tr>
@@ -77,7 +92,7 @@ function ClassManagement(){
 
                 
             </table>
-        </>
+        </div>
     )
 }
 
@@ -88,7 +103,7 @@ const Tr = ({data}) => {
             <td>{data.state1}</td>
             <td>{data.state2}<button className="btn">재응시</button></td>
             <td>
-            {
+                {
                     data.state3 && (
                         <div className="btn-wrap">
                         <button className={ data.state3.newplay ? 'btnPlay new' : 'btnPlay'} >play</button>
@@ -113,7 +128,7 @@ const Tr = ({data}) => {
                 <button className='btn'>재응시</button>
             </td>
             <td>
-                {data.state5}
+                <div>{data.state5}</div>
                 <button className='btn'>인쇄</button>
                 { data.testReturn && <button className='btn'>재응시</button> }
             </td>
