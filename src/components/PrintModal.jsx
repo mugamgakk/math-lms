@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Pagination from "../../components/Pagination";
+import Pagination from "./Pagination";
 import ReactToPrint from 'react-to-print'; // pdf, 인쇄
 
 function PrintModal({closeModal,name,book,cl,sodanwon}) {

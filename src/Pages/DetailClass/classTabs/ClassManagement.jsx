@@ -12,7 +12,7 @@ let daedanwon = {
             },
             
             state4 : '24/30',
-            state4 : '5/25',
+            state5 : '5/25',
             testReturn : true,
         },
         {   
@@ -25,23 +25,11 @@ let daedanwon = {
                 send : 10,
                 newplay : false,
             },
-            state4 : '5/25',
+            state4 : '24/30',
+            state5 : '5/25',
 
         },
       ]        
-    }
-
-
-const tdStateFunc = (data) => {
-        if(!data) return;
-        if(data.assessment){
-            return(
-                <button className='evalBtn btn'>
-                이해:{data.uds} 전달:{data.send}
-                </button>
-            )
-        }
-        return <button className='evalBtn btn'>수행 평가</button>;
     }
 
 function ClassManagement(){
@@ -50,7 +38,7 @@ function ClassManagement(){
         <>
             <table style={{ margin: '5px 0 0 0' }}>
             <colgroup>
-                <col style={{ width: "20%" }} />
+               
             </colgroup>
             <thead>
                 <tr>
@@ -91,23 +79,34 @@ const Tr = ({data}) => {
             <td>{data.state1}</td>
             <td>{data.state2}<button className="btn">재응시</button></td>
             <td>
-                {
+            {
                     data.state3 && (
                         <div className="btn-wrap">
-                            <button className={ data.state3.newplay ? 'btnPlay new' : 'btnPlay'} >play</button>
-                            <button className='btnDown'>down</button>
+                        <button className={ data.state3.newplay ? 'btnPlay new' : 'btnPlay'} >play</button>
+                        <button className='btnDown'>down</button>
                         </div>
                     )
                 }
-                {tdStateFunc(data.state3)}
+                {
+                    data.state3 ?  data.state3?.assessment ? (
+                        <div>
+                            <button className='evalBtn btn'>
+                            이해:{data.state3.uds} 전달:{data.state3.send}
+                            </button>
+                        </div>
+                    ) : <button className='evalBtn btn'>수행 평가</button> 
+                    : null
+                }
 
             </td>
             <td>
                 {data.state4}
+                <button className='btn'>재응시</button>
+            </td>
+            <td>
+                {data.state5}
                 <button className='btn'>인쇄</button>
-                {
-                   data.testReturn && <button className='btn'>재응시</button>
-                }
+                { data.testReturn && <button className='btn'>재응시</button> }
             </td>
             <td>
                 <button className='btn'>학습 완료</button>
