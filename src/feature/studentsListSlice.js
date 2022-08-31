@@ -10,7 +10,28 @@ export const studentsListSlice = createSlice({
           name : '강호동',
           age : '중2',
           nickName : 'kangsh',
-          반이름 : '중등 월화수 A'
+          반이름 : '중등 월화수 A',
+          교재 : [
+            {
+              이름 : '중2-1 노벰',
+              대단원 : 'I. 수와 연산',
+              소단원 : [
+                {
+                  tit : '소인수분해',
+                  state1 : '100%',
+                  state2 : '10/12',
+                  state3 : {
+                    assessment : true,
+                    uds : 5,
+                    newplay : true,
+                    send : 10
+                  },
+                  state4 : 24/30,
+                  state5 : 12/12,
+                }
+              ]
+            },
+          ],
       },
       {
           id : 2,

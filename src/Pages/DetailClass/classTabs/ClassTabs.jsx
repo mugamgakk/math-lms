@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import UserInfo from '../../../components/UserInfo';
 import AttendanceManagement from './AttendanceManagement';
 import LearningBreakdownTable from './LearningBreakdownTable';
+import ClassManagement from './ClassManagement';
 
 
 function ClassTabs() {
@@ -36,7 +37,7 @@ function ClassTabs() {
 
             {
                 {
-                    0 : <div>1</div>,
+                    0 : <ClassManagement />,
                     1 : <div>2</div>,
                     2 : <LearningBreakdownTable/>,
                     3 : <AttendanceManagement/>
