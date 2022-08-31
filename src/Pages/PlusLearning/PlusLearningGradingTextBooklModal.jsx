@@ -23,7 +23,7 @@ function PlusLearningGradingTextBooklModal({title = "제목임", setGradingModal
             <div className="modal-content">
                 <header className='fj p-5' style={{background : "orangered"}}>
                     {title}
-                    <button className='btn' onClick={()=>{setGradingModal(false)}}>x</button>
+                    <button className='btn' onClick={()=>{setGradingModal(false); setAnswer(data)  }}>x</button>
                 </header>
                 <div className='p-10'>
                     <div className="fj">
@@ -63,7 +63,7 @@ function PlusLearningGradingTextBooklModal({title = "제목임", setGradingModal
                 </div>
                 <div className="text-center">
                     <button className="btn">채점완료</button>
-                    <button className="btn" onClick={()=>{setGradingModal(false)}}>취소</button>
+                    <button className="btn" onClick={()=>{setGradingModal(false); setAnswer(data) }}>취소</button>
                 </div>
             </div>
         </div>

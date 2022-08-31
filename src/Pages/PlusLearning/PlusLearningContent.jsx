@@ -1,7 +1,7 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
+import AlertBox from '../../components/AlertBox';
 import Narrative from './Narrative';
-import PlusLearningAlert from './PlusLearningAlert';
 import TextBook from './TextBook';
 
 
@@ -15,7 +15,7 @@ function PlusLearningContent({tab}) {
             
             {
                 clickStudent === null
-                ? <PlusLearningAlert contentName={tab} />
+                ? <AlertBox name={tab} bg="pink" />
                 : (
                     {
                         서술형 :  <Narrative/>,

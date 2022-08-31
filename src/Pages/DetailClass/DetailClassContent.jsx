@@ -1,7 +1,7 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
+import AlertBox from '../../components/AlertBox';
 import ClassTabs from './classTabs/ClassTabs';
-import DetailClassAlert from './DetailClassAlert';
 
 
 function DetailClassContent() {
@@ -14,7 +14,7 @@ function DetailClassContent() {
             
             {
                 clickStudent === null
-                ? <DetailClassAlert/>
+                ? <AlertBox name="수업 관리 시작"/>
                 : <ClassTabs/>
             }
 

@@ -24,7 +24,6 @@ function StudentsSearch() {
     let {clickStudent} = useSelector(state=>state.studentsSearchSlice);
     let dispatch = useDispatch();
 
-    console.log("재랜더링")
 
     let [checkState, setCheckState] = useState([]);
     let [userList, setUserList] = useState();

@@ -18,6 +18,7 @@ const Attendance = lazy(()=> import('./Pages/Attendance') )
 const DetailClass = lazy(()=> import('./Pages/DetailClass'))
 const PlusLearning = lazy(()=> import('./Pages/PlusLearning') )
 const TodayClass = lazy(()=> import('./Pages/TodayClass') )
+const Evaluation = lazy(()=> import('./Pages/Evaluation') )
 
 
 function App() {
@@ -28,10 +29,11 @@ function App() {
       
       <div className="container">
         <ul className='row'>
-          <li style={{marginRight : "20px"}}><Link to="/attendance">attendance</Link></li>
-          <li style={{marginRight : "20px"}}><Link to="/detail-class">Detail class</Link></li>
-          <li style={{marginRight : "20px"}}><Link to="/plus-learning">plus-learning</Link></li>
-          <li style={{marginRight : "20px"}}><Link to="/today-class">today-class</Link></li>
+          <li style={{marginRight : "20px"}}><Link to="/attendance">출석체크</Link></li>
+          <li style={{marginRight : "20px"}}><Link to="/today-class">오늘의 수업</Link></li>
+          <li style={{marginRight : "20px"}}><Link to="/detail-class">학생별 수업 관리</Link></li>
+          <li style={{marginRight : "20px"}}><Link to="/plus-learning">플러스 러닝</Link></li>
+          <li style={{marginRight : "20px"}}><Link to="/evaluation">평가관리</Link></li>
           <li><Link to="/components">components guide</Link></li>
         </ul>
       </div>
@@ -45,6 +47,7 @@ function App() {
         <Route path="/detail-class" element={<DetailClass/>}/>
         <Route path="/plus-learning" element={<PlusLearning/>}/>
         <Route path="/today-class" element={<TodayClass/>}/>
+        <Route path="/evaluation" element={<Evaluation/>}/>
         <Route path="/components" element={<Components/>}>
             <Route path="prismazoom" element={<PrismaZoomPage/>} />
             <Route path="datepicker" element={<DatePickerPage/>} />
