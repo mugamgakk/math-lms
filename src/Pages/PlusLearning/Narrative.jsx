@@ -74,7 +74,7 @@ function Narrative() {
                 </thead>
                 <tbody>
                     {plusData.map((res) => {
-                        return <PlusTrData key={res.id} res={res} />;
+                        return <PlusTrData key={res.id} type="narrative" res={res} />;
                     })}
                 </tbody>
             </table>

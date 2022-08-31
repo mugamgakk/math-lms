@@ -19,6 +19,9 @@
 };
 
 @for $i from 5 through 15 {
+    .m-#{$i}{
+        margin : #{$i}px;
+    }
     .mr-#{$i}{
         margin-right: #{$i}px;
     }
@@ -36,6 +39,9 @@
     }
     .my-#{$i}{
         margin:  #{$i}px 0;
+    }
+    .p-#{$i}{
+        padding : #{$i}px;
     }
     .pr-#{$i}{
         padding-right: #{$i}px;

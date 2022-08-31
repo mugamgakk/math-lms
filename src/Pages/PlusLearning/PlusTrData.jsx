@@ -1,8 +1,9 @@
 import React, { memo, useState } from "react";
+import PrintModal from "../../components/PrintModal";
 import PlusLearningGradingModal from "./PlusLearningGradingModal";
-import PlusLearningPrintModal from "./PlusLearningPrintModal";
+import PlusLearningGradingTextBooklModal from "./PlusLearningGradingTextBooklModal";
 
-const PlusTrData = memo(({ res }) => {
+const PlusTrData = memo(({ res, type }) => {
     let [gradingModal, setGradingModal] = useState(false);
     let [printModal, setPrintModal] = useState(false);
 
@@ -21,16 +22,39 @@ const PlusTrData = memo(({ res }) => {
             <td>
                 {typeof res.채점 === "string" ? (
                     <>
-                        {gradingModal && <PlusLearningGradingModal setGradingModal ={setGradingModal} />}
-                        <p>{res.채점}</p>
-                        <button
-                            className="btn"
-                            onClick={() => {
-                                setGradingModal(true);
-                            }}
-                        >
-                            채점하기
-                        </button>
+                        {
+                            type === "textBook" && (
+                                <>
+                                <p>{res.채점}</p>
+                                {gradingModal && <PlusLearningGradingTextBooklModal setGradingModal ={setGradingModal} />}
+                                <button
+                                    className="btn"
+                                    onClick={() => {
+                                        setGradingModal(true);
+                                    }}
+                                >
+                                    채점하기
+                                </button>
+                                </>
+                            )
+                        }
+                        {
+                            type === "narrative" && (
+                                <>
+                                <p>{res.채점}</p>
+                                {gradingModal && <PlusLearningGradingModal setGradingModal ={setGradingModal} />}
+                                <button
+                                    className="btn"
+                                    onClick={() => {
+                                        setGradingModal(true);
+                                    }}
+                                >
+                                    채점하기
+                                </button>
+                                </>
+                            )
+                        }
+                        
                     </>
                 ) : (
                     <>
@@ -41,8 +65,9 @@ const PlusTrData = memo(({ res }) => {
                 )}
             </td>
             <td>
+                
                 {
-                    printModal && <PlusLearningPrintModal res={res} setPrintModal={setPrintModal} />
+                    printModal && <PrintModal title={`제목임`} closeModal={setPrintModal} />
                 }
                 
                 <button className="btn" disabled={res.시험지 ? false : true} onClick={()=>{setPrintModal(true)}}>

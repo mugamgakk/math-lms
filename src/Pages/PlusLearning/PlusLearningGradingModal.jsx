@@ -254,7 +254,7 @@ const PlusLearningGradingModal =  memo(({ setGradingModal })=> {
 
 function SolveTable({ item, index }) {
     let dispatch = useDispatch();
-    let [selectOption, setSelectOption] = useState(null);
+    let [selectOption, setSelectOption] = useState(item.점수 + "점");
     const 점수 = [];
 
     for (let i = 0; i <= item.배점; i += 0.5) {

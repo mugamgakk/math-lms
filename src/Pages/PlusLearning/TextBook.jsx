@@ -74,7 +74,7 @@ function TextBook() {
                 </thead>
                 <tbody>
                     {plusData.map((res) => {
-                        return <PlusTrData key={res.id} res={res} />;
+                        return <PlusTrData key={res.id} type="textBook" res={res} />;
                     })}
                 </tbody>
             </table>
