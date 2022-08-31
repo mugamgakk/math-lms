@@ -6,26 +6,10 @@ import PrintModal from '../../components/PrintModal';
 function TodayClassTr({data,name,book,tdName,tdBook}){
 
     // 모달 상태 관리
-    let [modalCondition,setModalCondition] = useState({
-        attModal : false,
-        assessmentModal : false,
-        printModal : false,
-    });
-    
-    const closeModal = (target) => {
-        setModalCondition({
-            ...modalCondition,
-            [target] : false,
-        })
-    }
-    
-    const openModal = (target) => {
-        setModalCondition({
-            ...modalCondition,
-            [target] : !modalCondition[target],            
-        });
-    }
-
+    let [attModal,setAttModal] = useState(false);
+    let [assModal,setAssModal] = useState(false);
+    let [printModal,setPrintModal] = useState(false);
+   
     return(
             <tr>
                 {tdName}
@@ -37,7 +21,7 @@ function TodayClassTr({data,name,book,tdName,tdBook}){
                 {
                     data.state3 && (
                         <div className="btn-wrap">
-                        <button className={ data.state3.newplay ? 'btnPlay new' : 'btnPlay'} onClick={()=>openModal('assessmentModal')} >play</button>
+                        <button className={ data.state3.newplay ? 'btnPlay new' : 'btnPlay'} onClick={()=>setAssModal(true)} >play</button>
                         <button className='btnDown'>down</button>
                         </div>
                     )
@@ -45,11 +29,11 @@ function TodayClassTr({data,name,book,tdName,tdBook}){
                 {
                     data.state3 ?  data.state3?.assessment ? (
                         <div>
-                            <button className='evalBtn btn' onClick={()=>openModal('assessmentModal')}>
+                            <button className='evalBtn btn' onClick={()=>setAssModal(true)}>
                             이해:{data.state3.uds} 전달:{data.state3.send}
                             </button>
                         </div>
-                    ) : <button className='evalBtn btn' onClick={()=>openModal('assessmentModal')}>수행 평가</button> 
+                    ) : <button className='evalBtn btn' onClick={()=>setAssModal(true)}>수행 평가</button> 
                     : null
                 }
                 </td>
@@ -57,45 +41,37 @@ function TodayClassTr({data,name,book,tdName,tdBook}){
                 <td className={data.state5 ? '' : 'disabled'}>
                     
                     { 
+                        data.state5 ?
                         data.state5 == 'Pass' ? 'Pass' : (
                             <div>
                             <div>{data.state5}</div>
-                            <button className='printBtn btn' onClick={()=>openModal('printModal')}>인쇄</button>
+                            <button className='printBtn btn' onClick={()=>setPrintModal(true)}>인쇄</button>
                             </div>
-                        )
+                        ) : null
                     }
                 </td>
-                <td><button className="attBtn btn" onClick={()=>openModal('attModal')}>학습 태도</button>
+                <td><button className="attBtn btn" onClick={()=>setAttModal(true)}>학습 태도</button>
                     {
-                    modalCondition.attModal ? 
+                    attModal ? 
                     <AttModal 
-                    name={name}
-                    book={book}
-                    cl={data.tit}
-                    sodanwon={data.sodanwon}
-                    closeModal={closeModal}
+                    title={`${name}/${book}/${data.tit}/${data.sodanwon}`}
+                    setAttModal={setAttModal}
                     /> 
                     : null
                     }
                     {
-                    modalCondition.assessmentModal ? 
+                   assModal ? 
                     <AssessmentModal 
-                    name={name}
-                    book={book}
-                    cl={data.tit}
-                    sodanwon={data.sodanwon}
-                    closeModal={closeModal}
+                    title={`${name}/${book}/${data.tit}/${data.sodanwon}`}
+                    setAssModal={setAssModal}
                     /> 
                     : null
                     }
                     {
-                    modalCondition.printModal ? 
+                    printModal ? 
                     <PrintModal 
-                    name={name}
-                    book={book}
-                    cl={data.tit}
-                    sodanwon={data.sodanwon}
-                    closeModal={closeModal}
+                    title={`${name}/${book}/${data.tit}/${data.sodanwon}`}
+                    setPrintModal={setPrintModal}
                     /> 
                     : null
                     }

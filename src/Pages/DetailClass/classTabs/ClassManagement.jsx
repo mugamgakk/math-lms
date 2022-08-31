@@ -29,6 +29,15 @@ let daedanwon = {
             state5 : '5/25',
 
         },
+        {   
+            name : '4. 최대공약수',
+            state1 : '100%',
+            state2 : '33%',
+            state3 : undefined,
+            state4 : '24/30',
+            state5 : '5/25',
+
+        },
       ]        
     }
 
