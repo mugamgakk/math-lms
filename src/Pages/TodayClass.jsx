@@ -5,7 +5,6 @@ import ChangeDate from "../components/ChangeDate";
 import TodayClassItem from "./TodayClass/TodayClassItem";
 import TodayClassSearch from "./TodayClass/TodayClassSearch"
 import { useSelector } from 'react-redux'
-import "../style/TodayClass/todayClass.scss";
 import axios from "axios";
 
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ScoreItem from './ScoreItem'
-function AttModal ({closeModal,name,book,cl,sodanwon}) {
+function AttModal ({setAttModal,title}) {
     let scoreTitList = [
         '1. 학습에 얼마나 집중하였습니까?',
         '2. 학습에 얼마나 적극적으로 참여하였습니까?',
@@ -26,7 +26,7 @@ function AttModal ({closeModal,name,book,cl,sodanwon}) {
     }
     
     const formConfirm = () => {
-        if(window.confirm('이 단원의 학습 태도 평가를 저장합니다.')) closeModal('attModal');
+        if(window.confirm('이 단원의 학습 태도 평가를 저장합니다.')) setAttModal(false);
     }
     return(
         <div className="modal">
@@ -35,14 +35,9 @@ function AttModal ({closeModal,name,book,cl,sodanwon}) {
             <div className="attModal-head cmmnModal-head">
                     <div className="tit">
                         <strong>[학습 태도 평가]</strong>
-                        <ul>
-                            <li>{name}/</li>
-                            <li>{book}/</li>
-                            <li>{cl}/</li>
-                            <li>{sodanwon}/</li>
-                        </ul>
+                        {title}
                     </div>
-                    <button className="close" onClick={() => closeModal('attModal')}>X</button>
+                    <button className="close" onClick={() => setAttModal(false)}>X</button>
             </div>
             <div className="attModal-body cmmnModal-body">
                 <h5>이 단원의 학습 태도를 10점 만점으로 평가해 주세요.</h5>
@@ -58,7 +53,7 @@ function AttModal ({closeModal,name,book,cl,sodanwon}) {
                 </ul>
             </div>
             <div className="attModal-foot cmmnModal-foot">
-                <button className="btn" onClick={()=>closeModal('attModal')}>취소</button>
+                <button className="btn" onClick={()=>setAttModal(false)}>취소</button>
                 <button className="btn" onClick={formConfirm}>평가 완료</button>
             </div>
         </div>
