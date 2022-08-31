@@ -1,84 +1,104 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Pagination from "./Pagination";
-import ReactToPrint from 'react-to-print'; // pdf, 인쇄
+import ReactToPrint from "react-to-print"; // pdf, 인쇄
 
-function PrintModal({title,closeModal}) {
+function PrintModal({ closeModal, title = "제목임" }) {
     const printComponent = React.useRef();
 
-    let [viewState,setViewState] = useState('question');
-    let [checkData, setCheckData] = useState([]);
-    // let [printState, setPrintState] = useState();
+    let [viewState, setViewState] = useState("question");
+    let [checkData, setCheckData] = useState(["question"]);
 
-    const checkState = (e) => {
-        if(e.target.checked){
-            setCheckData([...checkData, e.target.name]);
-        }else{
-            setCheckData(checkData.filter(data=> data !== e.target.name));
-        }   
-    }
+    const checkState = (checked, ele) => {
+        if (checked) {
+            setCheckData([...checkData, ele]);
+        } else {
+            setCheckData(checkData.filter((data) => data !== ele));
+        }
+    };
 
-    useEffect(()=>{
-        console.log(checkData);
-    },[checkData]);
-
-
-    return ( 
+    return (
         <>
-          <div className="modal">
-            <div className="dim"></div>
-            <div className='printModal cmmnModal'>
-                <div className="printModal-head cmmnModal-head">
-                <div className="tit">
-                        <strong>[학습 태도 평가]</strong>
-                        {title}
+            <div className="modal">
+                <div className="dim"></div>
+                <div className="printModal cmmnModal">
+                    <div className="printModal-head cmmnModal-head">
+                        <div className="tit">{title}</div>
+                        <button className="close" onClick={() => closeModal(false)}>
+                            X
+                        </button>
                     </div>
-                    <button className="close" onClick={() => closeModal(false)}>X</button>
-                </div>
-                <div className="printModal-body cmmnModal-body">
-                    <div className="btn-area">
-                        <div className="btn-area__left">
-                            <button className={ viewState === 'question' ? 'btn active' : 'btn' } onClick={() => setViewState('question')}>문제 보기</button>
-                            <button className={ viewState === 'solution' ? 'btn active' : 'btn' } onClick={() => setViewState('solution')}>풀이 보기</button>
-                        </div>
-                        <div className="btn-area__right">
-                            <input type="checkbox" name='question' onChange={checkState}/>문제지
-                            <input type="checkbox" name='solution' onChange={checkState}/>풀이지
+                    <div className="printModal-body cmmnModal-body">
+                        <div className="btn-area">
+                            <div className="btn-area__left">
+                                <button
+                                    className={viewState === "question" ? "btn active" : "btn"}
+                                    onClick={() => setViewState("question")}
+                                >
+                                    문제 보기
+                                </button>
+                                <button
+                                    className={viewState === "solution" ? "btn active" : "btn"}
+                                    onClick={() => setViewState("solution")}
+                                >
+                                    풀이 보기
+                                </button>
+                            </div>
+                            <div className="btn-area__right">
+                                <button className={"btn" + `${checkData.includes("question") ? " active" : ''}`}>
+                                    <input
+                                        type="checkbox"
+                                        id="question"
+                                        checked={checkData.includes("question") ? true : false}
+                                        onChange={(e) => {
+                                            checkState(e.target.checked, "question");
+                                        }}
+                                    />
+                                    <label htmlFor="question">문제지</label>
+                                </button>
+
+                                <button className={"btn" + `${checkData.includes("solution") ? " active" : ''}`}>
+                                    <input
+                                        type="checkbox"
+                                        id="solution"
+                                        checked={checkData.includes("solution") ? true : false}
+                                        onChange={(e) => {
+                                            checkState(e.target.checked, "solution");
+                                        }}
+                                    />
+                                    <label htmlFor="solution">풀이지</label>
+                                </button>
                                 <ReactToPrint
-                                    trigger={() => <button className="btn">인쇄하기</button>} //  trigger : 인쇄를 명령할 컴포넌트를 넣어주기
-                                    content={() => printComponent.current} // content : 인쇄 대상 ref를 넘겨주기
-                                    // documentTitle= "pdf이름" //pdf 로 저장할때 이름
+                                    trigger={() => <button className="btn">인쇄하기</button>}
+                                    content={() => printComponent.current}
                                 />
-                                
-                                {   
-                                    checkData.includes('question') &&  
-                                    <div style={{ display: 'none' }}>
-                                    <div ref={printComponent} style={{width : "793.701px"}}>문제111</div>
-                                    </div>
-                                }
-                                {   
-                                    checkData.includes('solution') &&  
-                                    <div style={{ display: 'none' }}>
-                                    <div ref={printComponent} style={{width : "793.701px"}}>풀이111</div>
-                                    </div>
-                                }
+                                    <div style={{ display: "none" }}>
+                                        <div ref={printComponent}>
+                                            {
+                                                checkData.includes("question") && <div>문제</div>
+                                            }
+                                            {
+                                                checkData.includes("solution") && <div>정답</div>
+                                            }
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="contents">
+                            {
+                                {
+                                    question: <div>문제</div>,
+                                    solution: <div>정답</div>,
+                                }[viewState]
+                            }
                         </div>
                     </div>
-                    <div className="contents">
-                       {
-                        {
-                            question : <div>문제1</div>,
-                            solution : <div>풀이1</div>
-                        }[viewState]
-                       }
+                    <div className="printModal-foot cmmnModal-foot">
+                        <Pagination />
                     </div>
-                </div>
-                <div className="printModal-foot cmmnModal-foot">
-                <Pagination />
                 </div>
             </div>
-          </div>
         </>
-     );
+    );
 }
 
 export default PrintModal;
