@@ -1,14 +1,14 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import ContentHeader from '../components/ContentHeader';
-import { useSelector, useDispatch } from 'react-redux'
-import PlusLearningSearch from './PlusLearning/PlusLearningSearch';
+import { useDispatch } from 'react-redux'
 import PlusLearningContent from './PlusLearning/PlusLearningContent';
-import {setClickStudent} from '../feature/plusLearningSlice';
+import {setClickStudent, getUserData} from '../feature/studentsSearchSlice';
+import StudentsSearch from '../components/StudentsSearch';
 
 
 function PlusLearning() {
 
-    let {user} = useSelector(state=>state.plusLearningSlice);
+    
     let [tab, setTab] = useState("서술형");
     let dispatch = useDispatch();
 
@@ -17,6 +17,11 @@ function PlusLearning() {
         dispatch(setClickStudent(null))
     }
 
+    useEffect(()=>{
+        dispatch(getUserData())
+    },[])
+
+    
     return ( 
         <div className='container'>
             <ContentHeader title={"플러스 러닝"} />
@@ -31,7 +36,7 @@ function PlusLearning() {
                 >교과서 적중문제</button>
             </div>
             <div className="row">
-                <PlusLearningSearch user={user} />
+                <StudentsSearch/>
                 <PlusLearningContent tab={tab} />
             </div>
         </div>

@@ -6,9 +6,9 @@ import TextBook from './TextBook';
 
 
 
-function PlusLearningContent({tab, user}) {
+function PlusLearningContent({tab}) {
 
-    let {clickStudent} = useSelector((state)=> state.plusLearningSlice)
+    let {clickStudent} = useSelector((state)=> state.studentsSearchSlice)
 
     return ( 
         <div className="students-contents">

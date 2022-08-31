@@ -9,7 +9,7 @@ import ClassManagement from './ClassManagement';
 function ClassTabs() {
 
     let [tabState, setTabState] = useState(0);
-    let {clickStudent} = useSelector(state=>state.studentList)
+    let {clickStudent} = useSelector(state=>state.studentsSearchSlice)
 
 
     return ( 

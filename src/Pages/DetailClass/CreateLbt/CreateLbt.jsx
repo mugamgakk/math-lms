@@ -8,7 +8,8 @@ let Box = styled.div`
 `;
 
 function CreateLbt({ printComponent }) {
-    let { clickStudent, lastDay, startDay, subjectArr } = useSelector((state) => state.studentList);
+    let { lastDay, startDay, subjectArr } = useSelector((state) => state.studentList);
+    let { clickStudent } = useSelector((state) => state.studentsSearchSlice);
     let { 교재학습분석, 플러스학습분석, 평가분석, 학습태도분석, 선생님의견 } = useSelector(
         (state) => state.studentList
     );

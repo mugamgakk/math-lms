@@ -6,7 +6,7 @@ import DetailClassAlert from './DetailClassAlert';
 
 function DetailClassContent() {
 
-    let {clickStudent} = useSelector((state)=> state.studentList)
+    let {clickStudent} = useSelector((state)=> state.studentsSearchSlice)
 
 
     return ( 

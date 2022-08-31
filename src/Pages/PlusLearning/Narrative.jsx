@@ -45,7 +45,7 @@ const 상태 = ["오픈전", "학습중", "학습완료"];
 
 function Narrative() {
     let [plusData, setPlusData] = useState(data);
-    let {clickStudent} = useSelector(state=>state.plusLearningSlice)
+    let {clickStudent} = useSelector(state=>state.studentsSearchSlice)
 
     return (
         <div className="Narrative">

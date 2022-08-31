@@ -42,7 +42,7 @@ const data = [
 
 function TextBook() {
     let [plusData, setPlusData] = useState(data);
-    let { clickStudent } = useSelector((state) => state.plusLearningSlice);
+    let { clickStudent } = useSelector((state) => state.studentsSearchSlice);
 
     return (
         <div>
