@@ -16,7 +16,7 @@ let data = [
         ]
     },
 ]
-function progressModal({setModalState,name}){
+function progressModal({setProgressState,name}){
     return(
         <div className="modal">
             <div className="dim"></div>
@@ -25,7 +25,7 @@ function progressModal({setModalState,name}){
                     <div className="tit">
                         <strong>[학습 태도 평가]{name}</strong>
                     </div>
-                    <button className="close" onClick={() => setModalState()}>X</button>
+                    <button className="close" onClick={() => setProgressState(false)}>X</button>
                 </div>
                 <div className="progressModal-body cmmnModal-body">
                     <div className='top fj'>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ProgressModal from '../modal/progressModal';
+import CreationModal from '../modal/creationModal';
 import { useSelector } from 'react-redux';
 
 let daedanwon = { 
@@ -43,9 +44,9 @@ let daedanwon = {
       ]        
     }
 
-function ClassManagement(){
-    let [modalState, setModalState] = useState();
-    let {clickStudent} = useSelector(state=>state.studentsSearchSlice)
+function ClassManagement({clickStudent}){
+    let [progressMo, setProgressState] = useState(false);
+    let [creationMo, setCreationMo] = useState(false);
     console.log(clickStudent);
 
     
@@ -54,12 +55,15 @@ function ClassManagement(){
 
             <div className="progress fj" >
                 <p>※ 메인 관리 교재를 체크 표시해 두면 오늘의 수업에서 학습 관리하기 편리합니다. (최대 6 종)</p>
-                <button className="btn" onClick={()=>setModalState(true)}>학습 진행률 보기</button>
+                <button className="btn" onClick={()=>setProgressState(true)}>학습 진행률 보기</button>
             </div>
             {
-                modalState && <ProgressModal setModalState={setModalState} name={clickStudent.name}/>
+                progressMo && <ProgressModal setProgressState={setProgressState} name={clickStudent.name}/>
             }
-            
+            {
+                creationMo && <CreationModal setCreationMo={setCreationMo} name={clickStudent.name}/>
+            }
+           
             <table className='mt-5'>
             <colgroup>
                <col style={{ width : '150px'}}/>
@@ -69,7 +73,7 @@ function ClassManagement(){
                     <th rowSpan={2}>단원</th>
                     <th colSpan={5}>수행현황</th>
                     <th rowSpan={2}>학습 완료</th>
-                    <th rowSpan={2}>오답<br/>정복하기<br /><button className="btn">생성</button></th>
+                    <th rowSpan={2}>오답<br/>정복하기<br /><button className="btn" onClick={()=>setCreationMo(true)}>생성</button></th>
                 </tr>
                 <tr>
                     <th>개념 강의</th>
@@ -124,7 +128,7 @@ const Tr = ({data}) => {
 
             </td>
             <td>
-                {data.state4}
+                { data.state4}
                 <button className='btn'>재응시</button>
             </td>
             <td>

@@ -4,14 +4,17 @@ import DatePicker from "react-date-picker"; // 데이트 피커
 import ChangeDate from "../components/ChangeDate";
 import TodayClassItem from "./TodayClass/TodayClassItem";
 import TodayClassSearch from "./TodayClass/TodayClassSearch"
-import { useSelector } from 'react-redux'
-import axios from "axios";
+// import { useSelector } from 'react-redux'
+import useStore from '../store/useTodayClassStore';
+
 
 
 
 
 function TodayClass(){
-    const students = useSelector(state=>state.todayClassList);
+    // const students = useSelector(state=>state.todayClassList);
+    let {students} = useStore(state=>state);
+    console.log(students);
 
     let [findTodayList, setFindList] = useState(null);
     
