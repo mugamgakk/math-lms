@@ -3,7 +3,7 @@ import Pagination from "../../components/Pagination";
 import SelectBase from "../../components/ui/select/SelectBase";
 import UserInfo from "../../components/UserInfo";
 import PlusTrData from "./PlusTrData";
-import {useSelector} from 'react-redux';
+import useStudentsStore from "../../store/useStudentsStore";
 
 const data = [
     {
@@ -45,7 +45,8 @@ const 상태 = ["오픈전", "학습중", "학습완료"];
 
 function Narrative() {
     let [plusData, setPlusData] = useState(data);
-    let {clickStudent} = useSelector(state=>state.studentsSearchSlice)
+    const clickStudent = useStudentsStore(state=>state.clickStudent)
+
 
     return (
         <div className="Narrative">

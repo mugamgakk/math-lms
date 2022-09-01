@@ -1,19 +1,17 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import ContentHeader from '../components/ContentHeader';
-import { useDispatch } from 'react-redux';
-import {getUserData, setClickStudent} from '../feature/studentsSearchSlice'
 import EvaluationRoutine from './Evaluation/EvaluationRoutine';
 import EvaluationJindan from './Evaluation/EvaluationJindan';
-
+import useStudentsStore from '../store/useStudentsStore';
 
 function Evaluation() {
+    const resetStudent = useStudentsStore(state=>state.resetStudent)
 
     let [tab, setTab] = useState("재원생정기평가");
-    let dispatch = useDispatch();
 
     const clickTab = (param)=>{
         setTab(param);
-        dispatch(setClickStudent(null))
+        resetStudent()
     }
 
 

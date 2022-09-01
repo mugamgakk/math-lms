@@ -1,14 +1,14 @@
 import React from 'react';
-import {useSelector} from 'react-redux';
 import AlertBox from '../../components/AlertBox';
 import Narrative from './Narrative';
 import TextBook from './TextBook';
+import useStudentsStore from '../../store/useStudentsStore';
 
 
 
 function PlusLearningContent({tab}) {
 
-    let {clickStudent} = useSelector((state)=> state.studentsSearchSlice)
+    const clickStudent = useStudentsStore(state=>state.clickStudent)
 
     return ( 
         <div className="students-contents">

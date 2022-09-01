@@ -1,27 +1,21 @@
 import React, {useState, useEffect} from 'react';
 import ContentHeader from '../components/ContentHeader';
-import { useDispatch } from 'react-redux'
 import PlusLearningContent from './PlusLearning/PlusLearningContent';
-import {setClickStudent, getUserData} from '../feature/studentsSearchSlice';
 import StudentsSearch from '../components/StudentsSearch';
+import useStudentsStore from '../store/useStudentsStore';
 
 
 function PlusLearning() {
 
+    let {resetStudent}  = useStudentsStore(state=>state)
     
     let [tab, setTab] = useState("서술형");
-    let dispatch = useDispatch();
 
     const clickTab = (param)=>{
         setTab(param);
-        dispatch(setClickStudent(null))
+        resetStudent()
     }
 
-    useEffect(()=>{
-        dispatch(getUserData())
-    },[])
-
-    
     return ( 
         <div className='container'>
             <ContentHeader title={"플러스 러닝"} />

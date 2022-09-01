@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import UserInfo from "../../components/UserInfo";
-import { useSelector } from "react-redux";
+import useStudentsStore from "../../store/useStudentsStore";
 import TextBookSearch from "./TextBookSearch";
 import PlusTrData from "./PlusTrData";
 
@@ -42,7 +42,8 @@ const data = [
 
 function TextBook() {
     let [plusData, setPlusData] = useState(data);
-    let { clickStudent } = useSelector((state) => state.studentsSearchSlice);
+    const clickStudent = useStudentsStore(state=>state.clickStudent)
+
 
     return (
         <div>

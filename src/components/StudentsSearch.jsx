@@ -1,9 +1,7 @@
 import React, { useState, useCallback } from "react";
 import SelectBox from "./ui/select/SelectBox";
-import { useDispatch, useSelector } from "react-redux";
-import { setClickStudent } from "../feature/studentsSearchSlice";
 import SearchBtn from "./ui/button/SearchBtn";
-import { useEffect } from "react";
+import useStudentsStore from "../store/useStudentsStore";
 
 const userNameSort = (userArr) => {
     let copy = [...userArr];
@@ -20,22 +18,16 @@ const userNameSort = (userArr) => {
 };
 
 function StudentsSearch() {
-    let {user} = useSelector(state=>state.studentsSearchSlice);
-    let {clickStudent} = useSelector(state=>state.studentsSearchSlice);
-    let dispatch = useDispatch();
 
-
+    let {user, setClickStudent, clickStudent} = useStudentsStore(state=>state);
     let [checkState, setCheckState] = useState([]);
-    let [userList, setUserList] = useState();
+    let [userList, setUserList] = useState(user);
     let [nameSearch, setNameSearch] = useState("");
 
-    useEffect(()=>{
-        setUserList(userNameSort(user))
-    },[user])
 
     //  클릭한 데이터
     const getUser = (list) => {
-        dispatch(setClickStudent(list));
+        setClickStudent(list)
     };
 
     // 검색

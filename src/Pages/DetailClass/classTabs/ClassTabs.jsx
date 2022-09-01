@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 import UserInfo from '../../../components/UserInfo';
 import AttendanceManagement from './AttendanceManagement';
 import LearningBreakdownTable from './LearningBreakdownTable';
 import ClassManagement from './ClassManagement';
 
 
-function ClassTabs() {
+function ClassTabs({clickStudent}) {
 
     let [tabState, setTabState] = useState(0);
-    let {clickStudent} = useSelector(state=>state.studentsSearchSlice)
-
 
     return ( 
         <div className='class-tabs'>
@@ -37,7 +34,7 @@ function ClassTabs() {
 
             {
                 {
-                    0 : <ClassManagement/>,
+                    0 : <ClassManagement clickStudent={clickStudent}/>,
                     1 : <div>2</div>,
                     2 : <LearningBreakdownTable/>,
                     3 : <AttendanceManagement/>

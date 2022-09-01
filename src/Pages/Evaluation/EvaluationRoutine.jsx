@@ -1,20 +1,15 @@
 import React from 'react';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import AlertBox from '../../components/AlertBox';
 import StudentsSearch from '../../components/StudentsSearch';
 import UserInfo from '../../components/UserInfo';
-import {getUserData} from '../../feature/studentsSearchSlice'
+import useStudentsStore from '../../store/useStudentsStore';
 
 
 function EvaluationRoutine() {
-    let dispatch = useDispatch();
-    let {clickStudent} = useSelector((state)=> state.studentsSearchSlice)
 
+    const clickStudent = useStudentsStore(state=>state.clickStudent);
 
-    useEffect(()=>{
-        dispatch(getUserData())
-    },[])
 
     return ( 
         <div className="row">
