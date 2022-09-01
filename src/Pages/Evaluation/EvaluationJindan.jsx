@@ -1,10 +1,12 @@
 import React from 'react';
 import ReservationSearch from '../../components/ReservationSearch';
+import EvaluationJindanContent from './EvaluationJindanContent';
 
 function EvaluationJindan() {
     return ( 
-        <div>
+        <div className='row'>
             <ReservationSearch/>
+            <EvaluationJindanContent/>
         </div>
      );
 }

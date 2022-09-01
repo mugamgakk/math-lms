@@ -1,6 +1,7 @@
 import * as React from "react";
 import DatePicker from "react-date-picker"; // 데이트 피커
 import ChangeDate from "../../components/ChangeDate";
+import dayjs from "dayjs";
 
 
 
@@ -8,6 +9,10 @@ function DatePickerPage() {
     const [value, onChange] = React.useState(new Date());
     const [openCalendar, setOpenCalendar] = React.useState(false);
 
+
+    let a = dayjs('2018-08-08').subtract(1, "year")
+
+    console.log(a)
 
 
 
@@ -66,6 +71,32 @@ function DatePickerPage() {
                     "century".) 
                     `}
                 </pre>
+
+
+                <h2>day js</h2>
+                <pre>
+                    {
+                        `
+                        dayjs('2018-08-08') 다양한 날씨 포맷을 넣어도 파씽해줌
+                        dayjs('2018-08-08').set('month', 3) 달을 3월로 바꾸기
+                        dayjs('2018-08-08').add(1, "y") 년도 하나추가
+                        dayjs('2018-08-08').subtract(1, "year") 년도 하나빼기
+
+                        y : 년도,
+                        M : 달,
+                        w : 요일 , 
+                        d : 일,
+                        h : 시간,
+                        m : 분,
+                        S : 초
+
+
+                        
+                        `
+                    }
+                </pre>
+
+
             </div>
      );
 }
