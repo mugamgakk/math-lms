@@ -184,7 +184,6 @@
                     &__tit{
                         color: #fff;
                         background: red;
-                        width: 50px;
                     }
                     &__bar{
                         display: flex;
@@ -234,5 +233,47 @@
                 
             }
         }
+    }
+    .creationModal{
+        width: 1000px;
+        &-body{
+            .top{
+                @include flex(start);
+                border: 1px solid #ccc;
+                &-tit{
+                    background: #ccc;
+                    border-right: 1px solid #ccc;
+                    width: 150px;
+                    text-align: center;
+                }                
+            }
+            table{
+              thead{
+                  tr{
+                      td{
+                          background: #ccc;
+                          border-right: 1px solid #ddd;
+                      }
+                  }
+              }
+              .check-wrap{
+                  input[type=checkbox]{
+                      display: none;
+                    }
+                    label{
+                        display: inline-block;
+                        width: 15px;
+                        height: 15px;
+                        border: 1px solid #ccc;
+                        background: #fff;
+                        
+                    }
+                    input[type=checkbox]:checked ~ label{
+                        background: #000;
+                    }
+                }
+            }
+        }
+
     }
 }

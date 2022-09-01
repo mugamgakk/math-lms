@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ProgressModal from '../modal/progressModal';
+import ProgressModalV2 from '../modal/progressModalV2';
 import CreationModal from '../modal/creationModal';
 import { useSelector } from 'react-redux';
 
@@ -47,7 +48,6 @@ let daedanwon = {
 function ClassManagement({clickStudent}){
     let [progressMo, setProgressState] = useState(false);
     let [creationMo, setCreationMo] = useState(false);
-    console.log(clickStudent);
 
     
     return(
@@ -63,6 +63,14 @@ function ClassManagement({clickStudent}){
             {
                 creationMo && <CreationModal setCreationMo={setCreationMo} name={clickStudent.name}/>
             }
+
+            {/* 아르케 학습일 경우 단일 행 모달 */}
+            {/* {
+                creationMo && 
+                ( 아르케 ? <ProgressModalV2 setProgressState={setProgressState} name={clickStudent.name}/> 
+                : <ProgressModal setProgressState={setProgressState} name={clickStudent.name}/> )
+
+            } */}
            
             <table className='mt-5'>
             <colgroup>
