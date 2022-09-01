@@ -37,7 +37,7 @@ function ClassTabs() {
 
             {
                 {
-                    0 : <ClassManagement />,
+                    0 : <ClassManagement/>,
                     1 : <div>2</div>,
                     2 : <LearningBreakdownTable/>,
                     3 : <AttendanceManagement/>

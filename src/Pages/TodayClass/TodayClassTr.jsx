@@ -8,7 +8,7 @@ function TodayClassTr({data,name,book,tdName,tdBook}){
     // 모달 상태 관리
     let [attModal,setAttModal] = useState(false);
     let [assModal,setAssModal] = useState(false);
-    let [printModal,setPrintModal] = useState(false);
+    let [printModal,closeModal] = useState(false);
    
     return(
             <tr>
@@ -27,7 +27,7 @@ function TodayClassTr({data,name,book,tdName,tdBook}){
                     )
                 }
                 {
-                    data.state3 ?  data.state3?.assessment ? (
+                    data.state3 ? data.state3?.assessment ? (
                         <div>
                             <button className='evalBtn btn' onClick={()=>setAssModal(true)}>
                             이해:{data.state3.uds} 전달:{data.state3.send}
@@ -45,7 +45,7 @@ function TodayClassTr({data,name,book,tdName,tdBook}){
                         data.state5 == 'Pass' ? 'Pass' : (
                             <div>
                             <div>{data.state5}</div>
-                            <button className='printBtn btn' onClick={()=>setPrintModal(true)}>인쇄</button>
+                            <button className='printBtn btn' onClick={()=>closeModal(true)}>인쇄</button>
                             </div>
                         ) : null
                     }
@@ -71,7 +71,7 @@ function TodayClassTr({data,name,book,tdName,tdBook}){
                     printModal ? 
                     <PrintModal 
                     title={`${name}/${book}/${data.tit}/${data.sodanwon}`}
-                    setPrintModal={setPrintModal}
+                    closeModal={closeModal}
                     /> 
                     : null
                     }
