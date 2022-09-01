@@ -13,6 +13,7 @@ import PrintPage from './Pages/ComponentsPage/PrintPage';
 import AudioPage from './Pages/ComponentsPage/AudioPage';
 import SelectPage from './Pages/ComponentsPage/SelectPage';
 
+
 const Login = lazy(()=> import('./Pages/Login') )
 const Attendance = lazy(()=> import('./Pages/Attendance') )
 const DetailClass = lazy(()=> import('./Pages/DetailClass'))
@@ -26,7 +27,7 @@ function App() {
 
   return ( 
     <div>
-      
+
       <div className="container">
         <ul className='row'>
           <li style={{marginRight : "20px"}}><Link to="/attendance">출석체크</Link></li>
