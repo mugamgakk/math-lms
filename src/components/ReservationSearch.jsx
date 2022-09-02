@@ -64,19 +64,29 @@ function ReservationSearch() {
 }
 
 const Search = () => {
-    let [start, setStart] = useState(new Date());
-    let [end, setEnd] = useState(new Date());
-    let [text, setText] = useState("");
+
+    let [value, setValue] = useState({
+        start : new Date(),
+        end : dayjs(new Date()).add(1, "M").$d,
+        text : ""
+    })
+
+    console.log(value)
+
     let findUser = useReservationStore((state) => state.findUser);
+
+    const postData = (e)=>{
+        e.preventDefault();
+        findUser(value);
+    }
 
     return (
         <div>
+            <form onSubmit={postData}>
             <DatePicker
                 className="datepicker-base"
-                onChange={(day) => {
-                    setStart(day);
-                }}
-                value={start}
+                onChange={day => setValue({...value, start : day})}
+                value={value.start}
                 clearIcon={null}
                 openCalendarOnFocus={false}
                 format={"yyyy-MM-dd"}
@@ -84,10 +94,8 @@ const Search = () => {
             ~
             <DatePicker
                 className="datepicker-base"
-                onChange={(day) => {
-                    setEnd(day);
-                }}
-                value={end}
+                onChange={day => setValue({...value, end : day})}
+                value={value.end}
                 clearIcon={null}
                 openCalendarOnFocus={false}
                 format={"yyyy-MM-dd"}
@@ -95,18 +103,14 @@ const Search = () => {
             <input
                 type="text"
                 className="form-control"
-                value={text}
-                onChange={(e) => {
-                    setText(e.target.value);
-                }}
+                value={value.text}
+                placeholder="이름 검색"
+                onChange={e=>setValue({...value, text : e.target.value})}
             />
-            <button
-                onClick={() => {
-                    findUser(text);
-                }}
-            >
+            <button className="btn">
                 예약자 조회
             </button>
+            </form>
         </div>
     );
 };

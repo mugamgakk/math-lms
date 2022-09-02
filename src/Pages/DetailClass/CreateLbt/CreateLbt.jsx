@@ -1,6 +1,7 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import styled from "styled-components";
+import {useSelector} from 'react-redux';
+import useStudentsStore from '../../../store/useStudentsStore';
 
 let Box = styled.div`
     height: 100px;
@@ -9,19 +10,11 @@ let Box = styled.div`
 
 function CreateLbt({ printComponent }) {
     let { lastDay, startDay, subjectArr } = useSelector((state) => state.studentList);
-    let { clickStudent } = useSelector((state) => state.studentsSearchSlice);
+    let clickStudent = useStudentsStore(state=>state.clickStudent);
     let { 교재학습분석, 플러스학습분석, 평가분석, 학습태도분석, 선생님의견 } = useSelector(
         (state) => state.studentList
     );
 
-    // console.log(교재학습분석);
-    // console.log(플러스학습분석);
-    // console.log(평가분석);
-    // console.log(학습태도분석);
-    // console.log(선생님의견);
-
-
-    // console.log(clickStudent ,lastDay , startDay, subjectArr )
 
     return (
         <div ref={printComponent} style={{ width: "793.701px" }}>

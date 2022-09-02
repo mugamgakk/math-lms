@@ -57,5 +57,14 @@
         margin-top: 100px;
         height: 600px;
         max-width: 1000px;
+
+        header{
+            background-color: orangered;
+            padding: 10px;
+        }
+
+        .modal-body{
+            padding: 10px;
+        }
     }
 }

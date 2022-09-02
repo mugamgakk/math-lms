@@ -1,4 +1,5 @@
 import create from 'zustand'
+import dayjs from 'dayjs'
 
 var user = [
     {name : "김일우", date : "2022.09.08.14:00", phone : "010-1243-2341"},
@@ -13,10 +14,26 @@ const useReservationStore = create(set=>({
     user: user,
     choiceUser : null,
     findUser : (payload)=> set (state=> {
-        if(payload === ""){
-            return ({user : user})
+
+        let {start, end, text} = payload;
+
+        if(text === ""){
+                return ({user : user})
         }
-       return ({user : state.user.filter(a=> a.name === payload )})
+
+        text = new RegExp(text);
+
+        const result = user.filter(a=>{
+            return ( 
+                start < dayjs(a.date) && //시작날싸 
+                dayjs(a.date) < end && //끝 날짜
+                text.test(a.name) // 이름
+                )
+        })
+
+
+            return ({user : result})
+
     }),
     choice : (payload)=> set (state=> ({choiceUser : payload}) )
 }))

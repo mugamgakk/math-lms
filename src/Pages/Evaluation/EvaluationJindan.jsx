@@ -6,7 +6,7 @@ function EvaluationJindan() {
     return ( 
         <div className='row'>
             <ReservationSearch/>
-            <EvaluationJindanContent/>
+            {/* <EvaluationJindanContent/> */}
         </div>
      );
 }
