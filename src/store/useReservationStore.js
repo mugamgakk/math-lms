@@ -31,8 +31,7 @@ const useReservationStore = create(set=>({
                 )
         })
 
-
-            return ({user : result})
+        return ({user : result})
 
     }),
     choice : (payload)=> set (state=> ({choiceUser : payload}) )

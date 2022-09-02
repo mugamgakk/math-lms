@@ -499,3 +499,16 @@ input.form-control{
         }
     }
 }
+
+.EvaluationJindanContent{
+    .evaluation-print{
+        background-color: #ccc;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        border: 1px solid #eee;
+        margin: 20px 0;
+        padding: 20px;
+    }
+}
