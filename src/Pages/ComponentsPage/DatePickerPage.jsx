@@ -34,8 +34,7 @@ function DatePickerPage() {
                 >
                     캘린더 아이콘
                 </button>
-
-                
+  
                 <br />
 
                 <h4>calendar props</h4>
@@ -75,7 +74,7 @@ function DatePickerPage() {
                         dayjs('2018-08-08').set('month', 3) 달을 3월로 바꾸기
                         dayjs('2018-08-08').add(1, "y") 다음년도 날짜 얻기
                         dayjs('2018-08-08').subtract(1, "year") 작년 날짜 얻기
-                        dayjs('2018-08-08').format() 포맷 얻기 2021-10-10T19:03:02+09:00
+                        dayjs('2018-08-08').format() 포맷 얻기 (근데 문자열임) 2021-10-10T19:03:02+09:00
                         dayjs('2018-08-08').get("y") 년도 얻기
                         
 
