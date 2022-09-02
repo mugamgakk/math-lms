@@ -260,20 +260,82 @@
                   input[type=checkbox]{
                       display: none;
                     }
-                    label{
+                    label:not(.checkAll){ 
                         display: inline-block;
                         width: 15px;
                         height: 15px;
                         border: 1px solid #ccc;
                         background: #fff;
-                        
                     }
-                    input[type=checkbox]:checked ~ label{
+                    input[type=checkbox]:not(.checkAll):checked ~ label{
                         background: #000;
+                    }
+                    .checkAll ~ label{
+                        position: relative;
+                    }
+                    .checkAll ~ label::after{
+                        content:'';
+                        display: inline-block;
+                        position: absolute;
+                        width: 15px;
+                        height: 15px;
+                        border: 1px solid #000;
+                        background: #fff;
+                    }
+                    .checkAll:checked ~ label::after{
+                        background: #000;
+
+                    }
+                    
+                 
+                    .isCheck ~ label::after{
+                        background-color: #000;
+                        box-shadow: 0 0 0 2px #fff inset;
+                    }
+                    
+                }
+                .toggleWrap{
+                    .buttonWrap{
+                        position: relative;
+
+                    .checkToggle{
+                        width: 20px;
+                        height: 20px;
+                        background: #fff;
+                        border: 1px solid #000;
+                        position: relative;
+                        &::after{
+                            content: '';
+                            display: inline-block;
+                            position: absolute;
+                            left: 50%;
+                            top: 6px;
+                            transform: translateX(-50%);
+                            border-bottom: 7px solid transparent;
+                            border-top: 7px solid #000;
+                            border-left: 7px solid transparent;
+                            border-right: 7px solid transparent;
+                           
+                        }
+                    }
+                    .selectWrap{
+                        position: absolute;
+                        top: 100%;
+                        left: 0;
+                        width: 150px;
+                        background: #fff;
+                        text-align: left;
+                         .checkWrap{
+                            input{
+                                border: 2px solid;
+                            }
+
+
+                         }
+                        }
                     }
                 }
             }
         }
-
     }
 }
