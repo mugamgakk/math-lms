@@ -10,12 +10,6 @@ function DatePickerPage() {
     const [openCalendar, setOpenCalendar] = React.useState(false);
 
 
-    let a = dayjs('2018-08-08').subtract(1, "year")
-
-    console.log(a)
-
-
-
     return ( 
         <div style={{marginTop : "100px"}}>
                 <h2>DatePicker</h2>
@@ -79,8 +73,11 @@ function DatePickerPage() {
                         `
                         dayjs('2018-08-08') 다양한 날씨 포맷을 넣어도 파씽해줌
                         dayjs('2018-08-08').set('month', 3) 달을 3월로 바꾸기
-                        dayjs('2018-08-08').add(1, "y") 년도 하나추가
-                        dayjs('2018-08-08').subtract(1, "year") 년도 하나빼기
+                        dayjs('2018-08-08').add(1, "y") 다음년도 날짜 얻기
+                        dayjs('2018-08-08').subtract(1, "year") 작년 날짜 얻기
+                        dayjs('2018-08-08').format() 포맷 얻기 2021-10-10T19:03:02+09:00
+                        dayjs('2018-08-08').get("y") 년도 얻기
+                        
 
                         y : 년도,
                         M : 달,
