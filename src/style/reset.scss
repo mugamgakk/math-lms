@@ -74,3 +74,21 @@ input[type="checkbox"]{
         background-color: #000;
     }
 }
+
+.picker-group{
+    position: relative;
+}
+
+.Reservation-datepicker{
+    display: flex;
+    position: absolute;
+    z-index: 10;
+    left: 0;
+    top: 30px;
+
+    .box{
+        border: 1px solid #ccc ;
+        padding: 10px;
+        background-color: #fff;
+    }
+}

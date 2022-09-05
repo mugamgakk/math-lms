@@ -42,8 +42,6 @@ function ReservationModal() {
 
     let [open, setOpen] = useState(true);
 
-
-
     return (
         <div className="modal-bg">
             <div className="modal-content">
