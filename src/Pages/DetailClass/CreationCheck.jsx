@@ -1,8 +1,38 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 
-function CreationCheck({data}) {
+function CreationCheck({data,dataList,setDataList}) {
     let [toggleState, setToggleState] = useState(false)
+    let [allCheck, setAllCheck] = useState(0);
+    let [checkData, setCheckData] = useState([]);
+    
+    // checkData를 value 로 가지는 배열 을 찾아서 그린다 
+    
+    useEffect(()=>{
+        checkData.length === data.length ? setAllCheck(2) : 
+        (checkData.length > 0 ? setAllCheck(1) : setAllCheck(0))
+        console.log(checkData);
+
+    },[checkData]);
+    
+
+    
+    const oneCheckfunc = (target,item) => {
+        if(target.checked){
+            setCheckData([...checkData,item]);
+        }else{
+            setCheckData(checkData.filter(data=> data !== item));
+        }
+    }
+
+    const allCheckfunc = (checked) => {
+        if(checked){
+            setCheckData([...data]);
+        }else{
+            setCheckData([]);
+        }
+    }
+
 
     return (
          <div className="buttonWrap">
@@ -11,14 +41,23 @@ function CreationCheck({data}) {
                 toggleState &&
                 <div className="selectWrap">
                     <div className="checkWrap">
-                        <input type="checkbox" className='checkAll' id='selectCheckAll' name=""/>
-                        <label htmlFor='selectCheckAll'>전체</label>
+                        <input type="checkbox" 
+                        className={allCheck === 1 ? 'checkAll isCheck' : 'checkAll'} 
+                        id={data[0]}
+                        name='all' 
+                        onChange={(e) => allCheckfunc(e.target.checked)} 
+                        checked={ allCheck === 2 } />
+                        <label htmlFor={data[0]}>전체</label>
                     </div>
                 {
                     data.map(item => {
                         return(
-                            <div className="checkWrap">
-                                <input type="checkbox" name="" id={item}/>
+                            <div className="checkWrap" key={item}>
+                                <input type="checkbox" name={item} id={item} 
+                                onChange={
+                                    (e) => oneCheckfunc(e.target,item) 
+                                } 
+                                checked={checkData.includes(item)}/>
                                 <label htmlFor={item}>{item}</label>
                             </div>
                         )
@@ -29,5 +68,8 @@ function CreationCheck({data}) {
         </div>
     );
 }
+
+// onChange 되면 Checked 가 true 인 checkbox 의 name 을 필터함수에 넣고   
+
 
 export default CreationCheck ;
