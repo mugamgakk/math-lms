@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
+import CreationCheck from '../CreationCheck'
 
 let data = [
     {
@@ -42,16 +44,35 @@ let data = [
        level : '하'
     },
 ]
+
+let 출처 = ['개념서', '뜨레스', '맞춤 클리닉'];
+let 문제형식 = ['객관식','주관식','서술형'];
+let 난이도 = ['최상','상','중상','중','중하','하','최하'];
+
 function CreationModal({setCreationMo,name}){
     let [checkState,setCheckState] = useState([]);
+    let [allCheck, setAllCheck] = useState(0);
 
-    console.log(checkState);
+    useEffect(()=>{
+        data.length === checkState.length ? setAllCheck(2) :
+        ( checkState.length > 0 ? setAllCheck(1) : setAllCheck(0) ) 
+    },[checkState]);
 
-    const changeCheckState = (id) => {
-        if(checkState.includes(id)){
-            setCheckState(checkState.filter(item => item !== id));
+
+
+    const changeCheckState = (tr) => {
+        if(checkState.includes(tr)){
+            setCheckState(checkState.filter(item => item !== tr));
         }else{
-            setCheckState([...checkState, id]);        
+            setCheckState([...checkState, tr]);
+        }
+    }
+
+    const allCheckState = (checked) => {
+        if(checked){
+            setCheckState([...data]);
+        }else{
+            setCheckState([]);
         }
     }
 
@@ -78,18 +99,35 @@ function CreationModal({setCreationMo,name}){
                             <tr>
                                 <td>
                                     <div className="check-wrap">
-                                        <input type="checkbox" name="" class="checkAll" id='checkAll'/>
-                                        <label htmlFor='checkAll' className='checkAll'>선택</label>
+                                        <input type="checkbox" name="" className={allCheck === 1 ? 'checkAll isCheck' : 'checkAll'} id='checkAll' 
+                                        onChange={(e)=>allCheckState(e.target.checked)}
+                                         checked={ allCheck === 2 }/>
+                                        <label htmlFor='checkAll' className='checkAll pl-20' >선택</label>
                                     </div>
                                     <span>(25/25)</span>
                                 </td>
                                 <td>대단원</td>
                                 <td>소단원</td>
                                 <td>개념(키워드)</td>
-                                <td>출처</td>
+                                <td>
+                                    <div className='toggleWrap fj'>
+                                       <CreationCheck data={출처}/>
+                                        <span>출처</span>
+                                    </div>
+                                </td>
                                 <td>번호</td>
-                                <td>문제 형식</td>
-                                <td>난이도</td>
+                                <td>
+                                    <div className='toggleWrap fj'>
+                                       <CreationCheck data={문제형식}/>
+                                        <span>문제 형식</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div className='toggleWrap fj'>
+                                       <CreationCheck data={난이도}/>
+                                        <span>난이도</span>
+                                    </div>
+                                </td>
                                 <td>문제 보기</td>
                             </tr>
                         </thead>
@@ -100,9 +138,9 @@ function CreationModal({setCreationMo,name}){
                                         <tr key={tr.id}>
                                             <td>
                                                 <div className="check-wrap">
-                                                    <input type="checkbox" id={tr.id}
-                                                     onChange={(e)=>changeCheckState(e.target.id)} 
-                                                     checked={ checkState.includes(tr.id) ? 'checked' : null}/>
+                                                    <input type="checkbox" id={tr.id} value=''
+                                                     onChange={() => changeCheckState(tr)} 
+                                                     checked={ checkState.includes(tr)}/>
                                                     <label htmlFor={tr.id}></label>
                                                 </div>
                                             </td>
