@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Calendar from "react-calendar";
 import SelectBase from "../../components/ui/select/SelectBase";
 import dayjs from "dayjs";
-import { weekChange } from "../../methods/method";
+import { weekChange } from "../../methods/methods";
 
 const 시간 = [];
 const 분 = [];
