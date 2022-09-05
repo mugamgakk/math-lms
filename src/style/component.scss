@@ -501,6 +501,11 @@ input.form-control{
 }
 
 .EvaluationJindanContent{
+
+    .name-input{
+        width: 100px !important;
+    }
+
     .evaluation-print{
         background-color: #ccc;
         display: flex;
