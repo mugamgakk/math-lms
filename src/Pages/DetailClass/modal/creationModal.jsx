@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import CreationCheck from '../CreationCheck'
+import CreationCheck from '../CreationCheck';
 
 let data = [
     {
@@ -50,8 +50,15 @@ let 문제형식 = ['객관식','주관식','서술형'];
 let 난이도 = ['최상','상','중상','중','중하','하','최하'];
 
 function CreationModal({setCreationMo,name}){
+
     let [checkState,setCheckState] = useState([]);
     let [allCheck, setAllCheck] = useState(0);
+    let [dataList,setDataList] = useState(null);
+ 
+
+    useEffect(()=>{
+        setDataList(data);
+    },[]);
 
     useEffect(()=>{
         data.length === checkState.length ? setAllCheck(2) :
@@ -75,6 +82,8 @@ function CreationModal({setCreationMo,name}){
             setCheckState([]);
         }
     }
+
+
 
     return(
 
@@ -111,20 +120,32 @@ function CreationModal({setCreationMo,name}){
                                 <td>개념(키워드)</td>
                                 <td>
                                     <div className='toggleWrap fj'>
-                                       <CreationCheck data={출처}/>
+                                       <CreationCheck 
+                                       data={출처} 
+                                       dataList={dataList} 
+                                       setDataList={setDataList} 
+                                       users={data}/>
                                         <span>출처</span>
                                     </div>
                                 </td>
                                 <td>번호</td>
                                 <td>
                                     <div className='toggleWrap fj'>
-                                       <CreationCheck data={문제형식}/>
+                                       <CreationCheck 
+                                       data={문제형식} 
+                                       dataList={dataList} 
+                                       setDataList={setDataList} 
+                                       users={data}/>
                                         <span>문제 형식</span>
                                     </div>
                                 </td>
                                 <td>
                                     <div className='toggleWrap fj'>
-                                       <CreationCheck data={난이도}/>
+                                       <CreationCheck 
+                                       data={난이도} 
+                                       dataList={dataList} 
+                                       setDataList={setDataList} 
+                                       users={data}/>
                                         <span>난이도</span>
                                     </div>
                                 </td>
@@ -132,8 +153,10 @@ function CreationModal({setCreationMo,name}){
                             </tr>
                         </thead>
                         <tbody>
+                        
                             {
-                                data.map(tr=>{
+                                dataList && 
+                                dataList.map(tr=>{
                                     return(
                                         <tr key={tr.id}>
                                             <td>
