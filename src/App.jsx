@@ -20,6 +20,7 @@ const DetailClass = lazy(()=> import('./Pages/DetailClass'))
 const PlusLearning = lazy(()=> import('./Pages/PlusLearning') )
 const TodayClass = lazy(()=> import('./Pages/TodayClass') )
 const Evaluation = lazy(()=> import('./Pages/Evaluation') )
+const Test = lazy(()=> import('./Pages/Test') )
 
 
 function App() {
@@ -56,6 +57,7 @@ function App() {
             <Route path="audio" element={<AudioPage/>} />
             <Route path="select" element={<SelectPage/>} />
         </Route>
+        <Route path="/test" element={<Test/>} />
         <Route path="*" element={<div style={{textAlign : "center"}}>페이지 없습니둥</div>} />
       </Routes>
       </Suspense>

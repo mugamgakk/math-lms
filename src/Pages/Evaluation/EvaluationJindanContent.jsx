@@ -34,6 +34,7 @@ function EvaluationJindanContent() {
                 연동하지 않은 평가 결과는 개인 정보 보호 정책에 따라 1 년 후 삭제됩니다 .
             </Box>
 
+
             <EvaluationPrint />
 
             
@@ -82,9 +83,9 @@ function EvaluationJindanContent() {
                 </thead>
                 <tbody>
                     {
-                        data.map(a=>{
+                        data.map((a,i)=>{
                             return (
-                                <tr>
+                                <tr key={i}>
                                     <td><input type="checkbox" /></td>
                                     <td>{a.day}</td>
                                     <td>{a.name}</td>

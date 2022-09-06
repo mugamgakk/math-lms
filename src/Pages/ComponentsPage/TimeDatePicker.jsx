@@ -5,20 +5,13 @@ import dayjs from "dayjs";
 import { weekChange } from "../../methods/methods";
 
 const 시간 = [];
-const 분 = [];
+const 분 = ["00", "10", "20", "30", "40", "50"];
 
 for (let i = 1; i <= 23; i++) {
     if (i < 10) {
         시간.push("0" + i.toString());
     } else {
         시간.push(i);
-    }
-}
-for (let i = 1; i <= 59; i++) {
-    if (i < 10) {
-        분.push("0" + i.toString());
-    } else {
-        분.push(i);
     }
 }
 

@@ -71,7 +71,7 @@ const Search = () => {
         text : ""
     })
 
-    console.log(value)
+    // console.log(value)
 
     let findUser = useReservationStore((state) => state.findUser);
 

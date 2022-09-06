@@ -17,5 +17,19 @@ function weekChange (param){
     }
 }
 
+// 용량 체크 함수
+// KB는 1,024Byte이고, MB는 1,024KB 임
+const getByteSize = (size) => {
+    // 파라미터에는 파일 사이즈
 
-export {weekChange}
+    const byteUnits = ["kb", "mb"];
+  
+    for (let i = 0; i < byteUnits.length; i++) {
+      size = (size / 1024);
+
+      if (size < 1024) return size.toFixed(1) + byteUnits[i];
+    }
+};
+
+
+export {weekChange, getByteSize}
