@@ -5,7 +5,6 @@ import './style/common.scss';
 import './style/utility.scss'
 import { Routes, Route, Link } from 'react-router-dom';
 import Home from './Pages/Home';
-
 import Components from './Pages/Components';
 import PrismaZoomPage from './Pages/ComponentsPage/PrismaZoomPage';
 import DatePickerPage from './Pages/ComponentsPage/DatePickerPage';
@@ -56,8 +55,8 @@ function App() {
             <Route path="print" element={<PrintPage/>} />
             <Route path="audio" element={<AudioPage/>} />
             <Route path="select" element={<SelectPage/>} />
+            <Route path="file" element={<Test/>}/>
         </Route>
-        <Route path="/test" element={<Test/>} />
         <Route path="*" element={<div style={{textAlign : "center"}}>페이지 없습니둥</div>} />
       </Routes>
       </Suspense>

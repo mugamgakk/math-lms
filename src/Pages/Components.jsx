@@ -11,8 +11,8 @@ function Components() {
                 <li style={{marginRight : "20px"}}><Link to="/components/print">인쇄/ pdf </Link></li>
                 <li style={{marginRight : "20px"}}><Link to="/components/audio">오디오 컴포넌트</Link></li>
                 <li style={{marginRight : "20px"}}><Link to="/components/select">셀렉트</Link></li>
+                <li style={{marginRight : "20px"}}><Link to="/components/file">파일 업로드 & 다운로드</Link></li>
             </ul>
-
           <Outlet/>
             
         </div>

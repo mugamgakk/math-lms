@@ -1,47 +1,43 @@
-import React, { useState } from 'react';
-import UserInfo from '../../../components/UserInfo';
-import AttendanceManagement from './AttendanceManagement';
-import LearningBreakdownTable from './LearningBreakdownTable';
-import ClassManagement from './ClassManagement';
+import React, { useState } from "react";
+import UserInfo from "../../../components/UserInfo";
+import AttendanceManagement from "./AttendanceManagement";
+import LearningBreakdownTable from "./LearningBreakdownTable";
+import ClassManagement from "./ClassManagement";
 
+const classItems = ["수업 관리", "오답 정복하기", "학습 분석표", "출결 관리"];
 
-function ClassTabs({clickStudent}) {
-
+function ClassTabs({ clickStudent }) {
     let [tabState, setTabState] = useState(0);
 
-    return ( 
-        <div className='class-tabs'>
-            <div className='btn-group' style={{margin : "10px 0"}}>
-                <button 
-                className={'btn' + `${tabState === 0 ? ' active' : ''}`}
-                onClick={()=>{setTabState(0)}}
-                >수업 관리</button>
-                <button 
-                className={'btn' + `${tabState === 1 ? ' active' : ''}`}
-                onClick={()=>{setTabState(1)}}
-                >오답 정복하기</button>
-                <button 
-                className={'btn' + `${tabState === 2 ? ' active' : ''}`}
-                onClick={()=>{setTabState(2)}}
-                >학습 분석표</button>
-                <button 
-                className={'btn' + `${tabState === 3 ? ' active' : ''}`}
-                onClick={()=>{setTabState(3)}}
-                >출결 관리</button>
+    return (
+        <div className="class-tabs">
+            <div className="btn-group" style={{ margin: "10px 0" }}>
+                {classItems.map((a, index) => {
+                    return (
+                        <button
+                            className={"btn" + `${tabState === index ? " active" : ""}`}
+                            onClick={() => {
+                                setTabState(index);
+                            }}
+                        >
+                            {a}
+                        </button>
+                    );
+                })}
             </div>
 
-            <UserInfo clickStudent={clickStudent}/>
+            <UserInfo clickStudent={clickStudent} />
 
             {
                 {
-                    0 : <ClassManagement clickStudent={clickStudent}/>,
-                    1 : <div>2</div>,
-                    2 : <LearningBreakdownTable/>,
-                    3 : <AttendanceManagement/>
+                    0: <ClassManagement clickStudent={clickStudent} />,
+                    1: <div>2</div>,
+                    2: <LearningBreakdownTable />,
+                    3: <AttendanceManagement />,
                 }[tabState]
             }
         </div>
-     );
+    );
 }
 
 export default ClassTabs;

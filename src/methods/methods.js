@@ -38,7 +38,12 @@ const getByteSize = (size) => {
 
 //  파일 한개를 파라미터로 넣어서 다운로드한다.
 //  두번째 파라미터로 파일명을 지정한다 (기본값 : 원본 파일명)
+
+// * 첨부파일 다운로드 시 탐색기 팝업 , 경로 지정 가능하도록 함  => 보안상 디렉토리 지정을 못함
+
 const fileDown = (file, fileName = file.originalFileName) => {
+    // var blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
+    // FileSaver.saveAs(blob, fileName)
     FileSaver.saveAs(file, fileName)
 }
 
@@ -62,7 +67,6 @@ const makeZip = (filesArr, fileName = "download") => {
             FileSaver.saveAs(content, fileName)
         })
 }
-
 
 
 
