@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 
-function CreationCheck({data,dataList,setDataList}) {
+function CreationCheck({data,setData}) {
     let [toggleState, setToggleState] = useState(false)
     let [allCheck, setAllCheck] = useState(0);
     let [checkData, setCheckData] = useState([]);
@@ -10,6 +10,7 @@ function CreationCheck({data,dataList,setDataList}) {
     useEffect(()=>{
         checkData.length === data.length ? setAllCheck(2) : 
         (checkData.length > 0 ? setAllCheck(1) : setAllCheck(0))
+        setData(checkData);
     },[checkData]);
     
 
@@ -40,11 +41,11 @@ function CreationCheck({data,dataList,setDataList}) {
                     <div className="checkWrap">
                         <input type="checkbox" 
                         className={allCheck === 1 ? 'checkAll isCheck' : 'checkAll'} 
-                        id={data[0]}
+                        id={`${data[0]}_all`}
                         name='all' 
                         onChange={(e) => allCheckfunc(e.target.checked)} 
                         checked={ allCheck === 2 } />
-                        <label htmlFor={data[0]}>전체</label>
+                        <label htmlFor={`${data[0]}_all`}>전체</label>
                     </div>
                 {
                     data.map(item => {
