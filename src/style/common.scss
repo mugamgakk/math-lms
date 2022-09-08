@@ -236,6 +236,7 @@
     }
     .creationModal{
         width: 1000px;
+        height: 500px;
         &-body{
             .top{
                 @include flex(start);
@@ -340,6 +341,18 @@
                     }
                 }
             }
+        }
+    }
+}
+
+.detailClass.wrongAnswerMaster{
+    .top{
+        margin-bottom: 10px;
+        &-left{
+            display: flex;
+        }
+        &-right{
+
         }
     }
 }
