@@ -1,9 +1,9 @@
 import React, { useCallback, useRef, useState } from "react";
-import { getByteSize, fileDown, makeZip } from "../methods/methods";
+import { getByteSize, fileDown, makeZip } from "../../methods/methods";
 
 
 
-function Test() {
+function FileDownLoad() {
     let [files, setFiles] = useState([]);
     let 총파일크기 = useRef(0);
 
@@ -104,4 +104,4 @@ function Test() {
     );
 }
 
-export default Test;
+export default FileDownLoad;

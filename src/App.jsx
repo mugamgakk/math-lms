@@ -11,6 +11,7 @@ import DatePickerPage from './Pages/ComponentsPage/DatePickerPage';
 import PrintPage from './Pages/ComponentsPage/PrintPage';
 import AudioPage from './Pages/ComponentsPage/AudioPage';
 import SelectPage from './Pages/ComponentsPage/SelectPage';
+import TableToExcel from './Pages/ComponentsPage/TableToExcel';
 
 
 const Login = lazy(()=> import('./Pages/Login') )
@@ -20,7 +21,7 @@ const PlusLearning = lazy(()=> import('./Pages/PlusLearning') )
 const TodayClass = lazy(()=> import('./Pages/TodayClass') )
 const Evaluation = lazy(()=> import('./Pages/Evaluation') )
 const Statistics = lazy(()=> import('./Pages/Statistics') )
-const Test = lazy(()=> import('./Pages/Test') )
+const FileDownLoad = lazy(()=> import('./Pages/ComponentsPage/FileDownLoad') )
 
 
 function App() {
@@ -59,7 +60,8 @@ function App() {
             <Route path="print" element={<PrintPage/>} />
             <Route path="audio" element={<AudioPage/>} />
             <Route path="select" element={<SelectPage/>} />
-            <Route path="file" element={<Test/>}/>
+            <Route path="file" element={<FileDownLoad/>}/>
+            <Route path="table-excel" element={<TableToExcel/>}/>
         </Route>
         <Route path="*" element={<div style={{textAlign : "center"}}>페이지 없습니둥</div>} />
       </Routes>
