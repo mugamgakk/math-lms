@@ -6,7 +6,7 @@ import ReservationModal from './ReservationModal';
 
 function EvaluationJindan() {
 
-    let [modal, setModal] = useState(true);
+    let [modal, setModal] = useState(false);
 
     return ( 
         <div className='row'>

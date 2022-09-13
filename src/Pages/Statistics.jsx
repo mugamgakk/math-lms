@@ -68,11 +68,13 @@ function Statistics() {
     let [sortPoint, setSortPoint] = useState("desc");
     const tableRef = useRef(null);
 
+    // 라이브러리때문에 3번 재랜더링 됨
     const { onDownload } = useDownloadExcel({
         currentTableRef: tableRef.current,
         filename: "Users table",
         sheet: "Users",
     });
+    
 
     const sortList = () => {
         let copy = [...value];
@@ -100,6 +102,8 @@ function Statistics() {
         setValue(data);
     };
 
+    console.log("재랜더링")
+
     return (
         <div className="Statistics container">
             <ContentHeader title={"학습 포인트 현황"} />
@@ -112,7 +116,13 @@ function Statistics() {
                     <button className="btn" onClick={resetList}>
                         초기화
                     </button>
-                    <button className="btn" onClick={onDownload}>
+                    <button className="btn" onClick={()=>{
+                        if(window.confirm("다운로드 하시겠습니까?")){
+                            onDownload()
+                        }else{
+                            return 
+                        }
+                        }}>
                         다운로드
                     </button>
                 </div>

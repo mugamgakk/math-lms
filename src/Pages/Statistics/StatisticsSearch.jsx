@@ -12,13 +12,13 @@ function StatisticsSearch({value, setValue}) {
 
     let initialData = useRef(value);
 
-    // useEffect(()=>{
-    //         let a = initialData.current.filter(a=>{
-    //             return checkState.includes(a.ban)
-    //         })
+    useEffect(()=>{
+            let a = initialData.current.filter(a=>{
+                return checkState.includes(a.ban)
+            })
     
-    //         setValue(a)
-    // },[checkState])
+            setValue(a)
+    },[checkState])
 
     return (
         <div className="StatisticsSearch">

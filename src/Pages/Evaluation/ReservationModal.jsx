@@ -62,6 +62,7 @@ function ReservationModal() {
                                 <td>
                                     <input
                                         type="text"
+                                    style={{width : "100px"}}
                                         value={value.name}
                                         className="form-control"
                                         onChange={(e) =>
@@ -100,6 +101,7 @@ function ReservationModal() {
                                 <td>
                                 <input
                                     type="text"
+                                    style={{width : "100px"}}
                                     value={value.school}
                                     className="form-control"
                                     onChange={(e) => setValue({ ...value, school: e.target.value })}
@@ -121,6 +123,7 @@ function ReservationModal() {
                                 <td>
                                     <input
                                         type="text"
+                                        style={{width : "100px"}}
                                         className="form-control"
                                         maxLength={3}
                                         onChange={(e) => {
@@ -132,6 +135,7 @@ function ReservationModal() {
                                     />
                                     <input
                                         type="text"
+                                        style={{width : "100px"}}
                                         className="form-control"
                                         maxLength={4}
                                         onChange={(e) => {
@@ -143,6 +147,7 @@ function ReservationModal() {
                                     />
                                     <input
                                         type="text"
+                                        style={{width : "100px"}}
                                         className="form-control"
                                         maxLength={4}
                                         onChange={(e) => {
@@ -159,6 +164,7 @@ function ReservationModal() {
                                 <td>
                                     <input
                                         type="text"
+                                        style={{width : "100px"}}
                                         className="form-control"
                                         maxLength={3}
                                         onChange={(e) => {
@@ -173,6 +179,7 @@ function ReservationModal() {
                                     />
                                     <input
                                         type="text"
+                                    style={{width : "100px"}}
                                         className="form-control"
                                         maxLength={4}
                                         onChange={(e) => {
@@ -187,6 +194,7 @@ function ReservationModal() {
                                     />
                                     <input
                                         type="text"
+                                    style={{width : "100px"}}
                                         className="form-control"
                                         maxLength={4}
                                         onChange={(e) => {
@@ -221,6 +229,7 @@ function ReservationModal() {
                                         defaultValue="학년"
                                         options={학년}
                                         value={value.진단평가학년1}
+                                        width="100px"
                                         onChange={(ele) => {
                                             setValue({
                                                 ...value,
@@ -232,6 +241,7 @@ function ReservationModal() {
                                         defaultValue="학기"
                                         options={학기}
                                         value={value.진단평가학기1}
+                                        width="100px"
                                         onChange={(ele) => {
                                             setValue({
                                                 ...value,
@@ -284,12 +294,14 @@ const Fn = memo(({ setCount, count, index, value, setValue }) => {
                     defaultValue="학년"
                     options={학년}
                     value={value["진단평가학년" + (index + 2)]}
+                    width="100px"
                     onChange={(ele) => setValue({ ...value, ["진단평가학년" + (index + 2)]: ele })}
                 />
                 <SelectBase
                     defaultValue="학기"
                     options={학기}
                     value={value["진단평가학기" + (index + 2)]}
+                    width="100px"
                     onChange={(ele) => setValue({ ...value, ["진단평가학기" + (index + 2)]: ele })}
                 />
                 {count.length === index + 1 && (
