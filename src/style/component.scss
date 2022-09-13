@@ -321,3 +321,32 @@ input.form-control{
         width: 100px;
     }
 }
+
+.btn-sort{
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ccc;
+    position: relative;
+
+    &::after{
+        content: '';
+        display: block;
+        width: 0;
+        height: 0;
+        border-top: 8px solid #000;
+        border-bottom: 8px solid transparent;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        position: absolute;
+        left: 50%;
+        top: 69%;
+        transform: translate(-50%, -50%);
+    }
+
+    &.asc{
+        &::after{
+            top: 30%;
+            transform: translate(-50%, -50%) rotate(180deg);
+        }
+    }
+}
