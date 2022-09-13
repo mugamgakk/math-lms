@@ -1,49 +1,8 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import CreationCheck from '../CreationCheck';
+import useStore from '../../../store/useCreationModal';
 
-let data = [
-    {
-       id : 0, 
-       deadanwon : 'I. 수와 연산',
-       sodanwon : '1. 소인수분해',
-       keyword : '소수와 합성수',
-       class : '개념서',
-       num : 3,
-       answer : '객관식',
-       level : '중하'
-    },
-    {
-       id : 1, 
-       deadanwon : 'I. 수와 연산',
-       sodanwon : '1. 소인수분해',
-       keyword : '소인수분해',
-       class : '뜨레스',
-       num : 10,
-       answer : '객관식',
-       level : '중상'
-    },
-    {
-       id : 2, 
-       deadanwon : 'I. 수와 연산',
-       sodanwon : '3. 최소공배수와 그 활용',
-       keyword : '최소공배수의 활용',
-       class : '뜨레스',
-       num : 7,
-       answer : '주관식',
-       level : '중'
-    },
-    {
-       id : 3, 
-       deadanwon : 'I. 수와 연산',
-       sodanwon : '2. 최대공약수와 그 활용',
-       keyword : '최소공배수 구하기',
-       class : '개념서',
-       num : 5,
-       answer : '객관식',
-       level : '하'
-    },
-]
 
 let 출처 = ['개념서', '뜨레스', '맞춤 클리닉'];
 let 문제형식 = ['객관식','주관식','서술형'];
@@ -53,30 +12,41 @@ function CreationModal({setCreationMo,name}){
 
     let [checkState,setCheckState] = useState([]);
     let [allCheck, setAllCheck] = useState(0);
+    let {data} = useStore(state=>state);
     let [dataList,setDataList] = useState(null);
+
     
     let [chul,setChul] = useState([]);
     let [mun,setMun] = useState([]);
-    let [level,setLevel] = useState([]);
+    let [nanido,setNanido] = useState([]);
 
+    let arr = [];
 
-
-    
     useEffect(()=>{
-        setDataList(data);
+            setDataList(data);
     },[]);
     
     useEffect(()=>{
-        let newList = chul.length !== 0 && dataList.filter(item => chul.includes(item.class));
-        newList && setDataList([...newList]);
-    },[chul]);
+        data.length === checkState.length ? setAllCheck(2) :
+        ( checkState.length > 0 ? setAllCheck(1) : setAllCheck(0)) 
+    },[checkState]);
+   
+    
     
     useEffect(()=>{
-        data.length === checkState.length ? setAllCheck(2) :
-        ( checkState.length > 0 ? setAllCheck(1) : setAllCheck(0) ) 
-    },[checkState]);
+        
+        
+        let newList = chul.length !== 0 ? 
+        (
+            arr.length > 0 ? arr.filter(item => chul.includes(item.class)) 
+            : data.filter(item => chul.includes(item.class))
+        )
+        : null;
+            
+        newList && arr.push(...newList);
+        arr.length > 0 ? setDataList([...arr]) : setDataList([]);
 
-
+    },[chul]);
 
     const changeCheckState = (tr) => {
         if(checkState.includes(tr)){
@@ -132,8 +102,11 @@ function CreationModal({setCreationMo,name}){
                                 <td>
                                     <div className='toggleWrap fj'>
                                        <CreationCheck 
-                                        data={출처} 
+                                        data={출처}
+                                        checkTarget={chul}
                                         setData={setChul}
+                                        dataList={dataList}
+                                        setDataList={setDataList}
                                         />
                                         <span>출처</span>
                                     </div>
@@ -143,7 +116,10 @@ function CreationModal({setCreationMo,name}){
                                     <div className='toggleWrap fj'>
                                        <CreationCheck 
                                         data={문제형식} 
+                                        checkTarget={mun}
                                         setData={setMun}
+                                        dataList={dataList}
+                                        setDataList={setDataList}
                                         />
                                         <span>문제 형식</span>
                                     </div>
@@ -152,7 +128,10 @@ function CreationModal({setCreationMo,name}){
                                     <div className='toggleWrap fj'>
                                        <CreationCheck 
                                         data={난이도} 
-                                        setData={setLevel}
+                                        checkTarget={nanido}
+                                        setData={setNanido}
+                                        dataList={dataList}
+                                        setDataList={setDataList}
                                         />
                                         <span>난이도</span>
                                     </div>
