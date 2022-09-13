@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 
-function CreationCheck({data,setData}) {
+function CreationCheck({data,setData,checkTarget,dataList,setDataList}) {
     let [toggleState, setToggleState] = useState(false)
     let [allCheck, setAllCheck] = useState(0);
-    let [checkData, setCheckData] = useState([]);
+    let [checkData, setCheckData] = useState([]);                                        
     
     
     useEffect(()=>{
@@ -12,9 +12,7 @@ function CreationCheck({data,setData}) {
         (checkData.length > 0 ? setAllCheck(1) : setAllCheck(0))
         setData(checkData);
     },[checkData]);
-    
 
-    
     const oneCheckfunc = (target,item) => {
         if(target.checked){
             setCheckData([...checkData,item]);

@@ -16,6 +16,7 @@ function ClassTabs({ clickStudent }) {
                 {classItems.map((a, index) => {
                     return (
                         <button
+                            key={index}
                             className={"btn" + `${tabState === index ? " active" : ""}`}
                             onClick={() => {
                                 setTabState(index);
