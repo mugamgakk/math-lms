@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import ProgressModal from '../modal/progressModal';
-import ProgressModalV2 from '../modal/progressModalV2';
 import CreationModal from '../modal/creationModal';
-import { useSelector } from 'react-redux';
+import { useMemo } from "react";
 
 let daedanwon = { 
       tit : 'I. 수와 연산',
@@ -97,7 +96,7 @@ function ClassManagement({clickStudent}){
                 </tr>
                 {
                     daedanwon.sodanwon.map(data=>{
-                        return <Tr key={data.name} data={data}/>;
+                        return <Tr key={data.name} data={data}/>
                     })
                 }
             </tbody>
@@ -108,7 +107,7 @@ function ClassManagement({clickStudent}){
     )
 }
 
-const Tr = ({data}) => {
+    const Tr = memo(({data}) => {
     return(
         <tr>
             <td>{data.name}</td>
@@ -154,5 +153,6 @@ const Tr = ({data}) => {
         </tr>
     )
     
-}
+    }
+)
 export default ClassManagement;

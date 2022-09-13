@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 
-function SelectBase({ width, onChange, options, value, defaultValue }) {
+function SelectBase({ width, onChange, options, value, defaultValue = "선택하세요" }) {
     let [selectOpen, setSelectOpen] = useState(false);
 
     return (
@@ -16,8 +16,6 @@ function SelectBase({ width, onChange, options, value, defaultValue }) {
                 {
                 value 
                 ? value 
-                : !defaultValue
-                ? "선택하세요"
                 : defaultValue
                 }
             </div>

@@ -54,12 +54,23 @@ function CreationModal({setCreationMo,name}){
     let [checkState,setCheckState] = useState([]);
     let [allCheck, setAllCheck] = useState(0);
     let [dataList,setDataList] = useState(null);
- 
+    
+    let [chul,setChul] = useState([]);
+    let [mun,setMun] = useState([]);
+    let [level,setLevel] = useState([]);
 
+
+
+    
     useEffect(()=>{
         setDataList(data);
     },[]);
-
+    
+    useEffect(()=>{
+        let newList = chul.length !== 0 && dataList.filter(item => chul.includes(item.class));
+        newList && setDataList([...newList]);
+    },[chul]);
+    
     useEffect(()=>{
         data.length === checkState.length ? setAllCheck(2) :
         ( checkState.length > 0 ? setAllCheck(1) : setAllCheck(0) ) 
@@ -121,10 +132,9 @@ function CreationModal({setCreationMo,name}){
                                 <td>
                                     <div className='toggleWrap fj'>
                                        <CreationCheck 
-                                       data={출처} 
-                                       dataList={dataList} 
-                                       setDataList={setDataList} 
-                                       users={data}/>
+                                        data={출처} 
+                                        setData={setChul}
+                                        />
                                         <span>출처</span>
                                     </div>
                                 </td>
@@ -132,20 +142,18 @@ function CreationModal({setCreationMo,name}){
                                 <td>
                                     <div className='toggleWrap fj'>
                                        <CreationCheck 
-                                       data={문제형식} 
-                                       dataList={dataList} 
-                                       setDataList={setDataList} 
-                                       users={data}/>
+                                        data={문제형식} 
+                                        setData={setMun}
+                                        />
                                         <span>문제 형식</span>
                                     </div>
                                 </td>
                                 <td>
                                     <div className='toggleWrap fj'>
                                        <CreationCheck 
-                                       data={난이도} 
-                                       dataList={dataList} 
-                                       setDataList={setDataList} 
-                                       users={data}/>
+                                        data={난이도} 
+                                        setData={setLevel}
+                                        />
                                         <span>난이도</span>
                                     </div>
                                 </td>

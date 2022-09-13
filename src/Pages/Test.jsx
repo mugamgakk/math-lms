@@ -64,7 +64,7 @@ function Test() {
                 <label htmlFor="file" className="btn">
                     업로드
                 </label>
-                <button className="btn" onClick={()=>{makeZip(files)}}>zip만드는 버튼</button>
+                <button className="btn" onClick={()=>{makeZip(files,"ghhgfhg")}}>zip만드는 버튼</button>
 
                 <div
                     style={{ padding: "10px", border: "1px solid #ccc" }}

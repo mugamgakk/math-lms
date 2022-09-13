@@ -1,18 +1,16 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 
-function CreationCheck({data,dataList,setDataList}) {
+function CreationCheck({data,setData}) {
     let [toggleState, setToggleState] = useState(false)
     let [allCheck, setAllCheck] = useState(0);
     let [checkData, setCheckData] = useState([]);
     
-    // checkData를 value 로 가지는 배열 을 찾아서 그린다 
     
     useEffect(()=>{
         checkData.length === data.length ? setAllCheck(2) : 
         (checkData.length > 0 ? setAllCheck(1) : setAllCheck(0))
-        console.log(checkData);
-
+        setData(checkData);
     },[checkData]);
     
 
@@ -43,11 +41,11 @@ function CreationCheck({data,dataList,setDataList}) {
                     <div className="checkWrap">
                         <input type="checkbox" 
                         className={allCheck === 1 ? 'checkAll isCheck' : 'checkAll'} 
-                        id={data[0]}
+                        id={`${data[0]}_all`}
                         name='all' 
                         onChange={(e) => allCheckfunc(e.target.checked)} 
                         checked={ allCheck === 2 } />
-                        <label htmlFor={data[0]}>전체</label>
+                        <label htmlFor={`${data[0]}_all`}>전체</label>
                     </div>
                 {
                     data.map(item => {
@@ -69,7 +67,6 @@ function CreationCheck({data,dataList,setDataList}) {
     );
 }
 
-// onChange 되면 Checked 가 true 인 checkbox 의 name 을 필터함수에 넣고   
 
 
 export default CreationCheck ;

@@ -4,7 +4,6 @@ import DatePicker from "react-date-picker"; // 데이트 피커
 import ChangeDate from "../components/ChangeDate";
 import TodayClassItem from "./TodayClass/TodayClassItem";
 import TodayClassSearch from "./TodayClass/TodayClassSearch"
-// import { useSelector } from 'react-redux'
 import useStore from '../store/useTodayClassStore';
 
 

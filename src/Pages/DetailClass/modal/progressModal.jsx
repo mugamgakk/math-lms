@@ -35,7 +35,7 @@ function progressModal({setProgressState,name}){
                                 <li>
                                     <div className="tit">개념서</div>
                                     <div className='gageWrap'>
-                                        <span class='gageWrap-gage' style={{ width: `${progress.개념}` }}>{progress.개념}</span>
+                                        <span className='gageWrap-gage' style={{ width: `${progress.개념}` }}>{progress.개념}</span>
                                         {
                                             per.map(item=>{
                                                 return <div className='gageWrap-item'>{item}</div>
@@ -46,7 +46,7 @@ function progressModal({setProgressState,name}){
                                 <li>
                                     <div className="tit">개념서</div>
                                     <div className='gageWrap'>
-                                        <span class='gageWrap-gage' style={{ width: `${progress.유형}` }}>{progress.유형}</span>
+                                        <span className='gageWrap-gage' style={{ width: `${progress.유형}` }}>{progress.유형}</span>
                                         {
                                             per.map(item=>{
                                                 return <div className='gageWrap-item'>{item}</div>
