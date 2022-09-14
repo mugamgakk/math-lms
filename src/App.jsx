@@ -5,6 +5,8 @@ import './style/common.scss';
 import './style/utility.scss'
 import { Routes, Route, Link } from 'react-router-dom';
 import Home from './Pages/Home';
+
+// ui
 import Components from './Pages/Components';
 import PrismaZoomPage from './Pages/ComponentsPage/PrismaZoomPage';
 import DatePickerPage from './Pages/ComponentsPage/DatePickerPage';
@@ -12,6 +14,7 @@ import PrintPage from './Pages/ComponentsPage/PrintPage';
 import AudioPage from './Pages/ComponentsPage/AudioPage';
 import SelectPage from './Pages/ComponentsPage/SelectPage';
 import TableToExcel from './Pages/ComponentsPage/TableToExcel';
+import Editor from './Pages/ComponentsPage/Editor';
 
 
 const Login = lazy(()=> import('./Pages/Login') )
@@ -62,6 +65,7 @@ function App() {
             <Route path="select" element={<SelectPage/>} />
             <Route path="file" element={<FileDownLoad/>}/>
             <Route path="table-excel" element={<TableToExcel/>}/>
+            <Route path="editor" element={<Editor/>}/>
         </Route>
         <Route path="*" element={<div style={{textAlign : "center"}}>페이지 없습니둥</div>} />
       </Routes>

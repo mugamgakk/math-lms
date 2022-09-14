@@ -13,6 +13,7 @@ function Components() {
                 <li style={{marginRight : "20px"}}><Link to="/components/select">셀렉트</Link></li>
                 <li style={{marginRight : "20px"}}><Link to="/components/file">파일 업로드 & 다운로드</Link></li>
                 <li style={{marginRight : "20px"}}><Link to="/components/table-excel">테이플 to 엑셀</Link></li>
+                <li style={{marginRight : "20px"}}><Link to="/components/editor">텍스트 에디터</Link></li>
             </ul>
           <Outlet/>
             

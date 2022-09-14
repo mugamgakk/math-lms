@@ -16,7 +16,7 @@ function TableToExcel() {
 
     return (
         <div>
-            <button onClick={onDownload}> Export excel </button>
+            <button className="btn" onClick={onDownload}> 엑셀로 만들기 </button>
 
             <table ref={tableRef}>
                 <tbody>
