@@ -47,10 +47,9 @@ let data = [
 const useCreationModal = create(set =>({
     data : data,
     reCreateData : null,
-    removeList: (payLoad,option) => {
+    reCreateFunc: (payLoad) => {
       set(state=>{
-      
-        return({  }) 
+        return({ reCreateData : payLoad }) 
       })
     },
      

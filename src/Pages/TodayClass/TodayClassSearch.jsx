@@ -5,51 +5,40 @@ import SelectBox from '../../components/ui/select/SelectBox';
 
 function TodayClassSearch({data,setFindList}) {
 
-    let [checkState, setCheckState] = useState([]);
     let [search, setSearch] = useState('');
 
     // 찾기 버튼
-    const findUser = ()=>{
-        let arr = [];
+    const findUser = () => {
+        let array = [];
 
-        data.forEach(list=>{
+        data.forEach(function (a) {
+            let regexp = new RegExp(search);
 
-            // 반으로 찾기
-            checkState.forEach(a=>{
+            if (regexp.test(a.name)) {
+                array.push(a);
+            }
+        });
+        setFindList(array);
+    };
 
-                if(list.반이름 === a){
-                    arr.push(list)
+
+    const findBan = (choiceArr)=>{
+        
+        const matchingArr = data.filter(a=>{
+            for(let ele of choiceArr){
+                if(a.반이름 === ele){
+                    return true
                 }
-
-            })
+            }
         })
 
-
-        //  검색창이 공백일시 반으로만 찾기
-        if(search === ''){
-            setFindList(arr)
-        }else{
-            // 이름 검색으로 찾기
-
-            let array = []
-
-            arr.forEach(function(a){
-                let regexp = new RegExp(search);
-
-                if(regexp.test(a.name)){
-                    array.push(a);
-                    setFindList(array)
-                }
-
-            })
-        }
-
+        setFindList(matchingArr)
     }
 
 
     return ( 
         <div>
-            <SelectBox width={"200px"} checkState={checkState} setCheckState={setCheckState} />
+            <SelectBox width={"200px"} onChange={findBan} />
             
             <input
                 type="text"
