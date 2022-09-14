@@ -9,8 +9,6 @@ import { useEffect } from "react";
 
 
 
-
-
 function Attendance() {
     // 전체 체크
     let [allCheck, setAllCheck] = useState(0) 
@@ -25,8 +23,6 @@ function Attendance() {
         setChulCheckList(data)
 
     },[])
-
-
 
     return (
         <div className="container Attendance">

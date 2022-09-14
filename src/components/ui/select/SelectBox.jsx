@@ -3,21 +3,18 @@ import React, { useEffect, useState } from "react";
 const arr = [
     "중등 월화수 A",
     "중등 월화수 B",
-    // "중등 월화수 C",
+    "중등 월화수 C",
     // "중등 화목토 A",
     // "중등 화목토 B",
     // "중등 화목토 C"
 ]
 
 
-function SelectTest({width, checkState, setCheckState}) {
+function SelectTest({width, onChange}) {
 
+    let [checkState, setCheckState] = useState(arr);
     let [selectState, setSelectState] = useState(false);
     let [choiceItem, setChiceItem] = useState('반 선택 (전체)');
-
-    useEffect(()=>{
-        setCheckState(arr)
-    },[])
 
     const allCheck = (checked)=>{
         if(checked){
@@ -43,7 +40,7 @@ function SelectTest({width, checkState, setCheckState}) {
     useEffect(()=>{
 
         if(arr.length === checkState.length === false){
-
+                
             if(checkState.length - 1 === 0){
                 setChiceItem(checkState[0])
             }else{
@@ -76,7 +73,7 @@ function SelectTest({width, checkState, setCheckState}) {
                 onClick={()=>{setSelectState(!selectState)}}
             ></button>
             <div className="select-option">
-                <button className="lookup">조회</button>
+                <button className="lookup" onClick={()=>{onChange(checkState)}}>조회</button>
 
                 <div className="all-box">
                     <input 
