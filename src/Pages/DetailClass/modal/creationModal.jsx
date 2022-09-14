@@ -15,12 +15,7 @@ function CreationModal({setCreationMo,name}){
     let {data,reCreateData,reCreateFunc} = useStore(state=>state);
     let [dataList,setDataList] = useState(null);
 
-    
-    let [chul,setChul] = useState([]);
-    let [mun,setMun] = useState([]);
-    let [nanido,setNanido] = useState([]);
 
-    let arr = [];
 
     useEffect(()=>{
             setDataList(data);
@@ -33,34 +28,21 @@ function CreationModal({setCreationMo,name}){
    
     
     
-    useEffect(()=>{
-        
-        
-        let newList = chul.length !== 0 ? 
-        (
-            arr.length > 0 ? arr.filter(item => chul.includes(item.class)) 
-            : data.filter(item => chul.includes(item.class))
-        )
-        : null;
-            
-        newList && arr.push(...newList);
-        arr.length > 0 ? setDataList([...arr]) : setDataList([]);
+   
 
-        reCreateFunc()
-        
-    //     let newChulList;
-    //    if(reCreateData){
-    //         newChulList = reCreateData.filter(item => chul.includes(item.class));
-    //         reCreateFunc(newChulList);
-    //         setDataList(newChulList);
-    //     }else{
-    //         newChulList = data.filter(item => chul.includes(item.class));
-    //         reCreateFunc(newChulList);
-    //         setDataList(newChulList);
-    //     }
+    const multiCheckFunc = (checkList,target) => {
+        let newList;
+        if(reCreateData){
+            newList = reCreateData.filter(item => checkList.includes(item[target]));
+            reCreateFunc(newList);
+            setDataList(reCreateData);
+        }else{
+         
+                newList = data.filter(item => checkList.includes(item[target]));
+                setDataList(newList);
+        }
 
-
-    },[chul]);
+    }
 
     const changeCheckState = (tr) => {
         if(checkState.includes(tr)){
@@ -126,10 +108,8 @@ function CreationModal({setCreationMo,name}){
                                     <div className='toggleWrap fj'>
                                        <CreationCheck 
                                         data={출처}
-                                        checkTarget={chul}
-                                        setData={setChul}
-                                        dataList={dataList}
-                                        setDataList={setDataList}
+                                        multiCheckFunc={multiCheckFunc}
+                                        keyName='class'
                                         />
                                         <span>출처</span>
                                     </div>
@@ -139,10 +119,8 @@ function CreationModal({setCreationMo,name}){
                                     <div className='toggleWrap fj'>
                                        <CreationCheck 
                                         data={문제형식} 
-                                        checkTarget={mun}
-                                        setData={setMun}
-                                        dataList={dataList}
-                                        setDataList={setDataList}
+                                        multiCheckFunc={multiCheckFunc}
+                                        keyName='answer'
                                         />
                                         <span>문제 형식</span>
                                     </div>
@@ -150,11 +128,9 @@ function CreationModal({setCreationMo,name}){
                                 <td>
                                     <div className='toggleWrap fj'>
                                        <CreationCheck 
-                                        data={난이도} 
-                                        checkTarget={nanido}
-                                        setData={setNanido}
-                                        dataList={dataList}
-                                        setDataList={setDataList}
+                                        data={난이도}
+                                        multiCheckFunc={multiCheckFunc}
+                                        keyName='level'
                                         />
                                         <span>난이도</span>
                                     </div>

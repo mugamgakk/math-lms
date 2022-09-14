@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 
-function CreationCheck({data,setData,checkTarget,dataList,setDataList}) {
+function CreationCheck({data,multiCheckFunc,keyName}) {
     let [toggleState, setToggleState] = useState(false)
     let [allCheck, setAllCheck] = useState(0);
     let [checkData, setCheckData] = useState([]);                                        
@@ -10,12 +10,15 @@ function CreationCheck({data,setData,checkTarget,dataList,setDataList}) {
     useEffect(()=>{
         checkData.length === data.length ? setAllCheck(2) : 
         (checkData.length > 0 ? setAllCheck(1) : setAllCheck(0))
-        setData(checkData);
+        
+            multiCheckFunc(checkData,keyName);
+            
     },[checkData]);
-
+    
     const oneCheckfunc = (target,item) => {
         if(target.checked){
             setCheckData([...checkData,item]);
+            
         }else{
             setCheckData(checkData.filter(data=> data !== item));
         }
@@ -51,7 +54,7 @@ function CreationCheck({data,setData,checkTarget,dataList,setDataList}) {
                             <div className="checkWrap" key={item}>
                                 <input type="checkbox" name={item} id={item} 
                                 onChange={
-                                    (e) => oneCheckfunc(e.target,item) 
+                                    (e)=>oneCheckfunc(e.target,item)
                                 } 
                                 checked={checkData.includes(item)}/>
                                 <label htmlFor={item}>{item}</label>
