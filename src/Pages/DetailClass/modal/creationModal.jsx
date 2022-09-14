@@ -12,7 +12,7 @@ function CreationModal({setCreationMo,name}){
 
     let [checkState,setCheckState] = useState([]);
     let [allCheck, setAllCheck] = useState(0);
-    let {data} = useStore(state=>state);
+    let {data,reCreateData,reCreateFunc} = useStore(state=>state);
     let [dataList,setDataList] = useState(null);
 
     
@@ -45,6 +45,20 @@ function CreationModal({setCreationMo,name}){
             
         newList && arr.push(...newList);
         arr.length > 0 ? setDataList([...arr]) : setDataList([]);
+
+        reCreateFunc()
+        
+    //     let newChulList;
+    //    if(reCreateData){
+    //         newChulList = reCreateData.filter(item => chul.includes(item.class));
+    //         reCreateFunc(newChulList);
+    //         setDataList(newChulList);
+    //     }else{
+    //         newChulList = data.filter(item => chul.includes(item.class));
+    //         reCreateFunc(newChulList);
+    //         setDataList(newChulList);
+    //     }
+
 
     },[chul]);
 
@@ -84,6 +98,15 @@ function CreationModal({setCreationMo,name}){
                     </div>
                     <table>
                         <colgroup>
+                            <col width='5%'/>
+                            <col width='10%'/>
+                            <col width='20%'/>
+                            <col width='20%'/>
+                            <col width='8%'/>
+                            <col width='6%'/>
+                            <col width='12%'/>
+                            <col width='12%'/>
+                            <col width='7%'/>
                         </colgroup>
                         <thead>
                             <tr>
