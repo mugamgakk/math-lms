@@ -15,6 +15,11 @@ function CreationModal({setCreationMo,name}){
     let {data,reCreateData,reCreateFunc} = useStore(state=>state);
     let [dataList,setDataList] = useState(null);
 
+    let [obj,setObj] = useState({
+        chul : [],
+        mun : [],
+        nanido : [],
+    })
 
 
     useEffect(()=>{
