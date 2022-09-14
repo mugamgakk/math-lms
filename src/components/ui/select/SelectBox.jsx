@@ -73,7 +73,10 @@ function SelectTest({width, onChange}) {
                 onClick={()=>{setSelectState(!selectState)}}
             ></button>
             <div className="select-option">
-                <button className="lookup" onClick={()=>{onChange(checkState)}}>조회</button>
+                <button className="lookup" onClick={()=>{
+                    onChange(checkState);
+                    setSelectState(false);
+                    }}>조회</button>
 
                 <div className="all-box">
                     <input 
