@@ -102,7 +102,6 @@ function Statistics() {
         setValue(data);
     };
 
-    console.log("재랜더링")
 
     return (
         <div className="Statistics container">
@@ -126,7 +125,7 @@ function Statistics() {
                         다운로드
                     </button>
                 </div>
-                <StatisticsSearch value={value} setValue={setValue} />
+                <StatisticsSearch data={data} value={value} setValue={setValue}  />
             </div>
 
             <table ref={tableRef}>

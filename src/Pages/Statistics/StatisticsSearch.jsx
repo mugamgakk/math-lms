@@ -1,28 +1,42 @@
 import React, { useState } from "react";
 import SelectBox from "../../components/ui/select/SelectBox";
 import DatePicker from "react-date-picker";
-import { useEffect } from "react";
-import { useRef } from "react";
 
-function StatisticsSearch({value, setValue}) {
-    let [checkState, setCheckState] = useState([]);
+function StatisticsSearch({data, value, setValue}) {
     let [studentName, setStudentName] = useState("");
     let [startDay, setStartDay] = useState(new Date());
     let [lastDay, setLastDay] = useState(new Date());
 
-    let initialData = useRef(value);
+    const searchStudents = ()=>{
 
-    useEffect(()=>{
-            let a = initialData.current.filter(a=>{
-                return checkState.includes(a.ban)
-            })
-    
-            setValue(a)
-    },[checkState])
+        let matchingArr = value.filter(a=>{
+            let regexp = new RegExp(studentName);
+            return regexp.test(a.name);
+        })
+
+        setValue(matchingArr)
+    }
+
+    console.log(data)
+
+    // 반 조회
+    const findBan = (choiceArr)=>{
+
+        const matchingArr = data.filter(a=>{
+            for(let ele of choiceArr){
+                if(a.ban === ele){
+                    return true
+                }
+            }
+        })
+
+        setValue(matchingArr)
+    }
+
 
     return (
         <div className="StatisticsSearch">
-            <SelectBox width={"200px"} checkState={checkState} setCheckState={setCheckState} />
+            <SelectBox width={"200px"} onChange={findBan}/>
 
             <DatePicker
                 className="datepicker-base"
@@ -55,7 +69,7 @@ function StatisticsSearch({value, setValue}) {
                     setStudentName(e.target.value);
                 }}
             />
-            <button type="button" className="btn">
+            <button type="button" className="btn" onClick={searchStudents}>
                 조회
             </button>
         </div>

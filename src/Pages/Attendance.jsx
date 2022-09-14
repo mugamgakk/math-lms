@@ -21,7 +21,6 @@ function Attendance() {
 
     useEffect(()=>{
         setChulCheckList(data)
-
     },[])
 
     return (
@@ -56,7 +55,7 @@ function Attendance() {
                     </button>
                 </div>
 
-                <AttendanceSearch data={data} setChulCheckList={setChulCheckList} />
+                <AttendanceSearch data={data} chulCheckList={chulCheckList} setChulCheckList={setChulCheckList} />
                 
             </header>
 

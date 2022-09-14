@@ -20,7 +20,6 @@ const userNameSort = (userArr) => {
 function StudentsSearch() {
 
     let {user, setClickStudent, clickStudent} = useStudentsStore(state=>state);
-    let [checkState, setCheckState] = useState([]);
     let [userList, setUserList] = useState(user);
     let [nameSearch, setNameSearch] = useState("");
 
@@ -31,36 +30,35 @@ function StudentsSearch() {
     };
 
     // 검색
-    const searchStudents = useCallback(() => {
-        let initialArray = [];
+    const searchStudents = ()=>{
 
-        // 반 검사
-        checkState.forEach(function (a) {
-            let 반검사 = user.filter((stu) => stu.반이름 === a);
-            initialArray = [...initialArray, ...반검사];
-        });
+        let matchingArr = userList.filter(a=>{
+            let regexp = new RegExp(nameSearch);
+            return regexp.test(a.name);
+        })
 
-        //  이름 검사
-        if (nameSearch !== "") {
+        setUserList(matchingArr)
+    }
 
-            if(nameSearch.length < 2){
-                alert("두글자 이상 검색하세요");
-                return
+     // 반 조회
+     const findBan = (choiceArr)=>{
+
+        const matchingArr = user.filter(a=>{
+            for(let ele of choiceArr){
+                if(a.반이름 === ele){
+                    return true
+                }
             }
+        })
 
-            let regex = new RegExp(nameSearch);
-
-            setUserList(initialArray.filter((stu) => regex.test(stu.name)));
-        } else {
-            setUserList(userNameSort(initialArray));
-        }
-    }, [nameSearch, userList]);
+        setUserList(matchingArr)
+    }
 
 
     return ( 
         <div className="students-search">
         <header className="row" style={{ padding: "10px 0" }}>
-            <SelectBox width={"150px"} checkState={checkState} setCheckState={setCheckState} />
+            <SelectBox width={"150px"} onChange={findBan}  />
             <input
                 type={"text"}
                 placeholder="이름"
@@ -122,7 +120,6 @@ function StudentsSearch() {
             onClick={() => {
                 setUserList(userNameSort(user));
                 setNameSearch("");
-                setCheckState([]);
             }}
         >
             초기화
