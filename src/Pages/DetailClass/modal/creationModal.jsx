@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import CreationCheck from '../CreationCheck';
 import useStore from '../../../store/useCreationModal';
+import { useRef } from "react";
 
 
 let 출처 = ['개념서', '뜨레스', '맞춤 클리닉'];
@@ -15,27 +16,79 @@ function CreationModal({setCreationMo,name}){
     let {data,reCreateData,reCreateFunc} = useStore(state=>state);
     let [dataList,setDataList] = useState(null);
 
+    let ref = useRef(false)
+
+    // 이것은 체크된 값
+    // 키값 키네임이랑 똑같게
     let [obj,setObj] = useState({
-        chul : [],
-        mun : [],
-        nanido : [],
+        class : 출처,
+        answer : 문제형식,
+        level : 난이도,
     })
 
+    // console.log(obj)
 
     useEffect(()=>{
             setDataList(data);
     },[]);
+
+    // console.log(data)
+    
     
     useEffect(()=>{
         data.length === checkState.length ? setAllCheck(2) :
         ( checkState.length > 0 ? setAllCheck(1) : setAllCheck(0)) 
     },[checkState]);
-   
-    
-    
-   
+
+
+    useEffect(()=>{
+        let arr = [];
+        let arr2 = [];
+        let arr3 = [];
+
+        if(ref.current === true){
+
+            obj.class.forEach(a=>{
+                data.forEach(dd =>{
+                    if(a === dd.class){
+                        arr.push(dd)
+                    }
+                })
+               
+            })
+            obj.answer.forEach(a=>{
+                arr.forEach(dd =>{
+                    if(a === dd.answer){
+                        arr2.push(dd)
+                    }
+                })
+            })
+            obj.level.forEach(a=>{
+                arr2.forEach(dd =>{
+                    if(a === dd.level){
+                        arr3.push(dd)
+                    }
+                })
+            })
+
+            console.log(arr3)
+
+            setDataList(arr3)
+
+        }else{
+            ref.current = true
+        }
+
+        
+        // for(let key in obj){
+        //     obj[key].forEach(a=>{
+        //         console.log(a)
+        //     })
+        // }
+    },[obj])
 
     const multiCheckFunc = (checkList,target) => {
+        console.log("@@@@@@@@@@@@@",checkList)
         let newList;
         newList = data.filter(item => checkList.includes(item[target]));
         setDataList(newList);
@@ -114,6 +167,8 @@ function CreationModal({setCreationMo,name}){
                                     <div className='toggleWrap fj'>
                                        <CreationCheck 
                                         data={출처}
+                                        obj={obj}
+                                        setObj={setObj}
                                         multiCheckFunc={multiCheckFunc}
                                         keyName='class'
                                         />
@@ -125,6 +180,8 @@ function CreationModal({setCreationMo,name}){
                                     <div className='toggleWrap fj'>
                                        <CreationCheck 
                                         data={문제형식} 
+                                        obj={obj}
+                                        setObj={setObj}
                                         multiCheckFunc={multiCheckFunc}
                                         keyName='answer'
                                         />
@@ -135,6 +192,8 @@ function CreationModal({setCreationMo,name}){
                                     <div className='toggleWrap fj'>
                                        <CreationCheck 
                                         data={난이도}
+                                        obj={obj}
+                                        setObj={setObj}
                                         multiCheckFunc={multiCheckFunc}
                                         keyName='level'
                                         />
