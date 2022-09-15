@@ -343,6 +343,43 @@
             }
         }
     }
+    .resultPopModal{
+        &-body{
+            h5{
+                text-align: left;
+            }
+            .contents{
+                display: flex;
+                justify-content: space-between;
+                height: 500px;
+                overflow: hidden;
+
+                &-l{
+                    width: 50%;
+                    margin-right: 30px;
+                    overflow-y: scroll;
+                    table{
+                        .btnPlay{
+                            width:20px;
+                            height: 20px;
+                            background: url(../../public/tempo/play.png)no-repeat center;
+                            background-size: 100%;
+                            font-size: 0;
+                            margin-right: 5px;
+                        }
+                    }
+                }
+                &-r{
+                    width: 50%;
+                    background: url(../../public/tempo/mun.png)no-repeat center;
+                    background-size: 100%;
+                    background-position: top;
+
+                }
+
+            }
+        }
+    }
 }
 
 .detailClass.wrongAnswerMaster{

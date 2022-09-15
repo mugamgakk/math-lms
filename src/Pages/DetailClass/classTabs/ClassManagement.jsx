@@ -118,10 +118,7 @@ function ClassManagement({clickStudent}){
         <tr>
             <td>{data.name}</td>
             <td>{data.state1}</td>
-            <td>{data.state2}<button className="btn" onClick={ () => setResultPopMo(true) }>재응시</button>
-            {
-                resultPopMo && <ResultPopModal setResultPopMo={setResultPopMo} />
-            }
+            <td>{data.state2}<button className="btn">재응시</button>
             </td>
             <td>
                 {
@@ -146,7 +143,15 @@ function ClassManagement({clickStudent}){
             </td>
             <td>
                 { data.state4}
-                <button className='btn'>재응시</button>
+                <button className='btn' onClick={ ()=>setResultPopMo(true) }>재응시</button>
+                {
+                resultPopMo && 
+                <ResultPopModal 
+                setResultPopMo={setResultPopMo}
+               
+                
+                />
+            }
             </td>
             <td>
                 <div>{data.state5}</div>

@@ -4,6 +4,22 @@ import CreationCheck from '../CreationCheck';
 import useStore from '../../../store/useCreationModal';
 import { useRef } from "react";
 
+const arr = [20,10,2,4];
+
+const arr2 = ["박","최", "김"];
+
+
+arr2.sort((a,b)=>{
+
+    if(a < b){
+        return -1
+    }else{
+        return 1
+    }
+})
+
+console.log(arr2)
+
 
 let 출처 = ['개념서', '뜨레스', '맞춤 클리닉'];
 let 문제형식 = ['객관식','주관식','서술형'];
@@ -12,11 +28,11 @@ let 난이도 = ['최상','상','중상','중','중하','하','최하'];
 function CreationModal({setCreationMo,name}){
 
     let [checkState,setCheckState] = useState([]);
-    let [allCheck, setAllCheck] = useState(0);
     let {data,reCreateData,reCreateFunc} = useStore(state=>state);
     let [dataList,setDataList] = useState(null);
 
     let ref = useRef(false)
+
 
     // 이것은 체크된 값
     // 키값 키네임이랑 똑같게
@@ -34,13 +50,6 @@ function CreationModal({setCreationMo,name}){
 
     // console.log(data)
     
-    
-    useEffect(()=>{
-        data.length === checkState.length ? setAllCheck(2) :
-        ( checkState.length > 0 ? setAllCheck(1) : setAllCheck(0)) 
-    },[checkState]);
-
-
     useEffect(()=>{
         let arr = [];
         let arr2 = [];
@@ -87,21 +96,6 @@ function CreationModal({setCreationMo,name}){
         // }
     },[obj])
 
-    const multiCheckFunc = (checkList,target) => {
-        console.log("@@@@@@@@@@@@@",checkList)
-        let newList;
-        newList = data.filter(item => checkList.includes(item[target]));
-        setDataList(newList);
-        // setDataList(newList);
-        // if(reCreateData){
-        //     newList = reCreateData.filter(item => checkList.includes(item[target]));
-        //     reCreateFunc(newList);
-        //     setDataList(reCreateData);
-        // }else{
-         
-        // }
-
-    }
 
     const changeCheckState = (tr) => {
         if(checkState.includes(tr)){
@@ -153,9 +147,9 @@ function CreationModal({setCreationMo,name}){
                             <tr>
                                 <td>
                                     <div className="check-wrap">
-                                        <input type="checkbox" name="" className={allCheck === 1 ? 'checkAll isCheck' : 'checkAll'} id='checkAll' 
+                                        <input type="checkbox" name="" className={checkState.length > 0 && checkState.length < data.length ? 'checkAll isCheck' : 'checkAll'} id='checkAll' 
                                         onChange={(e)=>allCheckState(e.target.checked)}
-                                         checked={ allCheck === 2 }/>
+                                         checked={ data.length === checkState.length }/>
                                         <label htmlFor='checkAll' className='checkAll pl-20' >선택</label>
                                     </div>
                                     <span>(25/25)</span>
@@ -169,7 +163,6 @@ function CreationModal({setCreationMo,name}){
                                         data={출처}
                                         obj={obj}
                                         setObj={setObj}
-                                        multiCheckFunc={multiCheckFunc}
                                         keyName='class'
                                         />
                                         <span>출처</span>
@@ -182,7 +175,6 @@ function CreationModal({setCreationMo,name}){
                                         data={문제형식} 
                                         obj={obj}
                                         setObj={setObj}
-                                        multiCheckFunc={multiCheckFunc}
                                         keyName='answer'
                                         />
                                         <span>문제 형식</span>
@@ -194,7 +186,6 @@ function CreationModal({setCreationMo,name}){
                                         data={난이도}
                                         obj={obj}
                                         setObj={setObj}
-                                        multiCheckFunc={multiCheckFunc}
                                         keyName='level'
                                         />
                                         <span>난이도</span>
