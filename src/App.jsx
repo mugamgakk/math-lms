@@ -15,6 +15,7 @@ import AudioPage from './Pages/ComponentsPage/AudioPage';
 import SelectPage from './Pages/ComponentsPage/SelectPage';
 import TableToExcel from './Pages/ComponentsPage/TableToExcel';
 import Editor from './Pages/ComponentsPage/Editor';
+import FileDownLoad from './Pages/ComponentsPage/FileDownLoad';
 
 
 const Login = lazy(()=> import('./Pages/Login') )
@@ -24,7 +25,6 @@ const PlusLearning = lazy(()=> import('./Pages/PlusLearning') )
 const TodayClass = lazy(()=> import('./Pages/TodayClass') )
 const Evaluation = lazy(()=> import('./Pages/Evaluation') )
 const Statistics = lazy(()=> import('./Pages/Statistics') )
-const FileDownLoad = lazy(()=> import('./Pages/ComponentsPage/FileDownLoad') )
 
 
 function App() {

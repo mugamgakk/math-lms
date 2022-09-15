@@ -74,9 +74,9 @@ const makeZip = (filesArr, fileName = "download") => {
 const arrSort = (arr, key = undefined, order = -1)=>{
     let copy = [...arr];
 
-    if(typeof copy[0] === "string"){
+    if(typeof copy[0] === "object"){
         copy.sort((a,b)=>{
-            if(a < b){
+            if(a[key] < b[key]){
                 return order === -1 ? -1 : 1
             }else{
                 return order === -1 ? 1 : -1
@@ -84,7 +84,7 @@ const arrSort = (arr, key = undefined, order = -1)=>{
         })
     }else{
         copy.sort((a,b)=>{
-            if(a[key] < b[key]){
+            if(a < b){
                 return order === -1 ? -1 : 1
             }else{
                 return order === -1 ? 1 : -1

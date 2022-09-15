@@ -1,0 +1,46 @@
+%content-base{
+    display: inline-block;
+    border: 1px solid #999;
+    background-color: #fff;
+    padding: 2px;
+    border-radius: 5px;
+    font-size: 13px;
+}
+
+
+.evaluation_order{
+
+    padding-left: 20px;
+
+    li{
+        list-style: auto;
+
+        &:first-child{
+
+            &::before{
+                content: '선택오픈';
+                @extend %content-base
+            }
+
+        }
+
+        &:nth-child(2){
+            &::before{
+            content: "인쇄";
+            @extend %content-base
+            }
+        }
+        &:nth-child(3){
+            &::before{
+            content: "채점 입력";
+            @extend %content-base
+            }
+        }
+        &:nth-child(4){
+            &::before{
+            content: "성적표 보기";
+            @extend %content-base
+            }
+        }
+    }
+}
