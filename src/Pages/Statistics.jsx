@@ -66,6 +66,7 @@ const data = [
 function Statistics() {
     let [value, setValue] = useState(data);
     let [sortPoint, setSortPoint] = useState("desc");
+    let [selectReset, setSelectReset] = useState(0);
     const tableRef = useRef(null);
 
     // 라이브러리때문에 3번 재랜더링 됨
@@ -100,6 +101,7 @@ function Statistics() {
 
     const resetList = () => {
         setValue(data);
+        setSelectReset(selectReset + 1)
     };
 
 
@@ -125,7 +127,7 @@ function Statistics() {
                         다운로드
                     </button>
                 </div>
-                <StatisticsSearch data={data} value={value} setValue={setValue}  />
+                <StatisticsSearch data={data} value={value} setValue={setValue} selectReset={selectReset} />
             </div>
 
             <table ref={tableRef}>

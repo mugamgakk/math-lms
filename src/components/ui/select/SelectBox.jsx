@@ -10,7 +10,7 @@ const arr = [
 ]
 
 
-function SelectTest({width, onChange}) {
+function SelectTest({width, onChange, reset}) {
 
     let [checkState, setCheckState] = useState(arr);
     let [selectState, setSelectState] = useState(false);
@@ -36,6 +36,12 @@ function SelectTest({width, onChange}) {
             setCheckState(checkState.filter(ele => ele !== item))
         }
     }
+
+    useEffect(()=>{
+        if(reset > 0){
+            setCheckState(arr)
+        }
+    },[reset])
 
     useEffect(()=>{
 

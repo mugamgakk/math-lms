@@ -68,11 +68,39 @@ const makeZip = (filesArr, fileName = "download") => {
         })
 }
 
+// 가나다 순 정렬
+// 1. 첫번째 파라미터 배열넣기
+// 2. 두번째 파라미터 배열이 오브젝트일시 key 값을 넣음
+const arrSort = (arr, key = undefined, order = -1)=>{
+    let copy = [...arr];
+
+    if(typeof copy[0] === "string"){
+        copy.sort((a,b)=>{
+            if(a < b){
+                return order === -1 ? -1 : 1
+            }else{
+                return order === -1 ? 1 : -1
+            }
+        })
+    }else{
+        copy.sort((a,b)=>{
+            if(a[key] < b[key]){
+                return order === -1 ? -1 : 1
+            }else{
+                return order === -1 ? 1 : -1
+            }
+        })
+    }
+
+    return copy
+}
+
 
 
 export {
     weekChange,
     getByteSize,
     fileDown,
-    makeZip
+    makeZip,
+    arrSort
 }

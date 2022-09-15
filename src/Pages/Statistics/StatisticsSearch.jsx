@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import SelectBox from "../../components/ui/select/SelectBox";
 import DatePicker from "react-date-picker";
 
-function StatisticsSearch({data, value, setValue}) {
+function StatisticsSearch({data, value, setValue, selectReset}) {
     let [studentName, setStudentName] = useState("");
     let [startDay, setStartDay] = useState(new Date());
     let [lastDay, setLastDay] = useState(new Date());
@@ -16,8 +16,6 @@ function StatisticsSearch({data, value, setValue}) {
 
         setValue(matchingArr)
     }
-
-    console.log(data)
 
     // 반 조회
     const findBan = (choiceArr)=>{
@@ -36,7 +34,7 @@ function StatisticsSearch({data, value, setValue}) {
 
     return (
         <div className="StatisticsSearch">
-            <SelectBox width={"200px"} onChange={findBan}/>
+            <SelectBox width={"200px"} onChange={findBan} reset={selectReset}/>
 
             <DatePicker
                 className="datepicker-base"

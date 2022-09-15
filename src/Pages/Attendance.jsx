@@ -8,7 +8,6 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
 
-
 function Attendance() {
     // 전체 체크
     let [allCheck, setAllCheck] = useState(0) 

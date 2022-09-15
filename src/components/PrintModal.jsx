@@ -28,7 +28,7 @@ function PrintModal({ closeModal, title = "제목임" }) {
                         </button>
                     </div>
                     <div className="printModal-body cmmnModal-body">
-                        <div className="btn-area">
+                        <div className="btn-area fj">
                             <div className="btn-area__left">
                                 <button
                                     className={viewState === "question" ? "btn active" : "btn"}
