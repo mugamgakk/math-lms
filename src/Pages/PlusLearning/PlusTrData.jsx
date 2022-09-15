@@ -1,7 +1,7 @@
 import React, { memo, useState } from "react";
 import PrintModal from "../../components/PrintModal";
 import PlusLearningGradingModal from "./PlusLearningGradingModal";
-import PlusLearningGradingTextBooklModal from "./PlusLearningGradingTextBooklModal";
+import PlusLearningGradingTextBookModal from "./PlusLearningGradingTextBookModal";
 
 const PlusTrData = memo(({ res, type }) => {
     let [gradingModal, setGradingModal] = useState(false);
@@ -26,7 +26,7 @@ const PlusTrData = memo(({ res, type }) => {
                             type === "textBook" && (
                                 <>
                                 <p>{res.채점}</p>
-                                {gradingModal && <PlusLearningGradingTextBooklModal setGradingModal ={setGradingModal} />}
+                                {gradingModal && <PlusLearningGradingTextBookModal setGradingModal ={setGradingModal} />}
                                 <button
                                     className="btn"
                                     onClick={() => {

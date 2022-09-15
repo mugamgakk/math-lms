@@ -9,7 +9,7 @@ const data = [
 
 
 
-function PlusLearningGradingTextBooklModal({title = "제목임", setGradingModal}) {
+function PlusLearningGradingTextBookModal({title = "제목임", setGradingModal}) {
 
     let [answer, setAnswer] = useState(data);
 
@@ -105,4 +105,4 @@ const Tr = ({item})=>{
     )
 }
 
-export default PlusLearningGradingTextBooklModal;
+export default PlusLearningGradingTextBookModal;
