@@ -37,15 +37,16 @@ function CreationModal({setCreationMo,name}){
 
     const multiCheckFunc = (checkList,target) => {
         let newList;
-        if(reCreateData){
-            newList = reCreateData.filter(item => checkList.includes(item[target]));
-            reCreateFunc(newList);
-            setDataList(reCreateData);
-        }else{
+        newList = data.filter(item => checkList.includes(item[target]));
+        setDataList(newList);
+        // setDataList(newList);
+        // if(reCreateData){
+        //     newList = reCreateData.filter(item => checkList.includes(item[target]));
+        //     reCreateFunc(newList);
+        //     setDataList(reCreateData);
+        // }else{
          
-                newList = data.filter(item => checkList.includes(item[target]));
-                setDataList(newList);
-        }
+        // }
 
     }
 

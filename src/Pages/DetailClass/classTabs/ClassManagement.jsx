@@ -1,6 +1,7 @@
 import React, { useState, memo } from "react";
 import ProgressModal from '../modal/progressModal';
-import CreationModal from '../modal/creationModal';
+import CreationModal from '../modal/CreationModal';
+import ResultPopModal from '../modal/ResultPopModal';
 import { useMemo } from "react";
 
 let daedanwon = { 
@@ -47,6 +48,7 @@ let daedanwon = {
 function ClassManagement({clickStudent}){
     let [progressMo, setProgressState] = useState(false);
     let [creationMo, setCreationMo] = useState(false);
+    let [resultPopMo, setResultPopMo] = useState(false);
 
     
     return(
@@ -96,7 +98,11 @@ function ClassManagement({clickStudent}){
                 </tr>
                 {
                     daedanwon.sodanwon.map(data=>{
-                        return <Tr key={data.name} data={data}/>
+                        return <Tr 
+                        key={data.name}
+                        data={data} 
+                        resultPopMo={resultPopMo} 
+                        setResultPopMo={setResultPopMo}/>
                     })
                 }
             </tbody>
@@ -107,12 +113,16 @@ function ClassManagement({clickStudent}){
     )
 }
 
-    const Tr = memo(({data}) => {
+    const Tr = memo(({data,setResultPopMo,resultPopMo}) => {
     return(
         <tr>
             <td>{data.name}</td>
             <td>{data.state1}</td>
-            <td>{data.state2}<button className="btn">재응시</button></td>
+            <td>{data.state2}<button className="btn" onClick={ () => setResultPopMo(true) }>재응시</button>
+            {
+                resultPopMo && <ResultPopModal setResultPopMo={setResultPopMo} />
+            }
+            </td>
             <td>
                 {
                     data.state3 && (
