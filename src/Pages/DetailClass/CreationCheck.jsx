@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 
-function CreationCheck({ data, multiCheckFunc, keyName,setObj, obj }) {
+function CreationCheck({ data, keyName,setObj, obj }) {
     let [toggleState, setToggleState] = useState(false);
-
-    // ???? 필요없음
-    // let [allCheck, setAllCheck] = useState(0);
 
     // 초기값 모두 선택
     let [checkData, setCheckData] = useState(data);
@@ -14,15 +11,6 @@ function CreationCheck({ data, multiCheckFunc, keyName,setObj, obj }) {
     useEffect(()=>{
         setObj({...obj, [keyName] : checkData})
     },[checkData])
-
-    // ??
-    // useEffect(()=>{
-    //     checkData.length === data.length ? setAllCheck(2) :
-    //     (checkData.length > 0 ? setAllCheck(1) : setAllCheck(0))
-
-    //         multiCheckFunc(checkData,keyName);
-
-    // },[checkData]);
 
     const oneCheckfunc = (target, item) => {
         if (target.checked) {
