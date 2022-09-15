@@ -56,7 +56,7 @@ function PlusLearningGradingTextBooklModal({title = "제목임", setGradingModal
                         </thead>
                         <tbody>
                             {
-                                answer.map(a=> <Tr item={a} />)
+                                answer.map(a=> <Tr item={a} key={a.id} />)
                             }
                         </tbody>
                     </table>

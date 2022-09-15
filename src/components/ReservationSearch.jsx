@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 
 function ReservationSearch() {
     const { user, choiceUser, choice } = useReservationStore((state) => state);
+    let [reservationModal, setReservationModal] = useState(false);
 
 
     // 예약일시 기준 , 오름차순 정렬
@@ -59,6 +60,11 @@ function ReservationSearch() {
                     })}
                 </tbody>
             </table>
+            {
+                
+            }
+
+            <button className="btn">진단평가 예약</button>
         </div>
     );
 }
@@ -83,6 +89,7 @@ const Search = () => {
     return (
         <div>
             <form onSubmit={postData}>
+            <div className="fj">
             <DatePicker
                 className="datepicker-base"
                 onChange={day => setValue({...value, start : day})}
@@ -100,12 +107,14 @@ const Search = () => {
                 openCalendarOnFocus={false}
                 format={"yyyy-MM-dd"}
             />
+            </div>
             <input
                 type="text"
                 className="form-control"
                 value={value.text}
                 placeholder="이름 검색"
                 onChange={e=>setValue({...value, text : e.target.value})}
+                style={{width : "200px"}}
             />
             <button className="btn">
                 예약자 조회

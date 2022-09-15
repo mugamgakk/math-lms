@@ -6,7 +6,6 @@ import ReservationModal from './ReservationModal';
 
 function EvaluationJindan() {
 
-    let [modal, setModal] = useState(false);
 
     return ( 
         <div className='row'>
@@ -14,7 +13,7 @@ function EvaluationJindan() {
             <EvaluationJindanContent/>
 
             {
-                modal && <ReservationModal/>
+                // modal && <ReservationModal/>
             }
 
         </div>

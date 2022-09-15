@@ -31,6 +31,11 @@
         border: 1px solid orangered;
         background: linear-gradient(to bottom, white 45%, orangered)
     }
+
+    &.btn-s{
+        min-width: auto;
+        padding: 5px;
+    }
 }
 
 .fj{

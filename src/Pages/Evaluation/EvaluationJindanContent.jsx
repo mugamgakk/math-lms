@@ -94,8 +94,8 @@ function EvaluationJindanContent() {
                                     <td>{a.평가범위}</td>
                                     <td>{a.level}</td>
                                     <td>{a.score}</td>
-                                    <td><button className="btn">보기</button></td>
-                                    <td><button className="btn">연동하기</button></td>
+                                    <td><button className="btn btn-s">보기</button></td>
+                                    <td><button className="btn btn-s">연동하기</button></td>
                                 </tr>
                             )
                         })
