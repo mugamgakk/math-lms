@@ -3,6 +3,7 @@ import styled from "styled-components";
 import EvaluationPrint from "./EvaluationPrint";
 import DatePicker from "react-date-picker";
 import dayjs from "dayjs";
+import ResultSave from "./ResultSave";
 
 const Box = styled.div`
     padding: 20px;
@@ -39,7 +40,11 @@ function EvaluationJindanContent() {
 
             
             <button className="btn">선택 삭제</button>
+
+            <ResultSave/>
+
             <button className="btn">결과 등록</button>
+
             <DatePicker
                 className="datepicker-base"
                 onChange={(day) => setValue({ ...value, start: day })}
