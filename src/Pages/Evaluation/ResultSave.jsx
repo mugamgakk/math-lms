@@ -3,6 +3,7 @@ import SelectBase from "../../components/ui/select/SelectBase";
 import DatePicker from "react-date-picker";
 import { useState } from "react";
 import styled from "styled-components";
+import { useCallback } from "react";
 
 const Btn = styled.button`
     width : 15px;
@@ -25,8 +26,10 @@ function ResultSave() {
     let [result, setResult] = useState([data.slice(0, 10), data.slice(10, 20), data.slice(20, 30)]);
     let [name, setName] = useState("");
 
-    const checkResult = (테이블인덱스, 배열인덱스, 답)=>{
-        console.log(테이블인덱스, 배열인덱스, 답)
+    
+
+    const checkResult = useCallback((테이블인덱스, 배열인덱스, 답)=>{
+        // console.log(테이블인덱스, 배열인덱스, 답)
 
         let copyArr = [...result];
 
@@ -45,10 +48,10 @@ function ResultSave() {
 
 
         setResult(copyArr)
-        console.log(copyArr)
+        // console.log(copyArr)
 
 
-    }
+    },[])
 
     return (
         <div className="modal-bg">

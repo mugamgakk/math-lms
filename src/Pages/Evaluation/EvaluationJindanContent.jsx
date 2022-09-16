@@ -23,6 +23,8 @@ function EvaluationJindanContent() {
         text: "",
     });
 
+    let [resultModal, setResultModal] = useState(false);
+
     return (
         <div className="EvaluationJindanContent">
             <Box>
@@ -41,9 +43,12 @@ function EvaluationJindanContent() {
             
             <button className="btn">선택 삭제</button>
 
-            <ResultSave/>
+            {
+                resultModal && <ResultSave/>
+            }
 
-            <button className="btn">결과 등록</button>
+
+            <button className="btn" onClick={()=>{setResultModal(true)}}>결과 등록</button>
 
             <DatePicker
                 className="datepicker-base"
