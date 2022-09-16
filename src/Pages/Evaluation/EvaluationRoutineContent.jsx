@@ -1,11 +1,8 @@
-import React from "react";
+import React, { useRef, useEffect, useState, memo } from "react";
 import SelectBase from "../../components/ui/select/SelectBase";
-import { useState } from "react";
 import DatePicker from "react-date-picker";
 import { arrSort } from "../../methods/methods";
-import { memo } from "react";
-import PrintModal from '../Statistics/PointModal';
-import { useEffect } from "react";
+import PrintModal from '../../../src/components/PrintModal';
 
 const 평가종류 = ["총괄 평가", "단원 평가", "(월말 평가)"];
 const 단원 = ["수와 연산", "문자와 식", "좌표평면과 그래프"];
@@ -37,35 +34,42 @@ function EvaluationRoutineContent() {
     let [checkItem, setCheckItem] = useState([]);
     let [printModal,setPrintModal] = useState(false);
 
+    const ref = useRef(false);
+
     useEffect(()=>{
-        console.log(selectOption);
+        if(ref.current){
+
+        let arr = [];
+        let arr2 = []; 
+
+            if(selectOption.평가종류){
+                data.forEach(item => {
+                    if(item.평가종류 == selectOption.평가종류 ){
+                        arr.push(item);
+                    }
+                })
+            }else{
+                arr = data;
+            }
+
+            if(selectOption.단원){
+                arr.forEach(item => {
+                    if(item.단원 == selectOption.단원){
+                        arr2.push(item);
+                    }
+                })
+                setList(arr2);
+            }else{
+                setList(arr);
+            }
+
+        }else{
+            ref.current = true;
+        }
+
+        
     },[selectOption])
 
-    const filterList = (op) => {
-        let arr = [];
-        let arr2 = [];
-
-        if(op.평가종류){
-            data.forEach(item => {
-                if(item.평가종류 == op.평가종류 ){
-                    arr.push(item);
-                }
-            })
-        }else{
-           arr = data;
-        }
-
-        if(op.단원){
-            arr.forEach(item => {
-                if(item.단원 == op.단원){
-                    arr2.push(item);
-                }
-            })
-            setList(arr2);
-        }else{
-            setList(arr);
-        }
-    }
     
     return (
         <div>
@@ -113,7 +117,7 @@ function EvaluationRoutineContent() {
                         openCalendarOnFocus={false}
                         format={"yyyy-MM-dd"}
                     />
-                    <button className="btn" onClick={()=>filterList(selectOption)}>조회</button>
+                    <button className="btn">조회</button>
                 </div>
             </div>
 
@@ -195,7 +199,7 @@ const Tr = memo(({ item, check, setCheck, printModal, setPrintModal}) => {
                         <p>{item.결과}</p>
                         <button className="btn" onClick={()=>setPrintModal(true)}>성적표 보기</button>
                         {
-                            printModal && <PrintModal setModal={setPrintModal}/>
+                            printModal && <PrintModal closeModal={setPrintModal}/>
                         }
                       
                     </>
