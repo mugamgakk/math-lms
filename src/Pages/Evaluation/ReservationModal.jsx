@@ -17,7 +17,7 @@ const 학년 = [
 
 const 학기 = ["1학기", "2학기"];
 
-function ReservationModal() {
+function ReservationModal({close}) {
     let [value, setValue] = useState({
         name: "",
         day: "",
@@ -50,7 +50,7 @@ function ReservationModal() {
             <div className="modal-content">
                 <header className="fj">
                     <h4>진단평가 예약등록</h4>
-                    <button className="btn">닫기</button>
+                    <button className="btn" onClick={()=>{close(false)}}>닫기</button>
                 </header>
                 <div className="modal-body">
                     <form onSubmit={send}>

@@ -22,11 +22,14 @@ const PlusTrData = memo(({ res, type }) => {
             <td>
                 {typeof res.채점 === "string" ? (
                     <>
-                        {
-                            type === "textBook" && (
-                                <>
+                        {type === "textBook" && (
+                            <>
                                 <p>{res.채점}</p>
-                                {gradingModal && <PlusLearningGradingTextBookModal setGradingModal ={setGradingModal} />}
+                                {gradingModal && (
+                                    <PlusLearningGradingTextBookModal
+                                        setGradingModal={setGradingModal}
+                                    />
+                                )}
                                 <button
                                     className="btn"
                                     onClick={() => {
@@ -35,14 +38,14 @@ const PlusTrData = memo(({ res, type }) => {
                                 >
                                     채점하기
                                 </button>
-                                </>
-                            )
-                        }
-                        {
-                            type === "narrative" && (
-                                <>
+                            </>
+                        )}
+                        {type === "narrative" && (
+                            <>
                                 <p>{res.채점}</p>
-                                {gradingModal && <PlusLearningGradingModal setGradingModal ={setGradingModal} />}
+                                {gradingModal && (
+                                    <PlusLearningGradingModal setGradingModal={setGradingModal} />
+                                )}
                                 <button
                                     className="btn"
                                     onClick={() => {
@@ -51,26 +54,27 @@ const PlusTrData = memo(({ res, type }) => {
                                 >
                                     채점하기
                                 </button>
-                                </>
-                            )
-                        }
-                        
+                            </>
+                        )}
                     </>
                 ) : (
                     <>
                         <p>{res.채점.point}/10점</p>
-                        
+
                         <button className="btn">재응시({res.채점.재응시})</button>
                     </>
                 )}
             </td>
             <td>
-                
-                {
-                    printModal && <PrintModal title={`제목임`} closeModal={setPrintModal} />
-                }
-                
-                <button className="btn" disabled={res.시험지 ? false : true} onClick={()=>{setPrintModal(true)}}>
+                {printModal && <PrintModal title={`제목임`} closeModal={setPrintModal} />}
+
+                <button
+                    className="btn"
+                    disabled={res.시험지 ? false : true}
+                    onClick={() => {
+                        setPrintModal(true);
+                    }}
+                >
                     인쇄
                 </button>
             </td>

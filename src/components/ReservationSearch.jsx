@@ -3,6 +3,7 @@ import { useState } from "react";
 import DatePicker from "react-date-picker";
 import useReservationStore from "../store/useReservationStore";
 import dayjs from "dayjs";
+import ReservationModal from "../Pages/Evaluation/ReservationModal";
 
 function ReservationSearch() {
     const { user, choiceUser, choice } = useReservationStore((state) => state);
@@ -61,10 +62,10 @@ function ReservationSearch() {
                 </tbody>
             </table>
             {
-                
+                reservationModal && <ReservationModal close={setReservationModal} />
             }
 
-            <button className="btn">진단평가 예약</button>
+            <button className="btn" onClick={()=>{setReservationModal(true)}} >진단평가 예약</button>
         </div>
     );
 }
