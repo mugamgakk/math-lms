@@ -129,7 +129,7 @@ function CreationModal({setCreationMo,name}){
                 <div className="creationModal-body cmmnModal-body">
                     <div className='top mb-10'>
                         <div className="top-tit">제목</div>
-                        <div className="top-con">중2-1뜨레스_오답 정복_20210705</div>
+                        <input type='text' className="top-con" value='중2-1뜨레스_오답 정복_20210705' />
                     </div>
                     <table>
                         <colgroup>
