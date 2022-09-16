@@ -393,3 +393,30 @@
         }
     }
 }
+
+    .markingModal{
+        &-body{
+            .marking{
+                display: flex;
+                &-block{
+                    width: 33.3%;
+                    &__head{
+                        >div{
+                            background: rgb(94, 94, 94);
+                            color: #fff;
+                            padding: 10px 0;
+                            text-align: center;
+                            border-right: 1px solid #fff;
+                        }
+                       
+                    }
+                    &__body{
+                            display: flex;
+                            flex-direction: column;
+                            width: 33.33%;
+                    }
+
+                }
+            }
+        }
+    }

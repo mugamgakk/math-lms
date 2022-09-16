@@ -3,6 +3,7 @@ import SelectBase from "../../components/ui/select/SelectBase";
 import DatePicker from "react-date-picker";
 import { arrSort } from "../../methods/methods";
 import PrintModal from '../../../src/components/PrintModal';
+import MarkingModal from './MarkingModal'
 
 const 평가종류 = ["총괄 평가", "단원 평가", "(월말 평가)"];
 const 단원 = ["수와 연산", "문자와 식", "좌표평면과 그래프"];
@@ -25,6 +26,7 @@ const data = [
     { 교재: "중2-1 노벰", 단원: "전체", 평가종류: "총괄 평가" },
 ];
 
+
 function EvaluationRoutineContent() {
     let [selectOption, setSelecOtion] = useState({ 평가종류: "", 단원: "" });
     let [startDay, setStartDay] = useState(new Date());
@@ -32,7 +34,8 @@ function EvaluationRoutineContent() {
     let [list, setList] = useState(data);
 
     let [checkItem, setCheckItem] = useState([]);
-    let [printModal,setPrintModal] = useState(false);
+   
+
 
     const ref = useRef(false);
 
@@ -67,7 +70,7 @@ function EvaluationRoutineContent() {
             ref.current = true;
         }
 
-        
+
     },[selectOption])
 
     
@@ -148,19 +151,24 @@ function EvaluationRoutineContent() {
                     </tr>
                 </thead>
                 <tbody>
-                    {list.map((a, i) => {
-                        return <Tr key={i} item={a} check={checkItem} setCheck={setCheckItem} printModal={printModal} setPrintModal={setPrintModal} />;
+                    {
+                    list.map((a, i) => {
+                        return <Tr key={i} 
+                        item={a} 
+                        check={checkItem} 
+                        setCheck={setCheckItem} 
+                    />;
                     })}
+
                 </tbody>
             </table>
         </div>
     );
 }
 
-const Tr = memo(({ item, check, setCheck, printModal, setPrintModal}) => {
-
-    console.log(check)
-
+const Tr = memo(({ item, check, setCheck}) => {
+    let [printModal,setPrintModal] = useState(false);
+    let [markingModal, setMarkingModal] = useState(false);
     return (
         <tr>
             <td>
@@ -199,12 +207,16 @@ const Tr = memo(({ item, check, setCheck, printModal, setPrintModal}) => {
                         <p>{item.결과}</p>
                         <button className="btn" onClick={()=>setPrintModal(true)}>성적표 보기</button>
                         {
-                            printModal && <PrintModal closeModal={setPrintModal}/>
+                            printModal && <PrintModal closeModal={setPrintModal} />
                         }
                       
                     </>
                 ) : (
-                    <button className="btn">채점하기</button>
+                    <button className="btn" onClick={()=>setMarkingModal(true)}>채점하기
+                    {
+                        markingModal && <MarkingModal setMarkingModal={setMarkingModal}  />
+                    }
+                    </button>
                 )}
             </td>
         </tr>
