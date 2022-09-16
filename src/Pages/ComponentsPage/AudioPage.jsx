@@ -4,6 +4,9 @@ import ReactAudioPlayer from "react-audio-player";
 import SelectBase from "../../components/ui/select/SelectBase";
 import 오디오입니동 from "../../test.mp3";
 import style from '../../style/style-module/Audio.module.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCoffee, faFileArrowDown } from '@fortawesome/free-solid-svg-icons'
+import { fileDown } from "../../methods/methods";
 
 const speedOption = [1, 1.25,1.5, 1.75, 2];
 
@@ -13,6 +16,7 @@ function AudioPage() {
     // 오디오 진행바
     let audioBar = useRef();
 
+
     let [valumeItem, setValumeItem] = useState(0.5);
     let [minTime, setMinTime] = useState("0 : 00");
     let [maxTime, setMaxTime] = useState("0 : 00");
@@ -20,8 +24,6 @@ function AudioPage() {
     let [listenSpeed, setListenSpeed] = useState(1000); // 1초에 한번
 
     let [speenValue, setSpeedValue] = useState(speedOption[0]);
-
-
 
     let allTime = useRef(0);
 
@@ -35,7 +37,7 @@ function AudioPage() {
     };
 
     // 볼륨파일 준비 됐을시
-    const audioReady = () => {
+    const audioReady = (e) => {
         let 오디오 = audio.current.audioEl.current;
 
         allTime.current = 오디오.duration;
@@ -113,6 +115,8 @@ function AudioPage() {
                 }}
             />
 
+                <input type="hidden" value={오디오입니동} />
+
             <div className="fj" style={{width: "500px"}}>
                 {minTime}
                 <div className={style.audio_bar} onClick={clickChange}>
@@ -135,6 +139,10 @@ function AudioPage() {
                 </button>
 
                 <SelectBase width={"100px"} value={speenValue} options={speedOption} onChange={el=> speedChange(el)}/>
+
+                <button className={style.download_btn} onClick={()=>{
+                    fileDown(오디오입니동)
+                }}><FontAwesomeIcon icon={faFileArrowDown} size="2x" /></button>
             </div>
 
             <h3>props</h3>
