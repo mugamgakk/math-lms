@@ -148,8 +148,6 @@ function ClassManagement({clickStudent}){
                 resultPopMo && 
                 <ResultPopModal 
                 setResultPopMo={setResultPopMo}
-               
-                
                 />
             }
             </td>
