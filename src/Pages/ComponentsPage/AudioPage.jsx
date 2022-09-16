@@ -107,7 +107,10 @@ function AudioPage() {
                 onCanPlay={audioReady}
                 listenInterval={listenSpeed}
                 onListen={audioIng}
-                onEnded={()=>{setMinTime(maxTime)}}
+                onEnded={()=>{
+                    audioBar.current.style.width = `${100}%`
+                    setMinTime(maxTime);
+                }}
             />
 
             <div className="fj" style={{width: "500px"}}>
