@@ -58,11 +58,11 @@ function MarkingModal({title,setMarkingModal}) {
                                                     <td className='num'>{item.id}</td>
                                                     <td className='answer'>{item.정답}</td>
                                                     <td className='stuAnswer'>
-                                                        <button>①</button>
-                                                        <button>②</button>
-                                                        <button>③</button>
-                                                        <button>④</button>
-                                                        <button>⑤</button>
+                                                        <button className='numBtn'>①</button>
+                                                        <button className='numBtn'>②</button>
+                                                        <button className='numBtn'>③</button>
+                                                        <button className='numBtn'>④</button>
+                                                        <button className='numBtn'>⑤</button>
                                                     </td>
                                                 </tr>
                                                 )
@@ -70,6 +70,11 @@ function MarkingModal({title,setMarkingModal}) {
 
                                     return(
                                         <table className="marking-block">
+                                            <colgroup>
+                                                <col style={{ width: "20%" }} />
+                                                <col style={{ width: "20%" }} />
+                                                <col style={{ width: "60%" }} />
+                                            </colgroup>
                                             <thead>
                                                 <tr className="marking-block__head">
                                                     <td className='num'>번호</td>
