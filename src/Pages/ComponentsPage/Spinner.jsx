@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 
 import FadeLoader from "react-spinners/FadeLoader";
+// https://www.davidhu.io/react-spinners/
 
 const override = {
     position: "absolute",

@@ -4,6 +4,7 @@ import EvaluationPrint from "./EvaluationPrint";
 import DatePicker from "react-date-picker";
 import dayjs from "dayjs";
 import ResultSave from "./ResultSave";
+import MemberLinkModal from "./MemberLinkModal";
 
 const Box = styled.div`
     padding: 20px;
@@ -11,10 +12,34 @@ const Box = styled.div`
 `;
 
 const data = [
-    {day : "2022.09.01", name : "김진우", school : "도곡중", grade : 2, 평가범위 : "중2-1", level : "엑시스", score : 90},
-    {day : "2022.09.21", name : "이수근", school : "도곡중", grade : 2, 평가범위 : "중2-1", level : "엑시스", score : 90},
-    {day : "2022.09.11", name : "강호동", school : "도곡중", grade : 2, 평가범위 : "중2-1", level : "엑시스", score : 90}
-]
+    {
+        day: "2022.09.01",
+        name: "김진우",
+        school: "도곡중",
+        grade: 2,
+        평가범위: "중2-1",
+        level: "엑시스",
+        score: 90,
+    },
+    {
+        day: "2022.09.21",
+        name: "이수근",
+        school: "도곡중",
+        grade: 2,
+        평가범위: "중2-1",
+        level: "엑시스",
+        score: 90,
+    },
+    {
+        day: "2022.09.11",
+        name: "강호동",
+        school: "도곡중",
+        grade: 2,
+        평가범위: "중2-1",
+        level: "엑시스",
+        score: 90,
+    },
+];
 
 function EvaluationJindanContent() {
     let [value, setValue] = useState({
@@ -36,20 +61,17 @@ function EvaluationJindanContent() {
                 ※ 진단평가 결과는 등록 회원의 학습 정보로 연동할 수 있습니다 . (1 회 한) <br />※
                 연동하지 않은 평가 결과는 개인 정보 보호 정책에 따라 1 년 후 삭제됩니다 .
             </Box>
-
-
             <EvaluationPrint />
-
-            
             <button className="btn">선택 삭제</button>
-
-            {
-                resultModal && <ResultSave modal={setResultModal} />
-            }
-
-
-            <button className="btn" onClick={()=>{setResultModal(true)}}>결과 등록</button>
-
+            {resultModal && <ResultSave modal={setResultModal} />}
+            <button
+                className="btn"
+                onClick={() => {
+                    setResultModal(true);
+                }}
+            >
+                결과 등록
+            </button>
             <DatePicker
                 className="datepicker-base"
                 onChange={(day) => setValue({ ...value, start: day })}
@@ -74,7 +96,15 @@ function EvaluationJindanContent() {
                 placeholder="이름 검색"
                 onChange={(e) => setValue({ ...value, text: e.target.value })}
             />
-            <button className="btn" onClick={()=>{ console.log(value) }} >조회</button>
+            <button
+                className="btn"
+                onClick={() => {
+                    console.log(value);
+                }}
+            >
+                조회
+            </button>
+
 
             <table>
                 <thead>
@@ -92,28 +122,44 @@ function EvaluationJindanContent() {
                     </tr>
                 </thead>
                 <tbody>
-                    {
-                        data.map((a,i)=>{
-                            return (
-                                <tr key={i}>
-                                    <td><input type="checkbox" /></td>
-                                    <td>{a.day}</td>
-                                    <td>{a.name}</td>
-                                    <td>{a.school}</td>
-                                    <td>{a.grade}</td>
-                                    <td>{a.평가범위}</td>
-                                    <td>{a.level}</td>
-                                    <td>{a.score}</td>
-                                    <td><button className="btn btn-s">보기</button></td>
-                                    <td><button className="btn btn-s">연동하기</button></td>
-                                </tr>
-                            )
-                        })
-                    }
+                    {data.map((a, i) => {
+                        return <Tr item={a} key={i}/>;
+                    })}
                 </tbody>
             </table>
         </div>
     );
 }
+
+const Tr = ({item}) => {
+
+    let [modal, setModal] = useState(false);
+
+    return (
+        <tr >
+            <td>
+                <input type="checkbox" />
+            </td>
+            <td>{item.day}</td>
+            <td>{item.name}</td>
+            <td>{item.school}</td>
+            <td>{item.grade}</td>
+            <td>{item.평가범위}</td>
+            <td>{item.level}</td>
+            <td>{item.score}</td>
+            <td>
+                <button className="btn btn-s">보기</button>
+            </td>
+            <td>
+                
+                {
+                    modal && <MemberLinkModal setModal={setModal}/>
+                }
+            
+                <button className="btn btn-s" onClick={()=>{setModal(true)}}>연동하기</button>
+            </td>
+        </tr>
+    );
+};
 
 export default EvaluationJindanContent;

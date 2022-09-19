@@ -5,7 +5,7 @@ import SelectBase from "../../components/ui/select/SelectBase";
 import 오디오입니동 from "../../test.mp3";
 import style from "../../style/style-module/Audio.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileArrowDown } from "@fortawesome/free-solid-svg-icons";
+import { faFileArrowDown, faPlay, faPause } from "@fortawesome/free-solid-svg-icons";
 import { fileDown } from "../../methods/methods";
 
 const speedOption = [1, 1.25, 1.5, 1.75, 2];
@@ -23,6 +23,7 @@ function AudioPage() {
     let [listenSpeed, setListenSpeed] = useState(1000); // 1초에 한번
 
     let [speenValue, setSpeedValue] = useState(speedOption[0]);
+    let [stateIcon, setStateIcon] = useState(faPause);
 
     let allTime = useRef(0);
 
@@ -30,9 +31,8 @@ function AudioPage() {
     const start = () => {
         let 오디오 = audio.current.audioEl.current;
 
-        console.log(audio.current);
-
         오디오.paused ? 오디오.play() : 오디오.pause();
+        오디오.paused ? setStateIcon(faPlay) : setStateIcon(faPause);
     };
 
     // 볼륨파일 준비 됐을시
@@ -111,6 +111,7 @@ function AudioPage() {
                 onEnded={() => {
                     audioBar.current.style.width = `${100}%`;
                     setMinTime(maxTime);
+                    setStateIcon(faPlay)
                 }}
             />
 
@@ -132,8 +133,8 @@ function AudioPage() {
                     value={valumeItem * 10}
                     onChange={volumeChange}
                 />
-                <button className="btn" onClick={start}>
-                    재생 버튼
+                <button onClick={start}>
+                    <FontAwesomeIcon icon={stateIcon} size="2x" />
                 </button>
                 <SelectBase
                     width={"100px"}
