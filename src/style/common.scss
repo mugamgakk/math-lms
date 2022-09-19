@@ -393,3 +393,35 @@
         }
     }
 }
+
+    .markingModal{
+        &-body{
+            .marking{
+                display: flex;
+                table{
+                    width: 33.3%;
+                    thead{
+                        td{
+                            background: rgb(94, 94, 94);
+                            color: #fff;
+                            padding: 10px 0;
+                            text-align: center;
+                            border-right: 1px solid #fff;
+                        }
+                        
+                    }
+                    tbody{
+                        td{
+                            .numBtn{
+                                font-size: 20px;
+                                margin: 0 1px;
+                            }
+                            .numBtn.active{
+                                background: red;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
