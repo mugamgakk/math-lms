@@ -44,7 +44,7 @@ function EvaluationJindanContent() {
             <button className="btn">선택 삭제</button>
 
             {
-                resultModal && <ResultSave/>
+                resultModal && <ResultSave modal={setResultModal} />
             }
 
 

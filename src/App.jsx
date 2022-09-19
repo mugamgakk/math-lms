@@ -16,6 +16,8 @@ import SelectPage from './Pages/ComponentsPage/SelectPage';
 import TableToExcel from './Pages/ComponentsPage/TableToExcel';
 import Editor from './Pages/ComponentsPage/Editor';
 import FileDownLoad from './Pages/ComponentsPage/FileDownLoad';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 
 const Login = lazy(()=> import('./Pages/Login') )
@@ -28,6 +30,13 @@ const Statistics = lazy(()=> import('./Pages/Statistics') )
 
 
 function App() {
+
+  // useEffect(()=>{
+  //   axios("http://218.50.0.41:8080/user.php")
+  //   .then(data=>{
+  //     console.log(data)
+  //   })
+  // },[])
 
 
   return ( 

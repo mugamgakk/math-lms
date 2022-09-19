@@ -6,11 +6,13 @@ function SelectBase({ width, onChange, options, value, defaultValue = "선택하
 
     return (
         <div className={"select-wrap" + `${selectOpen ? " active" : ""}`} style={{ width: width }}>
-            <div
+            <button
                 className="select-show"
                 onClick={() => {
                     setSelectOpen(!selectOpen);
-                    // setSelectTest({...selectTest, state : !selectTest.state});
+                }}
+                onBlur={()=>{
+                    setSelectOpen(false)
                 }}
             >
                 {
@@ -18,9 +20,12 @@ function SelectBase({ width, onChange, options, value, defaultValue = "선택하
                 ? value 
                 : defaultValue
                 }
-            </div>
+            </button>
             <button
                 className="select-btn"
+                onBlur={()=>{
+                    setSelectOpen(false)
+                }}
                 onClick={() => {
                     setSelectOpen(!selectOpen);
                 }}
@@ -33,7 +38,6 @@ function SelectBase({ width, onChange, options, value, defaultValue = "선택하
                                 className="option-item"
                                 key={i}
                                 onClick={(e) => {
-                                    setSelectOpen(false);
                                     onChange && onChange(a);
                                 }}
                             >
