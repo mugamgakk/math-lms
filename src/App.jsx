@@ -16,9 +16,10 @@ import SelectPage from './Pages/ComponentsPage/SelectPage';
 import TableToExcel from './Pages/ComponentsPage/TableToExcel';
 import Editor from './Pages/ComponentsPage/Editor';
 import FileDownLoad from './Pages/ComponentsPage/FileDownLoad';
-import { useEffect } from 'react';
-import axios from 'axios';
+import Spinner from './Pages/ComponentsPage/Spinner';
 
+// 스피너
+import FadeLoader from "react-spinners/FadeLoader";
 
 const Login = lazy(()=> import('./Pages/Login') )
 const Attendance = lazy(()=> import('./Pages/Attendance') )
@@ -29,15 +30,14 @@ const Evaluation = lazy(()=> import('./Pages/Evaluation') )
 const Statistics = lazy(()=> import('./Pages/Statistics') )
 
 
+const override = {
+  position: "absolute",
+  left: "50%",
+  top: "50%",
+  transform: "translate(-50%, -50%)"
+}
+
 function App() {
-
-  // useEffect(()=>{
-  //   axios("http://218.50.0.41:8080/user.php")
-  //   .then(data=>{
-  //     console.log(data)
-  //   })
-  // },[])
-
 
   return ( 
     <div>
@@ -53,9 +53,9 @@ function App() {
           <li><Link to="/components">components guide</Link></li>
         </ul>
       </div>
+      
 
-
-      <Suspense fallback={<div>로딩</div>}>
+      <Suspense fallback={<FadeLoader color={"#999"} cssOverride={override} size={100} />}>
       <Routes>
         <Route path="/" element={<Home/>} />
         <Route path="/login" element={<Login/>} />
@@ -75,6 +75,7 @@ function App() {
             <Route path="file" element={<FileDownLoad/>}/>
             <Route path="table-excel" element={<TableToExcel/>}/>
             <Route path="editor" element={<Editor/>}/>
+            <Route path="spinner" element={<Spinner/>}/>
         </Route>
         <Route path="*" element={<div style={{textAlign : "center"}}>페이지 없습니둥</div>} />
       </Routes>

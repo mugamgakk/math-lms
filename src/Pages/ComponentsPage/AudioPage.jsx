@@ -3,19 +3,18 @@ import { useState } from "react";
 import ReactAudioPlayer from "react-audio-player";
 import SelectBase from "../../components/ui/select/SelectBase";
 import 오디오입니동 from "../../test.mp3";
-import style from '../../style/style-module/Audio.module.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee, faFileArrowDown } from '@fortawesome/free-solid-svg-icons'
+import style from "../../style/style-module/Audio.module.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFileArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { fileDown } from "../../methods/methods";
 
-const speedOption = [1, 1.25,1.5, 1.75, 2];
+const speedOption = [1, 1.25, 1.5, 1.75, 2];
 
 function AudioPage() {
     //  오디오
     let audio = useRef();
     // 오디오 진행바
     let audioBar = useRef();
-
 
     let [valumeItem, setValumeItem] = useState(0.5);
     let [minTime, setMinTime] = useState("0 : 00");
@@ -62,27 +61,27 @@ function AudioPage() {
     };
 
     // 속도 바꿨을때
-    const speedChange = (speed)=>{
+    const speedChange = (speed) => {
         let 오디오 = audio.current.audioEl.current;
 
-        오디오.playbackRate = speed
+        오디오.playbackRate = speed;
         setSpeedValue(speed);
 
         setListenSpeed(1000 / speed);
         // 오디오실행이벤트 속도를 바꿔주기 위해
-    }
+    };
 
     // 진행 할때
-    const audioIng = (time)=>{
-        let 현재시간퍼센트 = time / allTime.current * 100;
-        audioBar.current.style.width = `${현재시간퍼센트}%`
+    const audioIng = (time) => {
+        let 현재시간퍼센트 = (time / allTime.current) * 100;
+        audioBar.current.style.width = `${현재시간퍼센트}%`;
 
         const min = parseInt(time / 60);
-	    const sec = Math.round(time % 60);
-        setMinTime(`${min} : ${sec < 10 ? "0" + sec : sec}`)
-    }
+        const sec = Math.round(time % 60);
+        setMinTime(`${min} : ${sec < 10 ? "0" + sec : sec}`);
+    };
 
-    const clickChange = (e)=>{
+    const clickChange = (e) => {
         const 오디오 = audio.current.audioEl.current;
 
         const rect = e.target.getBoundingClientRect();
@@ -93,10 +92,10 @@ function AudioPage() {
         const widthRatio = offsetX / width;
 
         const toTime = Math.round(widthRatio * 오디오.duration);
-        audioBar.current.style.width = `${toTime}%`
+        audioBar.current.style.width = `${toTime}%`;
 
         오디오.currentTime = toTime;
-    }
+    };
 
     return (
         <div style={{ marginTop: "100px" }}>
@@ -109,15 +108,15 @@ function AudioPage() {
                 onCanPlay={audioReady}
                 listenInterval={listenSpeed}
                 onListen={audioIng}
-                onEnded={()=>{
-                    audioBar.current.style.width = `${100}%`
+                onEnded={() => {
+                    audioBar.current.style.width = `${100}%`;
                     setMinTime(maxTime);
                 }}
             />
 
-                <input type="hidden" value={오디오입니동} />
+            <input type="hidden" value={오디오입니동} />
 
-            <div className="fj" style={{width: "500px"}}>
+            <div className="fj" style={{ width: "500px" }}>
                 {minTime}
                 <div className={style.audio_bar} onClick={clickChange}>
                     <div className={style.audio_bar_itme} ref={audioBar}></div>
@@ -125,7 +124,7 @@ function AudioPage() {
                 {maxTime}
             </div>
             <div>
-                볼륨 : 
+                볼륨 :
                 <input
                     type="range"
                     min={0}
@@ -133,16 +132,23 @@ function AudioPage() {
                     value={valumeItem * 10}
                     onChange={volumeChange}
                 />
-
                 <button className="btn" onClick={start}>
                     재생 버튼
                 </button>
-
-                <SelectBase width={"100px"} value={speenValue} options={speedOption} onChange={el=> speedChange(el)}/>
-
-                <button className={style.download_btn} onClick={()=>{
-                    fileDown(오디오입니동)
-                }}><FontAwesomeIcon icon={faFileArrowDown} size="2x" /></button>
+                <SelectBase
+                    width={"100px"}
+                    value={speenValue}
+                    options={speedOption}
+                    onChange={(el) => speedChange(el)}
+                />
+                <button
+                    className={style.download_btn}
+                    onClick={() => {
+                        fileDown(오디오입니동);
+                    }}
+                >
+                    <FontAwesomeIcon icon={faFileArrowDown} size="2x" />
+                </button>
             </div>
 
             <h3>props</h3>
