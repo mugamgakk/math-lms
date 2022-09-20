@@ -100,6 +100,9 @@ function AudioPage() {
     const forwardRadio = (time)=>{
         let 오디오 = audio.current.audioEl.current;
         let changeTime = 오디오.currentTime + time
+        if(changeTime < 0){
+            changeTime = 0
+        }
         audioIng(changeTime)
         오디오.currentTime = changeTime
 
@@ -119,7 +122,7 @@ function AudioPage() {
                 onEnded={() => {
                     audioBar.current.style.width = `${100}%`;
                     setMinTime(maxTime);
-                    setStateIcon(faPlay)
+                    setStateIcon(faPlay);
                 }}
             />
 
@@ -141,14 +144,23 @@ function AudioPage() {
                     value={valumeItem * 10}
                     onChange={volumeChange}
                 />
-                <button onClick={()=>{forwardRadio(-5)}}>
+                <button
+                    onClick={() => {
+                        forwardRadio(-5);
+                    }}
+                >
                     <FontAwesomeIcon icon={faBackwardFast} size="2x" />
                 </button>
                 <button className="mx-15" onClick={start}>
                     <FontAwesomeIcon icon={stateIcon} size="2x" />
                 </button>
-                <button onClick={()=>{forwardRadio(5)}} style={{transform : "rotate(180deg)"}}>
-                <FontAwesomeIcon icon={faBackwardFast} size="2x" />
+                <button
+                    onClick={() => {
+                        forwardRadio(5);
+                    }}
+                    style={{ transform: "rotate(180deg)" }}
+                >
+                    <FontAwesomeIcon icon={faBackwardFast} size="2x" />
                 </button>
                 <SelectBase
                     width={"100px"}
