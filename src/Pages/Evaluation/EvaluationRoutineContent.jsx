@@ -212,12 +212,11 @@ const Tr = memo(({ item, check, setCheck}) => {
                       
                     </>
                 ) : (
-                    <button className="btn" onClick={()=>setMarkingModal(true)}>채점하기
+                    <button className="btn" onClick={()=>setMarkingModal(true)}>채점하기</button>
+                    )}
                     {
                         markingModal && <MarkingModal setMarkingModal={setMarkingModal}  />
                     }
-                    </button>
-                )}
             </td>
         </tr>
     );
