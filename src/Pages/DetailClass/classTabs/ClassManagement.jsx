@@ -2,6 +2,11 @@ import React, { useState, memo } from "react";
 import ProgressModal from '../modal/progressModal';
 import CreationModal from '../modal/CreationModal';
 import ResultPopModal from '../modal/ResultPopModal';
+// 맞춤 클리닉 학습결과팝업
+import ResultPopModalClinic from '../modal/ResultPopModal_clinic';
+// 중등 아르케 학습결과팝업
+import ResultPopModalMS from '../modal/ResultPopModal_ms';
+
 import { useMemo } from "react";
 
 let daedanwon = { 
@@ -48,7 +53,7 @@ let daedanwon = {
 function ClassManagement({clickStudent}){
     let [progressMo, setProgressState] = useState(false);
     let [creationMo, setCreationMo] = useState(false);
-    let [resultPopMo, setResultPopMo] = useState(false);
+ 
 
     
     return(
@@ -101,8 +106,7 @@ function ClassManagement({clickStudent}){
                         return <Tr 
                         key={data.name}
                         data={data} 
-                        resultPopMo={resultPopMo} 
-                        setResultPopMo={setResultPopMo}/>
+                       />
                     })
                 }
             </tbody>
@@ -113,7 +117,10 @@ function ClassManagement({clickStudent}){
     )
 }
 
-    const Tr = memo(({data,setResultPopMo,resultPopMo}) => {
+    const Tr = memo(({data}) => {
+        let [resultPopMo, setResultPopMo] = useState(false);
+        let [resultPopMS, setResultPopMS] = useState(false);
+
     return(
         <tr>
             <td>{data.name}</td>
@@ -154,7 +161,13 @@ function ClassManagement({clickStudent}){
             <td>
                 <div>{data.state5}</div>
                 <button className='btn'>인쇄</button>
-                { data.testReturn && <button className='btn'>재응시</button> }
+                { data.testReturn && <button className='btn' onClick={()=>setResultPopMS(true)}>재응시</button> }
+                {
+                resultPopMS && 
+                <ResultPopModalMS 
+                setResultPopMo={setResultPopMS}
+                />
+                }
             </td>
             <td>
                 <button className='btn'>학습 완료</button>
