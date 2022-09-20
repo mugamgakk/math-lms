@@ -1,11 +1,39 @@
+import axios from "axios";
+import dayjs from "dayjs";
 import React, { useState } from "react";
+import { useEffect } from "react";
 import DatePicker from "react-date-picker";
+import FadeLoader from "react-spinners/FadeLoader";
 
-const data = new Array(100).fill(1);
+const override = {
+    display : "block",
+    margin : "100px auto"
+}
 
+const 오늘  = new Date();
+const beforeOneMonth = dayjs(오늘).subtract(1, "M").$d;
+
+console.log(beforeOneMonth)
 function PointModal({ title, setModal }) {
-    let [startDay, setStartDay] = useState(new Date());
-    let [lastDay, setLastDay] = useState(new Date());
+    let [startDay, setStartDay] = useState(beforeOneMonth);
+    let [lastDay, setLastDay] = useState(오늘);
+    let [list, setList] = useState(null);
+    let [loading, setLoading] = useState(true);
+
+    const getData = async ()=>{
+        loading === false && setLoading(true);
+        let 시작날짜 = dayjs(startDay).format('YYYY/MM/DD')
+        let 끝날짜 = dayjs(lastDay).format('YYYY/MM/DD')
+        let url = "/point/detail/?name=강호동&start="+ 시작날짜 +"&end=" + 끝날짜
+        let res = await axios.get(url);
+
+        setList(res.data)
+        setLoading(false)
+    }
+
+    useEffect(()=>{
+        getData()
+    },[])
 
     return (
         <div className="modal-bg">
@@ -42,12 +70,12 @@ function PointModal({ title, setModal }) {
                                 onChange={(day) => {
                                     setLastDay(day);
                                 }}
-                                value={startDay}
+                                value={lastDay}
                                 openCalendarOnFocus={false}
                                 format={"yyyy-MM-dd"}
                                 minDetail="month"
                             />
-                            <button className="btn">조회</button>
+                            <button className="btn" onClick={getData}>조회</button>
                         </div>
                     </div>
 
@@ -67,6 +95,9 @@ function PointModal({ title, setModal }) {
                             </tr>
                         </thead>
                     </table>
+                    {
+                        <FadeLoader color={"#ccc"} loading={loading} cssOverride={override} size={150} />
+                    }
                     <div style={{overflow : "auto", maxHeight : "300px"}}>
                     <table>
                         <colgroup>
@@ -77,15 +108,22 @@ function PointModal({ title, setModal }) {
                             <col style={{ width: "auto" }} />
                         </colgroup>
                         <tbody>
+                            
                             {
-                                data.map(a=>{
+                               !loading && list?.map((a,i)=>{
                                     return (
-                                        <tr>
-                                            <td>2022.08.31. 15:15:14</td>
+                                        <tr key={i}>
+                                            <td>{a.일시}</td>
                                             <td>중 1-1</td>
-                                            <td>교과서별 내신적중</td>
-                                            <td>교학사 소인수 분해</td>
-                                            <td>다이아</td>
+                                            <td>{a.교재}</td>
+                                            <td>{a.학습내용}</td>
+                                            <td>
+                                                {
+                                                    "미네랄" in a.포인트
+                                                    ? <Dog item="미네랄" index={a.포인트.미네랄} />
+                                                    : <Dog item="캐럿" index={a.포인트.캐럿} />
+                                                }
+                                            </td>
                                         </tr>
                                     )
                                 })
@@ -109,6 +147,20 @@ function PointModal({ title, setModal }) {
             </div>
         </div>
     );
+}
+
+const Dog = ({item, index})=>{
+
+    item === "미네랄"
+    ? item = "https://dictionary.cambridge.org/ko/images/thumb/diamon_noun_002_10599.jpg?version=5.0.252"
+    : item = "https://t1.daumcdn.net/cfile/blog/1303451B49BDDA6928"
+
+    const result = []
+    for(let i = 0; i < index; i++){
+        result.push(<img key={i} width={"20px"} src={item} />)
+    }
+
+    return result
 }
 
 export default PointModal;
