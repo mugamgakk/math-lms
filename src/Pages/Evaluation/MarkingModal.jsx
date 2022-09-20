@@ -10,6 +10,7 @@ data[16].정답 = [1, 2, 3];
 function MarkingModal({title,setMarkingModal}) {
 
     let [dataList, setDataList] = useState([data.slice(0,10),data.slice(10,20),data.slice(20,30)]);
+    
     useEffect(()=>{
         console.log(dataList);
     },[dataList])
@@ -21,9 +22,6 @@ function MarkingModal({title,setMarkingModal}) {
         let newAnswer = copy[a][b].학생답;
         
         if(Array.isArray(answer)){
-            // 정답 여러개
-            console.log('정답 여러개');
-
             if(!newAnswer){
                 newAnswer = [num];
             }else{
@@ -33,20 +31,11 @@ function MarkingModal({title,setMarkingModal}) {
                     newAnswer.push(num);
                 }
             }
-            
-
         }else{
-            // 정답 한개
-            console.log('정답한개');
             newAnswer = num;
-
         }
         copy[a][b].학생답 = newAnswer;
-        console.log(copy);
         setDataList(copy);
-
-
-
     }
 
 
