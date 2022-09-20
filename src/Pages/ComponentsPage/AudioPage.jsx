@@ -5,7 +5,7 @@ import SelectBase from "../../components/ui/select/SelectBase";
 import 오디오입니동 from "../../test.mp3";
 import style from "../../style/style-module/Audio.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileArrowDown, faPlay, faPause } from "@fortawesome/free-solid-svg-icons";
+import { faFileArrowDown, faPlay, faPause, faBackwardFast } from "@fortawesome/free-solid-svg-icons";
 import { fileDown } from "../../methods/methods";
 
 const speedOption = [1, 1.25, 1.5, 1.75, 2];
@@ -35,7 +35,7 @@ function AudioPage() {
         오디오.paused ? setStateIcon(faPlay) : setStateIcon(faPause);
     };
 
-    // 볼륨파일 준비 됐을시
+    // 오디오파일 준비 됐을시
     const audioReady = (e) => {
         let 오디오 = audio.current.audioEl.current;
 
@@ -97,6 +97,14 @@ function AudioPage() {
         오디오.currentTime = toTime;
     };
 
+    const forwardRadio = (time)=>{
+        let 오디오 = audio.current.audioEl.current;
+        let changeTime = 오디오.currentTime + time
+        audioIng(changeTime)
+        오디오.currentTime = changeTime
+
+    }
+
     return (
         <div style={{ marginTop: "100px" }}>
             <h2>오디오 테스트</h2>
@@ -133,8 +141,14 @@ function AudioPage() {
                     value={valumeItem * 10}
                     onChange={volumeChange}
                 />
-                <button onClick={start}>
+                <button onClick={()=>{forwardRadio(-5)}}>
+                    <FontAwesomeIcon icon={faBackwardFast} size="2x" />
+                </button>
+                <button className="mx-15" onClick={start}>
                     <FontAwesomeIcon icon={stateIcon} size="2x" />
+                </button>
+                <button onClick={()=>{forwardRadio(5)}} style={{transform : "rotate(180deg)"}}>
+                <FontAwesomeIcon icon={faBackwardFast} size="2x" />
                 </button>
                 <SelectBase
                     width={"100px"}
