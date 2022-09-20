@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import AssessmentModal from './AssessmentModal';
 import AttModal from './AttModal';
 import PrintModal from '../../components/PrintModal';
+import { fileDown } from "../../methods/methods";
+import 오디오입니동 from "../../test.mp3";
 
 function TodayClassTr({data,name,book,tdName,tdBook}){
 
@@ -22,7 +24,7 @@ function TodayClassTr({data,name,book,tdName,tdBook}){
                     data.state3 && (
                         <div className="btn-wrap">
                         <button className={ data.state3.newplay ? 'btnPlay new' : 'btnPlay'} onClick={()=>setAssModal(true)} >play</button>
-                        <button className='btnDown'>down</button>
+                        <button className='btnDown' onClick={()=>fileDown(오디오입니동)}>down</button>
                         </div>
                     )
                 }
