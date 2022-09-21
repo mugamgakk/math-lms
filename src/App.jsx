@@ -17,6 +17,7 @@ import TableToExcel from './Pages/ComponentsPage/TableToExcel';
 import Editor from './Pages/ComponentsPage/Editor';
 import FileDownLoad from './Pages/ComponentsPage/FileDownLoad';
 import Spinner from './Pages/ComponentsPage/Spinner';
+import SkeletonPage from './Pages/ComponentsPage/SkeletonPage';
 
 // 스피너
 import FadeLoader from "react-spinners/FadeLoader";
@@ -76,6 +77,7 @@ function App() {
             <Route path="table-excel" element={<TableToExcel/>}/>
             <Route path="editor" element={<Editor/>}/>
             <Route path="spinner" element={<Spinner/>}/>
+            <Route path="skeleton" element={<SkeletonPage/>}/>
         </Route>
         <Route path="*" element={<div style={{textAlign : "center"}}>페이지 없습니둥</div>} />
       </Routes>
