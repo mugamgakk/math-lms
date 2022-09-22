@@ -20,7 +20,7 @@ function ReferenceContentsModal({listNum,setModal}) {
                     </div>
                     <div className='tr'>
                         <div className="th">첨부파일</div>
-                        <div className="td file">
+                        <div className="td fileTd">
                             <div className='fileArea'></div>
                         </div> 
                         <div className="td"><button className='btn'>모두 받기</button></div>
@@ -29,7 +29,7 @@ function ReferenceContentsModal({listNum,setModal}) {
                 </div>
                 <div className="foot">
                     <button className='btn'>이전 글 보기</button>
-                    <button className='btn' onClick={setModal}>닫기</button>
+                    <button className='btn' onClick={()=>setModal(false)}>닫기</button>
                     <button className='btn'>다음 글 보기</button>
                 </div>
             </div>

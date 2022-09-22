@@ -4,7 +4,7 @@ import useStore from '../../store/useReferenceStore';
 import SelectBase from "../../components/ui/select/SelectBase";
 import { useEffect } from 'react';
 import ReferenceContentsModal from './ReferenceContentsModal';
-
+import ReferenceRegistrationModal from './ReferenceRegistrationModal';
 
 const 학년 = ['전체','초등','중등','고등'];
 const search = ['제목','제목+내용','대상'];
@@ -16,10 +16,11 @@ function Reference() {
     let {list} = useStore(state=>state);
 
     let [lenderList, setLenderList] = useState(null);
+    let [registModal, setRegistModal] = useState(false);
 
     useEffect(()=>{
         setLenderList(list);
-        
+
     },[])
     
      
@@ -27,7 +28,7 @@ function Reference() {
     return (
             <div className="contents-body reference">
                 <div className="contents-body__top fj pt-10">
-                    <button className="btn">글쓰기</button>
+                    <button className="btn" onClick={()=>setRegistModal(true)}>글쓰기</button>
                     <div className="btn-wrap">
                     <SelectBase 
                     onChange={(ele)=>setGradeOption(ele)}
@@ -91,6 +92,9 @@ function Reference() {
                     </table>
 
                 </div>
+                {
+                    registModal && <ReferenceRegistrationModal setRegistModal={setRegistModal}/>
+                }
             </div>
     );
 }
@@ -99,9 +103,7 @@ function Reference() {
 const Tr = memo(({list})=>{
     let [modal,setModal] = useState(false);
 
-    useEffect(()=>{
-        console.log(modal);
-    },[modal])
+   
     return(
         <tr>
             <td>{list.no}</td>         
@@ -109,7 +111,7 @@ const Tr = memo(({list})=>{
             {/* 제목 클릭하여 글내용 팝업 오픈 */}
             <td onClick={()=>setModal(true)}>
                 {
-                    modal && <ReferenceContentsModal listNum={list.no} setModal={()=>setModal(false)}/>
+                    modal && <ReferenceContentsModal listNum={list.no} setModal={setModal}/>
                 }
                 {
                     list.badge === '공지' && <span className='badge notice'>공지</span> 
@@ -127,7 +129,7 @@ const Tr = memo(({list})=>{
                     list.file && <span className='file'></span>
                 }
             </td>         
-            <td>{list.writer}</td>         
+            <td>{list.writer}</td>        
             <td>{list.date}</td>         
             <td>{list.view}</td>         
         </tr>
