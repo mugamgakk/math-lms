@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import DatePicker from "react-date-picker";
 import FadeLoader from "react-spinners/FadeLoader";
+import SkeletonTable from "../../components/SkeletonTable";
 
 const override = {
     display : "block",
@@ -95,9 +96,8 @@ function PointModal({ title, setModal }) {
                             </tr>
                         </thead>
                     </table>
-                    {
-                        <FadeLoader color={"#ccc"} loading={loading} cssOverride={override} size={150} />
-                    }
+                    
+
                     <div style={{overflow : "auto", maxHeight : "300px"}}>
                     <table>
                         <colgroup>
@@ -108,6 +108,9 @@ function PointModal({ title, setModal }) {
                             <col style={{ width: "auto" }} />
                         </colgroup>
                         <tbody>
+                        {
+                        loading && <SkeletonTable Tr={10} Td={5}/>
+                        }
                             
                             {
                                !loading && list?.map((a,i)=>{
