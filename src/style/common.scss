@@ -425,3 +425,76 @@
             }
         }
     }
+
+.file{
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background: url(../../public/tempo/clip.png)no-repeat center;
+    background-size: 100%;
+
+}
+
+.referenceNotification{
+    .reference{
+        .contents-body{
+            &__middle{
+                table{
+                    .badge{
+                        color: #fff;
+                        width: 70px;
+                        height: 20px;
+                    }
+                    .notice{
+                        background: red;
+                    }
+                    .required{
+                        background: blue;
+                    }
+                    .event{
+                        background: green;
+                    }
+                }
+                .rfModal{
+                    padding: 10px;
+                    .table{
+                        .tr{
+                           @include flex(start,center);
+                           margin-bottom: 10px;
+                           border-top: 1px solid #ccc;
+                           border-bottom: 1px solid #ccc;
+                           .th{
+                            background: #eee;
+                            border-right: 1px solid #ccc;
+                            padding: 10px;
+
+                           }
+                           .td{
+                            padding-left: 10px;
+                        }
+                        .file{
+                            width: 400px;
+                            border-right: 1px solid #ccc;
+                            background: yellow;
+                            display: block;
+                            height: 50px;
+
+                               .fileArea{
+                               }
+
+                           }
+                        }
+                        .textArea{
+                         border-top: 1px solid #ccc;
+                         border-bottom: 1px solid #ccc;
+                         text-align: left;
+                         margin-bottom: 10px;
+                         padding: 10px;
+                        }
+                    }
+        
+                }
+            }
+            }
+    }
+}

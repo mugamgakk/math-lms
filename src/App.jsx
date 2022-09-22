@@ -29,7 +29,7 @@ const PlusLearning = lazy(()=> import('./Pages/PlusLearning') )
 const TodayClass = lazy(()=> import('./Pages/TodayClass') )
 const Evaluation = lazy(()=> import('./Pages/Evaluation') )
 const Statistics = lazy(()=> import('./Pages/Statistics') )
-const Reference = lazy(()=> import('./Pages/Reference') )
+const Reference = lazy(()=> import('./Pages/ReferenceNotification') )
 
 
 const override = {

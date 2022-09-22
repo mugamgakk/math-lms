@@ -5,23 +5,32 @@ import ChangeDate from "../components/ChangeDate";
 import TodayClassItem from "./TodayClass/TodayClassItem";
 import TodayClassSearch from "./TodayClass/TodayClassSearch"
 import useStore from '../store/useTodayClassStore';
-
+import axios from 'axios';
 
 
 
 
 function TodayClass(){
-    // const students = useSelector(state=>state.todayClassList);
     let {students} = useStore(state=>state);
-    console.log(students);
 
     let [findTodayList, setFindList] = useState(null);
     
     useEffect(()=>{
         setFindList(students);
+
+
+        axios.post('/api/lms/class.php?class_cd')
+        .then((res)=> {
+            console.log(res);
+        }).catch((error)=>{
+            console.log('error');
+        });
+
+
     },[])
 
-    console.log(findTodayList);
+
+
 
     let [checkState, setCheckState] = useState([]);
 
