@@ -151,8 +151,13 @@ function ResultSave({ modal }) {
                                     <input
                                         type="text"
                                         className="form-control"
+                                        maxLength={13}
+                                        value={info.call}
                                         onChange={(e) => {
-                                            setInfo({ ...info, call: e.target.value });
+                                            let target = e.target.value
+                                            let dd = target.replace(/[^0-9]/g, '').replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+                                            console.log(dd)
+                                            setInfo({ ...info, call: dd });
                                         }}
                                     />
                                 </td>
