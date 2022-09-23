@@ -24,7 +24,7 @@ function SkeletonPage() {
                     </tr>
                 </thead>
                 <tbody>
-                    {skeleton && <SkeletonTable Tr={4} Td={4} />}
+                    {skeleton && <SkeletonTable R={4} D={4} />}
                     {/* props로 Tr의 숫자 Td의 갯수를 넣어주면 됨 */}
 
                     {!skeleton && (

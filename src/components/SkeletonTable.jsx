@@ -1,19 +1,19 @@
 import React from 'react';
 import style from '../style/style-module/Skeleton.module.scss';
 
-function SkeletonTable({Tr, Td}) {
+function SkeletonTable({R, D}) {
 
-    Tr = new Array(Tr).fill(1)
-    Td = new Array(Td).fill(1)
+    R = new Array(R).fill(1)
+    D = new Array(D).fill(1)
 
     return ( 
         <>
         {
-            Tr.map((a,i)=>{
+            R.map((a,i)=>{
                 return (
                     <tr key={i}>
                         {
-                            Td.map(dd=>{
+                            D.map((dd,i)=>{
                                 return (
                                     <td key={i + 100}>
                                         <div className={style.box}></div>

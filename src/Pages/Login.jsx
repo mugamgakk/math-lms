@@ -1,18 +1,27 @@
-import axios from 'axios';
 import React, { useState } from 'react';
+import axios from 'axios';
 import { useEffect } from 'react';
-import {useDispatch} from 'react-redux';
-import {logintAsync} from '../feature/loginSlice';
-
 
 function Login() {
 
     let [userId , setuserId] = useState('');
     let [userPw , setuserPw] = useState('');
-    let [picture, setPictrue] = useState([]);
-    let dispatch = useDispatch();
 
-    const loginAction = (e)=>{
+
+    useEffect(()=>{
+        axios.post("/api/lms/user.php", {
+            mode : "login",
+            user_gb : "P",
+            user_id  : "userid",
+            user_pw : "123"
+        })
+        .then(res=>{
+            console.log(res)
+        })
+    },[])
+
+
+    const loginAction = async (e)=>{
         e.preventDefault();
 
         let data = {
@@ -20,15 +29,14 @@ function Login() {
             userPw
         }
 
-        axios.post('http://192.168.11.201:5000/login', data)
-        .then(a=>{
-            console.log(a.data)
+        const login = await axios.post('http://192.168.11.201:5000/login', data);
 
-            localStorage.setItem('token', a.data.token)
+        if(login.data.code === 200){
+            localStorage.setItem('token', login.data.token)
+        }else{
+            alert("로그인 정보가 일치하지 않습니다.")
+        }
 
-        })
-
-        // dispatch(logintAsync(data))
     }
 
 
@@ -37,7 +45,7 @@ function Login() {
 
         let 토큰 = localStorage.getItem('token');
 
-        axios.get('http://192.168.11.201:5000/payload' , {
+        axios.get('http://192.168.11.201:5000/istoken' , {
             headers : {
                 "Authorization" : 토큰
             }
