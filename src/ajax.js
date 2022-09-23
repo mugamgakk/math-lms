@@ -2,7 +2,8 @@ import axios from "axios";
 
 const ajax = axios.create({
     baseURL: '/api/lms',
-    timeout: 1500
+    timeout: 1500,
+    method : "POST"
     // headers: {'X-Custom-Header': 'foobar'}
   });
 
