@@ -4,67 +4,14 @@ import StatisticsSearch from "./Statistics/StatisticsSearch";
 import StatisticsStandard from "./Statistics/StatisticsStandard";
 import { useDownloadExcel } from "react-export-table-to-excel";
 import PointModal from "./Statistics/PointModal";
+import { useEffect } from "react";
+import ajax from '../ajax';
+import {arrSort, comma} from '../methods/methods';
 
-const data = [
-    {
-        id: 1,
-        name: "강수학",
-        nickName: "kimsw",
-        grade: "중2",
-        carrot: 20,
-        mineral: 10,
-        getPoint: 250,
-        beforePoint: 2300,
-        ban: "중등 월화수 A",
-    },
-    {
-        id: 2,
-        name: "강시후",
-        nickName: "qwkjlk",
-        grade: "중1",
-        carrot: 22,
-        mineral: 12,
-        getPoint: 280,
-        beforePoint: 2100,
-        ban: "중등 월화수 B",
-    },
-    {
-        id: 3,
-        name: "김민찬",
-        nickName: "wlkj24",
-        grade: "중2",
-        carrot: 42,
-        mineral: 0,
-        getPoint: 420,
-        beforePoint: 2000,
-        ban: "중등 월화수 A",
-    },
-    {
-        id: 4,
-        name: "박연하",
-        nickName: "wlkj35",
-        grade: "중3",
-        carrot: 21,
-        mineral: 4,
-        getPoint: 230,
-        beforePoint: 1230,
-        ban: "중등 월화수 A",
-    },
-    {
-        id: 5,
-        name: "신중누",
-        nickName: "45jsda",
-        grade: "중1",
-        carrot: 32,
-        mineral: 12,
-        getPoint: 380,
-        beforePoint: 1200,
-        ban: "중등 월화수 B",
-    },
-];
+
 
 function Statistics() {
-    let [value, setValue] = useState(data);
+    let [value, setValue] = useState(null);
     let [sortPoint, setSortPoint] = useState("desc");
     let [selectReset, setSelectReset] = useState(0);
     const tableRef = useRef(null);
@@ -81,28 +28,42 @@ function Statistics() {
         let copy = [...value];
 
         if (sortPoint === "desc") {
-            copy.sort((a, b) => {
-                return a.getPoint - b.getPoint;
-            });
+            
 
-            setValue(copy);
+            setValue(arrSort(copy, "point"));
             setSortPoint("asc");
         } else {
-            copy.sort((a, b) => {
-                return b.getPoint - a.getPoint;
-            });
-
-            console.log(copy);
-            setValue(copy);
+            setValue(arrSort(copy, "point", 1));
             setSortPoint("desc");
         }
     };
     // 내림 : desc // 오름 : asc
 
     const resetList = () => {
-        setValue(data);
+        // setValue(data);
         setSelectReset(selectReset + 1)
     };
+
+    const getPointData = async()=>{
+        let url = "/point.php/?mode=list";
+        let query = {
+            class_cd : 12312313,
+            sdate : "2022-01-01",
+            edate : "2022-01-01",
+            qstr : "ㅁㄴㅇ",
+            order : "desc"
+        }
+
+        let res =  await ajax(url, query);
+        let {class_list, point_list} = res.data
+
+        setValue(arrSort(point_list, "um_nm"))
+
+    }
+
+    useEffect(()=>{
+        getPointData()
+    },[])
 
 
     return (
@@ -127,7 +88,7 @@ function Statistics() {
                         다운로드
                     </button>
                 </div>
-                <StatisticsSearch data={data} value={value} setValue={setValue} selectReset={selectReset} />
+                <StatisticsSearch getPointData={getPointData} />
             </div>
 
             <table ref={tableRef}>
@@ -150,8 +111,8 @@ function Statistics() {
                     </tr>
                 </thead>
                 <tbody>
-                    {value.map((a) => {
-                        return <Tr key={a.id} list={a} />;
+                    {value?.map((a,i) => {
+                        return <Tr key={i} list={a} index={i} />;
                     })}
                 </tbody>
             </table>
@@ -159,27 +120,27 @@ function Statistics() {
     );
 }
 
-const Tr = ({ list }) => {
+const Tr = ({ list, index }) => {
 
     let [modal, setModal] = useState(false);
 
     return (
         <tr>
-            <td>{list.id}</td>
+            <td>{index + 1}</td>
             <td>
-                {list.name} ({list.nickName})
+                {list.um_nm} ({list.um_id})
             </td>
-            <td>{list.grade}</td>
-            <td>{list.carrot}</td>
-            <td>{list.mineral}</td>
-            <td>{list.getPoint}</td>
+            <td>{list.school_grade}</td>
+            <td>{list.ct}</td>
+            <td>{list.mi}</td>
+            <td>{comma(list.point)}</td>
             <td>
                 {
-                    modal && <PointModal title={list.name} setModal={setModal}/>
+                    modal && <PointModal userId={list.usr_seq} title={list.um_nm} setModal={setModal}/>
                 }
                 <button className="btn" onClick={()=>{setModal(true)}}>상세 보기</button>
             </td>
-            <td>{list.beforePoint}</td>
+            <td>{ comma(list.total_point) }</td>
         </tr>
     );
 };

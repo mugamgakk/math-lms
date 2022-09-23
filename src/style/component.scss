@@ -157,22 +157,29 @@ input.form-control{
 
 
 .students-search{
-    width: 320px;
+    width: 30%;
     margin-right: 10px;
     border-right: 1px solid #000;
     padding-right: 10px;
 
     table{
         .active{
-            background-color: yellow;
+            background-color: rgb(235, 222, 212);
         }
     }
 }
 
 .students-contents{
-    width: 840px;
+    width: 70%;
 }
 
+.students-table{
+    thead{
+        position: sticky;
+        top: -1px;
+        background-color: rgb(255, 207, 117);
+    }
+}
 
 
 .AttendanceManagement{
@@ -348,5 +355,15 @@ input.form-control{
             top: 30%;
             transform: translate(-50%, -50%) rotate(180deg);
         }
+    }
+}
+
+.StatisticsStandard{
+    max-height: 0px;
+    overflow: hidden;
+    transition: all 0.6s;
+
+    &.active{
+        max-height: 200px;
     }
 }

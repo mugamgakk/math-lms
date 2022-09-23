@@ -95,6 +95,10 @@ const arrSort = (arr, key = undefined, order = -1)=>{
     return copy
 }
 
+const comma = (num)=>{
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 
 
 export {
@@ -102,5 +106,6 @@ export {
     getByteSize,
     fileDown,
     makeZip,
-    arrSort
+    arrSort,
+    comma
 }

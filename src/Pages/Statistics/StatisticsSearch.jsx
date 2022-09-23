@@ -2,39 +2,19 @@ import React, { useState } from "react";
 import SelectBox from "../../components/ui/select/SelectBox";
 import DatePicker from "react-date-picker";
 
-function StatisticsSearch({data, value, setValue, selectReset}) {
+function StatisticsSearch({getPointData}) {
     let [studentName, setStudentName] = useState("");
     let [startDay, setStartDay] = useState(new Date());
     let [lastDay, setLastDay] = useState(new Date());
 
     const searchStudents = ()=>{
-
-        let matchingArr = value.filter(a=>{
-            let regexp = new RegExp(studentName);
-            return regexp.test(a.name);
-        })
-
-        setValue(matchingArr)
-    }
-
-    // 반 조회
-    const findBan = (choiceArr)=>{
-
-        const matchingArr = data.filter(a=>{
-            for(let ele of choiceArr){
-                if(a.ban === ele){
-                    return true
-                }
-            }
-        })
-
-        setValue(matchingArr)
+        getPointData()
     }
 
 
     return (
         <div className="StatisticsSearch">
-            <SelectBox width={"200px"} onChange={findBan} reset={selectReset}/>
+            <SelectBox width={"200px"} />
 
             <DatePicker
                 className="datepicker-base"

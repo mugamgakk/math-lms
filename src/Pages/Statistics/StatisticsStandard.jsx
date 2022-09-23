@@ -17,6 +17,7 @@ function StatisticsStandard() {
     return (
         <div style={{ position: "relative", paddingTop: "100px" }}>
             <Box bg="orange">
+                <div className="d-flex">
                 <h4>지플럼 수학 학습 포인트 지급 기준</h4>
                 <button
                     className="btn"
@@ -26,7 +27,8 @@ function StatisticsStandard() {
                 >
                     {standard ? "닫기" : "확인"}
                 </button>
-                {standard && (
+                </div>
+                <div className={"StatisticsStandard" + `${standard ? " active": ""}`}>
                     <table>
                         <thead>
                             <tr>
@@ -52,7 +54,7 @@ function StatisticsStandard() {
                             </tr>
                         </tbody>
                     </table>
-                )}
+                    </div>
             </Box>
         </div>
     );
