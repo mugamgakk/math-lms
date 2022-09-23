@@ -21,7 +21,7 @@ function EvaluationRoutine() {
             {clickStudent === null ? (
                 <AlertBox bg="pink" name="재원생 정기평가 관리" />
             ) : (
-                <div style={{ width: "840px" }}>
+                <div style={{ width: "70%" }}>
                     <UserInfo clickStudent={clickStudent} />
 
                     <Box>

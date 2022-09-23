@@ -9,7 +9,7 @@ const Box =  styled.div`
 
 function AlertBox({bg = "yellow", name}) {
     return (
-        <div style={{width  : "100%"}}>
+        <div style={{width  : "70%"}}>
         <Box bg={bg}>
             [{name}] 학생 이름(아이디)을 클릭하세요. 
             <br/>

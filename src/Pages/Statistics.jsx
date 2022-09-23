@@ -5,10 +5,9 @@ import StatisticsStandard from "./Statistics/StatisticsStandard";
 import { useDownloadExcel } from "react-export-table-to-excel";
 import PointModal from "./Statistics/PointModal";
 import { useEffect } from "react";
-import ajax from '../ajax';
-import {arrSort, comma} from '../methods/methods';
-
-
+import ajax from "../ajax";
+import { arrSort, comma } from "../methods/methods";
+import SkeletonTable from "../components/SkeletonTable";
 
 function Statistics() {
     let [value, setValue] = useState(null);
@@ -16,20 +15,19 @@ function Statistics() {
     let [selectReset, setSelectReset] = useState(0);
     const tableRef = useRef(null);
 
+    let [skeleton, setSkeleton] = useState(true);
+
     // 라이브러리때문에 3번 재랜더링 됨
     const { onDownload } = useDownloadExcel({
         currentTableRef: tableRef.current,
         filename: "Users table",
         sheet: "Users",
     });
-    
 
     const sortList = () => {
         let copy = [...value];
 
         if (sortPoint === "desc") {
-            
-
             setValue(arrSort(copy, "point"));
             setSortPoint("asc");
         } else {
@@ -41,30 +39,33 @@ function Statistics() {
 
     const resetList = () => {
         // setValue(data);
-        setSelectReset(selectReset + 1)
+        setSelectReset(selectReset + 1);
     };
 
-    const getPointData = async()=>{
+    const getPointData = async () => {
+
+        !skeleton && setSkeleton(true)
+
         let url = "/point.php/?mode=list";
         let query = {
-            class_cd : 12312313,
-            sdate : "2022-01-01",
-            edate : "2022-01-01",
-            qstr : "ㅁㄴㅇ",
-            order : "desc"
-        }
+            class_cd: 12312313,
+            sdate: "2022-01-01",
+            edate: "2022-01-01",
+            qstr: "ㅁㄴㅇ",
+            order: "desc",
+        };
 
-        let res =  await ajax(url, query);
-        let {class_list, point_list} = res.data
+        let res = await ajax(url, query);
+        let { class_list, point_list } = res.data;
 
-        setValue(arrSort(point_list, "um_nm"))
+        setValue(arrSort(point_list, "um_nm"));
 
-    }
+        setSkeleton(false)
+    };
 
-    useEffect(()=>{
-        getPointData()
-    },[])
-
+    useEffect(() => {
+        getPointData();
+    }, []);
 
     return (
         <div className="Statistics container">
@@ -78,13 +79,16 @@ function Statistics() {
                     <button className="btn" onClick={resetList}>
                         초기화
                     </button>
-                    <button className="btn" onClick={()=>{
-                        if(window.confirm("다운로드 하시겠습니까?")){
-                            onDownload()
-                        }else{
-                            return 
-                        }
-                        }}>
+                    <button
+                        className="btn"
+                        onClick={() => {
+                            if (window.confirm("다운로드 하시겠습니까?")) {
+                                onDownload();
+                            } else {
+                                return;
+                            }
+                        }}
+                    >
                         다운로드
                     </button>
                 </div>
@@ -111,9 +115,13 @@ function Statistics() {
                     </tr>
                 </thead>
                 <tbody>
-                    {value?.map((a,i) => {
-                        return <Tr key={i} list={a} index={i} />;
-                    })}
+                    {
+                        skeleton
+                        ? <SkeletonTable R={5} D={8}/>
+                        : value.map((a, i) => {
+                            return <Tr key={i} list={a} index={i} />;
+                        })
+                    }
                 </tbody>
             </table>
         </div>
@@ -121,7 +129,6 @@ function Statistics() {
 }
 
 const Tr = ({ list, index }) => {
-
     let [modal, setModal] = useState(false);
 
     return (
@@ -135,12 +142,19 @@ const Tr = ({ list, index }) => {
             <td>{list.mi}</td>
             <td>{comma(list.point)}</td>
             <td>
-                {
-                    modal && <PointModal userId={list.usr_seq} title={list.um_nm} setModal={setModal}/>
-                }
-                <button className="btn" onClick={()=>{setModal(true)}}>상세 보기</button>
+                {modal && (
+                    <PointModal userId={list.usr_seq} title={list.um_nm} setModal={setModal} />
+                )}
+                <button
+                    className="btn"
+                    onClick={() => {
+                        setModal(true);
+                    }}
+                >
+                    상세 보기
+                </button>
             </td>
-            <td>{ comma(list.total_point) }</td>
+            <td>{comma(list.total_point)}</td>
         </tr>
     );
 };
