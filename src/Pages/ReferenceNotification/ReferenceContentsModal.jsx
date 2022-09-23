@@ -29,7 +29,12 @@ function ReferenceContentsModal({listNum,setModal}) {
                 </div>
                 <div className="foot">
                     <button className='btn'>이전 글 보기</button>
-                    <button className='btn' onClick={()=>setModal(false)}>닫기</button>
+                    <button className='btn' 
+                    onClick={(e)=>{
+                        setModal(false);
+                        e.stopPropagation();
+                    }}
+                    >닫기</button>
                     <button className='btn'>다음 글 보기</button>
                 </div>
             </div>
