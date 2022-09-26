@@ -11,7 +11,6 @@ import { comma } from "../../methods/methods";
 const 오늘  = new Date();
 const beforeOneMonth = dayjs(오늘).subtract(1, "M").$d;
 
-console.log(beforeOneMonth)
 function PointModal({ title, setModal, userId }) {
     let [startDay, setStartDay] = useState(beforeOneMonth);
     let [lastDay, setLastDay] = useState(오늘);

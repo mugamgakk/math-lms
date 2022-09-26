@@ -29,9 +29,6 @@ function StudentsSearch() {
 
         setSkeleton(false)
 
-
-        // getStudentsData(123412341234, nameSearch);
-
         setNameSearch("");
     };
 
@@ -41,9 +38,16 @@ function StudentsSearch() {
     }, []);
 
     useEffect(() => {
-        user && setUserList(user);
-        user && setSkeleton(false)
+        setTimeout(()=>{
+            user && setUserList(user);
+        },200)
     }, [user]);
+
+    useEffect(()=>{
+        if(userList){
+            setSkeleton(false)
+        }
+    },[userList])
 
     return (
         <div className="students-search">
@@ -84,7 +88,7 @@ function StudentsSearch() {
                         </tr>
                     </thead>
                     <tbody>
-                        {skeleton && <SkeletonTable R={4} D={4}/>}
+                        {skeleton && <SkeletonTable R={14} D={4}/>}
 
                         {userList?.map((res, i) => {
                             return (
