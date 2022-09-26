@@ -1,5 +1,6 @@
 @import './mixin';
 
+// 공통 모달
 .modal{
     .dim{
         position: fixed;
@@ -382,6 +383,7 @@
     }
 }
 
+// 학생별 수업관리 - 오답정복하기 
 .detailClass.wrongAnswerMaster{
     .top{
         margin-bottom: 10px;
@@ -426,6 +428,103 @@
         }
     }
 
+// 자료 및 알림
+.referenceNotification{
+    
+    .reference{
+        table{
+            .badge{
+                color: #fff;
+                width: 70px;
+                height: 20px;
+            }
+            .notice{
+                background: red;
+            }
+            .required{
+                background: blue;
+            }
+            .event{
+                background: green;
+            }
+        }
+        .rfModal{
+            padding: 10px;
+            .table{
+                .tr{
+                    @include flex(start,center);
+                    margin-bottom: 10px;
+                    border-top: 1px solid #ccc;
+                    border-bottom: 1px solid #ccc;
+                    .th{
+                    background: #eee;
+                    border-right: 1px solid #ccc;
+                    padding: 10px;
+
+                    }
+                    .td{
+                    padding:0 10px;
+                    }
+                    .fileTd{
+                        width: 350px;
+                        border-right: 1px solid #ccc;
+                        display: block;
+                        height: 50px;
+
+                        .fileArea{
+                        }
+
+                    }
+                    
+                }
+                .editor{
+                    .ck.ck-editor__editable_inline>:last-child {
+                        height: 220px;
+                    }
+                }
+                .textArea{
+                    border-top: 1px solid #ccc;
+                    border-bottom: 1px solid #ccc;
+                    text-align: left;
+                    margin-bottom: 10px;
+                    padding: 10px;
+                }
+            }
+        }
+    }
+    .notification{
+        .filters{
+            &-l{
+                @include flex(start,center);
+            }
+            
+        }
+
+    }
+    .afterReadingModal{
+        @include pos-center();
+        width: 400px;
+        table{
+            thead{
+                th{
+                    background: #ccc;
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+// common
 .file{
     width: 20px;
     height: 20px;
@@ -434,90 +533,26 @@
     background-size: 100%;
 
 }
-
-.referenceNotification{
-    .reference{
-                table{
-                    .badge{
-                        color: #fff;
-                        width: 70px;
-                        height: 20px;
-                    }
-                    .notice{
-                        background: red;
-                    }
-                    .required{
-                        background: blue;
-                    }
-                    .event{
-                        background: green;
-                    }
-                }
-                .rfModal{
-                    padding: 10px;
-                    .table{
-                        .tr{
-                           @include flex(start,center);
-                           margin-bottom: 10px;
-                           border-top: 1px solid #ccc;
-                           border-bottom: 1px solid #ccc;
-                           .th{
-                            background: #eee;
-                            border-right: 1px solid #ccc;
-                            padding: 10px;
-
-                           }
-                           .td{
-                            padding:0 10px;
-                            }
-                            .fileTd{
-                                width: 350px;
-                                border-right: 1px solid #ccc;
-                                display: block;
-                                height: 50px;
-
-                                .fileArea{
-                                }
-
-                            }
-                           .radioArea{
-                                display: inline-block;
-                                .radioInput{
-                                    appearance: none;
-                                }
-                                label{
-                                    margin-right: 10px;
-                                    &::before{
-                                        content: '';
-                                        display: inline-block;
-                                        width: 15px;
-                                        height: 15px;
-                                        border-radius: 50%;
-                                        border:1px solid;
-                                        position: relative;
-                                        top: 3px;
-                                        margin-right: 1px;
-                                    }
-                                }
-                                .radioInput:checked ~ label::before{
-                                    background: green;
-                                }
-                           }
-                        }
-                        .editor{
-                            .ck.ck-editor__editable_inline>:last-child {
-                                height: 220px;
-                            }
-                        }
-                        .textArea{
-                         border-top: 1px solid #ccc;
-                         border-bottom: 1px solid #ccc;
-                         text-align: left;
-                         margin-bottom: 10px;
-                         padding: 10px;
-                        }
-                    }
-        
-                }
+.radioArea{
+    display: inline-block;
+    .radioInput{
+        appearance: none;
+    }
+    label{
+        margin-right: 10px;
+        &::before{
+            content: '';
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            border:1px solid;
+            position: relative;
+            top: 3px;
+            margin-right: 1px;
+        }
+    }
+    .radioInput:checked ~ label::before{
+        background: green;
     }
 }

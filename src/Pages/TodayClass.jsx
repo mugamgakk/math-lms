@@ -5,7 +5,7 @@ import ChangeDate from "../components/ChangeDate";
 import TodayClassItem from "./TodayClass/TodayClassItem";
 import TodayClassSearch from "./TodayClass/TodayClassSearch"
 import useStore from '../store/useTodayClassStore';
-import axios from 'axios';
+import ajax from "../ajax";
 
 
 
@@ -18,13 +18,19 @@ function TodayClass(){
     useEffect(()=>{
         setFindList(students);
 
-
-        axios.post('/api/lms/class.php?class_cd')
-        .then((res)=> {
-            console.log(res);
-        }).catch((error)=>{
-            console.log('error');
-        });
+        ajax("/class.php/?mode=get_today_class", {
+            ymd : "2022-01-01",
+            class_cd : 137283785634112704,
+            qstr : "김수학"
+        }).then(res=>{
+            
+        })
+        // axios.post('/api/lms/class.php?')
+        // .then((res)=> {
+        //     console.log(res);
+        // }).catch((error)=>{
+        //     console.log('error');
+        // });
 
 
     },[])

@@ -1,5 +1,4 @@
-import React, {useState} from 'react';
-import { useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import ContentHeader from "../components/ContentHeader";
 import Reference from "./ReferenceNotification/Reference";
 import Notification from "./ReferenceNotification/Notification";
@@ -18,14 +17,14 @@ function ReferenceNotification() {
                             <button 
                             className={ tab == '자료실' ? 'btn active' : 'btn'} 
                             onClick={()=>setTab('자료실')}>자료실</button>
-                            <button className={ tab == '학습 알림' ? 'btn active' : 'btn'} 
-                            onClick={()=>setTab('학습 알림')}>학습 알림</button>
+                            <button className={ tab == '학습알림' ? 'btn active' : 'btn'} 
+                            onClick={()=>setTab('학습알림')}>학습 알림</button>
                         </div>
                     </div>
                     {
                         {
                             자료실 : <Reference />,    
-                            학습알림 : <Notification />    
+                            학습알림 : <Notification />,    
                         }[tab]
                     }
                 </div>
