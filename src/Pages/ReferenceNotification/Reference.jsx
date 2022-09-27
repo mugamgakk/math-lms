@@ -81,9 +81,9 @@ function Reference() {
                         </thead>
                         <tbody>
                             {
-                                lenderList && lenderList.map(list=>{
+                                lenderList && lenderList.map((list,i)=>{
                                     return(
-                                        <Tr list={list}/>
+                                        <Tr list={list} key={i}/>
                                     )
                                 })
                             }

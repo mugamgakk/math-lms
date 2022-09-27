@@ -1,6 +1,8 @@
 import React, {useState,useEffect,memo} from 'react';
 import SearchBtn from '../../components/ui/button/SearchBtn';
 import ajax from "../../ajax";
+import ViewMessageModal from './ViewMessageModal';
+
 
 function SendMessage() {
     let [sendList, setSendList] = useState(null);
@@ -16,7 +18,6 @@ function SendMessage() {
             page : 1
         }).then(res=>{
             setSendList(res.data.list);
-            console.log(res.data.list);
         })
     },[]);
 
@@ -42,12 +43,13 @@ function SendMessage() {
    }
    
    const deleteList = (checkList) => {
-
+   checkList.length === 0 ? window.alert('1개 이상 선택바람') 
+   : (window.confirm('삭제?') &&
     ajax("/notice.php/?mode=notice_delete", {
         delete_no : checkList
     }).then(res=>{
         console.log(res);
-    })
+    })   )
    }
 
     return (  
@@ -124,6 +126,8 @@ function SendMessage() {
 
 const Tr = memo(({list, checkState, checkList }) => {
     let [afterReadModal,setAfterReadModal] = useState(false);
+    let [viewModal,setViewModal] = useState(false);
+
     return(
         <tr>
             <td>
@@ -140,9 +144,20 @@ const Tr = memo(({list, checkState, checkList }) => {
             <td>
                 { list.files > 0 && <span className='file'></span> }
             </td>
-            <td onClick={()=>{
-
-            }}>{list.subject}</td>
+            <td onClick={(e)=>{
+                e.stopPropagation();
+                setViewModal(true);
+            }}>{list.subject}
+            {
+                viewModal && 
+                <ViewMessageModal 
+                setViewModal={setViewModal} 
+                tit='보낸' 
+                type='send'
+                seq={list.seq}
+                />
+            }
+            </td>
             <td onClick={()=>setAfterReadModal(true)}>{list.status}
                 {
                     (list.status.includes('/') && afterReadModal) && 

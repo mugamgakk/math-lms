@@ -1,6 +1,7 @@
 import React, {useState,useEffect,memo} from 'react';
 import SearchBtn from '../../components/ui/button/SearchBtn';
 import ajax from "../../ajax";
+import ViewMessageModal from './ViewMessageModal';
 
 function GetMessage() {
     let [sendList, setSendList] = useState(null);
@@ -39,6 +40,15 @@ function GetMessage() {
     }
    }
    
+   const deleteList = (checkList) => {
+    checkList.length === 0 ? window.alert('1개 이상 선택바람') 
+    : (window.confirm('삭제?') &&
+     ajax("/notice.php/?mode=notice_delete", {
+         delete_no : checkList
+     }).then(res=>{
+         console.log(res);
+     })   )
+    }
 
     return (  
         <>
@@ -70,7 +80,7 @@ function GetMessage() {
                     </div>
                 </div>
                 <div className="filters-r">
-                    <button className="btn">선택 삭제</button>
+                    <button className="btn" onClick={()=>deleteList(checkList)}>선택 삭제</button>
                 </div>
             </div>
             <div className="messageList">
@@ -109,7 +119,7 @@ function GetMessage() {
 }
 
 const Tr = memo(({list, checkState, checkList}) => {
-
+    let [viewModal,setViewModal] = useState(false);
     return(
         <tr>
             <td>
@@ -124,7 +134,21 @@ const Tr = memo(({list, checkState, checkList}) => {
             <td>{list.send_date}</td>
             <td>{list.from_name}</td>
             <td>{list.grade}</td>
-            <td>{list.subject}</td>
+            <td onClick={(e)=>{
+                e.stopPropagation();
+                setViewModal(true);
+                }}>{list.subject}
+            {
+                viewModal && 
+                <ViewMessageModal 
+                setViewModal={setViewModal} 
+                viewModal={viewModal} 
+                tit='받은'
+                type='receive'
+                seq={list.seq}
+                />
+            }
+            </td>
             <td>
                 <button className='btn'>답장 쓰기</button>
             </td>

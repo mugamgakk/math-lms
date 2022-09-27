@@ -499,6 +499,7 @@
             }
             
         }
+        
 
     }
     .afterReadingModal{
@@ -510,6 +511,15 @@
                     background: #ccc;
                 }
             }
+        }
+    }
+
+    .ViewMessageModal{
+        &-body{
+            padding: 10px;
+        }
+        &-foot{
+            padding-bottom: 10px;
         }
     }
 }

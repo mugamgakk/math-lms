@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import GetMessage from './GetMessage';
+import ReceiveMessage from './ReceiveMessage';
 import SendMessage from './SendMessage';
 
 function Notification() {
@@ -19,7 +19,7 @@ function Notification() {
             {
                {
                   '보낸 메세지' :  <SendMessage />,
-                  '받은 메세지' :  <GetMessage />
+                  '받은 메세지' :  <ReceiveMessage />
                }[message]
             }
          </div>
