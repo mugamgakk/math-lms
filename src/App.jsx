@@ -52,7 +52,7 @@ function App() {
           <li style={{marginRight : "20px"}}><Link to="/plus-learning">플러스 러닝</Link></li>
           <li style={{marginRight : "20px"}}><Link to="/evaluation">평가관리</Link></li>
           <li style={{marginRight : "20px"}}><Link to="/statistics">학습 통계</Link></li>
-          <li style={{marginRight : "20px"}}><Link to="/Reference">자료 및 알리ㅁ</Link></li>
+          <li style={{marginRight : "20px"}}><Link to="/Reference">자료 및 알림</Link></li>
           <li><Link to="/components">components guide</Link></li>
         </ul>
       </div>
