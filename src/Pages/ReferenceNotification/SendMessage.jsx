@@ -2,13 +2,14 @@ import React, {useState,useEffect,memo} from 'react';
 import SearchBtn from '../../components/ui/button/SearchBtn';
 import ajax from "../../ajax";
 import ViewMessageModal from './ViewMessageModal';
+import WriteMessageModal from './WriteMessageModal';
 
 
 function SendMessage() {
     let [sendList, setSendList] = useState(null);
     let [coToState,setCoToState] = useState('co');
     let [checkList, setCheckList] = useState([]);
-
+    let [writeModal, setWriteModal] = useState(false);
 
     useEffect(()=>{
         ajax("/notice.php/?mode=notice_list_send", {
@@ -83,8 +84,11 @@ function SendMessage() {
                     </div>
                 </div>
                 <div className="filters-r">
-                    <button className="btn">메세지 보내기</button>
-                    <button className="btn" onClick={()=> deleteList(checkList)}>선택 삭제</button>
+                    <button className="btn" onClick={() => setWriteModal(true)}>메세지 보내기</button>
+                    <button className="btn" onClick={() => deleteList(checkList)}>선택 삭제</button>
+                    {
+                        writeModal && <WriteMessageModal setWriteModal={setWriteModal} />
+                    }
                 </div>
             </div>
             <div className="messageList">

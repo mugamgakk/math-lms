@@ -1,8 +1,6 @@
-import React, {memo, useState} from 'react';
-import useStore from '../../store/useReferenceStore';
-
+import React, {memo, useState, useEffect} from 'react';
+import ajax from "../../ajax";
 import SelectBase from "../../components/ui/select/SelectBase";
-import { useEffect } from 'react';
 import ReferenceContentsModal from './ReferenceContentsModal';
 import ReferenceRegistrationModal from './ReferenceRegistrationModal';
 
@@ -13,14 +11,20 @@ function Reference() {
     let [gradeOption, setGradeOption] = useState('전체');
     let [searchOption, setSearchOption] = useState('전체');
     let [searchInput, setSearchInput] = useState('');
-    let {list} = useStore(state=>state);
-
+    
     let [lenderList, setLenderList] = useState(null);
     let [registModal, setRegistModal] = useState(false);
 
     useEffect(()=>{
-        setLenderList(list);
-
+        ajax("/board.php/?mode=list", {
+            divide : '초등',
+            qcate : 'ti',
+            qstr : '검색어',
+            page : 1
+        }).then(res=>{
+            console.log(res);
+            setLenderList(res.data.list);
+        })
     },[])
     
      
@@ -81,16 +85,14 @@ function Reference() {
                         </thead>
                         <tbody>
                             {
-                                lenderList && lenderList.map((list,i)=>{
+                                lenderList ? lenderList.map((list,i)=>{
                                     return(
                                         <Tr list={list} key={i}/>
                                     )
-                                })
+                                }) : null
                             }
                         </tbody>
-                    
                     </table>
-
                 </div>
                 {
                     registModal && <ReferenceRegistrationModal setRegistModal={setRegistModal}/>
@@ -107,22 +109,22 @@ const Tr = memo(({list})=>{
     return(
         <tr>
             <td>{list.no}</td>         
-            <td>{list.target}</td>        
+            <td>{list.bd_cate}</td>        
             {/* 제목 클릭하여 글내용 팝업 오픈 */}
             <td onClick={()=>setModal(true)}>
                 {
                     modal && <ReferenceContentsModal listNum={list.no} setModal={setModal}/>
                 }
                 {
-                    list.badge === '공지' && <span className='badge notice'>공지</span> 
+                    list.notice === 'H' && <span className='badge notice'>필독</span> 
                 } 
                 {
-                    list.badge === '필독' && <span className='badge required'>필독</span>
+                    list.notice === 'N' && <span className='badge required'>공지</span>
                 }
                 {
-                    list.badge === '이벤트' && <span className='badge event'>이벤트</span>
+                    list.notice === 'E' && <span className='badge event'>이벤트</span>
                 }
-                {list.title}
+                {list.bd_title}
                 </td>         
             <td>
                 {
@@ -130,8 +132,8 @@ const Tr = memo(({list})=>{
                 }
             </td>         
             <td>{list.writer}</td>        
-            <td>{list.date}</td>         
-            <td>{list.view}</td>         
+            <td>{list.reg_dt}</td>         
+            <td>{list.hit}</td>         
         </tr>
     )    
 });

@@ -1,6 +1,16 @@
-import React from 'react';
+import React, {useEffect,useState} from 'react';
+import ajax from "../../ajax";
 
 function ReferenceContentsModal({listNum,setModal}) {
+    let [contents,setContents] = useState(null);
+    useEffect(()=>{
+        ajax("/notice.php/?mode=view", {
+            bd_seq : 1234,
+        }).then(res=>{
+            console.log(res);
+        })
+    },[])
+
     return ( 
         <div className="modal">
             <div className="dim"></div>

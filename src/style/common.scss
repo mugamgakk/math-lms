@@ -258,44 +258,7 @@
                       }
                   }
               }
-              .check-wrap{
-                  input[type=checkbox]{
-                      display: none;
-                    }
-                    label:not(.checkAll){ 
-                        display: inline-block;
-                        width: 15px;
-                        height: 15px;
-                        border: 1px solid #ccc;
-                        background: #fff;
-                    }
-                    input[type=checkbox]:not(.checkAll):checked ~ label{
-                        background: #000;
-                    }
-                    .checkAll ~ label{
-                        position: relative;
-                    }
-                    .checkAll ~ label::after{
-                        content:'';
-                        display: inline-block;
-                        position: absolute;
-                        width: 15px;
-                        height: 15px;
-                        border: 1px solid #000;
-                        background: #fff;
-                    }
-                    .checkAll:checked ~ label::after{
-                        background: #000;
-
-                    }
-                    
-                 
-                    .isCheck ~ label::after{
-                        background-color: #000;
-                        box-shadow: 0 0 0 2px #fff inset;
-                    }
-                    
-                }
+              
                 .toggleWrap{
                     .buttonWrap{
                         position: relative;
@@ -327,17 +290,11 @@
                         width: 150px;
                         background: #fff;
                         text-align: left;
-                         .checkWrap{
-                            input{
-                               
-                            }
+                       
                             .isCheck {
                                 background-color: #000;
                                 box-shadow: 0 0 0 2px #fff inset;
                             }
-                            
-                            
-                         }
                         }
                     }
                 }
@@ -566,3 +523,4 @@
         background: green;
     }
 }
+
