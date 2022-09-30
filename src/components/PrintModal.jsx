@@ -16,6 +16,11 @@ function PrintModal({ closeModal, title = "제목임" }) {
         }
     };
 
+    // 우클릭 드래그 방지 
+    const eventAlert = (e)=>{
+        e.preventDefault();
+    }
+
     return (
         <>
             <div className="modal">
@@ -86,19 +91,59 @@ function PrintModal({ closeModal, title = "제목임" }) {
                         <div className="contents">
                             {
                                 {
-                                    question: <div>문제</div>,
-                                    solution: <div>정답</div>,
+                                    question: <div onContextMenu={eventAlert} onDragStart={eventAlert}>문제</div>,
+                                    solution: <div onContextMenu={eventAlert} onDragStart={eventAlert}>정답</div>,
                                 }[viewState]
                             }
                         </div>
                     </div>
                     <div className="printModal-foot cmmnModal-foot">
-                        <Pagination />
+                        {/* <Pagination /> */}
+                        <PrintPagination totalPage={7}/>
                     </div>
                 </div>
             </div>
         </>
     );
+}
+
+const PrintPagination = ({totalPage = 20, pageLength = 10})=>{
+
+    let [page, setPage] = useState(1);
+
+    const PageRender = ()=>{
+        let pageGroup = Math.ceil(page / pageLength);
+        let lastPage = pageGroup * pageLength;
+        let firstPage = lastPage - 9
+
+        if(totalPage < lastPage){
+            lastPage = totalPage
+        }
+
+        if(totalPage < pageLength){
+            lastPage = totalPage;
+            firstPage = 1;
+        }
+
+        const result = [];
+
+        for(let i = firstPage; i <= lastPage; i++){
+            result.push(<button key={i} onClick={()=>{setPage(i)}} className={"btn " + `${page === i ? "active" : ""}`}>{i}</button>)
+        }
+
+        if(totalPage > pageLength){
+            result.unshift(<button onClick={()=>{page > 1 && setPage(page - 1)}}>좌로</button>);
+            result.push(<button onClick={()=>{page < totalPage && setPage(page + 1)}}>우로</button>)
+        }
+
+        return result
+    }
+
+    return (
+        <div>
+            <PageRender/>
+        </div>
+    )
 }
 
 export default PrintModal;

@@ -118,7 +118,7 @@ function PointModal({ title, setModal, userId }) {
                         </colgroup>
                         <tbody>
                         {
-                        loading && <SkeletonTable R={10} D={5}/>
+                            loading && <SkeletonTable R={10} D={5}/>
                         }
                             
                             {

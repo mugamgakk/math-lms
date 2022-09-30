@@ -16,10 +16,10 @@ function Login() {
     const loginAction = async (e)=>{
         e.preventDefault();
 
-        ajax("/class.php/?mode=get_today_class", {
+        ajax("/user.php/?mode=login", {
             user_gb : "P",
-            user_id : "userid",
-            user_pw : "password",
+            user_id : userId,
+            user_pw : userPw,
         })
         .then(res=>{
             console.log(res)

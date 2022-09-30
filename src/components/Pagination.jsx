@@ -4,18 +4,26 @@ import style from '../style/style-module/pagination.module.scss';
 
 
 // 총 페이지 넣기 
-const pageFull = 30;
 
-
-function Pagination() {
+function Pagination({totalPage = 30, pageLength = 5}) {
 
     // 현재 페이지
-    let [page, setPage] = useState(10);
+    let [page, setPage] = useState(1);
 
     const pageNum = useCallback(()=>{
-        let pageGroup = Math.ceil(page / 5);
-        let lastPage = pageGroup * 5;
+        let pageGroup = Math.ceil(page / pageLength);
+        let lastPage = pageGroup * pageLength;
         let firstPage = lastPage - 4;
+
+
+        if(totalPage < lastPage){
+            lastPage = totalPage
+        }
+
+        if(totalPage < pageLength){
+            firstPage = 1;
+            lastPage = totalPage
+        }
 
         const result = [];
         
@@ -32,21 +40,21 @@ function Pagination() {
             <div className={style.box}>
                 <button onClick={()=>{setPage(1)}}>&lt;&lt;</button>
                 <button onClick={()=>{
-                    page <= 5
+                    page <= pageLength
                     ? setPage(1)
-                    : setPage(page - 5)
+                    : setPage(page - pageLength)
                 }}
                     >&lt;</button>
                 <ol>
                     {pageNum()}
                 </ol>
                 <button onClick={()=>{
-                    page > (pageFull - 5) && page <= pageFull
-                    ? setPage(pageFull)
-                    : setPage(page + 5)
+                    page > (totalPage - pageLength) && page <= totalPage
+                    ? setPage(totalPage)
+                    : setPage(page + pageLength)
                 }}>&gt;</button>
                 <button className={style.mx} onClick={()=>{
-                    setPage(pageFull)
+                    setPage(totalPage)
                 }} >&gt;&gt;</button>
             </div>
         </div>
