@@ -4,6 +4,7 @@ import SelectBase from "../../components/ui/select/SelectBase";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { getByteSize } from "../../methods/methods";
+import { faCropSimple } from '@fortawesome/free-solid-svg-icons';
 
 function WriteMessageModal({setWriteModal,setViewModal, toName}) {
     let [stuList, setStuList] = useState();
@@ -14,8 +15,13 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
     let [editorContents, setEditorContents] = useState();
     let [writeTit,setWriteTit] = useState('');
     let [to,setTo] = useState(toName);
-
+    let [fileCheck,setFileCheck] = useState([]);
     let ref = useRef(false);
+
+
+    useEffect(()=>{
+        console.log(fileCheck);
+    },[fileCheck]);
 
     useEffect(()=>{
         if(ref.current){
@@ -33,9 +39,9 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
     },[checkState])
 
     let [files, setFiles] = useState([]);
+
     let 총파일크기 = useRef(0);
 
-    
     useEffect(()=>{
         
         ajax("/notice.php/?mode=notice_usr", {
@@ -77,13 +83,34 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
         setEditorContents(editor.getData());
         console.log(JSON.stringify(editorContents));
     }
+    
+    const checkFile = (checked,file) => {
+        if(checked){
+            setFileCheck([...fileCheck,file]);
+        }else{
+            setFileCheck(fileCheck.filter(a => a !== file));               
+        }
+    }
+    const removeFile = (fileCheck) => {
 
+        let arr = [];
+
+        files.forEach(file=>{
+            if(!fileCheck.includes(file.name)){
+                console.log(file);
+                arr.push(file);
+            }
+        })
+        
+        setFileCheck([]);
+        setFiles([...arr]);
+    }
     const upload = useCallback(
         (파일) => {
             var 업로드파일정규식 = /\.(hwp|doc|docx|xls|xlsx|ppt|pptx|pdf|jpg|png|zip)$/i;
             var 총파일사이즈 = 총파일크기.current;
             var $100mb = 1024 * 1024 * 100; // 100mb
-
+            
             let arr = [];
 
             for (let value of 파일) {
@@ -212,6 +239,7 @@ return (
                                                 id="file"
                                                 onChange={(e) => {
                                                     upload(e.target.files);
+                                                    console.log('asd');
                                                 }}
                                                 className="d-none"
                                                 multiple
@@ -229,7 +257,6 @@ return (
 
                                                     var 파일 = e.dataTransfer.files;
                                                     // 드롭한 파일들이 모두 들어있음
-
                                                     if (파일.length === 0) {
                                                         return;
                                                     }
@@ -244,6 +271,10 @@ return (
                                             {files.map((a, i) => {
                                                 return (
                                                     <div key={i}>
+                                                        <input type="checkbox"
+                                                        onChange={(e)=>checkFile(e.target.checked,a.name)}
+                                                        checked={fileCheck.includes(a.name)}
+                                                        />
                                                         {a.name} ( {getByteSize(a.size)} )
                                                     </div>
                                                 );
@@ -252,7 +283,7 @@ return (
                                         </div>
                                         <div className="fileBtn">
                                             <label htmlFor="file" className="btn">파일 찾기</label>
-                                            <button className="btn" >파일삭제</button>
+                                            <button className="btn" onClick={()=>removeFile(fileCheck)}>파일삭제</button>
                                         </div>
                                     </td>
                                 </tr>
