@@ -1,7 +1,7 @@
 import React,{useEffect, useState} from 'react';
 import ajax from "../../ajax";
-import { fileDown } from '../../methods/methods';
-function ViewMessageModal({setViewModal, viewModal, tit, type, seq}) {
+
+function ViewMessageModal({setViewModal, viewModal, setWriteModal, tit, type, seq}) {
     let [data,setData] = useState(null);
     
     useEffect(()=>{
@@ -10,8 +10,6 @@ function ViewMessageModal({setViewModal, viewModal, tit, type, seq}) {
             nt_type : type
         }).then(res=>{
             setData(res.data);
-            console.log(res.data)
-            
         })   
     },[viewModal]);
 
@@ -42,7 +40,12 @@ function ViewMessageModal({setViewModal, viewModal, tit, type, seq}) {
                         setViewModal(false);
                     }}>
                     확인</button>
-                    <button className='btn'>답장 쓰기</button>
+                    {
+                        type === 'receive' && <button className='btn' onClick={()=>{
+                            setViewModal(false);
+                            setWriteModal(true);
+                        }}>답장 쓰기</button>
+                    }
                 </div>
             </div>
             </div>
@@ -53,7 +56,7 @@ function Tbody ({data,type}){
     return(
         <tbody>
         {
-            type == 'send'  &&  (
+            type === 'send'  &&  (
                 <>
                     <tr>
                         <th>받는 사람{data.nt_to_cnt}</th>
@@ -67,7 +70,7 @@ function Tbody ({data,type}){
             )
         }
        {
-            type == 'receive' && (
+            type === 'receive' && (
             <>
                <tr>
                     <th>보낸 사람</th> 
@@ -91,7 +94,7 @@ function Tbody ({data,type}){
         </td>
     </tr>
     {
-        type == 'send' && (
+        type === 'send' && (
             <tr>
                 <th>첨부 파일</th>
                 <td>

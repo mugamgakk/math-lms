@@ -49,8 +49,8 @@ function SendMessage() {
     ajax("/notice.php/?mode=notice_delete", {
         delete_no : checkList
     }).then(res=>{
-        console.log(res);
-    })   )
+        window.alert('삭제 성공');
+    }))
    }
 
     return (  

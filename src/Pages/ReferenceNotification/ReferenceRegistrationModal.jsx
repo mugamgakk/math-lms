@@ -1,8 +1,8 @@
 import React, { useState, useMemo, useCallback, useRef } from 'react';
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import SelectBase from "../../components/ui/select/SelectBase";
 import { getByteSize } from "../../methods/methods";
+import SelectBase from "../../components/ui/select/SelectBase";
 
 const 대상 = ['전체','초등','중등','고등'];
 const 유형 = ['일반','필독','공지','이벤트'];

@@ -2,6 +2,7 @@ import React, {useState,useEffect,memo} from 'react';
 import SearchBtn from '../../components/ui/button/SearchBtn';
 import ajax from "../../ajax";
 import ViewMessageModal from './ViewMessageModal';
+import WriteMessageModal from './WriteMessageModal';
 
 function GetMessage() {
     let [sendList, setSendList] = useState(null);
@@ -46,8 +47,8 @@ function GetMessage() {
      ajax("/notice.php/?mode=notice_delete", {
          delete_no : checkList
      }).then(res=>{
-         console.log(res);
-     })   )
+        window.alert('삭제 성공');
+     }))
     }
 
     return (  
@@ -120,6 +121,8 @@ function GetMessage() {
 
 const Tr = memo(({list, checkState, checkList}) => {
     let [viewModal,setViewModal] = useState(false);
+    let [writeModal,setWriteModal] = useState(false);
+    let [to,setTo] = useState(list.from_name);
     return(
         <tr>
             <td>
@@ -146,11 +149,22 @@ const Tr = memo(({list, checkState, checkList}) => {
                 tit='받은'
                 type='receive'
                 seq={list.seq}
+                setWriteModal={setWriteModal}
                 />
             }
             </td>
             <td>
-                <button className='btn'>답장 쓰기</button>
+                <button className='btn' onClick={()=>{
+                    setWriteModal(true);
+                    }}>답장 쓰기</button>
+                {
+                   writeModal && 
+                   <WriteMessageModal 
+                   setWriteModal={setWriteModal} 
+                   setViewModal={setViewModal}
+                    toName={list.from_name}
+                   />
+                }
             </td>
         </tr>
     )
