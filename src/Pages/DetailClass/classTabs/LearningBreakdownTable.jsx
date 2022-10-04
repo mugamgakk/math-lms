@@ -1,118 +1,88 @@
-import React, { useState } from "react";
-import LbtDayOption from "../LbtDayOption";
+import React, { useState, useEffect } from "react";
 import { useCallback } from "react";
-
-const arr = ["강호동", "이수근", "오징어", "꽃게", "떡볶이"];
-
+import useLbtStore from "../../../store/useLbtStore";
+import LbtDayOption from "../LbtDayOption";
 
 function LearningBreakdownTable() {
-    let [data, setData] = useState([...arr]);
+    let [lbtList, setLbtList] = useState(null);
     let [choiceArr, setChoiceArr] = useState([]);
+    let { lbtData, getLbtData, removeLbtData } = useLbtStore();
 
-    // 체크박스
-    const isChecked = useCallback(
-        (checked, ele) => {
-            if (checked) {
-                setChoiceArr([...choiceArr, ele]);
-            } else {
-                setChoiceArr(choiceArr.filter((list) => list !== ele));
-            }
-        },
-        [choiceArr]
-    );
+    const checkboxChecked = useCallback((checked, item) => {
+        if (checked) {
+            setChoiceArr([...choiceArr, item])
+        }else{
+            setChoiceArr(choiceArr.filter(a=> a !==item ))
+        }
+    },[choiceArr]);
 
-    // 삭제 버튼
-    const deleteLBT = useCallback(() => {
-        if (choiceArr.length === 0) {
+    const removeList = useCallback(()=>{
+        if(choiceArr.length === 0){
             alert("학습 분석표를 선택하세요");
-            return;
+        }else{
+            if(window.confirm("선택한 학습 분석표를 삭제하시겠습니까?")){
+                removeLbtData( lbtData.filter(a => !choiceArr.includes(a)) )
+            }else{
+                return 
+            }
         }
+    },[choiceArr])
 
-        if (window.confirm("삭제하시겠습니까?")) {
-            let copy = [...data]; //삭제
+    useEffect(() => {
+        setLbtList(lbtData);
+    }, [lbtData]);
 
-            choiceArr.forEach(function (item) {
-                copy.splice(copy.indexOf(item), 1);
-            });
-
-            setChoiceArr([]);
-            setData(copy);
-        } else {
-            return;
-        }
-    }, [choiceArr]);
-
+    useEffect(() => {
+        getLbtData();
+    }, []);
 
     return (
         <div>
             <LbtDayOption />
 
-            <button className="btn" onClick={deleteLBT}>
-                선택 삭제
-            </button>
+            <button className="btn" onClick={removeList}>선택 삭제</button>
 
             <p>[분석표 삭제 유의 !] 분석 결과는 생성일에 따라 달라질 수 있습니다</p>
 
-                <table>
-                    <colgroup>
-                        <col style={{ width: "auto" }} />
-                        <col style={{ width: "auto" }} />
-                        <col style={{ width: "auto" }} />
-                        <col style={{ width: "auto" }} />
-                        <col style={{ width: "auto" }} />
-                        <col style={{ width: "auto" }} />
-                    </colgroup>
-                    <thead>
-                        <tr>
-                            <th>선택</th>
-                            <th>학습기간</th>
-                            <th>분석표 생성일</th>
-                            <th>학습한 교재</th>
-                            <th>생성자</th>
-                            <th>학습 분석표</th>
-                        </tr>
-                    </thead>
-                </table>
-            <div style={{ height: "400px", overflow: "auto" }}>
-
             <table>
+                <thead>
+                    <tr>
+                        <th scope="col">선택</th>
+                        <th scope="col">학습 기간</th>
+                        <th scope="col">분석표 생성일</th>
+                        <th scope="col">학습한 교재</th>
+                        <th scope="col">생성자</th>
+                        <th scope="col">학습 분석표</th>
+                    </tr>
+                </thead>
                 <tbody>
-                    {data.map((a, i) => {
-                            return <LbtTr item={a} key={i} isChecked={isChecked} choiceArr={choiceArr} />;
+                    {lbtList?.map((item) => {
+                        return <Tr key={item.id} item={item} choiceArr={choiceArr} checkboxChecked={checkboxChecked} />;
                     })}
                 </tbody>
             </table>
-            </div>
-
         </div>
     );
 }
 
-const LbtTr = ({ item, isChecked, choiceArr }) => {
-
+const Tr = ({ item, checkboxChecked, choiceArr }) => {
     return (
         <tr>
             <td>
                 <input
                     type="checkbox"
-                    checked={choiceArr.includes(item) ? true : false}
+                    checked={choiceArr.includes(item)}
                     onChange={(e) => {
-                        isChecked(e.target.checked, item);
+                        checkboxChecked(e.target.checked, item);
                     }}
                 />
             </td>
-            <td>2022-06-12 ~ 2022-07-25</td>
-            <td>2021-07-02</td>
-            <td>중2-1 노벰, 중2-2 엑사스</td>
-            <td>{item}</td>
+            <td>{item.date}</td>
+            <td>{item.makeDay}</td>
+            <td>{item.book}</td>
+            <td>{item.maker}</td>
             <td>
-                <button
-                    className="btn"
-                    onClick={() => {
-                    }}
-                >
-                    보기
-                </button>
+                <button className="btn">보기</button>
             </td>
         </tr>
     );

@@ -1,7 +1,9 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import style from "../../../style/style-module/lbtModal.module.scss";
 import LbtCheckbox from "../LbtCheckbox";
 import CreateLbt from "../CreateLbt/CreateLbt";
+import useLbtStore from "../../../store/useLbtStore";
+import { useCallback } from "react";
 
 const dataLists = [
     {
@@ -31,18 +33,19 @@ const dataLists = [
     },
 ];
 
-function LbtModal(props) {
+
+function LbtModal({setCreateModal }) {
     const [allCheckBtn, setAllCheckBtn] = useState(false);
     const printComponent = useRef();
-    const [create, setCreate] = useState(0);
-
+    // 적용을 눌렀을때 데이터를 가져오기위한
+    const [count, setCount] = useState(0);
 
     return (
         <div
             className={style.modal}
             onClick={(e) => {
                 if (e.target === e.currentTarget) {
-                    props.setModal(false);
+                    setCreateModal(false)
                 }
             }}
         >
@@ -50,9 +53,6 @@ function LbtModal(props) {
                 <h4>종합 학습 분석표 생성하기</h4>
                 <div className="row">
                     <div className={style.left}>
-                        {/* {
-                            props.modalState === "인쇄" && <div className={style.disabled}></div>
-                        } */}
 
                         <strong>
                             평균 표시(
@@ -70,8 +70,8 @@ function LbtModal(props) {
                         <div>
                             <button
                                 className="btn"
-                                onClick={() => {
-                                    setAllCheckBtn(!allCheckBtn);
+                                onClick={()=>{
+                                    setAllCheckBtn(!allCheckBtn)
                                 }}
                             >
                                 모두 선택 / 해제
@@ -79,18 +79,16 @@ function LbtModal(props) {
                         </div>
 
                         <div className="contentGroup">
-                            {dataLists.map((list, i) => {
+                            {dataLists.map((checkbox, i) => {
                                 return (
-                                    <LbtCheckbox list={list} create={create} allCheckBtn={allCheckBtn} key={i} />
+                                    <LbtCheckbox key={i} checkbox={checkbox} count={count} allCheckBtn={allCheckBtn} />
                                 );
                             })}
                         </div>
 
                         <button
                             className="btn"
-                            onClick={() => {
-                                setCreate(create + 1);
-                            }}
+                            onClick={()=>{setCount(count + 1)}}
                         >
                             적용
                         </button>
@@ -104,7 +102,7 @@ function LbtModal(props) {
                     <button
                         className="btn"
                         onClick={() => {
-                            props.setModal(false);
+                            setCreateModal(false)
                         }}
                     >
                         닫기

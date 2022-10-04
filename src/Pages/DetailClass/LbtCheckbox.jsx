@@ -1,89 +1,79 @@
-import React, { useState, useCallback, useEffect, memo, useRef } from "react";
+import React from "react";
+import { useRef } from "react";
+import { useEffect } from "react";
+import { useState } from "react";
+import useLbtStore from "../../store/useLbtStore";
 import style from "../../style/style-module/lbtModal.module.scss";
-import { choiceLbt } from "../../feature/studentsListSlice";
-import { useDispatch } from "react-redux";
 
+function LbtCheckbox({ checkbox, count, allCheckBtn }) {
+    let [checkList, setCheckList] = useState(checkbox.optionItem);
+    let setCreateData = useLbtStore((state) => state.setCreateData);
 
-
-
-const LbtCheckbox = ({allCheckBtn, list, create})=> {
-
-    const [checkedList, setCheckedList] = useState([...list.optionItem]);
-
-    const didMount = useRef(false);
-    let dispatch = useDispatch();
+    let ref = useRef(false);
 
     const allCheck = (checked) => {
         if (checked) {
-            setCheckedList([...list.optionItem])
+            setCheckList(checkbox.optionItem);
         } else {
-            setCheckedList([]);
+            setCheckList([]);
         }
     };
 
-    const oneCheck = (checked, list) => {
+    const oneCheck = (checked, ele) => {
         if (checked) {
-            setCheckedList([...checkedList, list]);
+            setCheckList([...checkList, ele]);
         } else {
-            setCheckedList(checkedList.filter((ele) => ele != list));
+            setCheckList(checkList.filter((a) => a !== ele));
         }
     };
 
-    useEffect(()=>{
+    useEffect(() => {
+        setCreateData({ option: checkbox.option, optionItem: checkList });
+    }, [count]);
 
-    // useEffect 마운트시 실행 막기
-        if(didMount.current){
-            if(allCheckBtn){
-                // console.log(list.optionItem)
-                setCheckedList([...list.optionItem]);
-            }else{
-                setCheckedList([]);
+    useEffect(() => {
+        if (ref.current) {
+            if (allCheckBtn) {
+                setCheckList(checkbox.optionItem);
+            } else {
+                setCheckList([]);
             }
-        }else{
-            didMount.current = true;
+        } else {
+            ref.current = true;
         }
-
-    },[allCheckBtn])
-
-    // 적용 눌렀을시
-    useEffect(()=>{
-        dispatch(choiceLbt({ name : list.option , arr : checkedList}))
-
-    },[create])
-
-
+    }, [allCheckBtn]);
 
     return (
-        <div className="captionGroup">
-         
-            <input
-                type="checkbox"
-                id={list.option}
-                className={style.formConrol}
-                checked={checkedList.length === list.optionItem.length}
-                onChange={(e)=>{allCheck(e.target.checked)}}
-            />
-            <label htmlFor={list.option}>{list.option}</label>
-        
-            <ul className={style.contentList}>
-                {
-                    list.optionItem.map((a,i)=>{
-                        return (
-                            <li key={i}>
-                                <input
-                                    type="checkbox"
-                                    id={a}
-                                    className={style.formConrol}
-                                    onChange={(e)=>{oneCheck(e.target.checked,a)}}
-                                    checked={checkedList.includes(a)}
-                                />
-
-                                <label htmlFor={a}>{a}</label>
-                            </li>
-                        )
-                    })
-                }
-                
+        <div>
+            <div>
+                <label htmlFor={checkbox.option}>{checkbox.option}</label>
+                <input
+                    type="checkbox"
+                    id={checkbox.option}
+                    onChange={(e) => {
+                        allCheck(e.target.checked);
+                    }}
+                    checked={checkList.length === checkbox.optionItem.length}
+                    className={style.formConrol}
+                />
+            </div>
+            <ul className={style.contentList} style={{ marginLeft: "20px" }}>
+                {checkbox.optionItem.map((a) => {
+                    return (
+                        <li key={a}>
+                            <label htmlFor={a}>{a}</label>
+                            <input
+                                type="checkbox"
+                                id={a}
+                                className={style.formConrol}
+                                checked={checkList.includes(a)}
+                                onChange={(e) => {
+                                    oneCheck(e.target.checked, a);
+                                }}
+                            />
+                        </li>
+                    );
+                })}
             </ul>
         </div>
     );
