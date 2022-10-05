@@ -1,5 +1,7 @@
 import React,{useEffect, useState} from 'react';
 import ajax from "../../ajax";
+import { fileDown } from "../../methods/methods";
+
 
 function ViewMessageModal({setViewModal, viewModal, setWriteModal, tit, type, seq}) {
     let [data,setData] = useState(null);
@@ -101,7 +103,7 @@ function Tbody ({data,type}){
                     {
                         data.files.map(file=>{
                             return(
-                                // <div onClick={()=>fileDown(file.link)}>{file.filename}</div>
+                                // <div onClick={()=>fileDown(file)}>{file.filename}</div>
                                 <div>{file.filename}</div>
                             )
                         })

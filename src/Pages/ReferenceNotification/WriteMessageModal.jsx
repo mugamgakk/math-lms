@@ -25,7 +25,11 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
 
     useEffect(()=>{
         if(ref.current){
-            setTo(`${toName},${checkState.join()}`);
+            if(toName){
+                setTo(`${toName},${checkState.join()}`);
+            }else{
+                setTo(checkState.join());
+            }
         }else{
             ref.current = true;
         }

@@ -53,7 +53,7 @@ function Home() {
                         <Link to="/statistics">학습 통계</Link>
                     </li>
                     <li style={{ marginRight: "20px" }}>
-                        <Link to="/Reference">자료 및 알림</Link>
+                        <Link to="/reference">자료 및 알림</Link>
                     </li>
                     <li>
                         <Link to="/components">components guide</Link>
