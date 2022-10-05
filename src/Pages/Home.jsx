@@ -2,13 +2,11 @@ import axios from "axios";
 import React from "react";
 import { useEffect } from "react";
 import { Outlet, Link } from "react-router-dom";
-
-
+import ajax from "../ajax";
 
 
 function Home() {
     const url = window.location.pathname;
-
     
     useEffect(()=>{
         const token = localStorage.getItem("token");

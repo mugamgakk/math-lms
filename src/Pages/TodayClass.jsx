@@ -16,21 +16,19 @@ function TodayClass(){
     let [findTodayList, setFindList] = useState(null);
     
     useEffect(()=>{
-        setFindList(students);
 
         ajax("/class.php/?mode=get_today_class", {
             ymd : "2022-01-01",
             class_cd : 137283785634112704,
             qstr : "김수학"
         }).then(res=>{
+
+            let { class_list, today_list} = res.data;
+            setFindList(today_list);
+            
             
         })
-        // axios.post('/api/lms/class.php?')
-        // .then((res)=> {
-        //     console.log(res);
-        // }).catch((error)=>{
-        //     console.log('error');
-        // });
+       
 
 
     },[])

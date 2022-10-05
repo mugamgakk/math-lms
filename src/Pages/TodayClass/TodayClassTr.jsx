@@ -56,7 +56,6 @@ function TodayClassTr({data,name,book,tdName,tdBook}){
                     {
                     attModal ? 
                     <AttModal 
-                    title={`${name}/${book}/${data.tit}/${data.sodanwon}`}
                     setAttModal={setAttModal}
                     /> 
                     : null
@@ -64,7 +63,6 @@ function TodayClassTr({data,name,book,tdName,tdBook}){
                     {
                    assModal ? 
                     <AssessmentModal 
-                    title={`${name}/${book}/${data.tit}/${data.sodanwon}`}
                     setAssModal={setAssModal}
                     /> 
                     : null

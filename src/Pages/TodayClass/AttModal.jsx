@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import ScoreItem from './ScoreItem'
-function AttModal ({setAttModal,title}) {
+import ScoreItem from './ScoreItem';
+import ajax from "../../ajax";
+
+function AttModal ({setAttModal}) {
     let scoreTitList = [
         '1. 학습에 얼마나 집중하였습니까?',
         '2. 학습에 얼마나 적극적으로 참여하였습니까?',
@@ -16,6 +18,19 @@ function AttModal ({setAttModal,title}) {
         q4: 7,
         q5: 7,
     });
+
+    useEffect(()=>{
+        ajax("/class.php/?mode=get_attitude", {
+            cls_seq : 12345,
+        }).then(res=>{
+
+            console.log(res);
+            
+          
+            
+            
+        })
+    })
 
     const numClick = (idx,num) => {
         setTotalData({
@@ -35,7 +50,7 @@ function AttModal ({setAttModal,title}) {
             <div className="attModal-head cmmnModal-head">
                     <div className="tit">
                         <strong>[학습 태도 평가]</strong>
-                        {title}
+                        {/* {title} */}
                     </div>
                     <button className="close" onClick={() => setAttModal(false)}>X</button>
             </div>

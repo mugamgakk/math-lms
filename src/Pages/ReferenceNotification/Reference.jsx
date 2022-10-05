@@ -15,6 +15,9 @@ function Reference() {
     let [lenderList, setLenderList] = useState(null);
     let [registModal, setRegistModal] = useState(false);
 
+
+
+    
     useEffect(()=>{
         ajax("/board.php/?mode=list", {
             divide : '초등',
