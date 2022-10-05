@@ -7,6 +7,7 @@ import { Outlet, Link } from "react-router-dom";
 
 
 function Home() {
+    const url = window.location.pathname;
 
     
     useEffect(()=>{
@@ -24,9 +25,10 @@ function Home() {
             localStorage.removeItem("token");
             window.location = "/login"
         })
+
+        sessionStorage.setItem("pathName", url)
     })
 
-    const url = window.location.pathname;
 
     return (
         <div>

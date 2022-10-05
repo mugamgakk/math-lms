@@ -45,8 +45,9 @@ function App() {
 
     useEffect(()=>{
         var token = localStorage.getItem("token");
+        var pathName = sessionStorage.getItem("pathName")
 
-        token ? navigate("/") : navigate("/login");
+        token ? navigate(pathName) : navigate("/login");
     },[])
 
     return (
