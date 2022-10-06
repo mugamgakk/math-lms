@@ -10,12 +10,15 @@ function GetMessage() {
     let [checkList, setCheckList] = useState([]);
 
     useEffect(()=>{
-        ajax("/notice.php/?mode=notice_list_receive", {
+        ajax("/notice.php", { data: {
+            mode : 'notice_list_receive',
             qcate : coToState,
             qstr : '박',
             listnum : 30,
             page : 1
+        }
         }).then(res=>{
+            console.log(res);
             setSendList(res.data.list);
         })
     },[]);

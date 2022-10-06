@@ -60,9 +60,9 @@ function AttModal ({setAttModal}) {
                             return(
                                 <ScoreItem key={idx} tit={tit} idx={idx} numClick={numClick} style={totalData[idx]}/>
                                 )
-                            })
+                        })
                             
-                        }
+                    }
                 </ul>
             </div>
             <div className="attModal-foot cmmnModal-foot">

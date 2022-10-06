@@ -19,9 +19,6 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
     let ref = useRef(false);
 
 
-    useEffect(()=>{
-        console.log(fileCheck);
-    },[fileCheck]);
 
     useEffect(()=>{
         if(ref.current){
@@ -35,15 +32,8 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
         }
     },[checkState]);
 
-    useEffect(()=>{
-        console.log('마운트');
-        return ()=>{
-            console.log('언마운트');
-        }
-    },[checkState])
 
     let [files, setFiles] = useState([]);
-
     let 총파일크기 = useRef(0);
 
     useEffect(()=>{
@@ -103,12 +93,16 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
             if(!fileCheck.includes(file.name)){
                 console.log(file);
                 arr.push(file);
+            }else{
+                총파일크기.current = 총파일크기.current - file.size;
             }
         })
         
         setFileCheck([]);
         setFiles([...arr]);
     }
+
+    
     const upload = useCallback(
         (파일) => {
             var 업로드파일정규식 = /\.(hwp|doc|docx|xls|xlsx|ppt|pptx|pdf|jpg|png|zip)$/i;
