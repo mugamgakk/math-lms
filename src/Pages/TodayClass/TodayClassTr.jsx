@@ -24,7 +24,6 @@ function TodayClassTr({data,name,book,tdName,tdBook}){
                     data.state3 && (
                         <div className="btn-wrap">
                         <button className={ data.state3.newplay ? 'btnPlay new' : 'btnPlay'} onClick={()=>setAssModal(true)} >play</button>
-                        <button className='btnDown' onClick={()=>fileDown(오디오입니동)}>down</button>
                         </div>
                     )
                 }

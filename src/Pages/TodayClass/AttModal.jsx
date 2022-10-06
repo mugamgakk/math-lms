@@ -11,37 +11,35 @@ function AttModal ({setAttModal}) {
         '5. 오답 노트를 잘 정리하였습니까?',
     ];
     
-    let [totalData, setTotalData] = useState({
-        q1: 7,
-        q2: 7,
-        q3: 7,
-        q4: 7,
-        q5: 7,
-    });
+    let [totalData, setTotalData] = useState([7,7,7,7,7]);
+    let [title,setTitle] = useState('');
 
     useEffect(()=>{
         ajax("/class.php/?mode=get_attitude", {
             cls_seq : 12345,
         }).then(res=>{
-
             console.log(res);
-            
-          
-            
-            
+            setTotalData([...res.data.scores]);
+            setTitle(res.data.title);
         })
-    })
+    },[])
 
     const numClick = (idx,num) => {
-        setTotalData({
-            ...totalData,
-            [`q${idx}`]: num
-        });
-        console.log(totalData);
+        let copy = [...totalData];
+        copy[idx] = num;
+        setTotalData([...copy]);        
     }
     
     const formConfirm = () => {
-        if(window.confirm('이 단원의 학습 태도 평가를 저장합니다.')) setAttModal(false);
+        if(!window.confirm('이 단원의 학습 태도 평가를 저장합니다.')) return false;
+
+        ajax("/class.php/?mode=set_attitude", {
+            cls_seq : 12345,
+            scores : totalData,
+        }).then(res=>{
+           window.alert('제출완료');
+           setAttModal(false);
+        })
     }
     return(
         <div className="modal">
@@ -50,7 +48,7 @@ function AttModal ({setAttModal}) {
             <div className="attModal-head cmmnModal-head">
                     <div className="tit">
                         <strong>[학습 태도 평가]</strong>
-                        {/* {title} */}
+                        {title}
                     </div>
                     <button className="close" onClick={() => setAttModal(false)}>X</button>
             </div>
@@ -60,7 +58,7 @@ function AttModal ({setAttModal}) {
                     {
                         scoreTitList.map((tit,idx)=> {
                             return(
-                                <ScoreItem key={idx} tit={tit} idx={idx+1} numClick={numClick} style={totalData[`q${idx+1}`]}/>
+                                <ScoreItem key={idx} tit={tit} idx={idx} numClick={numClick} style={totalData[idx]}/>
                                 )
                             })
                             

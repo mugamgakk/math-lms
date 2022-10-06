@@ -7,24 +7,49 @@ import style from "../../style/style-module/Audio.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileArrowDown, faPlay, faPause, faBackwardFast } from "@fortawesome/free-solid-svg-icons";
 import { fileDown } from "../../methods/methods";
+import ajax from "../../ajax";
 
 const speedOption = [1, 1.25, 1.5, 1.75, 2];
 
-function AssessmentModal ({setAssModal,title}) {
+function AssessmentModal ({setAssModal}) {
     let assTit = [
        '개념 이해력',
        '전달력',
     ];
-    let [totalData, setTotalData] = useState({
-        q1: 7,
-        q2: 7,
-    });
+    let [totalData, setTotalData] = useState([7,7]);
+    let [title,setTitle] = useState('');
+
+    useEffect(()=>{
+        ajax("/class.php/?mode=get_assessment", {
+        }).then(res=>{
+            console.log(res.data);
+            setTotalData([res.data.uds,res.data.send]);
+            setTitle(res.data.title);
+        })
+    },[])
+
+
+    const formConfirm = () => {
+        if(!window.confirm('이 단원의 수행 평가를 저장합니다.')) return false;
+
+        ajax("/class.php/?mode=set_attitude", {
+
+            cls_seq : 12345,
+            uds : totalData[0],
+            send : totalData[1],
+
+        }).then(res=>{
+
+           window.alert('제출완료');
+           setAssModal(false);
+
+        })
+    }
 
     const numClick = (idx,num) => {
-        setTotalData({
-            ...totalData,
-            [`q${idx}`]: num
-        });
+        let copy = [...totalData];
+        copy[idx] = num;
+        setTotalData([...copy]);        
     }
  
      //  오디오
@@ -130,7 +155,7 @@ function AssessmentModal ({setAssModal,title}) {
             <div className='asseModal cmmnModal'>
                 <div className="asseModal-head cmmnModal-head">
                     <div className="tit">
-                        <strong>[학습 태도 평가]</strong>
+                        <strong>[수행 평가]</strong>
                            {title}
                     </div>
                     <button className="close" onClick={() => setAssModal(false)}>X</button>
@@ -213,7 +238,7 @@ function AssessmentModal ({setAssModal,title}) {
                                     <tr key={idx}>
                                         <th>{tit}</th>
                                         <td>
-                                            <ScoreItem numClick={numClick} idx={idx+1} style={totalData[`q${idx+1}`]}/>
+                                            <ScoreItem numClick={numClick} idx={idx} style={totalData[idx]}/>
                                         </td>
                                     </tr>
                                     )
@@ -224,7 +249,7 @@ function AssessmentModal ({setAssModal,title}) {
                 </div>
                 <div className="asseModal-foot cmmnModal-foot">
                     <button className='btn' onClick={() => setAssModal(false)}>취소</button>
-                    <button className='btn'>저장</button>
+                    <button className='btn' onClick={formConfirm}>저장</button>
                 </div>
             </div>
 
