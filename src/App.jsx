@@ -24,6 +24,8 @@ import SkeletonPage from "./Pages/ComponentsPage/SkeletonPage";
 import FadeLoader from "react-spinners/FadeLoader";
 import { useState } from "react";
 import { useEffect } from "react";
+import ajax from "./ajax";
+import useLoginStore from "./store/useLoginStore";
 
 const Attendance = lazy(() => import("./Pages/Attendance"));
 const DetailClass = lazy(() => import("./Pages/DetailClass"));
@@ -42,12 +44,28 @@ const override = {
 
 function App() {
     let navigate = useNavigate();
+    let getUserId = useLoginStore(state=>state.getUserId);
 
     useEffect(()=>{
-        var token = localStorage.getItem("token");
-        var pathName = sessionStorage.getItem("pathName")
+        var pathName = sessionStorage.getItem("pathName");
+        var isLogin = false;
 
-        token ? navigate(pathName) : navigate("/login");
+        ajax("/user.php", {
+            data : {
+                mode : "login",
+            }
+        })
+        .then(res=>{
+            console.log(res)
+            if(res.data.ok == -1){
+                getUserId(res.data.user_id)
+                isLogin = true;
+            }
+
+            isLogin ? navigate(pathName) : navigate("/login");
+
+        })
+
     },[])
 
     return (

@@ -3,26 +3,14 @@ import React from "react";
 import { useEffect } from "react";
 import { Outlet, Link } from "react-router-dom";
 import ajax from "../ajax";
+import useLoginStore from "../store/useLoginStore";
 
 
 function Home() {
     const url = window.location.pathname;
+    const user_id = useLoginStore(state=>state.user_id);
     
     useEffect(()=>{
-        const token = localStorage.getItem("token");
-        axios.get('http://192.168.11.178:8080/istoken' , {
-            headers : {
-                "Authorization" : token
-            }
-        }).then(res=>{
-            if(res.data.code === 200){
-                console.log(res.data.data)
-            }
-        }).catch(err=>{
-            alert("토큰이 만료되었습니다.");
-            localStorage.removeItem("token");
-            window.location = "/login"
-        })
 
         sessionStorage.setItem("pathName", url)
     })
@@ -57,10 +45,15 @@ function Home() {
                         <Link to="/components">components guide</Link>
                     </li>
                     <li><button onClick={()=>{
-                        localStorage.removeItem("token");
+                        ajax("/user.php",{
+                            data : {mode : "logout"}
+                        })
                         window.location = "/login"
                         }} className="btn">로그아웃</button></li>
                 </ul>
+                <span>
+                    {user_id}님 안뇽
+                </span>
             </div>
 
             {
