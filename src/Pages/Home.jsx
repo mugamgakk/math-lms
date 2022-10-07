@@ -4,22 +4,28 @@ import { useEffect } from "react";
 import { Outlet, Link } from "react-router-dom";
 import ajax from "../ajax";
 
-
 function Home() {
-
-    useEffect(()=>{
-        var pathName = window.location.pathname
+    useEffect(() => {
+        var pathName = window.location.pathname;
         sessionStorage.setItem("pathName", pathName);
-    })
+    });
 
-    var userId = useMemo(()=>{
-        return localStorage.getItem("lmsLogin")
-    },[])
+    var userId = useMemo(() => {
+        return localStorage.getItem("lmsLogin");
+    }, []);
+
+    const logoutFn = () => {
+        ajax("/user.php", {
+            data: { mode: "logout" },
+        });
+        localStorage.removeItem("lmsLogin");
+        window.location = "/login";
+    };
 
     return (
         <div>
             <div className="container">
-                <ul className="row">
+                <ul className="d-flex">
                     <li style={{ marginRight: "20px" }}>
                         <Link to="/attendance">출석체크</Link>
                     </li>
@@ -44,15 +50,15 @@ function Home() {
                     <li>
                         <Link to="/components">components guide</Link>
                     </li>
-                    <li><button onClick={()=>{
-                        ajax("/user.php",{
-                            data : {mode : "logout"}
-                        })
-                        localStorage.removeItem("lmsLogin");
-                        window.location = "/login"
-                        }} className="btn">로그아웃</button></li>
+                    <li></li>
                 </ul>
-                <strong>안녕하세요 {userId}</strong>
+
+                <div className="d-flex">
+                    <strong>안녕하세요 {userId}</strong>
+                    <button onClick={logoutFn} className="btn btn-danger">
+                        로그아웃
+                    </button>
+                </div>
             </div>
 
             <Outlet />

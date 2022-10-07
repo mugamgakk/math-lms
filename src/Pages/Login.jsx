@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import ajax from "../ajax";
 import style from "../style/style-module/Login.module.scss";
 import logo from "../assets/logo.svg";
-import useLoginStore from "../store/useLoginStore";
 
 function Login() {
     let [userId, setUserId] = useState("");
