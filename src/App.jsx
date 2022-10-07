@@ -3,7 +3,7 @@ import "./style/reset.scss";
 import "./style/component.scss";
 import "./style/common.scss";
 import "./style/utility.scss";
-import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Home from "./Pages/Home";
 import Login from "./Pages/Login";
 
@@ -24,8 +24,6 @@ import SkeletonPage from "./Pages/ComponentsPage/SkeletonPage";
 import FadeLoader from "react-spinners/FadeLoader";
 import { useState } from "react";
 import { useEffect } from "react";
-import ajax from "./ajax";
-import useLoginStore from "./store/useLoginStore";
 
 const Attendance = lazy(() => import("./Pages/Attendance"));
 const DetailClass = lazy(() => import("./Pages/DetailClass"));
@@ -43,64 +41,50 @@ const override = {
 };
 
 function App() {
-    let navigate = useNavigate();
-    let getUserId = useLoginStore(state=>state.getUserId);
+    const isLogin = localStorage.getItem("lmsLogin");
+    const navigate = useNavigate();
 
     useEffect(()=>{
-        var pathName = sessionStorage.getItem("pathName");
-        var isLogin = false;
-
-        ajax("/user.php", {
-            data : {
-                mode : "login",
-            }
-        })
-        .then(res=>{
-            console.log(res)
-            if(res.data.ok == -1){
-                getUserId(res.data.user_id)
-                isLogin = true;
-            }
-
-            isLogin ? navigate(pathName) : navigate("/login");
-
-        })
-
+        const pathName = sessionStorage.getItem("pathName");
+        isLogin ? navigate(pathName) : navigate("/login");
     },[])
 
     return (
         <div>
-
             <Suspense fallback={<FadeLoader color={"#999"} cssOverride={override} size={100} />}>
                 <Routes>
-                    <Route path="/login" element={<Login />} />
+                    {isLogin ? (
+                        <>
+                            <Route path="/" element={<Home />}>
+                                <Route path="attendance" element={<Attendance />} />
+                                <Route path="detail-class" element={<DetailClass />} />
+                                <Route path="plus-learning" element={<PlusLearning />} />
+                                <Route path="today-class" element={<TodayClass />} />
+                                <Route path="evaluation" element={<Evaluation />} />
+                                <Route path="statistics" element={<Statistics />} />
+                                <Route path="Reference" element={<Reference />} />
+                            </Route>
 
-                    <Route path="/" element={<Home />}>
-                        <Route path="attendance" element={<Attendance />} />
-                        <Route path="detail-class" element={<DetailClass />} />
-                        <Route path="plus-learning" element={<PlusLearning />} />
-                        <Route path="today-class" element={<TodayClass />} />
-                        <Route path="evaluation" element={<Evaluation />} />
-                        <Route path="statistics" element={<Statistics />} />
-                        <Route path="Reference" element={<Reference />} />
-                    </Route>
-
-                    <Route path="/components" element={<Components />}>
-                        <Route path="prismazoom" element={<PrismaZoomPage />} />
-                        <Route path="datepicker" element={<DatePickerPage />} />
-                        <Route path="print" element={<PrintPage />} />
-                        <Route path="audio" element={<AudioPage />} />
-                        <Route path="select" element={<SelectPage />} />
-                        <Route path="file" element={<FileDownLoad />} />
-                        <Route path="table-excel" element={<TableToExcel />} />
-                        <Route path="editor" element={<Editor />} />
-                        <Route path="spinner" element={<Spinner />} />
-                        <Route path="skeleton" element={<SkeletonPage />} />
-                    </Route>
-                    <Route
-                        path="*"
-                        element={<div style={{ textAlign: "center" }}>페이지 없습니둥</div>}
-                    />
+                            <Route path="/components" element={<Components />}>
+                                <Route path="prismazoom" element={<PrismaZoomPage />} />
+                                <Route path="datepicker" element={<DatePickerPage />} />
+                                <Route path="print" element={<PrintPage />} />
+                                <Route path="audio" element={<AudioPage />} />
+                                <Route path="select" element={<SelectPage />} />
+                                <Route path="file" element={<FileDownLoad />} />
+                                <Route path="table-excel" element={<TableToExcel />} />
+                                <Route path="editor" element={<Editor />} />
+                                <Route path="spinner" element={<Spinner />} />
+                                <Route path="skeleton" element={<SkeletonPage />} />
+                            </Route>
+                            <Route
+                                path="*"
+                                element={<div style={{ textAlign: "center" }}>페이지 없습니둥</div>}
+                            />
+                        </>
+                    ) : (
+                        <Route path="/login" element={<Login />} />
+                    )}
                 </Routes>
             </Suspense>
         </div>

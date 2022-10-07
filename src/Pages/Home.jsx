@@ -1,20 +1,20 @@
-import axios from "axios";
 import React from "react";
+import { useMemo } from "react";
 import { useEffect } from "react";
 import { Outlet, Link } from "react-router-dom";
 import ajax from "../ajax";
-import useLoginStore from "../store/useLoginStore";
 
 
 function Home() {
-    const url = window.location.pathname;
-    const user_id = useLoginStore(state=>state.user_id);
-    
-    useEffect(()=>{
 
-        sessionStorage.setItem("pathName", url)
+    useEffect(()=>{
+        var pathName = window.location.pathname
+        sessionStorage.setItem("pathName", pathName);
     })
 
+    var userId = useMemo(()=>{
+        return localStorage.getItem("lmsLogin")
+    },[])
 
     return (
         <div>
@@ -48,22 +48,12 @@ function Home() {
                         ajax("/user.php",{
                             data : {mode : "logout"}
                         })
+                        localStorage.removeItem("lmsLogin");
                         window.location = "/login"
                         }} className="btn">로그아웃</button></li>
                 </ul>
-                <span>
-                    {user_id}님 안뇽
-                </span>
+                <strong>안녕하세요 {userId}</strong>
             </div>
-
-            {
-                url === "/" && (
-                    <div className="container">
-                        홈입니둥
-                    </div>
-                )
-            }
-            
 
             <Outlet />
         </div>
