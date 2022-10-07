@@ -11,6 +11,11 @@ if (typeof global !== 'undefined') {
     Object.assign(global, { _JSXStyle });
 }
 
+const _JSXStyle = require('styled-jsx/style').default;
+if (typeof global !== 'undefined') {
+    Object.assign(global, { _JSXStyle });
+}
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
