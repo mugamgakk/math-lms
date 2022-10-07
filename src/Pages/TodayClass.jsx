@@ -4,17 +4,19 @@ import DatePicker from "react-date-picker"; // 데이트 피커
 import ChangeDate from "../components/ChangeDate";
 import TodayClassItem from "./TodayClass/TodayClassItem";
 import TodayClassSearch from "./TodayClass/TodayClassSearch"
-import useStore from '../store/useTodayClassStore';
 import ajax from "../ajax";
 
 
 
 
 function TodayClass(){
-    let {students} = useStore(state=>state);
 
     let [findTodayList, setFindList] = useState(null);
     
+
+    useEffect(()=>{
+        console.log(findTodayList);
+    },[findTodayList])
     useEffect(()=>{
 
         ajax("/class.php/?mode=get_today_class", {
@@ -24,13 +26,9 @@ function TodayClass(){
         }).then(res=>{
 
             let { class_list, today_list} = res.data;
-            setFindList(today_list);
-            
-            
+            setFindList(today_list);     
         })
        
-
-
     },[])
 
 
@@ -82,7 +80,7 @@ function TodayClass(){
                         style={{ width: "200px", margin: "0 5px" }}
                     />
                     <SearchBtn /> */}
-                    <TodayClassSearch data={students} setFindList={setFindList}/>
+                    <TodayClassSearch data={findTodayList} setFindList={setFindList}/>
                     <button
                         className="btn update"
                         onClick={() => setReloadState(!reloadState)}

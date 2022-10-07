@@ -19,12 +19,13 @@ function Reference() {
 
     
     useEffect(()=>{
-        ajax("/board.php/?mode=list", {
+        ajax("/board.php", {data : {
+            mode : "list",
             divide : '초등',
             qcate : 'ti',
             qstr : '검색어',
             page : 1
-        }).then(res=>{
+        }}).then(res=>{
             console.log(res);
             setLenderList(res.data.list);
         })

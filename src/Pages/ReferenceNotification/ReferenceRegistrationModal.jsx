@@ -3,6 +3,8 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { getByteSize } from "../../methods/methods";
 import SelectBase from "../../components/ui/select/SelectBase";
+import ajax from "../../ajax";
+import { useEffect } from 'react';
 
 const 대상 = ['전체','초등','중등','고등'];
 const 유형 = ['일반','필독','공지','이벤트'];
@@ -12,6 +14,9 @@ function ReferenceRegistrationModal({setRegistModal}) {
     let [category,setCategory] = useState('일반');
     let [title, setTitle] = useState('');
     let [editorContents, setEditorContents] = useState();
+    let [fileCheck,setFileCheck] = useState([]);
+    let ref = useRef(false);
+
 
     const editorCon = (event, editor) => {
         setEditorContents(editor.getData());
@@ -19,9 +24,34 @@ function ReferenceRegistrationModal({setRegistModal}) {
     }
 
     const radioState = (checked,target) => {
+
         if(checked){
             setCategory(target);
         }
+
+    }
+  const checkFile = (checked,file) => {
+        if(checked){
+            setFileCheck([...fileCheck,file]);
+        }else{
+            setFileCheck(fileCheck.filter(a => a !== file));               
+        }
+    }
+    const removeFile = (fileCheck) => {
+
+        let arr = [];
+
+        files.forEach(file=>{
+            if(!fileCheck.includes(file.name)){
+                console.log(file);
+                arr.push(file);
+            }else{
+                총파일크기.current = 총파일크기.current - file.size;
+            }
+        })
+        
+        setFileCheck([]);
+        setFiles([...arr]);
     }
 
     let createToday = useMemo(()=>{
@@ -38,7 +68,47 @@ function ReferenceRegistrationModal({setRegistModal}) {
 
     },[]);
 
+
+    const formSubmit = () => {
+     
+        ajax("/notice.php", { data : {
+            mode : 'write',
+            bd_seq : 1243,
+            bd_notice : 'N',
+            bd_title : title,
+            bd_content : JSON.stringify(editorContents),
+            files : encodingFiles,
+        }
+        }).then(res=>{
+            if(!window.confirm('저장하시겠습니까?')) return false;
+            setRegistModal(false);
+        }).catch(error=>{
+            console.log('error');
+        })
+
+    }
+
+
     let [files, setFiles] = useState([]);
+    let encodingFiles = [];
+
+
+    useEffect(()=>{
+
+        files.length > 0 &&
+
+        files.forEach(file=>{
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+            fileReader.onload = function(e) { 
+              encodingFiles.push(e.target.result);
+            }
+        });
+
+        console.log(encodingFiles);
+
+    },[files])
+
     let 총파일크기 = useRef(0);
 
     const upload = useCallback(
@@ -188,6 +258,10 @@ function ReferenceRegistrationModal({setRegistModal}) {
                                 {files.map((a, i) => {
                                     return (
                                         <div key={i}>
+                                              <input type="checkbox"
+                                                onChange={(e)=>checkFile(e.target.checked,a.name)}
+                                                checked={fileCheck.includes(a.name)}
+                                                />
                                             {a.name} ( {getByteSize(a.size)} )
                                         </div>
                                     );
@@ -197,12 +271,12 @@ function ReferenceRegistrationModal({setRegistModal}) {
                         </div> 
                         <div className="td">
                         <label htmlFor="file" className="btn">업로드</label>
-                        <button className="btn" >파일삭제</button>
+                        <button className="btn" onClick={()=>removeFile(fileCheck)}>파일삭제</button>
                         </div>    
                     </div>
                 </div>
                 <div className="foot">
-                    <button className='btn'>저장</button>
+                    <button className='btn' onClick={formSubmit}>저장</button>
                     <button className='btn' onClick={()=>setRegistModal(false)}>취소</button>
                 </div>
             </div>
