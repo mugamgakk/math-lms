@@ -87,10 +87,22 @@ function App() {
                     )}
                 </Routes>
             </Suspense>
+            <p>hello</p>
+            <Test/>
+            <style jsx>
+                        {`
+                        p{
+                            color : red
+                        }
+                        `}
+            </style>
         </div>
     );
 }
 
 
+function Test(){
+    return <p>안녕asdasd</p>
+}
 
 export default App;
