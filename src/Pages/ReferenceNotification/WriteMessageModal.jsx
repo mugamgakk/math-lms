@@ -17,8 +17,11 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
     let [to,setTo] = useState(toName);
     let [fileCheck,setFileCheck] = useState([]);
     let ref = useRef(false);
+    let 시간 = Array.from({length: 24}, (v,i) => `${i}시`);
+    let 분 = Array.from({length: 12}, (v,i) => i === 0 ? '00분' : `${i*5}분`);
 
-
+    let [hour,setHour] = useState('0시');
+    let [minute,setMinute] = useState('00분');
 
     useEffect(()=>{
         if(ref.current){
@@ -32,9 +35,44 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
         }
     },[checkState]);
 
+    const formSubmit = () => {
+        if(!window.confirm('저장하시겠습니까?')) return false;
+     
+        // ajax("/notice.php", { data : {
+        //     mode : 'notice_write',
+        //     nt_to_class : 142966200389505901,
+        //     nt_title : title,
+        //     nt_content : JSON.stringify(editorContents),
+        //     nt_files : encodingFiles,
+        // }}).then(res=>{
+        //     console.log(res);
+        //     setWriteModal(false);
+        // }).catch(error=>{
+        //     console.log('error');
+        // })
+
+    }
+
 
     let [files, setFiles] = useState([]);
+    let encodingFiles = [];
     let 총파일크기 = useRef(0);
+
+    useEffect(()=>{
+
+        files.length > 0 &&
+
+        files.forEach(file=>{
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+            fileReader.onload = function(e) { 
+              encodingFiles.push(e.target.result);
+            }
+        });
+
+        console.log(encodingFiles);
+
+    },[files])
 
     useEffect(()=>{
         
@@ -85,6 +123,7 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
             setFileCheck(fileCheck.filter(a => a !== file));               
         }
     }
+    
     const removeFile = (fileCheck) => {
 
         let arr = [];
@@ -290,12 +329,30 @@ return (
                     </div>
                 </div>
                 <div className="WriteMessageModal-foot cmmnModal-foot">
+                    <div className='reserveWrap fj'>
+                        <input type="text" className='form-control' placeholder='00-00-00' style={{ width:'100px' }} disabled/>
+                        <SelectBase 
+                        onChange={(ele)=>setHour(ele)}
+                        options={시간}
+                        value={hour}
+                        defaultValue='0시'
+                        width={'150px'}
+                        />
+                        <SelectBase 
+                        onChange={(ele)=>setMinute(ele)}
+                        options={분}
+                        value={minute}
+                        defaultValue='00분'
+                        width={'150px'}
+                        />
+                        <input type="checkbox" />
+                    </div>
                     <button className='btn'>예약 발송</button>
-                    <button className='btn'>발송하기</button>
+                    <button className='btn' onClick={formSubmit}>발송하기</button>
                     <button className='btn' onClick={()=>{
                         setWriteModal(false);
                         setViewModal && setViewModal(false);
-                        }}>취소</button>
+                    }}>취소</button>
                 </div>
 
             </div>
