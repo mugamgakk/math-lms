@@ -26,6 +26,7 @@ function SelectPage() {
                 options={options} // 모든 옵션들 <br/>
                 value={selectOption}  //현재 값 <br/>
                 defaultValue={""} //  // 기본값: 선택하세요
+                disabled={} // boolean 
             `}
             </pre>
 

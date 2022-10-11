@@ -28,7 +28,7 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
 
     let [dateInput , setDateInput] = useState('');
     let [regexDate, setRegexDate] = useState('');
-    let [selectDisabled, setSelectDisabled]  = useState(1);
+    let [selectDisabled, setSelectDisabled]  = useState(true);
 
     useEffect(()=>{
         setRegexDate(dateInput.replace(/(\d{2})(\d{2})(\d{2})/g, '$1-$2-$3'));
@@ -52,7 +52,7 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
             setSelectDisabled(false)
         }else{
             setRcheck(false);
-            setSelectDisabled(true);
+            setSelectDisabled(false);
 
         }
     }
@@ -349,7 +349,7 @@ return (
                         value={regexDate}
                         onChange={(e)=>setDateInput(e.target.value)}
                         style={{ width:'100px' }}
-                        disabled={selectDisabled === 1}
+                        disabled={selectDisabled}
                         />
                         <SelectBase 
                         onChange={(ele)=>setHour(ele)}
