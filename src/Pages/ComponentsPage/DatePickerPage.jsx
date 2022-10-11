@@ -19,10 +19,14 @@ function DatePickerPage() {
         <div style={{ marginTop: "100px" }}>
 
 
-            <LmsDatePicker width={"150px"} value={lmsDValue} onChange={(ele)=>{setLmsDValue(ele)}}/>
+            <LmsDatePicker 
+            width={"150px"} 
+            value={lmsDValue} 
+            onChange={(ele)=>{setLmsDValue(ele)}}
+            />
 
             <h2>PROPS</h2>
-            <pre style={{fontSize : "20px"}}>
+            <pre style={{fontSize : "18px", background:"#222", color : "#fff"}}>
                 {`
                 maxDate : 최대 선택할수 있는 날짜 설정
                 minDate : 최소 선택할수 있는 날짜 설정
@@ -44,7 +48,7 @@ function DatePickerPage() {
 
 
 
-
+{/* 
             <div className="picker-group">
                 <button
                     className="btn"
@@ -64,9 +68,9 @@ function DatePickerPage() {
                     />
                 )}
                 value : {reservationValue}
-            </div>
+            </div> */}
 
-            <h4>calendar props</h4>
+            {/* <h4>calendar props</h4> */}
             <pre>
                     {/* autoFocus : 마운트 시 포커스 될지 말지 (boolean) 
                     calendarIcon : 기본 아이콘 숨기기 (null) 
@@ -92,13 +96,13 @@ function DatePickerPage() {
             </pre>
 
             <h2>day js</h2>
-            <pre>
-                {`
+            <pre style={{fontSize : "18px", background:"#222", color : "#fff"}}>
+            {`
                         dayjs('2018-08-08') 다양한 날씨 포맷을 넣어도 파씽해줌
                         dayjs('2018-08-08').set('month', 3) 달을 3월로 바꾸기
                         dayjs('2018-08-08').add(1, "y") 다음년도 날짜 얻기
                         dayjs('2018-08-08').subtract(1, "year") 작년 날짜 얻기
-                        dayjs('2018-08-08').format() 포맷 얻기 (근데 문자열임) 2021-10-10T19:03:02+09:00
+                        dayjs('2018-08-08').format("YYYY-MM-DD") 포맷 얻기 (근데 문자열임) 2022-02-02
                         dayjs('2018-08-08').get("y") 년도 얻기
                         
 
@@ -109,9 +113,6 @@ function DatePickerPage() {
                         h : 시간,
                         m : 분,
                         S : 초
-
-
-                        
                         `}
             </pre>
         </div>

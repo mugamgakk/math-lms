@@ -4,7 +4,8 @@ import React from "react";
 import { useState } from "react";
 import DatePicker from "react-date-picker";
 import style from "../style/style-module/components.module.scss"
-import { createImmutableStateInvariantMiddleware } from "@reduxjs/toolkit";
+import { useRef } from "react";
+import { useEffect } from "react";
 
 
 function LmsDatePicker({
@@ -21,6 +22,16 @@ function LmsDatePicker({
 }) {
     let [isOpen, setIsOpen] = useState(false);
 
+    let dateRef = useRef(false);
+
+    useEffect(()=>{
+        if(dateRef.current ===true){
+            setIsOpen(true)
+        }else{
+            setIsOpen(false)
+        }
+    },[dateRef])
+
     return (
         <div className={`${style.datepicker} datepicker`} style={{width : width}}>
             <DatePicker
@@ -31,23 +42,26 @@ function LmsDatePicker({
                     }
                 }}
                 className={style.datepickerBody}
-                clearIcon={false}
-                calendarIcon={false}
+                clearIcon={null}
+                calendarIcon={null}
                 openCalendarOnFocus={false}
                 format={"yyyy-MM-dd"}
                 isOpen={isOpen}
                 disabled={disabled}
                 maxDate={maxDate}
-                maxDetail={maxDetail}
+                maxDetail={maxDetail} 
                 minDate={minDate}
                 minDetail={minDetail}
                 monthPlaceholder={monthPlaceholder}
                 required={required}
                 closeCalendar={false}
+                onCalendarClose={()=>{
+                    setIsOpen(false)
+                }}
             />
             <button
-                onClick={() => {
-                    setIsOpen(!isOpen);
+                onClick={(e) => {
+                    setIsOpen(true);
                 }}
                 className={style.datepickerBtn}
             >
