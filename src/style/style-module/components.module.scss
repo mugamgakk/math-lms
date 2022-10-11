@@ -1,0 +1,25 @@
+.datepicker{
+    display: flex;
+    align-items: center;
+    position: relative;
+    height: 30px;
+
+    .datepickerBody{
+        position: absolute;
+        width: calc(100% - 30px);
+        left: 0;
+        top: 0;
+        height: 100%;
+        background-color: #fff;
+
+    }
+
+    .datepickerBtn{
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        right: 0;
+        background-color: #0069d9;
+        color: #fff;
+    }
+}

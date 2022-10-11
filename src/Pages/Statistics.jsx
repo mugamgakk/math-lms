@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
 import ContentHeader from "../components/ContentHeader";
-import StatisticsSearch from "./Statistics/StatisticsSearch";
 import StatisticsStandard from "./Statistics/StatisticsStandard";
 import { useDownloadExcel } from "react-export-table-to-excel";
 import PointModal from "./Statistics/PointModal";
@@ -8,12 +7,17 @@ import { useEffect } from "react";
 import ajax from "../ajax";
 import { arrSort, comma } from "../methods/methods";
 import SkeletonTable from "../components/SkeletonTable";
+import DatePicker from "react-date-picker";
+import SelectBox from '../components/ui/select/SelectBox'
 
 function Statistics() {
     let [value, setValue] = useState(null);
     let [sortPoint, setSortPoint] = useState("desc");
     let [selectReset, setSelectReset] = useState(0);
     const tableRef = useRef(null);
+    let [studentName, setStudentName] = useState("");
+    let [startDay, setStartDay] = useState(new Date());
+    let [lastDay, setLastDay] = useState(new Date());
 
     let [skeleton, setSkeleton] = useState(true);
 
@@ -46,8 +50,9 @@ function Statistics() {
 
         !skeleton && setSkeleton(true)
 
-        let url = "/point.php/?mode=list";
+        let url = "/point.php/";
         let query = {
+            mode: "list",
             class_cd: 12312313,
             sdate: "2022-01-01",
             edate: "2022-01-01",
@@ -55,7 +60,10 @@ function Statistics() {
             order: "desc",
         };
 
-        let res = await ajax(url, query);
+        let res = await ajax(url, {data: query});
+
+        console.log(res)
+
         let { class_list, point_list } = res.data;
 
         setValue(arrSort(point_list, "um_nm"));
@@ -92,7 +100,46 @@ function Statistics() {
                         다운로드
                     </button>
                 </div>
-                <StatisticsSearch getPointData={getPointData} />
+
+                <div className="StatisticsSearch">
+            <SelectBox width={"200px"} />
+
+            <DatePicker
+                className="datepicker-base"
+                clearIcon={null}
+                onChange={(day) => {
+                    setStartDay(day);
+                }}
+                value={startDay}
+                openCalendarOnFocus={false}
+                format={"yyyy-MM-dd"}
+                minDetail="month"
+            />
+            <DatePicker
+                className="datepicker-base"
+                clearIcon={null}
+                onChange={(day) => {
+                    setLastDay(day);
+                }}
+                value={lastDay}
+                openCalendarOnFocus={false}
+                format={"yyyy-MM-dd"}
+                minDetail="month"
+            />
+            <input
+                type="text"
+                className="form-control"
+                placeholder="학생 이름"
+                value={studentName}
+                onChange={(e) => {
+                    setStudentName(e.target.value);
+                }}
+            />
+            <button type="button" className="btn" onClick={getPointData}>
+                조회
+            </button>
+        </div>
+
             </div>
 
             <table ref={tableRef}>

@@ -367,3 +367,9 @@ input.form-control{
         max-height: 200px;
     }
 }
+
+.datepicker{
+    .react-date-picker__wrapper{
+        border: 1px solid #0069d9;
+    }
+}

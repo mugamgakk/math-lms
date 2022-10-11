@@ -1,6 +1,7 @@
 import * as React from "react";
 import DatePicker from "react-date-picker"; // 데이트 피커
 import ChangeDate from "../../components/ChangeDate";
+import LmsDatePicker from "../../components/LmsDatePicker";
 import TimeDatePicker from "./TimeDatePicker";
 
 function DatePickerPage() {
@@ -12,8 +13,38 @@ function DatePickerPage() {
     // 타임 피커 선택 값
     const [reservationValue, setReservationValue] = React.useState();
 
+    const [lmsDValue, setLmsDValue] = React.useState(new Date());
+
     return (
         <div style={{ marginTop: "100px" }}>
+
+
+            <LmsDatePicker width={"150px"} value={lmsDValue} onChange={(ele)=>{setLmsDValue(ele)}}/>
+
+            <h2>PROPS</h2>
+            <pre style={{fontSize : "20px"}}>
+                {`
+                maxDate : 최대 선택할수 있는 날짜 설정
+                minDate : 최소 선택할수 있는 날짜 설정
+                minDetail : 최대 선택할수 있는 날짜 범위
+                minDetail : 최소 선택할수 있는 날짜 범위 ("month", "year", "decade" or
+                "century".)
+                onChange : onChange 파라미터에 변경시 날짜 들어있음
+                value : 값
+                width : width값 설정 기본값 150px
+                disabled : 기본값 false
+
+                ex : 
+                const [lmsValue, setLmsValue] = useState(new Date());
+
+                <LmsDatePicker width={"150px"} value={lmsDValue} onChange={(ele)=>{setLmsDValue(ele)}}/>
+
+                `}
+            </pre>
+
+
+
+
             <div className="picker-group">
                 <button
                     className="btn"
@@ -35,36 +66,9 @@ function DatePickerPage() {
                 value : {reservationValue}
             </div>
 
-            <h2>DatePicker</h2>
-            <ChangeDate value={value} onChange={onChange} />
-            <DatePicker
-                className="datepicker-base"
-                onChange={(day) => {
-                    onChange(day);
-                }}
-                value={value}
-                maxDate={new Date()}
-                clearIcon={null}
-                isOpen={openCalendar}
-                openCalendarOnFocus={false}
-                format={"yyyy-MM-dd"}
-                minDetail="month"
-            />
-            <button
-                className="btn"
-                onClick={() => {
-                    setOpenCalendar(!openCalendar);
-                }}
-            >
-                캘린더 아이콘
-            </button>
-
-            <br />
-
             <h4>calendar props</h4>
             <pre>
-                {` 
-                    autoFocus : 마운트 시 포커스 될지 말지 (boolean) 
+                    {/* autoFocus : 마운트 시 포커스 될지 말지 (boolean) 
                     calendarIcon : 기본 아이콘 숨기기 (null) 
                     maxDate : 최대 선택할수 있는 날짜 설정 
                     clearIcon : 클리어 해주는 아이콘 삭제 (null) 
@@ -84,9 +88,7 @@ function DatePickerPage() {
                     onChange : 값이 변경됐을때 함수 
                     format : 날짜 포맷 
                     closeCalendar : 값 선택후 닫을지 말지 (boolean) 
-                    minDetail : 최소 선택할수 있는 날짜 범위 ("month", "year", "decade" or
-                    "century".) 
-                    `}
+                      */}
             </pre>
 
             <h2>day js</h2>

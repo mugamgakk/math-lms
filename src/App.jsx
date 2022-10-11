@@ -22,7 +22,6 @@ import SkeletonPage from "./Pages/ComponentsPage/SkeletonPage";
 
 // 스피너
 import FadeLoader from "react-spinners/FadeLoader";
-import { useState } from "react";
 import { useEffect } from "react";
 
 const Attendance = lazy(() => import("./Pages/Attendance"));
@@ -91,7 +90,6 @@ function App() {
         </div>
     );
 }
-
 
 
 export default App;
