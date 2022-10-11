@@ -1,10 +1,9 @@
 import React, { useEffect, useState, memo } from "react";
 import ContentHeader from "../components/ContentHeader";
-import DatePicker from "react-date-picker"; // 데이트 피커
-import ChangeDate from "../components/ChangeDate";
 import TodayClassSearch from "./TodayClass/TodayClassSearch"
 import ajax from "../ajax";
 import Tr from './TodayClass/TodayClassTr';
+import DateNext from "../components/DateNext";
 
 
 
@@ -12,7 +11,7 @@ import Tr from './TodayClass/TodayClassTr';
 function TodayClass(){
 
     let [findTodayList, setFindList] = useState(null);
-    
+    let [date,setDate] = useState(new Date());
 
     useEffect(()=>{
         console.log(findTodayList);
@@ -46,9 +45,10 @@ function TodayClass(){
   
     return(
         <div className="container TodayClass">
-            <ContentHeader title={"오늘의 수업"} />
+            <ContentHeader title={"오늘의 수업"} location={'마이페이지 > 수학 학습 관리 > 오늘의 수업'} />
             <div className="date-area">
-                <ChangeDate value={value} onChange={onChange} />
+                <DateNext value={date} onChange={day=>setDate(day)}/>
+                {/* <ChangeDate value={value} onChange={onChange} />
                 <DatePicker
                     className="datepicker-base"
                     onChange={(day) => {
@@ -68,7 +68,7 @@ function TodayClass(){
                     }}
                 >
                     캘린더 아이콘
-                </button>
+                </button> */}
             </div>
             <header className="table-header row">
                 <div style={{ display:'flex' }}>

@@ -16,6 +16,8 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
     let [writeTit,setWriteTit] = useState('');
     let [to,setTo] = useState(toName);
     let [fileCheck,setFileCheck] = useState([]);
+
+    let [rCheck,setRcheck] = useState(false);
     let ref = useRef(false);
     let 시간 = Array.from({length: 24}, (v,i) => `${i}시`);
     let 분 = Array.from({length: 12}, (v,i) => i === 0 ? '00분' : `${i*5}분`);
@@ -35,21 +37,19 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
         }
     },[checkState]);
 
+    const rCheckFunc = (checked) => {
+        if(checked){
+            setRcheck(true); 
+        }else{
+            setRcheck(false);
+        }
+    }
+
+ 
+
     const formSubmit = () => {
+
         if(!window.confirm('저장하시겠습니까?')) return false;
-     
-        // ajax("/notice.php", { data : {
-        //     mode : 'notice_write',
-        //     nt_to_class : 142966200389505901,
-        //     nt_title : title,
-        //     nt_content : JSON.stringify(editorContents),
-        //     nt_files : encodingFiles,
-        // }}).then(res=>{
-        //     console.log(res);
-        //     setWriteModal(false);
-        // }).catch(error=>{
-        //     console.log('error');
-        // })
 
     }
 
@@ -330,7 +330,12 @@ return (
                 </div>
                 <div className="WriteMessageModal-foot cmmnModal-foot">
                     <div className='reserveWrap fj'>
-                        <input type="text" className='form-control' placeholder='00-00-00' style={{ width:'100px' }} disabled/>
+                        <input 
+                        type="number" 
+                        className='form-control' 
+                        placeholder='00-00-00' 
+                        style={{ width:'100px' }}
+                        />
                         <SelectBase 
                         onChange={(ele)=>setHour(ele)}
                         options={시간}
@@ -345,10 +350,13 @@ return (
                         defaultValue='00분'
                         width={'150px'}
                         />
-                        <input type="checkbox" />
+                        <input 
+                        className='rCheck' 
+                        type="checkbox" 
+                        onChange={(e)=>rCheckFunc(e.target.checked)}/>
                     </div>
-                    <button className='btn'>예약 발송</button>
-                    <button className='btn' onClick={formSubmit}>발송하기</button>
+                    <button className={ rCheck ? 'btn' : 'btn disabled'}>예약 발송</button>
+                    <button className={rCheck ? 'btn disabled' : 'btn'} onClick={formSubmit}>발송하기</button>
                     <button className='btn' onClick={()=>{
                         setWriteModal(false);
                         setViewModal && setViewModal(false);
