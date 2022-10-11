@@ -17,6 +17,10 @@ function ReferenceRegistrationModal({setRegistModal}) {
     let [fileCheck,setFileCheck] = useState([]);
     let ref = useRef(false);
 
+    useEffect(()=>{
+        console.log(category);
+        console.log(target);
+    },[category,target])
 
     const editorCon = (event, editor) => {
         setEditorContents(editor.getData());
@@ -69,18 +73,21 @@ function ReferenceRegistrationModal({setRegistModal}) {
     },[]);
 
 
+
+    // 글쓰기 전송
+
     const formSubmit = () => {
+        if(!window.confirm('저장하시겠습니까?')) return false;
      
         ajax("/notice.php", { data : {
             mode : 'write',
-            bd_seq : 1243,
             bd_notice : 'N',
             bd_title : title,
             bd_content : JSON.stringify(editorContents),
             files : encodingFiles,
         }
         }).then(res=>{
-            if(!window.confirm('저장하시겠습니까?')) return false;
+            console.log(res);
             setRegistModal(false);
         }).catch(error=>{
             console.log('error');

@@ -1,5 +1,6 @@
 import React, { useState, memo } from "react";
 import ProgressModal from '../modal/progressModal';
+import ProgressModalV2 from '../modal/progressModalV2';
 import CreationModal from '../modal/CreationModal';
 import ResultPopModal from '../modal/ResultPopModal';
 // 맞춤 클리닉 학습결과팝업
@@ -51,7 +52,7 @@ let daedanwon = {
     }
 
 function ClassManagement({clickStudent}){
-    let [progressMo, setProgressState] = useState(false);
+    let [progressMo, setProgressState] = useState(true);
     let [creationMo, setCreationMo] = useState(false);
  
 
@@ -72,7 +73,7 @@ function ClassManagement({clickStudent}){
 
             {/* 아르케 학습일 경우 단일 행 모달 */}
             {/* {
-                creationMo && 
+                progressMo && 
                 ( 아르케 ? <ProgressModalV2 setProgressState={setProgressState} name={clickStudent.name}/> 
                 : <ProgressModal setProgressState={setProgressState} name={clickStudent.name}/> )
 

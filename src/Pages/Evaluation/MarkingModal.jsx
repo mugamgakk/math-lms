@@ -8,12 +8,8 @@ for (let i = 0; i < 30; i++) {
 data[16].정답 = [1, 2, 3];
 // const numList = ['①','②','③','④','⑤']
 function MarkingModal({title,setMarkingModal}) {
-
-    let [dataList, setDataList] = useState([data.slice(0,10),data.slice(10,20),data.slice(20,30)]);
     
-    useEffect(()=>{
-        console.log(dataList);
-    },[dataList])
+    let [dataList, setDataList] = useState([data.slice(0,10),data.slice(10,20),data.slice(20,30)]);
 
     const clickBtn = (a,b,num)=>{
         
@@ -82,9 +78,6 @@ function MarkingModal({title,setMarkingModal}) {
                                     dataList.map((list,a)=>{
                                        const itemWrap = list.map((item,b)=>{
                                         
-                                        // let arr = [];
-                           
-
                                             return(
                                                 <tr key={item.id}>
                                                     <td className='num'>{item.id}</td>
@@ -94,20 +87,20 @@ function MarkingModal({title,setMarkingModal}) {
                                                             Array.isArray(item.학생답)
                                                             ? (
                                                                 <>
-                                                                <Btn num='①' name={ item.학생답 ? (item.학생답.includes(1) ? 'numBtn active' : 'numBtn') : 'numBtn'} clickNum={()=>clickBtn(a,b,1)}/>
-                                                                <Btn num='②' name={ item.학생답 ? (item.학생답.includes(2) ? 'numBtn active' : 'numBtn') : 'numBtn'} clickNum={()=>clickBtn(a,b,2)}/>
-                                                                <Btn num='③' name={ item.학생답 ? (item.학생답.includes(3) ? 'numBtn active' : 'numBtn') : 'numBtn'} clickNum={()=>clickBtn(a,b,3)}/>
-                                                                <Btn num='④' name={ item.학생답 ? (item.학생답.includes(4) ? 'numBtn active' : 'numBtn') : 'numBtn'} clickNum={()=>clickBtn(a,b,4)}/>
-                                                                <Btn num='⑤' name={ item.학생답 ? (item.학생답.includes(5) ? 'numBtn active' : 'numBtn') : 'numBtn'} clickNum={()=>clickBtn(a,b,5)}/>
+                                                                    <button className={ item.학생답 ? (item.학생답.includes(1) ? 'numBtn active' : 'numBtn') : 'numBtn'} onClick={()=>clickBtn(a,b,1)}>①</button>
+                                                                    <button className={ item.학생답 ? (item.학생답.includes(2) ? 'numBtn active' : 'numBtn') : 'numBtn'} onClick={()=>clickBtn(a,b,2)}>②</button>
+                                                                    <button className={ item.학생답 ? (item.학생답.includes(3) ? 'numBtn active' : 'numBtn') : 'numBtn'} onClick={()=>clickBtn(a,b,3)}>③</button>
+                                                                    <button className={ item.학생답 ? (item.학생답.includes(4) ? 'numBtn active' : 'numBtn') : 'numBtn'} onClick={()=>clickBtn(a,b,4)}>④</button>
+                                                                    <button className={ item.학생답 ? (item.학생답.includes(5) ? 'numBtn active' : 'numBtn') : 'numBtn'} onClick={()=>clickBtn(a,b,5)}>⑤</button>
                                                                 </>
                                                             )
                                                             :(
                                                                 <>
-                                                                <Btn num='①' name={ item.학생답 ? (item.학생답 === 1 ? 'numBtn active' : 'numBtn') : 'numBtn'} clickNum={()=>clickBtn(a,b,1)}/>
-                                                                <Btn num='②' name={ item.학생답 ? (item.학생답 === 2 ? 'numBtn active' : 'numBtn') : 'numBtn'} clickNum={()=>clickBtn(a,b,2)}/>
-                                                                <Btn num='③' name={ item.학생답 ? (item.학생답 === 3 ? 'numBtn active' : 'numBtn') : 'numBtn'} clickNum={()=>clickBtn(a,b,3)}/>
-                                                                <Btn num='④' name={ item.학생답 ? (item.학생답 === 4 ? 'numBtn active' : 'numBtn') : 'numBtn'} clickNum={()=>clickBtn(a,b,4)}/>
-                                                                <Btn num='⑤' name={ item.학생답 ? (item.학생답 === 5 ? 'numBtn active' : 'numBtn') : 'numBtn'} clickNum={()=>clickBtn(a,b,5)}/>
+                                                                    <button className={ item.학생답 ? (item.학생답 === 1 ? 'numBtn active' : 'numBtn') : 'numBtn'} onClick={()=>clickBtn(a,b,1)}>①</button>
+                                                                    <button className={ item.학생답 ? (item.학생답 === 2 ? 'numBtn active' : 'numBtn') : 'numBtn'} onClick={()=>clickBtn(a,b,2)}>②</button>
+                                                                    <button className={ item.학생답 ? (item.학생답 === 3 ? 'numBtn active' : 'numBtn') : 'numBtn'} onClick={()=>clickBtn(a,b,3)}>③</button>
+                                                                    <button className={ item.학생답 ? (item.학생답 === 4 ? 'numBtn active' : 'numBtn') : 'numBtn'} onClick={()=>clickBtn(a,b,4)}>④</button>
+                                                                    <button className={ item.학생답 ? (item.학생답 === 5 ? 'numBtn active' : 'numBtn') : 'numBtn'} onClick={()=>clickBtn(a,b,5)}>⑤</button>
                                                                 </>
                                                             )
                                                         }
@@ -137,8 +130,6 @@ function MarkingModal({title,setMarkingModal}) {
                                       )
                                     })
                                 }
-                     
-                       
                     </div>
 
                 </div>
@@ -150,13 +141,5 @@ function MarkingModal({title,setMarkingModal}) {
         </div>
     );
 }
-
-const Btn = memo(({num,clickNum,name}) => {
-
-    return(
-        <button className={name} onClick={clickNum}>{num}</button>
-    )
-
-});
 
 export default MarkingModal; 

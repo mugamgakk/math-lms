@@ -11,10 +11,7 @@ function TodayClassTr({data,name,book,tdName,tdBook}){
     let [attModal,setAttModal] = useState(false);
     let [assModal,setAssModal] = useState(false);
     let [printModal,closeModal] = useState(false);
-    
-    useEffect(()=>{
 
-    },[printModal])
     return(
             <tr>
                 {tdName}
