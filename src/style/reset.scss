@@ -26,15 +26,12 @@ table{
     background-color: #fff;
 
     th,td{
-        border: 1px solid #ccc;
+        border: 1px solid #dee2e6;
     }
     td{
         padding: 5px;
     }
 
-    .btn{
-        min-width: auto;
-    }
 }
 
 .row{
@@ -78,10 +75,6 @@ input[type="checkbox"]{
     &:checked {
         background-color: #000;
     }
-}
-
-.picker-group{
-    position: relative;
 }
 
 .Reservation-datepicker{

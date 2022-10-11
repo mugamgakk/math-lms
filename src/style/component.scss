@@ -53,28 +53,6 @@ input[type="text"].form-control{
 }
 
 
-
-.Attendance{
-
-    .table-header{
-        align-items: center;
-        justify-content: space-between;
-        margin-top: 20px;
-    }
-
-    table{
-        margin-top: 20px;
-
-        thead{
-            background-color: rgb(226, 226, 226);
-        }
-
-        th,td{
-            padding: 5px;
-        }
-    }
-}
-
 .lbt-option{
 
     border: 1px solid #ccc;
@@ -121,39 +99,6 @@ input.form-control{
     border: 1px solid #ccc;
 }
 
-.content-header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 10px;
-    border-bottom: 3px solid #000;
-    margin-top: 20px;
-
-    .title{
-        font-size: 20px;
-    }
-
-    .location-list{
-        display: flex;
-        align-items: center;
-    }
-}
-
-.day-wrap{
-    display: flex;
-    justify-content: center;
-
-
-    strong{
-        vertical-align:middle;
-    }
-
-    button{
-        margin: 0 20px;
-        font-size: 30px;
-        vertical-align:middle;
-    }
-}
 
 
 .students-search{

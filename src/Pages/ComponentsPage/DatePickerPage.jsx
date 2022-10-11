@@ -1,19 +1,21 @@
-import * as React from "react";
+import React, {useState} from "react";
 import DatePicker from "react-date-picker"; // 데이트 피커
-import ChangeDate from "../../components/ChangeDate";
+import DateNext from "../../components/DateNext";
 import LmsDatePicker from "../../components/LmsDatePicker";
 import TimeDatePicker from "./TimeDatePicker";
 
 function DatePickerPage() {
-    const [value, onChange] = React.useState(new Date());
-    const [openCalendar, setOpenCalendar] = React.useState(false);
+    const [value, onChange] = useState(new Date());
+    const [openCalendar, setOpenCalendar] = useState(false);
 
     // 타임 피커 상태
-    const [reservationPicker, setReservationPicker] = React.useState(false);
+    const [reservationPicker, setReservationPicker] = useState(false);
     // 타임 피커 선택 값
-    const [reservationValue, setReservationValue] = React.useState();
+    const [reservationValue, setReservationValue] = useState();
 
-    const [lmsDValue, setLmsDValue] = React.useState(new Date());
+    const [lmsDValue, setLmsDValue] = useState(new Date());
+
+    const [next, setNext] = useState(new Date());
 
     return (
         <div style={{ marginTop: "100px" }}>
@@ -45,6 +47,8 @@ function DatePickerPage() {
 
                 `}
             </pre>
+
+            <DateNext value={next} onChange={(day)=>{setNext(day)}}/>
 
 
 

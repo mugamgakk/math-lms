@@ -18,51 +18,6 @@
     };
 };
 
-@for $i from 5 through 15 {
-    .m-#{$i}{
-        margin : #{$i}px;
-    }
-    .mr-#{$i}{
-        margin-right: #{$i}px;
-    }
-    .mt-#{$i}{
-        margin-top: #{$i}px;
-    }
-    .ml-#{$i}{
-        margin-left: #{$i}px;
-    }
-    .mb-#{$i}{
-        margin-bottom: #{$i}px;
-    }
-    .mx-#{$i}{
-        margin: 0 #{$i}px;
-    }
-    .my-#{$i}{
-        margin:  #{$i}px 0;
-    }
-    .p-#{$i}{
-        padding : #{$i}px;
-    }
-    .pr-#{$i}{
-        padding-right: #{$i}px;
-    }
-    .pt-#{$i}{
-        padding-top: #{$i}px;
-    }
-    .pl-#{$i}{
-        padding-left: #{$i}px;
-    }
-    .pb-#{$i}{
-        padding-bottom: #{$i}px;
-    }
-    .px-#{$i}{
-        padding: 0 #{$i}px;
-    }
-    .py-#{$i}{
-        padding:  #{$i}px 0;
-    }
-}
-
 
 @mixin flex($jc : center , $ai : center) {
     display: flex;
@@ -76,13 +31,4 @@
     top: 50%;
     transform: translate(-50%,-50%);
 }
-
-
-// body{
-//     @include flex(start,start);
-//     @include pos-center()
-// }
-
-
-
 

@@ -23,3 +23,25 @@
         color: #fff;
     }
 }
+
+
+.nextDate{
+    display: inline-block;
+
+    .arrow{
+        color: #0069d9;
+    }
+
+    .date{
+        // overflow: hidden;
+    }
+
+    .nextBtn{
+        width: 30px;
+        height: 30px;
+        background-color: #0069d9;
+        color: #fff;
+        border-radius: 50%;
+        margin-left: 10px;
+    }
+}
