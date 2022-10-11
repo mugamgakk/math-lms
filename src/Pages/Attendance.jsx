@@ -11,12 +11,18 @@ import { useEffect } from "react";
 function Attendance() {
     // 전체 체크
     let [allCheck, setAllCheck] = useState(0) 
-    let [value, onChange] = useState(new Date())
-    // 캘린더 버튼
-    let [openCalendar, setOpenCalendar] = useState(false)
+
+    // 날짜
+    let [date, setDate] = useState(new Date());
+
     // 반 리스트
     let [chulCheckList, setChulCheckList] = useState(null);
+
     let {data} = useSelector(state=>state.attendanceSlice);
+
+    const changeDate = (day)=>{
+        setDate(day)
+    }
 
     useEffect(()=>{
         setChulCheckList(data)
@@ -24,25 +30,10 @@ function Attendance() {
 
     return (
         <div className="container Attendance">
-            <ContentHeader title={"출석 체크"} />
-            <ChangeDate value={value} onChange={onChange} />
-            <DatePicker
-                    className="datepicker-base"
-                    onChange={(day)=>{onChange(day)}}
-                    value={value}
-                    maxDate={new Date()}
-                    clearIcon={null}
-                    isOpen={openCalendar}
-                    openCalendarOnFocus={false}
-                    format={"yyyy-MM-dd"}
-                />
-                <button
-                    onClick={() => {
-                        setOpenCalendar(!openCalendar);
-                    }}
-                >
-                    캘린더 아이콘
-                </button>
+
+            <ContentHeader title="출석 체크" location={"마이페이지 > 수학 학습 관리 > 오늘의 수업"} />
+            
+            <ChangeDate value={date} onChange={changeDate} />
 
             <header className="table-header row">
                 <div>    
