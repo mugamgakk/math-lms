@@ -25,6 +25,15 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
     let [hour,setHour] = useState('0시');
     let [minute,setMinute] = useState('00분');
 
+
+    let [dateInput , setDateInput] = useState('');
+    let [regexDate, setRegexDate] = useState('');
+    let [selectDisabled, setSelectDisabled]  = useState(1);
+
+    useEffect(()=>{
+        setRegexDate(dateInput.replace(/(\d{2})(\d{2})(\d{2})/g, '$1-$2-$3'));
+    },[dateInput]);
+
     useEffect(()=>{
         if(ref.current){
             if(toName){
@@ -40,8 +49,11 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
     const rCheckFunc = (checked) => {
         if(checked){
             setRcheck(true); 
+            setSelectDisabled(false)
         }else{
             setRcheck(false);
+            setSelectDisabled(true);
+
         }
     }
 
@@ -331,10 +343,13 @@ return (
                 <div className="WriteMessageModal-foot cmmnModal-foot">
                     <div className='reserveWrap fj'>
                         <input 
-                        type="number" 
-                        className='form-control' 
+                        type="tel" 
+                        className='form-control'
                         placeholder='00-00-00' 
+                        value={regexDate}
+                        onChange={(e)=>setDateInput(e.target.value)}
                         style={{ width:'100px' }}
+                        disabled={selectDisabled === 1}
                         />
                         <SelectBase 
                         onChange={(ele)=>setHour(ele)}
@@ -342,6 +357,7 @@ return (
                         value={hour}
                         defaultValue='0시'
                         width={'150px'}
+                        disabled={selectDisabled}
                         />
                         <SelectBase 
                         onChange={(ele)=>setMinute(ele)}
@@ -349,6 +365,7 @@ return (
                         value={minute}
                         defaultValue='00분'
                         width={'150px'}
+                        disabled={selectDisabled}
                         />
                         <input 
                         className='rCheck' 

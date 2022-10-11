@@ -52,7 +52,7 @@ let daedanwon = {
     }
 
 function ClassManagement({clickStudent}){
-    let [progressMo, setProgressState] = useState(true);
+    let [progressMo, setProgressState] = useState(false);
     let [creationMo, setCreationMo] = useState(false);
  
 

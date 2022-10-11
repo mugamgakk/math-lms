@@ -14,9 +14,6 @@ function TodayClass(){
     let [date,setDate] = useState(new Date());
 
     useEffect(()=>{
-        console.log(findTodayList);
-    },[findTodayList])
-    useEffect(()=>{
 
         ajax("/class.php/?mode=get_today_class", {
             ymd : "2022-01-01",
@@ -154,7 +151,7 @@ const TodayClassItem = memo(({findTodayList}) => {
         });
 
          return(
-                <tbody key={student.id} className={student.name}>
+                <tbody key={k} className={student.name}>
                     {firstRow}
                 </tbody> 
         )
