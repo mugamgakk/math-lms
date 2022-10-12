@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import style from '../style/style-module/pagination.module.scss';
 
 
@@ -10,7 +10,7 @@ function Pagination({totalPage = 30, pageLength = 5}) {
     // 현재 페이지
     let [page, setPage] = useState(1);
 
-    const pageNum = useCallback(()=>{
+    const pageNum = ()=>{
         let pageGroup = Math.ceil(page / pageLength);
         let lastPage = pageGroup * pageLength;
         let firstPage = lastPage - 4;
@@ -32,7 +32,7 @@ function Pagination({totalPage = 30, pageLength = 5}) {
         }
 
         return result;
-    },[page])
+    }
 
 
     return ( 

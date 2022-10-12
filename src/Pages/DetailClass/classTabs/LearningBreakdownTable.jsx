@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useCallback } from "react";
 import useLbtStore from "../../../store/useLbtStore";
 import LbtDayOption from "../LbtDayOption";
 
@@ -8,15 +7,15 @@ function LearningBreakdownTable() {
     let [choiceArr, setChoiceArr] = useState([]);
     let { lbtData, getLbtData, removeLbtData } = useLbtStore();
 
-    const checkboxChecked = useCallback((checked, item) => {
+    const checkboxChecked = (checked, item) => {
         if (checked) {
             setChoiceArr([...choiceArr, item])
         }else{
             setChoiceArr(choiceArr.filter(a=> a !==item ))
         }
-    },[choiceArr]);
+    }
 
-    const removeList = useCallback(()=>{
+    const removeList = ()=>{
         if(choiceArr.length === 0){
             alert("학습 분석표를 선택하세요");
         }else{
@@ -26,7 +25,7 @@ function LearningBreakdownTable() {
                 return 
             }
         }
-    },[choiceArr])
+    }
 
     useEffect(() => {
         setLbtList(lbtData);

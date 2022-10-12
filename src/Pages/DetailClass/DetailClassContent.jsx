@@ -4,7 +4,7 @@ import ClassTabs from './classTabs/ClassTabs';
 import useStudentsStore from '../../store/useStudentsStore';
 
 
-function DetailClassContent() {
+function DetailClassContent({setLocation}) {
 
     const clickStudent = useStudentsStore(state=>state.clickStudent)
 
@@ -14,7 +14,7 @@ function DetailClassContent() {
             {
                 clickStudent === null
                 ? <AlertBox name="수업 관리 시작"/>
-                : <ClassTabs clickStudent={clickStudent} />
+                : <ClassTabs clickStudent={clickStudent} setLocation={setLocation} />
             }
 
         </div>

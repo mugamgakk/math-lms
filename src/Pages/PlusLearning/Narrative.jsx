@@ -1,4 +1,4 @@
-import React, { useState, useCallback, memo } from "react";
+import React, { useState } from "react";
 import Pagination from "../../components/Pagination";
 import SelectBase from "../../components/ui/select/SelectBase";
 import UserInfo from "../../components/UserInfo";

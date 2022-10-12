@@ -7,7 +7,7 @@ import WrongAnswerMaster from "./WrongAnswerMaster";
 
 const classItems = ["수업 관리", "오답 정복하기", "학습 분석표", "출결 관리"];
 
-function ClassTabs({ clickStudent }) {
+function ClassTabs({ clickStudent, setLocation }) {
     let [tabState, setTabState] = useState(0);
 
     return (
@@ -20,6 +20,7 @@ function ClassTabs({ clickStudent }) {
                             className={"btn" + `${tabState === index ? " active" : ""}`}
                             onClick={() => {
                                 setTabState(index);
+                                setLocation(">" + a);
                             }}
                         >
                             {a}
