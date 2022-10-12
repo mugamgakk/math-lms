@@ -25,8 +25,8 @@ function MultiSelect({width, onChange, options, value = [], defaultValue, limit}
     
 
     return ( 
-        <div className={'select-wrap' + `${selectState ? ' active' : ''}`} style={{width : width}}>
-        <div className='select-show' onClick={()=>{
+        <div className={'selectbox' + `${selectState ? ' active' : ''}`} style={{width : width}}>
+        <div className='selectbox-show' onClick={()=>{
             setSelectState(!selectState);
             if(selectState){
                 onChange(choiceArr)
@@ -38,20 +38,20 @@ function MultiSelect({width, onChange, options, value = [], defaultValue, limit}
                     :choiceArr[0]
                 }
         </div>
-        <button className='select-btn' onClick={()=>{
+        <button className='selectbox-btn' onClick={()=>{
             setSelectState(!selectState);
             if(selectState){
                 onChange(choiceArr)
             }
             }}>
         </button>
-        <div className='textbook-select-option'>
-
+        <div className='selectbox-option'>
+            <div>
 
             {
                 options.map(item=>{
                     return (
-                        <div className='option-item' key={item}>
+                        <div className='selectbox-option__item' key={item}>
                             <input 
                             type="checkbox" 
                             id={item}
@@ -63,6 +63,7 @@ function MultiSelect({width, onChange, options, value = [], defaultValue, limit}
                     )
                 })
             }
+            </div>
             
             </div>
         </div>

@@ -67,35 +67,37 @@ function SelectTest({width, onChange, reset}) {
 
     return (
         <div
-            className={"select-wrap" + `${selectState ? " active" : ""}`}
+            className={"selectbox" + `${selectState ? " active" : ""}`}
             style={{width : width}}
         >
-            <div className="select-show"
+            <div className="selectbox-show"
                 onClick={()=>{setSelectState(!selectState)}}
             >
                 {choiceItem}
             </div>
-            <button className="select-btn"
+            <button className="selectbox-btn"
                 onClick={()=>{setSelectState(!selectState)}}
             ></button>
-            <div className="select-option">
-                <button className="lookup" onClick={()=>{
+
+            <div className="selectbox-option">
+                <div>
+                <button className="selectbox-option--lookup" onClick={()=>{
                     onChange(checkState);
                     setSelectState(false);
                     }}>조회</button>
 
-                <div className="all-box">
+                <div className="selectbox-option__allcheck">
                     <input 
                         type="checkbox" 
                         id="all"
                         onChange={(e)=>{allCheck(e.target.checked)}}
                         checked={checkState.length === arr.length ? true : false}
-                        className={checkState.length > 0 && checkState.length < arr.length ? "isCheck" : ''}
+                        className={checkState.length > 0 && checkState.length < arr.length ? " ischeck" : ''}
                      />
                     <label htmlFor="all">(전체 선택)</label>
                 </div>
 
-                <ul className="item-list">
+                <ul className="selectbox-option__list">
                     {
                         arr.map((item,i) => {
                             return (
@@ -113,6 +115,7 @@ function SelectTest({width, onChange, reset}) {
                     }
                     
                 </ul>
+            </div>
             </div>
         </div>
     );

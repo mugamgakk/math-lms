@@ -33,6 +33,7 @@ function Login() {
             user_gb: loginType,
             user_id: userId,
             user_pw: userPw,
+            force_mode : "Y"
         };
 
         ajax("/user.php", {
@@ -40,7 +41,7 @@ function Login() {
         }).then((res) => {
             setLoading(false);
             setAlertText(res.data.msg);
-            console.log(res);
+            console.log("로그인",res);
 
             switch (res.data.ok) {
                 // 로그인 완료
@@ -63,6 +64,11 @@ function Login() {
                         return 
                     }
                     break;
+                case -1 : 
+                    localStorage.setItem("lmsLogin", userId)
+                    window.location = "/";
+                    break;
+
             }
         });
     };
@@ -75,7 +81,7 @@ function Login() {
                 </div>
                 <div className="mb-10">
                     <label className={style.label} htmlFor="id">
-                        아이디
+                        아이디 {userId}
                     </label>
                     <input
                         type="text"

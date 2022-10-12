@@ -57,6 +57,13 @@ function SkeletonPage() {
                     )}
                 </tbody>
             </table>
+
+            <pre style={{fontSize : "18px", background:"#222", color : "#fff"}}>
+                {`
+                    {<SkeletonTable R={4} D={4} />}
+                    {/* props로 R은 Tr의 갯수 D는 Td의 갯수를 넣어주면 됨 */}
+                `}
+            </pre>
         </div>
     );
 }

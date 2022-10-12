@@ -37,7 +37,8 @@ $border : 1px solid #dee2e6;
 
     &.active{
         border: 1px solid orangered;
-        background: linear-gradient(to bottom, white 45%, orangered)
+        background-color: #dae0e5;
+        border-color: #d3d9df;
     }
 
     &.btn-s{

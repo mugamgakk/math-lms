@@ -53,8 +53,8 @@ const AttendanceItem = memo(({list, allCheck})=> {
                 options={options}
                 value={selectOption}
                 onChange={(ele)=>{
+                    console.log(ele)
                     setSelectOption(ele);
-                    
                 }}
                 />
             </td>

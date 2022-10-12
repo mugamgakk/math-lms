@@ -36,7 +36,7 @@ function AttendanceSearch({ data,chulCheckList, setChulCheckList }) {
     }
 
     return (
-        <div>
+        <div className="d-flex">
             <SelectBox width={"200px"} onChange={findBan}/>
 
             <input

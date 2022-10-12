@@ -65,11 +65,9 @@ const useLbtStore = create((set) => ({
 
             id += 1;
 
-            console.log(id);
-
             const data = {
                 info: {
-                    id: 2,
+                    id: id,
                     date: state.createLbtInfo.day,
                     makeDay: "2022.22.22",
                     book: state.createLbtInfo.book.join(","),
@@ -79,7 +77,7 @@ const useLbtStore = create((set) => ({
             };
 
             let copy = [...state.lbtData, data];
-            console.log("@@@@@@@@@@@", copy);
+            // console.log("@@@@@@@@@@@", copy);
 
             return { lbtData: copy };
         }),

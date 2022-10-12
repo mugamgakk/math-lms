@@ -17,6 +17,13 @@ const useStudentsStore = create(set=>({
 
       const res = await ajax(url,param);
 
+      if(res.data.ok === 0){
+        localStorage.removeItem("lmsLogin")
+        window.location = "/login"
+      }
+
+      console.log(res)
+
       const {class_list , student_list} = res.data;
 
       return set (state=> ({user : arrSort(student_list, "um_nm"), classList : class_list}))

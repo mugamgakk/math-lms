@@ -60,51 +60,9 @@ function SelectTest(props) {
 
 
     return (
-        <div
-            className={"select-wrap" + `${selectState ? " active" : ""}`}
-            style={{width : props.width}}
-        >
-            <div className="select-show"
-                onClick={()=>{setSelectState(!selectState)}}
-            >
-                {choiceItem}
-            </div>
-            <button className="select-btn"
-                onClick={()=>{setSelectState(!selectState)}}
-            ></button>
-            <div className="select-option">
-                <button className="lookup">조회</button>
+        <div>
 
-                <div className="all-box">
-                    <input 
-                        type="checkbox" 
-                        id="all"
-                        onChange={(e)=>{allCheck(e.target.checked)}}
-                        checked={checkState.length === arr.length ? true : false}
-                        className={checkState.length > 0 && checkState.length < arr.length ? "isCheck" : ''}
-                     />
-                    <label htmlFor="all">(전체 선택)</label>
-                </div>
-
-                <ul className="item-list">
-                    {
-                        arr.map((item,i) => {
-                            return (
-                                <li key={i}>
-                                    <input 
-                                    type="checkbox" 
-                                    id={item}
-                                    onChange={e=>{oneCheck(e.target.checked, item)}}
-                                    checked={checkState.includes(item) ? true : false}
-                                    />
-                                    <label htmlFor={item}>{item}</label>
-                                </li>
-                            )
-                        })
-                    }
-                    
-                </ul>
-            </div>
+            
         </div>
     );
 }

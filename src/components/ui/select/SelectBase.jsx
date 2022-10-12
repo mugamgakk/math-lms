@@ -3,20 +3,20 @@ import { useEffect } from "react";
 import { useState } from "react";
 
 function SelectBase({ width, onChange, options, value, defaultValue = "선택하세요" , disabled}) {
+
     let [selectOpen, setSelectOpen] = useState(false);
     useEffect(()=>{
         console.log(disabled);
     },[disabled]);
+
+    console.log(value)
     return (
-        <div className={"select-wrap" + `${selectOpen ? " active" : ""}`} style={{ width: width }}>
+        <div className={"selectbox" + `${selectOpen ? " active" : ""}`} style={{ width: width }}>
             <button
-                className={disabled ? "select-show disabled" : "select-show"}
+                className={disabled ? "selectbox-show disabled" : "selectbox-show"}
                 onClick={() => {
                     if(disabled) return false;
                     setSelectOpen(!selectOpen);
-                }}
-                onBlur={()=>{
-                    setSelectOpen(false)
                 }}
             >
                 {
@@ -26,7 +26,7 @@ function SelectBase({ width, onChange, options, value, defaultValue = "선택하
                 }
             </button>
             <button
-                className="select-btn"
+                className="selectbox-btn"
                 onBlur={()=>{
                     setSelectOpen(false)
                 }}
@@ -35,21 +35,20 @@ function SelectBase({ width, onChange, options, value, defaultValue = "선택하
                     setSelectOpen(!selectOpen);
                 }}
             ></button>
-            <div className="textbook-select-option">
+            <div className="selectbox-option">
+                <div>
                 {options &&
                     options.map((a, i) => {
                         return (
-                            <div
-                                className="option-item"
-                                key={i}
-                                onClick={(e) => {
-                                    onChange && onChange(a);
-                                }}
-                            >
+                            <button key={i} onClick={()=>{
+                                onChange && onChange(a);
+                                setSelectOpen(false)
+                                }} className="selectbox-option__item">
                                 {a}
-                            </div>
+                            </button>
                         );
                     })}
+                    </div>
             </div>
         </div>
     );
