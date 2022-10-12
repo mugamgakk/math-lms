@@ -1,14 +1,15 @@
 import React from "react";
 import { useState } from "react";
 
-function SelectBase({ width, onChange, options, value, defaultValue = "선택하세요" }) {
+function SelectBase({ width, onChange, options, value, defaultValue = "선택하세요" , disabled}) {
     let [selectOpen, setSelectOpen] = useState(false);
 
     return (
         <div className={"select-wrap" + `${selectOpen ? " active" : ""}`} style={{ width: width }}>
             <button
-                className="select-show"
+                className={disabled ? "select-show disabled" : "select-show"}
                 onClick={() => {
+                    if(disabled) return false;
                     setSelectOpen(!selectOpen);
                 }}
                 onBlur={()=>{
@@ -27,6 +28,7 @@ function SelectBase({ width, onChange, options, value, defaultValue = "선택하
                     setSelectOpen(false)
                 }}
                 onClick={() => {
+                    if(disabled) return false;
                     setSelectOpen(!selectOpen);
                 }}
             ></button>

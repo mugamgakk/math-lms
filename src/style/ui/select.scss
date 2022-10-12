@@ -42,6 +42,9 @@
         cursor: pointer;
         border-right: none;
         text-align: left;
+        &.disabled{
+            background: rgba(209, 209, 209, 0.3);
+        }
     }
 
 
