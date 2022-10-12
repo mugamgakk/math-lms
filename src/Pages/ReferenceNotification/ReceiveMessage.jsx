@@ -1,12 +1,16 @@
 import React, {useState,useEffect,memo} from 'react';
 import SearchBtn from '../../components/ui/button/SearchBtn';
+import SelectBase from '../../components/ui/select/SelectBase';
 import ajax from "../../ajax";
 import ViewMessageModal from './ViewMessageModal';
 import WriteMessageModal from './WriteMessageModal';
 
+const viewList = ['30개','50개','100개'];
+
 function GetMessage() {
     let [sendList, setSendList] = useState(null);
     let [coToState,setCoToState] = useState('co');
+    let [viewListState,setViewListState] = useState('목록개수');
     let [checkList, setCheckList] = useState([]);
 
     useEffect(()=>{
@@ -78,9 +82,16 @@ function GetMessage() {
                         className='radioInput'/>
                         <label htmlFor='target'>받는 사람</label>
                     </div>
-                    <div className="searchWrap">
+                    <div className="searchWrap d-flex">
                         <input type="text" className='form-control' style={{width:'200px'}}/>
                         <SearchBtn />
+                        <SelectBase 
+                        onChange={(ele)=>setViewListState(ele)}
+                        options={viewList}
+                        value={viewListState}
+                        defaultValue='30개'
+                        width={'150px'}
+                        />
                     </div>
                 </div>
                 <div className="filters-r">

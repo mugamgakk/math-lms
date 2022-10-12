@@ -17,23 +17,12 @@ function ReferenceRegistrationModal({setRegistModal}) {
     let [fileCheck,setFileCheck] = useState([]);
     let ref = useRef(false);
 
-    useEffect(()=>{
-        console.log(category);
-        console.log(target);
-    },[category,target])
 
     const editorCon = (event, editor) => {
         setEditorContents(editor.getData());
         console.log(JSON.stringify(editorContents));
     }
 
-    const radioState = (checked,target) => {
-
-        if(checked){
-            setCategory(target);
-        }
-
-    }
   const checkFile = (checked,file) => {
         if(checked){
             setFileCheck([...fileCheck,file]);
@@ -108,7 +97,10 @@ function ReferenceRegistrationModal({setRegistModal}) {
             const fileReader = new FileReader();
             fileReader.readAsDataURL(file);
             fileReader.onload = function(e) { 
-              encodingFiles.push(e.target.result);
+              encodingFiles.push({
+                filename : file.name,
+                file : e.target.result
+            });
             }
         });
 
@@ -190,7 +182,7 @@ function ReferenceRegistrationModal({setRegistModal}) {
                                             type='radio' 
                                             name='radio' 
                                             id={item} 
-                                            onChange={(e)=>radioState(e.target.checked,item)}
+                                            onChange={(e)=> {e.target.checked && setCategory(item)}}
                                             checked={category === item}
                                             className='radioInput'/>
                                             <label htmlFor={item}>{item}</label>
@@ -209,7 +201,8 @@ function ReferenceRegistrationModal({setRegistModal}) {
                     <div className='editor'>
                         <CKEditor
                             editor={ClassicEditor}
-                            data="중1 수학 자료입니다. 게시물 내용 확인"
+                            config={{placeholder: "내용을 입력하세요."}} 
+                            data=""
                             onReady={(editor) => {
                                 // You can store the "editor" and use when it is needed.
                                 console.log("Editor is ready to use!", editor);

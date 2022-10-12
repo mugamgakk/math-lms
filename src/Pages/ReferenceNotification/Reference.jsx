@@ -9,35 +9,40 @@ const search = ['제목','제목+내용','대상'];
 
 function Reference() {
     let [gradeOption, setGradeOption] = useState('전체');
-    let [searchOption, setSearchOption] = useState('전체');
+    let [qcate, setQcate] = useState('제목');
     let [searchInput, setSearchInput] = useState('');
     
     let [lenderList, setLenderList] = useState(null);
     let [registModal, setRegistModal] = useState(false);
 
 
-
-    
     useEffect(()=>{
-        ajax("/board.php", {data : {
-            mode : "list",
-            divide : '초등',
-            qcate : 'ti',
-            qstr : '검색어',
-            page : 1
-        }}).then(res=>{
-            console.log(res);
-            setLenderList(res.data.list);
-        })
+      getList();
     },[])
     
-     
+     const getList = async () => {
+        let url = "/board.php";
+        let query = {
+            mode: "list",
+            divide : gradeOption,
+            qcate : qcate,
+            qstr : searchInput,
+            page : 1
+        };
+
+        let res = await ajax(url, {data: query});
+        let { list } = res.data;
+
+        console.log(res)
+
+        setLenderList(list);
+     }
 
     return (
             <div className="contents-body reference">
                 <div className="contents-body__top fj pt-10">
                     <button className="btn" onClick={()=>setRegistModal(true)}>글쓰기</button>
-                    <div className="btn-wrap">
+                    <div className="btn-wrap d-flex">
                     <SelectBase 
                     onChange={(ele)=>setGradeOption(ele)}
                     options={학년}
@@ -47,9 +52,9 @@ function Reference() {
                     />
 
                     <SelectBase 
-                    onChange={(ele)=>setSearchOption(ele)}
+                    onChange={(ele)=>setQcate(ele)}
                     options={search}
-                    value={searchOption}
+                    value={qcate}
                     defaultValue='제목'
                     width={'150px'}
                     />
@@ -62,7 +67,7 @@ function Reference() {
                     onChange={(e)=>setSearchInput(e.target.value)}
                     />
 
-                    <button className='btn'>조회</button>
+                    <button className='btn' onClick={getList}>조회</button>
                     </div>
                 </div>
                 <div className="contents-body__middle pt-10">

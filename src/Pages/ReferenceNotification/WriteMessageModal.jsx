@@ -111,21 +111,21 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
         }else{
 
             if(!window.confirm('저장하시겠습니까?')) return false;
-            
-            // ajax("/notice.php", { data : {
-            //     mode : 'notice_write',
-            //     nt_to : checkState,
-            //     nt_to_class : 142966200389505901,
-            //     nt_title : writeTit,
-            //     nt_reserve : nt_reserve,
-            //     nt_content : JSON.stringify(editorContents),
-            //     nt_files : encodingFiles,
-            // }}).then(res=>{
-            //     console.log(res);
-            //     setWriteModal(false);
-            // }).catch(error=>{
-            //     console.log('error');
-            // })
+
+            ajax("/notice.php", { data : {
+                mode : 'notice_write',
+                nt_to : checkState,
+                nt_to_class : 142966200389505901,
+                nt_title : writeTit,
+                nt_reserve : nt_reserve,
+                nt_content : JSON.stringify(editorContents),
+                nt_files : encodingFiles,
+            }}).then(res=>{
+                console.log(res);
+                setWriteModal(false);
+            }).catch(error=>{
+                console.log('error');
+            })
         }
     }
 

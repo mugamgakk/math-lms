@@ -1,27 +1,42 @@
 import React, {useState,useEffect,memo} from 'react';
 import SearchBtn from '../../components/ui/button/SearchBtn';
+import SelectBase from '../../components/ui/select/SelectBase';
 import ajax from "../../ajax";
 import ViewMessageModal from './ViewMessageModal';
 import WriteMessageModal from './WriteMessageModal';
 
+const viewList = ['30개','50개','100개'];
 
 function SendMessage() {
     let [sendList, setSendList] = useState(null);
     let [coToState,setCoToState] = useState('co');
+    let [viewListState,setViewListState] = useState('목록개수');
     let [checkList, setCheckList] = useState([]);
     let [writeModal, setWriteModal] = useState(false);
-
+    let [searchInput, setSearchInput] = useState('');
+    
     useEffect(()=>{
-        ajax("/notice.php/?mode=notice_list_send", {
-            qcate : coToState,
-            qstr : '박',
-            listnum : 30,
-            page : 1
-        }).then(res=>{
-            setSendList(res.data.list);
-        })
+        getList();
     },[]);
 
+ 
+    const getList = async () => {
+        let url = "/notice.php";
+        let query = {
+            mode: "notice_list_send",
+            qcate : coToState,
+            qstr : searchInput,
+            listnum : 30,
+            page : 1
+        };
+
+        let res = await ajax(url, {data: query});
+        let { list } = res.data;
+
+        console.log(res)
+
+        setSendList(list);
+     }
 
     const checkState = (checked, seq) => {
         if(checked){
@@ -78,9 +93,20 @@ function SendMessage() {
                         className='radioInput'/>
                         <label htmlFor='target'>받는 사람</label>
                     </div>
-                    <div className="searchWrap">
-                        <input type="text" className='form-control' style={{width:'200px'}}/>
+                    <div className="searchWrap d-flex">
+                        <input type="text" 
+                        className='form-control' 
+                        style={{width:'200px'}}
+                        onChange={(e)=>setSearchInput(e.target.value)}
+                        />
                         <SearchBtn />
+                        <SelectBase 
+                        onChange={(ele)=>setViewListState(ele)}
+                        options={viewList}
+                        value={viewListState}
+                        defaultValue='30개'
+                        width={'150px'}
+                    />
                     </div>
                 </div>
                 <div className="filters-r">
