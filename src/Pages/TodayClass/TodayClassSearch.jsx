@@ -37,7 +37,7 @@ function TodayClassSearch({data,setFindList}) {
 
 
     return ( 
-        <div>
+        <div className='d-flex'>
             <SelectBox width={"200px"} onChange={findBan} />
             
             <input
