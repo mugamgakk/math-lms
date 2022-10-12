@@ -52,7 +52,7 @@ function StudentsSearch() {
     return (
         <div className="students-search">
             <header className="row" style={{ padding: "10px 0" }}>
-                <SelectBox width={"150px"} />
+                <SelectBox width={"180px"} />
                 <input
                     type={"text"}
                     placeholder="이름"
