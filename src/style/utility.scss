@@ -26,8 +26,14 @@ $border : 1px solid #dee2e6;
     border-radius: 5px;
     border: $border;
     padding: 0 10px;
-    background: linear-gradient(to bottom, white 45%, rgb(187, 187, 187));
+    color: #212529;
+    background-color: #f8f9fa;
     min-width: 50px;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+
+    &:hover{
+        background-color: #e2e6ea;
+    }
 
     &.active{
         border: 1px solid orangered;

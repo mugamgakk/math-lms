@@ -56,7 +56,7 @@ function LearningBreakdownTable() {
                 </thead>
                 <tbody>
                     {lbtList?.map((item) => {
-                        return <Tr key={item.id} item={item} choiceArr={choiceArr} checkboxChecked={checkboxChecked} />;
+                        return <Tr key={item.info.id} data={item} item={item.info} choiceArr={choiceArr} checkboxChecked={checkboxChecked} />;
                     })}
                 </tbody>
             </table>
@@ -64,15 +64,15 @@ function LearningBreakdownTable() {
     );
 }
 
-const Tr = ({ item, checkboxChecked, choiceArr }) => {
+const Tr = ({ item, checkboxChecked, choiceArr, data }) => {
     return (
         <tr>
             <td>
                 <input
                     type="checkbox"
-                    checked={choiceArr.includes(item)}
+                    checked={choiceArr.includes(data)}
                     onChange={(e) => {
-                        checkboxChecked(e.target.checked, item);
+                        checkboxChecked(e.target.checked, data);
                     }}
                 />
             </td>

@@ -5,6 +5,7 @@ import DatePicker from "react-date-picker"; // 데이트 피커
 import styled from "styled-components";
 import useStudentsStore from "../../store/useStudentsStore";
 import useLbtStore from "../../store/useLbtStore";
+import LmsDatePicker from "../../components/LmsDatePicker";
 
 const today = new Date();
 const oneMonthAgo = dayjs(today).subtract(1, "M").$d;
@@ -75,31 +76,19 @@ const LbtDayOption = memo(()=> {
                 createModal && <LbtModal value={value} setCreateModal={setCreateModal}/>
             }
             <ol>
-                <li className="fj">
+                <li className="fj mb-3">
                     1. 학습기간을 설정해 주세요.
-                    <div>
-                        <DatePicker
-                            className="datepicker-base"
-                            onChange={(day) => {
-                                setValue({ ...value, startDay: day });
-                            }}
-                            value={value.startDay}
+                    <div className="d-flex">
+                        <LmsDatePicker
+                            onChange={day=> setValue({ ...value, startDay: day })}
                             maxDate={today}
-                            clearIcon={null}
-                            openCalendarOnFocus={false}
-                            format={"yyyy-MM-dd"}
+                            value={value.startDay}
                         />
                         ~
-                        <DatePicker
-                            className="datepicker-base"
-                            onChange={(day) => {
-                                setValue({ ...value, endDay: day });
-                            }}
-                            value={value.endDay}
+                        <LmsDatePicker
+                            onChange={day=> setValue({ ...value, endDay: day })}
                             maxDate={today}
-                            clearIcon={null}
-                            openCalendarOnFocus={false}
-                            format={"yyyy-MM-dd"}
+                            value={value.endDay}
                         />
                         <button
                             className="btn"
@@ -116,7 +105,7 @@ const LbtDayOption = memo(()=> {
                     {value.option === false ? (
                         <Box>학습 기간을 설정해 주세요.</Box>
                     ) : (
-                        <div>
+                        <div className="book-list">
                             <div>
                                 <label htmlFor="학습한교재">학습한 교재</label>
                                 <input
@@ -153,7 +142,7 @@ const LbtDayOption = memo(()=> {
                 <button
                     className="btn"
                     onClick={() => {
-                        setValue({ ...value, option: false, checkList: [] });
+                        setValue({ ...value, option: false, startDay : oneMonthAgo, endDay : today });
                     }}
                 >
                     초기화
@@ -162,6 +151,21 @@ const LbtDayOption = memo(()=> {
                     생성
                 </button>
             </div>
+            <style jsx>
+                    {`
+                        .book-list{
+                            display : flex;
+                            padding : 10px;
+                            border: 1px solid #dee2e6;
+                        }
+
+                        .book-list ul{
+                            margin-left : 20px;
+                            height : 70px;
+                            overflow : auto;
+                        }
+                    `}
+            </style>
         </div>
     );
 })

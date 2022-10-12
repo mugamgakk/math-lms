@@ -38,6 +38,8 @@ function LbtModal({setCreateModal }) {
     const printComponent = useRef();
     // 적용을 눌렀을때 데이터를 가져오기위한
     const [count, setCount] = useState(0);
+    const createData = useLbtStore(state=> state.createData);
+
 
     return (
         <div
@@ -97,7 +99,9 @@ function LbtModal({setCreateModal }) {
                     </div>
                 </div>
                 <div className={style.btnGroup}>
-                    <button className="btn">생성</button>
+                    <button className="btn" onClick={()=>{
+                        createData()
+                    }}>생성</button>
                     <button
                         className="btn"
                         onClick={() => {

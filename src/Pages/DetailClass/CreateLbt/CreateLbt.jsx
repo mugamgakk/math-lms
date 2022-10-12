@@ -8,6 +8,7 @@ function CreateLbt() {
     let createLbtInfo = useLbtStore((state) => state.createLbtInfo);
     let createLbtData = useLbtStore((state) => state.createLbtData);
 
+    // console.log(createLbtData)
 
     return (
         <div style={{ width: "210mm", textAlign: "center" }}>
@@ -32,31 +33,31 @@ function CreateLbt() {
                 </tbody>
             </table>
 
-            <div style={{textAlign : "left"}}>
-            {createLbtData &&
-                createLbtData?.map((a) => {
-                    return (
-                        <>
-                            {a.optionItem.length !== 0 && <h3>{a.option}</h3>}
-                            {a.optionItem?.map((dd) => {
-                                return (
-                                    <>
-                                        <h4>{dd}</h4>
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>2</td>
-                                                    <td>3</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </>
-                                );
-                            })}
-                        </>
-                    );
-                })}
+            <div style={{ textAlign: "left" }}>
+                {createLbtData &&
+                    createLbtData?.map((a) => {
+                        return (
+                            <>
+                                {a.optionItem.length !== 0 && <h3 key={a.option}>{a.option}</h3>}
+                                {a.optionItem?.map((dd) => {
+                                    return (
+                                        <>
+                                            <h4 key={dd}>{dd}</h4>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td>2</td>
+                                                        <td>3</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </>
+                                    );
+                                })}
+                            </>
+                        );
+                    })}
             </div>
         </div>
     );
