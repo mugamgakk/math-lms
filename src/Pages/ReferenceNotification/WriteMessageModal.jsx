@@ -6,22 +6,30 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { getByteSize } from "../../methods/methods";
 import { faCropSimple } from '@fortawesome/free-solid-svg-icons';
 
+
+const 시간 = Array.from({length: 24}, (v,i) => `${i}시`);
+const 분 = Array.from({length: 12}, (v,i) => i === 0 ? '00분' : `${i*5}분`);
+
 function WriteMessageModal({setWriteModal,setViewModal, toName}) {
     let [stuList, setStuList] = useState();
     let [classOption, setClassOption] = useState('반 선택');
+
+    // 반학생 리스트
     let [classList,setClassList] = useState(null);
 
+    // 반학생 리스트에서 받는사람 선택 체크 배열
     let [checkState,setCheckState] = useState([]);
+
     let [editorContents, setEditorContents] = useState();
     let [writeTit,setWriteTit] = useState('');
     let [to,setTo] = useState(toName);
     let [fileCheck,setFileCheck] = useState([]);
 
+    // 예약발송 체크 
     let [rCheck,setRcheck] = useState(false);
     
     let ref = useRef(false);
-    let 시간 = Array.from({length: 24}, (v,i) => `${i}시`);
-    let 분 = Array.from({length: 12}, (v,i) => i === 0 ? '00분' : `${i*5}분`);
+
 
     let [hour,setHour] = useState('0시');
     let [minute,setMinute] = useState('00분');
@@ -31,10 +39,24 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
     let [regexDate, setRegexDate] = useState('');
     let [selectDisabled, setSelectDisabled]  = useState(true);
 
+        // 반학생 리스트
     useEffect(()=>{
-        setRegexDate(dateInput.replace(/(\d{2})(\d{2})(\d{2})/g, '$1-$2-$3'));
-    },[dateInput]);
+    
+        ajax("/notice.php/?mode=notice_usr", {
+            class_cd : 123123
+        }).then(res=>{
+                let arr = [];
+                
+                res.data.class_list.map(list=>{
+                    arr.push(list.class_name);
+                })
 
+                setClassList([...arr])
+                setStuList(res.data.usr_list);
+            })   
+        
+    },[]);
+   
     useEffect(()=>{
         if(ref.current){
             if(toName){
@@ -59,12 +81,57 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
     }
 
  
+    const checkForm = () => {
+        let validation = true;
+      
+        if(!writeTit){
+            window.alert('제목을 입력하세요')
+            return;
+        }
+        if(!to){
+            window.alert('받는 사람을 입력하세요')
+            return;
+        }
+        if(!editorContents){
+            window.alert('내용을 입력하세요')
+            return;
+        }
 
-    const formSubmit = () => {
-
-        if(!window.confirm('저장하시겠습니까?')) return false;
-
+        return validation;
     }
+
+    const submitForm = () => {
+        let newDate = `20${regexDate}`;
+        let newHour = hour.replace('시','');
+        let newMinute = minute.replace('분','');
+        let nt_reserve = `${newDate} ${newHour}:${newMinute}`;
+        
+        if(!checkForm()){
+            return false;
+        }else{
+
+            if(!window.confirm('저장하시겠습니까?')) return false;
+            
+            // ajax("/notice.php", { data : {
+            //     mode : 'notice_write',
+            //     nt_to : checkState,
+            //     nt_to_class : 142966200389505901,
+            //     nt_title : writeTit,
+            //     nt_reserve : nt_reserve,
+            //     nt_content : JSON.stringify(editorContents),
+            //     nt_files : encodingFiles,
+            // }}).then(res=>{
+            //     console.log(res);
+            //     setWriteModal(false);
+            // }).catch(error=>{
+            //     console.log('error');
+            // })
+        }
+    }
+
+    useEffect(()=>{
+        setRegexDate(dateInput.replace(/(\d{2})(\d{2})(\d{2})/g, '$1-$2-$3'));
+    },[dateInput]);
 
 
     let [files, setFiles] = useState([]);
@@ -72,14 +139,17 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
     let 총파일크기 = useRef(0);
 
     useEffect(()=>{
-
+        console.log(files);
         files.length > 0 &&
 
         files.forEach(file=>{
             const fileReader = new FileReader();
             fileReader.readAsDataURL(file);
             fileReader.onload = function(e) { 
-              encodingFiles.push(e.target.result);
+              encodingFiles.push({
+                filename : file.name,
+                file : e.target.result
+            });
             }
         });
 
@@ -87,22 +157,7 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
 
     },[files])
 
-    useEffect(()=>{
-        
-        ajax("/notice.php/?mode=notice_usr", {
-            class_cd : 123123
-        }).then(res=>{
-                let arr = [];
-                
-                res.data.class_list.map(list=>{
-                    arr.push(list.class_name);
-                })
 
-                setClassList([...arr])
-                setStuList(res.data.usr_list);
-            })   
-        
-    },[]);
 
     const changeCheckState = (checked,list) => {
         if(checked){
@@ -264,7 +319,8 @@ return (
                                     <div className='editor' style={{ width:'542px' }}>
                                     <CKEditor
                                         editor={ClassicEditor}
-                                        data="중1 수학 자료입니다. 게시물 내용 확인"
+                                        config={{placeholder: "내용을 입력하세요."}} 
+                                        data=""
                                         onReady={(editor) => {
                                             // You can store the "editor" and use when it is needed.
                                             console.log("Editor is ready to use!", editor);
@@ -347,8 +403,11 @@ return (
                         type="tel" 
                         className='form-control'
                         placeholder='00-00-00' 
+                        maxLength={8}
                         value={regexDate}
-                        onChange={(e)=>setDateInput(e.target.value)}
+                        onChange={(e)=>{
+                            setDateInput(e.target.value);
+                        }}
                         style={{ width:'100px' }}
                         disabled={selectDisabled}
                         />
@@ -373,8 +432,8 @@ return (
                         type="checkbox" 
                         onChange={(e)=>rCheckFunc(e.target.checked)}/>
                     </div>
-                    <button className={ rCheck ? 'btn' : 'btn disabled'}>예약 발송</button>
-                    <button className={rCheck ? 'btn disabled' : 'btn'} onClick={formSubmit}>발송하기</button>
+                    <button className={ rCheck ? 'btn' : 'btn disabled'} onClick={submitForm}>예약 발송</button>
+                    <button className={rCheck ? 'btn disabled' : 'btn'} onClick={submitForm}>발송하기</button>
                     <button className='btn' onClick={()=>{
                         setWriteModal(false);
                         setViewModal && setViewModal(false);
