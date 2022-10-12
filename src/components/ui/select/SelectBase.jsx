@@ -1,9 +1,12 @@
 import React from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 
 function SelectBase({ width, onChange, options, value, defaultValue = "선택하세요" , disabled}) {
     let [selectOpen, setSelectOpen] = useState(false);
-
+    useEffect(()=>{
+        console.log(disabled);
+    },[disabled]);
     return (
         <div className={"select-wrap" + `${selectOpen ? " active" : ""}`} style={{ width: width }}>
             <button
