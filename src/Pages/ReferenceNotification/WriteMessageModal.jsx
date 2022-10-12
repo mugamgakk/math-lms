@@ -18,6 +18,7 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
     let [fileCheck,setFileCheck] = useState([]);
 
     let [rCheck,setRcheck] = useState(false);
+    
     let ref = useRef(false);
     let 시간 = Array.from({length: 24}, (v,i) => `${i}시`);
     let 분 = Array.from({length: 12}, (v,i) => i === 0 ? '00분' : `${i*5}분`);
@@ -49,10 +50,10 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
     const rCheckFunc = (checked) => {
         if(checked){
             setRcheck(true); 
-            setSelectDisabled(false)
+            setSelectDisabled(false);
         }else{
             setRcheck(false);
-            setSelectDisabled(false);
+            setSelectDisabled(true);
 
         }
     }
