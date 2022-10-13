@@ -6,7 +6,6 @@ import SkeletonTable from "../components/SkeletonTable";
 import AttendanceItem from "./Attendance/AttendanceItem";
 import AttendanceSearch from "./Attendance/AttendanceSearch";
 
-
 function Attendance() {
     // 전체 체크
     let [allCheck, setAllCheck] = useState(0);
@@ -17,13 +16,12 @@ function Attendance() {
     // 반 리스트
     let [chulCheckList, setChulCheckList] = useState([]);
 
-    useEffect(()=>{
-        axios.post("http://192.168.11.178:8080/attendace/list")
-        .then(res=>{
+    useEffect(() => {
+        axios.post("http://192.168.11.178:8080/attendace/list").then((res) => {
             setChulCheckList(res.data.list);
-            setSkeleton(false)
-        })
-    },[])
+            setSkeleton(false);
+        });
+    }, []);
 
     return (
         <div className="container">
@@ -33,11 +31,11 @@ function Attendance() {
             />
 
             <header className="fj mb-3">
-                <div>
-                </div>
+                <div></div>
                 <AttendanceSearch />
             </header>
 
+        <div className="table-box" style={{height : "200px"}}>
             <table>
                 <colgroup>
                     <col style={{ width: "20%" }} />
@@ -63,17 +61,23 @@ function Attendance() {
                     </tr>
                 </thead>
                 <tbody>
-
-                    {
-                        skeleton 
-                        ? <SkeletonTable R={4} D={3}/>
-                        :   chulCheckList.map((list) => {
-                                return <AttendanceItem list={list} key={list._id} allCheck={allCheck} />;
-                            })
-                    }
-                    
+                    {skeleton ? (
+                        <SkeletonTable R={4} D={3} />
+                    ) : (
+                        chulCheckList.map((list) => {
+                            return (
+                                <AttendanceItem list={list} key={list._id} allCheck={allCheck} />
+                            );
+                        })
+                    )}
                 </tbody>
             </table>
+
+            </div>
+
+ 
+
+
         </div>
     );
 }

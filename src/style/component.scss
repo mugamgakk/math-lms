@@ -318,3 +318,39 @@ input.form-control{
         border: 1px solid #0069d9;
     }
 }
+
+.table-box{
+    overflow: auto;
+    border: 1px solid #dee2e6;
+
+    thead{
+        position: sticky;
+        top: 0;
+        background-color: #fff;
+        z-index: 20;
+
+        th{
+            border: none;
+            border-right: 1px solid #dee2e6;
+
+            &:last-child{
+                border-right: none;
+            }
+        }
+    }
+    tbody{
+
+        td:first-child{
+            border-left: none;
+        }
+        td:last-child{
+            border-right: none;
+        }
+
+        tr:last-child{
+            td{
+                border-bottom: none;
+            }
+        }
+    }
+}

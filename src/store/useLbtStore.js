@@ -1,8 +1,10 @@
 import create from "zustand";
+import axios from "axios";
+import dayjs from "dayjs";
 
 const useLbtStore = create((set) => ({
     lbtData: [],
-    createLbtInfo: { name: "", ele: "", day: "", book: [] },
+    createLbtInfo: { name: "", age: "", date: "", book: [], maker: "김교사", capus: "대치 캠퍼스" },
     createLbtData: [
         { option: "교재 학습 분석", optionItem: [] },
         { option: "플러스 학습 분석", optionItem: [] },
@@ -10,37 +12,16 @@ const useLbtStore = create((set) => ({
         { option: "학습 태도 분석", optionItem: [] },
         { option: "선생님의견", optionItem: [] },
     ],
-    getLbtData: () =>
-        set((state) => {
-            // 비동기 통신
-            const data = [
-                {
-                    info: {
-                        id: 1,
-                        date: "2021 06 01 ~ 2021 06 30",
-                        makeDay: "2021-07-02",
-                        book: "중 2-1 노벰, 중2-2 엑사스",
-                        maker: "김교사",
-                    },
-                    data: [
-                        { option: "교재 학습 분석", optionItem: [] },
-                        { option: "플러스 학습 분석", optionItem: [] },
-                        { option: "평가 분석", optionItem: [] },
-                        { option: "학습 태도 분석", optionItem: [] },
-                        { option: "선생님의견", optionItem: [] },
-                    ],
-                },
-            ];
+    skeleton: true,
+    getLbtData: async () => {
+        let res = await axios.post("http://192.168.11.178:8080/lbt/list");
 
-            return { lbtData: data };
-        }),
-    removeLbtData: (param) =>
-        set((state) => {
-            return { lbtData: param };
-        }),
+        set({ lbtData: res.data.list, skeleton: false });
+    },
+
     setCreateInfo: (param) =>
         set((state) => {
-            return { createLbtInfo: param };
+            return { createLbtInfo: { ...state.createLbtInfo, ...param } };
         }),
     setCreateData: (param) =>
         set((state) => {
@@ -53,33 +34,17 @@ const useLbtStore = create((set) => ({
             });
             return { createLbtData: copy };
         }),
-    createData: (param) =>
+    createData: async (param) =>
         set((state) => {
-            let id = 0;
-
-            state.lbtData.forEach((a) => {
-                if (a.info.id > id) {
-                    id = a.info.id;
-                }
-            });
-
-            id += 1;
-
-            const data = {
-                info: {
-                    id: id,
-                    date: state.createLbtInfo.day,
-                    makeDay: "2022.22.22",
-                    book: state.createLbtInfo.book.join(","),
-                    maker: "강호동",
-                },
+            let obj = {
+                info: state.createLbtInfo,
                 data: state.createLbtData,
             };
+            obj.info.makeDay = dayjs(new Date()).format("YYYY-MM-DD");
 
-            let copy = [...state.lbtData, data];
-            // console.log("@@@@@@@@@@@", copy);
+            axios.post("http://192.168.11.178:8080/lbt", obj);
 
-            return { lbtData: copy };
+            return { lbtData: [...state.lbtData, obj] };
         }),
 }));
 

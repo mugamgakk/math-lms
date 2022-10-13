@@ -8,7 +8,6 @@ function CreateLbt() {
     let createLbtInfo = useLbtStore((state) => state.createLbtInfo);
     let createLbtData = useLbtStore((state) => state.createLbtData);
 
-    // console.log(createLbtData)
 
     return (
         <div style={{ width: "210mm", textAlign: "center" }}>
@@ -22,9 +21,9 @@ function CreateLbt() {
                         <th scope="row">캠퍼스</th>
                         <td>대치 캠퍼스</td>
                         <th scope="row">학년</th>
-                        <td>{createLbtInfo.ele}</td>
+                        <td>{createLbtInfo.age}</td>
                         <th scope="row">학습 기간</th>
-                        <td>{createLbtInfo.day}</td>
+                        <td>{createLbtInfo.date}</td>
                     </tr>
                     <tr>
                         <th scope="row">학습 교재</th>

@@ -40,7 +40,6 @@ function LbtModal({setCreateModal }) {
     const [count, setCount] = useState(0);
     const createData = useLbtStore(state=> state.createData);
 
-
     return (
         <div
             className={style.modal}
@@ -100,7 +99,8 @@ function LbtModal({setCreateModal }) {
                 </div>
                 <div className={style.btnGroup}>
                     <button className="btn" onClick={()=>{
-                        createData()
+                        createData();
+                        setCreateModal(false)
                     }}>생성</button>
                     <button
                         className="btn"

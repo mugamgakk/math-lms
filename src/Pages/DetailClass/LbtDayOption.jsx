@@ -56,8 +56,8 @@ const LbtDayOption = memo(()=> {
     const createLbt = ()=>{
         let option = {
             name : clickStudent.um_nm,
-            ele : clickStudent.school_grade,
-            day : dayjs(value.startDay).format("YYYY.MM.DD") + " ~ " +  dayjs(value.endDay).format("YYYY.MM.DD"),
+            age : clickStudent.school_grade,
+            date : dayjs(value.startDay).format("YYYY.MM.DD") + " ~ " +  dayjs(value.endDay).format("YYYY.MM.DD"),
             book : [...value.checkList]
         };
 
