@@ -30,6 +30,14 @@ $border : 1px solid #dee2e6;
     background-color: #f8f9fa;
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 
+    &:disabled{
+        background-color: #dce2e9;
+
+        &:hover{
+            background-color: #dce2e9;
+        }
+    }
+
     &:hover{
         background-color: #e2e6ea;
     }

@@ -2,35 +2,26 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import ContentHeader from "../components/ContentHeader";
+import SkeletonTable from "../components/SkeletonTable";
 import AttendanceItem from "./Attendance/AttendanceItem";
 import AttendanceSearch from "./Attendance/AttendanceSearch";
 
-const data = [
-    {
-        id: 1,
-        name: "강수학",
-        userId: "kangsh",
-        출결: "조퇴",
-        사유: "ㅁㄴㅇㅁㄴㅇㅁㄴㅇ",
-        반이름: "중등 월화수 A",
-    },
-    { id: 2, name: "강시후", userId: "kshhhh", 출결: null, 사유: "", 반이름: "중등 월화수 A" },
-    { id: 3, name: "김민찬", userId: "minck", 출결: null, 사유: "", 반이름: "중등 월화수 A" },
-    { id: 4, name: "박연아", userId: "parkya", 출결: null, 사유: "", 반이름: "중등 월화수 B" },
-    { id: 5, name: "오지연", userId: "yonnii", 출결: null, 사유: "", 반이름: "중등 월화수 B" },
-];
 
 function Attendance() {
     // 전체 체크
     let [allCheck, setAllCheck] = useState(0);
 
+    // 스켈레톤
+    let [skeleton, setSkeleton] = useState(true);
+
     // 반 리스트
-    let [chulCheckList, setChulCheckList] = useState(data);
+    let [chulCheckList, setChulCheckList] = useState([]);
 
     useEffect(()=>{
-        axios.post("http://192.168.11.178:8080/lbt")
+        axios.post("http://192.168.11.178:8080/attendace/list")
         .then(res=>{
-            console.log(res)
+            setChulCheckList(res.data.list);
+            setSkeleton(false)
         })
     },[])
 
@@ -43,21 +34,8 @@ function Attendance() {
 
             <header className="fj mb-3">
                 <div>
-                    <button
-                        className="btn"
-                        onClick={() => {
-                            console.log(data);
-                        }}
-                    >
-                        저장
-                    </button>
                 </div>
-
-                <AttendanceSearch
-                    data={data}
-                    chulCheckList={chulCheckList}
-                    setChulCheckList={setChulCheckList}
-                />
+                <AttendanceSearch />
             </header>
 
             <table>
@@ -85,9 +63,15 @@ function Attendance() {
                     </tr>
                 </thead>
                 <tbody>
-                    {chulCheckList.map((list) => {
-                        return <AttendanceItem list={list} key={list.id} allCheck={allCheck} />;
-                    })}
+
+                    {
+                        skeleton 
+                        ? <SkeletonTable R={4} D={3}/>
+                        :   chulCheckList.map((list) => {
+                                return <AttendanceItem list={list} key={list._id} allCheck={allCheck} />;
+                            })
+                    }
+                    
                 </tbody>
             </table>
         </div>

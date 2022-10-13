@@ -6,7 +6,7 @@ function SelectBase({ width, onChange, options, value, defaultValue = "선택하
 
     let [selectOpen, setSelectOpen] = useState(false);
     useEffect(()=>{
-        console.log(disabled);
+        // console.log(disabled);
     },[disabled]);
 
     return (
