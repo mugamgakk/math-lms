@@ -22,7 +22,7 @@ const Box = styled.div`
 
 const list = ["중2-1 노벰", "중2-2 엑사스", "중2-2 노벰", "중2-1 엑사스"];
 
-const LbtDayOption = memo(()=> {
+const LbtDayOption = memo(({dataNum})=> {
     let [value, setValue] = useState({
         startDay: oneMonthAgo,
         endDay: today,
@@ -54,6 +54,17 @@ const LbtDayOption = memo(()=> {
     };
 
     const createLbt = ()=>{
+
+        if(dataNum > 50){
+            alert("분석표가 최대 50개까지 저장됩니다. (현재 갯수 50개)");
+            return
+        }
+
+        if(value.checkList.length ===0){
+            alert("학습 분석표를 생성할 교재를 선택해주세요");
+            return 
+        }
+
         let option = {
             name : clickStudent.um_nm,
             age : clickStudent.school_grade,

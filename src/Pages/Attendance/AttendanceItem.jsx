@@ -38,7 +38,7 @@ const AttendanceItem = memo(({ list, allCheck }) => {
         data.reason = reason;
 
         axios.put("http://192.168.11.178:8080/attendace/correction", data).then((res) => {
-            console.log(res);
+            // console.log(res);
             setBtnDisabled(false)
         });
     };

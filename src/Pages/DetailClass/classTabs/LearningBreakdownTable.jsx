@@ -40,41 +40,54 @@ function LearningBreakdownTable() {
 
     return (
         <div>
-            <LbtDayOption />
+            <LbtDayOption dataNum={lbtData.length} />
 
             <button className="btn" onClick={removeList}>
                 선택 삭제
             </button>
 
+            <p>
+            분석표 목록에는 학생별로 최대 50 개까지 저장됩니다 .( <strong>{lbtList?.length}</strong> /50)
+            </p>
             <p>[분석표 삭제 유의 !] 분석 결과는 생성일에 따라 달라질 수 있습니다</p>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th scope="col">선택</th>
-                        <th scope="col">학습 기간</th>
-                        <th scope="col">분석표 생성일</th>
-                        <th scope="col">학습한 교재</th>
-                        <th scope="col">생성자</th>
-                        <th scope="col">학습 분석표</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {skeleton && <SkeletonTable R={4} D={6} />}
+            <div className="table-box"style={{height : "300px"}}>
+                <table>
+                    <colgroup>
+                        <col style={{width : "50px"}} />
+                        <col style={{width : "150px"}} />
+                        <col style={{width : "150px"}} />
+                        <col style={{width : "auto"}} />
+                        <col style={{width : "70px"}} />
+                        <col style={{width : "90px"}} />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th scope="col">선택</th>
+                            <th scope="col">학습 기간</th>
+                            <th scope="col">분석표 생성일</th>
+                            <th scope="col">학습한 교재</th>
+                            <th scope="col">생성자</th>
+                            <th scope="col">학습 분석표</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {skeleton && <SkeletonTable R={4} D={6} />}
 
-                    {lbtList?.map((item) => {
-                        return (
-                            <Tr
-                                key={item._id}
-                                data={item}
-                                item={item.info}
-                                choiceArr={choiceArr}
-                                checkboxChecked={checkboxChecked}
-                            />
-                        );
-                    })}
-                </tbody>
-            </table>
+                        {lbtList?.map((item) => {
+                            return (
+                                <Tr
+                                    key={item._id}
+                                    data={item}
+                                    item={item.info}
+                                    choiceArr={choiceArr}
+                                    checkboxChecked={checkboxChecked}
+                                />
+                            );
+                        })}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 }

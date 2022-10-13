@@ -22,8 +22,6 @@ const useStudentsStore = create(set=>({
         window.location = "/login"
       }
 
-      console.log(res)
-
       const {class_list , student_list} = res.data;
 
       return set (state=> ({user : arrSort(student_list, "um_nm"), classList : class_list}))

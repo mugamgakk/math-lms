@@ -35,48 +35,48 @@ function Attendance() {
                 <AttendanceSearch />
             </header>
 
-        <div className="table-box" style={{height : "200px"}}>
-            <table>
-                <colgroup>
-                    <col style={{ width: "20%" }} />
-                    <col style={{ width: "15%" }} />
-                    <col style={{ width: "auto" }} />
-                </colgroup>
-                <thead>
-                    <tr>
-                        <th>학생명(아이디)</th>
-                        <th>
-                            출결 체크
-                            <br />
-                            <button
-                                className="btn"
-                                onClick={() => {
-                                    setAllCheck(allCheck + 1);
-                                }}
-                            >
-                                모두출석
-                            </button>
-                        </th>
-                        <th>출결 사유</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {skeleton ? (
-                        <SkeletonTable R={4} D={3} />
-                    ) : (
-                        chulCheckList.map((list) => {
-                            return (
-                                <AttendanceItem list={list} key={list._id} allCheck={allCheck} />
-                            );
-                        })
-                    )}
-                </tbody>
-            </table>
-
+            <div className="table-box">
+                <table>
+                    <colgroup>
+                        <col style={{ width: "20%" }} />
+                        <col style={{ width: "15%" }} />
+                        <col style={{ width: "auto" }} />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>학생명(아이디)</th>
+                            <th>
+                                출결 체크
+                                <br />
+                                <button
+                                    className="btn"
+                                    onClick={() => {
+                                        setAllCheck(allCheck + 1);
+                                    }}
+                                >
+                                    모두출석
+                                </button>
+                            </th>
+                            <th>출결 사유</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {skeleton ? (
+                            <SkeletonTable R={4} D={3} />
+                        ) : (
+                            chulCheckList.map((list) => {
+                                return (
+                                    <AttendanceItem
+                                        list={list}
+                                        key={list._id}
+                                        allCheck={allCheck}
+                                    />
+                                );
+                            })
+                        )}
+                    </tbody>
+                </table>
             </div>
-
- 
-
 
         </div>
     );

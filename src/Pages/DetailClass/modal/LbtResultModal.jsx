@@ -1,5 +1,8 @@
 import React, {useRef} from "react";
 import style from "../../../style/style-module/lbtModal.module.scss";
+import ReactToPrint from "react-to-print"; 
+import html2canvas from "html2canvas";
+import FileSaver from "file-saver";
 
 const dataLists = [
     {
@@ -58,12 +61,29 @@ function LbtResultModal({data, setModal}) {
                         }
                     </div>
                     <div className={style.rightWrap}>
-                        <ContentList data={data}/>
+                        <ContentList printComponent={printComponent} data={data}/>
                     </div>
                 </div>
                 <div className={style.btnGroup}>
-                    <button className="btn">인쇄하기</button>
-                    <button className="btn">다운로드</button>
+                <ReactToPrint
+                trigger={() => <button className="btn">프린트 버튼</button>} //  trigger : 인쇄를 명령할 컴포넌트를 넣어주기
+                content={() => printComponent.current} // content : 인쇄 대상 ref를 넘겨주기
+                // documentTitle= "pdf이름" //pdf 로 저장할때 이름
+            />
+                    <button
+                className="btn"
+                onClick={() => {
+                    html2canvas(printComponent.current).then((canvas) => {
+                        const imgFile = canvas.toDataURL("image/jpeg");
+                        // png로 바꾸면 png로 됨
+                        const imgName = "download";
+
+                        FileSaver.saveAs(imgFile, imgName);
+                    });
+                }}
+            >
+                다운로드
+            </button>
                     <button className="btn" onClick={()=>{setModal(false)}}>닫기</button>
                 </div>
             </div>
@@ -108,11 +128,11 @@ const CheckList = ({checkbox, data})=>{
     )
 }
 
-const ContentList = ({data})=>{
+const ContentList = ({data, printComponent})=>{
     const info = data.info;
     const result = data.data
     return (
-        <div style={{ width: "210mm", textAlign: "center" }}>
+        <div ref={printComponent} style={{ width: "210mm", textAlign: "center" }}>
             <h4>
                 {info.makeDay} {info.maker}의 패럴랙스 수학 종합
                 학습 분석표
