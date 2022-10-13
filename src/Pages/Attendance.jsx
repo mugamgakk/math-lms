@@ -1,4 +1,6 @@
+import axios from "axios";
 import React, { useState } from "react";
+import { useEffect } from "react";
 import ContentHeader from "../components/ContentHeader";
 import AttendanceItem from "./Attendance/AttendanceItem";
 import AttendanceSearch from "./Attendance/AttendanceSearch";
@@ -22,11 +24,15 @@ function Attendance() {
     // 전체 체크
     let [allCheck, setAllCheck] = useState(0);
 
-    // 날짜
-    let [date, setDate] = useState(new Date());
-
     // 반 리스트
     let [chulCheckList, setChulCheckList] = useState(data);
+
+    useEffect(()=>{
+        axios.post("http://192.168.11.178:8080/lbt")
+        .then(res=>{
+            console.log(res)
+        })
+    },[])
 
     return (
         <div className="container">
@@ -35,7 +41,6 @@ function Attendance() {
                 location={"마이페이지 > 수학 학습 관리 > 오늘의 수업"}
             />
 
-        
             <header className="fj mb-3">
                 <div>
                     <button

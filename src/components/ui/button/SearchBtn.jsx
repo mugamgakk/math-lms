@@ -6,7 +6,7 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 function SearchBtn({onClick}) {
 
     return ( 
-        <button type='button' className='searchBtn' 
+        <button type='button' className='btn' 
         onClick={onClick && onClick}
         >
             <FontAwesomeIcon icon={faMagnifyingGlass} />

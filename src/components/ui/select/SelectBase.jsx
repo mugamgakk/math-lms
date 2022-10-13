@@ -9,7 +9,6 @@ function SelectBase({ width, onChange, options, value, defaultValue = "선택하
         console.log(disabled);
     },[disabled]);
 
-    console.log(value)
     return (
         <div className={"selectbox" + `${selectOpen ? " active" : ""}`} style={{ width: width }}>
             <button
