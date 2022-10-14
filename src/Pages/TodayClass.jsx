@@ -22,7 +22,6 @@ function TodayClass(){
         }).then(res=>{
                 let { class_list, today_list} = res.data;
                 setFindList(today_list); 
-                setSkeleton(false);
         })
        
     },[])
@@ -156,7 +155,7 @@ const TodayClassItem = memo(({findTodayList,skeleton}) => {
          return(
 
                 <tbody key={k} className={student.name}>
-                    {<SkeletonTable R={1} D={9} />}
+                    {/* {<SkeletonTable R={1} D={9} />} */}
                   
                     {firstRow}
                 </tbody> 
