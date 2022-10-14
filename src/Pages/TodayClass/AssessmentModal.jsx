@@ -18,14 +18,18 @@ function AssessmentModal ({setAssModal}) {
     ];
     let [totalData, setTotalData] = useState([7,7]);
     let [title,setTitle] = useState('');
+    let [audioState,setAudioState] = useState();
 
+    console.log(audioState);
     useEffect(()=>{
         ajax("/class.php/?mode=get_assessment", {
         }).then(res=>{
             console.log(res.data);
             setTotalData([res.data.uds,res.data.send]);
             setTitle(res.data.title);
+            setAudioState(res.data.file);
         })
+        
     },[])
 
 
@@ -161,74 +165,78 @@ function AssessmentModal ({setAssModal}) {
                     <button className="close" onClick={() => setAssModal(false)}>X</button>
                 </div>
                 <div className="asseModal-body cmmnModal-body">
-                    <div className="audio">
-                    <ReactAudioPlayer
-                src={오디오입니동}
-                autoPlay
-                ref={audio}
-                volume={valumeItem}
-                onCanPlay={audioReady}
-                listenInterval={listenSpeed}
-                onListen={audioIng}
-                onEnded={() => {
-                    audioBar.current.style.width = `${100}%`;
-                    setMinTime(maxTime);
-                    setStateIcon(faPlay);
-                }}
-            />
+                    {
+                        audioState && (
+                            <div className="audio">
+                            <ReactAudioPlayer
+                        src={오디오입니동}
+                        autoPlay
+                        ref={audio}
+                        volume={valumeItem}
+                        onCanPlay={audioReady}
+                        listenInterval={listenSpeed}
+                        onListen={audioIng}
+                        onEnded={() => {
+                            audioBar.current.style.width = `${100}%`;
+                            setMinTime(maxTime);
+                            setStateIcon(faPlay);
+                        }}
+                    />
 
-            <input type="hidden" value={오디오입니동} />
+                    <input type="hidden" value={오디오입니동} />
 
-            <div className="fj" style={{ width: "500px" }}>
-                {minTime}
-                <div className={style.audio_bar} onClick={clickChange}>
-                    <div className={style.audio_bar_itme} ref={audioBar}></div>
-                </div>
-                {maxTime}
-            </div>
-            <div>
-                볼륨 :
-                <input
-                    type="range"
-                    min={0}
-                    max={10}
-                    value={valumeItem * 10}
-                    onChange={volumeChange}
-                />
-                <button
-                    onClick={() => {
-                        forwardRadio(-5);
-                    }}
-                >
-                    <FontAwesomeIcon icon={faBackwardFast} size="2x" />
-                </button>
-                <button className="mx-15" onClick={start}>
-                    <FontAwesomeIcon icon={stateIcon} size="2x" />
-                </button>
-                <button
-                    onClick={() => {
-                        forwardRadio(5);
-                    }}
-                    style={{ transform: "rotate(180deg)" }}
-                >
-                    <FontAwesomeIcon icon={faBackwardFast} size="2x" />
-                </button>
-                <SelectBase
-                    width={"100px"}
-                    value={speenValue}
-                    options={speedOption}
-                    onChange={(el) => speedChange(el)}
-                />
-                <button
-                    className={style.download_btn}
-                    onClick={() => {
-                        fileDown(오디오입니동);
-                    }}
-                >
-                    <FontAwesomeIcon icon={faFileArrowDown} size="2x" />
-                </button>
-            </div>
+                    <div className="fj" style={{ width: "500px" }}>
+                        {minTime}
+                        <div className={style.audio_bar} onClick={clickChange}>
+                            <div className={style.audio_bar_itme} ref={audioBar}></div>
+                        </div>
+                        {maxTime}
                     </div>
+                    <div>
+                        볼륨 :
+                        <input
+                            type="range"
+                            min={0}
+                            max={10}
+                            value={valumeItem * 10}
+                            onChange={volumeChange}
+                        />
+                        <button
+                            onClick={() => {
+                                forwardRadio(-5);
+                            }}
+                        >
+                            <FontAwesomeIcon icon={faBackwardFast} size="2x" />
+                        </button>
+                        <button className="mx-15" onClick={start}>
+                            <FontAwesomeIcon icon={stateIcon} size="2x" />
+                        </button>
+                        <button
+                            onClick={() => {
+                                forwardRadio(5);
+                            }}
+                            style={{ transform: "rotate(180deg)" }}
+                        >
+                            <FontAwesomeIcon icon={faBackwardFast} size="2x" />
+                        </button>
+                        <SelectBase
+                            width={"100px"}
+                            value={speenValue}
+                            options={speedOption}
+                            onChange={(el) => speedChange(el)}
+                        />
+                        <button
+                            className={style.download_btn}
+                            onClick={() => {
+                                fileDown(오디오입니동);
+                            }}
+                        >
+                            <FontAwesomeIcon icon={faFileArrowDown} size="2x" />
+                        </button>
+                        </div>
+                    </div>
+                        )
+                    }
                     <h5>학생의 개념 이해력과 전달력 점수를 입력해 주세요.</h5>
                     <table>
                         <tbody>
