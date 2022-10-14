@@ -34,7 +34,7 @@ function 총합(param) {
     return count;
 }
 
-const PlusLearningGradingModal =  memo(({ setGradingModal })=> {
+const PlusLearningGradingModal =  memo(({ setModal })=> {
     let [uploadFile, setUploadFile] = useState([]);
     let [checkFile, setCheckFile] = useState([]);
     let [allScore,setAllScore] = useState(총합("점수"))
@@ -122,7 +122,7 @@ const PlusLearningGradingModal =  memo(({ setGradingModal })=> {
                     <button
                         className="btn"
                         onClick={() => {
-                            setGradingModal(false);
+                            setModal(false);
                         }}
                     >
                         X
@@ -203,7 +203,7 @@ const PlusLearningGradingModal =  memo(({ setGradingModal })=> {
                         </div>
                         <div className="btn-group">
                             <button className="btn" onClick={() => {
-                            setGradingModal(false);
+                            setModal(false);
                         }}>취소</button>
                             <button className="btn">채점 완료</button>
                         </div>

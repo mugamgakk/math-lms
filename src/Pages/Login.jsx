@@ -10,8 +10,6 @@ function Login() {
         password: "",
     });
 
-    console.log(textValue);
-
     let [loginType, setLoginType] = useState("P");
     // P : "패럴랙스"
     // G : "지앤비"
@@ -43,7 +41,6 @@ function Login() {
             data: data,
         }).then((res) => {
             setLoading(false);
-            console.log("로그인", res);
 
             switch (res.data.ok) {
                 // 로그인 완료

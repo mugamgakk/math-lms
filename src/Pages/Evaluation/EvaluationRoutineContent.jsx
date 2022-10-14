@@ -34,8 +34,6 @@ function EvaluationRoutineContent() {
     let [list, setList] = useState(data);
 
     let [checkItem, setCheckItem] = useState([]);
-   
-
 
     const ref = useRef(false);
 

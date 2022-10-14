@@ -22,6 +22,16 @@ function Home() {
         window.location = "/login";
     };
 
+    useEffect(()=>{
+        ajax("/user.php", {
+            data : {mode : "login"}
+        }).then(res=>{ 
+            if(res.data.ok !== -1){
+                logoutFn()
+            }
+        })
+    },[])
+
     return (
         <div>
             <div className="container">

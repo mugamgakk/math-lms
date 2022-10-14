@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Pagination from "../../components/Pagination";
 import SelectBase from "../../components/ui/select/SelectBase";
 import UserInfo from "../../components/UserInfo";
-import PlusTrData from "./PlusTrData";
 import useStudentsStore from "../../store/useStudentsStore";
+import { memo } from "react";
+import PlusLearningGradingModal from "./PlusLearningGradingModal";
 
 const data = [
     {
@@ -11,7 +11,7 @@ const data = [
         대단원: "수와 식의 계산",
         주제: "거듭제곱(1)",
         상태: "학습완료",
-        채점: { point: 8, 재응시: 2 },
+        채점: "시험지 채점",
         시험지: true,
     },
     {
@@ -35,7 +35,7 @@ const data = [
         대단원: "수와 식의 계산",
         주제: "04> 약수의 개수 구하기",
         상태: "학습완료",
-        채점: { point: 8, 재응시: 2 },
+        채점: "시험지 채점",
         시험지: false,
     },
 ];
@@ -45,8 +45,10 @@ const 상태 = ["오픈전", "학습중", "학습완료"];
 
 function Narrative() {
     let [plusData, setPlusData] = useState(data);
-    const clickStudent = useStudentsStore(state=>state.clickStudent)
+    let [unit, setUnit] = useState(); // 단원
+    let [situation, setSituation] = useState(); // 상태
 
+    const clickStudent = useStudentsStore((state) => state.clickStudent);
 
     return (
         <div className="Narrative">
@@ -60,12 +62,42 @@ function Narrative() {
                     <button className="btn">선택 오픈</button>
                     <button className="btn">선택 인쇄</button>
                 </div>
-                <SelectGroup data={data} setPlusData={setPlusData}/>
+                <div className="row">
+                    <SelectBase
+                        width="200px"
+                        options={단원}
+                        value={unit}
+                        onChange={(ele) => {
+                            setUnit(ele);
+                        }}
+                        defaultValue="대단원"
+                    />
+                    <SelectBase
+                        width="100px"
+                        options={상태}
+                        value={situation}
+                        onChange={(ele) => {
+                            setSituation(ele);
+                        }}
+                        defaultValue="상태"
+                    />
+                    <button className="btn">조회</button>
+                </div>
             </div>
             <table>
+                <colgroup>
+                    <col style={{ width: "50px" }} />
+                    <col style={{ width: "100px" }} />
+                    <col style={{ width: "auto" }} />
+                    <col style={{ width: "100px" }} />
+                    <col style={{ width: "100px" }} />
+                    <col style={{ width: "100px" }} />
+                </colgroup>
                 <thead>
                     <tr>
-                        <th>선택</th>
+                        <th>
+                            선택 <input type="checkbox" />
+                        </th>
                         <th>대단원</th>
                         <th>주제</th>
                         <th>상태</th>
@@ -74,51 +106,53 @@ function Narrative() {
                     </tr>
                 </thead>
                 <tbody>
-                    {plusData.map((res) => {
+                    {/* {plusData.map((res) => {
                         return <PlusTrData key={res.id} type="narrative" res={res} />;
+                    })} */}
+                    {plusData.map((ele) => {
+                        return <Tr ele={ele} key={ele.id} />;
                     })}
                 </tbody>
             </table>
-
-            <Pagination />
         </div>
     );
 }
 
+const Tr = memo(({ ele }) => {
 
-function SelectGroup ({data, setPlusData}){
-    let [unit, setUnit] = useState(); // 단원
-    let [situation, setSituation] = useState(); // 상태
-
-    const findPlusData = ()=>{
-
-        let 조회결과 = (data.filter(a=>a.대단원 === unit)).filter(a=>a.상태 === situation);
-
-        setPlusData(조회결과)
-
-    }
+    let [modal, setModal] = useState(false);
 
     return (
-        <div className="row">
-            <SelectBase
-            width="200px"
-            options={단원}
-            value={unit}
-            onChange={(ele)=>{setUnit(ele)}}
-            defaultValue="대단원"
-            />
-            <SelectBase
-            width="100px"
-            options={상태}
-            value={situation}
-            onChange={(ele)=>{setSituation(ele)}}
-            defaultValue="상태"
-            />
-            <button className="btn" onClick={findPlusData}>
-                조회
-            </button>
-        </div>
-    )
-}
+        <tr>
+            <td>
+                <input type="checkbox" />
+            </td>
+            <td>{ele.대단원}</td>
+            <td>{ele.주제}</td>
+            <td>{ele.상태}</td>
+            <td>
+                {
+                    ele.채점 === "온라인 채점"
+                    ? (
+                       <>
+                        {ele.채점}
+                        <button className="btn" onClick={()=>{setModal(true)}}>채점하기</button>
+                        {
+                            modal && <PlusLearningGradingModal setModal={setModal}/>
+                        }
+                        
+                       </> 
+                    )
+                    : ele.채점
+                }
+            </td>
+            <td>
+                <button type="button" className="btn">
+                    인쇄
+                </button>
+            </td>
+        </tr>
+    );
+});
 
 export default Narrative;

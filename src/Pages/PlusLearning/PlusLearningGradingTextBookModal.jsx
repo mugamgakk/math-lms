@@ -9,7 +9,7 @@ const data = [
 
 
 
-function PlusLearningGradingTextBookModal({title = "제목임", setGradingModal}) {
+function PlusLearningGradingTextBookModal({title = "제목임", setModal}) {
 
     let [answer, setAnswer] = useState(data);
 
@@ -23,7 +23,7 @@ function PlusLearningGradingTextBookModal({title = "제목임", setGradingModal}
             <div className="modal-content">
                 <header className='fj p-5' style={{background : "orangered"}}>
                     {title}
-                    <button className='btn' onClick={()=>{setGradingModal(false); setAnswer(data)  }}>x</button>
+                    <button className='btn' onClick={()=>{setModal(false); setAnswer(data)  }}>x</button>
                 </header>
                 <div className='p-10'>
                     <div className="fj">
@@ -63,7 +63,7 @@ function PlusLearningGradingTextBookModal({title = "제목임", setGradingModal}
                 </div>
                 <div className="text-center">
                     <button className="btn">채점완료</button>
-                    <button className="btn" onClick={()=>{setGradingModal(false); setAnswer(data) }}>취소</button>
+                    <button className="btn" onClick={()=>{setModal(false); setAnswer(data) }}>취소</button>
                 </div>
             </div>
         </div>
