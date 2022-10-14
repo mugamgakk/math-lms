@@ -9,8 +9,6 @@ function LearningBreakdownTable() {
     let [choiceArr, setChoiceArr] = useState([]);
     let { lbtData, getLbtData, skeleton } = useLbtStore();
 
-    console.log(skeleton);
-
     const checkboxChecked = (checked, item) => {
         if (checked) {
             setChoiceArr([...choiceArr, item]);
