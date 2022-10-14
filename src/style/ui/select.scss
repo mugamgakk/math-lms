@@ -15,7 +15,7 @@ $bg : #f8f9fa;
 
     &.active{
         .selectbox-option{
-            max-height: 200px;
+            max-height: 100px;
             overflow: auto;
         }
     }
@@ -71,7 +71,7 @@ $bg : #f8f9fa;
         left: 0;
         top: 29px;
         z-index: 15;
-        border: 1px solid $border;
+        // border: 1px solid $border;
         border-top: 0;
         text-align: left;
         font-size: 14px;

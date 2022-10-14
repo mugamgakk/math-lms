@@ -28,7 +28,7 @@ function DatePickerPage() {
             />
 
             <h2>PROPS</h2>
-            <pre style={{fontSize : "18px", background:"#222", color : "#fff"}}>
+            <pre>
                 {`
                 maxDate : 최대 선택할수 있는 날짜 설정
                 minDate : 최소 선택할수 있는 날짜 설정
@@ -100,7 +100,7 @@ function DatePickerPage() {
             </pre>
 
             <h2>day js</h2>
-            <pre style={{fontSize : "18px", background:"#222", color : "#fff"}}>
+            <pre>
             {`
                         dayjs('2018-08-08') 다양한 날씨 포맷을 넣어도 파씽해줌
                         dayjs('2018-08-08').set('month', 3) 달을 3월로 바꾸기

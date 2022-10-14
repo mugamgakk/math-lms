@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 function useCheck(initail = []) {
     let [data, setData] = useState(initail);
-    // return (  );
+    return [data,"@"];
 }
 
 export default useCheck;

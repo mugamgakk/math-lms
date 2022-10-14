@@ -38,6 +38,10 @@ table{
     display: flex;
 }
 
+.col-50{
+    width: 50%;
+}
+
 .container{
     width: 1200px;
     padding: 0 20px;
@@ -94,4 +98,10 @@ input[type="checkbox"]{
 .react-date-picker{
     position: relative;
     top: 3px;
+}
+
+pre{
+    background-color: rgb(235, 235, 235);
+    font-size: 18px;
+    font-weight: 500;
 }

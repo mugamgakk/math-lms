@@ -4,51 +4,48 @@ import UserInfo from "../../components/UserInfo";
 import useStudentsStore from "../../store/useStudentsStore";
 import { memo } from "react";
 import PlusLearningGradingModal from "./PlusLearningGradingModal";
-
-const data = [
-    {
-        id: 1,
-        대단원: "수와 식의 계산",
-        주제: "거듭제곱(1)",
-        상태: "학습완료",
-        채점: "시험지 채점",
-        시험지: true,
-    },
-    {
-        id: 2,
-        대단원: "수와 식의 계산",
-        주제: "거듭제곱(2)",
-        상태: "오픈전",
-        채점: "시험지 채점",
-        시험지: true,
-    },
-    {
-        id: 3,
-        대단원: "수와 식의 계산",
-        주제: "03> 제곱인 수 만들기",
-        상태: "학습중",
-        채점: "온라인 채점",
-        시험지: false,
-    },
-    {
-        id: 4,
-        대단원: "수와 식의 계산",
-        주제: "04> 약수의 개수 구하기",
-        상태: "학습완료",
-        채점: "시험지 채점",
-        시험지: false,
-    },
-];
+import { useEffect } from "react";
+import axios from "axios";
+import SkeletonTable from "../../components/SkeletonTable";
+import { useRef } from "react";
 
 const 단원 = ["수와 식의 계산", "가나다라 마바사"];
 const 상태 = ["오픈전", "학습중", "학습완료"];
 
 function Narrative() {
-    let [plusData, setPlusData] = useState(data);
+    const clickStudent = useStudentsStore((state) => state.clickStudent);
+    let [plusData, setPlusData] = useState([]);
     let [unit, setUnit] = useState(); // 단원
     let [situation, setSituation] = useState(); // 상태
+    let [checkedList, setCheckedList] = useState([]);
+    let [skeleton, setSkeleton] = useState(true);
 
-    const clickStudent = useStudentsStore((state) => state.clickStudent);
+    const initialData = useRef([]);
+
+    useEffect(() => {
+        setPlusData([]);
+        setSkeleton(true);
+
+        axios.post("http://192.168.11.178:8080/pluslearning/narrative").then((res) => {
+            setPlusData(res.data.list);
+            initialData.current = res.data.list;
+            setSkeleton(false);
+        });
+    }, [clickStudent]);
+
+    const checkAll = (e) => {
+        const { checked } = e.target;
+
+        checked ? setCheckedList(initialData.current) : setCheckedList([]);
+    };
+
+    const checkOne = (checked, ele) => {
+        if (checked) {
+            setCheckedList([...checkedList, ele]);
+        } else {
+            setCheckedList(checkedList.filter((a) => a !== ele));
+        }
+    };
 
     return (
         <div className="Narrative">
@@ -96,7 +93,12 @@ function Narrative() {
                 <thead>
                     <tr>
                         <th>
-                            선택 <input type="checkbox" />
+                            선택{" "}
+                            <input
+                                type="checkbox"
+                                checked={initialData.current.length === checkedList.length}
+                                onChange={checkAll}
+                            />
                         </th>
                         <th>대단원</th>
                         <th>주제</th>
@@ -109,8 +111,18 @@ function Narrative() {
                     {/* {plusData.map((res) => {
                         return <PlusTrData key={res.id} type="narrative" res={res} />;
                     })} */}
+
+                    {skeleton && <SkeletonTable R={6} D={6} />}
+
                     {plusData.map((ele) => {
-                        return <Tr ele={ele} key={ele.id} />;
+                        return (
+                            <Tr
+                                ele={ele}
+                                key={ele.id}
+                                checkOne={checkOne}
+                                checkedList={checkedList}
+                            />
+                        );
                     })}
                 </tbody>
             </table>
@@ -118,33 +130,40 @@ function Narrative() {
     );
 }
 
-const Tr = memo(({ ele }) => {
-
+const Tr = memo(({ ele, checkOne, checkedList }) => {
     let [modal, setModal] = useState(false);
 
     return (
         <tr>
             <td>
-                <input type="checkbox" />
+                <input
+                    type="checkbox"
+                    checked={checkedList.includes(ele)}
+                    onChange={(e) => {
+                        checkOne(e.target.checked, ele);
+                    }}
+                />
             </td>
             <td>{ele.대단원}</td>
             <td>{ele.주제}</td>
             <td>{ele.상태}</td>
             <td>
-                {
-                    ele.채점 === "온라인 채점"
-                    ? (
-                       <>
+                {ele.채점 === "온라인 채점" ? (
+                    <>
                         {ele.채점}
-                        <button className="btn" onClick={()=>{setModal(true)}}>채점하기</button>
-                        {
-                            modal && <PlusLearningGradingModal setModal={setModal}/>
-                        }
-                        
-                       </> 
-                    )
-                    : ele.채점
-                }
+                        <button
+                            className="btn"
+                            onClick={() => {
+                                setModal(true);
+                            }}
+                        >
+                            채점하기
+                        </button>
+                        {modal && <PlusLearningGradingModal userId={ele._id} setModal={setModal} />}
+                    </>
+                ) : (
+                    ele.채점
+                )}
             </td>
             <td>
                 <button type="button" className="btn">
@@ -154,5 +173,8 @@ const Tr = memo(({ ele }) => {
         </tr>
     );
 });
+
+
+
 
 export default Narrative;
