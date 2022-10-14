@@ -2,26 +2,29 @@ import React, { useState } from "react";
 import ajax from "../ajax";
 import style from "../style/style-module/Login.module.scss";
 import logo from "../assets/logo.svg";
+import useInput from "../hooks/useInput";
 
 function Login() {
-    let [userId, setUserId] = useState("");
-    let [userPw, setUserPw] = useState("");
+    let [textValue, setTextValue] = useInput({
+        id: "",
+        password: "",
+    });
+
+    console.log(textValue);
+
     let [loginType, setLoginType] = useState("P");
-
-    let [loading, setLoading] = useState(false);
-
-    let [alertText, setAlertText] = useState("");
-
     // P : "패럴랙스"
     // G : "지앤비"
+
+    let [loading, setLoading] = useState(false);
 
     const loginAction = async (e) => {
         e.preventDefault();
 
-        if (userId === "") {
+        if (textValue.id === "") {
             alert("아이디를 입력하세요.");
             return;
-        } else if (userPw === "") {
+        } else if (textValue.password === "") {
             alert("비밀번호를 입력하세요.");
             return;
         }
@@ -31,44 +34,46 @@ function Login() {
         const data = {
             mode: "login",
             user_gb: loginType,
-            user_id: userId,
-            user_pw: userPw,
-            force_mode : "Y"
+            user_id: textValue.id,
+            user_pw: textValue.password,
+            force_mode: "Y",
         };
 
         ajax("/user.php", {
             data: data,
         }).then((res) => {
             setLoading(false);
-            setAlertText(res.data.msg);
-            console.log("로그인",res);
+            console.log("로그인", res);
 
             switch (res.data.ok) {
                 // 로그인 완료
                 case 1:
-                    localStorage.setItem("lmsLogin", userId)
+                    localStorage.setItem("lmsLogin", textValue.id);
                     window.location = "/";
                     break;
                 // 로그인 중복
                 case -2:
-                    if(window.confirm("로그인된 계정이 있습니다. 기존 로그인 된 계정을 로그아웃 하시겠습니까.")){
+                    if (
+                        window.confirm(
+                            "로그인된 계정이 있습니다. 기존 로그인 된 계정을 로그아웃 하시겠습니까."
+                        )
+                    ) {
                         data.force_mode = "Y";
 
-                        ajax("/user.php",{
-                            data : data
-                        }).then(res=>{
-                            localStorage.setItem("lmsLogin", userId)
+                        ajax("/user.php", {
+                            data: data,
+                        }).then((res) => {
+                            localStorage.setItem("lmsLogin", textValue.id);
                             window.location = "/";
-                        })
-                    }else{
-                        return 
+                        });
+                    } else {
+                        return;
                     }
                     break;
-                case -1 : 
-                    localStorage.setItem("lmsLogin", userId)
+                case -1:
+                    localStorage.setItem("lmsLogin", textValue.id);
                     window.location = "/";
                     break;
-
             }
         });
     };
@@ -81,16 +86,15 @@ function Login() {
                 </div>
                 <div className="mb-10">
                     <label className={style.label} htmlFor="id">
-                        아이디 {userId}
+                        아이디
                     </label>
                     <input
                         type="text"
                         id="id"
+                        name="id"
                         className={`form-control ${style.text_input}`}
-                        value={userId}
-                        onChange={(e) => {
-                            setUserId(e.target.value);
-                        }}
+                        value={textValue.id}
+                        onChange={setTextValue}
                     />
                 </div>
                 <div className="mb-10">
@@ -100,11 +104,10 @@ function Login() {
                     <input
                         type="text"
                         id="pw"
+                        name="password"
                         className={`form-control ${style.text_input}`}
-                        value={userPw}
-                        onChange={(e) => {
-                            setUserPw(e.target.value);
-                        }}
+                        value={textValue.password}
+                        onChange={setTextValue}
                     />
                 </div>
                 <div className="d-flex">
@@ -133,18 +136,24 @@ function Login() {
                         />
                     </div>
                 </div>
-                <p style={{ color: "red" }}>{alertText}</p>
                 <button className="btn" disabled={loading} onClick={loginAction}>
                     로그인
                 </button>
-                <button type="button" className="btn" onClick={()=>{
-                    ajax("/user.php", {data : {
-                        mode : "logout"
-                    }})
-                    .then(res=>{
-                        console.log(res)
-                    })
-                }}>로그아웃</button>
+                <button
+                    type="button"
+                    className="btn"
+                    onClick={() => {
+                        ajax("/user.php", {
+                            data: {
+                                mode: "logout",
+                            },
+                        }).then((res) => {
+                            console.log(res);
+                        });
+                    }}
+                >
+                    로그아웃
+                </button>
             </form>
         </div>
     );
