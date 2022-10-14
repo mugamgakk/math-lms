@@ -4,14 +4,14 @@ import TodayClassSearch from "./TodayClass/TodayClassSearch"
 import ajax from "../ajax";
 import Tr from './TodayClass/TodayClassTr';
 import DateNext from "../components/DateNext";
-
-
+import SkeletonTable from "../components/SkeletonTable";
 
 
 function TodayClass(){
 
     let [findTodayList, setFindList] = useState(null);
     let [date,setDate] = useState(new Date());
+    let [skeleton, setSkeleton] = useState(true);
 
     useEffect(()=>{
 
@@ -20,9 +20,9 @@ function TodayClass(){
             class_cd : 137283785634112704,
             qstr : "김수학"
         }).then(res=>{
-
-            let { class_list, today_list} = res.data;
-            setFindList(today_list);     
+                let { class_list, today_list} = res.data;
+                setFindList(today_list); 
+                setSkeleton(false);
         })
        
     },[])
@@ -100,7 +100,7 @@ function TodayClass(){
                         <th>맞춤 클리닉</th>
                     </tr>
                 </thead>
-                { findTodayList && <TodayClassItem findTodayList={findTodayList}/> }
+                { findTodayList && <TodayClassItem findTodayList={findTodayList} skeleton={skeleton}/>  }
                 
             </table>
          
@@ -108,7 +108,7 @@ function TodayClass(){
     )
 }
 
-const TodayClassItem = memo(({findTodayList}) => {
+const TodayClassItem = memo(({findTodayList,skeleton}) => {
     const list = findTodayList;
     
     // className의 총 개수로 이름 rowspan 결정
@@ -145,13 +145,19 @@ const TodayClassItem = memo(({findTodayList}) => {
                         name={student.name} 
                         book={book.bookTit} 
                         tdName={name} 
-                        tdBook={bookTd}/>
+                        tdBook={bookTd}
+                        />
             });
            return classList;
         });
 
+        console.log(skeleton)
+
          return(
+
                 <tbody key={k} className={student.name}>
+                    {<SkeletonTable R={1} D={9} />}
+                  
                     {firstRow}
                 </tbody> 
         )
