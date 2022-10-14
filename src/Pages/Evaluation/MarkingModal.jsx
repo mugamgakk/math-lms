@@ -10,9 +10,10 @@ data[16].정답 = [1, 2, 3];
 function MarkingModal({title,setMarkingModal}) {
     
     let [dataList, setDataList] = useState([data.slice(0,10),data.slice(10,20),data.slice(20,30)]);
-
+ let [count, setCount] = useState(0);
+ console.log(count)
     const clickBtn = (a,b,num)=>{
-        
+        setCount(count+=1)
         let copy = [...dataList]
         let answer = copy[a][b].정답;
         let newAnswer = copy[a][b].학생답;
@@ -36,7 +37,7 @@ function MarkingModal({title,setMarkingModal}) {
 
 
     return (
-        <div className="modal">
+        <div className="modal" id={count}>
             <div className="dim"></div>
             <div className='markingModal cmmnModal'>
                 <div className="markingModal-head cmmnModal-head">
@@ -44,9 +45,10 @@ function MarkingModal({title,setMarkingModal}) {
                         <strong>{title}</strong>
                     </div>
                     <button className="close" onClick={() => setMarkingModal(false)}>X</button>
-                </div>
+                </div><>{console.log("render")}</>
                 <div className="markingModal-body cmmnModal-body">
                     <h5>※ 평가 응시는 1회만 가능합니다. 아래 기본 정보와 학생 답안을 정확히 확인한 후 입력 완료해 주세요. (제출 후 수정 불가)</h5>
+                    <p>{count}</p>
                     <table className='headTable'>
                         <tbody>
                             <tr>
