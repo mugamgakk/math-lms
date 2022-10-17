@@ -12,7 +12,7 @@ function StudentsSearch() {
     let [userList, setUserList] = useState(null);
     let [nameSearch, setNameSearch] = useState("");
     let [skeleton, setSkeleton] = useState(true);
-console.log(userList)
+
     //  클릭한 데이터
     const getUser = (list) => {
         setClickStudent(list);
@@ -37,15 +37,13 @@ console.log(userList)
         getStudentsData();
     }, []);
 
-    useEffect(() => {
-        console.log("effect")
+    useEffect(() => {       
         setTimeout(()=>{
             user && setUserList(user);
         },200)
     }, [user]);
 
-    useEffect(()=>{
-        console.log("effect-use")
+    useEffect(()=>{   
         if(userList){
             setSkeleton(false)
         }

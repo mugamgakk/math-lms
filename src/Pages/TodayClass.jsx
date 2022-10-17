@@ -148,9 +148,7 @@ const TodayClassItem = memo(({findTodayList,skeleton}) => {
                         />
             });
            return classList;
-        });
-
-        console.log(skeleton)
+        });      
 
          return(
 

@@ -165,7 +165,7 @@ function EvaluationRoutineContent() {
 }
 
 const Tr = memo(({ item, check, setCheck}) => {
-    console.log("////////////////////////Tr")
+ 
     let [printModal,setPrintModal] = useState(false);
     let [markingModal, setMarkingModal] = useState(false);
     return (
