@@ -165,11 +165,11 @@ function EvaluationRoutineContent() {
 }
 
 const Tr = memo(({ item, check, setCheck}) => {
- 
+   
     let [printModal,setPrintModal] = useState(false);
     let [markingModal, setMarkingModal] = useState(false);
     return (
-        <tr><>{console.log("tr")}</>
+        <tr>
             <td>
                 <input
                     type="checkbox"
