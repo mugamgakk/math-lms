@@ -114,11 +114,11 @@ function Narrative() {
 
                     {skeleton && <SkeletonTable R={6} D={6} />}
 
-                    {plusData.map((ele) => {
+                    {plusData.map((ele,i) => {
                         return (
                             <Tr
                                 ele={ele}
-                                key={ele.id}
+                                key={`key${i}`}
                                 checkOne={checkOne}
                                 checkedList={checkedList}
                             />

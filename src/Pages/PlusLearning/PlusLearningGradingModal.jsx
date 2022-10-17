@@ -14,6 +14,8 @@ function PlusLearningGradingModal({ title = "Title", userId, setModal }) {
     let 총파일크기 = useRef(0);
     let prizmaZoom = useRef();
 
+    console.log(list)
+
     useEffect(() => {
         axios
             .post("http://192.168.11.178:8080/pluslearning/narrative/standard/" + userId)
@@ -216,7 +218,7 @@ function PlusLearningGradingModal({ title = "Title", userId, setModal }) {
 }
 
 const Tr = ({ ele }) => {
-    let [select, setSelect] = useState(0);
+    let [dd, setSelect] = useState(0);
 
     const selectOption = () => {
         let result = [];
@@ -234,7 +236,7 @@ const Tr = ({ ele }) => {
             <td>{ele.points}</td>
             <td>
                 <SelectBase
-                    value={select}
+                    value={dd}
                     onChange={(data) => setSelect(data)}
                     options={selectOption()}
                 />
