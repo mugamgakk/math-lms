@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import SkeletonTable from "../../components/SkeletonTable";
 import { useRef } from "react";
+import PrintModal from "../../components/PrintModal";
 
 const 단원 = ["수와 식의 계산", "가나다라 마바사"];
 const 상태 = ["오픈전", "학습중", "학습완료"];
@@ -132,6 +133,7 @@ function Narrative() {
 
 const Tr = memo(({ ele, checkOne, checkedList }) => {
     let [modal, setModal] = useState(false);
+    let [printModal, setPrintModal] = useState(false);
 
     return (
         <tr>
@@ -166,7 +168,10 @@ const Tr = memo(({ ele, checkOne, checkedList }) => {
                 )}
             </td>
             <td>
-                <button type="button" className="btn">
+                {
+                    printModal && <PrintModal closeModal={setPrintModal}/>
+                }
+                <button type="button" className="btn" onClick={()=>{setPrintModal(true)}}>
                     인쇄
                 </button>
             </td>

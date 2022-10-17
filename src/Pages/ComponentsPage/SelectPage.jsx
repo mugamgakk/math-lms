@@ -5,7 +5,7 @@ import SelectBase from "../../components/ui/select/SelectBase";
 const options = ["김밥", "참치", "고구마"];
 
 function SelectPage() {
-    let [selectOption, setSelectOption] = useState(null);
+    let [selectOption, setSelectOption] = useState();
     let [multiSelect, setMultiSelect] = useState();
 
     return (

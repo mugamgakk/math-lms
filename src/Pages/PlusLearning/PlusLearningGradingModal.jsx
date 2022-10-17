@@ -6,25 +6,43 @@ import { useEffect } from "react";
 import SelectBase from "../../components/ui/select/SelectBase";
 import { getByteSize } from "../../methods/methods";
 import PrismaZoom from "react-prismazoom";
+import { useCallback } from "react";
 
 function PlusLearningGradingModal({ title = "Title", userId, setModal }) {
-    let [list, setList] = useState({});
+    let [list, setList] = useState(null);
     let [files, setFiles] = useState([]);
-    let allScore = useRef(0);
     let 총파일크기 = useRef(0);
     let prizmaZoom = useRef();
 
-    console.log(list)
+    let [pointAll, setPointAll] = useState(0);
+    let [score, setScore] = useState(0);
+
+    useEffect(()=>{
+
+        var count = 0;
+        var score = 0
+
+        list && list.grading.forEach(a=>{
+            count += a.points
+            score += a.score;
+        })
+
+        setScore(score)
+        setPointAll(count);
+
+
+    },[list])
 
     useEffect(() => {
         axios
             .post("http://192.168.11.178:8080/pluslearning/narrative/standard/" + userId)
             .then((res) => {
                 setList(res.data.list);
+
             });
     }, []);
 
-    const upload = (파일) => {
+    const upload = useCallback((파일) => {
         var 업로드파일정규식 = /\.(pdf|jpg|png)$/i;
         var 총파일사이즈 = 총파일크기.current;
         var $10mb = 1024 * 1024 * 10; // 10mb
@@ -64,7 +82,7 @@ function PlusLearningGradingModal({ title = "Title", userId, setModal }) {
         }
 
         setFiles([...files, ...arr]);
-    };
+    },[files]);
 
     return (
         <div className="modal">
@@ -102,20 +120,19 @@ function PlusLearningGradingModal({ title = "Title", userId, setModal }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {list.grading?.map((a, i) => {
-                                    return <Tr ele={a} key={"list" + i} />;
+                                {list && list.grading.map((a, i) => {
+                                    return <Tr ele={a} key={"list" + i} list={list} index={i} setList={setList} />;
                                 })}
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <td>합계</td>
                                     <td>
-                                        {list.grading?.map((a) => {
-                                            allScore.current += a.points;
-                                        })}
-                                        {allScore.current}점
+                                        {pointAll}
                                     </td>
-                                    <td></td>
+                                    <td>
+                                        {score}
+                                    </td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -132,7 +149,7 @@ function PlusLearningGradingModal({ title = "Title", userId, setModal }) {
                                                 a.name.length > 20
                                                 ? a.name.substr(0,20) + ".".repeat(3)
                                                 : a.name
-                                            } ({getByteSize(a.size)}){" "}
+                                            } ({getByteSize(a.size)})
                                         </div>
                                     );
                                 })}
@@ -217,8 +234,8 @@ function PlusLearningGradingModal({ title = "Title", userId, setModal }) {
     );
 }
 
-const Tr = ({ ele }) => {
-    let [dd, setSelect] = useState(0);
+const Tr = ({ ele, list, setList, index }) => {
+    let [select, setSelect] = useState(ele.score);
 
     const selectOption = () => {
         let result = [];
@@ -236,8 +253,16 @@ const Tr = ({ ele }) => {
             <td>{ele.points}</td>
             <td>
                 <SelectBase
-                    value={dd}
-                    onChange={(data) => setSelect(data)}
+                    value={select}
+                    onChange={(data) => {
+                        setSelect(data);
+                        let copy = {...list};
+
+                        list.grading[index].score = data;
+
+                        setList(copy)
+
+                    }}
                     options={selectOption()}
                 />
             </td>
