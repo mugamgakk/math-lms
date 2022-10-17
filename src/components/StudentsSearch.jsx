@@ -12,7 +12,11 @@ function StudentsSearch() {
     let [userList, setUserList] = useState(null);
     let [nameSearch, setNameSearch] = useState("");
     let [skeleton, setSkeleton] = useState(true);
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 0bb1034a51b2635035b2b2cdbd5dd05d28cb244c
     //  클릭한 데이터
     const getUser = (list) => {
         setClickStudent(list);
@@ -37,13 +41,23 @@ function StudentsSearch() {
         getStudentsData();
     }, []);
 
+<<<<<<< HEAD
     useEffect(() => {       
+=======
+    useEffect(() => {
+        // console.log("effect")
+>>>>>>> 0bb1034a51b2635035b2b2cdbd5dd05d28cb244c
         setTimeout(()=>{
             user && setUserList(user);
         },200)
     }, [user]);
 
+<<<<<<< HEAD
     useEffect(()=>{   
+=======
+    useEffect(()=>{
+        // console.log("effect-use")
+>>>>>>> 0bb1034a51b2635035b2b2cdbd5dd05d28cb244c
         if(userList){
             setSkeleton(false)
         }
@@ -98,7 +112,7 @@ function StudentsSearch() {
                                     className={
                                         res.usr_seq === clickStudent?.usr_seq ? "active" : ""
                                     }
-                                >{console.log(res.usr_seq)}
+                                >
                                     <td>{i + 1}</td>
                                     <td
                                         style={{ cursor: "pointer" }}

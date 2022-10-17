@@ -4,6 +4,13 @@ $border : 1px solid #dee2e6;
 
 // 유틸리티 클래스
 
+// 레이아웃
+@for $i from 1 through 12 {
+    .col-#{$i}{
+        width: percentage($i/12) !important;
+    }
+}
+
 .justify-content-between{
     display: flex;
     justify-content: space-between;
