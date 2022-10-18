@@ -7,11 +7,6 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store';
 
-const _JSXStyle = require('styled-jsx/style').default;
-if (typeof global !== 'undefined') {
-    Object.assign(global, { _JSXStyle });
-}
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>

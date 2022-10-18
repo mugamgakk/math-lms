@@ -16,8 +16,8 @@ const 상태 = ["오픈전", "학습중", "학습완료"];
 function Narrative() {
     const clickStudent = useStudentsStore((state) => state.clickStudent);
     let [plusData, setPlusData] = useState([]);
-    let [unit, setUnit] = useState(); // 단원
-    let [situation, setSituation] = useState(); // 상태
+    let [unit, setUnit] = useState(""); // 단원
+    let [situation, setSituation] = useState(""); // 상태
     let [checkedList, setCheckedList] = useState([]);
     let [skeleton, setSkeleton] = useState(true);
 
@@ -58,7 +58,9 @@ function Narrative() {
             <div className="justify-content-between">
                 <div>
                     <button className="btn">선택 오픈</button>
-                    <button className="btn">선택 인쇄</button>
+                    <button className="btn" onClick={()=>{
+                        console.log(checkedList)
+                    }}>선택 인쇄</button>
                 </div>
                 <div className="row">
                     <SelectBase
@@ -109,10 +111,6 @@ function Narrative() {
                     </tr>
                 </thead>
                 <tbody>
-                    {/* {plusData.map((res) => {
-                        return <PlusTrData key={res.id} type="narrative" res={res} />;
-                    })} */}
-
                     {skeleton && <SkeletonTable R={6} D={6} />}
 
                     {plusData.map((ele,i) => {

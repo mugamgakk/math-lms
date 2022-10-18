@@ -10,12 +10,23 @@ import SkeletonTable from "../components/SkeletonTable";
 import SelectBox from "../components/ui/select/SelectBox";
 import LmsDatePicker from "../components/LmsDatePicker";
 import dayjs from "dayjs";
+import { memo } from "react";
 
 function Statistics() {
+    // table data
     let [value, setValue] = useState(null);
+    // sort
     let [sortPoint, setSortPoint] = useState("desc");
+    // reset count
     let [selectReset, setSelectReset] = useState(0);
+    // class list
+    let [classList, setClassList] = useState([]);
+    
+    console.log(classList)
+    
     const tableRef = useRef(null);
+
+    // search name
     let [studentName, setStudentName] = useState("");
     let [startDay, setStartDay] = useState(new Date());
     let [lastDay, setLastDay] = useState(new Date());
@@ -43,7 +54,6 @@ function Statistics() {
     // 내림 : desc // 오름 : asc
 
     const resetList = () => {
-        // setValue(data);
         setSelectReset(selectReset + 1);
     };
 
@@ -53,20 +63,19 @@ function Statistics() {
         let url = "/point.php/";
         let query = {
             mode: "list",
-            class_cd: 12312313,
-            sdate: dayjs(startDay).format("YYYY-MM-DD") ,
-            edate: dayjs(lastDay).format("YYYY-MM-DD"),
-            qstr: studentName,
-            order: "desc",
+            // class_cd: 12312313,
+            // sdate: dayjs(startDay).format("YYYY-MM-DD") ,
+            // edate: dayjs(lastDay).format("YYYY-MM-DD"),
+            // qstr: studentName,
+            // order: "desc",
         };
 
         let res = await ajax(url, { data: query });
 
-        console.log(res);
-
         let { class_list, point_list } = res.data;
 
         setValue(arrSort(point_list, "um_nm"));
+        setClassList(class_list);
 
         setSkeleton(false);
     };
@@ -77,7 +86,7 @@ function Statistics() {
 
     return (
         <div className="Statistics container">
-            <ContentHeader title={"학습 포인트 현황"} />
+            <ContentHeader title={"학습 포인트 현황"} location="마이페이지 > 수학 > 학습 포인트 현황" />
 
             {/* 지플럼 수학 학습 포인트 지급 기준 */}
             <StatisticsStandard />
@@ -102,7 +111,7 @@ function Statistics() {
                 </div>
 
                 <div className="StatisticsSearch d-flex">
-                    <SelectBox width={"200px"} />
+                    <SelectBox width={"200px"} list={classList} />
                     <LmsDatePicker
                         value={startDay}
                         onChange={(day) => {
@@ -164,7 +173,7 @@ function Statistics() {
     );
 }
 
-const Tr = ({ list, index }) => {
+const Tr = memo(({ list, index }) => {
     let [modal, setModal] = useState(false);
 
     return (
@@ -193,6 +202,6 @@ const Tr = ({ list, index }) => {
             <td>{comma(list.total_point)}</td>
         </tr>
     );
-};
+});
 
 export default Statistics;

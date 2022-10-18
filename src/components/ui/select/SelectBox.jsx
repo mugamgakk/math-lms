@@ -1,22 +1,16 @@
 import React, { useEffect, useState } from "react";
 
-const arr = [
-    "중등 월화수 A",
-    "중등 월화수 B",
-    "중등 월화수 C",
-]
 
+function SelectTest({width, onChange, reset, list = []}) {
 
-function SelectTest({width, onChange, reset}) {
-
-    let [checkState, setCheckState] = useState(arr);
+    let [checkState, setCheckState] = useState(list);
     let [selectState, setSelectState] = useState(false);
     let [choiceItem, setChiceItem] = useState('반 선택 (전체)');
 
     const allCheck = (checked)=>{
         if(checked){
             let copyArr = [];
-            arr.forEach(item => {copyArr.push(item)});
+            list.forEach(item => {copyArr.push(item)});
 
             setCheckState(copyArr);
             setChiceItem('반 선택 (전체)')
@@ -36,13 +30,13 @@ function SelectTest({width, onChange, reset}) {
 
     useEffect(()=>{
         if(reset > 0){
-            setCheckState(arr)
+            setCheckState(list)
         }
     },[reset])
 
     useEffect(()=>{
 
-        if(arr.length === checkState.length === false){
+        if(list.length === checkState.length === false){
                 
             if(checkState.length - 1 === 0){
                 setChiceItem(checkState[0])
@@ -51,7 +45,7 @@ function SelectTest({width, onChange, reset}) {
             }
         }
 
-        if(arr.length === checkState.length){
+        if(list.length === checkState.length){
             setChiceItem('반 선택 (전체)')
         }
 
@@ -88,24 +82,25 @@ function SelectTest({width, onChange, reset}) {
                         type="checkbox" 
                         id="all"
                         onChange={(e)=>{allCheck(e.target.checked)}}
-                        checked={checkState.length === arr.length ? true : false}
-                        className={checkState.length > 0 && checkState.length < arr.length ? " ischeck" : ''}
+                        checked={checkState.length === list.length ? true : false}
+                        className={checkState.length > 0 && checkState.length < list.length ? " ischeck" : ''}
                      />
                     <label htmlFor="all">(전체 선택)</label>
                 </div>
 
                 <ul className="selectbox-option__list">
                     {
-                        arr.map((item,i) => {
+                        list.map((item,i) => {
                             return (
                                 <li key={i}>
                                     <input 
                                     type="checkbox" 
-                                    id={item}
+                                    id={item.class_cd
+                                    }
                                     onChange={e=>{oneCheck(e.target.checked, item)}}
                                     checked={checkState.includes(item) ? true : false}
                                     />
-                                    <label htmlFor={item}>{item}</label>
+                                    <label htmlFor={item.class_cd}>{item.class_name}</label>
                                 </li>
                             )
                         })
