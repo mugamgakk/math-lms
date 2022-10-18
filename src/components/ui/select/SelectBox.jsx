@@ -83,7 +83,7 @@ function SelectTest({width, onChange, reset, options}) {
             <div className="selectbox-option">
                 <div>
                 <button className="selectbox-option--lookup" onClick={()=>{
-                    onChange(checkState);
+                    onChange && onChange(checkState);
                     setSelectState(false);
                     }}>조회</button>
 
