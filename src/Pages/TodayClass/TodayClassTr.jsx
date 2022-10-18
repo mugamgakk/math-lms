@@ -5,7 +5,7 @@ import PrintModal from '../../components/PrintModal';
 import { fileDown } from "../../methods/methods";
 import 오디오입니동 from "../../test.mp3";
 
-function TodayClassTr({data,name,book,tdName,tdBook}){
+function TodayClassTr({data,name,book}){
 
     // 모달 상태 관리
     let [attModal,setAttModal] = useState(false);
@@ -13,13 +13,10 @@ function TodayClassTr({data,name,book,tdName,tdBook}){
     let [printModal,closeModal] = useState(false);
 
     return(
-            <tr>
-                {tdName}
-                {tdBook}
-                <td>{data.tit}</td>
-                <td className={data.state1 ? '' : 'disabled'}>{data.state1}</td>
-                <td className={data.state2 ? '' : 'disabled'}>{data.state2}</td>
-                <td className={data.state3 ? '' : 'disabled'}>
+        <>
+                <div className={data.state1 ? 'state1' : 'state1 disabled'}>{data.state1}</div>
+                <div className={data.state2 ? 'state2' : 'state2 disabled'}>{data.state2}</div>
+                <div className={data.state3 ? 'state3' : 'state3 disabled'}>
                 {
                     data.state3 && (
                         <div className="btn-wrap">
@@ -37,9 +34,9 @@ function TodayClassTr({data,name,book,tdName,tdBook}){
                     ) : <button className='evalBtn btn' onClick={()=>setAssModal(true)}>수행 평가</button> 
                     : null
                 }
-                </td>
-                <td className={data.state4 ? '' : 'disabled'}>{data.state4}</td>
-                <td className={data.state5 ? '' : 'disabled'}>
+                </div>
+                <div className={data.state4 ? 'state4' : 'state4 disabled'}>{data.state4}</div>
+                <div className={data.state5 ? 'state5' : 'state5 disabled'}>
                     
                     { 
                         data.state5 ?
@@ -50,8 +47,8 @@ function TodayClassTr({data,name,book,tdName,tdBook}){
                             </div>
                         ) : null
                     }
-                </td>
-                <td><button className="attBtn btn" onClick={()=>setAttModal(true)}>학습 태도</button>
+                </div>
+                <div className="att"><button className="attBtn btn" onClick={()=>setAttModal(true)}>학습 태도</button>
                     {
                     attModal ? 
                     <AttModal 
@@ -75,8 +72,10 @@ function TodayClassTr({data,name,book,tdName,tdBook}){
                     : null
                     }
                     
-                </td>
-            </tr>
+                </div>
+        </>
+
+         
     )
 }
 export default TodayClassTr;

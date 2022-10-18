@@ -3,8 +3,7 @@ import SearchBtn from '../../components/ui/button/SearchBtn';
 import SelectBox from '../../components/ui/select/SelectBox';
 
 
-function TodayClassSearch({data,setFindList}) {
-
+function TodayClassSearch({data,setFindList,option}) {
     let [search, setSearch] = useState('');
 
     // 찾기 버튼
@@ -38,7 +37,7 @@ function TodayClassSearch({data,setFindList}) {
 
     return ( 
         <div className='d-flex'>
-            <SelectBox width={"200px"} onChange={findBan} />
+            <SelectBox width={"200px"} onChange={findBan} option={option} />
             
             <input
                 type="text"

@@ -12,7 +12,7 @@ function TodayClass(){
     let [findTodayList, setFindList] = useState(null);
     let [date,setDate] = useState(new Date());
     let [skeleton, setSkeleton] = useState(true);
-
+    let [classList,setClassList] = useState();
     useEffect(()=>{
 
         ajax("/class.php/?mode=get_today_class", {
@@ -21,7 +21,10 @@ function TodayClass(){
             qstr : "김수학"
         }).then(res=>{
                 let { class_list, today_list} = res.data;
+             
                 setFindList(today_list); 
+                setClassList(class_list);
+
         })
        
     },[])
@@ -44,31 +47,10 @@ function TodayClass(){
             <ContentHeader title={"오늘의 수업"} location={'마이페이지 > 수학 학습 관리 > 오늘의 수업'} />
             <div className="date-area">
                 <DateNext value={date} onChange={day=>setDate(day)}/>
-                {/* <ChangeDate value={value} onChange={onChange} />
-                <DatePicker
-                    className="datepicker-base"
-                    onChange={(day) => {
-                        onChange(day);
-                    }}
-                    value={value}
-                    maxDate={new Date()}
-                    clearIcon={null}
-                    isOpen={openCalendar}
-                    openCalendarOnFocus={false}
-                    format={"yyyy-MM-dd"}
-                />
-                <button
-                    className="btn"
-                    onClick={() => {
-                        setOpenCalendar(!openCalendar);
-                    }}
-                >
-                    캘린더 아이콘
-                </button> */}
             </div>
             <header className="table-header row">
                 <div style={{ display:'flex' }}>
-                    <TodayClassSearch data={findTodayList} setFindList={setFindList}/>
+                    <TodayClassSearch data={findTodayList} setFindList={setFindList} option={classList && classList}/>
                     <button
                         className="btn update"
                         onClick={() => setReloadState(!reloadState)}
@@ -81,7 +63,15 @@ function TodayClass(){
                 <colgroup>
                     <col style={{ width: "10%" }} />
                     <col style={{ width: "15%" }} />
+                    <col style={{ width: "20%" }} />
+                    <col style={{ width: "9%" }} />
+                    <col style={{ width: "9%" }} />
+                    <col style={{ width: "9%" }} />
+                    <col style={{ width: "9%" }} />
+                    <col style={{ width: "9%" }} />
                     <col style={{ width: "auto" }} />
+                 
+                   
                 </colgroup>
                 <thead>
                     <tr>
@@ -99,66 +89,39 @@ function TodayClass(){
                         <th>맞춤 클리닉</th>
                     </tr>
                 </thead>
-                { findTodayList && <TodayClassItem findTodayList={findTodayList} skeleton={skeleton}/>  }
-                
             </table>
-         
+            {findTodayList &&
+                findTodayList.map((a) => {
+                    return (
+                        <div className="todayWrap">
+                            <span className="name">{a.name}</span>
+                            <div>
+                                {a.book.map((a) => {
+                                    return (
+                                        <div className="bookTitWrap">
+                                            <span className="bookTit">{a.bookTit}</span>
+                                            <div className="classTitWrap"> 
+                                                {a.className.map((a) => {
+                                                    return (
+                                                        <div className="stateWrap">
+                                                            <span className="classTit">{a.tit}</span>
+                                                            <Tr 
+                                                            key={a.tit} 
+                                                            data={a} 
+                                                            />
+                                                        </div>
+                                                    )
+                                                })}
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    );
+                })}
         </div>
     )
 }
 
-const TodayClassItem = memo(({findTodayList,skeleton}) => {
-    const list = findTodayList;
-    
-    // className의 총 개수로 이름 rowspan 결정
-    const getNameRowspan = (student) => {
-        let rowSpan = 0;
-        const { book : books} = student;
-        books.forEach((book) => {
-            rowSpan += book.className.length;
-        });
-        return rowSpan;
-    }
-
-    // 학생 데이터 tbody 생성
-    const tbodies = list.map((student,k) => {
-
-        // rowspan 값 추출
-        let trLength = Number(getNameRowspan(student));
-        const { book : books} = student;
-       
-        // 교재 추출
-        const firstRow = books.map((book,v)=>{ 
-            const { className : classes} = book;
-           
-            //  단원 추출
-            const classList = classes.map((_class,i)=>{
-                    // 교재 = 단원 === 0 일때 학생명 td 존재 , 위에서 구한 단원의 총 개수로 rowspan 값
-                    const name = (i === 0 && v === 0) ? <td rowSpan={trLength}>{student.name}({student.nickName})</td> : null;
-                    // 단원 i = 0 교재명 td 존재 , 단원 개수로 rowspan 값
-                    const bookTd = i === 0 ? <td rowSpan={classes.length}>{book.bookTit}</td> : null;
-
-                return <Tr 
-                        key={_class.tit} 
-                        data={_class} 
-                        name={student.name} 
-                        book={book.bookTit} 
-                        tdName={name} 
-                        tdBook={bookTd}
-                        />
-            });
-           return classList;
-        });      
-
-         return(
-
-                <tbody key={k} className={student.name}>
-                    {/* {<SkeletonTable R={1} D={9} />} */}
-                  
-                    {firstRow}
-                </tbody> 
-        )
-    }) 
-    return tbodies;
-});
 export default TodayClass;
