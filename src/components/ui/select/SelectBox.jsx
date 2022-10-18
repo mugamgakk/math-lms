@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useCallback } from "react";
 
 
 function SelectTest({width, onChange, reset, list = []}) {
@@ -7,7 +8,7 @@ function SelectTest({width, onChange, reset, list = []}) {
     let [selectState, setSelectState] = useState(false);
     let [choiceItem, setChiceItem] = useState('반 선택 (전체)');
 
-    const allCheck = (checked)=>{
+    const allCheck = useCallback((checked)=>{
         if(checked){
             let copyArr = [];
             list.forEach(item => {copyArr.push(item)});
@@ -18,16 +19,16 @@ function SelectTest({width, onChange, reset, list = []}) {
             setCheckState([]);
             setChiceItem('반을 선택하세요')
         }
-    }
+    },[checkState])
 
 
-    const oneCheck = (checked, item)=>{
+    const oneCheck = useCallback((checked, item)=>{
 
         checked 
         ? setCheckState([...checkState, item])
         : setCheckState(checkState.filter(a=> a !== item));
 
-    }
+    },[checkState])
 
     useEffect(()=>{
         if(reset > 0){
