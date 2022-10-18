@@ -23,8 +23,6 @@ function Statistics() {
     // class list
     let [classList, setClassList] = useState([]);
     
-    console.log(classList)
-    
     const tableRef = useRef(null);
 
     // search name
@@ -112,7 +110,10 @@ function Statistics() {
                 </div>
 
                 <div className="StatisticsSearch d-flex">
+
+
                     <SelectBox width={"200px"} options={classList} />
+
                     <LmsDatePicker
                         value={startDay}
                         onChange={(day) => {

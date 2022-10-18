@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useCallback } from "react";
 
 
-function SelectTest({width, onChange, reset, options = []}) {
+function SelectTest({width, onChange, reset, options}) {
 
     let [checkState, setCheckState] = useState([]);
     let [selectState, setSelectState] = useState(false);
@@ -41,6 +41,8 @@ function SelectTest({width, onChange, reset, options = []}) {
     },[options])
 
     useEffect(()=>{
+        if(options){
+
 
         if(checkState.length !== 0){
             if(checkState.length === 1){
@@ -57,6 +59,8 @@ function SelectTest({width, onChange, reset, options = []}) {
 
         if(checkState.length === 0){
             setChiceItem('반을 선택하세요')
+        }
+
         }
 
     },[checkState])
@@ -83,20 +87,26 @@ function SelectTest({width, onChange, reset, options = []}) {
                     setSelectState(false);
                     }}>조회</button>
 
-                <div className="selectbox-option__allcheck">
-                    <input 
-                        type="checkbox" 
-                        id="all"
-                        onChange={(e)=>{allCheck(e.target.checked)}}
-                        checked={checkState.length === options.length ? true : false}
-                        className={checkState.length > 0 && checkState.length < options.length ? " ischeck" : ''}
-                     />
-                    <label htmlFor="all">(전체 선택)</label>
-                </div>
+                {
+                    options && (
+                        <div className="selectbox-option__allcheck">
+                            <input 
+                                type="checkbox" 
+                                id="all"
+                                onChange={(e)=>{allCheck(e.target.checked)}}
+                                checked={checkState.length === options.length ? true : false}
+                                className={checkState.length > 0 && checkState.length < options.length ? " ischeck" : ''}
+                            />
+                            <label htmlFor="all">(전체 선택)</label>
+                        </div>
+                    )
+                }
+
+                
 
                 <ul className="selectbox-option__list">
                     {
-                       options.length !== 0 && options.map(a=>{
+                       options && options.map(a=>{
                         return (
                             <li key={a.class_cd}>
                                 <input type="checkbox" checked={checkState.includes(a)} id={a.class_cd} onChange={e=>{oneCheck(e.target.checked, a)}} />
