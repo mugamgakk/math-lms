@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useCallback } from "react";
 
 
-function SelectTest({width, onChange, reset, list = []}) {
+function SelectTest({width, onChange, reset, options = []}) {
 
     let [checkState, setCheckState] = useState([]);
     let [selectState, setSelectState] = useState(false);
@@ -11,7 +11,7 @@ function SelectTest({width, onChange, reset, list = []}) {
     const allCheck = useCallback((checked)=>{
         if(checked){
             let copyArr = [];
-            list.forEach(item => {copyArr.push(item)});
+            options.forEach(item => {copyArr.push(item)});
 
             setCheckState(copyArr);
             setChiceItem('반 선택 (전체)')
@@ -32,13 +32,13 @@ function SelectTest({width, onChange, reset, list = []}) {
 
     useEffect(()=>{
         if(reset > 0){
-            setCheckState(list)
+            setCheckState(options)
         }
     },[reset])
 
     useEffect(()=>{
-        setCheckState(list)
-    },[list])
+        setCheckState(options)
+    },[options])
 
     useEffect(()=>{
 
@@ -51,7 +51,7 @@ function SelectTest({width, onChange, reset, list = []}) {
         }
         
 
-        if(list.length === checkState.length){
+        if(options.length === checkState.length){
             setChiceItem('반 선택 (전체)')
         }
 
@@ -88,15 +88,15 @@ function SelectTest({width, onChange, reset, list = []}) {
                         type="checkbox" 
                         id="all"
                         onChange={(e)=>{allCheck(e.target.checked)}}
-                        checked={checkState.length === list.length ? true : false}
-                        className={checkState.length > 0 && checkState.length < list.length ? " ischeck" : ''}
+                        checked={checkState.length === options.length ? true : false}
+                        className={checkState.length > 0 && checkState.length < options.length ? " ischeck" : ''}
                      />
                     <label htmlFor="all">(전체 선택)</label>
                 </div>
 
                 <ul className="selectbox-option__list">
                     {
-                       list.length !== 0 && list.map(a=>{
+                       options.length !== 0 && options.map(a=>{
                         return (
                             <li key={a.class_cd}>
                                 <input type="checkbox" checked={checkState.includes(a)} id={a.class_cd} onChange={e=>{oneCheck(e.target.checked, a)}} />

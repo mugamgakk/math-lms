@@ -19,7 +19,7 @@ function Statistics() {
     let [sortPoint, setSortPoint] = useState("desc");
     // reset count
     let [selectReset, setSelectReset] = useState(0);
-    
+
     // class list
     let [classList, setClassList] = useState([]);
     
@@ -112,7 +112,7 @@ function Statistics() {
                 </div>
 
                 <div className="StatisticsSearch d-flex">
-                    <SelectBox width={"200px"} list={classList} />
+                    <SelectBox width={"200px"} options={classList} />
                     <LmsDatePicker
                         value={startDay}
                         onChange={(day) => {
