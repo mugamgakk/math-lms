@@ -38,12 +38,15 @@ table{
     width: 100%;
     background-color: #fff;
 
+    th{
+        white-space: nowrap;
+    }
+
     th,td{
+        padding: 5px;
         border: 1px solid #dee2e6;
     }
-    td{
-        padding: 5px;
-    }
+
 
 }
 

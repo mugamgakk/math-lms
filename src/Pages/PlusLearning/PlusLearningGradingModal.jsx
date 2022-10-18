@@ -17,6 +17,9 @@ function PlusLearningGradingModal({ title = "Title", userId, setModal }) {
     let [pointAll, setPointAll] = useState(0);
     let [score, setScore] = useState(0);
 
+    // checked Files
+    let [checkedFile, setCheckedFile] = useState([]);
+
     useEffect(()=>{
 
         var count = 0;
@@ -84,6 +87,35 @@ function PlusLearningGradingModal({ title = "Title", userId, setModal }) {
         setFiles([...files, ...arr]);
     },[files]);
 
+    const fileCheck = (check, ele)=>{
+        check ? setCheckedFile([...checkedFile, ele]) : setCheckedFile(checkedFile.filter(a=> a !== ele));
+
+        console.log(총파일크기.current)
+        
+    }
+
+    const removeFile = ()=>{
+        // console.log("총파일",files);
+        // console.log("체크된 파일",checkedFile);
+
+        let 체크된파일사이즈 = 0;
+        let copyFiles = [...files];
+
+        checkedFile.forEach(a=>{
+            체크된파일사이즈 += a.size
+
+            copyFiles.forEach((dd,i)=>{
+                if(a.name === dd.name){
+                    copyFiles.splice(i,1)
+                }
+            })
+        });
+
+        setFiles(copyFiles);
+        총파일크기.current = 총파일크기.current - 체크된파일사이즈
+
+    }
+
     return (
         <div className="modal">
             <div className="modal-content">
@@ -128,10 +160,10 @@ function PlusLearningGradingModal({ title = "Title", userId, setModal }) {
                                 <tr>
                                     <td>합계</td>
                                     <td>
-                                        {pointAll}
+                                        {pointAll} 점
                                     </td>
                                     <td>
-                                        {score}
+                                        {score} 점
                                     </td>
                                 </tr>
                             </tfoot>
@@ -141,14 +173,15 @@ function PlusLearningGradingModal({ title = "Title", userId, setModal }) {
                         <textarea id="option" rows="10"></textarea>
 
                         <div className="file-wrap fj">
-                            <div className="file-view border">
+                            <div className="file-view border" style={{minWidth : "100px", height : "80px"}}>
                                 {files.map((a, i) => {
                                     return (
                                         <div key={i}>
+                                            <input type="checkbox" id={a.name} checked={checkedFile.includes(a)} onChange={e=>{fileCheck(e.target.checked, a)}} />
                                             {
                                                 a.name.length > 20
-                                                ? a.name.substr(0,20) + ".".repeat(3)
-                                                : a.name
+                                                ? <label htmlFor={a.name}>{ a.name.substr(0,20) + ".".repeat(3) }</label>
+                                                : <label htmlFor={a.name}>{a.name} </label> 
                                             } ({getByteSize(a.size)})
                                         </div>
                                     );
@@ -168,6 +201,7 @@ function PlusLearningGradingModal({ title = "Title", userId, setModal }) {
                                 <label htmlFor="upload" className="d-flex">
                                     첨부 파일
                                 </label>
+                                <button className="btn" onClick={removeFile}>선택 삭제</button>
                             </div>
                         </div>
 
@@ -176,6 +210,7 @@ function PlusLearningGradingModal({ title = "Title", userId, setModal }) {
                             <button className="btn">수정</button>
                         </div>
                     </div>
+
                     <div className="col-50">
                         <div style={{ height: "50%" }}>
                             <h4 style={{ padding: "5px", backgroundColor: "skyblue" }}>모범답안</h4>
@@ -249,7 +284,7 @@ const Tr = ({ ele, list, setList, index }) => {
 
     return (
         <tr>
-            <td>{ele.standard}</td>
+            <td className="text-left">{ele.standard}</td>
             <td>{ele.points}</td>
             <td>
                 <SelectBase

@@ -19,14 +19,14 @@ function StudentsSearch() {
 
     // 검색
     const searchStudents = () => {
-        setSkeleton(true)
+        setSkeleton(true);
         let regexp = new RegExp(nameSearch);
 
         let list = user.filter((a) => regexp.test(a.um_nm));
 
         setUserList(list);
 
-        setSkeleton(false)
+        setSkeleton(false);
 
         setNameSearch("");
     };
@@ -36,17 +36,17 @@ function StudentsSearch() {
         getStudentsData();
     }, []);
 
-    useEffect(() => {       
-        setTimeout(()=>{
+    useEffect(() => {
+        // setTimeout(() => {
             user && setUserList(user);
-        },200)
+        // }, 200);
     }, [user]);
 
-    useEffect(()=>{   
-        if(userList){
-            setSkeleton(false)
+    useEffect(() => {
+        if (userList) {
+            setSkeleton(false);
         }
-    },[userList])
+    }, [userList]);
 
     return (
         <div className="students-search">
@@ -87,13 +87,12 @@ function StudentsSearch() {
                         </tr>
                     </thead>
                     <tbody>
-                        {skeleton && <SkeletonTable R={14} D={4}/>}
+                        {skeleton && <SkeletonTable R={14} D={4} />}
 
                         {userList?.map((res, i) => {
                             return (
                                 <tr
                                     key={res.usr_seq}
-                                  
                                     className={
                                         res.usr_seq === clickStudent?.usr_seq ? "active" : ""
                                     }
@@ -120,7 +119,7 @@ function StudentsSearch() {
                         })}
                     </tbody>
                 </table>
-                
+
                 {userList?.length === 0 && <div className="text-center p-10">학생이 없습니다</div>}
             </div>
 

@@ -4,6 +4,7 @@ import DatePicker from "react-date-picker";
 import { arrSort } from "../../methods/methods";
 import PrintModal from '../../../src/components/PrintModal';
 import MarkingModal from './MarkingModal'
+import LmsDatePicker from "../../components/LmsDatePicker";
 
 const 평가종류 = ["총괄 평가", "단원 평가", "(월말 평가)"];
 const 단원 = ["수와 연산", "문자와 식", "좌표평면과 그래프"];
@@ -98,15 +99,11 @@ function EvaluationRoutineContent() {
                         }}
                     />
 
-                    <DatePicker
-                        className="datepicker-base"
+                    <LmsDatePicker 
                         onChange={(day) => {
-                            setStartDay(day);
+                            setStartDay(day)
                         }}
                         value={startDay}
-                        clearIcon={null}
-                        openCalendarOnFocus={false}
-                        format={"yyyy-MM-dd"}
                     />
                     <DatePicker
                         className="datepicker-base"

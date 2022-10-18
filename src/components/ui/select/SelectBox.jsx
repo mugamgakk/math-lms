@@ -35,6 +35,10 @@ function SelectTest({width, onChange, reset, list = []}) {
     },[reset])
 
     useEffect(()=>{
+        setCheckState(list)
+    },[list])
+
+    useEffect(()=>{
 
         if(list.length === checkState.length === false){
                 

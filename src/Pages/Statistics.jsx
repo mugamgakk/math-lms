@@ -19,6 +19,7 @@ function Statistics() {
     let [sortPoint, setSortPoint] = useState("desc");
     // reset count
     let [selectReset, setSelectReset] = useState(0);
+    
     // class list
     let [classList, setClassList] = useState([]);
     
@@ -149,11 +150,13 @@ function Statistics() {
                         <th>캐럿(개)</th>
                         <th>미네랄(개)</th>
                         <th>
+                            <div style={{display : "inline-flex"}}>
                             획득 포인트(점)
                             <button
                                 className={"btn-sort" + `${sortPoint === "asc" ? " asc" : ""}`}
                                 onClick={sortList}
                             ></button>
+                            </div>
                         </th>
                         <th>내역</th>
                         <th>총 누적 포인트(점)</th>
