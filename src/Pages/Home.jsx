@@ -5,6 +5,17 @@ import { useEffect } from "react";
 import { Outlet, Link } from "react-router-dom";
 import ajax from "../ajax";
 
+const nav = [
+    { name: "출석체크", href: "attendance" },
+    { name: "오늘의 수업", href: "today-class" },
+    { name: "학생별 수업 관리", href: "detail-class" },
+    { name: "플러스 러닝", href: "plus-learning" },
+    { name: "평가관리", href: "evaluation" },
+    { name: "학습 통계", href: "statistics" },
+    { name: "자료 및 알림", href: "reference" },
+    { name: "components guide", href: "components" },
+];
+
 function Home() {
     useEffect(() => {
         var pathName = window.location.pathname;
@@ -12,10 +23,10 @@ function Home() {
     });
 
     let [campusInfo, setCampusInfo] = useState({
-        qteam : "",
-        qaera : "",
-        qcampus : ""
-    })
+        qteam: "",
+        qaera: "",
+        qcampus: "",
+    });
 
     var userId = useMemo(() => {
         return localStorage.getItem("lmsLogin");
@@ -29,73 +40,55 @@ function Home() {
         window.location = "/login";
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         ajax("/user.php", {
-            data : {mode : "login"}
-        }).then(res=>{ 
-            if(res.data.ok !== -1){
-                logoutFn()
+            data: { mode: "login" },
+        }).then((res) => {
+            if (res.data.ok !== -1) {
+                logoutFn();
             }
         });
 
         getCampusData();
-    },[])
+    }, []);
 
-    
-    const getCampusData = async (e)=>{
-
-        if(e){
+    const getCampusData = async (e) => {
+        if (e) {
             e.preventDefault();
         }
 
         let res = await ajax("/user.php", {
             data: {
-                mode : "get_campus_info",
-                qteam : campusInfo.qaera,
-                qarea : campusInfo.qaera,
-                qcampus : campusInfo.qcampus
-            }
+                mode: "get_campus_info",
+                qteam: campusInfo.qaera,
+                qarea: campusInfo.qaera,
+                qcampus: campusInfo.qcampus,
+            },
         });
 
         // console.log(res);
-    }
+    };
 
     return (
         <div>
             <div className="container">
-                <ul className="d-flex">
-                    <li style={{ marginRight: "20px" }}>
-                        <Link to="/attendance">출석체크</Link>
-                    </li>
-                    <li style={{ marginRight: "20px" }}>
-                        <Link to="/today-class">오늘의 수업</Link>
-                    </li>
-                    <li style={{ marginRight: "20px" }}>
-                        <Link to="/detail-class">학생별 수업 관리</Link>
-                    </li>
-                    <li style={{ marginRight: "20px" }}>
-                        <Link to="/plus-learning">플러스 러닝</Link>
-                    </li>
-                    <li style={{ marginRight: "20px" }}>
-                        <Link to="/evaluation">평가관리</Link>
-                    </li>
-                    <li style={{ marginRight: "20px" }}>
-                        <Link to="/statistics">학습 통계</Link>
-                    </li>
-                    <li style={{ marginRight: "20px" }}>
-                        <Link to="/reference">자료 및 알림</Link>
-                    </li>
-                    <li>
-                        <Link to="/components">components guide</Link>
-                    </li>
-                    <li></li>
-                </ul>
+                <div className="fj">
+                    <ul className="d-flex">
+                        {nav.map((a) => {
+                            return (
+                                <li style={{ marginRight: "20px", fontSize: "16px" }}>
+                                    <Link to={`/${a.href}`}>{a.name}</Link>
+                                </li>
+                            );
+                        })}
+                    </ul>
 
-                <div className="d-flex">
-                    <strong>안녕하세요 {userId}</strong>
-                    <button onClick={logoutFn} className="btn btn-danger">
-                        로그아웃
-                    </button>
+                    <div className="d-flex fa">
+                        <strong className="mr-3 userid">안녕하세요 {userId}</strong>
+                        <button onClick={logoutFn} className="btn btn-danger">
+                            로그아웃
+                        </button>
+                    </div>
                 </div>
 
                 {/* {
@@ -117,8 +110,6 @@ function Home() {
                     </div>
                     )
                 } */}
-
-                
             </div>
 
             <Outlet />

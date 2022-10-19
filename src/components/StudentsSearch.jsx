@@ -49,14 +49,17 @@ function StudentsSearch() {
     }, [userList]);
 
     return (
-        <div className="students-search">
-            <header className="row">
-                <SelectBox width={"180px"} options={classList} />
+        <div className="col-4 pr-4">
+            <header className="row mb-3">
+                <div className="col-6 pr-2">
+                    <SelectBox width={"100%"} options={classList} />
+                </div>
+                <div className="col-6 pl-2">
                 <input
                     type={"text"}
                     placeholder="이름"
                     className="form-control"
-                    style={{ width: "100px", marginLeft: "10px" }}
+                    style={{ width: "calc(100% - 30px)"}}
                     value={nameSearch}
                     onChange={(e) => {
                         setNameSearch(e.target.value);
@@ -68,6 +71,7 @@ function StudentsSearch() {
                     }}
                 />
                 <SearchBtn onClick={searchStudents} />
+                </div>
             </header>
 
             <div style={{ maxHeight: "600px", overflow: "auto" }}>

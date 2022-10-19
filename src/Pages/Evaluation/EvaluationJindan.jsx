@@ -9,7 +9,6 @@ function EvaluationJindan() {
         <div className='row'>
             <ReservationSearch/>
             <EvaluationJindanContent/>
-
         </div>
      );
 }

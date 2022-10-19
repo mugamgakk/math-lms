@@ -39,7 +39,7 @@ function EvaluationPrint() {
     }
 
     return (
-        <div className="evaluation-print">
+        <div className="fa mb-3">
             <h4>진단 평가지</h4>
             <SelectBase
                 width={100}

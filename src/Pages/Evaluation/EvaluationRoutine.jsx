@@ -19,14 +19,14 @@ function EvaluationRoutine() {
         <div className="row">
             <StudentsSearch />
             {clickStudent === null ? (
-                <div style={{width : "70%"}}>
+                <div className="col-8">
                 <AlertBox bg="pink" name="재원생 정기평가 관리" />
                 </div>
             ) : (
-                <div style={{ width: "70%" }}>
+                <div className="col-8">
                     <UserInfo clickStudent={clickStudent} />
 
-                    <Box>
+                    <Box className="mb-3">
                         <h4>정기평가 진행 순서</h4>
                         <ol className={style.evaluation_order}>
                             <li>평가를 진행할 시험지를 선택 오픈합니다.</li>

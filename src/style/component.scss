@@ -9,10 +9,11 @@
 // ui
 @import './ui/select';
 @import './ui/modal';
+@import './ui/button';
 
 
 input[type="text"].form-control{
-    display: block;
+    display: inline-block;
     width : 100%;
     border-radius: 0.25rem;
     height: 30px;
@@ -32,6 +33,10 @@ input[type="text"].form-control{
     &:disabled{
         background-color: rgb(209, 209, 209);
     }
+}
+
+.userid{
+    color: $red;
 }
 
 
@@ -109,7 +114,7 @@ input[type="text"].form-control{
     thead{
         position: sticky;
         top: -1px;
-        background-color: rgb(255, 207, 117);
+        background-color: #fff;
     }
 }
 

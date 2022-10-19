@@ -75,11 +75,11 @@ function EvaluationRoutineContent() {
     
     return (
         <div>
-            <div className="search-box fj">
+            <div className="fj mb-3">
                 <div>
                     <button className="btn">선택 오픈</button>
                 </div>
-                <div>
+                <div className="d-flex">
                     <SelectBase
                         defaultValue="평가 종류"
                         value={selectOption.평가종류}
@@ -105,15 +105,11 @@ function EvaluationRoutineContent() {
                         }}
                         value={startDay}
                     />
-                    <DatePicker
-                        className="datepicker-base"
-                        onChange={(day) => {
-                            setEndDay(day);
-                        }}
-                        value={endDay}
-                        clearIcon={null}
-                        openCalendarOnFocus={false}
-                        format={"yyyy-MM-dd"}
+                    <LmsDatePicker
+                    onChange={(day) => {
+                        setEndDay(day);
+                    }}
+                    value={endDay}
                     />
                     <button className="btn">조회</button>
                 </div>
