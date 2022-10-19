@@ -21,11 +21,14 @@ function DatePickerPage() {
         <div style={{ marginTop: "100px" }}>
 
 
+            <div style={{background : "black"}}>
             <LmsDatePicker 
             width={"150px"} 
             value={lmsDValue} 
             onChange={(ele)=>{setLmsDValue(ele)}}
             />
+            <button className="btn">버튼</button>
+            </div>
 
             <h2>PROPS</h2>
             <pre>

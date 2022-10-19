@@ -8,6 +8,7 @@ function SearchBtn({onClick}) {
     return ( 
         <button type='button' className='btn' 
         onClick={onClick && onClick}
+        style={{width : "30px"}}
         >
             <FontAwesomeIcon icon={faMagnifyingGlass} />
         </button>

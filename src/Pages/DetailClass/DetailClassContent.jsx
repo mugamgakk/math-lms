@@ -9,14 +9,12 @@ function DetailClassContent({setLocation}) {
     const clickStudent = useStudentsStore(state=>state.clickStudent)
 
     return ( 
-        <div className="students-contents">
-            
+        <div className='col-8'>
             {
                 clickStudent === null
                 ? <AlertBox name="수업 관리 시작"/>
                 : <ClassTabs clickStudent={clickStudent} setLocation={setLocation} />
             }
-
         </div>
      );
 }

@@ -5,10 +5,13 @@ import DatePicker from "react-date-picker";
 import dayjs from "dayjs";
 import ResultSave from "./ResultSave";
 import MemberLinkModal from "./MemberLinkModal";
+import LmsDatePicker from "../../components/LmsDatePicker";
 
 const Box = styled.div`
     padding: 20px;
-    background-color: rgb(255, 147, 108);
+    background-color: #dc3545;
+    color: #fff;
+    line-height : 20px;
 `;
 
 const data = [
@@ -51,8 +54,8 @@ function EvaluationJindanContent() {
     let [resultModal, setResultModal] = useState(false);
 
     return (
-        <div className="EvaluationJindanContent">
-            <Box>
+        <div className="col-8">
+            <Box className="mb-3">
                 진단 평가 진행 순서 <br />
                 1. 학년 학기를 선택하여 진단 평가지를 인쇄 합니다 . 학생의 현재 학년 학기의 직전
                 단계 를 선택하세요 <br />
@@ -62,6 +65,8 @@ function EvaluationJindanContent() {
                 연동하지 않은 평가 결과는 개인 정보 보호 정책에 따라 1 년 후 삭제됩니다 .
             </Box>
             <EvaluationPrint />
+            <div className="fj mb-3">
+            <div>
             <button className="btn">선택 삭제</button>
             {resultModal && <ResultSave modal={setResultModal} />}
             <button
@@ -72,22 +77,16 @@ function EvaluationJindanContent() {
             >
                 결과 등록
             </button>
-            <DatePicker
-                className="datepicker-base"
+            </div>
+            <div className="d-flex">
+            <LmsDatePicker
                 onChange={(day) => setValue({ ...value, start: day })}
                 value={value.start}
-                clearIcon={null}
-                openCalendarOnFocus={false}
-                format={"yyyy-MM-dd"}
             />
             ~
-            <DatePicker
-                className="datepicker-base"
-                onChange={(day) => setValue({ ...value, end: day })}
-                value={value.end}
-                clearIcon={null}
-                openCalendarOnFocus={false}
-                format={"yyyy-MM-dd"}
+            <LmsDatePicker
+            onChange={(day) => setValue({ ...value, end: day })}
+            value={value.end}
             />
             <input
                 type="text"
@@ -95,6 +94,7 @@ function EvaluationJindanContent() {
                 value={value.text}
                 placeholder="이름 검색"
                 onChange={(e) => setValue({ ...value, text: e.target.value })}
+                style={{width : "150px"}}
             />
             <button
                 className="btn"
@@ -104,8 +104,8 @@ function EvaluationJindanContent() {
             >
                 조회
             </button>
-
-
+            </div>
+            </div>
             <table>
                 <thead>
                     <tr>

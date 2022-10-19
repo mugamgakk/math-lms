@@ -1,8 +1,8 @@
 
 // 레이아웃
 .container{
-    width: 1200px;
-    padding: 0 20px;
+    width: 1240px;
+    padding: 20px;
     margin: 0 auto;
 }
 .row{
@@ -54,44 +54,6 @@
 .font-18{
     @include font-style(18);
 }
-
-.btn{
-    height: 30px;
-    border-radius: 5px;
-    border: $border;
-    padding: 0 10px;
-    color: #212529;
-    background-color: #f8f9fa;
-    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-    white-space: nowrap;
-
-    &:disabled{
-        background-color: #dce2e9;
-
-        &:hover{
-            background-color: #dce2e9;
-        }
-    }
-
-    &:hover{
-        background-color: #e2e6ea;
-    }
-
-    &.active{
-        border: 1px solid $red;
-        background-color: #dae0e5;
-        border-color: #d3d9df;
-    }
-
-    &.btn-s{
-        padding: 5px;
-    }
-    &.disabled{
-        pointer-events: none;
-        background: #ccc;
-    }
-}
-
 
 
 .modal-bg{
@@ -194,4 +156,34 @@
     }
     .pb-5{
         padding-bottom: 1rem * 3!important
+    }
+    .pr-1{
+        padding-right: 1rem * .25!important
+    }
+    .pr-2{
+        padding-right: 1rem * .5!important
+    }
+    .pr-3{
+        padding-right: 1rem !important
+    }
+    .pr-4{
+        padding-right: 1rem * 1.5!important
+    }
+    .pr-5{
+        padding-right: 1rem * 3!important
+    }
+    .pl-1{
+        padding-left: 1rem * .25!important
+    }
+    .pl-2{
+        padding-left: 1rem * .5!important
+    }
+    .pl-3{
+        padding-left: 1rem !important
+    }
+    .pl-4{
+        padding-left: 1rem * 1.5!important
+    }
+    .pl-5{
+        padding-left: 1rem * 3!important
     }

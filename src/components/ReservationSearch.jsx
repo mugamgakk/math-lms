@@ -4,6 +4,7 @@ import DatePicker from "react-date-picker";
 import useReservationStore from "../store/useReservationStore";
 import dayjs from "dayjs";
 import ReservationModal from "../Pages/Evaluation/ReservationModal";
+import LmsDatePicker from "./LmsDatePicker";
 
 function ReservationSearch() {
     const { user, choiceUser, choice } = useReservationStore((state) => state);
@@ -20,7 +21,7 @@ function ReservationSearch() {
     });
 
     return (
-        <div style={{ width: "320px" }}>
+        <div className="col-4 pr-3">
             <Search />
 
             <table style={{ fontSize: "12px" }}>
@@ -90,25 +91,23 @@ const Search = () => {
     return (
         <div>
             <form onSubmit={postData}>
-            <div className="fj">
-            <DatePicker
-                className="datepicker-base"
-                onChange={day => setValue({...value, start : day})}
-                value={value.start}
-                clearIcon={null}
-                openCalendarOnFocus={false}
-                format={"yyyy-MM-dd"}
-            />
-            ~
-            <DatePicker
-                className="datepicker-base"
-                onChange={day => setValue({...value, end : day})}
-                value={value.end}
-                clearIcon={null}
-                openCalendarOnFocus={false}
-                format={"yyyy-MM-dd"}
-            />
+            <div className="row mb-2">
+                <div className="col-6 pr-2">
+                    <LmsDatePicker
+                    width="100%"
+                    onChange={day => setValue({...value, start : day})}
+                    value={value.start}
+                />
+                </div>
+                <div className="col-6 pl-2">
+                    <LmsDatePicker
+                        width="100%"
+                        onChange={day => setValue({...value, end : day})}
+                        value={value.end}
+                    />
+                </div>
             </div>
+            <div className="d-flex mb-2">
             <input
                 type="text"
                 className="form-control"
@@ -120,6 +119,7 @@ const Search = () => {
             <button className="btn">
                 예약자 조회
             </button>
+                </div>
             </form>
         </div>
     );

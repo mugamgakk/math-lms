@@ -18,9 +18,9 @@ function Evaluation() {
     return ( 
         <div className='container'>
             <ContentHeader title={"평가 관리"}/>
-            <div className="btn-group">
+            <div className="btn-group mb-3">
                 <button 
-                className={'btn' + `${tab === "재원생정기평가" ? " active" : ''}`}
+                className={'btn mr-2' + `${tab === "재원생정기평가" ? " active" : ''}`}
                 onClick={()=>{clickTab("재원생정기평가")}}
                 >재원생 정기평가</button>
                 <button 
