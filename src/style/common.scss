@@ -605,3 +605,42 @@
     }
 }
 
+
+.btn-danger{
+    border: 1px solid #dc3545;
+    padding: 5px 10px;
+    border-radius: 3px;
+    color: #dc3545;
+    position: relative;
+    transition: .5s;
+    overflow: hidden;
+    background: none;
+    &::before{
+        content:'';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 0%;
+        background: #dc3545;
+        transition: .5s ease;
+        border-radius: 0 0 50% 50%;
+        width: 100%;
+        z-index: -1;
+    }
+    &:hover{
+        color: #fff;
+        background: none;
+    }
+    &:hover::before{
+        content:'';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 180%;
+        background: #dc3545;
+        border-radius: 0;
+    }
+
+}
