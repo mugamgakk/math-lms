@@ -75,21 +75,26 @@ function MarkingTable(){
         let answer = copy[a][b].정답;
         let newAnswer = copy[a][b].학생답;
         
-        if(Array.isArray(answer)){
-            if(!newAnswer){
-                newAnswer = [num];
-            }else{
-                if(newAnswer.includes(num)){
-                    newAnswer.splice(newAnswer.indexOf(num),1);
-                }else{
-                    newAnswer.push(num);
-                }
-            }
-        }else{
-            newAnswer = num;
+   
+        if(!Array.isArray(answer)){
+
+            num == newAnswer ?  newAnswer = null : newAnswer = num;
+
+            copy[a][b].학생답 = newAnswer;
+            setDataList(copy);
+            return;
         }
+        
+        !newAnswer ? newAnswer = [num] 
+        : ( 
+            newAnswer.includes(num) 
+            ? newAnswer.splice(newAnswer.indexOf(num),1) 
+            : newAnswer.push(num)
+        );
+       
         copy[a][b].학생답 = newAnswer;
         setDataList(copy);
+      
     };
 
     return(
