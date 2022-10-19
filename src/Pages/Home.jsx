@@ -76,7 +76,7 @@ function Home() {
                     <ul className="d-flex nav-list">
                         {nav.map((a) => {
                             return (
-                                <li style={window.location.pathname === "/" + a.href ? {color : "#dc3545"} : {}}>
+                                <li key={a.href} style={window.location.pathname === "/" + a.href ? {color : "#dc3545"} : {}}>
                                     <Link to={`/${a.href}`}>{a.name}</Link>
                                 </li>
                             );
