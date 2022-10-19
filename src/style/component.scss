@@ -1,10 +1,13 @@
 
-@import './mixin';
-@import "./variable";
+@import './options/mixin';
+@import "./options/variable";
+
+@import "./options/reset";
+@import "./options/utility";
 
 // ui
-@import './ui/select.scss';
-@import './ui/modal.scss';
+@import './ui/select';
+@import './ui/modal';
 
 
 input[type="text"].form-control{
@@ -358,4 +361,29 @@ input.form-control{
             }
         }
     }
+}
+
+.Reservation-datepicker{
+    display: flex;
+    position: absolute;
+    z-index: 10;
+    left: 0;
+    top: 30px;
+
+    .box{
+        border: 1px solid $border;
+        padding: 10px;
+        background-color: #fff;
+    }
+}
+
+.react-date-picker{
+    position: relative;
+    top: 3px;
+}
+
+pre{
+    background-color: rgb(235, 235, 235);
+    font-size: 18px;
+    font-weight: 500;
 }

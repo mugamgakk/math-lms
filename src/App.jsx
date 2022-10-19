@@ -1,8 +1,6 @@
 import React, { lazy, Suspense } from "react";
-import "./style/reset.scss";
 import "./style/component.scss";
 import "./style/common.scss";
-import "./style/utility.scss";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Home from "./Pages/Home";
 import Login from "./Pages/Login";

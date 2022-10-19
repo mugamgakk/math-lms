@@ -50,20 +50,6 @@ table{
 
 }
 
-.row{
-    display: flex;
-}
-
-.col-50{
-    width: 50%;
-}
-
-.container{
-    width: 1200px;
-    padding: 0 20px;
-    margin: 0 auto;
-}
-
 input{
     border: none;
 
@@ -77,7 +63,7 @@ input{
 
 textarea{
     width: 100%;
-    border: 1px solid #ccc;
+    border: 1px solid $border;
     resize: none;
     &:focus{
         outline: none;
@@ -97,27 +83,3 @@ input[type="checkbox"]{
     }
 }
 
-.Reservation-datepicker{
-    display: flex;
-    position: absolute;
-    z-index: 10;
-    left: 0;
-    top: 30px;
-
-    .box{
-        border: 1px solid #ccc ;
-        padding: 10px;
-        background-color: #fff;
-    }
-}
-
-.react-date-picker{
-    position: relative;
-    top: 3px;
-}
-
-pre{
-    background-color: rgb(235, 235, 235);
-    font-size: 18px;
-    font-weight: 500;
-}
