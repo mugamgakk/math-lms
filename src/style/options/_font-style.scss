@@ -1,0 +1,21 @@
+// @font-face {
+//     font-family: NanumSquareWeb;
+//     src: url(NanumSquareR.eot); /* IE 호환성 보기 */
+//     src: url(NanumSquareR.eot#iefix) format('embedded-opentype'), /* IE 6 ~ 8 */
+//          url(NanumSquareR.woff) format('woff'), /* 모던 브라우저 */
+//          url(NanumSquareR.ttf) format('truetype');
+//     font-weight: 400;
+// }
+
+@mixin font-style($size : 16) {
+    font-size: #{$size}px;
+
+    @if($size == 16){
+        line-height: 1.6;
+        letter-spacing: -0.02em;
+    }
+    @if($size == 18){
+        line-height: 1.8;
+        letter-spacing: -0.02em;
+    }
+}

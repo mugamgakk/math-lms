@@ -50,7 +50,7 @@ function StudentsSearch() {
 
     return (
         <div className="students-search">
-            <header className="row" style={{ padding: "10px 0" }}>
+            <header className="row">
                 <SelectBox width={"180px"} options={classList} />
                 <input
                     type={"text"}
@@ -93,9 +93,7 @@ function StudentsSearch() {
                             return (
                                 <tr
                                     key={res.usr_seq}
-                                    className={
-                                        res.usr_seq === clickStudent?.usr_seq ? "active" : ""
-                                    }
+                                    style={res.usr_seq === clickStudent?.usr_seq ?{backgroundColor : "#dee2e6"} : {}}
                                 >
                                     <td>{i + 1}</td>
                                     <td

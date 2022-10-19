@@ -55,7 +55,7 @@ function Narrative() {
                 학습하는 교재의 학년, 학기에 해당하는 서술형 문제를 오픈, 출력할 수
                 있습니다.(학년-학기별 공통)
             </p>
-            <div className="justify-content-between">
+            <div className="fj">
                 <div>
                     <button className="btn">선택 오픈</button>
                     <button className="btn" onClick={()=>{

@@ -1,14 +1,19 @@
 
 // 레이아웃
+.container{
+    width: 1200px;
+    padding: 0 20px;
+    margin: 0 auto;
+}
+.row{
+    display: flex;
+}
+
+//ex col-6 == 50% , col-12 == 100%;
 @for $i from 1 through 12 {
     .col-#{$i}{
         width: percentage($i/12) !important;
     }
-}
-
-.justify-content-between{
-    display: flex;
-    justify-content: space-between;
 }
 
 .d-none{
@@ -24,6 +29,30 @@
 }
 .text-left{
     text-align: left;
+}
+
+.fj{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.fa{
+    display: flex;
+    align-items: center;
+}
+
+.font-12{
+    @include font-style(12);
+}
+.font-14{
+    @include font-style(14);
+}
+.font-16{
+    @include font-style(16);
+}
+.font-18{
+    @include font-style(18);
 }
 
 .btn{
@@ -63,16 +92,7 @@
     }
 }
 
-.fj{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
 
-.fa{
-    display: flex;
-    align-items: center;
-}
 
 .modal-bg{
     position: fixed;
@@ -104,15 +124,9 @@
     }
 }
 
-.row{
-    display: flex;
-}
 
-.container{
-    width: 1200px;
-    padding: 0 20px;
-    margin: 0 auto;
-}
+
+
 
 .border{
     border: $border;

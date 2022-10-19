@@ -11,8 +11,8 @@ function ClassTabs({ clickStudent, setLocation }) {
     let [tabState, setTabState] = useState(0);
 
     return (
-        <div className="class-tabs">
-            <div className="btn-group" style={{ margin: "10px 0" }}>
+        <div>
+            <div>
                 {classItems.map((a, index) => {
                     return (
                         <button
