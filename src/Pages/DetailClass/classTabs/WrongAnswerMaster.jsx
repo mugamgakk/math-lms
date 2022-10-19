@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, memo} from "react";
 import SelectBase from '../../../components/ui/select/SelectBase';
 import useStore from '../../../store/useWrongManagement';
 import DatePicker from "react-date-picker";
@@ -9,7 +9,6 @@ import { useEffect } from "react";
 let options = ['전체','중2-1노벰','중2-2뜨레스','중2-2노벰']
 
 function WrongAnswer() {
-    let [modalState, setModalState] = useState(false);
     let {data,removeList,filterData} = useStore(state=>state);
     let [checkData,setCheckData] = useState([]);
     let [renderData, setRenderData] = useState(null);
@@ -37,13 +36,7 @@ function WrongAnswer() {
         filterData && setRenderData(filterData);
      },[filterData]);
         
-    const checkFunc = (checked,data) => {
-        if(checked){
-            setCheckData([...checkData, data]);
-        }else{
-            setCheckData(checkData.filter(item=>item !== data));
-        }
-    }
+
 
     let oneMonthAgo = useMemo(() => {
         var now = new Date();
@@ -63,9 +56,7 @@ function WrongAnswer() {
         }
     };
 
-    const closeModal = () => {
-        setModalState(false)
-    }
+
 
      return (
         <>
@@ -137,45 +128,11 @@ function WrongAnswer() {
                 </thead>
                 <tbody>
                     {
-                       renderData && renderData.map(data => {
-                            let getDate = data.date.split('-').join('');
-                            return(
-                                <tr key={data.id}>
-                                    <td>
-                                        <input type="checkbox" 
-                                        onChange={(e)=>checkFunc(e.target.checked,data)} 
-                                        checked={checkData.includes(data)}/>
-                                    </td>
-                                    <td>{data.date}</td>
-                                    <td>{data.book}</td>
-                                    <td>{data.tit}</td>
-                                    <td>
-                                        {
-                                            data.range.map((range,i)=>{
-                                                return(
-                                                    <div key={i}>{range}</div>
-                                                    )
-                                                })
-                                        }
-                                    </td>
-                                    <td>{data.count}</td>
-                                    <td>
-                                        <div>{data.state}</div>
-                                        { 
-                                            data.state == '학습 중' && <button className="btn">완료</button>
-                                        }
-                                    </td>
-                                    <td><button className="btn" onClick={()=> setModalState(true)}>인쇄</button>
-                                    {
-                                        modalState && <PrintModal closeModal={closeModal} title={`[오답 정복하기]${data.name}/${getDate}_${data.book}_오답 정복하기`}/>
-                                    }
-                                    
-                                    </td>
-                                </tr>
-                            )
-                        }) 
-                    }
+                        renderData && renderData.map(data=>{
+                            return <Tr data={data} checkData={checkData} setCheckData={setCheckData} />
+                        })
                         
+                    }
                 </tbody>
 
             </table>
@@ -183,5 +140,57 @@ function WrongAnswer() {
         </>
      );
 }
+
+const Tr = ({data,checkData,setCheckData})=>{
+    let [modalState, setModalState] = useState(false);
+    let getDate = data.date.split('-').join('');
+
+    const closeModal = () => {
+        setModalState(false)
+    }
+
+    const checkFunc = (checked,data) => {
+        if(checked){
+            setCheckData([...checkData, data]);
+        }else{
+            setCheckData(checkData.filter(item=>item !== data));
+        }
+    }
+
+
+    return(
+        <tr key={data.id}>
+            <td>
+                <input type="checkbox" 
+                onChange={(e)=>checkFunc(e.target.checked,data)} 
+                checked={checkData.includes(data)}/>
+            </td>
+            <td>{data.date}</td>
+            <td>{data.book}</td>
+            <td>{data.tit}</td>
+            <td>
+                {
+                    data.range.map((range,i)=>{
+                        return(
+                            <div key={i}>{range}</div>
+                            )
+                        })
+                }
+            </td>
+            <td>{data.count}</td>
+            <td>
+                <div>{data.state}</div>
+                { 
+                    data.state == '학습 중' && <button className="btn">완료</button>
+                }
+            </td>
+            <td><button className="btn" onClick={()=> setModalState(true)}>인쇄</button>
+            {
+                modalState && <PrintModal closeModal={closeModal} title={`[오답 정복하기]${data.name}/${getDate}_${data.book}_오답 정복하기`}/>
+            }
+            </td>
+        </tr>
+    )
+};
 
 export default WrongAnswer;

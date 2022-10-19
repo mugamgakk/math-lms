@@ -24,6 +24,8 @@ function TodayClass(){
              
                 setFindList(today_list); 
                 setClassList(class_list);
+                
+                skeleton(false);
 
         })
        
