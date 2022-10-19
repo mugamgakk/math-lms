@@ -17,6 +17,7 @@ const useStudentsStore = create(set=>({
 
       const res = await ajax(url,param);
 
+
       if(res.data.ok === 0){
         localStorage.removeItem("lmsLogin")
         window.location = "/login"

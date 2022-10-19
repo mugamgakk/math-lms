@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import SkeletonTable from "./SkeletonTable";
 
 function StudentsSearch() {
-    let { user, setClickStudent, clickStudent, getStudentsData, resetStudent } = useStudentsStore(
+    let { user, setClickStudent, clickStudent, getStudentsData, resetStudent, classList} = useStudentsStore(
         (state) => state
     );
     let [userList, setUserList] = useState(null);
@@ -51,7 +51,7 @@ function StudentsSearch() {
     return (
         <div className="students-search">
             <header className="row" style={{ padding: "10px 0" }}>
-                <SelectBox width={"180px"} />
+                <SelectBox width={"180px"} options={classList} />
                 <input
                     type={"text"}
                     placeholder="이름"

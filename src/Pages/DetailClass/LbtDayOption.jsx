@@ -162,21 +162,6 @@ const LbtDayOption = memo(({dataNum})=> {
                     생성
                 </button>
             </div>
-            <style jsx>
-                    {`
-                        .book-list{
-                            display : flex;
-                            padding : 10px;
-                            border: 1px solid #dee2e6;
-                        }
-
-                        .book-list ul{
-                            margin-left : 20px;
-                            height : 70px;
-                            overflow : auto;
-                        }
-                    `}
-            </style>
         </div>
     );
 })

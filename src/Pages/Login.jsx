@@ -42,6 +42,8 @@ function Login() {
         }).then((res) => {
             setLoading(false);
 
+            console.log(res)
+
             switch (res.data.ok) {
                 // 로그인 완료
                 case 1:
@@ -71,6 +73,9 @@ function Login() {
                     localStorage.setItem("lmsLogin", textValue.id);
                     window.location = "/";
                     break;
+                case 0 :
+                    alert(res.data.msg);
+                    return 
             }
         });
     };
@@ -136,7 +141,7 @@ function Login() {
                 <button className="btn" disabled={loading} onClick={loginAction}>
                     로그인
                 </button>
-                <button
+                {/* <button
                     type="button"
                     className="btn"
                     onClick={() => {
@@ -150,7 +155,7 @@ function Login() {
                     }}
                 >
                     로그아웃
-                </button>
+                </button> */}
             </form>
         </div>
     );

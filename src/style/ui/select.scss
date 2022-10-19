@@ -1,12 +1,6 @@
-$border : #dee2e6;
-$blue : #0069d9;
-$grey : #f8f9fa;
-$bg : #f8f9fa;
-
-
 .selectbox{
     display: inline-flex;
-    background-color: $bg;
+    background-color: $grey;
     position: relative;
     justify-content: space-between;
     align-items: center;
@@ -67,7 +61,7 @@ $bg : #f8f9fa;
     &-option{
         position: absolute;
         width: calc(100% - 30px);
-        background-color: $bg;
+        background-color: $grey;
         left: 0;
         top: 29px;
         z-index: 15;
