@@ -73,10 +73,10 @@ function Home() {
         <div>
             <div className="container">
                 <div className="fj">
-                    <ul className="d-flex">
+                    <ul className="d-flex nav-list">
                         {nav.map((a) => {
                             return (
-                                <li style={{ marginRight: "20px", fontSize: "16px" }}>
+                                <li style={window.location.pathname === "/" + a.href ? {color : "#dc3545"} : {}}>
                                     <Link to={`/${a.href}`}>{a.name}</Link>
                                 </li>
                             );
