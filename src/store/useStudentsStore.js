@@ -24,8 +24,14 @@ const useStudentsStore = create(set=>({
       }
 
       const {class_list , student_list} = res.data;
+      console.log(class_list)
+      let classArr = [];
 
-      return set (state=> ({user : arrSort(student_list, "um_nm"), classList : class_list}))
+      class_list.forEach(a=>{
+        classArr.push(a.class_name);
+      })
+
+      return set (state=> ({user : arrSort(student_list, "um_nm"), classList : classArr}))
     },
     setClickStudent : (payload)=> set (state=> ({clickStudent : payload})),
     resetStudent : ()=> set (state=> ({clickStudent : null}) )

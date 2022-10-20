@@ -74,7 +74,14 @@ function Statistics() {
         let { class_list, point_list } = res.data;
 
         setValue(arrSort(point_list, "um_nm"));
-        setClassList(class_list);
+
+        let classArr = [];
+
+        class_list.forEach(a=>{
+            classArr.push(a.class_name);
+        })
+
+        setClassList(classArr);
 
         setSkeleton(false);
     };
