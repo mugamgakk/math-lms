@@ -10,7 +10,7 @@ function SelectBase({ width, onChange, options, value, defaultValue = "선택하
 
     return (
         <div className={"selectbox" + `${selectOpen ? " active" : ""}`} style={{ width: width }}>
-            <button
+            <div
                 className={disabled ? "selectbox-show disabled" : "selectbox-show"}
                 onClick={() => {
                     if (disabled) return false;
@@ -18,8 +18,8 @@ function SelectBase({ width, onChange, options, value, defaultValue = "선택하
                 }}
             >
                 {value === 0 || value ? value :  defaultValue}
-            </button>
-            <button
+            </div>
+            <div
                 className="selectbox-btn"
                 onBlur={() => {
                     setSelectOpen(false);
@@ -28,7 +28,7 @@ function SelectBase({ width, onChange, options, value, defaultValue = "선택하
                     if (disabled) return false;
                     setSelectOpen(!selectOpen);
                 }}
-            ></button>
+            ></div>
             <div className="selectbox-option">
                 <div>
                     {options &&

@@ -1,11 +1,17 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Outlet, Link} from 'react-router-dom';
 
 function Components() {
 
+    useEffect(() => {
+        var pathName = window.location.pathname;
+        sessionStorage.setItem("pathName", pathName);
+    });
+
     return (
         <div className="container">
             <ul className='row'>
+                <li style={{marginRight : "20px"}}><Link to="/">Home</Link></li>
                 <li style={{marginRight : "20px"}}><Link to="/components/prismazoom">이미지 축소 확대</Link></li>
                 <li style={{marginRight : "20px"}}><Link to="/components/datepicker">데이트핔커</Link></li>
                 <li style={{marginRight : "20px"}}><Link to="/components/print">인쇄 / pdf / 이미지 </Link></li>

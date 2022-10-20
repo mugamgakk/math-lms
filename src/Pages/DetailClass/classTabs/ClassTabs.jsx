@@ -12,12 +12,12 @@ function ClassTabs({ clickStudent, setLocation }) {
 
     return (
         <div>
-            <div>
+            <div className="mb-3">
                 {classItems.map((a, index) => {
                     return (
                         <button
                             key={index}
-                            className={"btn" + `${tabState === index ? " active" : ""}`}
+                            className={"btn mr-2" + `${tabState === index ? " active" : ""}`}
                             onClick={() => {
                                 setTabState(index);
                                 setLocation(">" + a);

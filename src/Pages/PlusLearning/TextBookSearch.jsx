@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import DatePicker from 'react-date-picker';
+import LmsDatePicker from '../../components/LmsDatePicker';
 import SelectBase from '../../components/ui/select/SelectBase';
 
 
@@ -30,7 +31,7 @@ function TextBookSearch() {
     let [endDay, setEndDay] = useState(new Date());
 
     return ( 
-        <div>
+        <div className='d-flex'>
             <SelectBase
                 onChange={(ele) => {
                     setSelectBook(ele);
@@ -48,19 +49,17 @@ function TextBookSearch() {
                 value={selectState}
                 defaultValue="상태"
             />
-            <DatePicker
-            value={startDay}
-            format={"yyyy-MM-dd"}
-            clearIcon={null}
-            onChange={(day)=>{setStartDay(day)}}
+            <LmsDatePicker
+                value={startDay}
+                width="130px"
+                onChange={(day)=>{setStartDay(day)}}
             />
-            <DatePicker
+            <LmsDatePicker
             value={endDay}
-            format={"yyyy-MM-dd"}
-            clearIcon={null}
+            width="130px"
             onChange={(day)=>{setEndDay(day)}}
             />
-            <button onClick={()=>{}}>조회</button>
+            <button className='btn'>조회</button>
         </div>
      );
 }

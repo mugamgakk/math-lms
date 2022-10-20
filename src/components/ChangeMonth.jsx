@@ -7,22 +7,27 @@ import { useState } from 'react';
 function ChangeMonth({onChange}) {
 
     let [count, setCount] = useState(0);
-    let day = dayjs(new Date()).add(count, "M").format("YYYY-MM")
+    let [day, setDay] = useState("")
 
-    const changeDate = (day)=>{
-        setCount(count + day)
+
+    const changeDate = (param)=>{
+
+        if(param === 1 && count + 1 === 1){
+            alert("현재월 이후로 볼수 없음")
+            return 
+        }
+
+        setCount(count + param);
     }
 
     useEffect(()=>{
-
-        if(count > 0){
-            alert("현재 월 이후로는 이동할수 없습니다.");
-            setCount(0)
-        }else{
-            onChange(day)
-        }
-
+        setDay(dayjs(new Date()).add(count, "M").format("YYYY-MM"))
     },[count])
+
+    useEffect(()=>{
+        onChange(day);
+    },[day])
+
 
     return ( 
         <div>

@@ -1,3 +1,5 @@
+import { faR } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 import dayjs from "dayjs";
 import React from "react";
 import { useState } from "react";
@@ -24,20 +26,28 @@ const Reason = styled.div`
 
 const options = ["출석", "지각", "조퇴", "결석"];
 
-const nullMonth = new Array(4).fill(4);
-const month = new Array(31).fill(31);
-
-month[2] = { attendance: "출석" };
-month[4] = { attendance: "지각", reason: "더워서 지각" };
-month[6] = { attendance: "조퇴", reason: "추워서 조퇴" };
-month[8] = { attendance: "선택" };
-
 function AttendanceManagement() {
     let [clickNum, setClickNum] = useState(0);
     let [modal, setModal] = useState(false);
-    let [day,setDay] = useState(month);
+    let [day,setDay] = useState([]);
+    let [nullDay, setNullDay] = useState([]);
 
-    const changeMonth = (param) => {};
+    const changeMonth = async (param) => {
+
+        if(param === "") return;
+
+        let 첫날요일 = dayjs(param).$W;
+        let 마지막일 = dayjs(param).daysInMonth();
+
+        let arr = new Array(첫날요일).fill(첫날요일);
+
+        setNullDay(arr);
+
+
+        let res = await axios.post("http://192.168.11.178:8080/attendace/month", {day : param});
+
+        setDay(res.data.day)
+    };
 
     return (
         <div>
@@ -49,7 +59,6 @@ function AttendanceManagement() {
                         className="form-control"
                         rows="8"
                         placeholder="사유를 입력해 주세요.(50자 이내)"
-                        defaultValue={month[clickNum].reason}
                     >
                     </textarea>
                     <div className="text-center">
@@ -59,7 +68,7 @@ function AttendanceManagement() {
                 </Reason>
             )}
 
-            <header className="fj">
+            <header className="fj mb-3">
                 <div>
                     <button className="btn">선택에서 출석</button>
                 </div>
@@ -84,9 +93,11 @@ function AttendanceManagement() {
                 </thead>
             </table>
             <div style={{ display: "flex", flexWrap: "wrap" }}>
-                {nullMonth.map((a, i) => {
-                    return <Box key={i} />;
+
+                {nullDay.map((a, i) => {
+                    return <Box key={i} style={{backgroundColor: "#ddd"}}/>;
                 })}
+
                 {day.map((a, i) => {
                     return <DayBox item={a} index={i} key={i} setClickNum={setClickNum} setModal={setModal} />;
                 })}

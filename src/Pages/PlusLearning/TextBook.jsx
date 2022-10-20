@@ -54,7 +54,7 @@ function TextBook() {
             </p>
             <p>※ 기간을 설정하여 결과 리포트를 인쇄할 수 있습니다. (저장되지 않음)</p>
 
-            <div className="d-flex">
+            <div className="d-flex fj mb-3">
                 <div>
                     <button className="btn">선택 오픈</button>
                     <button className="btn">선택 인쇄</button>
