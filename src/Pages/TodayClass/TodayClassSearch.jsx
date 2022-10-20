@@ -4,8 +4,8 @@ import SelectBox from '../../components/ui/select/SelectBox';
 
 
 function TodayClassSearch({data,setFindList,option}) {
+    console.log(option);
     let [search, setSearch] = useState('');
-
     // 찾기 버튼
     const findUser = () => {
         let array = [];
