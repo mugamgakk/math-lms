@@ -27,7 +27,7 @@ const PlusTrData = memo(({ res, type }) => {
                                 <p>{res.채점}</p>
                                 {gradingModal && (
                                     <PlusLearningGradingTextBookModal
-                                        setGradingModal={setGradingModal}
+                                        setModal={setGradingModal}
                                     />
                                 )}
                                 <button

@@ -12,6 +12,8 @@ function StudentsSearch() {
     let [userList, setUserList] = useState(null);
     let [nameSearch, setNameSearch] = useState("");
     let [skeleton, setSkeleton] = useState(true);
+    // 반선택
+    let [classOption, setClassOption] = useState(classList);
     //  클릭한 데이터
     const getUser = (list) => {
         setClickStudent(list);
@@ -52,7 +54,7 @@ function StudentsSearch() {
         <div className="col-4 pr-4">
             <header className="row mb-3">
                 <div className="col-6 pr-2">
-                    <ClassSelect width={"100%"} options={classList} />
+                    <ClassSelect width={"100%"} onChange={(ele)=>{setClassOption(ele)}} value={classOption} options={classList} />
                 </div>
                 <div className="col-6 pl-2">
                 <input

@@ -58,8 +58,8 @@ function SelectPage() {
                 onChange={(ele) => {
                     setClassSelect(ele);
                 }}
-                // options={options}
-                // value={classSelect}
+                options={options}
+                value={classSelect}
             />
 
             <h2>props</h2>

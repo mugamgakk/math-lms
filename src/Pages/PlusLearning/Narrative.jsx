@@ -7,7 +7,6 @@ import PlusLearningGradingModal from "./PlusLearningGradingModal";
 import { useEffect } from "react";
 import axios from "axios";
 import SkeletonTable from "../../components/SkeletonTable";
-import { useRef } from "react";
 import PrintModal from "../../components/PrintModal";
 
 const 단원 = ["수와 식의 계산", "가나다라 마바사"];
@@ -15,30 +14,22 @@ const 상태 = ["오픈전", "학습중", "학습완료"];
 
 function Narrative() {
     const clickStudent = useStudentsStore((state) => state.clickStudent);
+    // tr data
     let [plusData, setPlusData] = useState([]);
-    let [unit, setUnit] = useState(""); // 단원
-    let [situation, setSituation] = useState(""); // 상태
+    // 단원
+    let [unit, setUnit] = useState(""); 
+    // 상태
+    let [situation, setSituation] = useState(""); 
     let [checkedList, setCheckedList] = useState([]);
     let [skeleton, setSkeleton] = useState(true);
 
-    const initialData = useRef([]);
-
-    useEffect(() => {
-        setPlusData([]);
-        setSkeleton(true);
-
-        axios.post("http://192.168.11.178:8080/pluslearning/narrative").then((res) => {
-            setPlusData(res.data.list);
-            initialData.current = res.data.list;
-            setSkeleton(false);
-        });
-    }, [clickStudent]);
+    const [initialData, setInitialData] = useState([]);
 
     const checkAll = (e) => {
         const { checked } = e.target;
 
-        checked ? setCheckedList(initialData.current) : setCheckedList([]);
-    };
+        checked ? setCheckedList(plusData) : setCheckedList([]);
+    }
 
     const checkOne = (checked, ele) => {
         if (checked) {
@@ -46,7 +37,28 @@ function Narrative() {
         } else {
             setCheckedList(checkedList.filter((a) => a !== ele));
         }
-    };
+    }
+
+    const searchData = ()=>{
+
+        let 대단원결과 = initialData.filter(a=> a.대단원 === unit );
+
+        let result = 대단원결과.filter(a=>a.상태 === situation);
+        setPlusData(result);
+        setCheckedList([]);
+
+    }
+
+    useEffect(() => {
+        setPlusData([]);
+        setSkeleton(true);
+
+        axios.post("http://192.168.11.178:8080/pluslearning/narrative").then((res) => {
+            setPlusData(res.data.list);
+            setInitialData(res.data.list);
+            setSkeleton(false);
+        });
+    }, [clickStudent]);
 
     return (
         <div className="Narrative">
@@ -55,7 +67,7 @@ function Narrative() {
                 학습하는 교재의 학년, 학기에 해당하는 서술형 문제를 오픈, 출력할 수
                 있습니다.(학년-학기별 공통)
             </p>
-            <div className="fj">
+            <div className="fj mb-3">
                 <div>
                     <button className="btn">선택 오픈</button>
                     <button className="btn" onClick={()=>{
@@ -81,7 +93,7 @@ function Narrative() {
                         }}
                         defaultValue="상태"
                     />
-                    <button className="btn">조회</button>
+                    <button className="btn" onClick={searchData}>조회</button>
                 </div>
             </div>
             <table>
@@ -99,7 +111,7 @@ function Narrative() {
                             선택{" "}
                             <input
                                 type="checkbox"
-                                checked={initialData.current.length === checkedList.length}
+                                checked={initialData.length === checkedList.length}
                                 onChange={checkAll}
                             />
                         </th>
