@@ -4,8 +4,8 @@ import ClassSelect from '../../components/ui/select/ClassSelect';
 
 
 function TodayClassSearch({data,setFindList,option}) {
+    console.log(option);
     let [search, setSearch] = useState('');
-
     // 찾기 버튼
     const findUser = () => {
         let array = [];

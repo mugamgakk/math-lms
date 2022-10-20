@@ -12,7 +12,8 @@ function TodayClass(){
     let [findTodayList, setFindList] = useState(null);
     let [date,setDate] = useState(new Date());
     let [skeleton, setSkeleton] = useState(true);
-    let [classList,setClassList] = useState();
+    let [classList,setClassList] = useState([]);
+
     useEffect(()=>{
 
         ajax("/class.php/?mode=get_today_class", {
@@ -25,7 +26,7 @@ function TodayClass(){
                 setFindList(today_list); 
                 setClassList(class_list);
                 
-                skeleton(false);
+                setSkeleton(false);
 
         })
        
@@ -52,7 +53,7 @@ function TodayClass(){
             </div>
             <header className="table-header row">
                 <div style={{ display:'flex' }}>
-                    <TodayClassSearch data={findTodayList} setFindList={setFindList} option={classList && classList}/>
+                    <TodayClassSearch data={findTodayList} setFindList={setFindList} option={classList}/>
                     <button
                         className="btn update"
                         onClick={() => setReloadState(!reloadState)}
@@ -91,8 +92,13 @@ function TodayClass(){
                         <th>맞춤 클리닉</th>
                     </tr>
                 </thead>
+            <tbody>
+               {
+                    skeleton && <SkeletonTable R={20} D={9} />
+               }
+            </tbody>
             </table>
-            {findTodayList &&
+            { (!skeleton && findTodayList) &&
                 findTodayList.map((a) => {
                     return (
                         <div className="todayWrap">
