@@ -106,3 +106,160 @@
         
     }
 }
+
+.select{
+    height: 30px;
+    min-width: 100px;
+    border-radius: 2px;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    display: inline-flex;
+    position: relative;
+
+    &.disabled{
+        background-color: rgba(153, 153, 153, 0.459);
+        color: #999;
+
+        .select-view, .select-btn{
+            cursor: not-allowed;
+        }
+    }
+
+    &.active{
+        .select-list-box{
+            max-height: 100px;
+            overflow-y: auto;
+        }
+
+        .select-btn{
+            &::after{
+                top: 38%;
+                transform: translate(-50%,-50%) rotate(180deg);
+            }
+        }
+    }
+
+    &-view{
+        width: calc(100% - 30px);
+        display: flex;
+        cursor: pointer;
+
+        h4{
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding-left: 10px;
+        }
+    }
+
+    &-list-box{
+        position: absolute;
+        width: 100%;
+        left: 0;
+        top: 34px;
+        overflow: hidden;
+        transition: all 0.3s;
+        max-height: 0;
+        z-index: 3;
+    }
+    
+    &-list{
+        border: 1px solid rgba(218, 218, 218, 0.993);
+        background-color: #fff;
+        border-radius: 2px;
+
+        li{
+            padding: 0 10px;
+            min-height: 30px;
+            line-height: 30px;
+            cursor: pointer;
+
+            .lookup{
+                width: 100%;
+                height: 20px;
+                line-height: 20px;
+                text-align: center;
+                background-color: #fff;
+                border-radius: 3px;
+            }
+
+            .check-state{
+                width: 15px;
+                height: 15px;
+                border: 1px solid $border;
+                margin-right: 5px;
+
+                &.all{
+                    background-color: $blue;
+                    border: none;
+                }
+
+                &.is-item{
+                    box-shadow: 0 0 0 2px #fff inset;
+                    background-color: $blue;
+                    border: 1px solid $blue;
+                }
+            }
+
+            &.active{
+
+                .checkbox{
+                    position: relative;
+
+                    &::before{
+                        content: '';
+                        position: absolute;
+                        width: 2px;
+                        height: 14px;
+                        left: 9px;
+                        bottom: 2px;
+                        background-color: $blue;
+                        transform: rotate(32deg);
+                    }
+
+                    &::after{
+                        content: '';
+                        position: absolute;
+                        width: 2px;
+                        height: 8px;
+                        left: 3px;
+                        bottom: 2px;
+                        background-color: $blue;
+                        transform: rotate(-45deg);
+                    }
+                }
+            }
+
+            .checkbox{
+                width: 15px;
+                height: 15px;
+                border: 1px solid $border;
+                margin-right: 5px;
+            }
+
+            &:hover{
+                background-color: rgba(221, 221, 221, 0.288);
+            }
+        }
+    }
+
+    &-btn{
+        width: 30px;
+        position: relative;
+        cursor: pointer;
+
+        &::after{
+            content: '';
+            display: block;
+            width: 0;
+            height: 0;
+            border-top: 8px solid #000;
+            border-bottom: 8px solid transparent;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            position: absolute;
+            left: 50%;
+            top: 69%;
+            transform: translate(-50%,-50%);
+        }
+    }
+}

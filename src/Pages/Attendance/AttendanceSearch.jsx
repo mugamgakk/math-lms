@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import SearchBtn from "../../components/ui/button/SearchBtn";
-import SelectBox from "../../components/ui/select/SelectBox";
+import ClassSelect from "../../components/ui/select/ClassSelect";
 
 function AttendanceSearch() {
     let [search, setSearch] = useState("");
 
     return (
         <div className="d-flex">
-            <SelectBox width={"200px"} />
+            <ClassSelect width={"200px"} />
 
             <input
                 type="text"

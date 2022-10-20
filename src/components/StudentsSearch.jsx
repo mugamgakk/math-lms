@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import SelectBox from "./ui/select/SelectBox";
+import ClassSelect from "./ui/select/ClassSelect";
 import SearchBtn from "./ui/button/SearchBtn";
 import useStudentsStore from "../store/useStudentsStore";
 import { useEffect } from "react";
@@ -52,7 +52,7 @@ function StudentsSearch() {
         <div className="col-4 pr-4">
             <header className="row mb-3">
                 <div className="col-6 pr-2">
-                    <SelectBox width={"100%"} options={classList} />
+                    <ClassSelect width={"100%"} options={classList} />
                 </div>
                 <div className="col-6 pl-2">
                 <input

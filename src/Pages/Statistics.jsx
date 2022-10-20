@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import ajax from "../ajax";
 import { arrSort, comma } from "../methods/methods";
 import SkeletonTable from "../components/SkeletonTable";
-import SelectBox from "../components/ui/select/SelectBox";
+import ClassSelect from "../components/ui/select/ClassSelect";
 import LmsDatePicker from "../components/LmsDatePicker";
 import dayjs from "dayjs";
 import { memo } from "react";
@@ -112,7 +112,7 @@ function Statistics() {
                 <div className="StatisticsSearch d-flex">
 
 
-                    <SelectBox width={"200px"} options={classList} />
+                    <ClassSelect width={"200px"} options={classList} />
 
                     <LmsDatePicker
                         value={startDay}

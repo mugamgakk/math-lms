@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import SearchBtn from '../../components/ui/button/SearchBtn';
-import SelectBox from '../../components/ui/select/SelectBox';
+import ClassSelect from '../../components/ui/select/ClassSelect';
 
 
 function TodayClassSearch({data,setFindList,option}) {
@@ -37,7 +37,7 @@ function TodayClassSearch({data,setFindList,option}) {
 
     return ( 
         <div className='d-flex'>
-            <SelectBox width={"200px"} onChange={findBan} option={option} />
+            <ClassSelect width={"200px"} onChange={findBan} option={option} />
             
             <input
                 type="text"
