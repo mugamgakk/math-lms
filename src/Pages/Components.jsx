@@ -24,6 +24,7 @@ function Components() {
                 <li style={{marginRight : "20px"}}><Link to="/components/editor">텍스트 에디터</Link></li>
                 <li style={{marginRight : "20px"}}><Link to="/components/spinner">스피너</Link></li>
                 <li style={{marginRight : "20px"}}><Link to="/components/skeleton">스켈레톤</Link></li>
+                <li style={{marginRight : "20px"}}><Link to="/components/icon">아이콘</Link></li>
             </ul>
           <Outlet/>
             

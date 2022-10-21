@@ -2,9 +2,9 @@
   font-family: 'icon-font';
   font-style: normal;
   font-weight: 400;
-  src: url("icon-font.eot?965415dca0c34ae3fb9dd7287f373232?#iefix") format("embedded-opentype"),
-url("icon-font.woff2?965415dca0c34ae3fb9dd7287f373232") format("woff2"),
-url("icon-font.woff?965415dca0c34ae3fb9dd7287f373232") format("woff");
+  src: url("icon-font.eot?b4e6d05d55b94c54d82677680acfb3ac?#iefix") format("embedded-opentype"),
+url("icon-font.woff2?b4e6d05d55b94c54d82677680acfb3ac") format("woff2"),
+url("icon-font.woff?b4e6d05d55b94c54d82677680acfb3ac") format("woff");
 }
 
 .icon-font, .ic-icons {
@@ -50,3 +50,4 @@ url("icon-font.woff?965415dca0c34ae3fb9dd7287f373232") format("woff");
 }
 
 .ic-apple:before { content: "\f101"; }
+.ic-plus:before { content: "\f102"; }

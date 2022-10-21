@@ -17,6 +17,7 @@ import Editor from "./Pages/ComponentsPage/Editor";
 import FileDownLoad from "./Pages/ComponentsPage/FileDownLoad";
 import Spinner from "./Pages/ComponentsPage/Spinner";
 import SkeletonPage from "./Pages/ComponentsPage/SkeletonPage";
+import IconPage from "./Pages/ComponentsPage/IconPage";
 
 import { useEffect } from "react";
 
@@ -64,6 +65,7 @@ function App() {
                             <Route path="editor" element={<Editor />} />
                             <Route path="spinner" element={<Spinner />} />
                             <Route path="skeleton" element={<SkeletonPage />} />
+                            <Route path="icon" element={<IconPage />} />
                         </Route>
                         <Route
                             path="*"
