@@ -1,3 +1,4 @@
+import "./icon-font/icon-font.css";
 import "./style/component.scss";
 import "./style/common.scss";
 import { Routes, Route, useNavigate } from "react-router-dom";
@@ -38,6 +39,7 @@ function App() {
 
     return (
         <div>
+            <i class="icon-font ft-icon ic-apple"></i>
             <Routes>
                 {isLogin ? (
                     <>
