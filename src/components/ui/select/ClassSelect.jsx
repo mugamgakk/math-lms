@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useCallback } from 'react';
 import { useEffect } from 'react';
 
 
@@ -9,7 +10,9 @@ function ClassSelect({width = "170px", onChange, options = [], value = [], defau
     let [choiceArr, setChoiceArr] = useState(value);
     let [text, setText] = useState("");
 
-    const checkedItem = (checked, ele)=>{
+    console.log(value)
+
+    const checkedItem = useCallback((checked, ele)=>{
 
         if(checked){
             // 삭제
@@ -24,15 +27,21 @@ function ClassSelect({width = "170px", onChange, options = [], value = [], defau
 
         }
         
-    }
+    },[choiceArr])
 
-    const allCheck = ()=>{
+    const allCheck = useCallback(()=>{
         if(options.length === choiceArr.length){
             setChoiceArr([]);
         }else{
             setChoiceArr(options)
         }
-    }
+    },[choiceArr])
+
+    useEffect(()=>{
+        if(value.length !== 0){
+            setChoiceArr(value)
+        }
+    },[value])
 
     useEffect(()=>{
         if(!choiceArr | !options){
@@ -40,13 +49,13 @@ function ClassSelect({width = "170px", onChange, options = [], value = [], defau
         }
 
         if(choiceArr.length === 1){
-            setText(choiceArr[0])
+            setText(choiceArr[0].class_name)
         }else{
 
             if(choiceArr.length === 0){
                 setText(defaultValue);
             }else{
-                setText(choiceArr[choiceArr.length - 1] + ` 외 ${choiceArr.length - 1} 반`)
+                setText(choiceArr[choiceArr.length - 1].class_name + ` 외 ${choiceArr.length - 1} 반`)
             }
         }
 
@@ -100,7 +109,7 @@ function ClassSelect({width = "170px", onChange, options = [], value = [], defau
                             >
                                 <div className="checkbox">
                                 </div>
-                                {a}
+                                {a.class_name}
                             </li>
                         )
                     })

@@ -6,18 +6,18 @@ import { useEffect } from "react";
 import SkeletonTable from "./SkeletonTable";
 
 function StudentsSearch() {
-    let { user, setClickStudent, clickStudent, getStudentsData, resetStudent, classList} = useStudentsStore(
-        (state) => state
-    );
+    let { user, setClickStudent, clickStudent, getStudentsData, resetStudent, classList} = useStudentsStore();
     let [userList, setUserList] = useState(null);
     let [nameSearch, setNameSearch] = useState("");
     let [skeleton, setSkeleton] = useState(true);
+    
     // 반선택
-    let [classOption, setClassOption] = useState(classList);
+    let [classOption, setClassOption] = useState([]);
     //  클릭한 데이터
     const getUser = (list) => {
         setClickStudent(list);
     };
+
 
     // 검색
     const searchStudents = () => {
@@ -32,6 +32,12 @@ function StudentsSearch() {
 
         setNameSearch("");
     };
+
+    useEffect(()=>{
+        if(classList.length !== 0){
+            setClassOption(classList)
+        }
+    },[classList])
 
     useEffect(() => {
         resetStudent();
@@ -54,7 +60,7 @@ function StudentsSearch() {
         <div className="col-4 pr-4">
             <header className="row mb-3">
                 <div className="col-6 pr-2">
-                    <ClassSelect width={"100%"} onChange={(ele)=>{setClassOption(ele)}} value={classOption} options={classList} />
+                    <ClassSelect width={"100%"} onChange={(ele)=>{ console.log(ele); setClassOption(ele)}} value={classOption} options={classList} />
                 </div>
                 <div className="col-6 pl-2">
                 <input
