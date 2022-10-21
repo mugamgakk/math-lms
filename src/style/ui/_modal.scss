@@ -5,6 +5,7 @@
     background-color: rgba(0,0,0,0.6);
     width: 100%;
     height: 100%;
+    z-index: 30;
 
     &-content{
         position: absolute;
@@ -14,8 +15,6 @@
         min-width: 300px;
         min-height: 300px;
         background-color: #fff;
-        border-radius: 10px;
-        overflow: hidden;
         text-align: left;
     }
 

@@ -9,7 +9,6 @@ import { arrSort, comma } from "../methods/methods";
 import SkeletonTable from "../components/SkeletonTable";
 import ClassSelect from "../components/ui/select/ClassSelect";
 import LmsDatePicker from "../components/LmsDatePicker";
-import dayjs from "dayjs";
 import { memo } from "react";
 
 function Statistics() {
@@ -22,6 +21,7 @@ function Statistics() {
 
     // class list
     let [classList, setClassList] = useState([]);
+    let [initialClass, setInitialClass] = useState([]);
     
     const tableRef = useRef(null);
 
@@ -75,13 +75,8 @@ function Statistics() {
 
         setValue(arrSort(point_list, "um_nm"));
 
-        let classArr = [];
-
-        class_list.forEach(a=>{
-            classArr.push(a.class_name);
-        })
-
-        setClassList(classArr);
+        setClassList(class_list);
+        setInitialClass(class_list)
 
         setSkeleton(false);
     };
@@ -97,7 +92,7 @@ function Statistics() {
             {/* 지플럼 수학 학습 포인트 지급 기준 */}
             <StatisticsStandard />
 
-            <div className="Statistics-search fj">
+            <div className="Statistics-search fj mb-3">
                 <div>
                     <button className="btn" onClick={resetList}>
                         초기화
@@ -118,8 +113,7 @@ function Statistics() {
 
                 <div className="StatisticsSearch d-flex">
 
-
-                    <ClassSelect width={"200px"} options={classList} />
+                    <ClassSelect width={"200px"} value={classList} options={initialClass} />
 
                     <LmsDatePicker
                         value={startDay}

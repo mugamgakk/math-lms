@@ -8,7 +8,7 @@ const Box = styled.div`
     background-color: ${(props) => props.bg};
     padding: 10px;
     width: 100%;
-    z-index: 100;
+    z-index: 3;
 `;
 
 function StatisticsStandard() {

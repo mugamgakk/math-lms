@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import DatePicker from "react-date-picker";
 import ajax from "../../ajax";
+import LmsDatePicker from "../../components/LmsDatePicker";
 import SkeletonTable from "../../components/SkeletonTable";
 import { comma } from "../../methods/methods";
 
@@ -26,11 +27,19 @@ function PointModal({ title, setModal, userId }) {
     const getData = async ()=>{
         loading === false && setLoading(true);
 
-        const res = await ajax("/point.php/?mode=list_st", {
+        const url = "/point.php/";
+        const params = {
+            mode : "list_st",
             usr_seq : userId,
             sdate : dayjs(startDay).format("YYYY-MM-DD"),
-            edate : dayjs(lastDay).format("YYYY-MM-DD"),
+            edate : dayjs(lastDay).format("YYYY-MM-DD")
+        }
+
+        const res = await ajax(url, {
+            data : params
         })
+
+        // console.log(res);
 
         setList(res.data.list);
 
@@ -46,9 +55,10 @@ function PointModal({ title, setModal, userId }) {
     },[])
 
     return (
-        <div className="modal-bg">
+        <div className="modal">
+            
             <div className="modal-content">
-                <header className="fj">
+            <header className="modal-header fj">
                     <h4>[학습 포인트 내역 ] {title}</h4>
                     <button
                         className="btn"
@@ -59,30 +69,23 @@ function PointModal({ title, setModal, userId }) {
                         X
                     </button>
                 </header>
-                <div className="modal-body">
-                    <div className="fj">
+                <div className="modal-body p-3">
+                    <div className="fj mb-3">
                         <div></div>
-                        <div>
-                            <DatePicker
-                                className="datepicker-base"
-                                clearIcon={null}
+                        <div className="d-flex">
+                            <LmsDatePicker
                                 onChange={(day) => {
                                     setStartDay(day);
                                 }}
                                 value={startDay}
-                                openCalendarOnFocus={false}
-                                format={"yyyy-MM-dd"}
                                 minDetail="month"
                             />
-                            <DatePicker
-                                className="datepicker-base"
-                                clearIcon={null}
+
+                            <LmsDatePicker
                                 onChange={(day) => {
                                     setLastDay(day);
                                 }}
                                 value={lastDay}
-                                openCalendarOnFocus={false}
-                                format={"yyyy-MM-dd"}
                                 minDetail="month"
                             />
                             <button className="btn" onClick={getData}>조회</button>

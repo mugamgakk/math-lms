@@ -1,8 +1,7 @@
 
 // 레이아웃
 .container{
-    width: 1240px;
-    padding: 20px;
+    width: 1200px;
     margin: 0 auto;
 }
 .row{
@@ -187,3 +186,19 @@
     .pl-5{
         padding-left: 1rem * 3!important
     }
+    .p-1{
+        padding: 1rem * .25!important
+    }
+    .p-2{
+        padding: 1rem * .5!important
+    }
+    .p-3{
+        padding: 1rem !important
+    }
+    .p-4{
+        padding: 1rem * 1.5!important
+    }
+    .p-5{
+        padding: 1rem * 3!important
+    }
+

@@ -35,7 +35,6 @@ function Attendance() {
                 <AttendanceSearch />
             </header>
 
-            <div className="table-box">
                 <table>
                     <colgroup>
                         <col style={{ width: "20%" }} />
@@ -76,7 +75,6 @@ function Attendance() {
                         )}
                     </tbody>
                 </table>
-            </div>
 
         </div>
     );

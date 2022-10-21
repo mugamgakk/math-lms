@@ -29,11 +29,11 @@
             }
         }
     }
-
     &-view{
         width: calc(100% - 30px);
         display: flex;
         cursor: pointer;
+        white-space: nowrap;
 
         h4{
             display: flex;
@@ -52,11 +52,12 @@
         transition: all 0.3s;
         max-height: 0;
         z-index: 3;
+        background-color: #fff;
+        box-shadow: 0 0 0 1px $border inset
+
     }
     
     &-list{
-        border: 1px solid rgba(218, 218, 218, 0.993);
-        background-color: #fff;
         border-radius: 2px;
 
         li{
