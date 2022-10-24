@@ -1,11 +1,14 @@
 import React, {useState} from 'react';
+import { useEffect } from 'react';
 import SearchBtn from '../../components/ui/button/SearchBtn';
 import ClassSelect from '../../components/ui/select/ClassSelect';
 
 
-function TodayClassSearch({data,setFindList,option}) {
-    console.log(option);
+function TodayClassSearch({data,setFindList,option = []}) {
+    
     let [search, setSearch] = useState('');
+    let [sel, setSel] = useState(option);
+
     // 찾기 버튼
     const findUser = () => {
         let array = [];
@@ -20,8 +23,15 @@ function TodayClassSearch({data,setFindList,option}) {
         setFindList(array);
     };
 
+    useEffect(()=>{
+        
+        if(option.length !== 0){
+            setSel(option);
+        }
+    },[option])
 
-    const findBan = (choiceArr)=>{
+
+    const findBan = (choiceArr) => {
         
         const matchingArr = data.filter(a=>{
             for(let ele of choiceArr){
@@ -32,12 +42,13 @@ function TodayClassSearch({data,setFindList,option}) {
         })
 
         setFindList(matchingArr)
+        
     }
 
 
     return ( 
         <div className='d-flex'>
-            <ClassSelect width={"200px"} onChange={findBan} option={option} />
+            <ClassSelect width={"200px"} value={sel} onChange={ele=>{ setSel(ele) }} options={option} />
             
             <input
                 type="text"
