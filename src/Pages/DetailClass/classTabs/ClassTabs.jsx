@@ -11,7 +11,7 @@ function ClassTabs({ clickStudent, setLocation }) {
     let [tabState, setTabState] = useState(0);
 
     return (
-        <div>
+        <>
             <div className="mb-3">
                 {classItems.map((a, index) => {
                     return (
@@ -39,7 +39,7 @@ function ClassTabs({ clickStudent, setLocation }) {
                     3: <AttendanceManagement />,
                 }[tabState]
             }
-        </div>
+        </>
     );
 }
 

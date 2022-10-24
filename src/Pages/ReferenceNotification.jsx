@@ -9,9 +9,9 @@ function ReferenceNotification() {
 
 
     return ( 
-            <div className="container referenceNotification">
+            <div className="referenceNotification">
                 <ContentHeader title={"자료 및 알림"}/>
-                <div className="contents pt-10">
+                <div className="bg contents pt-10">
                     <div className="contents-head">
                         <div className="btn-group">
                             <button 

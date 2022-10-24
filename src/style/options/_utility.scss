@@ -1,9 +1,5 @@
 
-// 레이아웃
-.container{
-    width: 1200px;
-    margin: 0 auto;
-}
+
 .row{
     display: flex;
 }
@@ -13,6 +9,15 @@
     .col-#{$i}{
         width: percentage($i/12) !important;
     }
+}
+
+.sr-only{
+    width: 1px;
+    height: 1px;
+    position: absolute;
+    left: -5000px !important;
+    top: 5000px !important;
+    overflow: hidden;
 }
 
 .d-none{

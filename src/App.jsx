@@ -3,7 +3,6 @@ import "./style/common.scss";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Home from "./Pages/Home";
 import Login from "./Pages/Login";
-import Icon from "./components/Icon";
 
 // ui
 import Components from "./Pages/Components";

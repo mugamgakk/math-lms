@@ -21,7 +21,7 @@ function ReservationSearch() {
     });
 
     return (
-        <div className="col-4 pr-3">
+        <div className="bg col-4">
             <Search />
 
             <table style={{ fontSize: "12px" }}>

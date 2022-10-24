@@ -1,7 +1,4 @@
-import React from "react";
-import { useMemo } from "react";
-import { useState } from "react";
-import { useEffect } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { Outlet, Link } from "react-router-dom";
 import ajax from "../ajax";
 
@@ -9,8 +6,8 @@ const nav = [
     { name: "출석체크", href: "attendance" },
     { name: "오늘의 수업", href: "today-class" },
     { name: "학생별 수업 관리", href: "detail-class" },
-    { name: "플러스 러닝", href: "plus-learning" },
-    { name: "평가관리", href: "evaluation" },
+    { name: "플러스 학습", href: "plus-learning" },
+    { name: "평가 관리", href: "evaluation" },
     { name: "학습 통계", href: "statistics" },
     { name: "자료 및 알림", href: "reference" },
     { name: "components guide", href: "components" },
@@ -45,6 +42,7 @@ function Home() {
             data: { mode: "login" },
         }).then((res) => {
             if (res.data.ok !== -1) {
+                alert("로그인이 만료되었습니다.");
                 logoutFn();
             }
         });
@@ -70,50 +68,55 @@ function Home() {
     };
 
     return (
-        <div>
-            <div className="container">
-                <div className="fj">
-                    <ul className="d-flex nav-list">
-                        {nav.map((a) => {
-                            return (
-                                <li key={a.href} style={window.location.pathname === "/" + a.href ? {color : "#dc3545"} : {}}>
-                                    <Link to={`/${a.href}`}>{a.name}</Link>
-                                </li>
-                            );
-                        })}
-                    </ul>
+        <main>
+            <header id="header">
+                <div className="container">
+                    <div className="header-layout">
+                        <h1 className="logo">
+                            <img src="" alt="logo" />
+                        </h1>
 
-                    <div className="d-flex fa">
-                        <strong className="mr-3 userid">안녕하세요 {userId}</strong>
-                        <button onClick={logoutFn} className="btn btn-danger">
-                            로그아웃
-                        </button>
+                        <div className="info">
+                            <strong className="info-name">강호동님</strong>
+                            <ul className="info-list">
+                                <li>회원정보</li>
+                                <li onClick={logoutFn}>로그아웃</li>
+                            </ul>
+                        </div>
+         
                     </div>
                 </div>
+            </header>
+            <div className="container row">
+                <nav className="lnb col-2">
+                    <h1 className="sr-only">Left Navigation Bar</h1>
 
-                {/* {
-                    window.location.pathname === "/" && (
-                        <div className="lnb" style={{width : "200px"}}>
-                        <form onSubmit={getCampusData}>
-                            <select  onChange={(e)=>{setCampusInfo({...campusInfo, qteam : e.target.value})}}>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                            </select>
-                            <select onChange={(e)=>{setCampusInfo({...campusInfo, qaera : e.target.value})}}>
-                                <option value="본사">본사</option>
-                                <option value="결기">경기</option>
-                            </select>
-                            <input type="text" className="form-control" onChange={(e)=>{setCampusInfo({...campusInfo, qcampus : e.target.value})}} />
-                            <button type="submit" className="btn">조회</button>
-                        </form>
+                    <div className="lnb-toggle">
+                        <div className="fa">
+                            <span className="lnb-toggle--label">메뉴 감추기</span>
+                            <button className="lnb-toggle--btn">on</button>
+                        </div>
                     </div>
-                    )
-                } */}
+                    <div className="lnb-lookup"></div>
+                    <div className="lnb-list">
+                        <h4 className="lnb-title">수학 학습 관리</h4>
+                        <ul>
+                            {
+                                nav.map(a=>{
+                                    return (<li key={a.name} className={`lnb-item ${window.location.pathname === "/" + a.href ? "active" : "" }`}>
+                                        <Link to={`/${a.href}`}>{a.name}</Link>
+                                    </li>)
+                                })
+                            }
+                            
+                        </ul>
+                    </div>
+                </nav>
+                <div className="content col-10">
+                    <Outlet />
+                </div>
             </div>
-
-            <Outlet />
-        </div>
+        </main>
     );
 }
 

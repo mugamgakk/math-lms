@@ -38,7 +38,7 @@ function PlusLearningGradingModal({ title = "Title", userId, setModal }) {
 
     useEffect(() => {
         axios
-            .post("http://192.168.11.178:8080/pluslearning/narrative/standard/" + userId)
+            .post("http://192.168.21.109:8080/pluslearning/narrative/standard/" + userId)
             .then((res) => {
                 setList(res.data.list);
 

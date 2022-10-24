@@ -11,7 +11,7 @@ function PlusLearningContent({tab}) {
     const clickStudent = useStudentsStore(state=>state.clickStudent)
 
     return ( 
-        <div className="students-contents">
+        <div className='bg col-8'>
             
             {
                 clickStudent === null

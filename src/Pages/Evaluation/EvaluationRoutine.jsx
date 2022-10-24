@@ -19,11 +19,11 @@ function EvaluationRoutine() {
         <div className="row">
             <StudentsSearch />
             {clickStudent === null ? (
-                <div className="col-8">
+                <div className="bg col-8">
                 <AlertBox bg="pink" name="재원생 정기평가 관리" />
                 </div>
             ) : (
-                <div className="col-8">
+                <div className="bg col-8">
                     <UserInfo clickStudent={clickStudent} />
 
                     <Box className="mb-3">

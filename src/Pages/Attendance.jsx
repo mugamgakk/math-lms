@@ -17,18 +17,21 @@ function Attendance() {
     let [chulCheckList, setChulCheckList] = useState([]);
 
     useEffect(() => {
-        axios.post("http://192.168.11.178:8080/attendace/list").then((res) => {
+        axios.post("http://192.168.21.109:8080/attendace/list").then((res) => {
             setChulCheckList(res.data.list);
             setSkeleton(false);
         });
+
     }, []);
 
     return (
-        <div className="container">
+        <>
             <ContentHeader
                 title="출석 체크"
                 location={"마이페이지 > 수학 학습 관리 > 오늘의 수업"}
             />
+
+            <div className="bg">
 
             <header className="fj mb-3">
                 <div></div>
@@ -75,8 +78,8 @@ function Attendance() {
                         )}
                     </tbody>
                 </table>
-
-        </div>
+                </div>
+        </>
     );
 }
 

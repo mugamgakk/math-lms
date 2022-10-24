@@ -57,7 +57,7 @@ function StudentsSearch() {
     }, [userList]);
 
     return (
-        <div className="col-4 pr-4">
+        <div className="bg col-4">
             <header className="row mb-3">
                 <div className="col-6 pr-2">
                     <ClassSelect width={"100%"} onChange={(ele)=>{ console.log(ele); setClassOption(ele)}} value={classOption} options={classList} />

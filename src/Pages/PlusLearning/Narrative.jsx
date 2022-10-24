@@ -53,7 +53,7 @@ function Narrative() {
         setPlusData([]);
         setSkeleton(true);
 
-        axios.post("http://192.168.11.178:8080/pluslearning/narrative").then((res) => {
+        axios.post("http://192.168.21.109:8080/pluslearning/narrative").then((res) => {
             setPlusData(res.data.list);
             setInitialData(res.data.list);
             setSkeleton(false);

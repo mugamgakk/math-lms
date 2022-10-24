@@ -46,8 +46,9 @@ function TodayClass(){
 
   
     return(
-        <div className="container TodayClass">
+        <div className="TodayClass">
             <ContentHeader title={"오늘의 수업"} location={'마이페이지 > 수학 학습 관리 > 오늘의 수업'} />
+            <div className="bg">
             <div className="date-area">
                 <DateNext value={date} onChange={day=>setDate(day)}/>
             </div>
@@ -128,6 +129,7 @@ function TodayClass(){
                         </div>
                     );
                 })}
+                </div>
         </div>
     )
 }

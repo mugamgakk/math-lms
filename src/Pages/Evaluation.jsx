@@ -16,7 +16,7 @@ function Evaluation() {
 
 
     return ( 
-        <div className='container'>
+        <>
             <ContentHeader title={"평가 관리"}/>
             <div className="btn-group mb-3">
                 <button 
@@ -36,7 +36,7 @@ function Evaluation() {
                 }[tab]
             }
           
-        </div>
+        </>
      );
 }
 
