@@ -6,13 +6,15 @@ import Tr from './TodayClass/TodayClassTr';
 import DateNext from "../components/DateNext";
 import SkeletonTable from "../components/SkeletonTable";
 
-
 function TodayClass(){
 
     let [findTodayList, setFindList] = useState(null);
     let [date,setDate] = useState(new Date());
     let [skeleton, setSkeleton] = useState(true);
-    let [classList,setClassList] = useState([]);
+    let [classList,setClassList] = useState();
+
+
+
 
     useEffect(()=>{
 
@@ -31,8 +33,6 @@ function TodayClass(){
         })
        
     },[])
-
-
 
 
     let [checkState, setCheckState] = useState([]);
