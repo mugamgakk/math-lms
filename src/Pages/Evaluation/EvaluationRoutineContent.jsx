@@ -39,18 +39,32 @@ function EvaluationRoutineContent() {
     let [sortState,setSortState] = useState('desc');
     const ref = useRef(false);
 
-    
     const sortList = () => {
-        let copy = [...list];
 
-        if (sortState === "desc"){
-            setList(arrSort(copy, "point"));
-            setSortState("asc");
+        let arr = [...list];
+        let dateArr = [];
+        let nonArr = [];
+
+        arr.forEach(a=>{
+          if(a.평가일 == '진행중' || a.평가일 == undefined ){
+            nonArr.push(a);
+          }else{
+            dateArr.push(a);
+          }
+        })
+
+        if(sortState == 'desc'){
+            setSortState('asc');
+            dateArr.sort((a,b)=> b.평가일.replace(/-/g,'') - a.평가일.replace(/-/g,'') );
         }else{
-            setList(arrSort(copy, "point", 1));
-            setSortState("desc");
+            setSortState('desc');
+            dateArr.sort((a,b)=> a.평가일.replace(/-/g,'') - b.평가일.replace(/-/g,'') );
         }
-    };
+
+        setList([...dateArr, ...nonArr]);
+
+    }
+
 
 
     useEffect(()=>{
@@ -153,7 +167,10 @@ function EvaluationRoutineContent() {
                         <th>평가 종류</th>
                         <th>시험지</th>
                         <th>평가일
-                            <button className="btn-sort" onClick={sortList}></button>
+                            <button 
+                                className={"btn-sort" + `${sortState === "asc" ? " asc" : ""}`}
+                                onClick={sortList}
+                            ></button>
                         </th>
                         <th>결과</th>
                     </tr>
