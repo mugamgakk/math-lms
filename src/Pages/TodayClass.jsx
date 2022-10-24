@@ -6,7 +6,6 @@ import Tr from './TodayClass/TodayClassTr';
 import DateNext from "../components/DateNext";
 import SkeletonTable from "../components/SkeletonTable";
 
-
 function TodayClass(){
 
     let [findTodayList, setFindList] = useState(null);

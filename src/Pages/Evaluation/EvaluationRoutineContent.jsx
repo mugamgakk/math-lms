@@ -36,7 +36,22 @@ function EvaluationRoutineContent() {
 
     let [checkItem, setCheckItem] = useState([]);
 
+    let [sortState,setSortState] = useState('desc');
     const ref = useRef(false);
+
+    
+    const sortList = () => {
+        let copy = [...list];
+
+        if (sortState === "desc"){
+            setList(arrSort(copy, "point"));
+            setSortState("asc");
+        }else{
+            setList(arrSort(copy, "point", 1));
+            setSortState("desc");
+        }
+    };
+
 
     useEffect(()=>{
         if(ref.current){
@@ -137,7 +152,9 @@ function EvaluationRoutineContent() {
                         <th>단원</th>
                         <th>평가 종류</th>
                         <th>시험지</th>
-                        <th>평가일</th>
+                        <th>평가일
+                            <button className="btn-sort" onClick={sortList}></button>
+                        </th>
                         <th>결과</th>
                     </tr>
                 </thead>
