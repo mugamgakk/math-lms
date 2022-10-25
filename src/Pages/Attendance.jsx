@@ -60,7 +60,7 @@ function Attendance() {
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody style={{maxHeight : "400px"}}>
                         {skeleton ? (
                             <SkeletonTable R={4} D={3} />
                         ) : (
