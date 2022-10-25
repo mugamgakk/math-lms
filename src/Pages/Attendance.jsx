@@ -17,7 +17,7 @@ function Attendance() {
     let [chulCheckList, setChulCheckList] = useState([]);
 
     useEffect(() => {
-        axios.post("http://192.168.21.109:8080/attendace/list").then((res) => {
+        axios.post("http://192.168.11.178:8080/attendace/list").then((res) => {
             setChulCheckList(res.data.list);
             setSkeleton(false);
         });
@@ -38,16 +38,13 @@ function Attendance() {
                 <AttendanceSearch />
             </header>
 
+
+                <div className="table">
                 <table>
-                    <colgroup>
-                        <col style={{ width: "20%" }} />
-                        <col style={{ width: "15%" }} />
-                        <col style={{ width: "auto" }} />
-                    </colgroup>
                     <thead>
                         <tr>
-                            <th>학생명(아이디)</th>
-                            <th>
+                            <th style={{width : "25%"}}>학생명(아이디)</th>
+                            <th style={{width : "15%"}}>
                                 출결 체크
                                 <br />
                                 <button
@@ -59,7 +56,8 @@ function Attendance() {
                                     모두출석
                                 </button>
                             </th>
-                            <th>출결 사유</th>
+                            <th style={{width : "60%"}}>출결 사유</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -78,6 +76,7 @@ function Attendance() {
                         )}
                     </tbody>
                 </table>
+                </div>
                 </div>
         </>
     );

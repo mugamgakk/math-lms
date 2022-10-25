@@ -37,7 +37,7 @@ const AttendanceItem = memo(({ list, allCheck }) => {
         data.attendance = selectOption;
         data.reason = reason;
 
-        axios.put("http://192.168.21.109:8080/attendace/correction", data).then((res) => {
+        axios.put("http://192.168.11.178:8080/attendace/correction", data).then((res) => {
             // console.log(res);
             setBtnDisabled(false)
         });
@@ -45,10 +45,10 @@ const AttendanceItem = memo(({ list, allCheck }) => {
 
     return (
         <tr>
-            <td>
+            <td style={{width : "25%"}}>
                 {list.name}({list.userId})
             </td>
-            <td>
+            <td style={{width : "15%"}}>
                 <SelectBase
                     options={options}
                     value={selectOption}
@@ -58,7 +58,7 @@ const AttendanceItem = memo(({ list, allCheck }) => {
                     }}
                 />
             </td>
-            <td>
+            <td style={{width : "60%"}}>
                 <input
                     type="text"
                     placeholder="사유 입력(50자 이내)"

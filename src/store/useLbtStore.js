@@ -14,7 +14,7 @@ const useLbtStore = create((set) => ({
     ],
     skeleton: true,
     getLbtData: async () => {
-        let res = await axios.post("http://192.168.21.109:8080/lbt/list");
+        let res = await axios.post("http://192.168.11.178:8080/lbt/list");
 
         set({ lbtData: res.data.list, skeleton: false });
     },
@@ -42,7 +42,7 @@ const useLbtStore = create((set) => ({
             };
             obj.info.makeDay = dayjs(new Date()).format("YYYY-MM-DD");
 
-            axios.post("http://192.168.21.109:8080/lbt", obj);
+            axios.post("http://192.168.11.178:8080/lbt", obj);
 
             return { lbtData: [...state.lbtData, obj] };
         }),

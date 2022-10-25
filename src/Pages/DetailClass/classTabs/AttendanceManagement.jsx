@@ -44,7 +44,7 @@ function AttendanceManagement() {
         setNullDay(arr);
 
 
-        let res = await axios.post("http://192.168.21.109:8080/attendace/month", {day : param});
+        let res = await axios.post("http://192.168.11.178:8080/attendace/month", {day : param});
 
         setDay(res.data.day)
     };

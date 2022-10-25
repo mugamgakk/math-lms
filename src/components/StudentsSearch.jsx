@@ -82,23 +82,18 @@ function StudentsSearch() {
                 </div>
             </header>
 
-            <div style={{ maxHeight: "600px", overflow: "auto" }}>
-                <table className="students-table">
-                    <colgroup>
-                        <col style={{ width: "20%" }} />
-                        <col style={{ width: "30%" }} />
-                        <col style={{ width: "20%" }} />
-                        <col style={{ width: "30%" }} />
-                    </colgroup>
+            <div className="table">
+                <table>
                     <thead>
                         <tr>
-                            <th>No.</th>
-                            <th>이름(아이디)</th>
-                            <th>학년</th>
-                            <th>학생 화면</th>
+                            <th style={{width : "20%"}}>No.</th>
+                            <th style={{width : "30%"}}>이름(아이디)</th>
+                            <th style={{width : "20%"}}>학년</th>
+                            <th style={{width : "30%"}}>학생 화면</th>
+                            <th></th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody style={{maxHeight : "600px"}}>
                         {skeleton && <SkeletonTable R={14} D={4} />}
 
                         {userList?.map((res, i) => {
@@ -107,9 +102,9 @@ function StudentsSearch() {
                                     key={res.usr_seq}
                                     style={res.usr_seq === clickStudent?.usr_seq ?{backgroundColor : "#dee2e6"} : {}}
                                 >
-                                    <td>{i + 1}</td>
+                                    <td style={{width : "20%"}}>{i + 1}</td>
                                     <td
-                                        style={{ cursor: "pointer" }}
+                                        style={{ cursor: "pointer", width : "30%" }}
                                         onClick={() => {
                                             getUser(res);
                                         }}
@@ -120,8 +115,8 @@ function StudentsSearch() {
                                             : res.um_id}
                                         )
                                     </td>
-                                    <td>{res.school_grade}</td>
-                                    <td>
+                                    <td style={{width : "20%"}}>{res.school_grade}</td>
+                                    <td style={{width : "30%"}}>
                                         <button className="btn">로그인</button>
                                     </td>
                                 </tr>

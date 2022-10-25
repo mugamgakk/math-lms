@@ -13,6 +13,8 @@ const nav = [
     { name: "components guide", href: "components" },
 ];
 
+const arr = new Array(22).fill(2);
+
 function Home() {
     useEffect(() => {
         var pathName = window.location.pathname;
@@ -77,7 +79,7 @@ function Home() {
                         </h1>
 
                         <div className="info">
-                            <strong className="info-name">강호동님</strong>
+                            <strong className="info-name">{localStorage.getItem("lmsLogin")}님</strong>
                             <ul className="info-list">
                                 <li>회원정보</li>
                                 <li onClick={logoutFn}>로그아웃</li>
@@ -113,6 +115,35 @@ function Home() {
                     </div>
                 </nav>
                 <div className="content col-10">
+
+                        {/* <div className="table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th style={{width : "30%"}}>1</th>
+                                        <th style={{width : "30%"}}>2</th>
+                                        <th style={{width : "40%"}}>3</th>
+                                        <th style={{width : "17px"}}></th>
+                                    </tr>
+                                </thead>
+                                <tbody style={{maxHeight : "200px"}}>
+                                    {
+                                        arr.map(a=>{
+                                            return (
+                                                <tr>
+                                                    <td style={{width : "30%"}}>1</td>
+                                                    <td style={{width : "30%"}}>2</td>
+                                                    <td style={{width : "40%"}}>3</td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
+                                    
+                                </tbody>
+                            </table>
+                        </div> */}
+
+
                     <Outlet />
                 </div>
             </div>
