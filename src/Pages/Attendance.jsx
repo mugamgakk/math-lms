@@ -131,7 +131,6 @@ const Tr = memo(({ list, index, setList, allCheck }) => {
     let [disable, setDisable] = useState(false);
 
     const ele = list[index];
-    console.log("재랜더링")
 
     useEffect(() => {
         // 선택/출석 사유 입력 영역 비활성화
