@@ -5,6 +5,7 @@ import { arrSort } from "../../methods/methods";
 import PrintModal from '../../../src/components/PrintModal';
 import MarkingModal from './MarkingModal'
 import LmsDatePicker from "../../components/LmsDatePicker";
+import { useCallback } from "react";
 
 const 평가종류 = ["총괄 평가", "단원 평가", "(월말 평가)"];
 const 단원 = ["수와 연산", "문자와 식", "좌표평면과 그래프"];
@@ -25,6 +26,27 @@ const data = [
     },
     { 교재: "중2-1 노벰", 단원: "좌표평면과 그래프", 평가종류: "단원 평가", 평가일: "진행중" },
     { 교재: "중2-1 노벰", 단원: "전체", 평가종류: "총괄 평가" },
+    {
+        교재: "중2-1 노벰",
+        단원: "가",
+        평가종류: "단원 평가",
+        평가일: "2021-07-20",
+        결과: "93점 (28/30)",
+    },
+    {
+        교재: "중2-1 노벰",
+        단원: "나",
+        평가종류: "단원 평가",
+        평가일: "2021-07-20",
+        결과: "93점 (28/30)",
+    },
+    {
+        교재: "중2-1 노벰",
+        단원: "다",
+        평가종류: "단원 평가",
+        평가일: "2021-07-20",
+        결과: "93점 (28/30)",
+    },
 ];
 
 
@@ -36,36 +58,58 @@ function EvaluationRoutineContent() {
 
     let [checkItem, setCheckItem] = useState([]);
 
-    let [sortState,setSortState] = useState('desc');
+    let [sort,setSort] = useState({
+        단원 : '내림차순',
+        평가일 : '내림차순',
+    })
+
+
     const ref = useRef(false);
 
-    const sortList = () => {
+    useEffect(()=>{
+        console.log(sort);
+    },[sort])
 
+    const dateSortFunc = (sortName) => {
         let arr = [...list];
         let dateArr = [];
         let nonArr = [];
-
-        arr.forEach(a=>{
-          if(a.평가일 == '진행중' || a.평가일 == undefined ){
-            nonArr.push(a);
-          }else{
-            dateArr.push(a);
-          }
-        })
-
-        if(sortState == 'desc'){
-            setSortState('asc');
-            dateArr.sort((a,b)=> b.평가일.replace(/-/g,'') - a.평가일.replace(/-/g,'') );
+      
+        if(sortName == '단원'){
+            arr.forEach(a=>{
+                if(a.단원 == '전체'){
+                    nonArr.push(a);
+                }else{
+                    dateArr.push(a);
+                }
+            });
         }else{
-            setSortState('desc');
-            dateArr.sort((a,b)=> a.평가일.replace(/-/g,'') - b.평가일.replace(/-/g,'') );
+            arr.forEach(a=>{
+                if(a.평가일 == '진행중' || a.평가일 == undefined){
+                    nonArr.push(a);
+                }else{
+                    dateArr.push(a);
+                }
+            });
         }
+      
+        if(sort[sortName] == '오름차순'){
+            setSort({
+                ...sort,
+                [sortName] : '내림차순',
+            });
+            dateArr = arrSort(dateArr, sortName, 1);
+            
 
+        }else{
+            setSort({
+                ...sort,
+                [sortName] : '오름차순',
+            });
+            dateArr = arrSort(dateArr, sortName);
+        }
         setList([...dateArr, ...nonArr]);
-
-    }
-
-
+      };
 
     useEffect(()=>{
         if(ref.current){
@@ -163,13 +207,17 @@ function EvaluationRoutineContent() {
                             />
                         </th>
                         <th>교재</th>
-                        <th>단원</th>
+                        <th>단원
+                            <button 
+                                className={"btn-sort" + `${sort.단원 === "오름차순" ? " asc" : ""}`}
+                                onClick={() => dateSortFunc('단원')}
+                            ></button>
+                        </th>
                         <th>평가 종류</th>
                         <th>시험지</th>
                         <th>평가일
-                            <button 
-                                className={"btn-sort" + `${sortState === "asc" ? " asc" : ""}`}
-                                onClick={sortList}
+                            <button className={"btn-sort" + `${sort.평가일 === "오름차순" ? " asc" : ""}`}
+                                onClick={() => dateSortFunc('평가일')}
                             ></button>
                         </th>
                         <th>결과</th>
