@@ -53,7 +53,8 @@ function Attendance() {
                                 onClick={() => {
                                     let copy = [...list];
                                     copy.forEach(a=>{
-                                        a.attendance = "출석"
+                                        a.attendance = "출석";
+                                        a.reason = ""
                                     })
                                     setList(copy);
                                 }}
