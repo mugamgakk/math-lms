@@ -91,9 +91,7 @@ function EvaluationRoutineContent() {
                     dateArr.push(a);
                 }
             });
-      
         }
-      
       
         if(sort[sortName] == '오름차순'){
             setSort({
@@ -101,13 +99,14 @@ function EvaluationRoutineContent() {
                 [sortName] : '내림차순',
             });
             dateArr = arrSort(dateArr, sortName, 1);
+            
+
         }else{
             setSort({
                 ...sort,
                 [sortName] : '오름차순',
             });
             dateArr = arrSort(dateArr, sortName);
-            console.log(dateArr);
         }
         setList([...dateArr, ...nonArr]);
       };
