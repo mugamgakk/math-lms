@@ -1,49 +1,30 @@
 import React from "react";
-import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarDays, faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
-import DatePicker from "react-date-picker";
-import style from "../style/style-module/components.module.scss"
+import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
+import style from "../style/style-module/components.module.scss";
+import { weekChange } from "../methods/methods"
+import { useCallback } from "react";
 
-const fn = (day) => {
-    switch (day) {
-        case 0:
-            return "일";
-        case 1:
-            return "월";
-        case 2:
-            return "화";
-        case 3:
-            return "수";
-        case 4:
-            return "목";
-        case 5:
-            return "금";
-        default:
-            return "토";
-    }
-};
+const today = new Date();
 
-function DateNext({value = new Date(), onChange}) {
-    const today = new Date();
+function DateNext({value = today, onChange}) {
 
     let year = value.getFullYear(),
         month = value.getMonth() + 1,
         date = value.getDate(),
-        day = fn(value.getDay());
+        day = weekChange(value.getDay());
 
-    let [openCalendar, setOpenCalendar] = useState(false);
-
-    const changeDay = (param) => {
+    const changeDay = useCallback((param) => {
         if (param === "prev" && onChange) {
             onChange(new Date(value.setDate(value.getDate() - 1)));
         } else if (param === "next" && onChange) {
             if (value >= new Date(today.setDate(today.getDate() - 1))) {
+                alert("현재월 이후로는 선택이 불가합니다.")
                 return;
             }
             onChange(new Date(value.setDate(value.getDate() + 1)));
         }
-    };
+    },[value]);
 
 
     let 날짜 = `${year}. ${month < 10 ? "0" + month : month}. 
@@ -72,27 +53,6 @@ function DateNext({value = new Date(), onChange}) {
                     }}
                 >
                     <FontAwesomeIcon icon={faAngleRight} />
-                </button>
-
-                <DatePicker
-                className={`${style.date}`}
-                value={value}
-                isOpen={openCalendar}
-                maxDate={new Date()}
-                onChange={(day)=>{
-                    if(onChange){
-                        onChange(day)
-                    }
-                }}
-                />
-
-                <button
-                    className={style.nextBtn}
-                    onClick={() => {
-                        setOpenCalendar(!openCalendar);
-                    }}
-                >
-                    <FontAwesomeIcon icon={faCalendarDays} />
                 </button>
             </div>
         </div>
