@@ -47,7 +47,6 @@ function Login() {
             switch (res.data.ok) {
                 // 로그인 완료
                 case 1:
-                    localStorage.setItem("lmsLogin", textValue.id);
                     window.location = "/";
                     break;
                 // 로그인 중복
@@ -62,7 +61,6 @@ function Login() {
                         ajax("/user.php", {
                             data: data,
                         }).then((res) => {
-                            localStorage.setItem("lmsLogin", textValue.id);
                             window.location = "/";
                         });
                     } else {
@@ -70,7 +68,6 @@ function Login() {
                     }
                     break;
                 case -1:
-                    localStorage.setItem("lmsLogin", textValue.id);
                     window.location = "/";
                     break;
                 case 0 :
@@ -141,21 +138,6 @@ function Login() {
                 <button className="btn" disabled={loading} onClick={loginAction}>
                     로그인
                 </button>
-                {/* <button
-                    type="button"
-                    className="btn"
-                    onClick={() => {
-                        ajax("/user.php", {
-                            data: {
-                                mode: "logout",
-                            },
-                        }).then((res) => {
-                            console.log(res);
-                        });
-                    }}
-                >
-                    로그아웃
-                </button> */}
             </form>
         </div>
     );
