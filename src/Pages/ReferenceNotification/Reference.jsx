@@ -3,10 +3,18 @@ import ajax from "../../ajax";
 import SelectBase from "../../components/ui/select/SelectBase";
 import ReferenceContentsModal from './ReferenceContentsModal';
 import ReferenceRegistrationModal from './ReferenceRegistrationModal';
+import styled from 'styled-components';
 
 const 학년 = ['전체','초등','중등','고등'];
 const search = ['제목','제목+내용','대상'];
 
+const NewBadge = styled.span`
+    padding: 0 3px;
+    border-radius: 3px;
+    font-size: 10px;
+    background: red;
+    color: #fff;
+`
 function Reference() {
     let [gradeOption, setGradeOption] = useState('전체');
     let [qcate, setQcate] = useState('제목');
@@ -21,19 +29,21 @@ function Reference() {
     },[])
     
      const getList = async () => {
+
         let url = "/board.php";
         let query = {
             mode: "list",
-            divide : gradeOption,
-            qcate : qcate,
+            divide : '초등',
+            qcate : 'ti',
             qstr : searchInput,
             page : 1
         };
-
+        
+        
         let res = await ajax(url, {data: query});
         let { list } = res.data;
 
-        console.log(res)
+        console.log(res);
 
         setLenderList(list);
      }
@@ -120,27 +130,30 @@ const Tr = memo(({list})=>{
    
     return(
         <tr>
-            <td>{list.no}</td>         
+            <td>{list.bd_seq}</td>         
             <td>{list.bd_cate}</td>        
             {/* 제목 클릭하여 글내용 팝업 오픈 */}
             <td onClick={()=>setModal(true)}>
                 {
-                    modal && <ReferenceContentsModal listNum={list.no} setModal={setModal}/>
+                    modal && <ReferenceContentsModal seq={list.bd_seq} setModal={setModal}/>
                 }
                 {
-                    list.notice === 'H' && <span className='badge notice'>필독</span> 
+                    list.bd_notice === 'H' && <span className='badge notice'>필독</span> 
                 } 
                 {
-                    list.notice === 'N' && <span className='badge required'>공지</span>
+                    list.bd_notice === 'N' && <span className='badge required'>공지</span>
                 }
                 {
-                    list.notice === 'E' && <span className='badge event'>이벤트</span>
+                    list.bd_notice === 'E' && <span className='badge event'>이벤트</span>
                 }
                 {list.bd_title}
-                </td>         
+                {
+                    list.news > 0 && <NewBadge>N</NewBadge>
+                }
+            </td>         
             <td>
                 {
-                    list.file && <span className='file'></span>
+                    list.files > 0 && <span className='file'></span>
                 }
             </td>         
             <td>{list.writer}</td>        

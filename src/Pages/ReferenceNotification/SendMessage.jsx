@@ -19,6 +19,10 @@ function SendMessage() {
         getList();
     },[]);
 
+    useEffect(()=>{
+        console.log(checkList);
+    },[checkList])
+
  
     const getList = async () => {
         let url = "/notice.php";
@@ -26,7 +30,7 @@ function SendMessage() {
             mode: "notice_list_send",
             qcate : coToState,
             qstr : searchInput,
-            listnum : 30,
+            listnum : 100,
             page : 1
         };
 
@@ -59,18 +63,19 @@ function SendMessage() {
    }
    
    const deleteList = (checkList) => {
-   checkList.length === 0 ? window.alert('1개 이상 선택바람') 
-   : (window.confirm('삭제?') &&
-    ajax("/notice.php/?mode=notice_delete", {
-        delete_no : checkList
-    }).then(res=>{
-        window.alert('삭제 성공');
-    }))
-   }
+    console.log(checkList);
+    checkList.length === 0 ? window.alert('1개 이상 선택바람') 
+    : (window.confirm('삭제?') &&
+        ajax("/notice.php/?mode=notice_delete", {
+            delete_no : checkList
+        }).then(res=>{
+            window.alert('삭제 성공');
+        }))
+    }
 
     return (  
         <>
-            <div className="filters fj mt-10 mb-10">
+            <div className="filters fj mt-10 mb-10"> 
                 <div className="filters-l">
 
                     <div className='radioArea'>
@@ -172,7 +177,7 @@ const Tr = memo(({list, checkState, checkList }) => {
             <td>{list.send_date}</td>
             <td>{list.to_name}</td>
             <td>
-                { list.files > 0 && <span className='file'></span> }
+                { list.files && <span className='file'></span> }
             </td>
             <td onClick={(e)=>{
                 e.stopPropagation();
@@ -189,13 +194,13 @@ const Tr = memo(({list, checkState, checkList }) => {
             }
             </td>
             <td onClick={()=>setAfterReadModal(true)}>{list.status}
-                {
+                {/* {
                     (list.status.includes('/') && afterReadModal) && 
                     <AfterReadingModal 
                     setAfterReadModal={setAfterReadModal}
                     afterReadModal={afterReadModal}
                     />
-                }
+                } */}
             </td>
             <td>
                 {

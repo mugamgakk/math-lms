@@ -16,7 +16,7 @@ function GetMessage() {
     useEffect(()=>{
         ajax("/notice.php", { data: {
             mode : 'notice_list_receive',
-            qcate : coToState,
+            qcate : 'co',
             qstr : '박',
             listnum : 30,
             page : 1

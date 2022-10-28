@@ -3,17 +3,20 @@ import ajax from "../../ajax";
 import { fileDown } from "../../methods/methods";
 
 
-function ViewMessageModal({setViewModal, viewModal, setWriteModal, tit, type, seq}) {
+function ViewMessageModal({setViewModal, setWriteModal, tit, type, seq}) {
     let [data,setData] = useState(null);
-    
+    console.log(seq,type)
     useEffect(()=>{
-        ajax("/notice.php/?mode=notice_view", {
+        ajax("/notice.php", {data: {
+            mode: 'notice_view',
             nt_seq : seq,
             nt_type : type
+        }
         }).then(res=>{
-            setData(res.data);
+            console.log(res);
+            // setData(res.data);
         })   
-    },[viewModal]);
+    },[]);
 
     return ( 
         <div className="modal">
