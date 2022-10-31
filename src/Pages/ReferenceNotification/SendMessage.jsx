@@ -30,7 +30,7 @@ function SendMessage() {
             mode: "notice_list_send",
             qcate : coToState,
             qstr : searchInput,
-            listnum : 100,
+            listnum : 30,
             page : 1
         };
 
@@ -177,7 +177,7 @@ const Tr = memo(({list, checkState, checkList }) => {
             <td>{list.send_date}</td>
             <td>{list.to_name}</td>
             <td>
-                { list.files && <span className='file'></span> }
+                { list.files > 0 && <span className='file'></span> }
             </td>
             <td onClick={(e)=>{
                 e.stopPropagation();

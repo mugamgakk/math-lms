@@ -1,6 +1,5 @@
 import React, { useState, memo } from "react";
 import ProgressModal from '../modal/progressModal';
-import ProgressModalV2 from '../modal/progressModalV2';
 import CreationModal from '../modal/CreationModal';
 import ResultPopModal from '../modal/ResultPopModal';
 // 맞춤 클리닉 학습결과팝업

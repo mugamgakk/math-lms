@@ -23,7 +23,6 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
     // 받는 사람 seq 배열
     let [checkSeq,setCheckSeq] = useState([]);
 
-
     let [editorContents, setEditorContents] = useState();
     let [writeTit,setWriteTit] = useState('');
     let [to,setTo] = useState(toName);
@@ -115,31 +114,35 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
     
     let [files, setFiles] = useState([]);
     
-    let encodingFiles = [];
     let 총파일크기 = useRef(0);
     
-    console.log(encodingFiles);
-    useEffect(()=>{
+    let encodingFiles = useMemo(()=>{
+
+        let arr = [];
         files.length > 0 &&
         files.forEach(file=>{
             const fileReader = new FileReader();
             fileReader.readAsDataURL(file);
             fileReader.onload = function(e) { 
-                encodingFiles.push({
+                arr.push({
                 filename : file.name,
                 file : e.target.result
                 });
             }
         });
-    },[files])
+
+        return arr;
+
+    },[files]);
+
 
     const changeCheckState = (checked,list) => {
         if(checked){
             setCheckState([...checkState, list.usr_name]);
-            setCheckSeq([...checkSeq, list.usr_seq])
+            setCheckSeq([...checkSeq, parseInt(list.usr_seq)])
         }else{
             setCheckState(checkState.filter(item => item !== list.usr_name));
-            setCheckSeq(checkSeq.filter(item => item !== list.usr_seq));
+            setCheckSeq(checkSeq.filter(item => item !== parseInt(list.usr_seq)));
         }
     }
 
@@ -237,9 +240,6 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
             
             if(!window.confirm('저장하시겠습니까?')) return false;
             
-            console.log(encodingFiles);
-            console.log(checkSeq);
-            console.log(JSON.stringify(editorContents));
             ajax("/notice.php", { data : {
                 mode : 'notice_write',
                 nt_to : checkSeq,

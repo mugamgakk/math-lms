@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import ajax from "../../../ajax";
 
 let progress = {개념 : '34.8%', 유형 : '71.6%'}
 let per = ['0%','20%','40%','60%','80%','100%']
@@ -16,7 +17,25 @@ let data = [
         ]
     },
 ]
-function progressModal({setProgressState,name}){
+
+
+function ProgressModal({setProgressState,name}){
+    let [progressData,setProgressData] = useState(null);
+
+    useEffect(()=>{
+        ajax("/class_result.php?mode=qa_prog", {
+            usr_seq : 80,
+            bk_cd : 'm11-co1'
+        
+        }).then(res=>{
+            console.log(res);
+            // setData(res.data);
+        }).catch((error)=>{
+            console.log(error);
+        })
+    },[]);
+
+
     return(
         <div className="modal">
             <div className="dim"></div>
@@ -38,7 +57,7 @@ function progressModal({setProgressState,name}){
                                         <span className='gageWrap-gage' style={{ width: `${progress.개념}` }}>{progress.개념}</span>
                                         {
                                             per.map(item=>{
-                                                return <div className='gageWrap-item'>{item}</div>
+                                                return <div className='gageWrap-item' key={item}>{item}</div>
                                             })
                                         }
                                     </div>
@@ -68,8 +87,35 @@ function progressModal({setProgressState,name}){
                                         <div className="con">90.6%</div>
                                     </li>
                                 </ul>
-                            </div>
+                        </div>
                     </div>
+                    {/* 아르케 */}
+                    {/* <div className='top fj'>
+                        <div className="top-table">
+                            <div className='top-table__tit'>학습 진행률</div>
+                            <ul className='top-table__bar'>
+                                <li>
+                                    <div className='gageWrap'>
+                                        <span className='gageWrap-gage' style={{ width: `${progress.개념}` }}>{progress.개념}</span>
+                                        {
+                                            per.map(item=>{
+                                                return <div className='gageWrap-item'>{item}</div>
+                                            })
+                                        }
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div className="top-table">
+                            <div className='top-table__tit'>교재 학습 정답률</div>
+                                <ul className='top-table__bar'>
+                                    <li>
+                                        <div className="tit">개념서</div>
+                                        <div className="con">{progress.개념}</div>
+                                    </li>
+                                </ul>
+                            </div>
+                    </div> */}
                     <div className="contents">
                         <table className="mt-15">
                             <colgroup>
@@ -107,7 +153,46 @@ function progressModal({setProgressState,name}){
                                                             <td>20 / 25</td>
                                                             <td>8 / 10</td>
                                                         </tr>
+                                                    )
+                                               }) 
+                                            }
+                                        </tbody>
+                                    )           
+                                })
+                            }
+                        </table>
+                        {/* 아르케 */}
+                        {/* <table className="mt-15">
+                            <colgroup>
+                                <col style={{ width: '30%' }}/>
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th rowSpan={2}>단원명</th>
+                                    <th colSpan={2}>유형 학습</th>
+                                </tr>
+                                <tr>
+                                    <th>학습일자</th>
+                                    <th>결과</th>
+                                </tr>
 
+                            </thead>
+                            {
+                                data.map(tbody=>{
+                                    return (
+                                        <tbody>
+                                            <tr><td colSpan={3} style={{ background: 'gray' }}>{tbody.tit}</td></tr>
+                                            {
+                                               tbody.sodanwon.map(tr=>{
+                                                    return(
+                                                        <tr>
+                                                            <td>{tr.tit}</td>
+                                                            <td>
+                                                                <div>2022-06-10</div>
+                                                                <div>2022-05-10</div>
+                                                            </td>
+                                                            <td>10 / 12</td>
+                                                        </tr>
                                                     )
                                                }) 
                                             }
@@ -116,13 +201,11 @@ function progressModal({setProgressState,name}){
 
                                 })
                             }
-
-                        </table>
-
+                        </table> */}
                     </div>
                 </div>
             </div>
         </div>
     )
 }
-export default progressModal;
+export default ProgressModal;
