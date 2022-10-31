@@ -5,6 +5,7 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { getByteSize } from "../../methods/methods";
 import { faCropSimple } from '@fortawesome/free-solid-svg-icons';
+import { useMemo } from 'react';
 
 
 const 시간 = Array.from({length: 24}, (v,i) => `${i}시`);
@@ -44,9 +45,6 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
     let [regexDate, setRegexDate] = useState('');
     let [selectDisabled, setSelectDisabled]  = useState(true);
 
-  useEffect(()=>{
-    console.log(checkSeq);
-  },[checkSeq])
         // 반학생 리스트
     useEffect(()=>{
     
@@ -109,63 +107,31 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
         return validation;
     }
 
-    const submitForm = () => {
-        let newDate = `20${regexDate}`;
-        let newHour = hour.replace('시','');
-        let newMinute = minute.replace('분','');
-        let nt_reserve = `${newDate} ${newHour}:${newMinute}`;
-        
-        console.log(encodingFiles);
-        if(!checkForm()){
-            return false;
-        }else{
-
-            if(!window.confirm('저장하시겠습니까?')) return false;
-
-            ajax("/notice.php", { data : {
-                mode : 'notice_write',
-                nt_to : checkSeq,
-                nt_title : writeTit,
-                nt_content : JSON.stringify(editorContents),
-                nt_files : encodingFiles,
-            }}).then(res=>{
-                console.log(res);
-                setWriteModal(false);
-            }).catch(error=>{
-                console.log('error');
-            })
-        }
-    }
 
     useEffect(()=>{
         setRegexDate(dateInput.replace(/(\d{2})(\d{2})(\d{2})/g, '$1-$2-$3'));
     },[dateInput]);
 
-
+    
     let [files, setFiles] = useState([]);
+    
     let encodingFiles = [];
     let 총파일크기 = useRef(0);
-
+    
+    console.log(encodingFiles);
     useEffect(()=>{
-        console.log(files);
         files.length > 0 &&
-
         files.forEach(file=>{
             const fileReader = new FileReader();
             fileReader.readAsDataURL(file);
             fileReader.onload = function(e) { 
-              encodingFiles.push({
+                encodingFiles.push({
                 filename : file.name,
                 file : e.target.result
-            });
+                });
             }
         });
-
-        console.log(encodingFiles);
-
     },[files])
-
-
 
     const changeCheckState = (checked,list) => {
         if(checked){
@@ -191,7 +157,6 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
 
     const editorCon = (event, editor) => {
         setEditorContents(editor.getData());
-        console.log(JSON.stringify(editorContents));
     }
     
     const checkFile = (checked,file) => {
@@ -208,7 +173,6 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
 
         files.forEach(file=>{
             if(!fileCheck.includes(file.name)){
-                console.log(file);
                 arr.push(file);
             }else{
                 총파일크기.current = 총파일크기.current - file.size;
@@ -260,6 +224,37 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
         [files]
     );
 
+    const submitForm = () => {
+        let newDate = `20${regexDate}`;
+        let newHour = hour.replace('시','');
+        let newMinute = minute.replace('분','');
+        let nt_reserve = `${newDate} ${newHour}:${newMinute}`;
+
+        
+        if(!checkForm()){
+            return false;
+        }else{
+            
+            if(!window.confirm('저장하시겠습니까?')) return false;
+            
+            console.log(encodingFiles);
+            console.log(checkSeq);
+            console.log(JSON.stringify(editorContents));
+            ajax("/notice.php", { data : {
+                mode : 'notice_write',
+                nt_to : checkSeq,
+                nt_title : writeTit,
+                nt_content : JSON.stringify(editorContents),
+                nt_files : encodingFiles,
+                nt_reserve : '2022-01-01 12:12'
+            }}).then(res=>{
+                console.log(res);
+                setWriteModal(false);
+            }).catch(error=>{
+                console.log('error');
+            })
+        }
+    }
 return (
         <div className="modal">
             <div className="dim"></div>
@@ -333,14 +328,14 @@ return (
                                         data=""
                                         onReady={(editor) => {
                                             // You can store the "editor" and use when it is needed.
-                                            console.log("Editor is ready to use!", editor);
+                                            // console.log("Editor is ready to use!", editor);
                                         }}
                                         onChange={(event, editor) => editorCon(event,editor)}
                                         onBlur={(event, editor) => {
-                                            console.log("Blur.", editor);
+                                            // console.log("Blur.", editor);
                                         }}
                                         onFocus={(event, editor) => {
-                                            console.log("Focus.", editor);
+                                            // console.log("Focus.", editor);
                                         }}
                                     />
                                      </div>
@@ -355,7 +350,6 @@ return (
                                                 id="file"
                                                 onChange={(e) => {
                                                     upload(e.target.files);
-                                                    console.log('asd');
                                                 }}
                                                 className="d-none"
                                                 multiple
@@ -378,7 +372,7 @@ return (
                                                     }
 
                                                     upload(파일);
-                                                    console.log("드롭됨");
+                                                    // console.log("드롭됨");
                                                 }}
                                             >
                                             {files.length === 0 && (
