@@ -3,6 +3,7 @@ import ajax from "../ajax";
 import style from "../style/style-module/Login.module.scss";
 import logo from "../assets/logo.svg";
 import useInput from "../hooks/useInput";
+import { useEffect } from "react";
 
 function Login() {
     let [textValue, setTextValue] = useInput({
@@ -42,20 +43,18 @@ function Login() {
         }).then((res) => {
             setLoading(false);
 
-            console.log(res)
+            // console.log(res);
 
             switch (res.data.ok) {
                 // 로그인 완료
                 case 1:
+                    localStorage.setItem("isLogin", "true");
                     window.location = "/";
                     break;
                 // 로그인 중복
                 case -2:
-                    if (
-                        window.confirm(
-                            "로그인된 계정이 있습니다. 기존 로그인 된 계정을 로그아웃 하시겠습니까."
-                        )
-                    ) {
+                    const alert = `로그인된 계정이 있습니다. 기존 로그인 된 계정을 로그아웃 하시겠습니까.`;
+                    if (window.confirm(alert)) {
                         data.force_mode = "Y";
 
                         ajax("/user.php", {
@@ -68,14 +67,24 @@ function Login() {
                     }
                     break;
                 case -1:
+                    localStorage.setItem("isLogin", "true");
                     window.location = "/";
                     break;
-                case 0 :
+                case 0:
                     alert(res.data.msg);
-                    return 
+                    return;
             }
         });
     };
+
+    useEffect(()=>{
+        ajax("/user.php", {
+            data: { mode: "logout" },
+        })
+        .then(()=>{
+            localStorage.removeItem("isLogin")
+        })
+    },[])
 
     return (
         <div className={style.container}>

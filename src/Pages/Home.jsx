@@ -22,11 +22,13 @@ function Home() {
     let [userId, setUserId] = useState("");
     const navigate = useNavigate();
 
+
     const logoutFn = useCallback(() => {
         ajax("/user.php", {
             data: { mode: "logout" },
         })
         .then(()=>{
+            localStorage.removeItem("isLogin")
             window.location = "/login";
         })
     },[])
@@ -47,6 +49,8 @@ function Home() {
         });
 
     }, []);
+
+  
 
     return (
         <main>

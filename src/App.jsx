@@ -1,7 +1,7 @@
 import "./style/component.scss";
 import "./style/common.scss";
 import { Routes, Route } from "react-router-dom";
-import Home from "./Pages/Home";
+
 import Login from "./Pages/Login";
 
 // ui
@@ -18,7 +18,7 @@ import Spinner from "./Pages/ComponentsPage/Spinner";
 import SkeletonPage from "./Pages/ComponentsPage/SkeletonPage";
 import IconPage from "./Pages/ComponentsPage/IconPage";
 
-
+import Authentication from "./components/Authentication";
 import Attendance from "./Pages/Attendance";
 import DetailClass from "./Pages/DetailClass";
 import PlusLearning from "./Pages/PlusLearning";
@@ -35,7 +35,7 @@ function App() {
     return (
         <div>
             <Routes>
-                <Route path="/" element={<Home />}>
+                <Route path="/" element={<Authentication />}>
                     <Route path="attendance" element={<Attendance />} />
                     <Route path="detail-class" element={<DetailClass />} />
                     <Route path="plus-learning" element={<PlusLearning />} />
