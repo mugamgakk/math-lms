@@ -1,87 +1,131 @@
-import { faR } from "@fortawesome/free-solid-svg-icons";
-import axios from "axios";
 import dayjs from "dayjs";
-import React from "react";
+import React, { memo } from "react";
 import { useState } from "react";
 import styled from "styled-components";
+import ajax from "../../../ajax";
 import ChangeMonth from "../../../components/ChangeMonth";
-import SelectBase from "../../../components/ui/select/SelectBase";
+import useStudentsStore from "../../../store/useStudentsStore";
+import AttendanceDay from "../AttendanceDay";
+import AttendanceReason from "../modal/AttendanceReason";
 
-const Box = styled.div`
-    width: 14.285714%;
-    height: 100px;
-    border: 1px solid #999;
+export const Box = styled.div`
+    width: 109.38px;
+    height: 109.38px;
+    background-color: ${(props) => props.bg};
     padding: 10px;
 `;
 
-const Reason = styled.div`
-    width: 400px;
-    border: 1px solid #999;
-    padding: 10px;
-    position: absolute;
-    right: 100px;
-    bottom: 100px;
-    background: #fff;
-`;
 
-const options = ["출석", "지각", "조퇴", "결석"];
 
 function AttendanceManagement() {
-    let [clickNum, setClickNum] = useState(0);
+    const clickStudent = useStudentsStore((state) => state.clickStudent);
+    let [data, setData] = useState();
+    // 데이터
+    let [firstDay, setFirstDay] = useState(new Date());
     let [modal, setModal] = useState(false);
-    let [day,setDay] = useState([]);
-    let [nullDay, setNullDay] = useState([]);
 
-    const changeMonth = async (param) => {
+    // 셀렉트 변경시
+    const changeData = ({ day, attd }) => {
+        let copy = [...data];
 
-        if(param === "") return;
+        copy[day - 1].attd = attd;
 
-        let 첫날요일 = dayjs(param).$W;
-        let 마지막일 = dayjs(param).daysInMonth();
+        setData(copy);
+    };
 
-        let arr = new Array(첫날요일).fill(첫날요일);
+    const getData = async (date = new Date()) => {
+        const 날짜 = dayjs(date).format("YYYYMM");
+        // 202210
 
-        setNullDay(arr);
+        const 마지막날짜 = dayjs(날짜).daysInMonth();
 
+        const data = {
+            mode: "view",
+            usr_seq: clickStudent.usr_seq,
+            ym: 날짜,
+        };
+        const res = await ajax("/class_daily.php", { data });
 
-        let res = await axios.post("http://192.168.11.178:8080/attendace/month", {day : param});
+        const dataArr = [];
 
-        setDay(res.data.day)
+        for (let i = 1; i <= 마지막날짜; i++) {
+            dataArr.push(i);
+
+            for (const key of res.data) {
+                if (i === parseInt(key.daynum)) {
+                    dataArr[i - 1] = key;
+                }
+            }
+        }
+
+        setData(dataArr);
+    };
+
+    // 저장
+    const saveAttendance = async () => {
+        let arr = [];
+
+        // console.log(data)
+
+        data.forEach((a) => {
+            if (typeof a === "object") {
+                arr.push(a);
+            }
+        });
+
+        const param = {
+            mode: "update",
+            usr_seq: clickStudent.usr_seq,
+            list: arr,
+        };
+
+        // console.log(param);
+
+        const res = await ajax("/class_daily.php", { data: param });
+
+        console.log(res);
     };
 
     return (
-        <div>
+        <>
             {modal && (
-                <Reason>
-                    <h4>출결 사유</h4>
-                    <strong>{clickNum + 1} 일</strong>
-                    <textarea
-                        className="form-control"
-                        rows="8"
-                        placeholder="사유를 입력해 주세요.(50자 이내)"
-                    >
-                    </textarea>
-                    <div className="text-center">
-                        <button className="btn" onClick={()=>{setModal(false)}}>취소</button>
-                        <button className="btn">저장</button>
-                    </div>
-                </Reason>
+                <AttendanceReason firstDay={firstDay} setModal={setModal} clickStudent={clickStudent}/>
             )}
 
-            <header className="fj mb-3">
+            <header className="fj">
                 <div>
-                    <button className="btn">선택에서 출석</button>
+                    <button
+                        className="btn"
+                        onClick={() => {
+                            let copy = [...data];
+
+                            for (let key of copy) {
+                                if (typeof key === "object") {
+                                    key.attd = "P";
+                                }
+                            }
+
+                            setData(copy);
+                        }}
+                    >
+                        선택에서 출석
+                    </button>
                 </div>
+                <ChangeMonth
+                    onChange={(ele) => {
+                        getData(ele);
+                        setFirstDay(ele);
+                    }}
+                />
                 <div>
-                    <ChangeMonth onChange={changeMonth} />
-                </div>
-                <div>
-                    <button className="btn">출결 저장</button>
+                    <button className="btn" onClick={saveAttendance}>
+                        출결저장
+                    </button>
                 </div>
             </header>
             <table>
                 <thead>
-                    <tr style={{ background: "#ccc" }}>
+                    <tr>
                         <th style={{ color: "red" }}>일</th>
                         <th>월</th>
                         <th>화</th>
@@ -93,44 +137,68 @@ function AttendanceManagement() {
                 </thead>
             </table>
             <div style={{ display: "flex", flexWrap: "wrap" }}>
+                <BeforeMonth firstDay={firstDay} />
+                {data &&
+                    data.map((a, i) => {
+                        return (
+                            <AttendanceDay
+                                item={a}
+                                key={i}
+                                changeData={changeData}
+                                setModal={setModal}
+                                firstDay={firstDay}
+                                clickStudent={clickStudent}
+                            />
+                        );
+                    })}
 
-                {nullDay.map((a, i) => {
-                    return <Box key={i} style={{backgroundColor: "#ddd"}}/>;
-                })}
-
-                {day.map((a, i) => {
-                    return <DayBox item={a} index={i} key={i} setClickNum={setClickNum} setModal={setModal} />;
-                })}
+                <NextMonth firstDay={firstDay} />
             </div>
-        </div>
+        </>
     );
 }
 
-function DayBox({ item, index, setClickNum, setModal }) {
-    let [value, setValue] = useState(item.attendance);
+const BeforeMonth = memo(({ firstDay }) => {
+    let { $y, $M } = dayjs(firstDay);
 
-    return (
-        <Box>
-            {index + 1}
-            {value && (
-                <SelectBase
-                    onChange={(ele) => {
-                        setValue(ele);
-                    }}
-                    options={options}
-                    value={value}
-                    defaultValue="선택"
-                />
-            )}
+    // 이전 달의 마지막 날 날짜와 요일 구하기
+    const startDay = new Date($y, $M, 0);
+    const prevDate = startDay.getDate();
+    const prevDay = startDay.getDay();
 
-            {value && value !== "선택" && value !== "출석" ? (
-                <button className="btn" onClick={()=>{
-                    setClickNum(index);
-                    setModal(true)
-                }}>사유보기</button>
-            ) : null}
-        </Box>
-    );
-}
+    let arr = [];
+    for (let i = prevDate - prevDay; i <= prevDate; i++) {
+        arr.push(
+            <Box key={i} bg="#ddd">
+                {i}
+            </Box>
+        );
+    }
+
+    if (arr.length === 7) {
+        return [];
+    } else {
+        return arr;
+    }
+});
+
+const NextMonth = memo(({ firstDay }) => {
+    let { $y, $M } = dayjs(firstDay);
+
+    // 이전 달의 마지막 날 날짜와 요일 구하기
+    const startDay = new Date($y, $M + 1, 0);
+    const prevDay = startDay.getDay();
+
+    let arr = [];
+    for (let i = 1; i <= 7 - (prevDay + 1); i++) {
+        arr.push(
+            <Box key={i} bg="#ddd">
+                {i}
+            </Box>
+        );
+    }
+
+    return arr;
+});
 
 export default AttendanceManagement;
