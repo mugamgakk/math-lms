@@ -36,6 +36,20 @@ function AttendanceReason({setModal, clickStudent, firstDay}) {
         console.log(res);
     };
 
+    useState(async ()=>{
+        const 날짜 = dayjs(firstDay).format("YYYYMM");
+
+        const data = {
+            mode: "get_reason",
+            usr_seq: clickStudent.usr_seq,
+            ymd: 날짜,
+        };
+        
+        const res = await ajax("/class_daily.php", { data });
+
+        console.log(res)
+    },[])
+
 
     return (
         <Modal>

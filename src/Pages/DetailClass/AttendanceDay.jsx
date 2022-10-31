@@ -38,16 +38,7 @@ const AttendanceDay = memo(({ item, changeData, setModal, firstDay, clickStudent
                     {item.attd && item.attd !== "P" ? (
                         <button className="btn" onClick={async ()=>{
 
-                            const 날짜 = dayjs(firstDay).format("YYYYMM");
-
-                            const data = {
-                                mode: "get_reason",
-                                usr_seq: clickStudent.usr_seq,
-                                ymd: 날짜,
-                            };
-                            const res = await ajax("/class_daily.php", { data });
-
-                            console.log(res)
+           
 
                             setModal(true);
                         }}>사유보기</button>

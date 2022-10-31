@@ -79,7 +79,7 @@ function AttendanceManagement() {
             list: arr,
         };
 
-        // console.log(param);
+        console.log(param);
 
         const res = await ajax("/class_daily.php", { data: param });
 
