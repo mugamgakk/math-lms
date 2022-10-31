@@ -1,11 +1,13 @@
 import React, {useEffect,useState} from 'react';
 import ajax from "../../ajax";
 
-function ReferenceContentsModal({listNum,setModal}) {
+function ReferenceContentsModal({seq,setModal}) {
     let [contents,setContents] = useState(null);
     useEffect(()=>{
-        ajax("/notice.php/?mode=view", {
-            bd_seq : 1234,
+        ajax("/notice.php", { data : {
+            mode : 'view',
+            bd_seq : seq,
+        }
         }).then(res=>{
             console.log(res);
         })
@@ -15,7 +17,7 @@ function ReferenceContentsModal({listNum,setModal}) {
         <div className="modal">
             <div className="dim"></div>
             <div className="rfModal cmmnModal">
-                <h3>No.{listNum}</h3>
+                <h3>No.{seq}</h3>
                 <div className="table">
                     <div className="tr">
                         <div className="th">대상</div>

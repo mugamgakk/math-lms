@@ -19,6 +19,9 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
 
     // 반학생 리스트에서 받는사람 선택 체크 배열
     let [checkState,setCheckState] = useState([]);
+    // 받는 사람 seq 배열
+    let [checkSeq,setCheckSeq] = useState([]);
+
 
     let [editorContents, setEditorContents] = useState();
     let [writeTit,setWriteTit] = useState('');
@@ -35,10 +38,15 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
     let [minute,setMinute] = useState('00분');
 
 
+
+
     let [dateInput , setDateInput] = useState('');
     let [regexDate, setRegexDate] = useState('');
     let [selectDisabled, setSelectDisabled]  = useState(true);
 
+  useEffect(()=>{
+    console.log(checkSeq);
+  },[checkSeq])
         // 반학생 리스트
     useEffect(()=>{
     
@@ -51,7 +59,7 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
                     arr.push(list.class_name);
                 })
 
-                setClassList([...arr])
+                setClassList([...arr]);
                 setStuList(res.data.usr_list);
             })   
         
@@ -96,6 +104,7 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
             window.alert('내용을 입력하세요')
             return;
         }
+     
 
         return validation;
     }
@@ -106,6 +115,7 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
         let newMinute = minute.replace('분','');
         let nt_reserve = `${newDate} ${newHour}:${newMinute}`;
         
+        console.log(encodingFiles);
         if(!checkForm()){
             return false;
         }else{
@@ -114,10 +124,8 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
 
             ajax("/notice.php", { data : {
                 mode : 'notice_write',
-                nt_to : checkState,
-                nt_to_class : 142966200389505901,
+                nt_to : checkSeq,
                 nt_title : writeTit,
-                nt_reserve : nt_reserve,
                 nt_content : JSON.stringify(editorContents),
                 nt_files : encodingFiles,
             }}).then(res=>{
@@ -161,9 +169,11 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
 
     const changeCheckState = (checked,list) => {
         if(checked){
-            setCheckState([...checkState, list]);
+            setCheckState([...checkState, list.usr_name]);
+            setCheckSeq([...checkSeq, list.usr_seq])
         }else{
-            setCheckState(checkState.filter(item => item !== list));
+            setCheckState(checkState.filter(item => item !== list.usr_name));
+            setCheckSeq(checkSeq.filter(item => item !== list.usr_seq));
         }
     }
 
@@ -289,7 +299,7 @@ return (
                                         <input 
                                         type="checkbox" 
                                         id={list.usr_seq}
-                                        onChange={(e)=>changeCheckState(e.target.checked,list.usr_name)}
+                                        onChange={(e)=>changeCheckState(e.target.checked,list)}
                                         checked={checkState.includes(list.usr_name)}
                                         />
                                     <label htmlFor={list.usr_seq}>{list.usr_name}</label>
