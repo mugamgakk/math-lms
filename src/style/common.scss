@@ -214,10 +214,16 @@
 
 // 학생별 수업관리 - 수업관리
 .detailClass.classManagement{
+    .table-wrap{
+        table{
+            td.disabled{
+                background: gray;
+            }
+        }
+    }
     .btn{
         min-width:  80px;
     }
-   
     .progressModal{
         width: 1000px;
         &-body{
@@ -292,15 +298,11 @@
                 }                
             }
             table{
-              thead{
-                  tr{
-                      td{
-                          background: #ccc;
-                          border-right: 1px solid #ddd;
-                      }
-                  }
-              }
-              
+                td{
+                    background: #ccc;
+                    border-right: 1px solid #ddd;
+                }
+           
                 .toggleWrap{
                     .buttonWrap{
                         position: relative;

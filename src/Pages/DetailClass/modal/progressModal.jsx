@@ -25,12 +25,12 @@ function ProgressModal({setProgressState,name}){
     useEffect(()=>{
         ajax("/class_result.php", { data : {
             mode : 'qa_prog',
-            usr_seq : 80,
+            usr_seq : 594,
             bk_cd : 'm11-co1'
         }
         }).then(res=>{
             console.log(res);
-        }).catch((error)=>{
+        }).catch(error=>{
             console.log(error);
         })
     },[]);

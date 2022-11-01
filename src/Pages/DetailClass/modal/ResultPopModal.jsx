@@ -1,9 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import ajax from "../../../ajax";
 
 
 let data = new Array(20).fill().map((v,i)=> i );
 
 function ResultPopMoal({setResultPopMo,title='강수학/중2-1개념서/I. 수와 연산/1. 소인수분해/개념 확인'}) {
+
+    useEffect(()=>{
+        ajax("/class_pop.php", { data : {
+            mode : 'qa_result',
+            usr_seq : 80,
+            bk_cd : '15m11coa11',
+            sd_kind : 'CO'
+        }
+        }).then(res=>{
+            console.log(res);
+        }).catch((error)=>{
+            console.log(error);
+        })
+    },[]);
+
+
     return ( 
             <div className="modal">
                 <div className="dim"></div>

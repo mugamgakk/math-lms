@@ -1,60 +1,69 @@
-import React, { useState, memo } from "react";
+import React, { useState, memo, useEffect } from "react";
+import ajax from "../../../ajax";
 import ProgressModal from '../modal/progressModal';
 import CreationModal from '../modal/CreationModal';
 import ResultPopModal from '../modal/ResultPopModal';
-// 맞춤 클리닉 학습결과팝업
-import ResultPopModalClinic from '../modal/ResultPopModal_clinic';
-// 중등 아르케 학습결과팝업
-import ResultPopModalMS from '../modal/ResultPopModal_ms';
 
 import { useMemo } from "react";
 
-let daedanwon = { 
-      tit : 'I. 수와 연산',
-      sodanwon : [
-        {   name : '1. 소인수분해',
-            state1 : '100%',
-            state2 : '33%',
-            state3 : {
-                assessment : false,
-                newplay : true,
-            },
+// let daedanwon = { 
+//       tit : 'I. 수와 연산',
+//       sodanwon : [
+//         {   name : '1. 소인수분해',
+//             state1 : '100%',
+//             state2 : '33%',
+//             state3 : {
+//                 assessment : false,
+//                 newplay : true,
+//             },
             
-            state4 : '24/30',
-            state5 : '5/25',
-            testReturn : true,
-        },
-        {   
-            name : '2. 최대공약수',
-            state1 : '100%',
-            state2 : '33%',
-            state3 : {
-                assessment : true,
-                uds : 5,
-                send : 10,
-                newplay : false,
-            },
-            state4 : '24/30',
-            state5 : '5/25',
+//             state4 : '24/30',
+//             state5 : '5/25',
+//             testReturn : true,
+//         },
+//         {   
+//             name : '2. 최대공약수',
+//             state1 : '100%',
+//             state2 : '33%',
+//             state3 : {
+//                 assessment : true,
+//                 uds : 5,
+//                 send : 10,
+//                 newplay : false,
+//             },
+//             state4 : '24/30',
+//             state5 : '5/25',
 
-        },
-        {   
-            name : '4. 최대공약수',
-            state1 : '100%',
-            state2 : '33%',
-            state3 : undefined,
-            state4 : '24/30',
-            state5 : '5/25',
+//         },
+//         {   
+//             name : '4. 최대공약수',
+//             state1 : '100%',
+//             state2 : '33%',
+//             state3 : undefined,
+//             state4 : '24/30',
+//             state5 : '5/25',
 
-        },
-      ]        
-    }
+//         },
+//       ]        
+//     }
 
 function ClassManagement({clickStudent}){
     let [progressMo, setProgressState] = useState(false);
     let [creationMo, setCreationMo] = useState(false);
- 
+    let [data, setData] = useState(null);
 
+    useEffect(()=>{
+        ajax("/class_manage.php", { data : {
+            mode : 'unit_list',
+            usr_seq : 80,
+        }
+        }).then(res=>{
+            setData(res.data);
+            console.log(res.data)
+        }).catch((error)=>{
+            console.log(error);
+        })
+    },[]);
     
     return(
         <div className='detailClass classManagement'>
@@ -78,6 +87,8 @@ function ClassManagement({clickStudent}){
 
             } */}
            
+           <div className="table-wrap">
+
             <table className='mt-5'>
             <colgroup>
                <col style={{ width : '150px'}}/>
@@ -97,88 +108,95 @@ function ClassManagement({clickStudent}){
                     <th>맞춤 클리닉</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr style={{ background:'gray' }}>
-                    <td colSpan={8}>{daedanwon.tit}</td>
-                </tr>
-                {
-                    daedanwon.sodanwon.map(data=>{
-                        return <Tr 
-                        key={data.name}
-                        data={data} 
-                       />
-                    })
-                }
-            </tbody>
-
-                
+            {
+                data && data.map(a=>{
+                    return(
+                        <tbody key={a}>
+                             <tr style={{ background:'gray' }}>
+                                <td colSpan={8}>{a.unit1}</td>
+                            </tr>
+                            {
+                                a.unit2.map(b=>{
+                                    return(
+                                        <Tr 
+                                        key={a.title}
+                                        data={b} 
+                                        />
+                                    )
+                                })
+                            }
+                        </tbody>
+                    )
+                })
+            }
             </table>
+            </div>
         </div>
     )
 }
 
-    const Tr = memo(({data}) => {
-        let [resultPopMo, setResultPopMo] = useState(false);
-        let [resultPopMS, setResultPopMS] = useState(false);
+const Tr = memo(({data}) => {
+
+    let [resultPop, setResultPop] = useState(false);
 
     return(
-        <tr>
-            <td>{data.name}</td>
-            <td>{data.state1}</td>
-            <td>{data.state2}<button className="btn">재응시</button>
+        <tr>         
+            <td>{data.title}</td>
+            <td className={!data.state1 && 'disabled'}>{data.state1}</td>
+            <td>{data.state2.score}
+                <button className={data.state2.avail ? 'btn' : 'btn disabled'}>재응시({data.state2.retry})</button>
             </td>
-            <td>
+            <td className={!Object.keys(data.state3).length && 'disabled'}>
                 {
-                    data.state3 && (
-                        <div className="btn-wrap">
-                        <button className={ data.state3.newplay ? 'btnPlay new' : 'btnPlay'} >play</button>
-                        <button className='btnDown'>down</button>
-                        </div>
+                    !Object.keys(data.state3).length == 0 
+                    ?  ( data.state3.file_url ? (
+                            <>
+                            <div className="btn-wrap">
+                                <button>play</button>
+                                <button>down</button>
+                            </div>
+                            <button className={data.state3.avail ? 'btn' : 'btn disabled'}>이해:{data.state3.uds} 전달:{data.state3.send}</button>
+                            </>
+                        ) : (
+                            <>
+                                <div>-</div>
+                                <button className='btn'>수행 평가</button>
+                            </>
+                        )
                     )
+                    : null 
                 }
-                {
-                    data.state3 ?  data.state3?.assessment ? (
-                        <div>
-                            <button className='evalBtn btn'>
-                            이해:{data.state3.uds} 전달:{data.state3.send}
-                            </button>
-                        </div>
-                    ) : <button className='evalBtn btn'>수행 평가</button> 
-                    : null
-                }
-
+              
+                
             </td>
             <td>
-                { data.state4}
-                <button className='btn' onClick={ ()=>setResultPopMo(true) }>재응시</button>
-                {
-                resultPopMo && 
-                <ResultPopModal 
-                setResultPopMo={setResultPopMo}
-                />
-            }
+                {data.state4.score}
+                <button className={data.state4.avail ? 'btn' : 'btn disabled'}>재응시({data.state4.retry})</button>
             </td>
-            <td>
-                <div>{data.state5}</div>
-                <button className='btn'>인쇄</button>
-                { data.testReturn && <button className='btn' onClick={()=>setResultPopMS(true)}>재응시</button> }
-                {
-                resultPopMS && 
-                <ResultPopModalMS 
-                setResultPopMo={setResultPopMS}
-                />
+            <td className={!Object.keys(data.state5).length && 'disabled'}>
+            {
+                    !Object.keys(data.state5).length == 0 
+                    ?  ( data.state5.avail ? (
+                            <>
+                                <div>{data.state5.score}</div>
+                                <button className="btn">인쇄</button>
+                                <button className="btn">재응시({data.state5.retry})</button>
+                            </>
+                        ) : (
+                                <div>-</div>
+                        )
+                    )
+                    : null 
                 }
             </td>
+            
             <td>
-                <button className='btn'>학습 완료</button>
-                <button className='btn'>학습 태도</button>
+                <button className="btn">학습 완료</button>
+                <button className="btn">학습 태도</button>
             </td>
-            <td>
-                <input type="checkbox" />
-            </td>
+            <td><input type='checkbox'/></td>
         </tr>
-    )
-    
+        )
     }
 )
 export default ClassManagement;
