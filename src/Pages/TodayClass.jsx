@@ -100,19 +100,19 @@ function TodayClass(){
             </tbody>
             </table>
             { (!skeleton && findTodayList) &&
-                findTodayList.map((a) => {
+                findTodayList.map((a,i) => {
                     return (
-                        <div className="todayWrap">
+                        <div className="todayWrap" key={i}>
                             <span className="name">{a.name}</span>
                             <div>
-                                {a.book.map((a) => {
+                                {a.book.map((a,i) => {
                                     return (
-                                        <div className="bookTitWrap">
+                                        <div className="bookTitWrap" key={i}>
                                             <span className="bookTit">{a.bookTit}</span>
                                             <div className="classTitWrap"> 
-                                                {a.className.map((a) => {
+                                                {a.className.map((a,i) => {
                                                     return (
-                                                        <div className="stateWrap">
+                                                        <div className="stateWrap" key={i}>
                                                             <span className="classTit">{a.tit}</span>
                                                             <Tr 
                                                             key={a.tit} 
