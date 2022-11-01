@@ -59,6 +59,7 @@ function Login() {
                         ajax("/user.php", {
                             data: data,
                         }).then((res) => {
+                            localStorage.setItem("isLogin", "true");
                             window.location = "/";
                         });
                     } else {
