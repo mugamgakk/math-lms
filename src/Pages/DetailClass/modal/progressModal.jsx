@@ -23,13 +23,13 @@ function ProgressModal({setProgressState,name}){
     let [progressData,setProgressData] = useState(null);
 
     useEffect(()=>{
-        ajax("/class_result.php?mode=qa_prog", {
+        ajax("/class_result.php", { data : {
+            mode : 'qa_prog',
             usr_seq : 80,
             bk_cd : 'm11-co1'
-        
+        }
         }).then(res=>{
             console.log(res);
-            // setData(res.data);
         }).catch((error)=>{
             console.log(error);
         })
