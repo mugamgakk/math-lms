@@ -20,8 +20,7 @@ function Attendance() {
     // 초기값
     let initialData = useRef();
 
-    const updateData = useCallback(
-        ({ _id, attendance, reason }) => {
+    const updateData = useCallback(({ _id, attendance, reason }) => {
             if (attendance) {
                 let copy = [...list];
                 copy.forEach((att) => {
@@ -41,9 +40,7 @@ function Attendance() {
                 });
                 setList(copy);
             }
-        },
-        [list]
-    );
+        },[list]);
 
     useEffect(() => {
         axios.post("http://192.168.11.178:8080/attendace/list").then((res) => {
@@ -134,8 +131,7 @@ function Attendance() {
                                         key={ele._id}
                                     />
                                 );
-                            })
-                        }
+                            })}
                     </tbody>
                 </table>
 

@@ -9,26 +9,21 @@ const useStudentsStore = create(set=>({
     classList : [],
     getStudentsData : async (classCd, queryStr)=>{
 
-      const url = "/class_st.php/?mode=student_list"
-      const param = {
+      const url = "/class_st.php"
+      const data = {
+        mode: "student_list",
         class_cd : classCd,
         qstr : queryStr
       }
 
-      const res = await ajax(url,param);
-
+      const res = await ajax(url, {data});
 
       if(res.data.ok === 0){
-        localStorage.removeItem("lmsLogin")
+        localStorage.removeItem("isLogin")
         window.location = "/login"
       }
 
       const {class_list , student_list} = res.data;
-      let classArr = [];
-
-      class_list.forEach(a=>{
-        classArr.push(a.class_name);
-      })
 
       return set (state=> ({user : arrSort(student_list, "um_nm"), classList : class_list}))
     },
