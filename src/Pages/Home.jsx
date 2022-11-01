@@ -2,7 +2,7 @@ import React, { useMemo, useState, useEffect } from "react";
 import { useCallback } from "react";
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import ajax from "../ajax";
-import SelectBase from "../components/ui/select/SelectBase";
+import LnbLookup from "./Home/LnbLookup";
 
 const nav = [
     { name: "출석체크", href: "attendance" },
@@ -15,8 +15,6 @@ const nav = [
     { name: "components guide", href: "components" },
 ];
 
-const arr = new Array(22).fill(2);
-
 function Home() {
 
     let [userId, setUserId] = useState("");
@@ -27,18 +25,18 @@ function Home() {
         ajax("/user.php", {
             data: { mode: "logout" },
         })
-        .then(()=>{
-            localStorage.removeItem("isLogin")
-            window.location = "/login";
-        })
-    },[])
+            .then(() => {
+                localStorage.removeItem("isLogin")
+                window.location = "/login";
+            })
+    }, [])
 
     useEffect(() => {
         ajax("/user.php", {
             data: { mode: "login" },
         }).then((res) => {
             // console.log(res)
-            if(res.data.ok === -1){
+            if (res.data.ok === -1) {
                 setUserId(res.data.user_id)
             }
 
@@ -50,7 +48,7 @@ function Home() {
 
     }, []);
 
-  
+
 
     return (
         <main>
@@ -68,7 +66,7 @@ function Home() {
                                 <li onClick={logoutFn}>로그아웃</li>
                             </ul>
                         </div>
-         
+
                     </div>
                 </div>
             </header>
@@ -82,35 +80,25 @@ function Home() {
                             <button className="lnb-toggle--btn">on</button>
                         </div>
                     </div>
-                    <div className="lnb-lookup">
-                        <div className="border-bottom p-2">
-                            <SelectBase width="70px" defaultValue="본부"/>
-                            <SelectBase width="150px" defaultValue="캠퍼스를 선택하세요"/>
-                        </div>
-                        <div className="p-2">
-                            <input type="text" className="form-control mb-1" style={{width : "75%"}} placeholder="키워드를 입력하세요" />
-                            <button className="btn">조회</button>
-                            <SelectBase width="100%" defaultValue="캠퍼스를 선택하세요"/>
-                        </div>
-                    </div>
+                    <LnbLookup />
                     <div className="lnb-list">
                         <h4 className="lnb-title">수학 학습 관리</h4>
                         <ul>
                             {
-                                nav.map(a=>{
+                                nav.map(a => {
                                     return (
-                                    <li key={a.name} className={`lnb-item ${window.location.pathname === "/" + a.href ? "active" : "" }`}>
-                                        <Link to={`/${a.href}`}>{a.name}</Link>
-                                    </li>)
+                                        <li key={a.name} className={`lnb-item ${window.location.pathname === "/" + a.href ? "active" : ""}`}>
+                                            <Link to={`/${a.href}`}>{a.name}</Link>
+                                        </li>)
                                 })
                             }
-                            
+
                         </ul>
                     </div>
                 </nav>
                 <div className="content col-10">
 
-                        {/* <div className="table">
+                    {/* <div className="table">
                             <table>
                                 <thead>
                                     <tr>

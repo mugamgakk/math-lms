@@ -6,7 +6,7 @@ import ajax from "../../ajax";
 
 const options = ["출석", "지각", "조퇴", "결석"];
 
-const AttendanceDay = memo(({ item, changeData, setModal, firstDay, clickStudent }) => {
+const AttendanceDay = memo(({ item, changeData, setModal}) => {
     let obj = {
         P: "출석",
         L: "지각",
@@ -36,10 +36,7 @@ const AttendanceDay = memo(({ item, changeData, setModal, firstDay, clickStudent
                         options={options}
                     />
                     {item.attd && item.attd !== "P" ? (
-                        <button className="btn" onClick={async ()=>{
-
-           
-
+                        <button className="btn" onClick={async () => {
                             setModal(true);
                         }}>사유보기</button>
                     ) : (

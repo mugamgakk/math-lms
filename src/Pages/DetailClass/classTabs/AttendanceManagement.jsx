@@ -65,31 +65,30 @@ function AttendanceManagement() {
     const saveAttendance = async () => {
         let arr = [];
 
-        // console.log(data)
-
         data.forEach((a) => {
             if (typeof a === "object") {
+                delete a.daynum
                 arr.push(a);
             }
         });
 
         const param = {
             mode: "update",
-            usr_seq: clickStudent.usr_seq,
+            usr_seq: parseInt(clickStudent.usr_seq),
             list: arr,
         };
 
-        console.log(param);
+        // console.log(param);
 
         const res = await ajax("/class_daily.php", { data: param });
 
-        console.log(res);
+        // console.log(res);
     };
 
     return (
         <>
             {modal && (
-                <AttendanceReason firstDay={firstDay} setModal={setModal} clickStudent={clickStudent}/>
+                <AttendanceReason firstDay={firstDay} setModal={setModal} clickStudent={clickStudent} />
             )}
 
             <header className="fj">
@@ -138,19 +137,18 @@ function AttendanceManagement() {
             </table>
             <div style={{ display: "flex", flexWrap: "wrap" }}>
                 <BeforeMonth firstDay={firstDay} />
-                {data &&
-                    data.map((a, i) => {
+                {
+                    data && data.map((a, i) => {
                         return (
                             <AttendanceDay
                                 item={a}
                                 key={i}
                                 changeData={changeData}
                                 setModal={setModal}
-                                firstDay={firstDay}
-                                clickStudent={clickStudent}
                             />
                         );
-                    })}
+                    })
+                }
 
                 <NextMonth firstDay={firstDay} />
             </div>

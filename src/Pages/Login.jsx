@@ -34,8 +34,7 @@ function Login() {
             mode: "login",
             user_gb: loginType,
             user_id: textValue.id,
-            user_pw: textValue.password,
-            force_mode: "Y",
+            user_pw: textValue.password
         };
 
         ajax("/user.php", {
@@ -43,7 +42,7 @@ function Login() {
         }).then((res) => {
             setLoading(false);
 
-            // console.log(res);
+            console.log(res);
 
             switch (res.data.ok) {
                 // 로그인 완료
