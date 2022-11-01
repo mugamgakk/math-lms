@@ -10,6 +10,7 @@ function ClassManagement({clickStudent}){
     let [progressMo, setProgressState] = useState(false);
     let [creationMo, setCreationMo] = useState(false);
     let [data, setData] = useState(null);
+
     useEffect(()=>{
         ajax("/class_manage.php", { data : {
             mode : 'unit_list',
@@ -23,6 +24,7 @@ function ClassManagement({clickStudent}){
         })
     },[]);
 
+    // 학습 완료
     const studyDone = useCallback((ucode) => {
         ajax("/class_manage.php", { data : {
             mode : 'retry',
@@ -37,6 +39,7 @@ function ClassManagement({clickStudent}){
         })
     },[]);
 
+    // 재응시
     const retry = useCallback((ucode)=>{
         ajax("/class_manage.php", { data : {
             mode : 'retry',
@@ -126,9 +129,9 @@ const Tr = memo(({data,studyDone,ucode,retry}) => {
             <td>{data.state2.score}
                 <button className={data.state2.avail ? 'btn' : 'btn disabled'}>재응시({data.state2.retry})</button>
             </td>
-            <td className={!Object.keys(data.state3).length ? 'disabled' : ''}>
+            <td className={Object.keys(data.state3).length == 0 ? 'disabled' : ''}>
                 {
-                    !Object.keys(data.state3).length == 0 
+                    Object.keys(data.state3).length !== 0 
                     ?  ( data.state3.file_url ? (
                             <>
                             <div className="btn-wrap">
@@ -161,9 +164,9 @@ const Tr = memo(({data,studyDone,ucode,retry}) => {
                     resultPop && <ResultPopModal setResultPop={setResultPop} />
                 }
             </td>
-            <td className={!Object.keys(data.state5).length ? 'disabled' : ''}>
+            <td className={Object.keys(data.state5).length == 0 ? 'disabled' : ''}>
             {
-                    !Object.keys(data.state5).length == 0 
+                    Object.keys(data.state5).length !== 0 
                     ?  ( data.state5.avail ? (
                             <>
                                 <div>{data.state5.score}</div>
