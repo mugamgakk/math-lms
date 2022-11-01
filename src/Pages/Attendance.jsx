@@ -1,15 +1,13 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { memo } from "react";
+import { useCallback } from "react";
 import { useRef } from "react";
 import { useEffect } from "react";
 import ContentHeader from "../components/ContentHeader";
 import DateNext from "../components/DateNext";
 import SearchBtn from "../components/ui/button/SearchBtn";
 import ClassSelect from "../components/ui/select/ClassSelect";
-import SelectBase from "../components/ui/select/SelectBase";
-
-const options = ["출석", "지각", "조퇴", "결석"];
+import AttendanceTableList from "./Attendance/AttendanceTableList";
 
 function Attendance() {
     // 리스트
@@ -19,8 +17,33 @@ function Attendance() {
     let [date, setDate] = useState(new Date());
     // 검색어
     let [search, setSearch] = useState("");
-
+    // 초기값
     let initialData = useRef();
+
+    const updateData = useCallback(
+        ({ _id, attendance, reason }) => {
+            if (attendance) {
+                let copy = [...list];
+                copy.forEach((att) => {
+                    if (att._id === _id) {
+                        att.attendance = attendance;
+                    }
+                });
+                setList(copy);
+            }
+
+            if (reason || reason === "") {
+                let copy = [...list];
+                copy.forEach((att) => {
+                    if (att._id === _id) {
+                        att.reason = reason;
+                    }
+                });
+                setList(copy);
+            }
+        },
+        [list]
+    );
 
     useEffect(() => {
         axios.post("http://192.168.11.178:8080/attendace/list").then((res) => {
@@ -52,10 +75,10 @@ function Attendance() {
                                 className="btn"
                                 onClick={() => {
                                     let copy = [...list];
-                                    copy.forEach(a=>{
+                                    copy.forEach((a) => {
                                         a.attendance = "출석";
-                                        a.reason = ""
-                                    })
+                                        a.reason = "";
+                                    });
                                     setList(copy);
                                 }}
                             >
@@ -92,25 +115,29 @@ function Attendance() {
                     </div>
                 </header>
 
-                <div className="table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th style={{ width: "25%" }}>학생명(아이디)</th>
-                                <th style={{ width: "15%" }}>출결 체크</th>
-                                <th style={{ width: "60%" }}>출결 사유</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody style={{ maxHeight: "400px" }}>
-                            {list.map((ele, index) => {
+                <table>
+                    <thead>
+                        <tr>
+                            <th style={{ width: "25%" }}>학생명(아이디)</th>
+                            <th style={{ width: "15%" }}>출결 체크</th>
+                            <th style={{ width: "60%" }}>출결 사유</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            list.map((ele) => {
                                 return (
-                                    <Tr list={list} setList={setList} index={index} key={ele._id} />
+                                    <AttendanceTableList
+                                        updateData={updateData}
+                                        ele={ele}
+                                        key={ele._id}
+                                    />
                                 );
-                            })}
-                        </tbody>
-                    </table>
-                </div>
+                            })
+                        }
+                    </tbody>
+                </table>
 
                 <div>
                     <button
@@ -126,50 +153,5 @@ function Attendance() {
         </>
     );
 }
-
-const Tr = memo(({ list, index, setList, allCheck }) => {
-    let [disable, setDisable] = useState(false);
-
-    const ele = list[index];
-
-    useEffect(() => {
-        // 선택/출석 사유 입력 영역 비활성화
-        if (ele.attendance === null || ele.attendance === "출석") {
-            setDisable(true);
-        } else {
-            setDisable(false);
-        }
-    }, [list]);
-
-    return (
-        <tr>
-            <td style={{ width: "25%" }}>{ele.name}</td>
-            <td style={{ width: "15%" }}>
-                <SelectBase
-                    value={ele.attendance}
-                    options={options}
-                    onChange={(data) => {
-                        let copy = [...list];
-                        copy[index].attendance = data;
-                        setList(copy);
-                    }}
-                />
-            </td>
-            <td style={{ width: "60%" }}>
-                <input
-                    type="text"
-                    className="form-control"
-                    value={ele.reason}
-                    disabled={disable}
-                    onChange={(e) => {
-                        let copy = [...list];
-                        copy[index].reason = e.target.value;
-                        setList(copy);
-                    }}
-                />
-            </td>
-        </tr>
-    );
-});
 
 export default Attendance;
