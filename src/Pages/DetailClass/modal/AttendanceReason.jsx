@@ -27,11 +27,7 @@ function AttendanceReason({ setModal, clickStudent, firstDay, clickDay }) {
             reason,
         };
 
-        console.log(param)
-
         const res = await ajax("/class_daily.php", { data: param });
-
-        console.log(res)
 
         setModal(false);
     };
@@ -44,8 +40,6 @@ function AttendanceReason({ setModal, clickStudent, firstDay, clickDay }) {
             usr_seq: clickStudent.usr_seq,
             ymd: 날짜,
         };
-
-        console.log(data)
 
         const res = await ajax("/class_daily.php", { data });
         console.log(res);
