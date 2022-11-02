@@ -42,7 +42,7 @@ function AttendanceReason({ setModal, clickStudent, firstDay, clickDay }) {
         };
 
         const res = await ajax("/class_daily.php", { data });
-        console.log(res);
+        // console.log(res);
         let comment = res.data.reason;
 
         setReason(comment ?? "");
