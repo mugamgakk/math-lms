@@ -3,49 +3,8 @@ import ajax from "../../../ajax";
 import ProgressModal from '../modal/progressModal';
 import CreationModal from '../modal/CreationModal';
 import ResultPopModal from '../modal/ResultPopModal';
+import { useCallback } from "react";
 
-import { useMemo } from "react";
-
-// let daedanwon = { 
-//       tit : 'I. 수와 연산',
-//       sodanwon : [
-//         {   name : '1. 소인수분해',
-//             state1 : '100%',
-//             state2 : '33%',
-//             state3 : {
-//                 assessment : false,
-//                 newplay : true,
-//             },
-            
-//             state4 : '24/30',
-//             state5 : '5/25',
-//             testReturn : true,
-//         },
-//         {   
-//             name : '2. 최대공약수',
-//             state1 : '100%',
-//             state2 : '33%',
-//             state3 : {
-//                 assessment : true,
-//                 uds : 5,
-//                 send : 10,
-//                 newplay : false,
-//             },
-//             state4 : '24/30',
-//             state5 : '5/25',
-
-//         },
-//         {   
-//             name : '4. 최대공약수',
-//             state1 : '100%',
-//             state2 : '33%',
-//             state3 : undefined,
-//             state4 : '24/30',
-//             state5 : '5/25',
-
-//         },
-//       ]        
-//     }
 
 function ClassManagement({clickStudent}){
     let [progressMo, setProgressState] = useState(false);
@@ -64,6 +23,36 @@ function ClassManagement({clickStudent}){
             console.log(error);
         })
     },[]);
+
+    // 학습 완료
+    const studyDone = useCallback((ucode) => {
+        ajax("/class_manage.php", { data : {
+            mode : 'retry',
+            ucode : ucode,
+            usr_seq : 80
+        }
+        }).then(res=>{
+            console.log(res)
+            return 1;
+        }).catch((error)=>{
+            console.log(error);
+        })
+    },[]);
+
+    // 재응시
+    const retry = useCallback((ucode)=>{
+        ajax("/class_manage.php", { data : {
+            mode : 'retry',
+            ucode : ucode,
+            sd_kind : 'CO'
+        }
+        }).then(res=>{
+            console.log(res)
+            return 1;
+        }).catch((error)=>{
+            console.log(error);
+        })
+    },[])
     
     return(
         <div className='detailClass classManagement'>
@@ -78,15 +67,6 @@ function ClassManagement({clickStudent}){
             {
                 creationMo && <CreationModal setCreationMo={setCreationMo} name={clickStudent.name}/>
             }
-
-            {/* 아르케 학습일 경우 단일 행 모달 */}
-            {/* {
-                progressMo && 
-                ( 아르케 ? <ProgressModalV2 setProgressState={setProgressState} name={clickStudent.name}/> 
-                : <ProgressModal setProgressState={setProgressState} name={clickStudent.name}/> )
-
-            } */}
-           
            <div className="table-wrap">
 
             <table className='mt-5'>
@@ -121,6 +101,9 @@ function ClassManagement({clickStudent}){
                                         <Tr 
                                         key={a.title}
                                         data={b} 
+                                        studyDone={studyDone}
+                                        retry={retry}
+                                        ucode={a.ucode}
                                         />
                                     )
                                 })
@@ -135,20 +118,20 @@ function ClassManagement({clickStudent}){
     )
 }
 
-const Tr = memo(({data}) => {
+const Tr = memo(({data,studyDone,ucode,retry}) => {
 
     let [resultPop, setResultPop] = useState(false);
 
     return(
         <tr>         
             <td>{data.title}</td>
-            <td className={!data.state1 && 'disabled'}>{data.state1}</td>
+            <td className={!data.state1 ? 'disabled' : ''}>{data.state1}</td>
             <td>{data.state2.score}
                 <button className={data.state2.avail ? 'btn' : 'btn disabled'}>재응시({data.state2.retry})</button>
             </td>
-            <td className={!Object.keys(data.state3).length && 'disabled'}>
+            <td className={Object.keys(data.state3).length == 0 ? 'disabled' : ''}>
                 {
-                    !Object.keys(data.state3).length == 0 
+                    Object.keys(data.state3).length !== 0 
                     ?  ( data.state3.file_url ? (
                             <>
                             <div className="btn-wrap">
@@ -169,13 +152,21 @@ const Tr = memo(({data}) => {
               
                 
             </td>
-            <td>
+            <td onClick={()=>setResultPop(true)}>
                 {data.state4.score}
-                <button className={data.state4.avail ? 'btn' : 'btn disabled'}>재응시({data.state4.retry})</button>
+                <button 
+                className={data.state4.avail ? 'btn' : 'btn disabled'}
+                onClick={(e)=>{
+                    e.stopPropagation();
+                    retry(ucode);
+                    }}>재응시({data.state4.retry})</button>
+                {
+                    resultPop && <ResultPopModal setResultPop={setResultPop} />
+                }
             </td>
-            <td className={!Object.keys(data.state5).length && 'disabled'}>
+            <td className={Object.keys(data.state5).length == 0 ? 'disabled' : ''}>
             {
-                    !Object.keys(data.state5).length == 0 
+                    Object.keys(data.state5).length !== 0 
                     ?  ( data.state5.avail ? (
                             <>
                                 <div>{data.state5.score}</div>
@@ -191,7 +182,7 @@ const Tr = memo(({data}) => {
             </td>
             
             <td>
-                <button className="btn">학습 완료</button>
+                <button className='btn' onClick={()=>studyDone(ucode)}>학습 완료</button>
                 <button className="btn">학습 태도</button>
             </td>
             <td><input type='checkbox'/></td>
