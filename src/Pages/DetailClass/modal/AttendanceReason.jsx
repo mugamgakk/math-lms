@@ -27,6 +27,8 @@ function AttendanceReason({ setModal, clickStudent, firstDay, clickDay }) {
             reason,
         };
 
+        console.log(param)
+
         const res = await ajax("/class_daily.php", { data: param });
 
         console.log(res)
@@ -47,7 +49,7 @@ function AttendanceReason({ setModal, clickStudent, firstDay, clickDay }) {
 
         const res = await ajax("/class_daily.php", { data });
         console.log(res);
-        let comment = res.data[0].dc_comment;
+        let comment = res.data.reason;
 
         setReason(comment ?? "");
     };
