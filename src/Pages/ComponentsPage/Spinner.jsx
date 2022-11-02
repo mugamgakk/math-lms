@@ -16,11 +16,17 @@ function Spinner() {
         <div className="sweet-loading">
             <button className="btn" onClick={() => setLoading(!loading)}>Toggle Loader</button>
 
-            <FadeLoader color={"blue"} loading={loading} cssOverride={override} size={150} />
-
+            <FadeLoader color={"#ccc"} loading={loading} cssOverride={override} size={150} />
             <pre>
                 {
                     `
+                    import FadeLoader from "react-spinners/FadeLoader";
+                    // https://www.davidhu.io/react-spinners/
+
+                    let [loading, setLoading] = useState(true);
+
+                    <FadeLoader color={"#ccc"} loading={loading} cssOverride={override} size={150} />
+
                         color : 색상
 
                         loading : 보여주고 안보여주기 (boolean)

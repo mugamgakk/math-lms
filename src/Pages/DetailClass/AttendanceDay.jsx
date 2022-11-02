@@ -1,12 +1,11 @@
 import React, { memo } from "react";
 import SelectBase from "../../components/ui/select/SelectBase";
 import { Box } from "./classTabs/AttendanceManagement";
-import dayjs from "dayjs";
-import ajax from "../../ajax";
 
 const options = ["출석", "지각", "조퇴", "결석"];
+// const todayDate = new Date().getDate();
 
-const AttendanceDay = memo(({ item, changeData, setModal}) => {
+const AttendanceDay = memo(({ item, changeData, setModal, setClickDay}) => {
     let obj = {
         P: "출석",
         L: "지각",
@@ -38,6 +37,7 @@ const AttendanceDay = memo(({ item, changeData, setModal}) => {
                     {item.attd && item.attd !== "P" ? (
                         <button className="btn" onClick={async () => {
                             setModal(true);
+                            setClickDay(item.daynum)
                         }}>사유보기</button>
                     ) : (
                         ""

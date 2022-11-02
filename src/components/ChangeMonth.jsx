@@ -13,7 +13,7 @@ const firstDate = ()=>{
     return dayjs(a);
 }
 
-function ChangeMonth({value = firstDate(), onChange}) {
+function ChangeMonth({value = firstDate(), onChange, clickStudent}) {
 
     let [day, setDay] = useState(value)
 
@@ -33,7 +33,7 @@ function ChangeMonth({value = firstDate(), onChange}) {
 
     useEffect(()=>{
         onChange(day);
-    },[day])
+    },[day, clickStudent])
 
     const {$M, $y} = dayjs(day);
 

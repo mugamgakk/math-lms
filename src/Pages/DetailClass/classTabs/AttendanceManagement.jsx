@@ -7,6 +7,9 @@ import ChangeMonth from "../../../components/ChangeMonth";
 import useStudentsStore from "../../../store/useStudentsStore";
 import AttendanceDay from "../AttendanceDay";
 import AttendanceReason from "../modal/AttendanceReason";
+import FadeLoader from "react-spinners/FadeLoader";
+import { useEffect } from "react";
+import { useRef } from "react";
 
 export const Box = styled.div`
     width: 109.38px;
@@ -15,7 +18,24 @@ export const Box = styled.div`
     padding: 10px;
 `;
 
+const override = {
+    position: "absolute",
+    left: "50%",
+    top: "50%",
+    transform: "translate(-50%, -50%)"
+  }
 
+  const bg = {
+    position : "absolute", 
+    left: 0, 
+    top: 0, 
+    width: "100%", 
+    height : "100%",
+    backgroundColor : "rgba(0,0,0,0.3)",
+    zIndex : 1
+  }
+
+  
 
 function AttendanceManagement() {
     const clickStudent = useStudentsStore((state) => state.clickStudent);
@@ -23,6 +43,11 @@ function AttendanceManagement() {
     // 데이터
     let [firstDay, setFirstDay] = useState(new Date());
     let [modal, setModal] = useState(false);
+    let [clickDay, setClickDay] = useState(1);
+    let [spin, setSpin] = useState(true);
+
+    // 변경유무
+    let changeState = useRef(false);
 
     // 셀렉트 변경시
     const changeData = ({ day, attd }) => {
@@ -30,14 +55,25 @@ function AttendanceManagement() {
 
         copy[day - 1].attd = attd;
 
+        changeState.current = true
+
         setData(copy);
     };
 
     const getData = async (date = new Date()) => {
+        setSpin(true);
         const 날짜 = dayjs(date).format("YYYYMM");
         // 202210
 
         const 마지막날짜 = dayjs(날짜).daysInMonth();
+
+        const dataArr = [];
+
+        for (let i = 1; i <= 마지막날짜; i++) {
+            dataArr.push(i);
+        }
+
+        setData(dataArr)
 
         const data = {
             mode: "view",
@@ -46,10 +82,7 @@ function AttendanceManagement() {
         };
         const res = await ajax("/class_daily.php", { data });
 
-        const dataArr = [];
-
         for (let i = 1; i <= 마지막날짜; i++) {
-            dataArr.push(i);
 
             for (const key of res.data) {
                 if (i === parseInt(key.daynum)) {
@@ -59,15 +92,18 @@ function AttendanceManagement() {
         }
 
         setData(dataArr);
+        setTimeout(()=>{setSpin(false)},300)
+        
     };
 
     // 저장
     const saveAttendance = async () => {
+
         let arr = [];
 
         data.forEach((a) => {
             if (typeof a === "object") {
-                delete a.daynum
+                // delete a.daynum
                 arr.push(a);
             }
         });
@@ -88,7 +124,7 @@ function AttendanceManagement() {
     return (
         <>
             {modal && (
-                <AttendanceReason firstDay={firstDay} setModal={setModal} clickStudent={clickStudent} />
+                <AttendanceReason firstDay={firstDay} setModal={setModal} clickStudent={clickStudent} clickDay={clickDay} />
             )}
 
             <header className="fj">
@@ -111,13 +147,20 @@ function AttendanceManagement() {
                     </button>
                 </div>
                 <ChangeMonth
+                    clickStudent={clickStudent}
                     onChange={(ele) => {
                         getData(ele);
                         setFirstDay(ele);
                     }}
                 />
                 <div>
-                    <button className="btn" onClick={saveAttendance}>
+                    <button className="btn" onClick={()=>{
+                        if(window.confirm("저장하시겠습니까?") === false){
+                            return 
+                        }else{
+                            saveAttendance()
+                        }
+                    }}>
                         출결저장
                     </button>
                 </div>
@@ -135,7 +178,16 @@ function AttendanceManagement() {
                     </tr>
                 </thead>
             </table>
-            <div style={{ display: "flex", flexWrap: "wrap" }}>
+            <div style={{ display: "flex", flexWrap: "wrap", position: "relative" }}>
+                {
+                    spin && (
+                        <div style={bg}>
+                            <FadeLoader color={"#fff"} cssOverride={override} size={150} />
+                        </div>
+                    )
+                }
+                
+
                 <BeforeMonth firstDay={firstDay} />
                 {
                     data && data.map((a, i) => {
@@ -145,6 +197,7 @@ function AttendanceManagement() {
                                 key={i}
                                 changeData={changeData}
                                 setModal={setModal}
+                                setClickDay={setClickDay}
                             />
                         );
                     })
