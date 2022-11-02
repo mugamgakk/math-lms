@@ -23,6 +23,7 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
     // 받는 사람 seq 배열
     let [checkSeq,setCheckSeq] = useState([]);
 
+    
     let [editorContents, setEditorContents] = useState();
     let [writeTit,setWriteTit] = useState('');
     let [to,setTo] = useState(toName);
