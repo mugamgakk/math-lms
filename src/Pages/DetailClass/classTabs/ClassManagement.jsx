@@ -32,8 +32,7 @@ function ClassManagement({clickStudent}){
             usr_seq : 80
         }
         }).then(res=>{
-            console.log(res)
-            return 1;
+            console.log(res);
         }).catch((error)=>{
             console.log(error);
         })
@@ -45,14 +44,16 @@ function ClassManagement({clickStudent}){
             mode : 'retry',
             ucode : ucode,
             sd_kind : 'CO'
-        }
+            }
         }).then(res=>{
-            console.log(res)
+            console.log(res);
             return 1;
         }).catch((error)=>{
             console.log(error);
         })
     },[])
+
+
     
     return(
         <div className='detailClass classManagement'>

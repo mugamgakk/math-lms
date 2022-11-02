@@ -38,7 +38,7 @@ function SendMessage() {
         let { list } = res.data;
 
         console.log(res)
-
+     
         setSendList(list);
      }
 
