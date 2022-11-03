@@ -12,8 +12,8 @@ import { useEffect } from "react";
 import { useRef } from "react";
 
 export const Box = styled.div`
-    width: 109.38px;
-    height: 109.38px;
+    width: 107.83px;
+    height: 107.83px;
     background-color: ${(props) => props.bg};
     padding: 10px;
 `;
