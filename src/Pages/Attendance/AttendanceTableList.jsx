@@ -1,5 +1,6 @@
 import React, {useState, useEffect, memo} from 'react';
 import SelectBase from "../../components/ui/select/SelectBase";
+import {Prompt} from "react-router-dom"
 
 const options = ["출석", "지각", "조퇴", "결석"];
 
