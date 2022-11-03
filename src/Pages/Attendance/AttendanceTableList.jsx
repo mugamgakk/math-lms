@@ -5,7 +5,6 @@ const options = ["출석", "지각", "조퇴", "결석"];
 
 const AttendanceTableList = memo(({updateData, ele})=> {
     let [disable, setDisable] = useState(false);
-    console.log('랜더링');
     useEffect(() => {
         // 선택/출석 사유 입력 영역 비활성화
         if (ele.attendance === null || ele.attendance === "출석") {

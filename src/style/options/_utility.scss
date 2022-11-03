@@ -46,6 +46,12 @@
     align-items: center;
 }
 
+.fc{
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
 .font-12{
     @include font-style(12);
 }
