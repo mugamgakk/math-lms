@@ -65,7 +65,7 @@ function Attendance() {
 
             <div className="bg">
                 <header className="mb-3">
-                    <DateNext value={date} onChange={(ele) => setDate(ele)} />
+                    <DateNext value={date} onChange={ele=>{ setDate(ele) }} />
                     <div className="fj">
                         <div>
                             <button

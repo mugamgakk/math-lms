@@ -18,10 +18,10 @@ const useStudentsStore = create(set=>({
 
       const res = await ajax(url, {data});
 
-      if(res.data.ok === 0){
-        localStorage.removeItem("isLogin")
-        window.location = "/login"
-      }
+      // if(res.data.ok === 0){
+      //   localStorage.removeItem("isLogin")
+      //   window.location = "/login"
+      // }
 
       const {class_list , student_list} = res.data;
 

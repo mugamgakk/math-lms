@@ -1,62 +1,34 @@
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
-import style from "../style/style-module/components.module.scss";
-import { weekChange } from "../methods/methods"
-import { useCallback } from "react";
+import dayjs from 'dayjs';
+import React from 'react';
+import { useCallback } from 'react';
+import { weekChange } from '../methods/methods';
 
-const today = new Date();
+const today = dayjs(new Date()).format("YYYYMMDD");
 
-function DateNext({value = today, onChange}) {
+function DateNext({onChange, value = new Date()}) {
 
-    let year = value.getFullYear(),
-        month = value.getMonth() + 1,
-        date = value.getDate(),
-        day = weekChange(value.getDay());
+    let dateFormat = dayjs(value).format("YYYY.MM.DD");
+    let weekDay =  weekChange(dayjs(value).$W);
 
-    const changeDay = useCallback((param) => {
-        if (param === "prev" && onChange) {
-            onChange(new Date(value.setDate(value.getDate() - 1)));
-        } else if (param === "next" && onChange) {
-            if (value >= new Date(today.setDate(today.getDate() - 1))) {
-                alert("현재월 이후로는 선택이 불가합니다.")
-                return;
-            }
-            onChange(new Date(value.setDate(value.getDate() + 1)));
+    const changeDate = useCallback((num)=>{
+        let dayValue = dayjs(value).format("YYYYMMDD");
+
+        if(num === 1 && today === dayValue){
+            alert("현재월 이후로 넘길수 없습니다.");
+            return;
         }
-    },[value]);
 
+        let {$d : day} = dayjs(value).add(num, "d");
+        onChange && onChange(day);
+    },[value])
 
-    let 날짜 = `${year}. ${month < 10 ? "0" + month : month}. 
-    ${date < 10 ? "0" + date : date} (${day})`;
-
-    return (
-        <div className={style.nextDate}>
-            <div className="fa">
-                <button
-                    type="button"
-                    style={{ fontSize: "30px" }}
-                    className={style.arrow}
-                    onClick={() => {
-                        changeDay("prev");
-                    }}
-                >
-                    <FontAwesomeIcon icon={faAngleLeft} />
-                </button>
-                <strong style={{ position: "relative", top: "-3px" }}>{날짜}</strong>
-                <button
-                    type="button"
-                    style={{ fontSize: "30px" }}
-                    className={style.arrow}
-                    onClick={() => {
-                        changeDay("next");
-                    }}
-                >
-                    <FontAwesomeIcon icon={faAngleRight} />
-                </button>
-            </div>
+    return ( 
+        <div className='fa'>
+            <button className='btn' onClick={()=>{changeDate(-1)}}>좌</button>
+            <h4>{dateFormat} ({weekDay})</h4>
+            <button className='btn' onClick={()=>{changeDate(1)}}>우</button>
         </div>
-    );
+     );
 }
 
 export default DateNext;
