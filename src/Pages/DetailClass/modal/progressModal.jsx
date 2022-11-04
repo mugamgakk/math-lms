@@ -68,7 +68,7 @@ function ProgressModal({setProgressState,name}){
                                         <span className='gageWrap-gage' style={{ width: `${progress.유형}` }}>{progress.유형}</span>
                                         {
                                             per.map(item=>{
-                                                return <div className='gageWrap-item'>{item}</div>
+                                                return <div className='gageWrap-item' key={item}>{item}</div>
                                             })
                                         }
                                     </div>
