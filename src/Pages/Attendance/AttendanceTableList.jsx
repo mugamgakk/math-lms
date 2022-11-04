@@ -1,8 +1,12 @@
 import React, {useState, useEffect, memo} from 'react';
 import SelectBase from "../../components/ui/select/SelectBase";
-import {Prompt} from "react-router-dom"
 
-const options = ["출석", "지각", "조퇴", "결석"];
+const options = [
+    { value: '출석', label: '출석' },
+    { value: '지각', label: '지각' },
+    { value: '조퇴', label: '조퇴' },
+    { value: '결석', label: '결석' },
+];
 
 const AttendanceTableList = memo(({updateData, ele})=> {
     let [disable, setDisable] = useState(false);

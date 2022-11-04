@@ -1,14 +1,23 @@
 import React from "react";
+import { useCallback } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 
 function SelectBase({ width = "130px", onChange, options, value, defaultValue = "선택하세요", disabled }) {
     let [selectOpen, setSelectOpen] = useState(false);
 
-    const openSelect = () => {
+    const openSelect = useCallback(() => {
         if (disabled) return false;
         setSelectOpen(!selectOpen);
-    }
+    },[selectOpen]);
+
+    const setTitle = useCallback(()=>{
+        for(let ele of options){
+            if(ele.value === value || ele.value === value.value){
+                return ele.label
+            }
+        }
+    },[value])
 
     return (
         <div tabIndex={1}
@@ -16,7 +25,7 @@ function SelectBase({ width = "130px", onChange, options, value, defaultValue = 
             className={`select ${selectOpen ? "active" : ""} ${disabled ? "disabled" : ""}`} onBlur={() => { setSelectOpen(false) }}
         >
             <div className="select-view" onClick={openSelect}>
-                <h4>{value ? value.label : defaultValue}</h4>
+                <h4>{value ? setTitle() : defaultValue}</h4>
             </div>
             <div className="select-btn" onClick={openSelect}></div>
             <div className="select-list-box">
