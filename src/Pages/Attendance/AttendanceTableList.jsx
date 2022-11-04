@@ -10,9 +10,10 @@ const options = [
 
 const AttendanceTableList = memo(({updateData, ele})=> {
     let [disable, setDisable] = useState(false);
+    console.log(ele)
     useEffect(() => {
         // 선택/출석 사유 입력 영역 비활성화
-        if (ele.attendance === null || ele.attendance === "출석") {
+        if (ele.attendance === "출석" || ele.attendance.value === "출석") {
             setDisable(true);
         } else {
             setDisable(false);
