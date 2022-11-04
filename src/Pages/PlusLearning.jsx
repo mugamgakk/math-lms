@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import ContentHeader from "../components/ContentHeader";
-import PlusLearningContent from "./PlusLearning/PlusLearningContent";
 import StudentsSearch from "../components/StudentsSearch";
 import useStudentsStore from "../store/useStudentsStore";
+import AlertBox from "../components/AlertBox";
+import Narrative from "./PlusLearning/Narrative";
+import TextBook from "./PlusLearning/TextBook";
 
 function PlusLearning() {
+    const clickStudent = useStudentsStore(state => state.clickStudent)
     let { resetStudent } = useStudentsStore((state) => state);
 
     let [tab, setTab] = useState("서술형");
@@ -43,7 +46,20 @@ function PlusLearning() {
             </div>
             <div className="row">
                 <StudentsSearch />
-                <PlusLearningContent tab={tab} />
+                <div className='bg col-8'>
+
+                    {
+                        clickStudent === null
+                            ? <AlertBox name={tab} bg="pink" />
+                            : (
+                                {
+                                    서술형: <Narrative />,
+                                    교과서: <TextBook />
+                                }[tab]
+                            )
+                    }
+
+                </div>
             </div>
         </>
     );

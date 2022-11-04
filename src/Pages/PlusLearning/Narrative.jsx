@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import SkeletonTable from "../../components/SkeletonTable";
 import PrintModal from "../../components/PrintModal";
+import ajax from "../../ajax";
 
 const 단원 = ["수와 식의 계산", "가나다라 마바사"];
 const 상태 = ["오픈전", "학습중", "학습완료"];
@@ -59,6 +60,25 @@ function Narrative() {
             setSkeleton(false);
         });
     }, [clickStudent]);
+
+    const getList = async()=>{
+
+        const data = {
+            mode : "ct_list",
+            usr_seq : clickStudent.usr_seq,
+            
+        }
+
+        try{
+            let res = await ajax("class_plus.php");
+
+        }catch(msg){
+            alert(msg)
+        }
+    }
+
+    useEffect(()=>{
+    },[])
 
     return (
         <div className="Narrative">

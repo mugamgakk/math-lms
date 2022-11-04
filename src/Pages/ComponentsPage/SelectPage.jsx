@@ -5,6 +5,13 @@ import SelectBase from "../../components/ui/select/SelectBase";
 
 const options = ["김밥", "참치", "고구마"];
 
+const items = [
+    { value: null, label: "선택하세요" },
+    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'strawberry', label: 'Strawberry' },
+    { value: 'vanilla', label: 'Vanilla' },
+];
+
 function SelectPage() {
     let [selectOption, setSelectOption] = useState();
     let [multiSelect, setMultiSelect] = useState();
@@ -17,9 +24,10 @@ function SelectPage() {
             <h2>셀렉트 베이스</h2>
             <SelectBase
                 onChange={(ele) => {
+                    console.log(ele)
                     setSelectOption(ele);
                 }}
-                options={options}
+                options={items}
                 value={selectOption}
             />
 

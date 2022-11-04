@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+import ajax from "../../../ajax";
 import SkeletonTable from "../../../components/SkeletonTable";
 import useLbtStore from "../../../store/useLbtStore";
+import useStudentsStore from "../../../store/useStudentsStore";
 import LbtDayOption from "../LbtDayOption";
 import LbtResultModal from "../modal/LbtResultModal";
 
@@ -8,6 +10,7 @@ function LearningBreakdownTable() {
     let [lbtList, setLbtList] = useState(null);
     let [choiceArr, setChoiceArr] = useState([]);
     let { lbtData, getLbtData, skeleton } = useLbtStore();
+    const clickStudent = useStudentsStore(state=>state.clickStudent)
 
     const checkboxChecked = (checked, item) => {
         if (checked) {
@@ -28,8 +31,43 @@ function LearningBreakdownTable() {
         }
     };
 
+    const getAnalyticsBook = async ()=>{
+        const data = {
+            mode : "analytics_book",
+            sdate : "2022-01-01",
+            edate : "2022-01-31",
+            usr_seq :clickStudent.usr_seq
+        }
+        try{
+            const res = await ajax("/class_result.php", {data});
+
+            console.log(res);
+
+        }catch(err){
+            // console.log(err)
+        }
+    }
+
+    const getAnalyticsList = async ()=>{
+        const data = {
+            mode : "analytics_list",
+            usr_seq :clickStudent.usr_seq
+        }
+
+        
+        try{
+            const res = await ajax("/class_result.php", {data});
+
+            console.log(res)
+
+        }catch(errMsg){
+            alert(errMsg.message)
+        }
+    }
+
     useEffect(() => {
         getLbtData();
+        getAnalyticsBook()
     }, []);
 
     useEffect(() => {
