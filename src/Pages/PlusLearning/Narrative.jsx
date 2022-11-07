@@ -2,83 +2,130 @@ import React, { useState } from "react";
 import SelectBase from "../../components/ui/select/SelectBase";
 import UserInfo from "../../components/UserInfo";
 import useStudentsStore from "../../store/useStudentsStore";
-import { memo } from "react";
-import PlusLearningGradingModal from "./PlusLearningGradingModal";
 import { useEffect } from "react";
 import axios from "axios";
 import SkeletonTable from "../../components/SkeletonTable";
-import PrintModal from "../../components/PrintModal";
 import ajax from "../../ajax";
+import NarrativeTr from "./NarrativeTr";
 
 const 단원 = ["수와 식의 계산", "가나다라 마바사"];
-const 상태 = ["오픈전", "학습중", "학습완료"];
+const stateOptions = [
+    { value: "P", label: "오픈전" },
+    { value: "S", label: "학습중" },
+    { value: "C", label: "완료" },
+];
+
+const DATA = [
+    {
+        sc_seq: 123,
+        ltitle: "I. 수와 식의 계산",
+        sc_title: "01> 거듭제곱 ⑴",
+        sc_status: "P",
+        sc_std_score: 18,
+        sc_max_score: 20,
+        sc_per_score: 90
+    },
+    {
+        sc_seq: 123,
+        ltitle: "I. 수와 식의 계산",
+        sc_title: "01> 거듭제곱 ⑴",
+        sc_status: "S",
+        sc_std_score: 18,
+        sc_max_score: 20,
+        sc_per_score: 90
+    },
+    {
+        sc_seq: 123,
+        ltitle: "I. 수와 식의 계산",
+        sc_title: "01> 거듭제곱 ⑴",
+        sc_status: "C",
+        sc_std_score: 18,
+        sc_max_score: 20,
+        sc_per_score: 90
+    },
+    {
+        sc_seq: 123,
+        ltitle: "I. 수와 식의 계산",
+        sc_title: "01> 거듭제곱 ⑴",
+        sc_status: "P",
+        sc_std_score: 18,
+        sc_max_score: 20,
+        sc_per_score: 90
+    },
+]
 
 function Narrative() {
     const clickStudent = useStudentsStore((state) => state.clickStudent);
     // tr data
     let [plusData, setPlusData] = useState([]);
     // 단원
-    let [unit, setUnit] = useState(""); 
+    let [unit, setUnit] = useState("");
     // 상태
-    let [situation, setSituation] = useState(""); 
+    let [situation, setSituation] = useState("");
     let [checkedList, setCheckedList] = useState([]);
     let [skeleton, setSkeleton] = useState(true);
 
     const [initialData, setInitialData] = useState([]);
 
     const checkAll = (e) => {
-        const { checked } = e.target;
-
-        checked ? setCheckedList(plusData) : setCheckedList([]);
+        e.target.checked ? setCheckedList(plusData) : setCheckedList([]);
     }
 
     const checkOne = (checked, ele) => {
-        if (checked) {
-            setCheckedList([...checkedList, ele]);
-        } else {
-            setCheckedList(checkedList.filter((a) => a !== ele));
+        console.log(checkedList)
+        checked ? setCheckedList([...checkedList, ele]) : setCheckedList(checkedList.filter((a) => a !== ele))
+    }
+
+    const openState = async (isOpen) => {
+        const idData = checkedList.map(id => id.sc_seq);
+        const data = {
+            arr_sc_seq : idData
+        }
+
+        isOpen ? data.mode = "ct_open" : data.mode = "ct_close";
+
+        try {
+            let res = await ajax("class_plus.php", data)
+
+
+        } catch (err) {
+
         }
     }
 
-    const searchData = ()=>{
 
-        let 대단원결과 = initialData.filter(a=> a.대단원 === unit );
+    const getList = async () => {
+        setSkeleton(true);
 
-        let result = 대단원결과.filter(a=>a.상태 === situation);
-        setPlusData(result);
-        setCheckedList([]);
+        const data = {
+            mode: "ct_list",
+            usr_seq: clickStudent.usr_seq,
+            qlno: 1,
+            qstatus: "P",
+            qbkcd: "M11_CO1"
+        }
 
+        try {
+            // let res = await ajax("class_plus.php", {data});
+            let res = await new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve(10)
+                }, 1000)
+            })
+
+            setPlusData([...DATA]);
+            setInitialData([...DATA]);
+            setSkeleton(false);
+
+        } catch (msg) {
+            setSkeleton(false);
+            // alert(msg)
+        }
     }
 
     useEffect(() => {
-        setPlusData([]);
-        setSkeleton(true);
-
-        axios.post("http://192.168.11.178:8080/pluslearning/narrative").then((res) => {
-            setPlusData(res.data.list);
-            setInitialData(res.data.list);
-            setSkeleton(false);
-        });
-    }, [clickStudent]);
-
-    const getList = async()=>{
-
-        const data = {
-            mode : "ct_list",
-            usr_seq : clickStudent.usr_seq,
-            
-        }
-
-        try{
-            let res = await ajax("class_plus.php");
-
-        }catch(msg){
-            alert(msg)
-        }
-    }
-
-    useEffect(()=>{
-    },[])
+        getList()
+    }, [])
 
     return (
         <div className="Narrative">
@@ -89,9 +136,9 @@ function Narrative() {
             </p>
             <div className="fj mb-3">
                 <div>
-                    <button className="btn">선택 오픈</button>
-                    <button className="btn" onClick={()=>{
-                        console.log(checkedList)
+                    <button className="btn" onClick={()=>{openState(true)}}>선택 오픈</button>
+                    <button className="btn" onClick={()=>{openState(false)}}>선택 오픈 취소</button>
+                    <button className="btn" onClick={() => {
                     }}>선택 인쇄</button>
                 </div>
                 <div className="row">
@@ -106,14 +153,14 @@ function Narrative() {
                     />
                     <SelectBase
                         width="100px"
-                        options={상태}
+                        options={stateOptions}
                         value={situation}
                         onChange={(ele) => {
                             setSituation(ele);
                         }}
                         defaultValue="상태"
                     />
-                    <button className="btn" onClick={searchData}>조회</button>
+                    <button className="btn">조회</button>
                 </div>
             </div>
             <table>
@@ -145,9 +192,9 @@ function Narrative() {
                 <tbody>
                     {skeleton && <SkeletonTable R={6} D={6} />}
 
-                    {plusData.map((ele,i) => {
+                    {plusData.map((ele, i) => {
                         return (
-                            <Tr
+                            <NarrativeTr
                                 ele={ele}
                                 key={`key${i}`}
                                 checkOne={checkOne}
@@ -161,53 +208,7 @@ function Narrative() {
     );
 }
 
-const Tr = memo(({ ele, checkOne, checkedList }) => {
-    let [modal, setModal] = useState(false);
-    let [printModal, setPrintModal] = useState(false);
 
-    return (
-        <tr>
-            <td>
-                <input
-                    type="checkbox"
-                    checked={checkedList.includes(ele)}
-                    onChange={(e) => {
-                        checkOne(e.target.checked, ele);
-                    }}
-                />
-            </td>
-            <td>{ele.대단원}</td>
-            <td>{ele.주제}</td>
-            <td>{ele.상태}</td>
-            <td>
-                {ele.채점 === "온라인 채점" ? (
-                    <>
-                        {ele.채점}
-                        <button
-                            className="btn"
-                            onClick={() => {
-                                setModal(true);
-                            }}
-                        >
-                            채점하기
-                        </button>
-                        {modal && <PlusLearningGradingModal userId={ele._id} setModal={setModal} />}
-                    </>
-                ) : (
-                    ele.채점
-                )}
-            </td>
-            <td>
-                {
-                    printModal && <PrintModal closeModal={setPrintModal}/>
-                }
-                <button type="button" className="btn" onClick={()=>{setPrintModal(true)}}>
-                    인쇄
-                </button>
-            </td>
-        </tr>
-    );
-});
 
 
 

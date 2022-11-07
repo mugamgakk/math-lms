@@ -7,8 +7,13 @@ import SelectBase from "../../components/ui/select/SelectBase";
 import { getByteSize } from "../../methods/methods";
 import PrismaZoom from "react-prismazoom";
 import { useCallback } from "react";
+import useStudentsStore from "../../store/useStudentsStore";
+import ajax from "../../ajax";
 
-function PlusLearningGradingModal({ title = "Title", userId, setModal }) {
+function PlusLearningGradingModal({ title = "Title", setModal, sc_seq }) {
+    const clickStudent = useStudentsStore((state) => state.clickStudent);
+
+
     let [list, setList] = useState(null);
     let [files, setFiles] = useState([]);
     let 총파일크기 = useRef(0);
@@ -20,30 +25,12 @@ function PlusLearningGradingModal({ title = "Title", userId, setModal }) {
     // checked Files
     let [checkedFile, setCheckedFile] = useState([]);
 
-    useEffect(()=>{
+    // 통신 데이터
+    let [qData, setQdata] = useState(null);
+    // 문항번호
+    let [qnum, setQnum] = useState(1);
 
-        var count = 0;
-        var score = 0
-
-        list && list.grading.forEach(a=>{
-            count += a.points
-            score += a.score;
-        })
-
-        setScore(score)
-        setPointAll(count);
-
-
-    },[list])
-
-    useEffect(() => {
-        axios
-            .post("http://192.168.11.178:8080/pluslearning/narrative/standard/" + userId)
-            .then((res) => {
-                setList(res.data.list);
-
-            });
-    }, []);
+    
 
     const upload = useCallback((파일) => {
         var 업로드파일정규식 = /\.(pdf|jpg|png)$/i;
@@ -116,24 +103,64 @@ function PlusLearningGradingModal({ title = "Title", userId, setModal }) {
 
     }
 
+    const getData = async (qnum)=>{
+        const data = {
+            mode : "ct_score",
+            sc_seq : sc_seq,
+            usr_seq : clickStudent.usr_seq,
+            qno : qnum
+        }
+
+        try{
+            let res = await axios.post("http://192.168.11.178:8080/pluslearning/popup" ,data);
+
+            setQdata(res.data);
+            console.log(res)
+        }catch(err){
+
+        }
+
+        
+    }
+
+    useEffect(()=>{
+        getData()
+    },[])
+
+    useEffect(()=>{
+
+        var count = 0;
+        var score = 0
+
+        qData && qData.score.forEach(a=>{
+            count += a.point
+            score += a.stdpoint;
+        })
+
+        setScore(score)
+        setPointAll(count);
+
+
+    },[qData])
+
     return (
         <div className="modal">
             <div className="modal-content">
                 <div className="modal-header mb-3 fj">
-                    <h4>{title}</h4>
+                    <h4>{qData?.ptitle}</h4>
                     <button className="btn" onClick={()=>{setModal(false)}}>X</button>
                 </div>
                 <div className="modal-body row" style={{ width: "1100px", padding: "10px" }}>
-                    <div className="col-50 mr-3">
+                    <div className="col-6 mr-3">
                         <div className="btn-group mb-3">
-                            <button className="btn active">1번 문항</button>
-                            <button className="btn">2번 문항</button>
+                            <button className={`btn ${qnum === 1 ? "active" : ""}`} onClick={()=>{setQnum(1); getData(1)} }>1번 문항</button>
+                            <button className={`btn ${qnum === 2 ? "active" : ""}`} onClick={()=>{setQnum(2); getData(2)}}>2번 문항</button>
                         </div>
 
                         <div className="problem mb-3" style={{ height: "250px", overflow: "auto" }}>
                             <img
-                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnnL1zg5aG2iHMCmy3QhJyYUS3zjjZHPH4wg&usqp=CAU"
-                                alt=""
+                                src={qData?.aimage_path + qData?.qimg_filename}
+                                alt="문제 영역"
                                 width={"100%"}
                             />
                         </div>
@@ -152,9 +179,11 @@ function PlusLearningGradingModal({ title = "Title", userId, setModal }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {list && list.grading.map((a, i) => {
-                                    return <Tr ele={a} key={"list" + i} list={list} index={i} setList={setList} />;
-                                })}
+                                {
+                                    qData?.score.map(ele=>{
+                                        return <Tr ele={ele}/>
+                                    })
+                                }
                             </tbody>
                             <tfoot>
                                 <tr>
@@ -170,7 +199,7 @@ function PlusLearningGradingModal({ title = "Title", userId, setModal }) {
                         </table>
 
                         <label htmlFor="option">선생님 의견 (첨삭)</label>
-                        <textarea id="option" rows="10"></textarea>
+                        <textarea id="option" rows="10" defaultValue={qData?.comment} ></textarea>
 
                         <div className="file-wrap fj">
                             <div className="file-view border" style={{minWidth : "100px", height : "80px"}}>
@@ -211,7 +240,7 @@ function PlusLearningGradingModal({ title = "Title", userId, setModal }) {
                         </div>
                     </div>
 
-                    <div className="col-50">
+                    <div className="col-6">
                         <div style={{ height: "50%" }}>
                             <h4 style={{ padding: "5px", backgroundColor: "skyblue" }}>모범답안</h4>
                             <div style={{ height: "calc(100% - 30px)", overflow: "auto" }}>
@@ -269,14 +298,14 @@ function PlusLearningGradingModal({ title = "Title", userId, setModal }) {
     );
 }
 
-const Tr = ({ ele, list, setList, index }) => {
-    let [select, setSelect] = useState(ele.score);
+const Tr = ({ ele }) => {
+    let [select, setSelect] = useState(ele.stdpoint);
 
     const selectOption = () => {
         let result = [];
 
-        for (let i = 0; i <= ele.points; i += 0.5) {
-            result.push(i);
+        for (let i = 0; i <= ele.point; i += 0.5) {
+            result.push({value : i, label : i});
         }
 
         return result;
@@ -284,19 +313,13 @@ const Tr = ({ ele, list, setList, index }) => {
 
     return (
         <tr>
-            <td className="text-left">{ele.standard}</td>
-            <td>{ele.points}</td>
+            <td className="text-left">{ele.scoring_guide}</td>
+            <td>{ele.point}</td>
             <td>
                 <SelectBase
                     value={select}
                     onChange={(data) => {
                         setSelect(data);
-                        let copy = {...list};
-
-                        list.grading[index].score = data;
-
-                        setList(copy)
-
                     }}
                     options={selectOption()}
                 />

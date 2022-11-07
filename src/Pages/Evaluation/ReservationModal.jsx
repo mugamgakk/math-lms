@@ -3,6 +3,8 @@ import { memo } from "react";
 import { useState } from "react";
 import TimeDatePicker from "../ComponentsPage/TimeDatePicker";
 import SelectBase from "../../components/ui/select/SelectBase";
+import ajax from "../../ajax";
+import { useEffect } from "react";
 
 const 학년 = [
     "초등 2학년",
@@ -17,7 +19,21 @@ const 학년 = [
 
 const 학기 = ["1학기", "2학기"];
 
-function ReservationModal({close}) {
+const arr = 
+    {
+        dr_seq : 1243,
+        dr_date : "2022.09.08. 14:00",
+        dr_nm : "김일우",
+        dr_std_phone : "010-1111-1111",
+        dr_shool : "도곡중",
+        dr_grade : 2,
+        dr_selected : "중2-1",
+        dr_recomm : "엑사스",
+        dr_score : "90점"
+    }
+
+
+function ReservationModal({close, id}) {
     let [value, setValue] = useState({
         name: "",
         day: "",
@@ -30,7 +46,8 @@ function ReservationModal({close}) {
         진단평가학기1: null,
     });
 
-    console.log(value);
+    let [list, setList] = useState({});
+
 
     // 진당평가 선택 갯수 카운트
     let [count, setCount] = useState([]);
@@ -39,6 +56,26 @@ function ReservationModal({close}) {
         e.preventDefault();
         console.log(value);
     };
+
+    const getData = async ()=>{
+        const data = {
+            mode :"dr_detail",
+            dr_seq : id
+        }
+
+        try{
+            let res = await new Promise((resolve, reject)=>{ setTimeout(()=>{resolve(10)},1000) })
+
+            setList(arr)
+            // let res = ajax("leveltest.php", {data})
+        }catch(err){
+            console.log(err)
+        }
+    }
+
+    useEffect(()=>{
+        getData();
+    },[])
 
     // 타임 피커 상태
     const [reservationPicker, setReservationPicker] = useState(false);
@@ -63,7 +100,7 @@ function ReservationModal({close}) {
                                     <input
                                         type="text"
                                     style={{width : "100px"}}
-                                        value={value.name}
+                                        value={list.dr_nm}
                                         className="form-control"
                                         onChange={(e) =>
                                             setValue({ ...value, name: e.target.value })
