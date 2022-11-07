@@ -1,54 +1,116 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect, useRef, memo } from "react";
 import CreationCheck from '../CreationCheck';
-import useStore from '../../../store/useCreationModal';
-import { useRef } from "react";
+import ajax from "../../../ajax";
+import dayjs from "dayjs";
+import { useMemo } from "react";
 
-let 출처 = ['개념서', '뜨레스', '맞춤 클리닉'];
-let 문제형식 = ['객관식','주관식','서술형'];
-let 난이도 = ['최상','상','중상','중','중하','하','최하'];
+const source = ['개념서', '뜨레스', '맞춤 클리닉'];
+const type = ['객관식','주관식','서술형'];
+const level = ['최상','상','중상','중','중하','하','최하'];
+
+const data = [
+        {
+            qa_seq : 123,
+            ltitle : 'i.수와 연산',
+            utitle : '1.소인수분해',
+            keyword : '소수와 합성수',
+            source : 'CO',
+            no : 1,
+            type : 'O',
+            level :'L2'
+        },
+        {
+            qa_seq : 124,
+            ltitle : 'i.수와 연산',
+            utitle : '1.소인수분해',
+            keyword : '소수와 합성수',
+            source : 'TR',
+            no : 1,
+            type : 'S',
+            level :'L1'
+        },
+        {
+            qa_seq : 125,
+            ltitle : 'i.수와 연산',
+            utitle : '1.소인수분해',
+            keyword : '소수와 합성수',
+            source : 'CC',
+            no : 1,
+            type : 'D',
+            level :'L3'
+        },
+        {
+            qa_seq : 126,
+            ltitle : 'i.수와 연산',
+            utitle : '1.소인수분해',
+            keyword : '소수와 합성수',
+            source : 'CO',
+            no : 1,
+            type : 'C',
+            level :'L4'
+        },
+    ]
 
 function CreationModal({setCreationMo,name}){
 
     let [checkState,setCheckState] = useState([]);
-    let {data,reCreateData,reCreateFunc} = useStore(state=>state);
-    let [dataList,setDataList] = useState(null);
+    let [dataList,setDataList] = useState(data);
 
     let ref = useRef(false)
 
+    useEffect(()=>{
+        // createWrongAnswer();
+    },[]);
 
-    // 이것은 체크된 값
+    // const createWrongAnswer = async () => {
+    //     let url = "/class_wrong.php/";
+    //     let query = {
+    //         mode: "wa_create_list",
+    //         usr_seq : 80,
+    //         arr_ucode : 'CO'
+    //     };
+
+    //     let res = await ajax(url, { data: query });
+    //     setDataList(res);
+    // }
+
+        // let res = new Promise((resolve, reject) => {
+        //     setTimeout(()=>{
+        //         resolve(10)
+        //     },1000)
+        // })
+
+    // res.then(res=>{
+        
+    // })
+
     // 키값 키네임이랑 똑같게
     let [obj,setObj] = useState({
-        class : 출처,
-        answer : 문제형식,
-        level : 난이도,
-    })
-
-
-    useEffect(()=>{
-            setDataList(data);
-    },[]);
+        source : source,
+        type : type,
+        level : level,
+    });
 
     
     useEffect(()=>{
+
         let arr = [];
         let arr2 = [];
         let arr3 = [];
 
         if(ref.current === true){
 
-            obj.class.forEach(a=>{
-                data.forEach(dd =>{
-                    if(a === dd.class){
+            obj.source.forEach(a=>{
+                dataList.forEach(dd =>{
+                    if(a === dd.source){
                         arr.push(dd)
                     }
                 })
                
             })
-            obj.answer.forEach(a=>{
+            obj.type.forEach(a=>{
                 arr.forEach(dd =>{
-                    if(a === dd.answer){
+                    if(a === dd.type){
                         arr2.push(dd)
                     }
                 })
@@ -61,39 +123,41 @@ function CreationModal({setCreationMo,name}){
                 })
             })
 
-            console.log(arr3)
-
             setDataList(arr3)
 
         }else{
             ref.current = true
         }
 
-        
-     
     },[obj])
 
-
-    const changeCheckState = (tr) => {
-        if(checkState.includes(tr)){
-            setCheckState(checkState.filter(item => item !== tr));
+    const changeCheckState = (seq) => {
+        if(checkState.includes(seq)){
+            setCheckState(checkState.filter(item => item !== seq));
         }else{
-            setCheckState([...checkState, tr]);
+            setCheckState([...checkState, seq]);
         }
     }
 
     const allCheckState = (checked) => {
         if(checked){
-            setCheckState([...data]);
+            setCheckState([...dataList]);
         }else{
             setCheckState([]);
         }
     }
 
 
+    let [title,setTitle] = useState('중2-1뜨레스_오답 정복_20210705');
+
+    let today = useMemo(()=>{
+        let newDate = dayjs(new Date).format('YYYYMMDD');
+        return newDate;
+    })
+    console.log(today);
+
 
     return(
-
         <div className="modal">
             <div className="dim"></div>
             <div className='creationModal cmmnModal'>
@@ -106,7 +170,7 @@ function CreationModal({setCreationMo,name}){
                 <div className="creationModal-body cmmnModal-body">
                     <div className='top mb-10'>
                         <div className="top-tit">제목</div>
-                        <input type='text' className="top-con" value='중2-1뜨레스_오답 정복_20210705' />
+                        <input type='text' className="top-con" value={title} onChange={(e)=>setTitle(e.target.value)} />
                     </div>
                     <table>
                         <colgroup>
@@ -124,9 +188,9 @@ function CreationModal({setCreationMo,name}){
                             <tr>
                                 <td>
                                     <div className="check-wrap">
-                                        <input type="checkbox" name="" className={checkState.length > 0 && checkState.length < data.length ? 'checkAll isCheck' : 'checkAll'} id='checkAll' 
+                                        <input type="checkbox" name="" className={checkState.length > 0 && checkState.length < dataList.length ? 'checkAll isCheck' : 'checkAll'} id='checkAll' 
                                         onChange={(e)=>allCheckState(e.target.checked)}
-                                         checked={ data.length === checkState.length }/>
+                                         checked={ dataList.length === checkState.length }/>
                                         <label htmlFor='checkAll' className='checkAll pl-20' >선택</label>
                                     </div>
                                     <span>(25/25)</span>
@@ -137,7 +201,7 @@ function CreationModal({setCreationMo,name}){
                                 <td>
                                     <div className='toggleWrap fj'>
                                        <CreationCheck 
-                                        data={출처}
+                                        data={source}
                                         obj={obj}
                                         setObj={setObj}
                                         keyName='class'
@@ -149,7 +213,7 @@ function CreationModal({setCreationMo,name}){
                                 <td>
                                     <div className='toggleWrap fj'>
                                        <CreationCheck 
-                                        data={문제형식} 
+                                        data={type} 
                                         obj={obj}
                                         setObj={setObj}
                                         keyName='answer'
@@ -160,7 +224,7 @@ function CreationModal({setCreationMo,name}){
                                 <td>
                                     <div className='toggleWrap fj'>
                                        <CreationCheck 
-                                        data={난이도}
+                                        data={level}
                                         obj={obj}
                                         setObj={setObj}
                                         keyName='level'
@@ -175,24 +239,24 @@ function CreationModal({setCreationMo,name}){
                         
                             {
                                 dataList && 
-                                dataList.map(tr=>{
+                                dataList.map(data=>{
                                     return(
-                                        <tr key={tr.id}>
+                                        <tr key={data.qa_seq}>
                                             <td>
                                                 <div className="check-wrap">
-                                                    <input type="checkbox" id={tr.id} value=''
-                                                     onChange={() => changeCheckState(tr)} 
-                                                     checked={ checkState.includes(tr)}/>
-                                                    <label htmlFor={tr.id}></label>
+                                                    <input type="checkbox" id={data.qa_seq}
+                                                     onChange={() => changeCheckState(data.qa_seq)} 
+                                                     checked={ checkState.includes(data.qa_seq)}/>
+                                                    <label htmlFor={data.qa_seq}></label>
                                                 </div>
                                             </td>
-                                            <td>{tr.deadanwon}</td>
-                                            <td>{tr.sodanwon}</td>
-                                            <td>{tr.keyword}</td>
-                                            <td>{tr.class}</td>
-                                            <td>{tr.num}</td>
-                                            <td>{tr.answer}</td>
-                                            <td>{tr.level}</td>
+                                            <td>{data.ltitle}</td>
+                                            <td>{data.utitle}</td>
+                                            <td>{data.keyword}</td>
+                                            <td>{data.source}</td>
+                                            <td>{data.no}</td>
+                                            <td>{data.type}</td>
+                                            <td>{data.level}</td>
                                             <td>
                                                 <button className='btn'>보기</button>
                                             </td>

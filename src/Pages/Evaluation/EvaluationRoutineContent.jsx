@@ -71,7 +71,7 @@ function EvaluationRoutineContent() {
         단원 : true,
         평가일 : true,
     })
-    
+
     //  true == 오름차순, false == 내림차순
     
     const ref = useRef(false);
@@ -120,6 +120,7 @@ function EvaluationRoutineContent() {
     },[sort]);
 
 
+    
     useEffect(()=>{
         if(ref.current){
 

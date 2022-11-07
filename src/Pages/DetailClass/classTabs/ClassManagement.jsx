@@ -10,50 +10,65 @@ function ClassManagement({clickStudent}){
     let [progressMo, setProgressState] = useState(false);
     let [creationMo, setCreationMo] = useState(false);
     let [data, setData] = useState(null);
-    let [checkList, setCheckList] = useState([]);
+    let [wrongPopList, setWrongPopList] = useState([]);
+
+    const setList = async () => {
+
+        let url = "/class_manage.php/";
+        let query = {
+            mode: "unit_list",
+            usr_seq : 80,
+        };
+
+        let res = await ajax(url, { data: query });
+
+        setData(res.data);
+        console.log(res.data);
+    };
 
     useEffect(()=>{
-        ajax("/class_manage.php", { data : {
-            mode : 'unit_list',
-            usr_seq : 80,
-        }
-        }).then(res=>{
-            setData(res.data);
-            console.log(res.data)
-        }).catch((error)=>{
-            console.log(error);
-        })
+        setList();
     },[]);
 
     // 학습 완료
-    const studyDone = useCallback((ucode) => {
-        ajax("/class_manage.php", { data : {
-            mode : 'retry',
+
+    const studyDone = async (ucode) => {
+        let url = "/class_manage.php/";
+        let query = {
+            mode: "set_passed",
             ucode : ucode,
-            usr_seq : 80
-        }
-        }).then(res=>{
-            console.log(res);
-        }).catch((error)=>{
-            console.log(error);
-        })
-    },[]);
+            usr_seq : 80,
+        };
+
+        let res = await ajax(url, { data: query });
+
+        console.log(res);
+    };
 
     // 재응시
-    const retry = useCallback((ucode)=>{
-        ajax("/class_manage.php", { data : {
-            mode : 'retry',
+    const retry = async (ucode) =>{
+        let url = "/class_manage.php/";
+        let query = {
+            mode: "set_retry",
             ucode : ucode,
             sd_kind : 'CO'
-            }
-        }).then(res=>{
-            console.log(res);
-            return 1;
-        }).catch((error)=>{
-            console.log(error);
-        })
-    },[])
+        };
 
+        let res = await ajax(url, { data: query });
+
+        console.log(res);
+    };
+
+
+    // 오답정복하기 생성 - ucode 배열
+    const setCheckList = (checked,ucode) => {
+        if(checked){
+            setWrongPopList([...wrongPopList, ucode]);
+        }else{
+            setWrongPopList(wrongPopList.filter(list => list !== ucode));
+        }
+
+    }
 
     
     return(
@@ -67,7 +82,7 @@ function ClassManagement({clickStudent}){
                 progressMo && <ProgressModal setProgressState={setProgressState} name={clickStudent.name}/>
             }
             {
-                creationMo && <CreationModal setCreationMo={setCreationMo} name={clickStudent.name}/>
+                creationMo && <CreationModal setCreationMo={setCreationMo} name={clickStudent.name} ucode={wrongPopList}/>
             }
            <div className="table-wrap">
 
@@ -105,7 +120,9 @@ function ClassManagement({clickStudent}){
                                         data={b} 
                                         studyDone={studyDone}
                                         retry={retry}
-                                        ucode={a.ucode}
+                                        // ucode={a.ucode}
+                                        ucode={b.ucode}
+                                        setCheckList={setCheckList}
                                         />
                                     )
                                 })
@@ -120,10 +137,8 @@ function ClassManagement({clickStudent}){
     )
 }
 
-const Tr = ({data,studyDone,ucode,retry}) => {
-
+const Tr = ({data,studyDone,ucode,retry,setCheckList}) => {
     let [resultPop, setResultPop] = useState(false);
-
 
     return(
         <tr>         
@@ -188,7 +203,7 @@ const Tr = ({data,studyDone,ucode,retry}) => {
                 <button className='btn' onClick={()=>studyDone(ucode)}>학습 완료</button>
                 <button className="btn">학습 태도</button>
             </td>
-            <td><input type='checkbox'/></td>
+            <td><input type='checkbox' onChange={(e)=>setCheckList(e.target.checked,ucode)}/></td>
         </tr>
         )
     }
