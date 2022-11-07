@@ -13,6 +13,7 @@ function NarrativeTr({ ele, checkOne, checkedList }) {
     let [gradingModal, setGradingModal] = useState(false);
     let [printModal, setPrintModal] = useState(false);
 
+    // 재응시
     const reTry = async()=>{
         const data = {
             mode : "ct_retry",
@@ -72,7 +73,10 @@ function NarrativeTr({ ele, checkOne, checkedList }) {
                 }
             </td>
             <td>
-                <button className='btn'>인쇄</button>
+                {
+                    printModal && <PrintModal closeModal={setPrintModal}/>
+                }
+                <button className='btn' onClick={()=>{setPrintModal(true)}}>인쇄</button>
             </td>
         </tr>
     );

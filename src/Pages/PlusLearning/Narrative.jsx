@@ -72,14 +72,16 @@ function Narrative() {
     }
 
     const checkOne = (checked, ele) => {
-        console.log(checkedList)
         checked ? setCheckedList([...checkedList, ele]) : setCheckedList(checkedList.filter((a) => a !== ele))
     }
 
+    // 선택오픈, 오픈 취소
     const openState = async (isOpen) => {
+        if (checkedList.length === 0) alert("1개이상 선택하세요");
+
         const idData = checkedList.map(id => id.sc_seq);
         const data = {
-            arr_sc_seq : idData
+            arr_sc_seq: idData
         }
 
         isOpen ? data.mode = "ct_open" : data.mode = "ct_close";
@@ -125,7 +127,7 @@ function Narrative() {
 
     useEffect(() => {
         getList()
-    }, [])
+    }, [clickStudent])
 
     return (
         <div className="Narrative">
@@ -136,9 +138,11 @@ function Narrative() {
             </p>
             <div className="fj mb-3">
                 <div>
-                    <button className="btn" onClick={()=>{openState(true)}}>선택 오픈</button>
-                    <button className="btn" onClick={()=>{openState(false)}}>선택 오픈 취소</button>
+                    <button className="btn" onClick={() => { openState(true) }}>선택 오픈</button>
+                    <button className="btn" onClick={() => { openState(false) }}>선택 오픈 취소</button>
                     <button className="btn" onClick={() => {
+                        if (checkedList.length === 0) alert("1개이상 선택하세요");
+
                     }}>선택 인쇄</button>
                 </div>
                 <div className="row">
@@ -190,18 +194,22 @@ function Narrative() {
                     </tr>
                 </thead>
                 <tbody>
-                    {skeleton && <SkeletonTable R={6} D={6} />}
 
-                    {plusData.map((ele, i) => {
-                        return (
-                            <NarrativeTr
-                                ele={ele}
-                                key={`key${i}`}
-                                checkOne={checkOne}
-                                checkedList={checkedList}
-                            />
-                        );
-                    })}
+                    {
+                        skeleton
+                            ? <SkeletonTable R={6} D={6} />
+                            : plusData.map((ele, i) => {
+                                return (
+                                    <NarrativeTr
+                                        ele={ele}
+                                        key={`key${i}`}
+                                        checkOne={checkOne}
+                                        checkedList={checkedList}
+                                    />
+                                );
+                            })
+                    }
+
                 </tbody>
             </table>
         </div>

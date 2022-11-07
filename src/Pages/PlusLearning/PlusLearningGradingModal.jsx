@@ -10,16 +10,13 @@ import { useCallback } from "react";
 import useStudentsStore from "../../store/useStudentsStore";
 import ajax from "../../ajax";
 
-function PlusLearningGradingModal({ title = "Title", setModal, sc_seq }) {
+function PlusLearningGradingModal({ setModal, sc_seq }) {
     const clickStudent = useStudentsStore((state) => state.clickStudent);
 
-
-    let [list, setList] = useState(null);
+    let prizmaZoom = useRef();
     let [files, setFiles] = useState([]);
     let 총파일크기 = useRef(0);
-    let prizmaZoom = useRef();
 
-    let [pointAll, setPointAll] = useState(0);
     let [score, setScore] = useState(0);
 
     // checked Files
@@ -30,131 +27,150 @@ function PlusLearningGradingModal({ title = "Title", setModal, sc_seq }) {
     // 문항번호
     let [qnum, setQnum] = useState(1);
 
-    
+    const upload = useCallback(
+        (파일) => {
+            var 업로드파일정규식 = /\.(pdf|jpg|png)$/i;
+            var 총파일사이즈 = 총파일크기.current;
+            var $10mb = 1024 * 1024 * 10; // 10mb
 
-    const upload = useCallback((파일) => {
-        var 업로드파일정규식 = /\.(pdf|jpg|png)$/i;
-        var 총파일사이즈 = 총파일크기.current;
-        var $10mb = 1024 * 1024 * 10; // 10mb
+            let arr = [];
 
-        let arr = [];
+            if (files.length === 3) {
+                alert("업로드 파일 갯수를 초과 하였습니다.");
+                return;
+            }
 
-        if (files.length === 3) {
-            alert("업로드 파일 갯수를 초과 하였습니다.");
-            return;
-        }
+            for (let value of 파일) {
+                for (let a of files) {
+                    if (a.name === value.name) {
+                        alert("이미 업로드 된 파일입니다.");
+                        return;
+                    }
+                }
 
-        for (let value of 파일) {
-            for (let a of files) {
-                if (a.name === value.name) {
-                    alert("이미 업로드 된 파일입니다.");
+                if (총파일사이즈 >= $10mb) {
+                    alert("총 파일 사이즈를 초과하였습니다 (10mb)");
                     return;
                 }
+
+                if (업로드파일정규식.test(value.name) === false) {
+                    alert("일치하는 파일 형식이 아닙니다.");
+                    return;
+                }
+
+                if (value.size >= $10mb) {
+                    alert("파일이 너무 큽니다.");
+                    return;
+                }
+
+                arr.push(value);
+                총파일크기.current = 총파일크기.current + value.size;
             }
 
-            if (총파일사이즈 >= $10mb) {
-                alert("총 파일 사이즈를 초과하였습니다 (10mb)");
-                return;
+            setFiles([...files, ...arr]);
+        },
+        [files]
+    );
+
+    const fileCheck = (check, ele) => {
+        check
+            ? setCheckedFile([...checkedFile, ele])
+            : setCheckedFile(checkedFile.filter((a) => a !== ele));
+    };
+
+    const selectUpdate = (ele, data) => {
+        const { value } = data;
+
+        let copy = [...qData.score];
+        copy.forEach((a) => {
+            if (a.scoring_guide === ele.scoring_guide) {
+                a.stdpoint = value;
             }
+        });
 
-            if (업로드파일정규식.test(value.name) === false) {
-                alert("일치하는 파일 형식이 아닙니다.");
-                return;
-            }
+        setQdata({ ...qData, score: copy });
+    };
 
-            if (value.size >= $10mb) {
-                alert("파일이 너무 큽니다.");
-                return;
-            }
-
-            arr.push(value);
-            총파일크기.current = 총파일크기.current + value.size;
-        }
-
-        setFiles([...files, ...arr]);
-    },[files]);
-
-    const fileCheck = (check, ele)=>{
-        check ? setCheckedFile([...checkedFile, ele]) : setCheckedFile(checkedFile.filter(a=> a !== ele));
-
-        console.log(총파일크기.current)
-        
-    }
-
-    const removeFile = ()=>{
-        // console.log("총파일",files);
-        // console.log("체크된 파일",checkedFile);
-
+    const removeFile = () => {
         let 체크된파일사이즈 = 0;
         let copyFiles = [...files];
 
-        checkedFile.forEach(a=>{
-            체크된파일사이즈 += a.size
+        checkedFile.forEach((a) => {
+            체크된파일사이즈 += a.size;
 
-            copyFiles.forEach((dd,i)=>{
-                if(a.name === dd.name){
-                    copyFiles.splice(i,1)
+            copyFiles.forEach((dd, i) => {
+                if (a.name === dd.name) {
+                    copyFiles.splice(i, 1);
                 }
-            })
+            });
         });
 
         setFiles(copyFiles);
-        총파일크기.current = 총파일크기.current - 체크된파일사이즈
+        총파일크기.current = 총파일크기.current - 체크된파일사이즈;
+    };
 
-    }
-
-    const getData = async (qnum)=>{
+    const getData = async (qnum) => {
         const data = {
-            mode : "ct_score",
-            sc_seq : sc_seq,
-            usr_seq : clickStudent.usr_seq,
-            qno : qnum
-        }
+            mode: "ct_score",
+            sc_seq: sc_seq,
+            usr_seq: clickStudent.usr_seq,
+            qno: qnum,
+        };
 
-        try{
-            let res = await axios.post("http://192.168.11.178:8080/pluslearning/popup" ,data);
+        try {
+            let res = await axios.post("http://192.168.11.178:8080/pluslearning/popup", data);
 
             setQdata(res.data);
-            console.log(res)
-        }catch(err){
 
-        }
+            console.log(res.data);
 
-        
-    }
+            let num = res.data.score.reduce((prev, ele) => {
+                return prev + ele.stdpoint;
+            }, 0);
 
-    useEffect(()=>{
-        getData()
-    },[])
+            setScore(num);
+        } catch (err) {}
+    };
 
-    useEffect(()=>{
-
-        var count = 0;
-        var score = 0
-
-        qData && qData.score.forEach(a=>{
-            count += a.point
-            score += a.stdpoint;
-        })
-
-        setScore(score)
-        setPointAll(count);
-
-
-    },[qData])
+    useEffect(() => {
+        getData();
+    }, [qnum]);
 
     return (
         <div className="modal">
             <div className="modal-content">
                 <div className="modal-header mb-3 fj">
                     <h4>{qData?.ptitle}</h4>
-                    <button className="btn" onClick={()=>{setModal(false)}}>X</button>
+                    <button
+                        className="btn"
+                        onClick={() => {
+                            setModal(false);
+                        }}
+                    >
+                        X
+                    </button>
                 </div>
                 <div className="modal-body row" style={{ width: "1100px", padding: "10px" }}>
                     <div className="col-6 mr-3">
                         <div className="btn-group mb-3">
-                            <button className={`btn ${qnum === 1 ? "active" : ""}`} onClick={()=>{setQnum(1); getData(1)} }>1번 문항</button>
-                            <button className={`btn ${qnum === 2 ? "active" : ""}`} onClick={()=>{setQnum(2); getData(2)}}>2번 문항</button>
+                            <button
+                                className={`btn ${qnum === 1 ? "active" : ""}`}
+                                onClick={() => {
+                                    setQnum(1);
+                                    getData(1);
+                                }}
+                            >
+                                1번 문항
+                            </button>
+                            <button
+                                className={`btn ${qnum === 2 ? "active" : ""}`}
+                                onClick={() => {
+                                    setQnum(2);
+                                    getData(2);
+                                }}
+                            >
+                                2번 문항
+                            </button>
                         </div>
 
                         <div className="problem mb-3" style={{ height: "250px", overflow: "auto" }}>
@@ -179,39 +195,56 @@ function PlusLearningGradingModal({ title = "Title", setModal, sc_seq }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {
-                                    qData?.score.map(ele=>{
-                                        return <Tr ele={ele}/>
-                                    })
-                                }
+                                {qData?.score.map((ele, i) => {
+                                    return <Tr ele={ele} key={i} selectUpdate={selectUpdate} />;
+                                })}
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <td>합계</td>
                                     <td>
-                                        {pointAll} 점
+                                        {qData?.score.reduce((prev, ele) => {
+                                            return ele.point + prev;
+                                        }, 0)}{" "}
+                                        점
                                     </td>
                                     <td>
-                                        {score} 점
+                                        {qData?.score.reduce((prev, ele) => {
+                                            return ele.stdpoint + prev;
+                                        }, 0)}{" "}
+                                        점
                                     </td>
                                 </tr>
                             </tfoot>
                         </table>
 
                         <label htmlFor="option">선생님 의견 (첨삭)</label>
-                        <textarea id="option" rows="10" defaultValue={qData?.comment} ></textarea>
+                        <textarea id="option" rows="10" defaultValue={qData?.comment}></textarea>
 
                         <div className="file-wrap fj">
-                            <div className="file-view border" style={{minWidth : "100px", height : "80px"}}>
+                            <div
+                                className="file-view border"
+                                style={{ minWidth: "100px", height: "80px" }}
+                            >
                                 {files.map((a, i) => {
                                     return (
                                         <div key={i}>
-                                            <input type="checkbox" id={a.name} checked={checkedFile.includes(a)} onChange={e=>{fileCheck(e.target.checked, a)}} />
-                                            {
-                                                a.name.length > 20
-                                                ? <label htmlFor={a.name}>{ a.name.substr(0,20) + ".".repeat(3) }</label>
-                                                : <label htmlFor={a.name}>{a.name} </label> 
-                                            } ({getByteSize(a.size)})
+                                            <input
+                                                type="checkbox"
+                                                id={a.name}
+                                                checked={checkedFile.includes(a)}
+                                                onChange={(e) => {
+                                                    fileCheck(e.target.checked, a);
+                                                }}
+                                            />
+                                            {a.name.length > 20 ? (
+                                                <label htmlFor={a.name}>
+                                                    {a.name.substr(0, 20) + ".".repeat(3)}
+                                                </label>
+                                            ) : (
+                                                <label htmlFor={a.name}>{a.name} </label>
+                                            )}{" "}
+                                            ({getByteSize(a.size)})
                                         </div>
                                     );
                                 })}
@@ -230,12 +263,21 @@ function PlusLearningGradingModal({ title = "Title", setModal, sc_seq }) {
                                 <label htmlFor="upload" className="d-flex">
                                     첨부 파일
                                 </label>
-                                <button className="btn" onClick={removeFile}>선택 삭제</button>
+                                <button className="btn" onClick={removeFile}>
+                                    선택 삭제
+                                </button>
                             </div>
                         </div>
 
                         <div className="text-center">
-                            <button className="btn mr-3" onClick={()=>{setModal(false)}}>취소</button>
+                            <button
+                                className="btn mr-3"
+                                onClick={() => {
+                                    setModal(false);
+                                }}
+                            >
+                                취소
+                            </button>
                             <button className="btn">수정</button>
                         </div>
                     </div>
@@ -298,14 +340,12 @@ function PlusLearningGradingModal({ title = "Title", setModal, sc_seq }) {
     );
 }
 
-const Tr = ({ ele }) => {
-    let [select, setSelect] = useState(ele.stdpoint);
-
+const Tr = ({ ele, selectUpdate }) => {
     const selectOption = () => {
         let result = [];
 
         for (let i = 0; i <= ele.point; i += 0.5) {
-            result.push({value : i, label : i});
+            result.push({ value: i, label: i });
         }
 
         return result;
@@ -317,9 +357,9 @@ const Tr = ({ ele }) => {
             <td>{ele.point}</td>
             <td>
                 <SelectBase
-                    value={select}
+                    value={ele.stdpoint}
                     onChange={(data) => {
-                        setSelect(data);
+                        selectUpdate(ele, data);
                     }}
                     options={selectOption()}
                 />
