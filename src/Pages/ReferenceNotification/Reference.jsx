@@ -5,8 +5,18 @@ import ReferenceContentsModal from './ReferenceContentsModal';
 import ReferenceRegistrationModal from './ReferenceRegistrationModal';
 import styled from 'styled-components';
 
-const 학년 = ['전체','초등','중등','고등'];
-const search = ['제목','제목+내용','대상'];
+const 학년 = [
+    { value: '전체', label: '전체' },
+    { value: '초등', label: '초등' },
+    { value: '중등', label: '중등' },
+    { value: '고등', label: '고등' },
+];
+
+const search = [
+    { value: '제목', label: '제목' },
+    { value: '제목+내용', label: '제목+내용' },
+    { value: '대상', label: '대상' },
+];
 
 const NewBadge = styled.span`
     padding: 0 3px;

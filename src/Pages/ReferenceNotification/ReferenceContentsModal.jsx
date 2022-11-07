@@ -1,10 +1,12 @@
 import React, {useEffect,useState} from 'react';
 import ajax from "../../ajax";
+import { fileDown } from '../../methods/methods';
+import FileSaver from "file-saver";
+import JSZip from "jszip";
 
 function ReferenceContentsModal({seq,setModal}) {
 
     let [contents,setContents] = useState(null);
-
     
     useEffect(()=>{
         ajax("/board.php", { data : {
@@ -17,6 +19,24 @@ function ReferenceContentsModal({seq,setModal}) {
         })
     },[])
 
+    const makeZip = (filesArr, fileName = "download") => {
+
+        if(filesArr.length === 0){
+            return 
+        }
+    
+        const zip = new JSZip();
+    
+        filesArr.forEach(ele => {
+            zip.file(ele.filename, ele, {binary: true})
+        })
+    
+        zip.generateAsync({type: "blob"})
+            .then(content => {
+                FileSaver.saveAs(content, fileName)
+            })
+    }
+    
     console.log(contents);
     return ( 
         <div className="modal">
@@ -45,7 +65,16 @@ function ReferenceContentsModal({seq,setModal}) {
                         <div className='tr'>
                             <div className="th">첨부파일</div>
                             <div className="td fileTd">
-                                <div className='fileArea'></div>
+                                <div className='fileArea'>
+                                    {
+                                        contents.files.length > 0 && contents.files.map(file=>{
+                                            
+                                            return(
+                                                <div key={file.bf_seq} onClick={()=>fileDown(file.fileurl,file.filename)}>{file.filename}({file.filesize})</div>
+                                            )
+                                        })
+                                    }
+                                </div>
                             </div> 
                             <div className="td"><button className='btn'>선택 받기</button></div>
                             <div className="td"><button className='btn'>모두 받기</button></div>

@@ -4,7 +4,7 @@ import { getByteSize, fileDown, makeZip } from "../../methods/methods";
 function FileDownLoad() {
     let [files, setFiles] = useState([]);
     let 총파일크기 = useRef(0);
-
+    console.log(files);
     const upload = (파일) => {
         var 업로드파일정규식 = /\.(hwp|doc|docx|xls|xlsx|ppt|pptx|pdf|jpg|png|zip)$/i;
         var 총파일사이즈 = 총파일크기.current;

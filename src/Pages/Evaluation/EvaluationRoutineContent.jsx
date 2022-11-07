@@ -6,9 +6,20 @@ import PrintModal from '../../../src/components/PrintModal';
 import MarkingModal from './MarkingModal'
 import LmsDatePicker from "../../components/LmsDatePicker";
 import { useCallback } from "react";
+import dayjs from "dayjs";
 
-const 평가종류 = ["총괄 평가", "단원 평가", "(월말 평가)"];
-const 단원 = ["수와 연산", "문자와 식", "좌표평면과 그래프"];
+const 평가종류 = [
+    { value: '총괄 평가', label: '총괄 평가' },
+    { value: '단원 평가', label: '단원 평가' },
+    { value: '(월말 평가)', label: '(월말 평가)' },
+];
+const 단원 = [
+    { value: '수와 연산', label: '수와 연산' },
+    { value: '문자와 식', label: '문자와 식' },
+    { value: '좌표평면과 그래프', label: '좌표평면과 그래프' },
+];
+
+
 const data = [
     {
         교재: "중2-1 노벰",
@@ -52,20 +63,27 @@ const data = [
 
 function EvaluationRoutineContent() {
     let [selectOption, setSelecOtion] = useState({ 평가종류: "", 단원: "" });
-    let [startDay, setStartDay] = useState(new Date());
-    let [endDay, setEndDay] = useState(new Date());
     let [list, setList] = useState(data);
-
+    
     let [checkItem, setCheckItem] = useState([]);
-
+    
     let [sort,setSort] = useState({
         단원 : true,
         평가일 : true,
     })
-//  true == 오름차순, false == 내림차순
-
+    
+    //  true == 오름차순, false == 내림차순
+    
     const ref = useRef(false);
-
+    
+    let oneMonthAgo = useMemo(() => {
+        var now = new Date();
+        var oneMonthAgo = dayjs(now).subtract(1,"M").$d;
+        return oneMonthAgo;
+    }, []);
+    
+    let [startDay, setStartDay] = useState(oneMonthAgo);
+    let [endDay, setEndDay] = useState(new Date());
 
     const dateSortFunc = useCallback((sortName) => {
         

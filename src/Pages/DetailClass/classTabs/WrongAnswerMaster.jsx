@@ -1,40 +1,61 @@
 import React, { useState, useMemo, memo} from "react";
 import SelectBase from '../../../components/ui/select/SelectBase';
 import useStore from '../../../store/useWrongManagement';
+import ajax from "../../../ajax";
 import DatePicker from "react-date-picker";
 import PrintModal from '../../../components/PrintModal';
 import dayjs from "dayjs"
 import { useEffect } from "react";
 
-let options = ['전체','중2-1노벰','중2-2뜨레스','중2-2노벰']
+const options = [
+    { value: null, label: "전체" },
+    { value: '중2-1노벰', label: '중2-1노벰' },
+    { value: '중2-2뜨레스', label: '중2-2뜨레스' },
+    { value: '중2-2노벰', label: '중2-2노벰' },
+];
 
 function WrongAnswer() {
-    let {data,removeList,filterData} = useStore(state=>state);
+    // let {data,removeList,filterData} = useStore(state=>state);
+
     let [checkData,setCheckData] = useState([]);
     let [renderData, setRenderData] = useState(null);
+    let [filterData, setFilterData] = useState(null);
     let [selectOption, setSelectOption] = useState();
-
+    let today = dayjs(new Date()).format('YYYY-MM-DD');
+    let monthAge = dayjs(new Date()).subtract(1,'month').format('YYYY-MM-DD');
     
     useEffect(()=>{
-        setCheckData([]);
-        setRenderData(data);
-    },[data]);
+        ajax("/class_wrong.php", { data : {
+            mode : 'list',
+            usr_seq : 80,
+            sdate : monthAge,
+            edate : today,
+        }
+        }).then(res=>{
+            console.log(res.data)
+            // setRenderData(res.data);
+        }).catch((error)=>{
+            console.log(error);
+        })
+    },[]);
     
-    useEffect(()=>{
-        if(selectOption == '전체'){
-            setRenderData(data);
-            return;
-        }
-        if(selectOption){
-            let array = renderData && data.filter(item => item.book == selectOption);
-            array && setRenderData(array);
-        }
 
-    },[selectOption]);
+    
+    // useEffect(()=>{
+    //     if(selectOption == '전체'){
+    //         setRenderData(data);
+    //         return;
+    //     }
+    //     if(selectOption){
+    //         let array = renderData && data.filter(item => item.book == selectOption);
+    //         array && setRenderData(array);
+    //     }
 
-    useEffect(()=>{
-        filterData && setRenderData(filterData);
-     },[filterData]);
+    // },[selectOption]);
+
+    // useEffect(()=>{
+    //     filterData && setRenderData(filterData);
+    //  },[filterData]);
         
 
 
@@ -64,10 +85,7 @@ function WrongAnswer() {
                 <p>※ 오답 정복하기는 학생별 오답 맞춤 학습지입니다 학생 화면 나의 오답 목록에 반영</p>
             <div className="top fj">
                 <div className="top-left">
-                    <button className="btn" onClick={()=>
-                        checkData.length > 0 ? (window.confirm('삭제함?') && removeList(checkData,selectOption && selectOption)) 
-                        : window.alert('1개이상 선택바람')
-                    }>선택 삭제</button>
+                    <button className="btn">선택 삭제</button>
                     <SelectBase 
                         onChange={(ele)=>{setSelectOption(ele)}} 
                         options={options} // 모든 옵션들 <br/>

@@ -5,12 +5,17 @@ import ajax from "../../ajax";
 import ViewMessageModal from './ViewMessageModal';
 import WriteMessageModal from './WriteMessageModal';
 
-const viewList = ['30개','50개','100개'];
+const viewList = [
+    { value: 30, label: '30개' },
+    { value: 50, label: '50개' },
+    { value: 100, label: '100개' },
+];
+
 
 function SendMessage() {
     let [sendList, setSendList] = useState(null);
     let [coToState,setCoToState] = useState('co');
-    let [viewListState,setViewListState] = useState('목록개수');
+    let [viewListState,setViewListState] = useState();
     let [checkList, setCheckList] = useState([]);
     let [writeModal, setWriteModal] = useState(false);
     let [searchInput, setSearchInput] = useState('');
@@ -107,10 +112,9 @@ function SendMessage() {
                         <SearchBtn />
                         <SelectBase 
                         onChange={(ele)=>setViewListState(ele)}
+                        defaultValue='목록 개수'
                         options={viewList}
                         value={viewListState}
-                        defaultValue='30개'
-                        width={'150px'}
                     />
                     </div>
                 </div>

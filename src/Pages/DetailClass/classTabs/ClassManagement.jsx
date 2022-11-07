@@ -10,6 +10,7 @@ function ClassManagement({clickStudent}){
     let [progressMo, setProgressState] = useState(false);
     let [creationMo, setCreationMo] = useState(false);
     let [data, setData] = useState(null);
+    let [checkList, setCheckList] = useState([]);
 
     useEffect(()=>{
         ajax("/class_manage.php", { data : {
@@ -97,10 +98,10 @@ function ClassManagement({clickStudent}){
                                 <td colSpan={8}>{a.unit1}</td>
                             </tr>
                             {
-                                a.unit2.map(b=>{
+                                a.unit2.map((b,i)=>{
                                     return(
                                         <Tr 
-                                        key={a.title}
+                                        key={i}
                                         data={b} 
                                         studyDone={studyDone}
                                         retry={retry}
@@ -119,9 +120,10 @@ function ClassManagement({clickStudent}){
     )
 }
 
-const Tr = memo(({data,studyDone,ucode,retry}) => {
+const Tr = ({data,studyDone,ucode,retry}) => {
 
     let [resultPop, setResultPop] = useState(false);
+
 
     return(
         <tr>         
@@ -190,5 +192,5 @@ const Tr = memo(({data,studyDone,ucode,retry}) => {
         </tr>
         )
     }
-)
+
 export default ClassManagement;

@@ -4,21 +4,6 @@ import CreationCheck from '../CreationCheck';
 import useStore from '../../../store/useCreationModal';
 import { useRef } from "react";
 
-const arr = [20,10,2,4];
-
-const arr2 = ["박","최", "김"];
-
-
-arr2.sort((a,b)=>{
-
-    if(a < b){
-        return -1
-    }else{
-        return 1
-    }
-})
-
-
 let 출처 = ['개념서', '뜨레스', '맞춤 클리닉'];
 let 문제형식 = ['객관식','주관식','서술형'];
 let 난이도 = ['최상','상','중상','중','중하','하','최하'];
@@ -40,13 +25,11 @@ function CreationModal({setCreationMo,name}){
         level : 난이도,
     })
 
-    // console.log(obj)
 
     useEffect(()=>{
             setDataList(data);
     },[]);
 
-    // console.log(data)
     
     useEffect(()=>{
         let arr = [];
@@ -87,11 +70,7 @@ function CreationModal({setCreationMo,name}){
         }
 
         
-        // for(let key in obj){
-        //     obj[key].forEach(a=>{
-        //         console.log(a)
-        //     })
-        // }
+     
     },[obj])
 
 
