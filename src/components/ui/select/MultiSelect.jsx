@@ -35,9 +35,9 @@ function MultiSelect({width = "130px", onChange, options, value = [], defaultVal
 
     return ( 
         <div tabIndex={1} style={{width : width}} className={`select ${selectOpen ? "active" : ""} ${disabled ? "disabled" : ""}`} 
-        // onBlur={()=>{
-        //     setSelectOpen(false);
-        // }}
+        onBlur={()=>{
+            setSelectOpen(false);
+        }}
         >
 
             <div className="select-view" onClick={()=>{setSelectOpen(!selectOpen)}}>
