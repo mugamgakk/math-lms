@@ -80,7 +80,9 @@ function Home() {
                             <button className="lnb-toggle--btn">on</button>
                         </div>
                     </div>
+                    
                     <LnbLookup />
+
                     <div className="lnb-list">
                         <h4 className="lnb-title">수학 학습 관리</h4>
                         <ul>

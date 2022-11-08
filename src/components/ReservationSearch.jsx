@@ -5,6 +5,7 @@ import ReservationModal from "../Pages/Evaluation/ReservationModal";
 import LmsDatePicker from "./LmsDatePicker";
 import ajax from "../ajax";
 import { useEffect } from "react";
+import SkeletonTable from "./SkeletonTable";
 
 const arr = [
     {
@@ -39,6 +40,7 @@ function ReservationSearch() {
         end: new Date(),
         text: "",
     });
+    let [skeleton, setSkeleton] = useState(true);
 
     const levelTestData = async () => {
         const data = {
@@ -48,16 +50,16 @@ function ReservationSearch() {
             qstr: "박",
             kind: "RV",
         };
-        console.log(data);
         try {
             let res = await new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve(10);
-                }, 1000);
+                }, 600);
             });
             // let res = await ajax("leveltest.php", { data });
 
             setList(arr);
+            setSkeleton(false);
         } catch (err) {}
     };
 
@@ -107,9 +109,13 @@ function ReservationSearch() {
                     </tr>
                 </thead>
                 <tbody>
-                    {list.map((ele, i) => {
-                        return <Tr ele={ele} key={"key" + i} />;
-                    })}
+                    {
+                        skeleton
+                        ? <SkeletonTable R={10} D={4}/>
+                        :list.map((ele, i) => {
+                            return <Tr ele={ele} key={"key" + i} />;
+                        })
+                    }
                 </tbody>
             </table>
             {reservationModal && <ReservationModal close={setReservationModal} />}

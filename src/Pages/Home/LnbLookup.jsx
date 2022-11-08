@@ -3,12 +3,19 @@ import { useState } from "react";
 import ajax from "../../ajax";
 import SelectBase from "../../components/ui/select/SelectBase";
 
-const 본부 = [1, 2, 3];
-const 캠퍼스 = ["본사", "경기"];
-
+const 본부 = [
+    {value : 1, label : 1},
+    {value : 2, label : 2},
+    {value : 3, label : 3}
+]
+const 캠퍼스 = [
+    {value : "본사", label : "본사"},
+    {value : "경기", label : "경기"}
+]
 function LnbLookup() {
     let [bon, setBon] = useState("");
     let [campus, setCampus] = useState("");
+    // 검색
     let [keyward, setKeyward] = useState("");
 
     const getCampusInfo = async () => {
