@@ -57,7 +57,6 @@ const DATA = [
 function Narrative() {
     const clickStudent = useStudentsStore((state) => state.clickStudent);
     const bookList = useStudentsStore((state) => state.bookList);
-    console.log("선택된 북리스트",bookList)
     // tr data
     let [plusData, setPlusData] = useState([]);
     // 단원
