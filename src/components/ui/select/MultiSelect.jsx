@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 
 
 
@@ -26,15 +27,27 @@ function MultiSelect({width = "130px", onChange, options, value = [], defaultVal
         
     }
 
+
+    useEffect(()=>{
+        setChoiceArr(value)
+
+    },[value])
+
     return ( 
         <div tabIndex={1} style={{width : width}} className={`select ${selectOpen ? "active" : ""} ${disabled ? "disabled" : ""}`} 
-        onBlur={()=>{
-            setSelectOpen(false);
-        }}
+        // onBlur={()=>{
+        //     setSelectOpen(false);
+        // }}
         >
 
             <div className="select-view" onClick={()=>{setSelectOpen(!selectOpen)}}>
-                <h4>{value.length !== 0 ? value[value.length - 1] :  defaultValue}</h4>
+                <h4>
+                    {
+                        choiceArr.length !==0
+                        ? choiceArr[choiceArr.length - 1].label
+                        : defaultValue
+                    }
+                </h4>
             </div>
             <div className="select-btn" onClick={()=>{setSelectOpen(!selectOpen)}}></div>
             <div className="select-list-box">
@@ -48,11 +61,11 @@ function MultiSelect({width = "130px", onChange, options, value = [], defaultVal
                                 let isClass = e.target.classList.contains("active");
                                 checkedItem(isClass, a);
                             }}
-                            className={`fa ${choiceArr.includes(a) ? "active" : ""}`}
+                            className={`fa ${choiceArr.some(c=> c.value === a.value ) ? "active" : ""}`}
                             >
                                 <div className="checkbox">
                                 </div>
-                                {a}
+                                {a.label}
                             </li>
                         )
                     })

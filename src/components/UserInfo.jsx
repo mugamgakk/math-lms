@@ -1,39 +1,41 @@
 import React, {useState} from 'react';
+import { useEffect } from 'react';
+import ajax from '../ajax';
 import MultiSelect from './ui/select/MultiSelect';
 
 
-
-const options = [
-    "중 3-1 뜨레스", "중1-1 뜨레스", "초6-1 아르케" , "중2-2 쓰레스", "중2-2액세스", "중3-1액세스",
-    "초4-1 아르케"
-]
-
-
-const 중딩 = options.filter(item=> /(중)\s?[1-6]/.test(item));
-const 초딩 = options.filter(item=> /(초)\s?[1-6]/.test(item));
-
-
-중딩.sort((a,b)=>{
-
-    a = a.match(/(중)\s?[1-6]/)[0].match(/[0-9]/)[0]
-    b = b.match(/(중)\s?[1-6]/)[0].match(/[0-9]/)[0]
-
-    return b-a
-})
-초딩.sort((a,b)=>{
-
-    a = a.match(/(초)\s?[1-6]/)[0].match(/[0-9]/)[0]
-    b = b.match(/(초)\s?[1-6]/)[0].match(/[0-9]/)[0]
-
-    return b-a
-})
-
-const 잼민 = [...중딩, ...초딩];
-
-
 function UserInfo({clickStudent}) {
-    // 6개 기본 체크
-    let [multiSelect, setMultiSelect] = useState(잼민.slice(0,6));
+   
+    let [multiSelect, setMultiSelect] = useState();
+    let [optionsDefault, setoptionsDefault] = useState();
+
+    useEffect(()=>{
+        if(clickStudent){
+            const data = {
+                mode : "std_info",
+                usr_seq : clickStudent.usr_seq
+            }
+            ajax("/class_manage.php", {data})
+            .then(res=>{
+                let userData = {
+                    um_id : "gkatjdwn1",
+                    um_nm : "강호동",
+                    school_grade : "초1",
+                    bk_list : [{bk_cd : "M12_C12",bk_name : "중 2-1 노벰"}]
+                }
+
+                const options = userData.bk_list.map(a=> ({value : a.bk_cd, label : a.bk_name}));
+
+                // 초기값  // 6개 기본 체크
+                setMultiSelect(options.slice(0,6))
+
+                // option
+                setoptionsDefault(options);
+
+            })
+            
+        }
+    },[clickStudent])
 
 
     return ( 
@@ -46,8 +48,9 @@ function UserInfo({clickStudent}) {
                     <dt>교재</dt>
                     <dd>
                         <MultiSelect
-                        options={잼민}
+                        options={optionsDefault}
                         onChange={(arr) => {
+                            console.log(arr)
                             setMultiSelect(arr)
                         }}
                         value={multiSelect}

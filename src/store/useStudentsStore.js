@@ -8,7 +8,8 @@ const useStudentsStore = create(set=>({
     clickStudent : null,
     classList : [],
     getStudentsData : async (classCd, queryStr)=>{
-
+      // 리스트 가져오기
+      
       const url = "/class_st.php"
       const data = {
         mode: "student_list",
