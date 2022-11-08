@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { useEffect } from 'react';
 import ajax from '../ajax';
+import useStudentsStore from '../store/useStudentsStore';
 import MultiSelect from './ui/select/MultiSelect';
 
 
@@ -8,6 +9,7 @@ function UserInfo({clickStudent}) {
    
     let [multiSelect, setMultiSelect] = useState();
     let [optionsDefault, setoptionsDefault] = useState();
+    let setBookList = useStudentsStore(state=>state.setBookList);
 
     useEffect(()=>{
         if(clickStudent){
@@ -21,13 +23,17 @@ function UserInfo({clickStudent}) {
                     um_id : "gkatjdwn1",
                     um_nm : "강호동",
                     school_grade : "초1",
-                    bk_list : [{bk_cd : "M12_C12",bk_name : "중 2-1 노벰"}]
+                    bk_list : [
+                        {bk_cd : "M12_C12",bk_name : "중 2-1 노벰"},
+                        {bk_cd : "M22_B22",bk_name : "중 2-2 수학"}
+                    ]
                 }
 
                 const options = userData.bk_list.map(a=> ({value : a.bk_cd, label : a.bk_name}));
 
                 // 초기값  // 6개 기본 체크
-                setMultiSelect(options.slice(0,6))
+                setMultiSelect(options.slice(0,6));
+                setBookList(options.slice(0,6))
 
                 // option
                 setoptionsDefault(options);

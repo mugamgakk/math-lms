@@ -7,6 +7,8 @@ const useStudentsStore = create(set=>({
     user: [],
     clickStudent : null,
     classList : [],
+    bookList : [],
+    setBookList  : (param)=> set(state=> ({bookList : param})),
     getStudentsData : async (classCd, queryStr)=>{
       // 리스트 가져오기
       
