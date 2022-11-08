@@ -196,6 +196,7 @@ function ResultSave({ modal }) {
     );
 }
 
+
 const Table = memo(({ tableList, checkResult, arrIndex }) => {
 
 
