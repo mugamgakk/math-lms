@@ -38,7 +38,6 @@ function WrongAnswer() {
             console.log(error);
         })
     },[]);
-    
 
     
     // useEffect(()=>{
