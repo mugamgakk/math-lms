@@ -55,12 +55,23 @@ function CreationModal({setCreationMo,name}){
 
     let [checkState,setCheckState] = useState([]);
     let [dataList,setDataList] = useState(data);
+    let ref = useRef(false);
 
-    let ref = useRef(false)
+    console.log(dataList);
+
+    let [obj,setObj] = useState({
+        source : source,
+        type : type,
+        level : level,
+    });
 
     useEffect(()=>{
-        // createWrongAnswer();
-    },[]);
+        console.log(checkState);
+    },[checkState])
+
+    // useEffect(()=>{
+    //     createWrongAnswer();
+    // },[]);
 
     // const createWrongAnswer = async () => {
     //     let url = "/class_wrong.php/";
@@ -74,24 +85,6 @@ function CreationModal({setCreationMo,name}){
     //     setDataList(res);
     // }
 
-        // let res = new Promise((resolve, reject) => {
-        //     setTimeout(()=>{
-        //         resolve(10)
-        //     },1000)
-        // })
-
-    // res.then(res=>{
-        
-    // })
-
-    // 키값 키네임이랑 똑같게
-    let [obj,setObj] = useState({
-        source : source,
-        type : type,
-        level : level,
-    });
-
-    
     useEffect(()=>{
 
         let arr = [];
@@ -131,31 +124,42 @@ function CreationModal({setCreationMo,name}){
 
     },[obj])
 
-    const changeCheckState = (seq) => {
-        if(checkState.includes(seq)){
-            setCheckState(checkState.filter(item => item !== seq));
-        }else{
+
+    const changeCheckState = (checked,seq) => {
+        if(checked){
             setCheckState([...checkState, seq]);
+        }else{
+            setCheckState(checkState.filter(item => item !== seq));
         }
+     
     }
+
+    
 
     const allCheckState = (checked) => {
         if(checked){
-            setCheckState([...dataList]);
+            let arr = [];
+            dataList.forEach(list=>{
+                for(let key in list){
+                    if(key === 'qa_seq'){
+                        arr.push(list[key]);
+                    }
+                }
+            });
+            setCheckState(arr);
         }else{
             setCheckState([]);
         }
     }
 
 
-    let [title,setTitle] = useState('중2-1뜨레스_오답 정복_20210705');
-
+    
     let today = useMemo(()=>{
         let newDate = dayjs(new Date).format('YYYYMMDD');
         return newDate;
-    })
-    console.log(today);
-
+    },[])
+    
+    let [title,setTitle] = useState(`중2-1뜨레스_오답 정복하기_${today}`);
 
     return(
         <div className="modal">
@@ -236,31 +240,11 @@ function CreationModal({setCreationMo,name}){
                             </tr>
                         </thead>
                         <tbody>
-                        
                             {
                                 dataList && 
                                 dataList.map(data=>{
                                     return(
-                                        <tr key={data.qa_seq}>
-                                            <td>
-                                                <div className="check-wrap">
-                                                    <input type="checkbox" id={data.qa_seq}
-                                                     onChange={() => changeCheckState(data.qa_seq)} 
-                                                     checked={ checkState.includes(data.qa_seq)}/>
-                                                    <label htmlFor={data.qa_seq}></label>
-                                                </div>
-                                            </td>
-                                            <td>{data.ltitle}</td>
-                                            <td>{data.utitle}</td>
-                                            <td>{data.keyword}</td>
-                                            <td>{data.source}</td>
-                                            <td>{data.no}</td>
-                                            <td>{data.type}</td>
-                                            <td>{data.level}</td>
-                                            <td>
-                                                <button className='btn'>보기</button>
-                                            </td>
-                                        </tr>
+                                        <Tr data={data} key={data.qa_seq} changeCheckState={changeCheckState} checkState={checkState}/>
                                     )
                                 })
                             }
@@ -276,4 +260,38 @@ function CreationModal({setCreationMo,name}){
         </div>
     )
 }
+
+const Tr = ({data,changeCheckState,checkState}) => {
+    return(
+        <tr key={data.qa_seq}>
+        <td>
+            <div className="check-wrap">
+                <input type="checkbox" id={data.qa_seq}
+                 onChange={(e)=>changeCheckState(e.target.checked,data.qa_seq)} 
+                 checked={ checkState.includes(data.qa_seq)}/>
+                <label htmlFor={data.qa_seq}></label>
+            </div>
+        </td>
+        <td>{data.ltitle}</td>
+        <td>{data.utitle}</td>
+        <td>{data.keyword}</td>
+        <td>
+            { data.source == 'CO' && '개념서' }
+            { data.source == 'TR' && '뜨레스' }
+            { data.source == 'CC' && '맞춤클리닉' }
+        </td>
+        <td>{data.no}</td>
+        <td>
+            { data.type == 'O' && '객관식' }
+            { data.type == 'S' && '주관식' }
+            { data.type == 'D' && '서술형' }
+            { data.type == 'C' && '정오체크' }
+        </td>
+        <td>{data.level}</td>
+        <td>
+            <button className='btn'>보기</button>
+        </td>
+    </tr>
+    )
+};
 export default CreationModal;

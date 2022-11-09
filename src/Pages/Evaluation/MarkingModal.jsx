@@ -68,6 +68,8 @@ function MarkingTable(){
     
     data[16].정답 = [1, 2, 3];
     let [dataList, setDataList] = useState([data.slice(0,10),data.slice(10,20),data.slice(20,30)]);
+
+    console.log(dataList);
     
     const clickBtn = (a,b,num) => {
 

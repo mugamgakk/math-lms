@@ -3,35 +3,42 @@ import ajax from "../../../ajax";
 import ProgressModal from '../modal/progressModal';
 import CreationModal from '../modal/CreationModal';
 import ResultPopModal from '../modal/ResultPopModal';
+import useStudentsStore from "../../../store/useStudentsStore";
 import { useCallback } from "react";
 
 
 function ClassManagement({clickStudent}){
     let [progressMo, setProgressState] = useState(false);
     let [creationMo, setCreationMo] = useState(false);
+    let bookList = useStudentsStore((state) => state.bookList);
+
     let [data, setData] = useState(null);
     let [wrongPopList, setWrongPopList] = useState([]);
+    let [bk_cd, setBkCd] = useState();
 
-    const setList = async () => {
+    console.log(bookList);
+
+    useEffect(()=>{
+        getList();
+    },[]);
+
+    const getList = async () => {
 
         let url = "/class_manage.php/";
         let query = {
             mode: "unit_list",
             usr_seq : 80,
+            bk_cd : 'M12_C12'
         };
 
         let res = await ajax(url, { data: query });
-
+        console.log(res);
         setData(res.data);
-        console.log(res.data);
+    
     };
 
-    useEffect(()=>{
-        setList();
-    },[]);
-
+ 
     // 학습 완료
-
     const studyDone = async (ucode) => {
         let url = "/class_manage.php/";
         let query = {
@@ -45,8 +52,10 @@ function ClassManagement({clickStudent}){
         console.log(res);
     };
 
+
     // 재응시
     const retry = async (ucode) =>{
+
         let url = "/class_manage.php/";
         let query = {
             mode: "set_retry",
@@ -57,6 +66,7 @@ function ClassManagement({clickStudent}){
         let res = await ajax(url, { data: query });
 
         console.log(res);
+
     };
 
 
@@ -73,7 +83,6 @@ function ClassManagement({clickStudent}){
     
     return(
         <div className='detailClass classManagement'>
-
             <div className="progress fj" >
                 <p>※ 메인 관리 교재를 체크 표시해 두면 오늘의 수업에서 학습 관리하기 편리합니다. (최대 6 종)</p>
                 <button className="btn" onClick={()=>setProgressState(true)}>학습 진행률 보기</button>
@@ -112,21 +121,21 @@ function ClassManagement({clickStudent}){
                              <tr style={{ background:'gray' }}>
                                 <td colSpan={8}>{a.unit1}</td>
                             </tr>
-                            {
-                                a.unit2.map((b,i)=>{
-                                    return(
-                                        <Tr 
-                                        key={i}
-                                        data={b} 
-                                        studyDone={studyDone}
-                                        retry={retry}
-                                        // ucode={a.ucode}
-                                        ucode={b.ucode}
-                                        setCheckList={setCheckList}
-                                        />
-                                    )
-                                })
-                            }
+                                {
+                                    a.unit2.map((b,i)=>{
+                                        return(
+                                            <Tr 
+                                            key={i}
+                                            data={b} 
+                                            studyDone={studyDone}
+                                            retry={retry}
+                                            // ucode={a.ucode}
+                                            ucode={b.ucode}
+                                            setCheckList={setCheckList}
+                                            />
+                                        )
+                                    })
+                                }
                         </tbody>
                     )
                 })
