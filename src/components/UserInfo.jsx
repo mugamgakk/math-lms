@@ -2,12 +2,14 @@ import React, {useState} from 'react';
 import { useEffect } from 'react';
 import ajax from '../ajax';
 import useStudentsStore from '../store/useStudentsStore';
-import MultiSelect from './ui/select/MultiSelect';
+import SelectBook from './ui/select/SelectBook';
 
 
 function UserInfo({clickStudent}) {
    
     let [multiSelect, setMultiSelect] = useState();
+    let [chiceItem, setChiceItem] = useState();
+
     let [optionsDefault, setoptionsDefault] = useState();
     let setBookList = useStudentsStore(state=>state.setBookList);
 
@@ -37,11 +39,26 @@ function UserInfo({clickStudent}) {
             .then(res=>{
                 // console.log(res)
 
-                const options = res.data.bk_list.map(a=> ({value : a.bk_cd, label : a.bk_name}));
+                // const options = res.data.bk_list.map(a=> ({value : a.bk_cd, label : a.bk_name}));
+
+                const options = [
+                    {value : 123, label : "수학"},
+                    {value : 1323, label : "영어"},
+                    {value : 323, label : "도덕"},
+                    {value : 313, label : "기술"},
+                    {value : 3, label : "개그"},
+                    {value : 2, label : "찬양"},
+                    {value : 1, label : "축구"}
+                ]
 
                 // 초기값  // 6개 기본 체크
                 setMultiSelect(options.slice(0,6));
-                setBookList(options.slice(0,6))
+
+                // store에 넣을 초기값
+                setBookList(options[0]);
+                
+                // select초기값
+                setChiceItem(options[0])
 
                 // option
                 setoptionsDefault(options);
@@ -66,13 +83,18 @@ function UserInfo({clickStudent}) {
                 <div>
                     <dt>교재</dt>
                     <dd>
-                        <MultiSelect
+                        <SelectBook
                         options={optionsDefault}
-                        onChange={(arr) => {
+                        onCheck={(arr) => {
                             setMultiSelect(arr);
                             choiceBook(arr);
                         }}
-                        value={multiSelect}
+                        onChange={(ele)=>{
+                            setChiceItem(ele);
+                            setBookList(ele);
+                        }}
+                        value={chiceItem}
+                        checkValue={multiSelect}
                         limit={6}
                         />
                     </dd>
