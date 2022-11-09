@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useCallback } from "react";
 import { useRef } from "react";
 import { useEffect } from "react";
+import ajax from "../ajax";
 import ContentHeader from "../components/ContentHeader";
 import DateNext from "../components/DateNext";
 import SearchBtn from "../components/ui/button/SearchBtn";
@@ -43,17 +44,29 @@ function Attendance() {
         },[list]);
 
     useEffect(() => {
-        axios.post("http://192.168.11.178:8080/attendace/list").then((res) => {
-            let arr = [];
+        const data = {
+            mode : "get_daily",
+            ymd : "20220101",
+            class_cd : 123412341243,
+            qstr : "박"
+        }
 
-            for (let ele of res.data.list) {
-                arr.push({ ...ele });
-            }
+        ajax("class_daily.php", {data})
+        .then(res=>{
+            console.log(res);
+        })
 
-            initialData.current = arr;
+        // axios.post("http://192.168.11.178:8080/attendace/list").then((res) => {
+        //     let arr = [];
 
-            setList([...res.data.list]);
-        });
+        //     for (let ele of res.data.list) {
+        //         arr.push({ ...ele });
+        //     }
+
+        //     initialData.current = arr;
+
+        //     setList([...res.data.list]);
+        // });
     }, []);
 
     return (

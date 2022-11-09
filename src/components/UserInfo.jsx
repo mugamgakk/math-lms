@@ -11,6 +11,22 @@ function UserInfo({clickStudent}) {
     let [optionsDefault, setoptionsDefault] = useState();
     let setBookList = useStudentsStore(state=>state.setBookList);
 
+// 교재 6종 선택
+    const choiceBook = async(list)=>{
+        const data = {
+            mode : "bk_select",
+            usr_seq : clickStudent.usr_seq
+        }
+
+        data.bk_cd = list.map(ele=> ele.value);
+
+        let res = await ajax("class_manage.php", {data});
+
+        // console.log("교재 6종",data);
+        // console.log("교재 6종 선택",res);
+
+    }
+
     useEffect(()=>{
         if(clickStudent){
             const data = {
@@ -19,17 +35,9 @@ function UserInfo({clickStudent}) {
             }
             ajax("/class_manage.php", {data})
             .then(res=>{
-                let userData = {
-                    um_id : "gkatjdwn1",
-                    um_nm : "강호동",
-                    school_grade : "초1",
-                    bk_list : [
-                        {bk_cd : "M12_C12",bk_name : "중 2-1 노벰"},
-                        {bk_cd : "M22_B22",bk_name : "중 2-2 수학"}
-                    ]
-                }
+                // console.log(res)
 
-                const options = userData.bk_list.map(a=> ({value : a.bk_cd, label : a.bk_name}));
+                const options = res.data.bk_list.map(a=> ({value : a.bk_cd, label : a.bk_name}));
 
                 // 초기값  // 6개 기본 체크
                 setMultiSelect(options.slice(0,6));
@@ -38,6 +46,11 @@ function UserInfo({clickStudent}) {
                 // option
                 setoptionsDefault(options);
 
+                return options.slice(0.6);
+
+            })
+            .then(data=>{
+                choiceBook(data);
             })
             
         }
@@ -56,8 +69,8 @@ function UserInfo({clickStudent}) {
                         <MultiSelect
                         options={optionsDefault}
                         onChange={(arr) => {
-                            console.log(arr)
-                            setMultiSelect(arr)
+                            setMultiSelect(arr);
+                            choiceBook(arr);
                         }}
                         value={multiSelect}
                         limit={6}

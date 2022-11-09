@@ -99,7 +99,23 @@ const comma = (num)=>{
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+export function _map(list, fn){
+    const arr = [];
+    for(let i = 0; i < list.length; i++){
+        arr.push(fn(list[i], i))
+    }
+    return arr
+}
 
+export function _filter(list, fn){
+    const arr = [];
+    for(let i = 0; i < list.length; i++){
+        if(fn(list[i], i)){
+            arr.push(list[i])
+        }
+    }
+    return arr;
+}
 
 export {
     weekChange,
