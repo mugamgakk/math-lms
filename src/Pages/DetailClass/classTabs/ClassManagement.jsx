@@ -16,11 +16,9 @@ function ClassManagement({clickStudent}){
     let [wrongPopList, setWrongPopList] = useState([]);
     let [bk_cd, setBkCd] = useState();
 
-    console.log(bookList);
-
     useEffect(()=>{
         getList();
-    },[]);
+    },[bookList]);
 
     const getList = async () => {
 
@@ -28,7 +26,8 @@ function ClassManagement({clickStudent}){
         let query = {
             mode: "unit_list",
             usr_seq : 80,
-            bk_cd : 'M12_C12'
+            // bk_cd : 'M12_C12',
+            bk_cd : bookList.value
         };
 
         let res = await ajax(url, { data: query });
@@ -91,7 +90,12 @@ function ClassManagement({clickStudent}){
                 progressMo && <ProgressModal setProgressState={setProgressState} name={clickStudent.name}/>
             }
             {
-                creationMo && <CreationModal setCreationMo={setCreationMo} name={clickStudent.name} ucode={wrongPopList}/>
+                creationMo && <CreationModal 
+                setCreationMo={setCreationMo} 
+                name={clickStudent.um_nm} 
+                ucode={wrongPopList}
+                bookList={bookList}
+                />
             }
            <div className="table-wrap">
 
@@ -125,13 +129,13 @@ function ClassManagement({clickStudent}){
                                     a.unit2.map((b,i)=>{
                                         return(
                                             <Tr 
-                                            key={i}
-                                            data={b} 
-                                            studyDone={studyDone}
-                                            retry={retry}
-                                            // ucode={a.ucode}
-                                            ucode={b.ucode}
-                                            setCheckList={setCheckList}
+                                                key={i}
+                                                data={b} 
+                                                studyDone={studyDone}
+                                                retry={retry}
+                                                // ucode={a.ucode}
+                                                ucode={b.ucode}
+                                                setCheckList={setCheckList}
                                             />
                                         )
                                     })

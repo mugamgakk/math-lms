@@ -13,21 +13,23 @@ function TodayClass(){
     let [skeleton, setSkeleton] = useState(true);
     let [classList,setClassList] = useState();
 
-
-
-
     useEffect(()=>{
 
-        ajax("/class.php/?mode=get_today_class", {
-            ymd : "2022-01-01",
-            class_cd : 137283785634112704,
-            qstr : "김수학"
+        ajax("/class.php/", { data : {
+
+                mode : 'get_today_class',
+                ymd : "2022-01-01",
+                class_cd : 137283785634112704,
+                qstr : "김수학"
+            
+            }
         }).then(res=>{
-                let { class_list, today_list} = res.data;
-             
+
+            let { class_list, today_list} = res.data;
+
+                console.log(res);
                 setFindList(today_list); 
                 setClassList(class_list);
-                
                 setSkeleton(false);
 
         })

@@ -210,44 +210,7 @@
         }
 }
 
-.lnb-list{
-    position: relative;
-    .trigger{
-        position: absolute;
-        left: 30px;
-        bottom: 20px;
-        cursor: pointer;
-        width: 5px;
-        height: 5px;
-    }
-    .egg{
-        width: 100px;
-        height: 100px;
-        position: absolute;
-        left: 0;
-        z-index: -1;
-        bottom: -24px;
-        background-size: 100%;
-    }
-    .egg.show{
-        animation: dance 3s ease-in-out ;
-    }
-    @keyframes dance {
-        0%{
-            left: 0;
-        }
-        50%{
-            left: -80px;
-        }
-        80%{
-            left: -80px; 
-        }
-        100%{
-            left: 0;
-        }
-        
-    }
-}
+
 // 학생별 수업관리 - 수업관리
 .detailClass.classManagement{
 
