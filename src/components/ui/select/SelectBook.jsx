@@ -57,7 +57,9 @@ function SelectBook({
                 }}
             >
                 <h4>
+                    <strong className="mr-2">
                     {chiceItem ? chiceItem.label : defaultValue}
+                    </strong>
                     <div className={`checkbox ${
                                         choiceArr.some((c) => c.value === chiceItem.value) ? "active" : ""
                                     }`} 
@@ -79,7 +81,7 @@ function SelectBook({
                                     key={i}
                                     className={`fa`}
                                 >
-                                    <strong onClick={()=>{ setChiceItem(a); onChange && onChange(a) }}>
+                                    <strong className="mr-2" onClick={()=>{ setChiceItem(a); onChange && onChange(a) }}>
                                         {a.label}
                                     </strong>
                                     <div className={`checkbox ${
