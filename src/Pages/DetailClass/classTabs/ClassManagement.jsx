@@ -15,7 +15,7 @@ function ClassManagement({clickStudent}){
     let [data, setData] = useState(null);
     let [wrongPopList, setWrongPopList] = useState([]);
     let [bk_cd, setBkCd] = useState();
-
+    console.log(clickStudent);
     useEffect(()=>{
         getList();
     },[bookList]);
@@ -64,7 +64,6 @@ function ClassManagement({clickStudent}){
 
         let res = await ajax(url, { data: query });
 
-        console.log(res);
 
     };
 
@@ -92,7 +91,7 @@ function ClassManagement({clickStudent}){
             {
                 creationMo && <CreationModal 
                 setCreationMo={setCreationMo} 
-                name={clickStudent.um_nm} 
+                stuInfo={clickStudent} 
                 ucode={wrongPopList}
                 bookList={bookList}
                 />

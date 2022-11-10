@@ -51,12 +51,14 @@ const data = [
         },
     ]
 
-function CreationModal({setCreationMo,name,bookList}){
+function CreationModal({setCreationMo,stuInfo,bookList}){
 
     let [checkState,setCheckState] = useState([]);
     let [dataList,setDataList] = useState(data);
     let [newList, setNewList] = useState(dataList);
     let ref = useRef(false);
+
+    console.log(checkState);
 
 
     let [obj,setObj] = useState({
@@ -82,6 +84,7 @@ function CreationModal({setCreationMo,name,bookList}){
     //     // setDataList(res);
     // }
 
+ 
     useEffect(()=>{
         let arr = [];
         let arr2 = [];
@@ -146,6 +149,21 @@ function CreationModal({setCreationMo,name,bookList}){
         }
     }
 
+    // 오답 생성 전송
+    const sendList = async () => {
+
+        if(!window.confirm('오답 생성 전송?')) return;
+        
+        let url = "/class_wrong.php/";
+        let query = {
+            mode: "wa_create_save",
+            usr_seq : stuInfo.usr_seq,
+            qa_no : checkState
+        };
+            
+            let res = await ajax(url, { data: query });
+            console.log(res);
+    }
 
     
     let today = useMemo(()=>{
@@ -161,7 +179,7 @@ function CreationModal({setCreationMo,name,bookList}){
             <div className='creationModal cmmnModal'>
                 <div className="creationModal-head cmmnModal-head">
                     <div className="tit">
-                        <strong>[오답 정복하기 생성]{name}/{bookList.label}</strong>
+                        <strong>[오답 정복하기 생성]{stuInfo.um_nm}/{bookList.label}</strong>
                     </div>
                     <button className="close" onClick={()=>setCreationMo(false)}>X</button>
                 </div>
@@ -247,7 +265,7 @@ function CreationModal({setCreationMo,name,bookList}){
                 </div>
                 <div className="creationModal-foot cmmnModal-foot">
                     <button className="btn">미리보기</button>
-                    <button className="btn">생성하기</button>
+                    <button className="btn" onClick={sendList}>생성하기</button>
                     <button className="btn" onClick={()=>setCreationMo(false)}>닫기</button>
                 </div>
             </div>
