@@ -25,7 +25,7 @@ function ClassManagement({clickStudent}){
         let url = "/class_manage.php/";
         let query = {
             mode: "unit_list",
-            usr_seq : 80,
+            usr_seq : clickStudent.usr_seq,
             // bk_cd : 'M12_C12',
             bk_cd : bookList.value
         };
@@ -43,7 +43,7 @@ function ClassManagement({clickStudent}){
         let query = {
             mode: "set_passed",
             ucode : ucode,
-            usr_seq : 80,
+            usr_seq : clickStudent.usr_seq,
         };
 
         let res = await ajax(url, { data: query });

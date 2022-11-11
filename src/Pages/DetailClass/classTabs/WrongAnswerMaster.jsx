@@ -1,11 +1,11 @@
-import React, { useState, useMemo, memo} from "react";
+import React, { useState, useMemo, useEffect} from "react";
 import SelectBase from '../../../components/ui/select/SelectBase';
-import useStore from '../../../store/useWrongManagement';
 import ajax from "../../../ajax";
 import DatePicker from "react-date-picker";
 import PrintModal from '../../../components/PrintModal';
 import dayjs from "dayjs"
-import { useEffect } from "react";
+import useStudentsStore from "../../../store/useStudentsStore";
+
 
 const options = [
     { value: null, label: "전체" },
@@ -14,30 +14,57 @@ const options = [
     { value: '중2-2노벰', label: '중2-2노벰' },
 ];
 
-function WrongAnswer() {
+const data = {
+    bk_list : [
+        { bk_cd : 'M12_C12', bk_name: '중2-1노벰'},
+        { bk_cd : 'M12_C12', bk_name: '중2-1노벰'},
+    ],
+    wrong_list : [
+        {
+            wa_seq : 123,
+            reg_dt : "2021-01-01",
+            bk_name : "중2-1 뜨레스",
+            wa_title : "제목 중2-1뜨레스 _강수학 말줄임표 없이",
+            wa_range : "줄바꿈은<br>어떻게<br>할것인가",
+            wa_qnum : 30,
+            wa_status : "학습중",
+        },
+        {
+            wa_seq : 124,
+            reg_dt : "2021-01-01",
+            bk_name : "중2-2 노벰",
+            wa_title : "제목 중2-1뜨레스 _강수학 말줄임표 없이",
+            wa_range : "줄바꿈은<br>어떻게<br>할것인가",
+            wa_qnum : 30,
+            wa_status : "학습중",
+        },
+    ]
+}
+function WrongAnswer({clickStudent}) {
     // let {data,removeList,filterData} = useStore(state=>state);
 
     let [checkData,setCheckData] = useState([]);
-    let [renderData, setRenderData] = useState(null);
+    let [renderData, setRenderData] = useState(data);
     let [filterData, setFilterData] = useState(null);
     let [selectOption, setSelectOption] = useState();
     let today = dayjs(new Date()).format('YYYY-MM-DD');
     let monthAge = dayjs(new Date()).subtract(1,'month').format('YYYY-MM-DD');
+    let bookList = useStudentsStore((state) => state.bookList);
     
-    useEffect(()=>{
-        ajax("/class_wrong.php", { data : {
-            mode : 'list',
-            usr_seq : 80,
-            sdate : monthAge,
-            edate : today,
-        }
-        }).then(res=>{
-            console.log(res.data)
-            // setRenderData(res.data);
-        }).catch((error)=>{
-            console.log(error);
-        })
-    },[]);
+    // useEffect(()=>{
+    //     ajax("/class_wrong.php", { data : {
+    //         mode : 'list',
+    //         usr_seq : clickStudent.usr_seq,
+    //         sdate : monthAge,
+    //         edate : today,
+    //     }
+    //     }).then(res=>{
+    //         console.log(res.data)
+    //         // setRenderData(res.data);
+    //     }).catch((error)=>{
+    //         console.log(error);
+    //     })
+    // },[]);
 
     
     // useEffect(()=>{
@@ -145,7 +172,7 @@ function WrongAnswer() {
                 </thead>
                 <tbody>
                     {
-                        renderData && renderData.map(data=>{
+                        filterData && filterData.map(data=>{
                             return <Tr data={data} checkData={checkData} setCheckData={setCheckData} />
                         })
                         

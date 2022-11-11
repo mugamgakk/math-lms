@@ -43,7 +43,7 @@ function DetailClassContent({ setLocation }) {
                             {
                                 {
                                     0: <ClassManagement clickStudent={clickStudent} />,
-                                    1: <WrongAnswerMaster />,
+                                    1: <WrongAnswerMaster clickStudent={clickStudent} />,
                                     2: <LearningBreakdownTable />,
                                     3: <AttendanceManagement />,
                                 }[tabState]
