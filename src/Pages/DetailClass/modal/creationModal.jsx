@@ -4,8 +4,8 @@ import ajax from "../../../ajax";
 import dayjs from "dayjs";
 import { useMemo } from "react";
 
-const source = ['개념서', '뜨레스', '맞춤 클리닉'];
-const type = ['객관식','주관식','서술형'];
+const source = ['개념서', '뜨레스', '엑사스','노벰','맞춤클리닉'];
+const type = ['객관식','주관식','서술형','정오 체크'];
 const level = ['최상','상','중상','중','중하','하','최하'];
 
 const data = [
@@ -14,60 +14,58 @@ const data = [
             ltitle : 'i.수와 연산',
             utitle : '1.소인수분해',
             keyword : '소수와 합성수',
-            source : 'CO',
+            source : '뜨레스',
             no : 1,
-            type : 'O',
-            level :'L2'
+            type : '객관식',
+            level :'중'
         },
         {
             qa_seq : 124,
             ltitle : 'i.수와 연산',
             utitle : '1.소인수분해',
             keyword : '소수와 합성수',
-            source : 'TR',
+            source : '맞춤클리닉',
             no : 1,
-            type : 'S',
-            level :'L1'
+            type : '주관식',
+            level :'최상'
         },
         {
             qa_seq : 125,
             ltitle : 'i.수와 연산',
             utitle : '1.소인수분해',
             keyword : '소수와 합성수',
-            source : 'CC',
+            source : '개념서',
             no : 1,
-            type : 'D',
-            level :'L3'
+            type : '서술형',
+            level :'최하'
         },
         {
             qa_seq : 126,
             ltitle : 'i.수와 연산',
             utitle : '1.소인수분해',
             keyword : '소수와 합성수',
-            source : 'CO',
+            source : '노벰',
             no : 1,
-            type : 'C',
-            level :'L4'
+            type : '객관식',
+            level :'상'
         },
     ]
 
-function CreationModal({setCreationMo,name}){
+function CreationModal({setCreationMo,stuInfo,bookList}){
 
     let [checkState,setCheckState] = useState([]);
     let [dataList,setDataList] = useState(data);
+    let [newList, setNewList] = useState(dataList);
     let ref = useRef(false);
 
-    console.log(dataList);
+    console.log(checkState);
+
 
     let [obj,setObj] = useState({
         source : source,
         type : type,
         level : level,
     });
-
-    useEffect(()=>{
-        console.log(checkState);
-    },[checkState])
 
     // useEffect(()=>{
     //     createWrongAnswer();
@@ -82,41 +80,40 @@ function CreationModal({setCreationMo,name}){
     //     };
 
     //     let res = await ajax(url, { data: query });
-    //     setDataList(res);
+    //     console.log(res);
+    //     // setDataList(res);
     // }
 
+ 
     useEffect(()=>{
-
         let arr = [];
         let arr2 = [];
         let arr3 = [];
 
         if(ref.current === true){
-
             obj.source.forEach(a=>{
-                dataList.forEach(dd =>{
-                    if(a === dd.source){
+                dataList.forEach(dd=>{
+                    if(a == dd.source){
                         arr.push(dd)
                     }
-                })
-               
-            })
+                })               
+            })          
             obj.type.forEach(a=>{
                 arr.forEach(dd =>{
-                    if(a === dd.type){
+                    if(a == dd.type){
                         arr2.push(dd)
                     }
                 })
             })
             obj.level.forEach(a=>{
                 arr2.forEach(dd =>{
-                    if(a === dd.level){
+                    if(a == dd.level){
                         arr3.push(dd)
                     }
                 })
             })
 
-            setDataList(arr3)
+            setNewList(arr3)
 
         }else{
             ref.current = true
@@ -152,6 +149,21 @@ function CreationModal({setCreationMo,name}){
         }
     }
 
+    // 오답 생성 전송
+    const sendList = async () => {
+
+        if(!window.confirm('오답 생성 전송?')) return;
+        
+        let url = "/class_wrong.php/";
+        let query = {
+            mode: "wa_create_save",
+            usr_seq : stuInfo.usr_seq,
+            qa_no : checkState
+        };
+            
+            let res = await ajax(url, { data: query });
+            console.log(res);
+    }
 
     
     let today = useMemo(()=>{
@@ -159,7 +171,7 @@ function CreationModal({setCreationMo,name}){
         return newDate;
     },[])
     
-    let [title,setTitle] = useState(`중2-1뜨레스_오답 정복하기_${today}`);
+    let [title,setTitle] = useState(`${bookList.label}_오답 정복하기_${today}`);
 
     return(
         <div className="modal">
@@ -167,7 +179,7 @@ function CreationModal({setCreationMo,name}){
             <div className='creationModal cmmnModal'>
                 <div className="creationModal-head cmmnModal-head">
                     <div className="tit">
-                        <strong>[오답 정복하기 생성]{name}</strong>
+                        <strong>[오답 정복하기 생성]{stuInfo.um_nm}/{bookList.label}</strong>
                     </div>
                     <button className="close" onClick={()=>setCreationMo(false)}>X</button>
                 </div>
@@ -197,7 +209,7 @@ function CreationModal({setCreationMo,name}){
                                          checked={ dataList.length === checkState.length }/>
                                         <label htmlFor='checkAll' className='checkAll pl-20' >선택</label>
                                     </div>
-                                    <span>(25/25)</span>
+                                    <span>{checkState.length}/{dataList.length}</span>
                                 </td>
                                 <td>대단원</td>
                                 <td>소단원</td>
@@ -208,7 +220,7 @@ function CreationModal({setCreationMo,name}){
                                         data={source}
                                         obj={obj}
                                         setObj={setObj}
-                                        keyName='class'
+                                        keyName='source'
                                         />
                                         <span>출처</span>
                                     </div>
@@ -220,7 +232,7 @@ function CreationModal({setCreationMo,name}){
                                         data={type} 
                                         obj={obj}
                                         setObj={setObj}
-                                        keyName='answer'
+                                        keyName='type'
                                         />
                                         <span>문제 형식</span>
                                     </div>
@@ -241,8 +253,8 @@ function CreationModal({setCreationMo,name}){
                         </thead>
                         <tbody>
                             {
-                                dataList && 
-                                dataList.map(data=>{
+                                newList && 
+                                newList.map(data=>{
                                     return(
                                         <Tr data={data} key={data.qa_seq} changeCheckState={changeCheckState} checkState={checkState}/>
                                     )
@@ -253,7 +265,7 @@ function CreationModal({setCreationMo,name}){
                 </div>
                 <div className="creationModal-foot cmmnModal-foot">
                     <button className="btn">미리보기</button>
-                    <button className="btn">생성하기</button>
+                    <button className="btn" onClick={sendList}>생성하기</button>
                     <button className="btn" onClick={()=>setCreationMo(false)}>닫기</button>
                 </div>
             </div>
@@ -275,18 +287,9 @@ const Tr = ({data,changeCheckState,checkState}) => {
         <td>{data.ltitle}</td>
         <td>{data.utitle}</td>
         <td>{data.keyword}</td>
-        <td>
-            { data.source == 'CO' && '개념서' }
-            { data.source == 'TR' && '뜨레스' }
-            { data.source == 'CC' && '맞춤클리닉' }
-        </td>
+        <td>{data.source}</td>
         <td>{data.no}</td>
-        <td>
-            { data.type == 'O' && '객관식' }
-            { data.type == 'S' && '주관식' }
-            { data.type == 'D' && '서술형' }
-            { data.type == 'C' && '정오체크' }
-        </td>
+        <td>{data.type}</td>
         <td>{data.level}</td>
         <td>
             <button className='btn'>보기</button>

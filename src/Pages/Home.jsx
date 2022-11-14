@@ -18,6 +18,7 @@ const nav = [
 
 function Home() {
     let [userId, setUserId] = useState("");
+    let [guess, setGuess] = useState(false);
     const navigate = useNavigate();
 
     const logoutFn = useCallback(() => {
@@ -44,8 +45,6 @@ function Home() {
             }
         });
     }, []);
-
-    let [guess, setGuess] = useState(false);
 
     return (
         <main>

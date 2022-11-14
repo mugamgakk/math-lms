@@ -15,20 +15,19 @@ function ClassManagement({clickStudent}){
     let [data, setData] = useState(null);
     let [wrongPopList, setWrongPopList] = useState([]);
     let [bk_cd, setBkCd] = useState();
-
-    console.log(bookList);
-
+    console.log(clickStudent);
     useEffect(()=>{
         getList();
-    },[]);
+    },[bookList]);
 
     const getList = async () => {
 
         let url = "/class_manage.php/";
         let query = {
             mode: "unit_list",
-            usr_seq : 80,
-            bk_cd : 'M12_C12'
+            usr_seq : clickStudent.usr_seq,
+            // bk_cd : 'M12_C12',
+            bk_cd : bookList.value
         };
 
         let res = await ajax(url, { data: query });
@@ -44,7 +43,7 @@ function ClassManagement({clickStudent}){
         let query = {
             mode: "set_passed",
             ucode : ucode,
-            usr_seq : 80,
+            usr_seq : clickStudent.usr_seq,
         };
 
         let res = await ajax(url, { data: query });
@@ -65,7 +64,6 @@ function ClassManagement({clickStudent}){
 
         let res = await ajax(url, { data: query });
 
-        console.log(res);
 
     };
 
@@ -91,7 +89,12 @@ function ClassManagement({clickStudent}){
                 progressMo && <ProgressModal setProgressState={setProgressState} name={clickStudent.name}/>
             }
             {
-                creationMo && <CreationModal setCreationMo={setCreationMo} name={clickStudent.name} ucode={wrongPopList}/>
+                creationMo && <CreationModal 
+                setCreationMo={setCreationMo} 
+                stuInfo={clickStudent} 
+                ucode={wrongPopList}
+                bookList={bookList}
+                />
             }
            <div className="table-wrap">
 
@@ -125,13 +128,13 @@ function ClassManagement({clickStudent}){
                                     a.unit2.map((b,i)=>{
                                         return(
                                             <Tr 
-                                            key={i}
-                                            data={b} 
-                                            studyDone={studyDone}
-                                            retry={retry}
-                                            // ucode={a.ucode}
-                                            ucode={b.ucode}
-                                            setCheckList={setCheckList}
+                                                key={i}
+                                                data={b} 
+                                                studyDone={studyDone}
+                                                retry={retry}
+                                                // ucode={a.ucode}
+                                                ucode={b.ucode}
+                                                setCheckList={setCheckList}
                                             />
                                         )
                                     })

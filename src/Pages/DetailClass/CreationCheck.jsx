@@ -3,7 +3,6 @@ import { useEffect } from "react";
 
 function CreationCheck({ data, keyName,setObj, obj }) {
     let [toggleState, setToggleState] = useState(false);
-
     // 초기값 모두 선택
     let [checkData, setCheckData] = useState(data);
 
