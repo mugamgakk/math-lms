@@ -1,7 +1,7 @@
 import React, { useState, memo, useEffect } from "react";
 import ajax from "../../../ajax";
 import ProgressModal from '../modal/progressModal';
-import CreationModal from '../modal/CreationModal';
+import CreationModal from '../modal/TestTestTestTest';
 import ResultPopModal from '../modal/ResultPopModal';
 import useStudentsStore from "../../../store/useStudentsStore";
 import { useCallback } from "react";
@@ -15,7 +15,9 @@ function ClassManagement({clickStudent}){
     let [data, setData] = useState(null);
     let [wrongPopList, setWrongPopList] = useState([]);
     let [bk_cd, setBkCd] = useState();
+
     console.log(clickStudent);
+
     useEffect(()=>{
         getList();
     },[bookList]);
@@ -26,11 +28,11 @@ function ClassManagement({clickStudent}){
         let query = {
             mode: "unit_list",
             usr_seq : clickStudent.usr_seq,
-            // bk_cd : 'M12_C12',
             bk_cd : bookList.value
         };
 
         let res = await ajax(url, { data: query });
+        
         console.log(res);
         setData(res.data);
     
