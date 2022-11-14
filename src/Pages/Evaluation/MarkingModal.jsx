@@ -47,6 +47,9 @@ function MarkingModal({title,setMarkingModal}) {
                         </tbody>
                     </table>
                     <h5>평가 결과 등록</h5>
+
+                    <input type="range" style={{ width:'0' }} />
+
                     <MarkingTable />
                 </div>
                 <div className="markingModal-foot cmmnModal-foot">
