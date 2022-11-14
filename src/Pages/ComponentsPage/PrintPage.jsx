@@ -48,7 +48,7 @@ function PrintPage() {
             </button>
 
             {/* // A4 사이즈를 width 210 mm 를 px로 793.701px 이다 */}
-            <div ref={printComponent} style={{ width: "210mm"}}>
+            <div ref={printComponent} style={{ width: "210mm"}} className="asdf">
                 프린트 될 내용 입니다.!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             </div>
 
@@ -97,6 +97,14 @@ function PrintPage() {
         </div>
                 `}
             </pre>
+
+            <style>{`
+                .asdf{
+                    color : red;
+                    font-size : 3rem
+                }
+                `}
+            </style>
         </div>
     );
 }

@@ -101,20 +101,32 @@ const comma = (num)=>{
 
 export function _map(list, fn){
     const arr = [];
-    for(let i = 0; i < list.length; i++){
-        arr.push(fn(list[i], i))
-    }
+    
+    _each(list, function(ele, i){
+        arr.push(fn(ele, i))
+    })
+
     return arr
 }
 
 export function _filter(list, fn){
     const arr = [];
-    for(let i = 0; i < list.length; i++){
-        if(fn(list[i], i)){
-            arr.push(list[i])
+
+    _each(list, function(ele, i){
+        if(fn(ele, i)){
+            arr.push(ele)
         }
-    }
+    })
+
     return arr;
+}
+
+export function _each(list, fn){
+    for(var i = 0; i < list.length; i++){
+        fn(list[i], i)
+    }
+
+    return list
 }
 
 export {

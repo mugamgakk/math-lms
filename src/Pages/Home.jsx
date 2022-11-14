@@ -2,6 +2,7 @@ import React, { useMemo, useState, useEffect } from "react";
 import { useCallback } from "react";
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import ajax from "../ajax";
+import { _map } from "../methods/methods";
 import LnbLookup from "./Home/LnbLookup";
 
 const nav = [
@@ -16,20 +17,17 @@ const nav = [
 ];
 
 function Home() {
-
     let [userId, setUserId] = useState("");
     const navigate = useNavigate();
-
 
     const logoutFn = useCallback(() => {
         ajax("/user.php", {
             data: { mode: "logout" },
-        })
-            .then(() => {
-                localStorage.removeItem("isLogin")
-                window.location = "/login";
-            })
-    }, [])
+        }).then(() => {
+            localStorage.removeItem("isLogin");
+            window.location = "/login";
+        });
+    }, []);
 
     useEffect(() => {
         ajax("/user.php", {
@@ -37,7 +35,7 @@ function Home() {
         }).then((res) => {
             // console.log(res)
             if (res.data.ok === -1) {
-                setUserId(res.data.user_id)
+                setUserId(res.data.user_id);
             }
 
             if (res.data.ok !== -1) {
@@ -45,7 +43,6 @@ function Home() {
                 logoutFn();
             }
         });
-
     }, []);
 
     let [guess, setGuess] = useState(false);
@@ -66,7 +63,6 @@ function Home() {
                                 <li onClick={logoutFn}>로그아웃</li>
                             </ul>
                         </div>
-
                     </div>
                 </div>
             </header>
@@ -80,31 +76,44 @@ function Home() {
                             <button className="lnb-toggle--btn">on</button>
                         </div>
                     </div>
-                    
+
                     <LnbLookup />
 
                     <div className="lnb-list">
-                        <img className={guess ? 'egg show' : 'egg'} src="https://item.kakaocdn.net/do/81df5c1c454964e03abc3377028efb11f43ad912ad8dd55b04db6a64cddaf76d" alt="" />
-                        <div className="trigger" onClick={()=>{
-                            setGuess(true);
-                            setTimeout(()=>{setGuess(false)},3000)
-                        }}></div>
+                        <img
+                            className={guess ? "egg show" : "egg"}
+                            src="https://item.kakaocdn.net/do/81df5c1c454964e03abc3377028efb11f43ad912ad8dd55b04db6a64cddaf76d"
+                            alt=""
+                        />
+                        <div
+                            className="trigger"
+                            onClick={() => {
+                                setGuess(true);
+                                setTimeout(() => {
+                                    setGuess(false);
+                                }, 3000);
+                            }}
+                        ></div>
                         <h4 className="lnb-title">수학 학습 관리</h4>
                         <ul>
-                            {
-                                nav.map(a => {
-                                    return (
-                                        <li key={a.name} className={`lnb-item ${window.location.pathname === "/" + a.href ? "active" : ""}`}>
-                                            <Link to={`/${a.href}`}>{a.name}</Link>
-                                        </li>)
-                                })
-                            }
-
+                            {_map(nav, (a) => {
+                                return (
+                                    <li
+                                        key={a.name}
+                                        className={`lnb-item ${
+                                            window.location.pathname === "/" + a.href
+                                                ? "active"
+                                                : ""
+                                        }`}
+                                    >
+                                        <Link to={`/${a.href}`}>{a.name}</Link>
+                                    </li>
+                                );
+                            })}
                         </ul>
                     </div>
                 </nav>
                 <div className="content col-10">
-
                     {/* <div className="table">
                             <table>
                                 <thead>
@@ -131,7 +140,6 @@ function Home() {
                                 </tbody>
                             </table>
                         </div> */}
-
 
                     <Outlet />
                 </div>

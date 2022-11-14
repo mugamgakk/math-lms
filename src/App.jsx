@@ -28,7 +28,7 @@ import Statistics from "./Pages/Statistics";
 import Reference from "./Pages/ReferenceNotification";
 import { lazy } from "react";
 
-const ErrorPage = lazy(()=> import("./Pages/ErrorPage.jsx") )
+const ErrorPage = lazy(() => import("./Pages/ErrorPage.jsx"))
 
 function App() {
 
@@ -60,7 +60,7 @@ function App() {
                 </Route>
                 <Route
                     path="*"
-                    element={<ErrorPage/>}
+                    element={<ErrorPage />}
                 />
                 <Route path="/login" element={<Login />} />
             </Routes>

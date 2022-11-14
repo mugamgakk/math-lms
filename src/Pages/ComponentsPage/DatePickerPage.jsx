@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import DatePicker from "react-date-picker"; // 데이트 피커
 import DateNext from "../../components/DateNext";
 import LmsDatePicker from "../../components/LmsDatePicker";
@@ -21,13 +21,13 @@ function DatePickerPage() {
         <div style={{ marginTop: "100px" }}>
 
 
-            <div style={{background : "black"}}>
-            <LmsDatePicker 
-            width={"150px"} 
-            value={lmsDValue} 
-            onChange={(ele)=>{setLmsDValue(ele)}}
-            />
-            <button className="btn">버튼</button>
+            <div style={{ background: "black" }}>
+                <LmsDatePicker
+                    width={"150px"}
+                    value={lmsDValue}
+                    onChange={(ele) => { setLmsDValue(ele) }}
+                />
+                <button className="btn">버튼</button>
             </div>
 
             <h2>PROPS</h2>
@@ -51,11 +51,11 @@ function DatePickerPage() {
                 `}
             </pre>
 
-            <DateNext value={next} onChange={(day)=>{setNext(day)}}/>
+            <DateNext value={next} onChange={(day) => { setNext(day) }} />
 
 
 
-{/* 
+            {/* 
             <div className="picker-group">
                 <button
                     className="btn"
@@ -79,7 +79,7 @@ function DatePickerPage() {
 
             {/* <h4>calendar props</h4> */}
             <pre>
-                    {/* autoFocus : 마운트 시 포커스 될지 말지 (boolean) 
+                {/* autoFocus : 마운트 시 포커스 될지 말지 (boolean) 
                     calendarIcon : 기본 아이콘 숨기기 (null) 
                     maxDate : 최대 선택할수 있는 날짜 설정 
                     clearIcon : 클리어 해주는 아이콘 삭제 (null) 
@@ -104,7 +104,7 @@ function DatePickerPage() {
 
             <h2>day js</h2>
             <pre>
-            {`
+                {`
                         dayjs('2018-08-08') 다양한 날씨 포맷을 넣어도 파씽해줌
                         dayjs('2018-08-08').set('month', 3) 달을 3월로 바꾸기
                         dayjs('2018-08-08').add(1, "y") 다음년도 날짜 얻기

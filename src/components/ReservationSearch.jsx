@@ -36,8 +36,8 @@ function ReservationSearch() {
     let [reservationModal, setReservationModal] = useState(false);
     let [list, setList] = useState([]);
     let [value, setValue] = useState({
-        start: dayjs(new Date()).subtract(1, "M").$d,
-        end: new Date(),
+        start: null,
+        end: null,
         text: "",
     });
     let [skeleton, setSkeleton] = useState(true);

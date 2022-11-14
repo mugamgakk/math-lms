@@ -1,8 +1,6 @@
 import axios from "axios";
 import dayjs from "dayjs";
 import React, { useState } from "react";
-import { useCallback } from "react";
-import { useRef } from "react";
 import { useEffect } from "react";
 import ajax from "../ajax";
 import ContentHeader from "../components/ContentHeader";
@@ -65,50 +63,39 @@ function Attendance() {
     let [banValue, setbanValue] = useState();
     let [banOption, setBanOption] = useState();
 
-    const updateData = ({userId, value, key})=>{
-        console.log(date)
+
+    const updateData = ({ userId, value, key }) => {
+        // console.log(date);
         let copy = [...list];
 
-        copy.forEach(a=>{
-            if(a.usr_seq == userId){
-                a[key] = value
+        copy.forEach((a) => {
+            if (a.usr_seq == userId) {
+                a[key] = value;
             }
-        })
+        });
 
-        setList(copy)
-    }
+        setList(copy);
+    };
 
     const getData = async () => {
         const ymd = dayjs(date).format("YYYYMMDD");
-        
+
         const data = {
             mode: "get_daily",
-            ymd
+            ymd,
         };
-        if(search.trim() !== "") data.qstr = search;
-        if(banValue) data.class_cd = banValue.map(a=> a.class_cd);
+        if (search.trim() !== "") data.qstr = search;
+        if (banValue) data.class_cd = banValue.map((a) => a.class_cd);
 
+        let res = await ajax("class_daily.php", { data });
+        console.log(res);
 
-        let res = await new Promise((resolve, reject) => {setTimeout(() => { resolve(response);}, 600);});
-
-        setList(res.student_list);
-        setBanOption(res.class_list);
-        setbanValue(res.class_list)
+        setList(res.data.student_list);
+        setBanOption(res.data.class_list);
+        setbanValue(res.data.class_list);
     };
 
     useEffect(() => {
-        const data = {
-            mode: "get_daily",
-            ymd: "20220101",
-            class_cd: 123412341243,
-            qstr: "박",
-        };
-
-        ajax("class_daily.php", {data})
-        .then(res=>{
-            console.log(res);
-        })
-
         getData();
     }, [date]);
 
@@ -144,18 +131,18 @@ function Attendance() {
                             >
                                 모두 출석
                             </button>
-                            <button
-                                className="btn"
-                                onClick={getData}
-                            >
+                            <button className="btn" onClick={getData}>
                                 초기화
                             </button>
                         </div>
                         <div>
-                            <ClassSelect width={"200px"}
+                            <ClassSelect
+                                width={"200px"}
                                 value={banValue}
                                 options={banOption}
-                                onChange={(ele)=>{console.log(ele)}}
+                                onChange={(ele) => {
+                                    console.log(ele);
+                                }}
                             />
                             <input
                                 type="text"
@@ -182,13 +169,9 @@ function Attendance() {
                         </tr>
                     </thead>
                     <tbody>
-                        {list.map((ele) => {
+                        {list.map((ele, i) => {
                             return (
-                                <AttendanceTableList
-                                    updateData={updateData}
-                                    ele={ele}
-                                    key={ele.usr_seq}
-                                />
+                                <AttendanceTableList updateData={updateData} ele={ele} key={i} />
                             );
                         })}
                     </tbody>
