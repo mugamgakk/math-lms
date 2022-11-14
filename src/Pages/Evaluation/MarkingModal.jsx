@@ -5,7 +5,7 @@ function MarkingModal({data,title,setMarkingModal}) {
     // 새로운 props 가 들어올때
     // 부모 컴포넌트 랜더링
     // state변경이 있을때
-
+    console.log(data);
     return (
         <div className="modal">
             <div className="dim"></div>

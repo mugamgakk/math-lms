@@ -35,19 +35,8 @@ const data = [
         tb_name: '중2-1 노벰',
         ltitle: 'II. 문자와 식',
         kind: '단원 평가',
-        ev_date: '2021-07-20',
+        ev_date: '2021-07-22',
         ev_std_score: 18,
-        ev_max_score: 20,
-        ev_per_score: 90,
-
-    },
-    {
-        ut_seq: 1,
-        tb_name: '중2-1 노벰',
-        ltitle: 'III. 좌표평면과 그래프',
-        kind: '총괄 평가',
-        ev_date: '2021-07-20',
-        ev_std_score: 15,
         ev_max_score: 20,
         ev_per_score: 90,
 
@@ -63,44 +52,17 @@ const data = [
         ev_per_score: null,
 
     },
-    // {
+    {
+        ut_seq: 13,
+        tb_name: '중2-1 노벰',
+        ltitle: 'IIII. 문자와 식',
+        kind: '단원 평가',
+        ev_date: '2021-07-19',
+        ev_std_score: 18,
+        ev_max_score: 20,
+        ev_per_score: 90,
 
-    //     교재: "중2-1 노벰",
-    //     단원: "수와 연산",
-    //     평가종류: "단원 평가",
-    //     평가일: "2021-07-21",
-    //     결과: "93점 (28/30)",
-    // },
-    // {
-    //     교재: "중2-1 노벰",
-    //     단원: "문자와 식",
-    //     평가종류: "단원 평가",
-    //     평가일: "2021-07-20",
-    //     결과: "93점 (28/30)",
-    // },
-    // { 교재: "중2-1 노벰", 단원: "좌표평면과 그래프", 평가종류: "단원 평가", 평가일: "진행중" },
-    // { 교재: "중2-1 노벰", 단원: "전체", 평가종류: "총괄 평가", 평가일: "" },
-    // {
-    //     교재: "중2-1 노벰",
-    //     단원: "가",
-    //     평가종류: "단원 평가",
-    //     평가일: "2021-07-20",
-    //     결과: "93점 (28/30)",
-    // },
-    // {
-    //     교재: "중2-1 노벰",
-    //     단원: "나",
-    //     평가종류: "단원 평가",
-    //     평가일: "2021-07-20",
-    //     결과: "93점 (28/30)",
-    // },
-    // {
-    //     교재: "중2-1 노벰",
-    //     단원: "다",
-    //     평가종류: "단원 평가",
-    //     평가일: "2021-07-20",
-    //     결과: "93점 (28/30)",
-    // },
+    },
 ];
 
 
@@ -112,34 +74,35 @@ function EvaluationRoutineContent() {
     let [checkItem, setCheckItem] = useState([]);
     
     let [sort,setSort] = useState({
-        단원 : true,
-        평가일 : true,
+        ltitle : true,
+        ev_date : true,
     })
+
 
     //  true == 오름차순, false == 내림차순
 
-    useEffect(()=>{
-        getList();
-    },[]);
+    // useEffect(()=>{
+    //     getList();
+    // },[]);
 
-    const getList = async () => {
+    // const getList = async () => {
 
-        let url = "/evaluation.php/";
+    //     let url = "/evaluation.php/";
 
-        let query = {
-            mode: "ut_list",
-            usr_seq : clickStudent.usr_seq,
-            qkind : 'UT',
-            qlno : 1,
-            sdate : startDay,
-            edate : endDay,
-        };
+    //     let query = {
+    //         mode: "ut_list",
+    //         usr_seq : clickStudent.usr_seq,
+    //         qkind : 'UT',
+    //         qlno : 1,
+    //         sdate : startDay,
+    //         edate : endDay,
+    //     };
 
-        let res = await ajax(url, { data: query });
+    //     let res = await ajax(url, { data: query });
 
-        console.log(res);
+    //     console.log(res);
     
-    };
+    // };
 
     const ref = useRef(false);
     
@@ -151,6 +114,11 @@ function EvaluationRoutineContent() {
     
     let [startDay, setStartDay] = useState(oneMonthAgo);
     let [endDay, setEndDay] = useState(new Date());
+
+
+    useEffect(()=>{
+        console.log(sort);
+    },[sort])
 
     const dateSortFunc = useCallback((sortName) => {
         
@@ -167,7 +135,6 @@ function EvaluationRoutineContent() {
                 ...sort,
                 [sortName] : false
             })
-
             
         }else{
 
@@ -188,39 +155,39 @@ function EvaluationRoutineContent() {
 
 
     
-    useEffect(()=>{
-        if(ref.current){
+    // useEffect(()=>{
+    //     if(ref.current){
 
-        let arr = [];
-        let arr2 = []; 
+    //     let arr = [];
+    //     let arr2 = []; 
 
-            if(selectOption.평가종류){
-                data.forEach(item => {
-                    if(item.kind == selectOption.평가종류 ){
-                        arr.push(item);
-                    }
-                })
-            }else{
-                arr = data;
-            }
+    //         if(selectOption.평가종류){
+    //             data.forEach(item => {
+    //                 if(item.kind == selectOption.평가종류 ){
+    //                     arr.push(item);
+    //                 }
+    //             })
+    //         }else{
+    //             arr = data;
+    //         }
 
-            if(selectOption.단원){
-                arr.forEach(item => {
-                    if(item.ltitle == selectOption.단원){
-                        arr2.push(item);
-                    }
-                })
-                setList(arr2);
-            }else{
-                setList(arr);
-            }
+    //         if(selectOption.단원){
+    //             arr.forEach(item => {
+    //                 if(item.ltitle == selectOption.단원){
+    //                     arr2.push(item);
+    //                 }
+    //             })
+    //             setList(arr2);
+    //         }else{
+    //             setList(arr);
+    //         }
 
-        }else{
-            ref.current = true;
-        }
+    //     }else{
+    //         ref.current = true;
+    //     }
 
 
-    },[selectOption])
+    // },[selectOption])
 
     
     return (
@@ -286,15 +253,15 @@ function EvaluationRoutineContent() {
                         <th>교재</th>
                         <th>단원
                             <button 
-                                className={"btn-sort" + `${sort.단원 ? " asc" : ""}`}
-                                onClick={() => dateSortFunc('단원')}
+                                className={"btn-sort" + `${sort.kind ? " asc" : ""}`}
+                                onClick={() => dateSortFunc('ltitle')}
                             ></button>
                         </th>
                         <th>평가 종류</th>
                         <th>시험지</th>
                         <th>평가일
-                            <button className={"btn-sort" + `${sort.평가일 ? " asc" : ""}`}
-                                onClick={() => dateSortFunc('평가일')}
+                            <button className={"btn-sort" + `${sort.ev_date ? " asc" : ""}`}
+                                onClick={() => dateSortFunc('ev_date')}
                             ></button>
                         </th>
                         <th>결과</th>
@@ -322,9 +289,6 @@ const Tr = memo(({ item, check, setCheck}) => {
     let [markingModal, setMarkingModal] = useState(false);
     const clickStudent = useStudentsStore((state) => state.clickStudent);
     let bookList = useStudentsStore((state) => state.bookList);
-
-    console.log(clickStudent);
-    console.log(bookList);
     let title = `[${item.kind}]/${clickStudent.um_nm}/${bookList.label}/${item.ltitle}`;
     return (
         <tr>
