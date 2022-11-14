@@ -15,6 +15,12 @@ function SkeletonPage() {
     return (
         <div>
             <table>
+                <colgroup>
+                    <col style={{width : "20%"}} />
+                    <col style={{width : "20%"}} />
+                    <col style={{width : "20%"}} />
+                    <col style={{width : "40%"}} />
+                </colgroup>
                 <thead>
                     <tr>
                         <th>No.</th>

@@ -115,6 +115,8 @@ function Narrative() {
                 }, 1000)
             })
 
+            console.log(res)
+
             setPlusData([...DATA]);
             setInitialData([...DATA]);
             setSkeleton(false);

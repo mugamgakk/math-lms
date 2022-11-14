@@ -2,7 +2,8 @@ import React, { useMemo, useState, useEffect } from "react";
 import { useCallback } from "react";
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import ajax from "../ajax";
-import { _map } from "../methods/methods";
+import useTable from "../hooks/useTable";
+import { _each, _map } from "../methods/methods";
 import LnbLookup from "./Home/LnbLookup";
 
 const nav = [
@@ -19,6 +20,10 @@ const nav = [
 function Home() {
     let [userId, setUserId] = useState("");
     let [guess, setGuess] = useState(false);
+
+    // let dd = useTable(".tbody");
+
+
     const navigate = useNavigate();
 
     const logoutFn = useCallback(() => {
@@ -45,6 +50,8 @@ function Home() {
             }
         });
     }, []);
+
+    
 
     return (
         <main>
@@ -100,11 +107,10 @@ function Home() {
                                 return (
                                     <li
                                         key={a.name}
-                                        className={`lnb-item ${
-                                            window.location.pathname === "/" + a.href
-                                                ? "active"
-                                                : ""
-                                        }`}
+                                        className={`lnb-item ${window.location.pathname === "/" + a.href
+                                            ? "active"
+                                            : ""
+                                            }`}
                                     >
                                         <Link to={`/${a.href}`}>{a.name}</Link>
                                     </li>
@@ -115,31 +121,56 @@ function Home() {
                 </nav>
                 <div className="content col-10">
                     {/* <div className="table">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th style={{width : "30%"}}>1</th>
-                                        <th style={{width : "30%"}}>2</th>
-                                        <th style={{width : "40%"}}>3</th>
-                                        <th style={{width : "17px"}}></th>
-                                    </tr>
-                                </thead>
-                                <tbody style={{maxHeight : "200px"}}>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th style={{ width: "30%" }}>1</th>
+                                    <th style={{ width: "30%" }}>2</th>
+                                    <th style={{ width: "40%" }}>3</th>
                                     {
-                                        arr.map(a=>{
-                                            return (
-                                                <tr>
-                                                    <td style={{width : "30%"}}>1</td>
-                                                    <td style={{width : "30%"}}>2</td>
-                                                    <td style={{width : "40%"}}>3</td>
-                                                </tr>
-                                            )
-                                        })
+                                        dd && <th style={{ width: "17px" }}></th>
                                     }
-                                    
-                                </tbody>
-                            </table>
-                        </div> */}
+                                </tr>
+                            </thead>
+                            <tbody style={{ maxHeight: "200px", overflowY: dd ? "scroll" : "unset" }} className="tbody">
+                                <tr>
+                                    <td style={{ width: "30%" }}>1</td>
+                                    <td style={{ width: "30%" }}>2</td>
+                                    <td style={{ width: "40%" }}>3</td>
+                                </tr>
+                                <tr>
+                                    <td style={{ width: "30%" }}>1</td>
+                                    <td style={{ width: "30%" }}>2</td>
+                                    <td style={{ width: "40%" }}>3</td>
+                                </tr>
+                                <tr>
+                                    <td style={{ width: "30%" }}>1</td>
+                                    <td style={{ width: "30%" }}>2</td>
+                                    <td style={{ width: "40%" }}>3</td>
+                                </tr>
+                                <tr>
+                                    <td style={{ width: "30%" }}>1</td>
+                                    <td style={{ width: "30%" }}>2</td>
+                                    <td style={{ width: "40%" }}>3</td>
+                                </tr>
+                                <tr>
+                                    <td style={{ width: "30%" }}>1</td>
+                                    <td style={{ width: "30%" }}>2</td>
+                                    <td style={{ width: "40%" }}>3</td>
+                                </tr>
+                                <tr>
+                                    <td style={{ width: "30%" }}>1</td>
+                                    <td style={{ width: "30%" }}>2</td>
+                                    <td style={{ width: "40%" }}>3</td>
+                                </tr>
+                                <tr>
+                                    <td style={{ width: "30%" }}>1</td>
+                                    <td style={{ width: "30%" }}>2</td>
+                                    <td style={{ width: "40%" }}>3</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div> */}
 
                     <Outlet />
                 </div>
