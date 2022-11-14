@@ -1,7 +1,7 @@
 import React, { useState, memo, useEffect } from "react";
 import ajax from "../../../ajax";
 import ProgressModal from '../modal/progressModal';
-import CreationModal from '../modal/TestTestTestTest';
+import CreationModal from '../modal/CreationModal';
 import ResultPopModal from '../modal/ResultPopModal';
 import useStudentsStore from "../../../store/useStudentsStore";
 import { useCallback } from "react";
@@ -32,7 +32,7 @@ function ClassManagement({clickStudent}){
         };
 
         let res = await ajax(url, { data: query });
-        
+
         console.log(res);
         setData(res.data);
     
