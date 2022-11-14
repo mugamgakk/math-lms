@@ -1,12 +1,11 @@
-import React, { useRef, useEffect, useState, memo, useMemo } from "react";
+import React, { useRef, useEffect, useState, memo, useMemo, useCallback } from "react";
 import SelectBase from "../../components/ui/select/SelectBase";
-import DatePicker from "react-date-picker";
-import { arrSort } from "../../methods/methods";
 import PrintModal from '../../../src/components/PrintModal';
 import MarkingModal from './MarkingModal'
 import LmsDatePicker from "../../components/LmsDatePicker";
-import { useCallback } from "react";
 import dayjs from "dayjs";
+import useStudentsStore from "../../store/useStudentsStore";
+import ajax from "../../ajax";
 
 const 평가종류 = [
     { value: '총괄 평가', label: '총괄 평가' },
@@ -14,56 +13,101 @@ const 평가종류 = [
     { value: '(월말 평가)', label: '(월말 평가)' },
 ];
 const 단원 = [
-    { value: '수와 연산', label: '수와 연산' },
-    { value: '문자와 식', label: '문자와 식' },
-    { value: '좌표평면과 그래프', label: '좌표평면과 그래프' },
+    { value: 'I. 수와 식의 계산', label: 'I. 수와 식의 계산' },
+    { value: 'II. 문자와 식', label: 'II. 문자와 식' },
+    { value: 'III. 좌표평면과 그래프', label: 'III. 좌표평면과 그래프' },
 ];
-
 
 const data = [
     {
-        교재: "중2-1 노벰",
-        단원: "수와 연산",
-        평가종류: "단원 평가",
-        평가일: "2021-07-21",
-        결과: "93점 (28/30)",
+        ut_seq: 123,
+        tb_name: '중2-1 노벰',
+        ltitle: 'I. 수와 식의 계산',
+        kind: '단원 평가',
+        ev_date: '2021-07-20',
+        ev_std_score: 18,
+        ev_max_score: 20,
+        ev_per_score: 90,
+
     },
     {
-        교재: "중2-1 노벰",
-        단원: "문자와 식",
-        평가종류: "단원 평가",
-        평가일: "2021-07-20",
-        결과: "93점 (28/30)",
-    },
-    { 교재: "중2-1 노벰", 단원: "좌표평면과 그래프", 평가종류: "단원 평가", 평가일: "진행중" },
-    { 교재: "중2-1 노벰", 단원: "전체", 평가종류: "총괄 평가", 평가일: "" },
-    {
-        교재: "중2-1 노벰",
-        단원: "가",
-        평가종류: "단원 평가",
-        평가일: "2021-07-20",
-        결과: "93점 (28/30)",
+        ut_seq: 13,
+        tb_name: '중2-1 노벰',
+        ltitle: 'II. 문자와 식',
+        kind: '단원 평가',
+        ev_date: '2021-07-20',
+        ev_std_score: 18,
+        ev_max_score: 20,
+        ev_per_score: 90,
+
     },
     {
-        교재: "중2-1 노벰",
-        단원: "나",
-        평가종류: "단원 평가",
-        평가일: "2021-07-20",
-        결과: "93점 (28/30)",
+        ut_seq: 1,
+        tb_name: '중2-1 노벰',
+        ltitle: 'III. 좌표평면과 그래프',
+        kind: '총괄 평가',
+        ev_date: '2021-07-20',
+        ev_std_score: 15,
+        ev_max_score: 20,
+        ev_per_score: 90,
+
     },
     {
-        교재: "중2-1 노벰",
-        단원: "다",
-        평가종류: "단원 평가",
-        평가일: "2021-07-20",
-        결과: "93점 (28/30)",
+        ut_seq: 3,
+        tb_name: '중2-1 노벰',
+        ltitle: 'III. 좌표평면과 그래프',
+        kind: '단원 평가',
+        ev_date: '2021-07-20',
+        ev_std_score: null,
+        ev_max_score: null,
+        ev_per_score: null,
+
     },
+    // {
+
+    //     교재: "중2-1 노벰",
+    //     단원: "수와 연산",
+    //     평가종류: "단원 평가",
+    //     평가일: "2021-07-21",
+    //     결과: "93점 (28/30)",
+    // },
+    // {
+    //     교재: "중2-1 노벰",
+    //     단원: "문자와 식",
+    //     평가종류: "단원 평가",
+    //     평가일: "2021-07-20",
+    //     결과: "93점 (28/30)",
+    // },
+    // { 교재: "중2-1 노벰", 단원: "좌표평면과 그래프", 평가종류: "단원 평가", 평가일: "진행중" },
+    // { 교재: "중2-1 노벰", 단원: "전체", 평가종류: "총괄 평가", 평가일: "" },
+    // {
+    //     교재: "중2-1 노벰",
+    //     단원: "가",
+    //     평가종류: "단원 평가",
+    //     평가일: "2021-07-20",
+    //     결과: "93점 (28/30)",
+    // },
+    // {
+    //     교재: "중2-1 노벰",
+    //     단원: "나",
+    //     평가종류: "단원 평가",
+    //     평가일: "2021-07-20",
+    //     결과: "93점 (28/30)",
+    // },
+    // {
+    //     교재: "중2-1 노벰",
+    //     단원: "다",
+    //     평가종류: "단원 평가",
+    //     평가일: "2021-07-20",
+    //     결과: "93점 (28/30)",
+    // },
 ];
 
 
 function EvaluationRoutineContent() {
     let [selectOption, setSelecOtion] = useState({ 평가종류: "", 단원: "" });
     let [list, setList] = useState(data);
+    const clickStudent = useStudentsStore((state) => state.clickStudent);
     
     let [checkItem, setCheckItem] = useState([]);
     
@@ -73,7 +117,30 @@ function EvaluationRoutineContent() {
     })
 
     //  true == 오름차순, false == 내림차순
+
+    useEffect(()=>{
+        getList();
+    },[]);
+
+    const getList = async () => {
+
+        let url = "/evaluation.php/";
+
+        let query = {
+            mode: "ut_list",
+            usr_seq : clickStudent.usr_seq,
+            qkind : 'UT',
+            qlno : 1,
+            sdate : startDay,
+            edate : endDay,
+        };
+
+        let res = await ajax(url, { data: query });
+
+        console.log(res);
     
+    };
+
     const ref = useRef(false);
     
     let oneMonthAgo = useMemo(() => {
@@ -129,7 +196,7 @@ function EvaluationRoutineContent() {
 
             if(selectOption.평가종류){
                 data.forEach(item => {
-                    if(item.평가종류 == selectOption.평가종류 ){
+                    if(item.kind == selectOption.평가종류 ){
                         arr.push(item);
                     }
                 })
@@ -139,7 +206,7 @@ function EvaluationRoutineContent() {
 
             if(selectOption.단원){
                 arr.forEach(item => {
-                    if(item.단원 == selectOption.단원){
+                    if(item.ltitle == selectOption.단원){
                         arr2.push(item);
                     }
                 })
@@ -253,6 +320,12 @@ const Tr = memo(({ item, check, setCheck}) => {
    
     let [printModal,setPrintModal] = useState(false);
     let [markingModal, setMarkingModal] = useState(false);
+    const clickStudent = useStudentsStore((state) => state.clickStudent);
+    let bookList = useStudentsStore((state) => state.bookList);
+
+    console.log(clickStudent);
+    console.log(bookList);
+    let title = `[${item.kind}]/${clickStudent.um_nm}/${bookList.label}/${item.ltitle}`;
     return (
         <tr>
             <td>
@@ -268,27 +341,27 @@ const Tr = memo(({ item, check, setCheck}) => {
                     }}
                 />
             </td>
-            <td> {item.교재} </td>
-            <td> {item.단원} </td>
-            <td> {item.평가종류} </td>
+            <td> {item.tb_name} </td>
+            <td> {item.ltitle} </td>
+            <td> {item.kind} </td>
             <td>
                 <button className="btn">인쇄</button>
             </td>
             <td>
-                {item.평가일 ? (
-                    item.평가일 === "진행중" ? (
+                {item.ev_date ? (
+                    item.ev_date === "진행중" ? (
                         <button className="btn">오픈취소</button>
                     ) : (
-                        item.평가일
+                        item.ev_date
                     )
                 ) : (
                     "ㅡ"
                 )}
             </td>
             <td>
-                {item.결과 ? (
+                {item.ev_per_score ? (
                     <>
-                        <p>{item.결과}</p>
+                        <p>{item.ev_per_score}점({item.ev_std_score}/{item.ev_max_score})</p>
                         <button className="btn" onClick={()=>setPrintModal(true)}>성적표 보기</button>
                         {
                             printModal && <PrintModal closeModal={setPrintModal} />
@@ -299,7 +372,14 @@ const Tr = memo(({ item, check, setCheck}) => {
                     <button className="btn" onClick={()=>setMarkingModal(true)}>채점하기</button>
                     )}
                     {
-                        markingModal && <MarkingModal setMarkingModal={setMarkingModal}  />
+                        markingModal && 
+                        <MarkingModal 
+                        setMarkingModal={setMarkingModal} 
+                        data={item}
+                        title={title}
+                        
+                        
+                        />
                     }
             </td>
         </tr>
