@@ -79,7 +79,7 @@ function Home() {
                     <LnbLookup />
 
                     <div className="lnb-list">
-                        <img
+                        {/* <img
                             style={{width : "100%"}}
                             className={guess ? "egg show" : "egg"}
                             src="https://item.kakaocdn.net/do/81df5c1c454964e03abc3377028efb11f43ad912ad8dd55b04db6a64cddaf76d"
@@ -93,7 +93,7 @@ function Home() {
                                     setGuess(false);
                                 }, 3000);
                             }}
-                        ></div>
+                        ></div> */}
                         <h4 className="lnb-title">수학 학습 관리</h4>
                         <ul>
                             {_map(nav, (a) => {
