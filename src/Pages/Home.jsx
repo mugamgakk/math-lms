@@ -80,6 +80,7 @@ function Home() {
 
                     <div className="lnb-list">
                         <img
+                            style={{width : "100%"}}
                             className={guess ? "egg show" : "egg"}
                             src="https://item.kakaocdn.net/do/81df5c1c454964e03abc3377028efb11f43ad912ad8dd55b04db6a64cddaf76d"
                             alt=""
