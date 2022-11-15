@@ -8,8 +8,19 @@ import { faCropSimple } from '@fortawesome/free-solid-svg-icons';
 import { useMemo } from 'react';
 
 
-const 시간 = Array.from({length: 24}, (v,i) => `${i}시`);
-const 분 = Array.from({length: 12}, (v,i) => i === 0 ? '00분' : `${i*5}분`);
+// const 시간 = Array.from({length: 24}, (v,i) => `${i}시`);
+
+const 시간 = [];
+
+ for(let i=0; i<24; i++){
+    시간[i] = { label : `${i}시`, value : `${i}시`};
+ }
+
+ const 분 = [];
+
+for(let i=0; i<12; i++){
+    i === 0 ? 분[i] = { value : '00분', label: '00분'} : 분[i] = { value : `${i*5}분`, label : `${i*5}분` }
+}
 
 function WriteMessageModal({setWriteModal,setViewModal, toName}) {
     let [stuList, setStuList] = useState();
@@ -268,13 +279,13 @@ return (
                 </div>
                 <div className="writeMessageModal-body cmmnModal-body">
                     <div className="left">
-                        <SelectBase 
+                        {/* <SelectBase 
                         onChange={(ele)=>setClassOption(ele)}
                         options={classList}
                         value={classOption && classOption}
                         defaultValue='반 선택'
                         width={'150px'}
-                        />
+                        /> */}
                        <div className="left-check">
                         <div className="check-wrap">
                             <input 
