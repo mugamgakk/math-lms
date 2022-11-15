@@ -41,7 +41,7 @@ function EvaluationRoutine() {
                         <strong>모든 평가는 1회만 응시 가능합니다.</strong>
                     </Box>
 
-                    <EvaluationRoutineContent />
+                    <EvaluationRoutineContent/>
                 </div>
             )}
         </div>

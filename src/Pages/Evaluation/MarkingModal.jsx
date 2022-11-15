@@ -1,14 +1,11 @@
-import React, { useState }from 'react';
-
-
-
-function MarkingModal({title,setMarkingModal}) {
+import React, { useState, useEffect }from 'react';
+function MarkingModal({data,title,setMarkingModal}) {
 
     // 리렌더링 조건
     // 새로운 props 가 들어올때
     // 부모 컴포넌트 랜더링
     // state변경이 있을때
-
+    console.log(data);
     return (
         <div className="modal">
             <div className="dim"></div>
@@ -47,9 +44,6 @@ function MarkingModal({title,setMarkingModal}) {
                         </tbody>
                     </table>
                     <h5>평가 결과 등록</h5>
-
-                    <input type="range" style={{ width:'0' }} />
-
                     <MarkingTable />
                 </div>
                 <div className="markingModal-foot cmmnModal-foot">
@@ -66,28 +60,34 @@ function MarkingTable(){
     let data = [];
     
     for (let i = 0; i < 30; i++) {
-        data[i] = { id: i + 1, 정답: Math.floor(Math.random() * 5) + 1, 학생답: null };
+        data[i] = { id: i + 1, 정답: Math.floor(Math.random() * 5) + 1, 학생답: [] };
     }
     
     data[16].정답 = [1, 2, 3];
     let [dataList, setDataList] = useState([data.slice(0,10),data.slice(10,20),data.slice(20,30)]);
 
-    console.log(dataList);
+    // useEffect(()=>{
+    //     console.log(dataList[0]);
+    // },[dataList])
     
     const clickBtn = (a,b,num) => {
 
         let copy = [...dataList]
         let answer = copy[a][b].정답;
         let newAnswer = copy[a][b].학생답;
-        
+        console.log(newAnswer);
+
+
    
         if(!Array.isArray(answer)){
-
-            num == newAnswer ?  newAnswer = null : newAnswer = num;
-
+            console.log(newAnswer);
+            newAnswer.length == 0 ? newAnswer = [num] : (
+                newAnswer.includes(num) ? newAnswer = [] : newAnswer = [num]
+            )
             copy[a][b].학생답 = newAnswer;
             setDataList(copy);
             return;
+
         }
         
         !newAnswer ? newAnswer = [num] 
@@ -99,6 +99,7 @@ function MarkingTable(){
        
         copy[a][b].학생답 = newAnswer;
         setDataList(copy);
+
       
     };
 
