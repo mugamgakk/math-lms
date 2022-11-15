@@ -10,12 +10,19 @@
 @mixin font-style($size : 16) {
     font-size: #{$size}px;
 
+    @if($size == 24){
+        letter-spacing: 36px;
+    }
+
+    @if($size == 20){
+        letter-spacing: 30px;
+    }
+
+    @if($size == 17){
+        letter-spacing: 22px;
+    }
     @if($size == 16){
-        line-height: 1.6;
-        letter-spacing: -0.02em;
+        letter-spacing: 22px;
     }
-    @if($size == 18){
-        line-height: 1.8;
-        letter-spacing: -0.02em;
-    }
+
 }

@@ -48,3 +48,7 @@
     @extend %button-base;
 }
 
+.btn-green{
+    @extend %button-base;
+    background-color: $primary;
+}

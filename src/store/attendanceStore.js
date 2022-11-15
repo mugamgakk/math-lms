@@ -1,11 +1,12 @@
 import axios from 'axios'
 import create from 'zustand'
+import ajax from '../ajax';
 
 const attendanceStore = create(set=>({
     list1: [],
     initialList : [],
     getList : async ()=>{
-        let res = await axios.post("http://192.168.11.178:8080/attendace/list");
+        let res = await ajax("")
 
         let arr = [];
 

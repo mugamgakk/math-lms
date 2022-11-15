@@ -8,11 +8,6 @@ function DatePickerPage() {
     const [value, onChange] = useState(new Date());
     const [openCalendar, setOpenCalendar] = useState(false);
 
-    // 타임 피커 상태
-    const [reservationPicker, setReservationPicker] = useState(false);
-    // 타임 피커 선택 값
-    const [reservationValue, setReservationValue] = useState();
-
     const [lmsDValue, setLmsDValue] = useState(new Date());
 
     const [next, setNext] = useState(new Date());
@@ -21,9 +16,8 @@ function DatePickerPage() {
         <div style={{ marginTop: "100px" }}>
 
 
-            <div style={{ background: "black" }}>
+            <div>
                 <LmsDatePicker
-                    width={"150px"}
                     value={lmsDValue}
                     onChange={(ele) => { setLmsDValue(ele) }}
                 />

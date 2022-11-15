@@ -10,6 +10,7 @@
 @import './ui/select';
 @import './ui/modal';
 @import './ui/button';
+@import "./ui/input";
 
 @import "./options/layout";
 
@@ -283,12 +284,6 @@ input[type="text"].form-control{
 
     &.active{
         max-height: 200px;
-    }
-}
-
-.datepicker{
-    .react-date-picker__wrapper{
-        border: 1px solid #0069d9;
     }
 }
 
