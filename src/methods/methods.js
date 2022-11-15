@@ -1,5 +1,6 @@
 import FileSaver from "file-saver";
 import JSZip from "jszip";
+import html2canvas from "html2canvas";
 
 
 function weekChange(param) {
@@ -95,8 +96,19 @@ const arrSort = (arr, key = undefined, order = -1)=>{
     return copy
 }
 
+// 숫자에 콤마 넣어주는 함수
 const comma = (num)=>{
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+export function htmlToImg (target, filName = "download", format = "jpeg"){
+      html2canvas(target).then((canvas) => {
+            const imgFile = canvas.toDataURL("image/" + format);
+            // png로 바꾸면 png로 됨
+            const imgName = filName;
+
+            FileSaver.saveAs(imgFile, imgName);
+        });
 }
 
 export function _map(list, fn){

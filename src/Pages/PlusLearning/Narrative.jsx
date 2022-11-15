@@ -108,21 +108,17 @@ function Narrative() {
         }
 
         try {
-            // let res = await ajax("class_plus.php", {data});
-            let res = await new Promise((resolve, reject) => {
-                setTimeout(() => {
-                    resolve(10)
-                }, 1000)
-            })
+            let res = await ajax("class_plus.php", {data});
 
-            console.log(res)
+            // console.log(res)
 
-            setPlusData([...DATA]);
-            setInitialData([...DATA]);
+
             setSkeleton(false);
 
         } catch (msg) {
             setSkeleton(false);
+            setPlusData([...DATA]);
+            setInitialData([...DATA]);
             // alert(msg)
         }
     }
