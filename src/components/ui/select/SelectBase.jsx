@@ -5,11 +5,11 @@ import { useState } from "react";
 
 function SelectBase({ width = "130px", onChange, options, value, defaultValue = "선택하세요", disabled }) {
     let [selectOpen, setSelectOpen] = useState(false);
-
+    
     const openSelect = useCallback(() => {
         if (disabled) return false;
         setSelectOpen(!selectOpen);
-    },[selectOpen]);
+    },[disabled, selectOpen]);
 
     const setTitle = useCallback(()=>{
         for(let ele of options){

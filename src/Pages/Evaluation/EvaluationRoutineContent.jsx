@@ -115,11 +115,6 @@ function EvaluationRoutineContent() {
     let [startDay, setStartDay] = useState(oneMonthAgo);
     let [endDay, setEndDay] = useState(new Date());
 
-
-    useEffect(()=>{
-        console.log(sort);
-    },[sort])
-
     const dateSortFunc = useCallback((sortName) => {
         
         let arr = [...list];
