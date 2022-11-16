@@ -64,8 +64,7 @@ function Attendance() {
     let [banOption, setBanOption] = useState();
 
 
-    const updateData = ({ userId, value, key }) => {
-        // console.log(date);
+    const updateData = ( userId, value, key ) => {
         let copy = [...list];
 
         copy.forEach((a) => {
@@ -90,9 +89,9 @@ function Attendance() {
         let res = await ajax("class_daily.php", { data });
         console.log(res);
 
-        setList(res.data.student_list);
-        setBanOption(res.data.class_list);
-        setbanValue(res.data.class_list);
+        setList(response.student_list);
+        setBanOption(response.class_list);
+        setbanValue(response.class_list);
     };
 
     useEffect(() => {
@@ -124,7 +123,6 @@ function Attendance() {
                                     let copy = [...list];
                                     copy.forEach((a) => {
                                         a.attd = "P";
-                                        a.reason = "";
                                     });
                                     setList(copy);
                                 }}
@@ -163,9 +161,8 @@ function Attendance() {
                     <thead>
                         <tr>
                             <th style={{ width: "25%" }}>학생명(아이디)</th>
-                            <th style={{ width: "15%" }}>출결 체크</th>
-                            <th style={{ width: "60%" }}>출결 사유</th>
-                            <th></th>
+                            <th style={{ width: "20%" }}>출결 체크</th>
+                            <th style={{ width: "auto" }}>출결 사유</th>
                         </tr>
                     </thead>
                     <tbody>

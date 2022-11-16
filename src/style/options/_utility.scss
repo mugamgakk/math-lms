@@ -7,7 +7,7 @@
 //ex col-6 == 50% , col-12 == 100%;
 @for $i from 1 through 12 {
     .col-#{$i}{
-        width: percentage($i/12) !important;
+        width: percentage($i/12) ;
     }
 }
 

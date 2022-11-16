@@ -1,52 +1,49 @@
-import React, { useState, useEffect, memo } from "react";
-import SelectBase from "../../components/ui/select/SelectBase";
+import React from "react";
+import { useState } from "react";
 
-const options = [
+const att = [
     { value: "P", label: "출석" },
     { value: "L", label: "지각" },
     { value: "E", label: "조퇴" },
     { value: "A", label: "결석" },
 ];
 
-const AttendanceTableList = memo(({ updateData, ele }) => {
-    let [disable, setDisable] = useState(false);
+function AttendanceTableList({ ele, updateData }) {
 
-    useEffect(() => {
-        // 선택/출석 사유 입력 영역 비활성화
-        if (ele.attd === "P") {
-            setDisable(true);
-        } else {
-            setDisable(false);
-        }
-    }, [ele.attd]);
+    let [disable, setDisable] = useState(ele.reason === "" ? true : false);
 
     return (
         <tr>
-            <td style={{ width: "25%" }}>
+            <td>
                 {ele.um_nm} ({ele.um_id})
             </td>
-            <td style={{ width: "15%" }}>
-                <SelectBase
-                    value={ele.attd}
-                    options={options}
-                    onChange={(res) => {
-                        updateData({userId : ele.usr_seq, value : res.value, key : "attd"});
-                    }}
-                />
+            <td>
+                {att.map((a) => {
+                    return (
+                        <button
+                            key={a.value}
+                            className={`btn ${a.value === ele.attd ? "active" : ""}`}
+                            onClick={(e) => { updateData(ele.usr_seq, a.value, "attd") }}
+                        >
+                            {a.label}
+                        </button>
+                    );
+                })}
             </td>
-            <td style={{ width: "60%" }}>
-                <input 
-                type="text"
-                className="form-control" 
-                value={ele.reason} 
-                disabled={disable} 
-                onChange={e=>{ 
-                    updateData({userId : ele.usr_seq, value : e.target.value, key : "reason"});
-                }}
+            <td className="d-flex">
+                <button className="btn" onClick={() => { setDisable(!disable) }}>글쓰기</button>
+                <input
+                    type="text"
+                    value={ele.reason}
+                    className="form-control"
+                    placeholder="사유 입력(50자 이내)"
+                    disabled={disable}
+                    onChange={(e) => { updateData(ele.usr_seq, e.target.value, "reason") }}
                 />
+                <button className="btn">저장</button>
             </td>
         </tr>
     );
-});
+}
 
 export default AttendanceTableList;
