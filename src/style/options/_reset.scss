@@ -69,16 +69,3 @@ textarea{
     }
 }
 
-input[type="checkbox"]{
-    background-color: #fff;
-    width: 13px;
-    height: 13px;
-    border-radius: 0;
-    appearance: none;
-    border: 1px solid #999;
-
-    &:checked {
-        background-color: #000;
-    }
-}
-

@@ -17,6 +17,7 @@ import FileDownLoad from "./Pages/ComponentsPage/FileDownLoad";
 import Spinner from "./Pages/ComponentsPage/Spinner";
 import SkeletonPage from "./Pages/ComponentsPage/SkeletonPage";
 import IconPage from "./Pages/ComponentsPage/IconPage";
+import Ui from "./Pages/ComponentsPage/UiPage";
 
 import Authentication from "./components/Authentication";
 import Attendance from "./Pages/Attendance";
@@ -57,6 +58,7 @@ function App() {
                     <Route path="spinner" element={<Spinner />} />
                     <Route path="skeleton" element={<SkeletonPage />} />
                     <Route path="icon" element={<IconPage />} />
+                    <Route path="ui" element={<Ui />} />
                 </Route>
                 <Route
                     path="*"

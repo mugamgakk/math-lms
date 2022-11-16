@@ -64,54 +64,101 @@
         justify-content: flex-end;
         align-items: center;
         height: 50px;
-        background-color: green;
+        background-color: $green;
         color: #fff;
 
         &--btn {
             width: 50px;
             height: 50px;
-            background-color: rgb(3, 54, 3);
+            background-color: $green;
             color: #fff;
         }
     }
 
     &-lookup {
-        background-color: #ddd;
-    }
+        background-color: #DCDEE0;
+        padding: 10px 20px;
 
-    &-list {
-        height: calc(100% - 180px);
-        background-color: rgb(77, 54, 13);
-        color: #fff;
+        &__btn{
+            display: flex;
+            
+            button{
+                background-color: #999;
+                width: 50%;
+                height: 30px;
+                @include flex();
+                
+                &:first-child{
+                    border-top-left-radius: 5px;
+                    border-bottom-left-radius: 5px;
+                }
+                &:last-child{
+                    border-top-right-radius: 5px;
+                    border-bottom-right-radius: 5px;
+                }
 
-        ul {
-            background-color: rgb(117, 82, 21);
-
-            li {
-                display: flex;
-                align-items: center;
-                height: 40px;
-                padding-left: 20px;
-
-                &.active {
-                    position: relative;
-
-                    &::before {
-                        content: "";
-                        width: 3px;
-                        height: 100%;
-                        position: absolute;
-                        left: 0;
-                        top: 0;
-                        background-color: $red;
-                    }
+                &.active{
+                    border: 2px solid $green;
+                    background-color: #fff;
+                    color: $green;
                 }
             }
         }
     }
 
+    &-list {
+        height: calc(100% - 216px);
+        background-color: #333A3D;
+        color: #fff;
+        padding: 10px;
+
+
+        .lnb-item{
+            margin-bottom: 5px;
+            &:last-child{
+                .one-depth{
+                    margin-bottom: 0;
+                }
+            }
+        }
+
+        .one-depth{
+            position: relative;
+            border-radius: 5px;
+            padding: 10px;
+
+            a{
+                display: flex;
+                align-items: center;
+            }
+
+            // &::before{
+            //     content: "";
+            //     position: absolute;
+            //     width: 2px;
+            //     height: 15px;
+            //     right: 15px;
+            //     top: 0;
+            //     background-color: #fff;
+            // }
+            // &::after{
+            //     content: "";
+            //     position: absolute;
+            //     width: 2px;
+            //     height: 15px;
+            //     right: 15px;
+            //     top: 0;
+            //     transform: rotate(90deg);
+            //     background-color: #fff;
+            // }
+
+        }
+    }
+
     &-title {
-        padding: 20px;
+        padding: 10px;
+        background-color: #5C6164;
+        color: #fff;
     }
 }
 

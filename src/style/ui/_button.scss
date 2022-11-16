@@ -1,10 +1,21 @@
 %button-base{
-    height: 30px;
+    height: 35px;
     border-radius: 5px;
+    min-width: 60px;
+    padding: 0 15px;
+    color: #fff;
+    background-color: #fff;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+
+
+    &:disabled{
+        cursor: not-allowed;
+    }
 }
 
 .btn{
-    @extend %button-base;
+    height: 30px;
+    border-radius: 5px;
 
     border: 1px solid $border;
     padding: 0 10px;
@@ -26,7 +37,7 @@
     }
 
     &.active{
-        border: 1px solid $red;
+        border: 1px solid $orange;
         background-color: #dae0e5;
         border-color: #d3d9df;
     }
@@ -40,15 +51,94 @@
     }
 }
 
-.btn-dark{
-    @extend %button-base;
-}
-
-.btn-blue{
-    @extend %button-base;
-}
-
 .btn-green{
     @extend %button-base;
-    background-color: $primary;
+    background-color: $green;
+
+    &:hover{
+        background-color: #02846C;
+    }
+
+    &:disabled{
+
+        &:hover{
+            background-color: $green;
+        }
+    }
+}
+
+.btn-green-border{
+    @extend %button-base;
+    border: 1px solid $green;
+    color: $green;
+
+    &:hover{
+        background-color: $green;
+        color: $white;
+    }
+
+    &:disabled{
+
+        &:hover{
+            background-color: #fff;
+        }
+    }
+}
+.btn-green-light{
+    @extend %button-base;
+    background-color: $green-light;
+    color: $green;
+}
+.btn-orange{
+    @extend %button-base;
+    background-color: $orange;
+
+    &:hover{
+        background-color: #E05836;
+    }
+
+    &:disabled{
+
+        &:hover{
+            background-color: $orange;
+        }
+    }
+}
+
+.btn-orange-border{
+    @extend %button-base;
+    border: 1px solid $orange;
+    color: $orange;
+
+    &:hover{
+        background-color: $orange;
+        color: $white;
+    }
+
+    &:disabled{
+
+        &:hover{
+            background-color: #fff;
+        }
+    }
+}
+.btn-orange-light{
+    @extend %button-base;
+    background-color: $orange-light;
+    color: $orange;
+}
+.btn-brown{
+    @extend %button-base;
+    background-color: $brown;
+
+    &:hover{
+        background-color: #E05836;
+    }
+
+    &:disabled{
+
+        &:hover{
+            background-color: $brown;
+        }
+    }
 }

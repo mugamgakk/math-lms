@@ -5,16 +5,17 @@ import ajax from "../ajax";
 import useTable from "../hooks/useTable";
 import { _each, _map } from "../methods/methods";
 import LnbLookup from "./Home/LnbLookup";
+import Icon from "../components/Icon";
 
 const nav = [
-    { name: "출석체크", href: "attendance" },
-    { name: "오늘의 수업", href: "today-class" },
-    { name: "학생별 수업 관리", href: "detail-class" },
-    { name: "플러스 학습", href: "plus-learning" },
-    { name: "평가 관리", href: "evaluation" },
-    { name: "학습 통계", href: "statistics" },
-    { name: "자료 및 알림", href: "reference" },
-    { name: "components guide", href: "components" },
+    { icon: "apple", name: "출석체크", href: "attendance" },
+    { icon: "apple", name: "오늘의 수업", href: "today-class" },
+    { icon: "apple", name: "학생별 수업 관리", href: "detail-class" },
+    { icon: "apple", name: "플러스 학습", href: "plus-learning", depth: ["서술형 따라잡기", "교과서별 내신적중"] },
+    { icon: "apple", name: "평가 관리", href: "evaluation" },
+    { icon: "apple", name: "학습 통계", href: "statistics" },
+    { icon: "apple", name: "자료 및 알림", href: "reference" },
+    { icon: "apple", name: "components guide", href: "components" },
 ];
 
 function Home() {
@@ -51,7 +52,7 @@ function Home() {
         });
     }, []);
 
-    
+
 
     return (
         <main>
@@ -59,7 +60,7 @@ function Home() {
                 <div className="container">
                     <div className="header-layout">
                         <h1 className="logo">
-                            <img src="" alt="logo" />
+                            <img src="/logo192.png" alt="logo" style={{ width: "35px" }} />
                         </h1>
 
                         <div className="info">
@@ -85,34 +86,21 @@ function Home() {
 
                     <LnbLookup />
 
+                    <h4 className="lnb-title">수학 학습 관리</h4>
                     <div className="lnb-list">
-                        {/* <img
-                            style={{width : "100%"}}
-                            className={guess ? "egg show" : "egg"}
-                            src="https://item.kakaocdn.net/do/81df5c1c454964e03abc3377028efb11f43ad912ad8dd55b04db6a64cddaf76d"
-                            alt=""
-                        />
-                        <div
-                            className="trigger"
-                            onClick={() => {
-                                setGuess(true);
-                                setTimeout(() => {
-                                    setGuess(false);
-                                }, 3000);
-                            }}
-                        ></div> */}
-                        <h4 className="lnb-title">수학 학습 관리</h4>
                         <ul>
-                            {_map(nav, (a) => {
+                            {_map(nav, (ele) => {
                                 return (
                                     <li
-                                        key={a.name}
-                                        className={`lnb-item ${window.location.pathname === "/" + a.href
-                                            ? "active"
-                                            : ""
-                                            }`}
+                                        key={ele.name}
+                                        className={`lnb-item`}
                                     >
-                                        <Link to={`/${a.href}`}>{a.name}</Link>
+                                        <div className="one-depth">
+                                                <Link to={`/${ele.href}`}>
+                                                    <Icon icon={ele.icon} />
+                                                    {ele.name}
+                                                </Link>
+                                        </div>
                                     </li>
                                 );
                             })}

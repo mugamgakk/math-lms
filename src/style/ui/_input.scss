@@ -1,3 +1,49 @@
+%checkbox-base{
+    display: inline-block;
+    input[type=checkbox]{
+        display: none;
+
+        &:checked + label{
+            position: relative;
+
+            &::before{
+                content: "";
+                position: absolute;
+                width: 2.2px;
+                height: 5px;
+                transform: rotate(132deg);
+                background-color: white;
+                top: 5px;
+                left: 25%;
+            }
+            &::after{
+                content: "";
+                position: absolute;
+                width: 2.2px;
+                height: 8px;
+                left: 53%;
+                transform: rotate(38deg);
+                background-color: white;
+                top: 1px;
+            }
+        }
+
+        &:disabled + label{
+            background-color: $grey;
+            cursor: not-allowed;
+        }
+    }
+
+    label{
+        display: inline-block;
+        width: 13px;
+        height: 13px;
+        border: 1px solid $border;
+        cursor: pointer;
+        border-radius: 3px;
+    }
+}
+
 .datepicker{
     background-color: #fff;
     width: 100%;
@@ -6,7 +52,7 @@
     border: 1px solid #999;
 
     .ic-apple{
-        color: $primary;
+        color: $green;
     }
 
     .react-date-picker{
@@ -21,6 +67,23 @@
     }
 
     .react-date-picker__wrapper{
+        border: none;
+    }
+}
+
+.check-green{
+    @extend %checkbox-base;
+
+    input[type=checkbox]:checked + label{
+        background-color: $green;
+        border: none;
+    }
+}
+.check-orange{
+    @extend %checkbox-base;
+
+    input[type=checkbox]:checked + label{
+        background-color: $orange;
         border: none;
     }
 }
