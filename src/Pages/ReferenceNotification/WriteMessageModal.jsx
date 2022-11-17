@@ -49,9 +49,6 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
     let [hour,setHour] = useState('0시');
     let [minute,setMinute] = useState('00분');
 
-
-
-
     let [dateInput , setDateInput] = useState('');
     let [regexDate, setRegexDate] = useState('');
     let [selectDisabled, setSelectDisabled]  = useState(true);

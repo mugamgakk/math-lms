@@ -1,5 +1,6 @@
 import React from 'react';
 import SelectBase from '../../components/ui/select/SelectBase';
+import Checkbox from "../../components/Checkbox";
 
 function UiPage() {
     return ( 
@@ -75,6 +76,7 @@ function UiPage() {
                     </label>
                 </div>
             </div>
+
 
             <style>
                 {`
