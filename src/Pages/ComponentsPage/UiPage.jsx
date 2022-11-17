@@ -1,47 +1,46 @@
 import React from 'react';
-import SelectBase from '../../components/ui/select/SelectBase';
 
 function UiPage() {
-    return ( 
+    return (
         <div>
             <div>
                 <h4>color</h4>
                 <div className='d-flex'>
-                <div className="ui-color" style={{background : "#00a37f"}}>
-                    $green
-                    <br/>
-                    #00a37f
-                </div>
-                <div className="ui-color" style={{background : "#CCEDE5"}}>
-                    $green-light
-                    <br/>
-                    #CCEDE5
-                </div>
-                <div className="ui-color" style={{background : "#EA7851"}}>
-                    $orange
-                    <br/>
-                    #EA7851
-                </div>
-                <div className="ui-color" style={{background : "#FBE4DC"}}>
-                    $orange
-                    <br/>
-                    #FBE4DC
-                </div>
-                <div className="ui-color" style={{background : "#664E3D"}}>
-                    $brown
-                    <br/>
-                    #664E3D
-                </div>
-                <div className="ui-color" style={{background : "#c8c8c8"}}>
-                    $border
-                    <br/>
-                    #c8c8c8
-                </div>
-                <div className="ui-color" style={{background : "#EEEEEE"}}>
-                    $grey
-                    <br/>
-                    #EEEEEE
-                </div>
+                    <div className="ui-color" style={{ background: "#00a37f" }}>
+                        $green
+                        <br />
+                        #00a37f
+                    </div>
+                    <div className="ui-color" style={{ background: "#CCEDE5" }}>
+                        $green-light
+                        <br />
+                        #CCEDE5
+                    </div>
+                    <div className="ui-color" style={{ background: "#EA7851" }}>
+                        $orange
+                        <br />
+                        #EA7851
+                    </div>
+                    <div className="ui-color" style={{ background: "#FBE4DC" }}>
+                        $orange-light
+                        <br />
+                        #FBE4DC
+                    </div>
+                    <div className="ui-color" style={{ background: "#664E3D" }}>
+                        $brown
+                        <br />
+                        #664E3D
+                    </div>
+                    <div className="ui-color" style={{ background: "#c8c8c8" }}>
+                        $border
+                        <br />
+                        #c8c8c8
+                    </div>
+                    <div className="ui-color" style={{ background: "#EEEEEE" }}>
+                        $grey
+                        <br />
+                        #EEEEEE
+                    </div>
                 </div>
             </div>
 
@@ -65,12 +64,12 @@ function UiPage() {
             <div>
                 <h4>checkbox</h4>
                 <div className='check-green'>
-                    <input type="checkbox" id='a'/>
+                    <input type="checkbox" id='a' />
                     <label htmlFor="a">
                     </label>
                 </div>
                 <div className='check-orange'>
-                    <input type="checkbox" id='b'/>
+                    <input type="checkbox" id='b' />
                     <label htmlFor="b">
                     </label>
                 </div>
@@ -91,7 +90,7 @@ function UiPage() {
                 `}
             </style>
         </div>
-     );
+    );
 }
 
 export default UiPage;

@@ -7,6 +7,7 @@ import ContentHeader from "../components/ContentHeader";
 import DateNext from "../components/DateNext";
 import SearchBtn from "../components/ui/button/SearchBtn";
 import ClassSelect from "../components/ui/select/ClassSelect";
+import { _remove } from "../methods/methods";
 import AttendanceTableList from "./Attendance/AttendanceTableList";
 
 // 출결 P:출석 / L:지각 / E:조퇴 / A:결석
@@ -63,7 +64,6 @@ function Attendance() {
     let [banValue, setbanValue] = useState();
     let [banOption, setBanOption] = useState();
 
-
     const updateData = ( userId, value, key ) => {
         let copy = [...list];
 
@@ -96,6 +96,7 @@ function Attendance() {
 
     useEffect(() => {
         getData();
+
     }, [date]);
 
     return (

@@ -141,6 +141,20 @@ export function _each(list, fn){
     return list
 }
 
+export function _remove(list, obj){
+    var key = Object.keys(obj)[0];
+    var value = Object.values(obj)[0];
+
+    var arr = [];
+    for(let i = 0; i < list.length; i++){
+        if(list[i][key] !== value){
+            arr.push(list[i])
+        }
+    }   
+
+    return arr;
+}
+
 export {
     weekChange,
     getByteSize,
