@@ -1,19 +1,18 @@
-%button-base{
+%button-base {
     height: 35px;
     border-radius: 5px;
-    min-width: 60px;
     padding: 0 15px;
     color: #fff;
     background-color: #fff;
-    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+        box-shadow 0.15s ease-in-out;
 
-
-    &:disabled{
+    &:disabled {
         cursor: not-allowed;
     }
 }
 
-.btn{
+.btn {
     height: 30px;
     border-radius: 5px;
 
@@ -21,124 +20,153 @@
     padding: 0 10px;
     color: #212529;
     background-color: #f8f9fa;
-    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+        box-shadow 0.15s ease-in-out;
     white-space: nowrap;
 
-    &:disabled{
+    &:disabled {
         background-color: #dce2e9;
 
-        &:hover{
+        &:hover {
             background-color: #dce2e9;
         }
     }
 
-    &:hover{
+    &:hover {
         background-color: #e2e6ea;
     }
 
-    &.active{
+    &.active {
         border: 1px solid $orange;
         background-color: #dae0e5;
         border-color: #d3d9df;
     }
 
-    &.btn-s{
+    &.btn-s {
         padding: 5px;
     }
-    &.disabled{
+    &.disabled {
         pointer-events: none;
         background: #ccc;
     }
 }
 
-.btn-green{
+.btn-green {
     @extend %button-base;
     background-color: $green;
 
-    &:hover{
-        background-color: #02846C;
+    &:hover {
+        background-color: #02846c;
     }
 
-    &:disabled{
-
-        &:hover{
+    &:disabled {
+        &:hover {
             background-color: $green;
         }
     }
 }
 
-.btn-green-border{
+.btn-green-border {
     @extend %button-base;
     border: 1px solid $green;
     color: $green;
 
-    &:hover{
+    &:hover {
         background-color: $green;
         color: $white;
     }
 
-    &:disabled{
-
-        &:hover{
+    &:disabled {
+        &:hover {
             background-color: #fff;
         }
     }
 }
-.btn-green-light{
+.btn-green-light {
     @extend %button-base;
     background-color: $green-light;
     color: $green;
 }
-.btn-orange{
+.btn-orange {
     @extend %button-base;
     background-color: $orange;
 
-    &:hover{
-        background-color: #E05836;
+    &:hover {
+        background-color: #e05836;
     }
 
-    &:disabled{
-
-        &:hover{
+    &:disabled {
+        &:hover {
             background-color: $orange;
         }
     }
 }
 
-.btn-orange-border{
+.btn-orange-border {
     @extend %button-base;
     border: 1px solid $orange;
     color: $orange;
 
-    &:hover{
+    &:hover {
         background-color: $orange;
         color: $white;
     }
 
-    &:disabled{
-
-        &:hover{
+    &:disabled {
+        &:hover {
             background-color: #fff;
         }
     }
 }
-.btn-orange-light{
+.btn-orange-light {
     @extend %button-base;
     background-color: $orange-light;
     color: $orange;
 }
-.btn-brown{
+.btn-brown {
     @extend %button-base;
     background-color: $brown;
 
-    &:hover{
-        background-color: #E05836;
+    &:hover {
+        background-color: #e05836;
     }
 
-    &:disabled{
-
-        &:hover{
+    &:disabled {
+        &:hover {
             background-color: $brown;
+        }
+    }
+}
+
+.btn-grey {
+    @extend %button-base;
+    background-color: $grey;
+    color: #000;
+
+    &:hover {
+        background-color: #ddd;
+    }
+
+    &:disabled {
+        &:hover {
+            background-color: $grey;
+        }
+    }
+}
+
+.btn-grey-border {
+    @extend %button-base;
+    border: 1px solid $grey;
+    color: #000;
+
+    &:hover {
+        background-color: $grey;
+        color: #000;
+    }
+
+    &:disabled {
+        &:hover {
+            background-color: #fff;
         }
     }
 }

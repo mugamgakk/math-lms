@@ -118,7 +118,7 @@ function Attendance() {
                     <div className="fj">
                         <div>
                             <button
-                                className="btn"
+                                className="btn-grey"
                                 onClick={() => {
                                     let copy = [...list];
                                     copy.forEach((a) => {
@@ -129,7 +129,7 @@ function Attendance() {
                             >
                                 모두 출석
                             </button>
-                            <button className="btn" onClick={getData}>
+                            <button className="btn-grey-border" onClick={getData}>
                                 초기화
                             </button>
                         </div>
@@ -160,8 +160,8 @@ function Attendance() {
                 <table>
                     <thead>
                         <tr>
-                            <th style={{ width: "25%" }}>학생명(아이디)</th>
-                            <th style={{ width: "20%" }}>출결 체크</th>
+                            <th style={{ width: "20%" }}>학생명(아이디)</th>
+                            <th style={{ width: "25%" }}>출결 체크</th>
                             <th style={{ width: "auto" }}>출결 사유</th>
                         </tr>
                     </thead>

@@ -22,7 +22,7 @@ function AttendanceTableList({ ele, updateData }) {
                     return (
                         <button
                             key={a.value}
-                            className={`btn ${a.value === ele.attd ? "active" : ""}`}
+                            className={`${a.value === ele.attd ? "btn-orange" : "btn-grey-border"}`}
                             onClick={(e) => { updateData(ele.usr_seq, a.value, "attd") }}
                         >
                             {a.label}
