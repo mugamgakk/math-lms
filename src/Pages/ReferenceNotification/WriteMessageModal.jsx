@@ -238,8 +238,8 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
 
     const submitForm = () => {
         let newDate = `20${regexDate}`;
-        let newHour = hour.replace('시','');
-        let newMinute = minute.replace('분','');
+        let newHour = hour.label.replace('시','');
+        let newMinute = minute.label.replace('분','');
         let nt_reserve = `${newDate} ${newHour}:${newMinute}`;
 
         
