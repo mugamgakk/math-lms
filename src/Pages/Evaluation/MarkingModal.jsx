@@ -25,27 +25,32 @@ function MarkingModal({data,title,setMarkingModal}) {
 
     let [answerList, setAnswerList] = useState([getAnswer.slice(0,10),getAnswer.slice(10,20),getAnswer.slice(20,30)]);
 
-
-   
-
-   
-
+    
     const sendAnswer = async () => {
 
-    
+        if(!window.confirm('전송?')) return;
+
+        let newAnswer = [...answerList];
+        let newArr = newAnswer[0].concat(newAnswer[1],newAnswer[2]);
+        
+        newArr.forEach(a=>{
+            delete a.crt_ans;
+        })
+
         let url = "/evaluation.php/";
         let query = {
             mode: "ut_score_save",
             usr_seq : clickStudent.usr_seq,
-            arr_crt : []
+            arr_crt : newArr
         };
-
+        
         let res = await ajax(url, { data: query });
-
-        console.log(res);
     
+        setMarkingModal(false);
+
     };
 
+    
     return (
         <div className="modal">
             <div className="dim"></div>
@@ -95,6 +100,7 @@ function MarkingModal({data,title,setMarkingModal}) {
 }
 
 function MarkingTable({answerList,setAnswerList}){
+
     const clickBtn = (a,b,num) => {
 
         let copy = [...answerList]

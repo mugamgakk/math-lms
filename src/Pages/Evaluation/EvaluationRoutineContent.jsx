@@ -12,97 +12,59 @@ const 평가종류 = [
     { value: '단원 평가', label: '단원 평가' },
     { value: '(월말 평가)', label: '(월말 평가)' },
 ];
-const 단원 = [
-    { value: 'I. 수와 식의 계산', label: 'I. 수와 식의 계산' },
-    { value: 'II. 문자와 식', label: 'II. 문자와 식' },
-    { value: 'III. 좌표평면과 그래프', label: 'III. 좌표평면과 그래프' },
-];
-
-const data = [
-    {
-        ut_seq: 123,
-        tb_name: '중2-1 노벰',
-        ltitle: 'I. 수와 식의 계산',
-        kind: '단원 평가',
-        ev_date: '2021-07-20',
-        ev_std_score: 18,
-        ev_max_score: 20,
-        ev_per_score: 90,
-
-    },
-    {
-        ut_seq: 13,
-        tb_name: '중2-1 노벰',
-        ltitle: 'II. 문자와 식',
-        kind: '단원 평가',
-        ev_date: '2021-07-22',
-        ev_std_score: 18,
-        ev_max_score: 20,
-        ev_per_score: 90,
-
-    },
-    {
-        ut_seq: 3,
-        tb_name: '중2-1 노벰',
-        ltitle: 'III. 좌표평면과 그래프',
-        kind: '단원 평가',
-        ev_date: '2021-07-20',
-        ev_std_score: null,
-        ev_max_score: null,
-        ev_per_score: null,
-
-    },
-    {
-        ut_seq: 13,
-        tb_name: '중2-1 노벰',
-        ltitle: 'IIII. 문자와 식',
-        kind: '단원 평가',
-        ev_date: '2021-07-19',
-        ev_std_score: 18,
-        ev_max_score: 20,
-        ev_per_score: 90,
-
-    },
-];
-
 
 function EvaluationRoutineContent() {
     let [selectOption, setSelecOtion] = useState({ 평가종류: "", 단원: "" });
-    let [list, setList] = useState(data);
+    let [list, setList] = useState(null);
+    let [lectureList, setLectureList] = useState(null);
+    let [filterList, setFilterList] = useState(null);
     const clickStudent = useStudentsStore((state) => state.clickStudent);
     
-    let [checkItem, setCheckItem] = useState([]);
-    
+    let [checkItem, setCheckItem] = useState([]);   
     let [sort,setSort] = useState({
         ltitle : true,
         ev_date : true,
     })
-
-
     //  true == 오름차순, false == 내림차순
-
-    // useEffect(()=>{
-    //     getList();
-    // },[]);
-
-    // const getList = async () => {
-
-    //     let url = "/evaluation.php/";
-
-    //     let query = {
-    //         mode: "ut_list",
-    //         usr_seq : clickStudent.usr_seq,
-    //         qkind : 'UT',
-    //         qlno : 1,
-    //         sdate : startDay,
-    //         edate : endDay,
-    //     };
-
-    //     let res = await ajax(url, { data: query });
-
-    //     console.log(res);
     
-    // };
+    useEffect(()=>{
+        getList();     
+    },[]);
+    
+    useEffect(()=>{
+        if(!lectureList) return;
+
+            let arr = [];
+            
+            lectureList.forEach(a=>{
+                arr.push({value: a.ltitle, label: a.ltitle});
+            });
+            
+            setFilterList(arr);
+
+    },[lectureList]);
+
+    const getList = async () => {
+
+        let url = "/evaluation.php/";
+
+        let query = {
+            mode: "ut_list",
+            usr_seq : clickStudent.usr_seq,
+            qkind : 'UT',
+            qlno : 1,
+            sdate : startDay,
+            edate : endDay,
+        };
+
+        let res = await ajax(url, { data: query });
+
+        let { lecture_list, ut_list } = res.data;
+
+        setList(ut_list);
+        setLectureList(lecture_list);
+
+    };
 
     const ref = useRef(false);
     
@@ -114,6 +76,7 @@ function EvaluationRoutineContent() {
     
     let [startDay, setStartDay] = useState(oneMonthAgo);
     let [endDay, setEndDay] = useState(new Date());
+
 
     const dateSortFunc = useCallback((sortName) => {
         
@@ -146,44 +109,7 @@ function EvaluationRoutineContent() {
 
         setList(arr);
 
-    },[sort]);
-
-
-    
-    // useEffect(()=>{
-    //     if(ref.current){
-
-    //     let arr = [];
-    //     let arr2 = []; 
-
-    //         if(selectOption.평가종류){
-    //             data.forEach(item => {
-    //                 if(item.kind == selectOption.평가종류 ){
-    //                     arr.push(item);
-    //                 }
-    //             })
-    //         }else{
-    //             arr = data;
-    //         }
-
-    //         if(selectOption.단원){
-    //             arr.forEach(item => {
-    //                 if(item.ltitle == selectOption.단원){
-    //                     arr2.push(item);
-    //                 }
-    //             })
-    //             setList(arr2);
-    //         }else{
-    //             setList(arr);
-    //         }
-
-    //     }else{
-    //         ref.current = true;
-    //     }
-
-
-    // },[selectOption])
-
+    },[sort,list]);
     
     return (
         <div>
@@ -193,7 +119,7 @@ function EvaluationRoutineContent() {
                 </div>
                 <div className="d-flex">
                     <SelectBase
-                        defaultValue="평가 종류"
+                        defaultValue="평가종류"
                         value={selectOption.평가종류}
                         options={평가종류}
                         width={"150px"}
@@ -204,7 +130,7 @@ function EvaluationRoutineContent() {
                     <SelectBase
                         defaultValue="단원"
                         value={selectOption.단원}
-                        options={단원}
+                        options={filterList && filterList}
                         width={"150px"}
                         onChange={(ele) => {
                             setSelecOtion({ ...selectOption, 단원: ele });
@@ -223,7 +149,7 @@ function EvaluationRoutineContent() {
                     }}
                     value={endDay}
                     />
-                    <button className="btn">조회</button>
+                    <button className="btn" onClick={getList}>조회</button>
                 </div>
             </div>
 
@@ -235,10 +161,10 @@ function EvaluationRoutineContent() {
                             <input
                                 type="checkbox"
                                 id="all-check"
-                                checked={data.length === checkItem.length ? true : false}
+                                checked={(list && list.length === checkItem.length) ? true : false}
                                 onChange={(e) => {
                                     if (e.target.checked) {
-                                        setCheckItem(data);
+                                        setCheckItem(list);
                                     } else {
                                         setCheckItem([]);
                                     }
@@ -248,7 +174,7 @@ function EvaluationRoutineContent() {
                         <th>교재</th>
                         <th>단원
                             <button 
-                                className={"btn-sort" + `${sort.kind ? " asc" : ""}`}
+                                className={"btn-sort" + `${sort.ltitle ? " asc" : ""}`}
                                 onClick={() => dateSortFunc('ltitle')}
                             ></button>
                         </th>
@@ -264,7 +190,7 @@ function EvaluationRoutineContent() {
                 </thead>
                 <tbody>
                     {
-                    list.map((a, i) => {
+                    list && list.map((a, i) => {
                         return <Tr key={i} 
                         item={a} 
                         check={checkItem} 

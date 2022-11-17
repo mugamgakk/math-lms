@@ -75,6 +75,7 @@ function UiPage() {
                 </div>
             </div>
 
+
             <style>
                 {`
                     .ui-color{
