@@ -3,61 +3,37 @@ import React from 'react';
 function UiPage() {
     return (
         <div>
-            <div>
-                <h4>color</h4>
-                <div className='d-flex'>
-                    <div className="ui-color" style={{ background: "#00a37f" }}>
-                        $green
-                        <br />
-                        #00a37f
-                    </div>
-                    <div className="ui-color" style={{ background: "#CCEDE5" }}>
-                        $green-light
-                        <br />
-                        #CCEDE5
-                    </div>
-                    <div className="ui-color" style={{ background: "#EA7851" }}>
-                        $orange
-                        <br />
-                        #EA7851
-                    </div>
-                    <div className="ui-color" style={{ background: "#FBE4DC" }}>
-                        $orange-light
-                        <br />
-                        #FBE4DC
-                    </div>
-                    <div className="ui-color" style={{ background: "#664E3D" }}>
-                        $brown
-                        <br />
-                        #664E3D
-                    </div>
-                    <div className="ui-color" style={{ background: "#c8c8c8" }}>
-                        $border
-                        <br />
-                        #c8c8c8
-                    </div>
-                    <div className="ui-color" style={{ background: "#EEEEEE" }}>
-                        $grey
-                        <br />
-                        #EEEEEE
-                    </div>
-                </div>
-            </div>
 
             <div>
                 <h4>button</h4>
                 <div>
                     <button className='btn-green'>btn-green</button>
+                    <button className='btn-green' disabled>btn-green</button>
                     <button className='btn-green-border'>btn-green-light</button>
+                    <button className='btn-green-border' disabled>btn-green-light</button>
                     <button className='btn-green-light'>btn-green-light</button>
+                    <button className='btn-green-light' disabled>btn-green-light</button>
                 </div>
                 <div>
                     <button className='btn-orange'>btn-orange</button>
+                    <button className='btn-orange' disabled>btn-orange</button>
                     <button className='btn-orange-border'>btn-orange-light</button>
+                    <button className='btn-orange-border' disabled>btn-orange-light</button>
                     <button className='btn-orange-light'>btn-orange-light</button>
+                    <button className='btn-orange-light' disabled>btn-orange-light</button>
                 </div>
                 <div>
                     <button className='btn-brown'>btn-brown</button>
+                    <button className='btn-brown' disabled>btn-brown</button>
+                </div>
+                <div>
+                    <button className='btn-table'>btn-table</button>
+                </div>
+                <div>
+                    <button className='btn-grey'>btn-grey</button>
+                    <button className='btn-grey' disabled>btn-grey</button>
+                    <button className='btn-grey-border'>btn-grey-border</button>
+                    <button className='btn-grey-border' disabled>btn-grey-border</button>
                 </div>
             </div>
 
