@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="17.999" height="19.999" viewBox="0 0 17.999 19.999">
+    <g data-name="그룹 2049">
+        <g data-name="그룹 2048">
+            <g data-name="그룹 2047">
+                <path data-name="사각형 599" transform="translate(11.999 8.999)" style="fill=#000" d="M0 0h2v2H0z"/>
+                <path data-name="사각형 600" transform="translate(8 8.999)" style="fill=#000" d="M0 0h2v2H0z"/>
+                <path data-name="사각형 601" transform="translate(4 8.999)" style="fill=#000" d="M0 0h2v2H0z"/>
+                <path data-name="패스 981" d="M37.332 2h-1V0h-2v2h-8V0h-2v2h-1a1.991 1.991 0 0 0-1.99 2l-.01 14a2 2 0 0 0 2 2h14a2.006 2.006 0 0 0 2-2V4a2.006 2.006 0 0 0-2-2zm0 16h-14V7h14z" transform="translate(-21.333)" style="fill=#000"/>
+            </g>
+        </g>
+    </g>
+</svg>

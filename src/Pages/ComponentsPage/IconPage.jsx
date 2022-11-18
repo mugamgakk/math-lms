@@ -3,7 +3,22 @@ import { useEffect } from "react";
 import { useState } from "react";
 import Icon from "../../components/Icon";
 
-const arr = ["apple", "plus"];
+const arr = [
+    'apple',             'arrow_typeA',
+    'attendence',        'calendar',
+    'close',             'download',
+    'evaluation',        'file',
+    'info',              'lnbDetail',
+    'logout',            'more',
+    'notification',      'pencil',
+    'play',              'plus',
+    'plusLearning',      'point',
+    'print',             'reload',
+    'remove',            'search',
+    'select_typeA',      'select_typeB',
+    'studentManagement', 'todayClass',
+    'volume',            'warning'
+  ]
 
 function IconPage() {
     return (
@@ -45,7 +60,7 @@ const Box = ({ icon }) => {
     }, [text]);
 
     return (
-        <div className="col-1" data-id={`<Icon icon={"${icon}"} />`} onClick={handleCopyClipBoard}>
+        <div className="col-1 mb-2" data-id={`<Icon icon={"${icon}"} />`} onClick={handleCopyClipBoard} >
             <Icon icon={icon} />
             <p>{text}</p>
         </div>
