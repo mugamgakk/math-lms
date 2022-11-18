@@ -6,6 +6,7 @@
 //          url(NanumSquareR.ttf) format('truetype');
 //     font-weight: 400;
 // }
+
 @font-face {
     font-family: Pretendard;
     src: url("../../assets/fonts/Pretendard-Regular.ttf") format('truetype');
@@ -28,22 +29,27 @@
 }
 
 
-@mixin font-style($size : 16) {
-    font-size: #{$size}px;
 
-    @if($size == 24){
-        letter-spacing: 36px;
+@mixin font-style($size : 18) {
+    font-size: #{$size}px;
+    letter-spacing: -0.04em;
+
+    @if($size == 16){
+        line-height: 16px;
+    }
+    @if($size == 17){
+        line-height: 22px;
+    }
+    @if($size == 18){
+        line-height: 26px;
     }
 
     @if($size == 20){
-        letter-spacing: 30px;
+        line-height: 30px;
     }
-
-    @if($size == 17){
-        letter-spacing: 22px;
-    }
-    @if($size == 16){
-        letter-spacing: 22px;
+    @if($size == 24){
+        line-height: 36px;
     }
 
 }
+
