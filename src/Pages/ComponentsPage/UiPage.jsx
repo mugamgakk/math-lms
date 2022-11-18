@@ -1,4 +1,5 @@
 import React from 'react';
+import SelectBase from '../../components/ui/select/SelectBase';
 
 function UiPage() {
     return (
@@ -36,6 +37,13 @@ function UiPage() {
                     <button className='btn-grey-border' disabled>btn-grey-border</button>
                 </div>
             </div>
+
+            <div>
+                <h4>select</h4>
+                <SelectBase/>
+                <SelectBase disabled={true}/>
+            </div>
+
 
             <div>
                 <h4>checkbox</h4>
