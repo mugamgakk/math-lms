@@ -1,186 +1,94 @@
 .select {
-    height: 30px;
-    min-width: 30px;
-    border-radius: 2px;
-    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
-    display: inline-flex;
-    position: relative;
+    height: 40px;
+    min-width: 100px;
+    border-radius: $radius;
+    @include font-style(17);
+    border: 1px solid #ccc;
+    color: #666;
     background-color: #fff;
-
-    .checkbox.active {
-        position: relative;
-
-        &::before {
-            content: "";
-            position: absolute;
-            width: 2px;
-            height: 14px;
-            left: 9px;
-            bottom: 2px;
-            background-color: $green;
-            transform: rotate(32deg);
-        }
-
-        &::after {
-            content: "";
-            position: absolute;
-            width: 2px;
-            height: 8px;
-            left: 3px;
-            bottom: 2px;
-            background-color: $green;
-            transform: rotate(-45deg);
-        }
-    }
-
-    .checkbox {
-        width: 15px;
-        height: 15px;
-        border: 1px solid $border;
-        margin-right: 5px;
-    }
-
-    &.disabled {
-        background-color: rgba(153, 153, 153, 0.459);
-        color: #999;
-
-        .select-view,
-        .select-btn {
-            cursor: not-allowed;
-        }
-    }
-
-    &.active {
-        .select-list-box {
-            max-height: 100px;
-            overflow-y: auto;
-        }
-
-        .select-btn {
-            &::after {
-                top: 38%;
-                transform: translate(-50%, -50%) rotate(180deg);
-            }
-        }
-    }
-    &-view {
-        width: calc(100% - 30px);
-        display: flex;
-        cursor: pointer;
-        white-space: nowrap;
-
-        h4 {
-            display: flex;
-            align-items: center;
-            width: 100%;
+    position: relative;
+    cursor: pointer;
+    
+    .select-view{
+        height: 100%;
+        
+        @include flex(start);
+        h4{
+            white-space: nowrap;
+            width: 80%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-weight: 400;
             padding-left: 10px;
         }
     }
 
-    &-list-box {
+    .select-btn{
         position: absolute;
-        width: 100%;
+        top: 7px;
+        right: 10px;
+        i{
+            font-size: 1px;
+            color: #444;
+        }
+    }
+    .select-list-box{
+        position: absolute;
+        top: 42px;
         left: 0;
-        top: 34px;
+        width: 100%;
+        z-index: 1;
         overflow: hidden;
-        transition: all 0.3s;
+        transition: max-height 0.3s;
         max-height: 0;
-        z-index: 3;
-        background-color: #fff;
-        box-shadow: 0 0 0 1px $border inset;
+        border-radius: 0;
     }
 
-    &-list {
-        border-radius: 2px;
+    .select-list{
+        padding: 4px;
+        background-color: $white;
 
-        li {
+        li{
+            height: 30px;
+            border-radius: 2px;
             padding: 0 10px;
-            min-height: 30px;
+            width: 100%;
+            white-space: nowrap;
             line-height: 30px;
-            cursor: pointer;
-            text-align: left;
+            overflow: hidden;
+            text-overflow: ellipsis;
 
-            &.active {
-                .checkbox {
-                    position: relative;
-            
-                    &::before {
-                        content: "";
-                        position: absolute;
-                        width: 2px;
-                        height: 14px;
-                        left: 9px;
-                        bottom: 2px;
-                        background-color: $green;
-                        transform: rotate(32deg);
-                    }
-            
-                    &::after {
-                        content: "";
-                        position: absolute;
-                        width: 2px;
-                        height: 8px;
-                        left: 3px;
-                        bottom: 2px;
-                        background-color: $green;
-                        transform: rotate(-45deg);
-                    }
-                }
-            }
-
-            .lookup {
-                width: 100%;
-                height: 20px;
-                line-height: 20px;
-                text-align: center;
-                background-color: #fff;
-                border-radius: 3px;
-            }
-
-            .check-state {
-                width: 15px;
-                height: 15px;
-                border: 1px solid $border;
-                margin-right: 5px;
-
-                &.all {
-                    background-color: $green;
-                    border: none;
-                }
-
-                &.is-item {
-                    box-shadow: 0 0 0 2px #fff inset;
-                    background-color: $green;
-                    border: 1px solid $green;
-                }
-            }
-
-            
-
-            &:hover {
-                background-color: rgba(221, 221, 221, 0.288);
+            &:hover{
+                background-color: #eee;
             }
         }
     }
 
-    &-btn {
-        width: 30px;
-        position: relative;
-        cursor: pointer;
 
-        &::after {
-            content: "";
-            display: block;
-            width: 0;
-            height: 0;
-            border-top: 8px solid #000;
-            border-bottom: 8px solid transparent;
-            border-left: 6px solid transparent;
-            border-right: 6px solid transparent;
-            position: absolute;
-            left: 50%;
-            top: 69%;
-            transform: translate(-50%, -50%);
+    &.active {
+        border-color: $border;
+
+        .select-list-box {
+            border-radius: $radius;
+            max-height: 100px;
+            border: 1px solid #ccc;
+            overflow-y: auto;
+        }
+
+        .select-btn{
+            top: 10px;
+            transform: rotate(180deg);
         }
     }
+
+    &.disabled{
+        h4{
+            color: #ccc;
+        }
+        i{
+            color: #ccc;
+        }
+        cursor: not-allowed;
+    }
+
 }

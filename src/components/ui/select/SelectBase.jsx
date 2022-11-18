@@ -1,7 +1,7 @@
 import React from "react";
 import { useCallback } from "react";
-import { useEffect } from "react";
 import { useState } from "react";
+import Icon from "../../Icon";
 
 function SelectBase({ width = "130px", onChange, options, value, defaultValue = "선택하세요", disabled }) {
     let [selectOpen, setSelectOpen] = useState(false);
@@ -22,12 +22,15 @@ function SelectBase({ width = "130px", onChange, options, value, defaultValue = 
     return (
         <div tabIndex={1}
             style={{ width: width }}
-            className={`select ${selectOpen ? "active" : ""} ${disabled ? "disabled" : ""}`} onBlur={() => { setSelectOpen(false) }}
+            className={`select ${selectOpen ? "active" : ""} ${disabled ? "disabled" : ""}`} 
+            onBlur={() => { setSelectOpen(false) }}
         >
             <div className="select-view" onClick={openSelect}>
                 <h4>{value ? setTitle() : defaultValue}</h4>
             </div>
-            <div className="select-btn" onClick={openSelect}></div>
+            <div className="select-btn" onClick={openSelect}>
+                <Icon icon={"select_typeA"} />
+            </div>
             <div className="select-list-box">
                 <ul className="select-list">
                     {
