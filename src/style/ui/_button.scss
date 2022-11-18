@@ -1,9 +1,11 @@
 %button-base {
+    @include font-style(17);
     height: 40px;
     border-radius: $radius;
     min-width: 100px;
     color: #fff;
     background-color: transparent;
+    padding: 0 11px;
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
         box-shadow 0.15s ease-in-out;
 
@@ -60,6 +62,9 @@
     }
 
     &:disabled {
+
+        color: rgba($white,0.5);
+
         &:hover {
             background-color: $green;
         }
@@ -77,6 +82,8 @@
     }
 
     &:disabled {
+        color: rgba($green,0.5);
+
         &:hover {
             background-color: #fff;
         }
@@ -86,7 +93,13 @@
     @extend %button-base;
     background-color: $green-light;
     color: $green;
+
+    &:disabled{
+        color: rgba($green,0.2)
+    }
 }
+
+
 .btn-orange {
     @extend %button-base;
     background-color: $orange;
@@ -96,6 +109,8 @@
     }
 
     &:disabled {
+        color: rgba($white,0.4);
+
         &:hover {
             background-color: $orange;
         }
@@ -113,6 +128,8 @@
     }
 
     &:disabled {
+        color: rgba($orange,0.4);
+
         &:hover {
             background-color: #fff;
         }
@@ -122,50 +139,73 @@
     @extend %button-base;
     background-color: $orange-light;
     color: $orange;
+
+    &:disabled{
+        color: rgba($orange,0.4);
+
+    }
 }
+
+
 .btn-brown {
     @extend %button-base;
     background-color: $brown;
 
     &:hover {
-        background-color: #e05836;
+        background-color: #473326
     }
 
     &:disabled {
+        color: rgba($white,0.4);
+
         &:hover {
             background-color: $brown;
         }
     }
 }
 
+.btn-table{
+    @extend %button-base;
+    height: 30px;
+    border: 1px solid $border;
+    color: #444;
+
+    &:hover{
+        background-color: #eee;
+    }
+}
+
 .btn-grey {
     @extend %button-base;
-    background-color: $grey;
-    color: #000;
+    border: solid 1px #ccc;
+    background-color: #eee;
+    color: #444;
 
     &:hover {
         background-color: #ddd;
     }
 
     &:disabled {
+        color: #ccc;
         &:hover {
-            background-color: $grey;
+            background-color: #eee;
         }
     }
 }
 
 .btn-grey-border {
     @extend %button-base;
-    border: 1px solid $grey;
-    color: #000;
+    border: 1px solid $border;
+    color: #444;
 
     &:hover {
         background-color: $grey;
-        color: #000;
     }
 
-    &:disabled {
-        &:hover {
+    &:disabled{
+        color: #ccc;
+
+        &:hover{
             background-color: #fff;
         }
     }
