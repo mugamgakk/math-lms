@@ -16,11 +16,12 @@ function AssessmentModal ({setAssModal}) {
        '개념 이해력',
        '전달력',
     ];
+
     let [totalData, setTotalData] = useState([7,7]);
+
     let [title,setTitle] = useState('');
     let [audioState,setAudioState] = useState();
 
-    console.log(audioState);
     useEffect(()=>{
         ajax("/class.php/?mode=get_assessment", {
         }).then(res=>{
@@ -246,7 +247,7 @@ function AssessmentModal ({setAssModal}) {
                                     <tr key={idx}>
                                         <th>{tit}</th>
                                         <td>
-                                            <ScoreItem numClick={numClick} idx={idx} style={totalData[idx]}/>
+                                            <ScoreItem numClick={numClick} idx={idx} totalData={totalData}/>
                                         </td>
                                     </tr>
                                     )

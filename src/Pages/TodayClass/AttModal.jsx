@@ -12,6 +12,7 @@ function AttModal ({setAttModal}) {
     ];
     
     let [totalData, setTotalData] = useState([7,7,7,7,7]);
+
     let [title,setTitle] = useState('');
 
     useEffect(()=>{
@@ -25,11 +26,14 @@ function AttModal ({setAttModal}) {
     },[])
 
     const numClick = (idx,num) => {
+
         let copy = [...totalData];
         copy[idx] = num;
         setTotalData([...copy]);        
-    }
     
+    }
+
+
     const formConfirm = () => {
         if(!window.confirm('이 단원의 학습 태도 평가를 저장합니다.')) return false;
 
@@ -58,8 +62,8 @@ function AttModal ({setAttModal}) {
                     {
                         scoreTitList.map((tit,idx)=> {
                             return(
-                                <ScoreItem key={idx} tit={tit} idx={idx} numClick={numClick} style={totalData[idx]}/>
-                                )
+                                <ScoreItem key={idx} tit={tit} idx={idx} numClick={numClick} totalData={totalData}/>
+                            )
                         })
                             
                     }

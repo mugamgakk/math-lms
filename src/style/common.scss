@@ -44,40 +44,21 @@
     }
     &-body{
         padding: 10px;
-                .bar{
-                    // padding: 0 20px;
-                    border: 1px solid;
-                    margin-top: 25px;
-                    position: relative;
-                    &-num{
-                        position: absolute;
-                        top: -25px;
-                        left: -6px;
-                        width: 102%;
-                        display: flex;
-                        justify-content: space-between;
-                    }
-                    &-gage{
-                        position: absolute;
-                        left: 0;
-                        top: 0;
-                        height: 100%;
-                        // width: 50%;
-                        background: red;
-                        // transition: .2s;
-
-                    }
-                    .clickScore{
-                        border-right: 1px solid;
-                        display: inline-block;
-                        width: 10%;
-                        z-index: 1;
-                        position: relative;
-                        opacity: 0;
-                    }
-                    .halfArea{
-                        width: 5%;
-                    }
+        .bar{
+            // padding: 0 20px;
+            margin-top: 25px;
+            position: relative;
+            .num{
+                width: 30px;
+                height: 30px;
+                line-height: 30px;
+                border-radius: 50%;
+                border: 1px solid;
+                cursor: pointer;
+            }
+            .num.active{
+                background: red;
+            }
         }
     }
     &-foot{
@@ -97,117 +78,120 @@
             display: none;
         }
     }
-        .table-header{
-            justify-content: flex-end;
-            .update{
-                vertical-align: middle;
-                margin-left: 5px;
+
+    .table-header{
+        justify-content: flex-end;
+        .update{
+            vertical-align: middle;
+            margin-left: 5px;
+        }
+    }
+
+    table{
+        thead{
+            th{
+                background: #eee;
             }
         }
-        table{
-            thead{
-                th{
-                    background: #eee;
-                }
-            }
-        } 
-        .todayWrap{
-            border: 1px solid #ccc;
-            border-bottom: none;
+    }
+
+    .todayWrap{
+        border: 1px solid #ccc;
+        border-bottom: none;
+        @include flex(start,center);
+        text-align: center;
+        .name{
+            width: 114px;
+        }
+        .bookTitWrap{
             @include flex(start,center);
+            border-left: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            &:last-child{
+                border-bottom: none;
+            }
+            .bookTit{
+                width: 173px;
+            }
+        }
+        .classTitWrap{
+            border-left: 1px solid #ccc;
+            .classTit{
+                width: 232px;
+                height: 60px;
+                @include flex(center,center);
+                border-right: 1px solid #ccc;
+            }
+        }
+        .stateWrap{
+            border-bottom: 1px solid #ccc;
+            @include flex(start,center);
+            &:last-child{
+                border-bottom: none;
+            }
+            >div{
+                // @include flex(center,center);
+                height: 60px;
+                @include flex(center,center);
+                flex-direction: column;
+                border-right: 1px solid #ccc;
+                width: 104.5px;
+            }
+            .att{
+                border-right: none;
+                width: 115px;
+            }
+        }
+    }
+    .disabled{
+        background: #ccc;
+    }
+            
+    .btn{
+        min-width: unset;
+    }
+    .btnPlay{
+        width:20px;
+        height: 20px;
+        background: url(../../public/tempo/play.png)no-repeat center;
+        background-size: 100%;
+        font-size: 0;
+        margin-right: 5px;
+    }
+    .btnPlay.new{
+        position: relative;
+        &::after{
+            content:'N';
+            display: block;
+            background: rgb(255, 0, 0);
+            border-radius: 50%;
+            color: #fff;
+            font-size: 10px;
+            width: 15px;
+            height: 15px;
             text-align: center;
-            .name{
-                width: 114px;
-            }
-            .bookTitWrap{
-                @include flex(start,center);
-                border-left: 1px solid #ccc;
-                border-bottom: 1px solid #ccc;
-                &:last-child{
-                    border-bottom: none;
-                }
-                .bookTit{
-                    width: 173px;
-                }
-            }
-            .classTitWrap{
-                border-left: 1px solid #ccc;
-                .classTit{
-                    width: 232px;
-                    height: 60px;
-                    @include flex(center,center);
-                    border-right: 1px solid #ccc;
-                }
-            }
-            .stateWrap{
-                border-bottom: 1px solid #ccc;
-                @include flex(start,center);
-                &:last-child{
-                    border-bottom: none;
-                }
-                >div{
-                    // @include flex(center,center);
-                    height: 60px;
-                    @include flex(center,center);
-                    flex-direction: column;
-                    border-right: 1px solid #ccc;
-                    width: 104.5px;
-                }
-               .att{
-                    border-right: none;
-                    width: 115px;
-               }
-            }
+            line-height: 15px;
+            position: absolute;
+            right: -7px;
+            top: -5px;
         }
-        .disabled{
-            background: #ccc;
-        }
-                
-        .btn{
-            min-width: unset;
-        }
-        .btnPlay{
-            width:20px;
-            height: 20px;
-            background: url(../../public/tempo/play.png)no-repeat center;
-            background-size: 100%;
-            font-size: 0;
-            margin-right: 5px;
-        }
-        .btnPlay.new{
-            position: relative;
-            &::after{
-                content:'N';
-                display: block;
-                background: rgb(255, 0, 0);
-                border-radius: 50%;
-                color: #fff;
-                font-size: 10px;
-                width: 15px;
-                height: 15px;
-                text-align: center;
-                line-height: 15px;
-                position: absolute;
-                right: -7px;
-                top: -5px;
-            }
-        }
-        .btnDown{
-            width:30px;
-            height: 30px;
-            background: url(../../public/tempo/down.png)no-repeat center;
-            background-size: 100%;
-            font-size: 0;
+    }
+    .btnDown{
+        width:30px;
+        height: 30px;
+        background: url(../../public/tempo/down.png)no-repeat center;
+        background-size: 100%;
+        font-size: 0;
 
-        }
+    }
 
-        .printModal{
-            &-body{
-                .btn-area{
-                    @include flex(sb,center);
-                }
+    .printModal{
+        &-body{
+            .btn-area{
+                @include flex(sb,center);
             }
         }
+    }
 }
 
 
