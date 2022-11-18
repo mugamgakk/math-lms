@@ -155,6 +155,16 @@ export function _remove(list, obj){
     return arr;
 }
 
+export function _cloneDeep(list){
+    let arr = [];
+
+    list.forEach(a=>{
+        arr.push({...a})
+    })
+
+    return arr
+}
+
 export {
     weekChange,
     getByteSize,

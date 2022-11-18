@@ -8,7 +8,7 @@ function Authentication() {
     return (
         <>
         {
-            localStorage.getItem("isLogin") ? <Home/> : <Navigate to="/login" />
+            localStorage.getItem("GplumMathIsLogin") ? <Home/> : <Navigate to="/login" />
         }
         </>
 

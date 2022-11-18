@@ -31,7 +31,7 @@ function Home() {
         ajax("/user.php", {
             data: { mode: "logout" },
         }).then(() => {
-            localStorage.removeItem("isLogin");
+            localStorage.removeItem("GplumMathIsLogin");
             window.location = "/login";
         });
     }, []);

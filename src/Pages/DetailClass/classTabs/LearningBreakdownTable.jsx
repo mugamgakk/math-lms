@@ -41,7 +41,7 @@ function LearningBreakdownTable() {
         try{
             const res = await ajax("/class_result.php", {data});
 
-            console.log(res);
+            // console.log("@@@@@@@@",res);
 
         }catch(err){
             // console.log(err)
@@ -58,7 +58,7 @@ function LearningBreakdownTable() {
         try{
             const res = await ajax("/class_result.php", {data});
 
-            console.log(res)
+            console.log("@@",res)
 
         }catch(errMsg){
             alert(errMsg.message)
@@ -67,7 +67,8 @@ function LearningBreakdownTable() {
 
     useEffect(() => {
         getLbtData();
-        getAnalyticsBook()
+        getAnalyticsBook();
+        getAnalyticsList()
     }, []);
 
     useEffect(() => {

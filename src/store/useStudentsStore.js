@@ -22,7 +22,7 @@ const useStudentsStore = create(set=>({
       const res = await ajax(url, {data});
 
       // if(res.data.ok === 0){
-      //   localStorage.removeItem("isLogin")
+      //   localStorage.removeItem("GplumMathIsLogin")
       //   window.location = "/login"
       // }
 

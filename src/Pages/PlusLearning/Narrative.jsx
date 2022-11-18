@@ -3,12 +3,15 @@ import SelectBase from "../../components/ui/select/SelectBase";
 import UserInfo from "../../components/UserInfo";
 import useStudentsStore from "../../store/useStudentsStore";
 import { useEffect } from "react";
-import axios from "axios";
 import SkeletonTable from "../../components/SkeletonTable";
 import ajax from "../../ajax";
 import NarrativeTr from "./NarrativeTr";
+import { _cloneDeep } from "../../methods/methods";
 
-const 단원 = ["수와 식의 계산", "가나다라 마바사"];
+const 단원 = [
+    { value: 1, label: "수와 식의 계산" },
+    { value: 2, label: "수와 수의 곱샘" }
+];
 const stateOptions = [
     { value: "P", label: "오픈전" },
     { value: "S", label: "학습중" },
@@ -55,13 +58,16 @@ const DATA = [
 ]
 
 function Narrative() {
-    const clickStudent = useStudentsStore((state) => state.clickStudent);
+    const { clickStudent, bookList } = useStudentsStore((state) => state);
+
     // tr data
     let [plusData, setPlusData] = useState([]);
+
     // 단원
-    let [unit, setUnit] = useState("");
+    let [unit, setUnit] = useState();
     // 상태
-    let [situation, setSituation] = useState("");
+    let [situation, setSituation] = useState();
+
     let [checkedList, setCheckedList] = useState([]);
     let [skeleton, setSkeleton] = useState(true);
 
@@ -77,21 +83,27 @@ function Narrative() {
 
     // 선택오픈, 오픈 취소
     const openState = async (isOpen) => {
-        if (checkedList.length === 0) alert("1개이상 선택하세요");
-
-        const idData = checkedList.map(id => id.sc_seq);
-        const data = {
-            arr_sc_seq: idData
-        }
-
-        isOpen ? data.mode = "ct_open" : data.mode = "ct_close";
-
         try {
-            let res = await ajax("class_plus.php", data)
+
+            if (checkedList.length === 0) {
+                alert("1개이상 선택하세요");
+                return 
+            };
+
+            const idData = checkedList.map(id => id.sc_seq);
+            const data = {
+                arr_sc_seq: idData
+            }
+
+            isOpen ? data.mode = "ct_open" : data.mode = "ct_close";
+
+            let res = await ajax("class_plus.php", { data });
+
+            console.log(res)
 
 
         } catch (err) {
-
+            console.log(err)
         }
     }
 
@@ -102,24 +114,23 @@ function Narrative() {
         const data = {
             mode: "ct_list",
             usr_seq: clickStudent.usr_seq,
-            qlno: 1,
-            qstatus: "P",
-            qbkcd: "M11_CO1"
+            qlno: unit?.value,
+            qstatus: situation?.value,
+            qbkcd: bookList.value
         }
 
         try {
-            let res = await ajax("class_plus.php", {data});
+            let res = await ajax("class_plus.php", { data });
 
-            // console.log(res)
+            console.log(res)
 
+            setPlusData(_cloneDeep(res.data));
+            setInitialData(_cloneDeep(res.data));
 
             setSkeleton(false);
 
         } catch (msg) {
             setSkeleton(false);
-            setPlusData([...DATA]);
-            setInitialData([...DATA]);
-            // alert(msg)
         }
     }
 
@@ -162,7 +173,7 @@ function Narrative() {
                         }}
                         defaultValue="상태"
                     />
-                    <button className="btn">조회</button>
+                    <button className="btn" onClick={getList}>조회</button>
                 </div>
             </div>
             <table>
@@ -180,7 +191,7 @@ function Narrative() {
                             선택{" "}
                             <input
                                 type="checkbox"
-                                checked={initialData.length === checkedList.length}
+                                checked={initialData.length === checkedList.length && checkedList.length !== 0}
                                 onChange={checkAll}
                             />
                         </th>

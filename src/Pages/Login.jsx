@@ -47,7 +47,7 @@ function Login() {
             switch (res.data.ok) {
                 // 로그인 완료
                 case 1:
-                    localStorage.setItem("isLogin", "true");
+                    localStorage.setItem("GplumMathIsLogin", "true");
                     window.location = "/";
                     break;
                 // 로그인 중복
@@ -59,7 +59,7 @@ function Login() {
                         ajax("/user.php", {
                             data: data,
                         }).then((res) => {
-                            localStorage.setItem("isLogin", "true");
+                            localStorage.setItem("GplumMathIsLogin", "true");
                             window.location = "/";
                         });
                     } else {
@@ -67,7 +67,7 @@ function Login() {
                     }
                     break;
                 case -1:
-                    localStorage.setItem("isLogin", "true");
+                    localStorage.setItem("GplumMathIsLogin", "true");
                     window.location = "/";
                     break;
                 case 0:
@@ -82,7 +82,7 @@ function Login() {
             data: { mode: "logout" },
         })
         .then(()=>{
-            localStorage.removeItem("isLogin")
+            localStorage.removeItem("GplumMathIsLogin")
         })
     },[])
 

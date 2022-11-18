@@ -1,13 +1,14 @@
 import axios from "axios";
 import dayjs from "dayjs";
 import React, { useState } from "react";
+import { useRef } from "react";
 import { useEffect } from "react";
 import ajax from "../ajax";
 import ContentHeader from "../components/ContentHeader";
 import DateNext from "../components/DateNext";
 import SearchBtn from "../components/ui/button/SearchBtn";
 import ClassSelect from "../components/ui/select/ClassSelect";
-import { _remove } from "../methods/methods";
+import { _cloneDeep, _remove } from "../methods/methods";
 import AttendanceTableList from "./Attendance/AttendanceTableList";
 
 // 출결 P:출석 / L:지각 / E:조퇴 / A:결석
@@ -64,6 +65,8 @@ function Attendance() {
     let [banValue, setbanValue] = useState();
     let [banOption, setBanOption] = useState();
 
+    let initialData = useRef([]);
+
     const updateData = ( userId, value, key ) => {
         let copy = [...list];
 
@@ -87,11 +90,15 @@ function Attendance() {
         if (banValue) data.class_cd = banValue.map((a) => a.class_cd);
 
         let res = await ajax("class_daily.php", { data });
-        console.log(res);
+        // console.log(res);
 
-        setList(response.student_list);
-        setBanOption(response.class_list);
-        setbanValue(response.class_list);
+        
+        setList(_cloneDeep(res.data.student_list));
+
+        initialData.current = _cloneDeep(res.data.student_list);
+
+        setBanOption(res.data.class_list);
+        setbanValue(res.data.class_list);
     };
 
     useEffect(() => {
@@ -130,7 +137,9 @@ function Attendance() {
                             >
                                 모두 출석
                             </button>
-                            <button className="btn-grey-border" onClick={getData}>
+                            <button className="btn-grey-border" onClick={()=>{
+                                setList(_cloneDeep(initialData.current));
+                            }}>
                                 초기화
                             </button>
                         </div>
