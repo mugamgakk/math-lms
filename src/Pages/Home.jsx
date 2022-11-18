@@ -6,6 +6,7 @@ import useTable from "../hooks/useTable";
 import { _each, _map } from "../methods/methods";
 import LnbLookup from "./Home/LnbLookup";
 import Icon from "../components/Icon";
+import logo from "../assets/logo.svg"
 
 const nav = [
     { icon: "apple", name: "출석체크", href: "attendance" },
@@ -56,23 +57,28 @@ function Home() {
 
     return (
         <main>
+            <div className="container">
             <header id="header">
-                <div className="container">
-                    <div className="header-layout">
-                        <h1 className="logo">
-                            <img src="/logo192.png" alt="logo" style={{ width: "35px" }} />
-                        </h1>
+                <div className="header-layout">
+                    <img src={logo} alt="logo" style={{ width: "116px" }} />
 
-                        <div className="info">
-                            <strong className="info-name">{userId}님</strong>
-                            <ul className="info-list">
-                                <li>회원정보</li>
-                                <li onClick={logoutFn}>로그아웃</li>
-                            </ul>
-                        </div>
+                    <div className="info">
+                        <strong className="info-name">{userId} 님</strong>
+                        <ul className="info-list">
+                            <li>
+                                <Icon icon={"info"} />
+                                회원정보
+                            </li>
+                            
+                            <li onClick={logoutFn}>
+                            <Icon icon={"logout"} />
+                                로그아웃
+                                </li>
+                        </ul>
                     </div>
                 </div>
             </header>
+            </div>
             <div className="container row">
                 <nav className="lnb col-2">
                     <h1 className="sr-only">Left Navigation Bar</h1>

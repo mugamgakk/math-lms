@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useCallback } from "react";
 import { useEffect } from "react";
+import Icon from "../../Icon";
 
 function ClassSelect({
     width = "170px",
@@ -93,12 +94,14 @@ function ClassSelect({
                 onClick={() => {
                     setSelectOpen(!selectOpen);
                 }}
-            ></div>
+            >
+                <Icon icon={"select_typeA"} />
+            </div>
             <div className="select-list-box">
                 <ul className="select-list">
-                    <li className="fa">
+                    {/* <li className="fa">
                         <div className="lookup">조회</div>
-                    </li>
+                    </li> */}
                     <li className="fa" onClick={allCheck}>
                         <div
                             className={`check-state ${
