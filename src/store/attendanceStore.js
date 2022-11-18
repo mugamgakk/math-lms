@@ -1,25 +1,26 @@
-import axios from 'axios'
-import create from 'zustand'
-import ajax from '../ajax';
+import create from "zustand";
+import ajax from "../ajax";
 
-const attendanceStore = create(set=>({
-    list1: [],
-    initialList : [],
-    getList : async ()=>{
-        let res = await ajax("")
+const attendanceStore = create((set) => ({
+    date: new Date(),
+    classList: [],
+    studentList: [],
+    copyStudentList: [],
+    searchText: "",
+    getList: async ({date, searchText, classList}) => {
+        const param = {
+            mode: "get_daily",
+            ymd: date,
+            class_cd: classList,
+            qstr: searchText,
+        };
 
-        let arr = [];
+        let res = await ajax("class_daily.php", { data: param });
 
-        for (let ele of res.data.list) {
-            arr.push({ ...ele });
-        }
+        const { class_list, student_list } = res.data;
 
-        return set(state=> ({initialList : arr, list1 : res.data.list}))
+        return set((state) => ({ classList: class_list, studentList: student_list, copyStudentList :  student_list}));
     },
-    increasePopulation : ()=> set (state=> {
+}));
 
-        return ({bears : state.bears + 1})
-    })
-}))
-
-export default attendanceStore
+export default attendanceStore;

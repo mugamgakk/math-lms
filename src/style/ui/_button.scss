@@ -1,9 +1,9 @@
 %button-base {
-    height: 35px;
-    border-radius: 5px;
-    padding: 0 15px;
+    height: 40px;
+    border-radius: $radius;
+    min-width: 100px;
     color: #fff;
-    background-color: #fff;
+    background-color: transparent;
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
         box-shadow 0.15s ease-in-out;
 
