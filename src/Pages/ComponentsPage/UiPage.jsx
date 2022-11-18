@@ -1,5 +1,6 @@
 import React from 'react';
 import SelectBase from '../../components/ui/select/SelectBase';
+import Checkbox from '../../components/Checkbox';
 
 function UiPage() {
     return (
@@ -47,16 +48,9 @@ function UiPage() {
 
             <div>
                 <h4>checkbox</h4>
-                <div className='check-green'>
-                    <input type="checkbox" id='a' />
-                    <label htmlFor="a">
-                    </label>
-                </div>
-                <div className='check-orange'>
-                    <input type="checkbox" id='b' />
-                    <label htmlFor="b">
-                    </label>
-                </div>
+                <Checkbox color='green' disabled={true} checked/>
+                <Checkbox color='orange' checked={true}/>
+                <Checkbox color='green' checked={true} />
             </div>
 
 
