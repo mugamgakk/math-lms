@@ -80,9 +80,9 @@ function UiPage() {
                 <pre>
                     {
                         `
-                        <div className='textInput searchInput'>
-                            <input type='text' className="textInput-search" placeholder='학생 이름을 입력하세요' />
-                            <button className='searchInput-wrap'>
+                        <div className='searchInput'>
+                            <input type='text' className="textInput" placeholder='학생 이름을 입력하세요' />
+                            <button className='searchInput-btn'>
                                 <Icon icon={"search"} color='#00A37F' size='20px'/>
                             </button>
                         </div>
