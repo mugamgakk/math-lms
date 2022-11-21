@@ -1,13 +1,12 @@
 import React from "react";
 import DatePicker from "react-date-picker";
-import style from "../style/style-module/components.module.scss"
-import { useRef } from "react";
-import { useEffect } from "react";
 import Icon from "./Icon";
+import { useState } from "react";
+import dayjs from "dayjs";
 
 
 function LmsDatePicker({
-    value = new Date(),
+    value ,
     onChange,
     maxDate,
     maxDetail,
@@ -15,36 +14,47 @@ function LmsDatePicker({
     minDetail,
     disabled = false,
     required = false,
-    monthPlaceholder = "--",
-    width = "150px"
+    monthPlaceholder = "달력에서 선택",
+    style
 }) {
 
-    let dateRef = useRef(false);
+    let [isOpen, setIsOpen] = useState(false);
 
     return (
-        
-        <div className="datepicker" style={{width}}>
-            <DatePicker
-                value={value}
-                onChange={(day) => {
-                    if (onChange) {
-                        onChange(day);
-                    }
-                }}
-                className={style.datepickerBody}
-                clearIcon={null}
-                calendarIcon={<Icon icon={"apple"}/>}
-                openCalendarOnFocus={false}
-                format={"yyyy-MM-dd"}
-                disabled={disabled}
-                maxDate={maxDate}
-                maxDetail={maxDetail} 
-                minDate={minDate}
-                minDetail={minDetail}
-                monthPlaceholder={monthPlaceholder}
-                required={required}
-                closeCalendar={false}
-            />
+
+        <div className="datepicker">
+            <div>
+            <div className="datepicker-body">
+                <DatePicker
+                    value={value}
+                    onChange={(day) => {
+                        if (onChange) {
+                            onChange(day);
+                        }
+                    }}
+                    clearIcon={null}
+                    openCalendarOnFocus={false}
+                    format={"yyyy-MM-dd"}
+                    disabled={disabled}
+                    maxDate={maxDate}
+                    maxDetail={maxDetail}
+                    minDate={minDate}
+                    minDetail={minDetail}
+                    required={required}
+                    closeCalendar={false}
+                    onCalendarClose={()=>{setIsOpen(false)}}
+                    isOpen={isOpen}
+                />
+            </div>
+            <button className="datepicker-btn" onClick={()=>{setIsOpen(true)}} style={style}>
+                    {
+                    value 
+                    ? dayjs(value).format("YYYY.MM.DD")
+                    : monthPlaceholder
+                }
+                    <Icon icon={"calendar"} style={{fontSize : "18px", marginLeft : "10px"}} />
+            </button>
+            </div>
         </div>
     );
 }

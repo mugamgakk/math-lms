@@ -59,7 +59,7 @@ function LnbLookup() {
                     }}
                 />
                 <button className='searchInput-wrap'>
-                    <Icon icon={"search"} color='#00A37F' size='20px' />
+                    <Icon icon={"search"} style={{fontSize : "20px", color : "#00A37F"}}  />
                 </button>
             </div>
             <SelectBase

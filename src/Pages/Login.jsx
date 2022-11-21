@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import ajax from "../ajax";
-import style from "../style/style-module/Login.module.scss";
 import logo from "../assets/logo.svg";
 import useInput from "../hooks/useInput";
 import { useEffect } from "react";
@@ -87,33 +86,31 @@ function Login() {
     },[])
 
     return (
-        <div className={style.container}>
+        <div>
             <form onSubmit={loginAction}>
                 <div className="text-center">
                     <img src={logo} alt="" width={120} />
                 </div>
                 <div className="mb-10">
-                    <label className={style.label} htmlFor="id">
+                    <label htmlFor="id">
                         아이디
                     </label>
                     <input
                         type="text"
                         id="id"
                         name="id"
-                        className={`form-control ${style.text_input}`}
                         value={textValue.id}
                         onChange={setTextValue}
                     />
                 </div>
                 <div className="mb-10">
-                    <label className={style.label} htmlFor="pw">
+                    <label htmlFor="pw">
                         비밀번호
                     </label>
                     <input
                         type="text"
                         id="pw"
                         name="password"
-                        className={`form-control ${style.text_input}`}
                         value={textValue.password}
                         onChange={setTextValue}
                     />

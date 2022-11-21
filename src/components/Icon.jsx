@@ -1,10 +1,12 @@
-import "../icon-font/icon-font.css"
+import "../icon-font/icon-font.css";
 
-function Icon ({icon,color,size,addClass,rotate}){
+function Icon({ icon, className, style }) {
     return (
-    <i className={addClass ? `icon-font ft-icon ic-${icon} ${addClass}` : `icon-font ft-icon ic-${icon}`} 
-    style={{ color: color, fontSize:size, transform:rotate}}></i>
-    )
+        <i
+            className={`icon-font ft-icon ic-${icon} ${className}`}
+            style={style}
+        ></i>
+    );
 }
 
-export default Icon
+export default Icon;

@@ -1,0 +1,28 @@
+.datepicker{
+    display: inline-flex;
+
+    &-body{
+        height: 0;
+        .react-date-picker__wrapper{
+            visibility: hidden;
+        }
+
+        .react-date-picker__calendar{
+            top: 43px !important;
+        }
+    }
+
+    &-btn{
+        height: 40px;
+        @include flex();
+        border: 1px solid #666;
+        border-radius: $radius;
+        background-color: $white;
+        padding: 0 15px;
+        @include font-style(17);
+        font-weight: 500;
+        color: #444;
+        z-index: 3;
+        position: relative;
+    }
+}

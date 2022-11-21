@@ -1,5 +1,22 @@
+@import "./ui/datepicker";
+
 // 출석체크
 
 .attendence{
-    
+    &-head{
+        padding: 20px 30px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    &-body{
+        padding: 30px;
+
+        .search{
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 10px;
+        }
+    }
 }
+
+
