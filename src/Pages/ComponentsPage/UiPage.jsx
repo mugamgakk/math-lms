@@ -63,21 +63,17 @@ function UiPage() {
 
             <div className='mb-20'>
                 <h3 className=''>inputbox</h3>
-                <div className='textInput'>
-                    <input type='text' className="textInput-default" placeholder='내용을 입력하세요' />
-                </div>
+                <input type='text' className="textInput" placeholder='내용을 입력하세요' />
                 <pre>
                     {
                         `
-                        <div className='textInput'>
                             <input type='text' className="textInput-default" placeholder='내용을 입력하세요' />
-                        </div>
                         `
                     }
                 </pre>
-                <div className='textInput searchInput'>
-                    <input type='text' className="textInput-search" placeholder='학생 이름을 입력하세요' />
-                    <button className='searchInput-wrap'>
+                <div className='searchInput'>
+                    <input type='text' className="textInput" placeholder='학생 이름을 입력하세요' />
+                    <button className='searchInput-btn'>
                         <Icon icon={"search"} color='#00A37F' size='20px'/>
                     </button>
                 </div>

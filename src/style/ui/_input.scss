@@ -28,27 +28,25 @@
 }
 
 .textInput{
-    position: relative;
-    input{
-        @include font-style(17);
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        padding: 8px;
-        width: 100%;
-        &::placeholder{
-            color: #ccc;
-        }
-        &:focus{
+    @include font-style(17);
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px;
+    width: 100%;
+    &::placeholder{
+        color: #ccc;
+    }
+    &:focus{
         border: 1px solid #666;
         color: #444;
-        }
     }
     &-search{
         padding-right: 30px !important;
     }
 }
 .searchInput{
-    &-wrap{
+    position: relative;
+    &-btn{
         position: absolute;
         right: 0;
         top:0;
