@@ -57,11 +57,9 @@ function TodayClass(){
                         <div style={{ display:'flex' }}>
                             <TodayClassSearch data={findTodayList} setFindList={setFindList} option={classList}/>
                             <button
-                                className="btn update"
+                                className="btn-reload btn-grey"
                                 onClick={() => setReloadState(!reloadState)}
-                            >
-                                새로고침
-                            </button>
+                            ><Icon icon={"reload"}/>새로고침</button>
                         </div>
                     </header>
                     <table style={{ margin: '5px 0 0 0' }}>

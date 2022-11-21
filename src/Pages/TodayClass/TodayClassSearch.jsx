@@ -50,9 +50,9 @@ function TodayClassSearch({data,setFindList,option = []}) {
             <ClassSelect width={"200px"} value={sel} onChange={ele=>{ setSel(ele) }} options={option} />
             <input
                 type="text"
-                className="form-control"
+                className="textInput"
                 placeholder="학생"
-                style={{ width: "200px", margin: "0 5px" }}
+                style={{ width: "200px" }}
                 value={search}
                 onKeyUp={(e)=>{
                     if(e.key === "Enter"){

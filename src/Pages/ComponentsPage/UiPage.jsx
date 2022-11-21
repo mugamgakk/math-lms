@@ -17,7 +17,15 @@ function UiPage() {
                         <button className='btn-search btn-green'><Icon icon={"search"} />검색</button>
                         `
                     }
-                </pre>
+                    </pre>
+                    <button className='btn-reload btn-grey'><Icon icon={"reload"}/>새로고침</button>
+                    <pre>
+                    {
+                        `
+                        <button className='btn-reload btn-grey'><Icon icon={"reload"}/>새로고침</button>
+                        `
+                    }
+                    </pre>
                     <button className='btn-green'>btn-green</button>
                     <button className='btn-green' disabled>btn-green</button>
                     <button className='btn-green-border'>btn-green-light</button>
@@ -67,7 +75,7 @@ function UiPage() {
                 <pre>
                     {
                         `
-                            <input type='text' className="textInput-default" placeholder='내용을 입력하세요' />
+                            <input type='text' className="textInput" placeholder='내용을 입력하세요' />
                         `
                     }
                 </pre>
