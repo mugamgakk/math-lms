@@ -40,7 +40,6 @@ function TodayClassSearch({data,setFindList,option = []}) {
                 }
             }
         })
-
         setFindList(matchingArr)
         
     }
@@ -49,7 +48,6 @@ function TodayClassSearch({data,setFindList,option = []}) {
     return ( 
         <div className='d-flex'>
             <ClassSelect width={"200px"} value={sel} onChange={ele=>{ setSel(ele) }} options={option} />
-            
             <input
                 type="text"
                 className="form-control"
@@ -63,8 +61,7 @@ function TodayClassSearch({data,setFindList,option = []}) {
                 }}
                 onChange={(e)=>{
                     setSearch(e.target.value);
-                }}
-            />
+                }} />
             <SearchBtn onClick={findUser}/>
         </div>
      );

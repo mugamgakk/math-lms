@@ -11,6 +11,13 @@ function UiPage() {
                 <h3>button</h3>
                 <div>
                     <button className='btn-search btn-green'><Icon icon={"search"} />검색</button>
+                    <pre>
+                    {
+                        `
+                        <button className='btn-search btn-green'><Icon icon={"search"} />검색</button>
+                        `
+                    }
+                </pre>
                     <button className='btn-green'>btn-green</button>
                     <button className='btn-green' disabled>btn-green</button>
                     <button className='btn-green-border'>btn-green-light</button>

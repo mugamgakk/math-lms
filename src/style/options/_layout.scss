@@ -357,34 +357,13 @@
 .content {
     width: calc(100% - 320px);
     background-color: #f6f6f6;
-    padding: 20px;
-    padding-bottom: 40px;
-
-    &-head{
-        @include flex(sb);
+    padding: 16px 24px;
+    header{
         margin-bottom: 15px;
-
-        .title{
-            @include flex();
-            padding-left: 10px;
-
+        h3{
+            margin-left: 8px;
             i{
-                font-size: 24px;
-                margin-right: 10px
-            }
-            h3{
-                @include font-style(24);
-                font-weight: 700;
-            }
-        }
-
-        .location{
-            font-weight: 400;
-            @include font-style(16);
-            color: #666;
-            strong{
-                color: #222;
-                font-weight: 600;
+                vertical-align: bottom;
             }
         }
     }
@@ -394,5 +373,16 @@
     background-color: #fff;
     min-height: 750px;
     border-radius: $radius;
-    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12);
+    .date-area{
+        padding: 18px 30px;
+        border-bottom: 1px solid #eee;
+        h4{
+            padding: 0 10px;
+        }
+    }
+    .tableWrap{
+        padding: 38px 30px;
+        header{
+        }
+    }
 }
