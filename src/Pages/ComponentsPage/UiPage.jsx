@@ -1,6 +1,7 @@
 import React from 'react';
 import SelectBase from '../../components/ui/select/SelectBase';
 import Checkbox from '../../components/Checkbox';
+import Icon from "../../components/Icon";
 
 function UiPage() {
     return (
@@ -45,7 +46,6 @@ function UiPage() {
                 <SelectBase disabled={true}/>
             </div>
 
-
             <div>
                 <h4>checkbox</h4>
                 <Checkbox color='green' disabled={true} checked/>
@@ -53,6 +53,16 @@ function UiPage() {
                 <Checkbox color='green' checked={true} />
             </div>
 
+            <div>
+                <h4 className=''>inputbox</h4>
+                <div className='textInput'>
+                    <input type='text' className="textInput-default" placeholder='내용을 입력하세요' />
+                </div>
+                <div className='textInput'>
+                    <input type='text' className="textInput-search mr-10" placeholder='학생 이름을 입력하세요' />
+                    <button className='btn-search btn-green'><Icon icon={"search"} />검색</button>
+                </div>
+            </div>
 
             <style>
                 {`

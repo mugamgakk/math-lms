@@ -27,4 +27,31 @@
     }
 }
 
+.textInput{
+    display: flex;
+    input{
+        @include font-style(17);
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 8px;
+        width: 100%;
+        &::placeholder{
+            color: #ccc;
+        }
+        &:focus{
+        border: 1px solid #666;
+        color: #444;
+        }
+    }
+    .btn-search{
+        .ic-search{
+            font-size: 16px;
+            margin-right: 5px;
+            position: relative;
+            top: -2px;
+        }
+    }
+}
+
+
 

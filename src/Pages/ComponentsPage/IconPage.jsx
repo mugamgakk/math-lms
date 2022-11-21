@@ -17,7 +17,8 @@ const arr = [
     'remove',            'search',
     'select_typeA',      'select_typeB',
     'studentManagement', 'todayClass',
-    'volume',            'warning'
+    'volume',            'warning',
+    'openMenu',          'closeMenu'
   ]
 
 function IconPage() {
