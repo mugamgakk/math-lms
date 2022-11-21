@@ -6,7 +6,7 @@ import Icon from './Icon';
 
 const today = dayjs(new Date()).format("YYYYMMDD");
 
-function DateNext({onChange, value = new Date()}) {
+function DateNext({onChange, value = new Date(), style}) {
 
     let dateFormat = dayjs(value).format("YYYY.MM.DD");
     let weekDay =  weekChange(dayjs(value).$W);
@@ -24,10 +24,10 @@ function DateNext({onChange, value = new Date()}) {
     },[value])
 
     return ( 
-        <div className='fa'>
-            <button className='btn-arrow fc' onClick={()=>{changeDate(-1)}}><Icon icon={"arrowA"} rotate='rotate(180deg)' color='#888' addClass='abvc'/></button>
-            <h4>{dateFormat} ({weekDay})</h4>
-            <button className='btn-arrow fc' onClick={()=>{changeDate(1)}}><Icon icon={"arrowA"} color='#888' /></button>
+        <div className='fa' style={style}>
+            <button className='btn-arrow fc' onClick={()=>{changeDate(-1)}}><Icon icon={"arrowA"} style={{transform : "rotate(180deg)", color : "#888"}}/></button>
+            <h4 className='next-date'>{dateFormat} ({weekDay})</h4>
+            <button className='btn-arrow fc' onClick={()=>{changeDate(1)}}><Icon icon={"arrowA"} style={{color : "#888"}} /></button>
         </div>
      );
 }

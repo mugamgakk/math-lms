@@ -47,19 +47,19 @@ function LnbLookup() {
                     키워드검색</button>
             </div>
 
-            <div className='textInput searchInput'
-                style={{ marginBottom: "4px" }}
-            >
-                <input type='text'
-                    className="textInput-search"
-                    placeholder="검색어를 입력하세요"
-                    value={keyward}
-                    onChange={(e) => {
-                        setKeyward(e.target.value);
-                    }}
+          
+            <div className='searchInput' style={{marginBottom : "4px"}}>
+                <input type='text' 
+                className="textInput"
+                placeholder='검색어를 입력하세요' 
+                value={keyward}
+                onChange={(e) => {
+                    setKeyward(e.target.value);
+                }}
                 />
-                <button className='searchInput-wrap'>
-                    <Icon icon={"search"} style={{fontSize : "20px", color : "#00A37F"}}  />
+                <button className='searchInput-btn'>
+                <Icon icon={"search"} style={{fontSize : "20px", color : "#00A37F"}}  />
+
                 </button>
             </div>
             <SelectBase

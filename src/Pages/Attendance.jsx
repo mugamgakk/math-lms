@@ -24,25 +24,23 @@ function Attendance() {
                 title="출석 체크"
                 location={"마이페이지 > 수학 학습 관리 > "}
             >
-                <Icon icon={"attendence"} style={{color : "#00A37F"}} />
+                <Icon icon={"attendence"} style={{ color: "#00A37F" }} />
             </ContentHeader>
             <div className="attendence bg">
-                <div className='attendence-head'>
-                    <DateNext value={date} />
-                    <LmsDatePicker/>
+                <div className='attendence-head d-flex'>
+                    <DateNext value={date} style={{ marginRight: "4px" }} />
+                    <LmsDatePicker />
                 </div>
                 <div className='attendence-body'>
                     <div className='search'>
                         <ClassSelect className={"mr-10"} />
-                        <div className='textInput mr-10'>
-                            <input type='text' className="textInput-default" placeholder='학생명을 입력하세요' style={{ width: "200px" }} />
-                        </div>
+                        <input type='text' className="textInput mr-10" placeholder='내용을 입력하세요' style={{ width: "200px" }} />
                         <button className='btn-green btn-icon mr-10'>
-                            <Icon icon={"search"}  />
+                            <Icon icon={"search"} />
                             검색
                         </button>
                         <button className='btn-grey btn-icon'>
-                        <Icon icon={"reload"} />
+                            <Icon icon={"reload"} />
                             새로고침
                         </button>
                     </div>
@@ -80,9 +78,8 @@ const Tr = ({ ele }) => {
                 <button className='btn-green'>출결</button>
             </td>
             <td>
-                <div className='textInput'>
-                    <input type='text' className="textInput-default" placeholder='학생명을 입력하세요' />
-                </div>
+                <input type='text' className="textInput mr-10" placeholder='내용을 입력하세요' />
+
             </td>
         </tr>
     )
