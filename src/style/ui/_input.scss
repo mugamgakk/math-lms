@@ -28,7 +28,7 @@
 }
 
 .textInput{
-    display: flex;
+    position: relative;
     input{
         @include font-style(17);
         border: 1px solid #ccc;
@@ -43,16 +43,22 @@
         color: #444;
         }
     }
-    .btn-search{
-        width: 81px;
-        .ic-search{
-            font-size: 16px;
-            margin-right: 5px;
-            position: relative;
-            top: -2px;
-        }
+    &-search{
+        padding-right: 40px !important;
     }
 }
+.searchInput{
+    &-wrap{
+        position: absolute;
+        right: 0;
+        top:0;
+        width: 40px;
+        height: 100%;
+        @include flex();
+    }
+
+}
+
 
 
 

@@ -10,6 +10,7 @@ function UiPage() {
             <div>
                 <h4>button</h4>
                 <div>
+                    <button className='btn-search btn-green'><Icon icon={"search"} />검색</button>
                     <button className='btn-green'>btn-green</button>
                     <button className='btn-green' disabled>btn-green</button>
                     <button className='btn-green-border'>btn-green-light</button>
@@ -58,9 +59,11 @@ function UiPage() {
                 <div className='textInput'>
                     <input type='text' className="textInput-default" placeholder='내용을 입력하세요' />
                 </div>
-                <div className='textInput'>
-                    <input type='text' className="textInput-search mr-10" placeholder='학생 이름을 입력하세요' />
-                    <button className='btn-search btn-green'><Icon icon={"search"} />검색</button>
+                <div className='textInput searchInput'>
+                    <input type='text' className="textInput-search" placeholder='학생 이름을 입력하세요' />
+                    <button className='searchInput-wrap'>
+                        <Icon icon={"search"} color='#00A37F' size='20px'/>
+                    </button>
                 </div>
             </div>
 
