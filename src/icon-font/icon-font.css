@@ -2,9 +2,9 @@
   font-family: 'icon-font';
   font-style: normal;
   font-weight: 400;
-  src: url("icon-font.eot?efeb52d90581e293eb93c2e9adfc055b?#iefix") format("embedded-opentype"),
-url("icon-font.woff2?efeb52d90581e293eb93c2e9adfc055b") format("woff2"),
-url("icon-font.woff?efeb52d90581e293eb93c2e9adfc055b") format("woff");
+  src: url("icon-font.eot?10ec2679e7a4d92167eb75eb90a33eff?#iefix") format("embedded-opentype"),
+url("icon-font.woff2?10ec2679e7a4d92167eb75eb90a33eff") format("woff2"),
+url("icon-font.woff?10ec2679e7a4d92167eb75eb90a33eff") format("woff");
 }
 
 .icon-font, .ic-icons {
@@ -50,17 +50,17 @@ url("icon-font.woff?efeb52d90581e293eb93c2e9adfc055b") format("woff");
 }
 
 .ic-apple:before { content: "\f101"; }
-.ic-arrow_typeA:before { content: "\f102"; }
+.ic-arrowA:before { content: "\f102"; }
 .ic-attendence:before { content: "\f103"; }
 .ic-calendar:before { content: "\f104"; }
 .ic-close:before { content: "\f105"; }
-.ic-closeMenu:before { content: "\f106"; }
-.ic-download:before { content: "\f107"; }
-.ic-evaluation:before { content: "\f108"; }
-.ic-file:before { content: "\f109"; }
-.ic-info:before { content: "\f10a"; }
-.ic-lnbDetail:before { content: "\f10b"; }
-.ic-logout:before { content: "\f10c"; }
+.ic-download:before { content: "\f106"; }
+.ic-evaluation:before { content: "\f107"; }
+.ic-file:before { content: "\f108"; }
+.ic-info:before { content: "\f109"; }
+.ic-lnbDetail:before { content: "\f10a"; }
+.ic-logout:before { content: "\f10b"; }
+.ic-menu_btn(close):before { content: "\f10c"; }
 .ic-more:before { content: "\f10d"; }
 .ic-notification:before { content: "\f10e"; }
 .ic-pencil:before { content: "\f10f"; }

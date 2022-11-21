@@ -4,22 +4,22 @@ import { useState } from "react";
 import Icon from "../../components/Icon";
 
 const arr = [
-    'apple',             'arrow_typeA',
-    'attendence',        'calendar',
-    'close',             'download',
-    'evaluation',        'file',
-    'info',              'lnbDetail',
-    'logout',            'more',
-    'notification',      'pencil',
-    'play',              'plus',
-    'plusLearning',      'point',
-    'print',             'reload',
-    'remove',            'search',
-    'select_typeA',      'select_typeB',
-    'studentManagement', 'todayClass',
-    'volume',            'warning',
-    'openMenu',          'closeMenu'
-  ]
+    'apple',        'arrowA',
+    'attendence',   'calendar',
+    'close',        'download',
+    'evaluation',   'file',
+    'info',         'lnbDetail',
+    'logout',       'menu_btn(close)',
+    'more',         'notification',
+    'pencil',       'play',
+    'plus',         'plusLearning',
+    'point',        'print',
+    'reload',       'remove',
+    'search',       'select_typeA',
+    'select_typeB', 'studentManagement',
+    'todayClass',   'volume',
+    'warning'
+  ];
 
 function IconPage() {
     return (
@@ -31,7 +31,17 @@ function IconPage() {
                     return <Box icon={a} key={a} />;
                 })}
             </div>
-
+            <pre>
+                {
+                    `
+                    --- Props --- 
+                    addClass = '클래스이름'
+                    rotate = 'rotate(180deg)'
+                    color = '#888'
+                    size = '20px'
+                    `
+                }
+            </pre>
             <style>
                 {`
                 i{

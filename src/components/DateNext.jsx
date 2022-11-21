@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import React from 'react';
 import { useCallback } from 'react';
 import { weekChange } from '../methods/methods';
+import Icon from './Icon';
 
 const today = dayjs(new Date()).format("YYYYMMDD");
 
@@ -24,9 +25,9 @@ function DateNext({onChange, value = new Date()}) {
 
     return ( 
         <div className='fa'>
-            <button className='btn' onClick={()=>{changeDate(-1)}}>좌</button>
+            <button className='btn-arrow fc' onClick={()=>{changeDate(-1)}}><Icon icon={"arrowA"} rotate='rotate(180deg)' color='#888' addClass='abvc'/></button>
             <h4>{dateFormat} ({weekDay})</h4>
-            <button className='btn' onClick={()=>{changeDate(1)}}>우</button>
+            <button className='btn-arrow fc' onClick={()=>{changeDate(1)}}><Icon icon={"arrowA"} color='#888' /></button>
         </div>
      );
 }
