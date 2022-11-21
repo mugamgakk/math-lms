@@ -2,7 +2,6 @@ import React, { useMemo, useState, useEffect } from "react";
 import { useCallback } from "react";
 import { Outlet, Link, useNavigate, useLocation } from "react-router-dom";
 import ajax from "../ajax";
-import useTable from "../hooks/useTable";
 import { _each, _map } from "../methods/methods";
 import LnbLookup from "./Home/LnbLookup";
 import Icon from "../components/Icon";

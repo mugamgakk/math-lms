@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import ajax from "../../ajax";
+import Icon from "../../components/Icon";
 import SelectBase from "../../components/ui/select/SelectBase";
 
 const 본부 = [
@@ -34,28 +35,32 @@ function LnbLookup() {
     return (
         <div className="lnb-lookup">
             <div className="lnb-lookup__btn">
-                <button 
-                className={`${standard === "분류" ? "active" : ""}`}
-                onClick={()=>{setStandard("분류")}}
+                <button
+                    className={`${standard === "분류" ? "active" : ""}`}
+                    onClick={() => { setStandard("분류") }}
                 >
                     분류검색</button>
-                <button 
+                <button
                     className={`${standard === "키워드" ? "active" : ""}`}
-                    onClick={()=>{setStandard("키워드")}}
+                    onClick={() => { setStandard("키워드") }}
                 >
                     키워드검색</button>
             </div>
-            <div className="textInput">
-            <input
-                type="text"
-                value={keyward}
-                onChange={(e) => {
-                    setKeyward(e.target.value);
-                }}
-                className="textInput"
-                style={{marginBottom : "4px"}}
-                placeholder="검색어를 입력하세요"
-            />
+
+            <div className='textInput searchInput'
+                style={{ marginBottom: "4px" }}
+            >
+                <input type='text'
+                    className="textInput-search"
+                    placeholder="검색어를 입력하세요"
+                    value={keyward}
+                    onChange={(e) => {
+                        setKeyward(e.target.value);
+                    }}
+                />
+                <button className='searchInput-wrap'>
+                    <Icon icon={"search"} color='#00A37F' size='20px' />
+                </button>
             </div>
             <SelectBase
                 width="100%"
