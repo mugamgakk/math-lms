@@ -9,15 +9,16 @@ import Icon from "../components/Icon";
 import logo from "../assets/logo.svg"
 
 const nav = [
-    { icon: "apple", name: "출석체크", href: "attendance" },
-    { icon: "apple", name: "오늘의 수업", href: "today-class" },
-    { icon: "apple", name: "학생별 수업 관리", href: "detail-class" },
-    { icon: "apple", name: "플러스 학습", href: "plus-learning", depth: ["서술형 따라잡기", "교과서별 내신적중"] },
-    { icon: "apple", name: "평가 관리", href: "evaluation" },
-    { icon: "apple", name: "학습 통계", href: "statistics" },
-    { icon: "apple", name: "자료 및 알림", href: "reference" },
-    { icon: "apple", name: "components guide", href: "components" },
+    { icon: "attendence", name: "출석체크", href: "attendance" },
+    { icon: "todayClass", name: "오늘의 수업", href: "today-class" },
+    { icon: "studentManagement", name: "학생별 수업 관리", href: "detail-class" },
+    { icon: "plusLearning", name: "플러스 학습", href: "plus-learning", depth: ["서술형 따라잡기", "교과서별 내신적중"] },
+    { icon: "evaluation", name: "평가 관리", href: "evaluation" },
+    { icon: "notification", name: "학습 통계", href: "statistics" },
+    { icon: "point", name: "자료 및 알림", href: "reference" },
+    { icon: "point", name: "components guide", href: "components" },
 ];
+
 
 function Home() {
     let [userId, setUserId] = useState("");
@@ -56,11 +57,10 @@ function Home() {
 
 
     return (
-        <main>
-            <div className="container">
+        <main id="main">
             <header id="header">
                 <div className="header-layout">
-                    <img src={logo} alt="logo" style={{ width: "116px" }} />
+                    <img src={logo} alt="logo" className="logo" />
 
                     <div className="info">
                         <strong className="info-name">{userId} 님</strong>
@@ -69,25 +69,24 @@ function Home() {
                                 <Icon icon={"info"} />
                                 회원정보
                             </li>
-                            
+
                             <li onClick={logoutFn}>
-                            <Icon icon={"logout"} />
+                                <Icon icon={"logout"} />
                                 로그아웃
-                                </li>
+                            </li>
                         </ul>
                     </div>
                 </div>
             </header>
-            </div>
-            <div className="container row">
-                <nav className="lnb col-2">
+            <div className="row" style={{ overflow: "hidden" }}>
+                <nav className="lnb">
                     <h1 className="sr-only">Left Navigation Bar</h1>
 
                     <div className="lnb-toggle">
-                        <div className="fa">
-                            <span className="lnb-toggle--label">메뉴 감추기</span>
-                            <button className="lnb-toggle--btn">on</button>
-                        </div>
+                        <span className="lnb-toggle--label">메뉴 감추기</span>
+                        <button className="lnb-toggle--btn">
+                            <Icon icon={"attendence"} />
+                        </button>
                     </div>
 
                     <LnbLookup />
@@ -97,80 +96,38 @@ function Home() {
                         <ul>
                             {_map(nav, (ele) => {
                                 return (
-                                    <li
+                                    <Li
+                                        ele={ele}
                                         key={ele.name}
-                                        className={`lnb-item`}
-                                    >
-                                        <div className="one-depth">
-                                                <Link to={`/${ele.href}`}>
-                                                    <Icon icon={ele.icon} />
-                                                    {ele.name}
-                                                </Link>
-                                        </div>
-                                    </li>
+                                    />
                                 );
                             })}
                         </ul>
                     </div>
                 </nav>
-                <div className="content col-10">
-                    {/* <div className="table">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th style={{ width: "30%" }}>1</th>
-                                    <th style={{ width: "30%" }}>2</th>
-                                    <th style={{ width: "40%" }}>3</th>
-                                    {
-                                        dd && <th style={{ width: "17px" }}></th>
-                                    }
-                                </tr>
-                            </thead>
-                            <tbody style={{ maxHeight: "200px", overflowY: dd ? "scroll" : "unset" }} className="tbody">
-                                <tr>
-                                    <td style={{ width: "30%" }}>1</td>
-                                    <td style={{ width: "30%" }}>2</td>
-                                    <td style={{ width: "40%" }}>3</td>
-                                </tr>
-                                <tr>
-                                    <td style={{ width: "30%" }}>1</td>
-                                    <td style={{ width: "30%" }}>2</td>
-                                    <td style={{ width: "40%" }}>3</td>
-                                </tr>
-                                <tr>
-                                    <td style={{ width: "30%" }}>1</td>
-                                    <td style={{ width: "30%" }}>2</td>
-                                    <td style={{ width: "40%" }}>3</td>
-                                </tr>
-                                <tr>
-                                    <td style={{ width: "30%" }}>1</td>
-                                    <td style={{ width: "30%" }}>2</td>
-                                    <td style={{ width: "40%" }}>3</td>
-                                </tr>
-                                <tr>
-                                    <td style={{ width: "30%" }}>1</td>
-                                    <td style={{ width: "30%" }}>2</td>
-                                    <td style={{ width: "40%" }}>3</td>
-                                </tr>
-                                <tr>
-                                    <td style={{ width: "30%" }}>1</td>
-                                    <td style={{ width: "30%" }}>2</td>
-                                    <td style={{ width: "40%" }}>3</td>
-                                </tr>
-                                <tr>
-                                    <td style={{ width: "30%" }}>1</td>
-                                    <td style={{ width: "30%" }}>2</td>
-                                    <td style={{ width: "40%" }}>3</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div> */}
-
+                <div className="content">
                     <Outlet />
                 </div>
             </div>
         </main>
     );
+}
+
+const Li = ({ele}) => {
+    return (
+        <>
+            <li
+                className={`lnb-item`}
+            >
+                <Link to={`/${ele.href}`}>
+                    <Icon icon={ele.icon} />
+                    <p className="item new">
+                        {ele.name}
+                    </p>
+                </Link>
+            </li>
+        </>
+    )
 }
 
 export default Home;

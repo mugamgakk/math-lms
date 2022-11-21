@@ -33,7 +33,7 @@ function LnbLookup() {
 
     return (
         <div className="lnb-lookup">
-            <div className="lnb-lookup__btn mb-2">
+            <div className="lnb-lookup__btn">
                 <button 
                 className={`${standard === "분류" ? "active" : ""}`}
                 onClick={()=>{setStandard("분류")}}
@@ -51,7 +51,8 @@ function LnbLookup() {
                 onChange={(e) => {
                     setKeyward(e.target.value);
                 }}
-                className="form-control mb-2"
+                className="form-control"
+                style={{marginBottom : "4px"}}
                 placeholder="검색어를 입력하세요"
             />
             <SelectBase
