@@ -25,8 +25,8 @@ function Attendance() {
             >
                 <Icon icon={"attendence"} color="#00A37F" />
             </ContentHeader>
-            <div className="bg">
-                <div>
+            <div className="attendence bg">
+                <div className='attendence-date'>
                     <DateNext value={date} />
                 </div>
                 <div className='fe'>
@@ -57,7 +57,7 @@ function Attendance() {
 }
 
 const Tr = ({ele}) => {
-    console.log(ele)
+    // console.log(ele)
     return (
         <tr>
             <td>{ele.um_nm} ({ele.um_id})</td>
