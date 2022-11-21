@@ -1,5 +1,5 @@
 // 레이아웃
-
+// gnb , lnb title
 
 #main{
     min-width: 1903px;
@@ -146,6 +146,8 @@
                 color: #d4d6d8;
                 display: flex;
                 align-items: center;
+                width: 250px;
+                
                 i{
                     margin-right: 10px;
                 }
@@ -355,61 +357,42 @@
 .content {
     width: calc(100% - 320px);
     background-color: #f6f6f6;
+    padding: 20px;
+    padding-bottom: 40px;
+
+    &-head{
+        @include flex(sb);
+        margin-bottom: 15px;
+
+        .title{
+            @include flex();
+            padding-left: 10px;
+
+            i{
+                font-size: 24px;
+                margin-right: 10px
+            }
+            h3{
+                @include font-style(24);
+                font-weight: 700;
+            }
+        }
+
+        .location{
+            font-weight: 400;
+            @include font-style(16);
+            color: #666;
+            strong{
+                color: #222;
+                font-weight: 600;
+            }
+        }
+    }
 }
 
 .bg {
     background-color: #fff;
-    min-height: 700px;
+    min-height: 750px;
     border-radius: $radius;
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12);
 }
-
-
-
-// .table {
-//     table {
-//         display: block;
-//         border: 1px solid $border;
-//         border-right: none;
-//     }
-
-//     td,
-//     th {
-//         border: none;
-//     }
-
-//     td,
-//     th {
-//         border-right: 1px solid $border;
-//         display: flex;
-//         justify-content: center;
-//         align-items: center;
-//         word-break:break-all;
-//     }
-
-//     tr {
-//         display: flex;
-//         border-bottom: 1px solid $border;
-//     }
-//     thead {
-//         display: block;
-
-//         th:nth-last-child(1) {
-//             width: 17px;
-//             border-right: none;
-//         }
-//         th:nth-last-child(2) {
-//             border-right: none;
-//         }
-
-        
-//     }
-
-//     tbody {
-//         display: block;
-//         overflow-y: scroll;
-
-//         tr:last-child{
-//             border-bottom: none;
-//         }
-//     }
-// }

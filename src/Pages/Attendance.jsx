@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import ContentHeader from "../components/ContentHeader";
 import DateNext from "../components/DateNext";
+import Icon from '../components/Icon';
 import ClassSelect from "../components/ui/select/ClassSelect";
 import attendanceStore from '../store/attendanceStore';
 
@@ -20,8 +21,10 @@ function Attendance() {
         <>
             <ContentHeader
                 title="출석 체크"
-                location={"마이페이지 > 수학 학습 관리 > 오늘의 수업"}
-            />
+                location={"마이페이지 > 수학 학습 관리 > "}
+            >
+                <Icon icon={"attendence"} color="#00A37F" />
+            </ContentHeader>
             <div className="bg">
                 <div>
                     <DateNext value={date} />

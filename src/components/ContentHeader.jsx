@@ -1,13 +1,19 @@
 import React from 'react';
 
 
-function ContentHeader({title, location}) {
+function ContentHeader({title, location, children}) {
     return ( 
-        <header className='fj border-bottom pb-3 mb-3'>
-            <h3 className='title'>{title}</h3>
-            <strong>
+        <header className='content-head'>
+            <div className='title'>
+                {children}
+                <h3> {title}</h3>
+            </div>
+            <p className='location'>
                 {location}
-            </strong>
+                <strong>
+                {title}
+                </strong>
+            </p>
         </header>
      );
 }
