@@ -11,12 +11,12 @@
         border: 1px solid #666;
         color: #444;
     }
-    &-search{
-        padding-right: 30px !important;
-    }
 }
 .searchInput{
     position: relative;
+    .textInput{
+        padding-right: 40px !important;
+    }
     &-btn{
         position: absolute;
         right: 0;
