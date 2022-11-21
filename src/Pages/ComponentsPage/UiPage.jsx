@@ -5,10 +5,10 @@ import Icon from "../../components/Icon";
 
 function UiPage() {
     return (
-        <div>
+        <div style={{ padding: '10px 20px' }}>
 
-            <div>
-                <h4>button</h4>
+            <div className='mb-20'>
+                <h3>button</h3>
                 <div>
                     <button className='btn-search btn-green'><Icon icon={"search"} />검색</button>
                     <button className='btn-green'>btn-green</button>
@@ -41,30 +41,51 @@ function UiPage() {
                 </div>
             </div>
 
-            <div>
-                <h4>select</h4>
+            <div className='mb-20'>
+                <h3>select</h3>
                 <SelectBase/>
                 <SelectBase disabled={true}/>
             </div>
 
-            <div>
-                <h4>checkbox</h4>
+            <div className='mb-20'>
+                <h3>checkbox</h3>
                 <Checkbox color='green' disabled={true} checked/>
                 <Checkbox color='orange' checked={true}/>
                 <Checkbox color='green' checked={true} />
             </div>
 
-            <div>
-                <h4 className=''>inputbox</h4>
+            <div className='mb-20'>
+                <h3 className=''>inputbox</h3>
                 <div className='textInput'>
                     <input type='text' className="textInput-default" placeholder='내용을 입력하세요' />
                 </div>
+                <pre>
+                    {
+                        `
+                        <div className='textInput'>
+                            <input type='text' className="textInput-default" placeholder='내용을 입력하세요' />
+                        </div>
+                        `
+                    }
+                </pre>
                 <div className='textInput searchInput'>
                     <input type='text' className="textInput-search" placeholder='학생 이름을 입력하세요' />
                     <button className='searchInput-wrap'>
                         <Icon icon={"search"} color='#00A37F' size='20px'/>
                     </button>
                 </div>
+                <pre>
+                    {
+                        `
+                        <div className='textInput searchInput'>
+                            <input type='text' className="textInput-search" placeholder='학생 이름을 입력하세요' />
+                            <button className='searchInput-wrap'>
+                                <Icon icon={"search"} color='#00A37F' size='20px'/>
+                            </button>
+                        </div>
+                        `
+                    }
+                </pre>
             </div>
 
             <style>
