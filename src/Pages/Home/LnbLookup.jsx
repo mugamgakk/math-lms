@@ -45,16 +45,18 @@ function LnbLookup() {
                 >
                     키워드검색</button>
             </div>
+            <div className="textInput">
             <input
                 type="text"
                 value={keyward}
                 onChange={(e) => {
                     setKeyward(e.target.value);
                 }}
-                className="form-control"
+                className="textInput"
                 style={{marginBottom : "4px"}}
                 placeholder="검색어를 입력하세요"
             />
+            </div>
             <SelectBase
                 width="100%"
                 value={campus}

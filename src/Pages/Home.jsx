@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { useCallback } from "react";
-import { Outlet, Link, useNavigate } from "react-router-dom";
+import { Outlet, Link, useNavigate, useLocation } from "react-router-dom";
 import ajax from "../ajax";
 import useTable from "../hooks/useTable";
 import { _each, _map } from "../methods/methods";
@@ -12,7 +12,12 @@ const nav = [
     { icon: "attendence", name: "출석체크", href: "attendance" },
     { icon: "todayClass", name: "오늘의 수업", href: "today-class" },
     { icon: "studentManagement", name: "학생별 수업 관리", href: "detail-class" },
-    { icon: "plusLearning", name: "플러스 학습", href: "plus-learning", depth: ["서술형 따라잡기", "교과서별 내신적중"] },
+    {
+        icon: "plusLearning", name: "플러스 학습", href: "plus-learning", depth: [
+            { name: "서술형 따라잡기", href: "plus-learning" },
+            { name: "교과서별 내신적중", href: "plus-learning" },
+        ]
+    },
     { icon: "evaluation", name: "평가 관리", href: "evaluation" },
     { icon: "notification", name: "학습 통계", href: "statistics" },
     { icon: "point", name: "자료 및 알림", href: "reference" },
@@ -23,6 +28,7 @@ const nav = [
 function Home() {
     let [userId, setUserId] = useState("");
     let [guess, setGuess] = useState(false);
+    let [burger, setBurger] = useState(false);
 
     // let dd = useTable(".tbody");
 
@@ -79,12 +85,12 @@ function Home() {
                 </div>
             </header>
             <div className="row" style={{ overflow: "hidden" }}>
-                <nav className="lnb">
+                <nav className={`lnb ${burger ? "active" : ""}`}>
                     <h1 className="sr-only">Left Navigation Bar</h1>
 
                     <div className="lnb-toggle">
                         <span className="lnb-toggle--label">메뉴 감추기</span>
-                        <button className="lnb-toggle--btn">
+                        <button className="lnb-toggle--btn" onClick={() => { setBurger(!burger) }}>
                             <Icon icon={"attendence"} />
                         </button>
                     </div>
@@ -93,16 +99,17 @@ function Home() {
 
                     <h4 className="lnb-title">수학 학습 관리</h4>
                     <div className="lnb-list">
-                        <ul>
+                        <div>
                             {_map(nav, (ele) => {
                                 return (
                                     <Li
                                         ele={ele}
                                         key={ele.name}
+                                        burger={burger}
                                     />
                                 );
                             })}
-                        </ul>
+                        </div>
                     </div>
                 </nav>
                 <div className="content">
@@ -113,20 +120,68 @@ function Home() {
     );
 }
 
-const Li = ({ele}) => {
+const Li = ({ ele, burger }) => {
+
+    let [depth, setDepth] = useState(false);
+    let [minDepth, setMinDepth] = useState(false);
+
+    let location = useLocation();
+
+    useEffect(() => {
+        setDepth(false);
+        setMinDepth(false);
+    }, [burger])
+
     return (
-        <>
-            <li
-                className={`lnb-item`}
+        <div className={`lnb-items-warp ${minDepth ? "active" : ""}`} onMouseOver={()=>{setMinDepth(true)}} onMouseLeave={()=>{setMinDepth(false)}} >
+            <div
+                className={`lnb-item ${"/" + ele.href === location.pathname ? "active" : ""}`}
             >
                 <Link to={`/${ele.href}`}>
                     <Icon icon={ele.icon} />
-                    <p className="item new">
+                    <p className="item">
                         {ele.name}
                     </p>
                 </Link>
-            </li>
-        </>
+                {
+                    ele.depth && <button className={`depth-btn ${depth ? "active" : ""}`} onClick={() => { setDepth(!depth) }}></button>
+                }
+
+            </div>
+            {
+                <div className={`lnb-item__depth ${depth ? "active" : ""}`}>
+                    <div>
+                            {
+                               ele.depth && <div className="spe">{ele.name}</div>
+                            }
+                        {
+                            
+                            ele.depth?.map(a => {
+                                return (<div className="depth">
+                                    <Link to={`/${a.href}`}>
+                                       
+                                        <p className="item new">
+                                            {a.name} 
+                                        </p>
+                                    </Link>
+                                </div>)
+                            })
+                        }
+
+                        {
+                            !ele.depth && (
+                                <Link to={`/${ele.href}`}>
+                                    <p className="item new">
+                                            {ele.name}
+                                        </p>
+                                </Link>
+                            )
+                        }
+                    </div>
+                </div>
+
+            }
+        </div>
     )
 }
 
