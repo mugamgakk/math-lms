@@ -90,7 +90,7 @@ function Login() {
         <div className="login-wrap">
         <div className="login">
             <form onSubmit={loginAction}>
-                <div className="text-center">
+                <div className="text-center mb-20">
                     <img src={logo} alt="" width={120} />
                 </div>
                 <div className="mb-10">
@@ -145,9 +145,11 @@ function Login() {
                         />
                     </div>
                 </div>
+                <div className="text-right">
                 <button className="btn-grey-border" type="button" disabled={loading} onClick={loginAction}>
                     로그인
                 </button>
+                </div>
             </form>
             <style>
                 {`
