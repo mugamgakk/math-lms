@@ -16,27 +16,32 @@ function DetailClassContent({ setLocation }) {
     let [tabState, setTabState] = useState(0);
 
     return (
-        <div className='bg bg-content'>
+        <div className='bg bg-content student-content'>
             {
                 clickStudent === null
                     ? <AlertBox name="수업 관리 시작" />
                     : (
                         <>
-                            <div className="mb-3">
-                                {classItems.map((a, index) => {
-                                    return (
-                                        <button
-                                            key={index}
-                                            className={"btn mr-2" + `${tabState === index ? " active" : ""}`}
-                                            onClick={() => {
-                                                setTabState(index);
-                                                setLocation(">" + a);
-                                            }}
-                                        >
-                                            {a}
-                                        </button>
-                                    );
-                                })}
+                            <div className='student-content-header'>
+                                <ul className='student-content-tab'>
+                                    {
+                                        classItems.map((a, index)=>{
+                                            return (
+                                                <li
+                                                key={index}
+                                                onClick={() => {
+                                                    setTabState(index);
+                                                    // setLocation(">" + a);
+                                                }}
+                                                className={`${tabState === index ? " active" : ""}`}
+                                                >
+                                                    {a}
+                                                </li>
+                                            )
+                                        })
+                                    }
+                                    <li></li>
+                                </ul>
                             </div>
                             <UserInfo clickStudent={clickStudent} />
 

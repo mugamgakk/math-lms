@@ -21,7 +21,7 @@ const nav = [
     { icon: "evaluation", name: "평가 관리", href: "evaluation" },
     { icon: "notification", name: "학습 통계", href: "statistics" },
     { icon: "point", name: "자료 및 알림", href: "reference" },
-    { icon: "point", name: "components guide", href: "components" },
+    { icon: "apple", name: "components guide", href: "components" },
 ];
 
 

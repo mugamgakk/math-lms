@@ -49,7 +49,7 @@ function LmsDatePicker({
             <button className="datepicker-btn" onClick={()=>{setIsOpen(true)}} style={style}>
                     {
                     value 
-                    ? dayjs(value).format("YYYY.MM.DD")
+                    ? dayjs(value).format("YYYY-MM-DD")
                     : monthPlaceholder
                 }
                     <Icon icon={"calendar"} style={{fontSize : "18px", marginLeft : "10px"}} />

@@ -2,43 +2,47 @@
 
 // 출석체크
 
-.attendence{
-    &-head{
+%content-border {
+    content: "";
+    height: 1px;
+    background-color: #eee;
+    position: absolute;
+    left: -30px;
+    width: calc(100% + 60px);
+    bottom: 0px;
+}
+
+.attendence {
+    &-head {
         position: relative;
         margin-bottom: 60px;
-        
-        &::after{
-            content: "";
-            height: 1px;
-            background-color: #eee;
-            position: absolute;
-            left: -30px;
-            width: calc(100% + 60px);
+
+        &::after {
+            @extend %content-border;
             bottom: -20px;
         }
     }
 
-    &-body{
-        .search{
+    &-body {
+        .search {
             display: flex;
             justify-content: flex-end;
             margin-bottom: 10px;
         }
     }
 
-    &-footer{
+    &-footer {
         text-align: right;
         margin-top: 20px;
     }
 }
 
 // 학생별 수업관리 학생 리스트
-.student-list{
-    
-    &-header{
+.student-list {
+    &-header {
         margin-bottom: 20px;
 
-        .title{
+        .title {
             @include font-style(24);
             color: #222;
             font-weight: 600;
@@ -46,8 +50,75 @@
         }
     }
 
-    &-footer{
+    &-footer {
         margin-top: 20px;
         text-align: center;
+    }
+}
+
+// 학생별 수업관리 콘텐츠
+.student-content {
+    &-header {
+        position: relative;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        
+        &::after {
+            @extend %content-border;
+        }
+    }
+
+    &-tab{
+        display: flex;
+
+        li{
+            @include font-style(20);
+            font-weight: 500;
+            color: #888;
+            margin-right: 20px;
+            cursor: pointer;
+
+            &.active{
+                color: #222;
+                position: relative;
+                font-weight: 600;
+
+                &::after{
+                    content: "";
+                    width: 100%;
+                    position: absolute;
+                    height: 2px;
+                    background-color: $green;
+                    left: 0;
+                    bottom: -10px;
+                }
+            }
+
+            &:last-child{
+                margin-right: 0;
+            }
+        }
+    }
+}
+
+.user-info{
+    .name{
+
+        @include font-style(28);
+        color: #222;
+        font-weight: 700;
+        margin-right: 6px;
+    }
+
+    .grade{
+        width: 40px;
+        height: 24px;
+        background-color: #ff7b42;
+        color: $white;
+        border-radius: 12px;
+        margin-right: 20px;
+        @include font-style(18);
+        @include flex;
+        font-weight: 600;
     }
 }

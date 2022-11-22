@@ -75,35 +75,24 @@ function UserInfo({ clickStudent }) {
 
 
     return (
-        <dl className='row user-info'>
-            <div>
-                <dt>학생이름</dt>
-                <dd>{clickStudent?.um_nm}</dd>
-            </div>
-            <div>
-                <dt>교재</dt>
-                <dd>
-                    <SelectBook
-                        options={optionsDefault}
-                        onCheck={(arr) => {
-                            setMultiSelect(arr);
-                            choiceBook(arr);
-                        }}
-                        onChange={(ele) => {
-                            setChiceItem(ele);
-                            setBookList(ele);
-                        }}
-                        value={chiceItem}
-                        checkValue={multiSelect}
-                        limit={6}
-                    />
-                </dd>
-            </div>
-            <div>
-                <dt>학년</dt>
-                <dd>{clickStudent?.school_grade}</dd>
-            </div>
-        </dl>
+        <div className='fa user-info'>
+            <strong className='name'>{clickStudent?.um_nm}</strong>
+            <div className="grade">{clickStudent?.school_grade}</div>
+            <SelectBook
+                options={optionsDefault}
+                onCheck={(arr) => {
+                    setMultiSelect(arr);
+                    choiceBook(arr);
+                }}
+                onChange={(ele) => {
+                    setChiceItem(ele);
+                    setBookList(ele);
+                }}
+                value={chiceItem}
+                checkValue={multiSelect}
+                limit={6}
+            />
+        </div>
     );
 }
 
