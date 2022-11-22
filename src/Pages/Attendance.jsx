@@ -22,10 +22,10 @@ function Attendance() {
         <>
             <ContentHeader
                 title="출석 체크"
-                location={"마이페이지 > 수학 학습 관리 > "}
-            >
-                <Icon icon={"attendence"} style={{ color: "#00A37F" }} />
-            </ContentHeader>
+                location={["마이페이지", "수학 학습 관리"]}
+                icon="attendence"
+            
+            />
             <div className="attendence bg">
                 <div className='attendence-head d-flex'>
                     <DateNext value={date} style={{ marginRight: "4px" }} />
