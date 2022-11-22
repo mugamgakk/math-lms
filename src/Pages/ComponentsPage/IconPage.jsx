@@ -18,7 +18,7 @@ const arr = [
     'search',       'select_typeA',
     'select_typeB', 'studentManagement',
     'todayClass',   'volume',
-    'warning'
+    'warning',      'hamburger'
   ];
 
 function IconPage() {
@@ -35,10 +35,9 @@ function IconPage() {
                 {
                     `
                     --- Props --- 
-                    addClass = '클래스이름'
-                    rotate = 'rotate(180deg)'
-                    color = '#888'
-                    size = '20px'
+                    className                
+                    icon
+                    style
                     `
                 }
             </pre>

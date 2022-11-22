@@ -77,7 +77,7 @@ function ClassSelect({
         <div
             tabIndex={1}
             style={{ width: width }}
-            className={`select ${selectOpen ? "active" : ""} ${disabled ? "disabled" : ""} ${className}`}
+            className={`select ${selectOpen ? "active" : ""} ${disabled ? "disabled" : ""} ${className}` + ' mr-10'}
             onBlur={() => {
                 setSelectOpen(false);
             }}
