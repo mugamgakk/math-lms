@@ -17,7 +17,12 @@ function Evaluation() {
 
     return ( 
         <>
-            <ContentHeader title={"평가 관리"}/>
+            <ContentHeader 
+            title={"평가 관리"}
+            location={["마이페이지", "수학 학습 관리", "평가 관리"]}
+            icon="evaluation"
+            current={"재원생정기평가"}
+            />
             <div className="btn-group mb-3">
                 <button 
                 className={'btn mr-2' + `${tab === "재원생정기평가" ? " active" : ''}`}

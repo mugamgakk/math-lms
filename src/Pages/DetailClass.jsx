@@ -16,6 +16,7 @@ function DetailClass() {
             title={'학생별 수업 관리'} 
             location={["마이페이지","수학 학습 관리"]}
             icon="studentManagement"
+            current={'학생별 수업 관리'}
             />
             <div className='row'>
             <StudentsSearch/>

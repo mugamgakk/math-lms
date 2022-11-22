@@ -24,6 +24,7 @@ function PlusLearning() {
                 title={"플러스 러닝"}
                 location={["마이페이지","수학 학습 관리",  "플러스 학습"]}
                 icon="plusLearning"
+                current={"플러스 러닝"}
             />
             <div className="btn-group mb-3">
                 <button

@@ -2,7 +2,7 @@ import React from 'react';
 import Icon from './Icon';
 
 
-function ContentHeader({ title, location, icon }) {
+function ContentHeader({ title, location, icon, current }) {
     return (
         <header className='fj content-head'>
             <div className='title fa'>
@@ -22,7 +22,7 @@ function ContentHeader({ title, location, icon }) {
                 }
 
                 <strong>
-                    {title}
+                    {current}
                 </strong>
             </p>
         </header>
