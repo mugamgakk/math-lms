@@ -86,7 +86,9 @@ function Login() {
     },[])
 
     return (
-        <div>
+
+        <div className="login-wrap">
+        <div className="login">
             <form onSubmit={loginAction}>
                 <div className="text-center">
                     <img src={logo} alt="" width={120} />
@@ -99,6 +101,7 @@ function Login() {
                         type="text"
                         id="id"
                         name="id"
+                        className="textInput"
                         value={textValue.id}
                         onChange={setTextValue}
                     />
@@ -111,6 +114,7 @@ function Login() {
                         type="text"
                         id="pw"
                         name="password"
+                        className="textInput"
                         value={textValue.password}
                         onChange={setTextValue}
                     />
@@ -141,11 +145,28 @@ function Login() {
                         />
                     </div>
                 </div>
-                <button className="btn" disabled={loading} onClick={loginAction}>
+                <button className="btn-grey-border" type="button" disabled={loading} onClick={loginAction}>
                     로그인
                 </button>
             </form>
+            <style>
+                {`
+                    .login-wrap{
+                        height : 100vh;
+                        background : #eee;
+                    }
+                    .login{
+                        position : absolute;
+                        left : 50%;
+                        top : 40%;
+                        transform : translate(-50%,-50%);
+                    }
+                `}
+
+            </style>
         </div>
+        </div>
+
     );
 }
 
