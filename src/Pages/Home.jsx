@@ -6,6 +6,7 @@ import { _each, _map } from "../methods/methods";
 import LnbLookup from "./Home/LnbLookup";
 import Icon from "../components/Icon";
 import logo from "../assets/logo.svg"
+import hamburger from "../assets/hamburger.svg";
 
 const nav = [
     { icon: "attendence", name: "출석체크", href: "attendance" },
@@ -90,7 +91,7 @@ function Home() {
                     <div className="lnb-toggle">
                         <span className="lnb-toggle--label">메뉴 감추기</span>
                         <button className="lnb-toggle--btn" onClick={() => { setBurger(!burger) }}>
-                            <Icon icon={"attendence"} />
+                            <img src={hamburger} alt="" />
                         </button>
                     </div>
 
