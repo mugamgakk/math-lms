@@ -50,7 +50,7 @@ function TodayClassSearch({data,setFindList,option = []}) {
             <ClassSelect width={"200px"} value={sel} onChange={ele=>{ setSel(ele) }} options={option} />
             <input
                 type="text"
-                className="textInput"
+                className="textInput mr-10"
                 placeholder="학생"
                 style={{ width: "200px" }}
                 value={search}
