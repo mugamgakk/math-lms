@@ -7,7 +7,7 @@ import { memo } from "react";
 import { useCallback } from "react";
 import Icon from "./Icon";
 
-function StudentsSearch() {
+function StudentsSearch({children}) {
     let { user, setClickStudent, clickStudent, getStudentsData, resetStudent, classList } = useStudentsStore();
     let [userList, setUserList] = useState(null);
     let [nameSearch, setNameSearch] = useState("");
@@ -61,7 +61,10 @@ function StudentsSearch() {
     return (
         <div className="bg bg-list student-list">
             <header className="student-list-header">
-                <h3 className="title">학생 선택</h3>
+                    <h3 className="title fj">
+                        학생 선택
+                    {children}
+                        </h3>
                 <div className="fj">
                     <ClassSelect
                         onChange={(ele) => { setClassOption(ele) }}
@@ -87,7 +90,6 @@ function StudentsSearch() {
                 </div>
             </header>
             <div className="student-list-body">
-                <div className="table">
                     <table>
                         <thead>
                             <tr>
@@ -95,7 +97,6 @@ function StudentsSearch() {
                                 <th style={{ width: "30%" }}>이름(아이디)</th>
                                 <th style={{ width: "20%" }}>학년</th>
                                 <th style={{ width: "30%" }}>학생 화면</th>
-                                <th></th>
                             </tr>
                         </thead>
                         <tbody style={{ maxHeight: "600px" }}>
@@ -108,7 +109,6 @@ function StudentsSearch() {
                     </table>
 
                     {userList?.length === 0 && <div className="text-center">학생이 없습니다</div>}
-                </div>
 
             </div>
 

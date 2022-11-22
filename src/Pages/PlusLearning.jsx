@@ -26,28 +26,25 @@ function PlusLearning() {
                 icon="plusLearning"
                 current={"플러스 러닝"}
             />
-            <div className="btn-group mb-3">
-                <button
-                    className={"btn" + `${tab === "서술형" ? " active" : ""}`}
+            <div className="row">
+                <StudentsSearch >
+                <ul className="content-tabs" >
+                    <li 
+                    className={`${tab === "서술형" ? " active" : ""}`}
                     onClick={() => {
                         clickTab("서술형");
                         setLocation("서술형 따라잡기");
                     }}
-                >
-                    서술형 따라잡기
-                </button>
-                <button
-                    className={"btn" + `${tab === "교과서" ? " active" : ""}`}
-                    onClick={() => {
-                        clickTab("교과서");
-                        setLocation("교과서 적중문제");
-                    }}
-                >
-                    교과서 적중문제
-                </button>
-            </div>
-            <div className="row">
-                <StudentsSearch />
+                    >서술형 따라잡기</li>
+                    <li
+                        className={`${tab === "교과서" ? " active" : ""}`}
+                        onClick={() => {
+                            clickTab("교과서");
+                            setLocation("교과서 적중문제");
+                        }}
+                    >교과서 적중문제</li>
+                </ul>
+                </StudentsSearch>
                 <div className='bg bg-content'>
 
                     {

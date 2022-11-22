@@ -204,3 +204,35 @@
     width: 40px;
     height: 40px;
 }
+
+
+.content-tabs {
+    display: flex;
+    li{
+        @include font-style(20);
+        font-weight: 500;
+        color: #888;
+        margin-right: 20px;
+        cursor: pointer;
+
+        &.active{
+            color: #222;
+            position: relative;
+            font-weight: 600;
+
+            &::after{
+                content: "";
+                width: 100%;
+                position: absolute;
+                height: 2px;
+                background-color: $green;
+                left: 0;
+                bottom: -10px;
+            }
+        }
+
+        &:last-child{
+            margin-right: 0;
+        }
+    }
+}

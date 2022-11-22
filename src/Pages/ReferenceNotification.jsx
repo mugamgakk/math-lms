@@ -13,13 +13,16 @@ function ReferenceNotification() {
                 <ContentHeader title={"자료 및 알림"}/>
                 <div className="bg contents pt-10">
                     <div className="contents-head">
-                        <div className="btn-group">
-                            <button 
-                            className={ tab == '자료실' ? 'btn active' : 'btn'} 
-                            onClick={()=>setTab('자료실')}>자료실</button>
-                            <button className={ tab == '학습알림' ? 'btn active' : 'btn'} 
-                            onClick={()=>setTab('학습알림')}>학습 알림</button>
-                        </div>
+                        <ul className='content-tabs'>
+                            <li 
+                            className={ tab == '자료실' ? 'active' : ''} 
+                            onClick={()=>setTab('자료실')}
+                            >자료실</li>
+                            <li 
+                            className={ tab == '학습알림' ? 'active' : ''} 
+                            onClick={()=>setTab('학습알림')}
+                            >학습 알림</li>
+                        </ul>
                     </div>
                     {
                         {

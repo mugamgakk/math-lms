@@ -1,48 +1,69 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import ContentHeader from '../components/ContentHeader';
 import EvaluationRoutine from './Evaluation/EvaluationRoutine';
 import EvaluationJindan from './Evaluation/EvaluationJindan';
 import useStudentsStore from '../store/useStudentsStore';
+import StudentsSearch from '../components/StudentsSearch';
+import AlertBox from '../components/AlertBox';
+import UserInfo from '../components/UserInfo';
 
 function Evaluation() {
-    const resetStudent = useStudentsStore(state=>state.resetStudent)
+    const resetStudent = useStudentsStore(state => state.resetStudent);
+    const clickStudent = useStudentsStore((state) => state.clickStudent);
 
-    let [tab, setTab] = useState("재원생정기평가");
+    let [tab, setTab] = useState("진단평가");
 
-    const clickTab = (param)=>{
+    const clickTab = (param) => {
         setTab(param);
-        resetStudent()
+        // resetStudent()
     }
 
 
-    return ( 
+    return (
         <>
-            <ContentHeader 
-            title={"평가 관리"}
-            location={["마이페이지", "수학 학습 관리", "평가 관리"]}
-            icon="evaluation"
-            current={"재원생정기평가"}
+            <ContentHeader
+                title={"평가 관리"}
+                location={["마이페이지", "수학 학습 관리", "평가 관리"]}
+                icon="evaluation"
+                current={"재원생정기평가"}
             />
-            <div className="btn-group mb-3">
-                <button 
-                className={'btn mr-2' + `${tab === "재원생정기평가" ? " active" : ''}`}
-                onClick={()=>{clickTab("재원생정기평가")}}
-                >재원생 정기평가</button>
-                <button 
-                className={'btn' + `${tab === "진단평가" ? " active" : ''}`}
-                onClick={()=>{clickTab("진단평가")}}
-                >진단평가</button>
+
+            <div className="row">
+                <StudentsSearch />
+                <div className="bg bg-content">
+
+                    {
+                        clickStudent === null
+                            ? <AlertBox />
+                            : (
+                                <>
+                                    <div className="tabs-header">
+                                        <ul className='content-tabs'>
+                                            <li
+                                                onClick={() => { clickTab("재원생정기평가") }}
+                                                className={`${tab === "재원생정기평가" ? "active" : ""}`}>재원생정기평가</li>
+                                            <li
+                                                onClick={() => { clickTab("진단평가") }}
+                                                className={`${tab === "진단평가" ? "active" : ""}`}>진단평가</li>
+                                        </ul>
+                                    </div>
+                                    <UserInfo clickStudent={clickStudent} />
+                                    {
+                                        {
+                                            재원생정기평가: <EvaluationRoutine />,
+                                            진단평가: <EvaluationJindan />
+                                        }[tab]
+                                    }
+                                </>
+                            )
+                    }
+                </div>
             </div>
 
-            {
-                {
-                    재원생정기평가 : <EvaluationRoutine/>,
-                    진단평가 : <EvaluationJindan/>
-                }[tab]
-            }
-          
+
+
         </>
-     );
+    );
 }
 
 export default Evaluation;

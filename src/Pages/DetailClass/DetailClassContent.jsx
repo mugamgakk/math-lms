@@ -22,8 +22,8 @@ function DetailClassContent({ setLocation }) {
                     ? <AlertBox name="수업 관리 시작" />
                     : (
                         <>
-                            <div className='student-content-header'>
-                                <ul className='student-content-tab'>
+                            <div className='tabs-header'>
+                                <ul className='content-tabs'>
                                     {
                                         classItems.map((a, index)=>{
                                             return (
