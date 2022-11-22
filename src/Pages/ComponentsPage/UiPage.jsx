@@ -12,19 +12,19 @@ function UiPage() {
                 <div>
                     <button className='btn-search btn-green'><Icon icon={"search"} />검색</button>
                     <pre>
-                    {
-                        `
+                        {
+                            `
                         <button className='btn-search btn-green'><Icon icon={"search"} />검색</button>
                         `
-                    }
+                        }
                     </pre>
-                    <button className='btn-reload btn-grey'><Icon icon={"reload"}/>새로고침</button>
+                    <button className='btn-reload btn-grey'><Icon icon={"reload"} />새로고침</button>
                     <pre>
-                    {
-                        `
+                        {
+                            `
                         <button className='btn-reload btn-grey'><Icon icon={"reload"}/>새로고침</button>
                         `
-                    }
+                        }
                     </pre>
                     <button className='btn-green'>btn-green</button>
                     <button className='btn-green' disabled>btn-green</button>
@@ -58,14 +58,14 @@ function UiPage() {
 
             <div className='mb-20'>
                 <h3>select</h3>
-                <SelectBase/>
-                <SelectBase disabled={true}/>
+                <SelectBase />
+                <SelectBase disabled={true} />
             </div>
 
             <div className='mb-20'>
                 <h3>checkbox</h3>
-                <Checkbox color='green' disabled={true} checked/>
-                <Checkbox color='orange' checked={true}/>
+                <Checkbox color='green' disabled={true} checked />
+                <Checkbox color='orange' checked={true} />
                 <Checkbox color='green' checked={true} />
             </div>
 
@@ -82,7 +82,7 @@ function UiPage() {
                 <div className='searchInput'>
                     <input type='text' className="textInput" placeholder='학생 이름을 입력하세요' />
                     <button className='searchInput-btn'>
-                        <Icon icon={"search"} style={{color:'#00A37F',fontSize:'20px'}}/>
+                        <Icon icon={"search"} style={{ color: '#00A37F', fontSize: '20px' }} />
                     </button>
                 </div>
                 <pre>
@@ -96,6 +96,33 @@ function UiPage() {
                         </div>
                         `
                     }
+                </pre>
+            </div>
+
+            <div>
+                <h3>Modal</h3>
+                <pre>
+                    {
+                        `
+                        <div className="modal">
+                        <div className="modal-content">
+                            <div className="modal-header fj">
+                                <h2 className='modal-title'>title</h2>
+                                <button className='btn'>
+                                    <Icon icon={"close"} />
+                                </button>
+                            </div>
+                            <div className="modal-body">
+        
+                            </div>
+                            <div className="modal-footer">
+        
+                            </div>
+                        </div>
+                    </div>
+                        `
+                    }
+
                 </pre>
             </div>
 

@@ -26,6 +26,24 @@ function Attendance() {
                 icon="attendence"
                 current="출석 체크"
             />
+
+            <div className="modal">
+                <div className="modal-content">
+                    <div className="modal-header fj">
+                        <h2 className='modal-title'>title</h2>
+                        <button className='btn'>
+                            <Icon icon={"close"} />
+                        </button>
+                    </div>
+                    <div className="modal-body">
+                            sdfdsfsdfds
+                    </div>
+                    <div className="modal-footer">
+                        <button className='btn-green'>버튼</button>
+                    </div>
+                </div>
+            </div>
+
             <div className="attendence bg">
                 <div className='attendence-head d-flex'>
                     <DateNext value={date} style={{ marginRight: "4px" }} />
