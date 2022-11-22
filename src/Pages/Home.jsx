@@ -84,31 +84,31 @@ function Home() {
                     </div>
                 </div>
             </header>
-            <div className="row" style={{ overflow: "hidden" }}>
+            <div className="row">
                 <nav className={`lnb ${burger ? "active" : ""}`}>
-                    <h1 className="sr-only">Left Navigation Bar</h1>
+                    <div className="lnb-content">
+                        <div className="lnb-toggle">
+                            <span className="lnb-toggle--label">메뉴 감추기</span>
+                            <button className="lnb-toggle--btn" onClick={() => { setBurger(!burger) }}>
+                                <img src={hamburger} alt="" />
+                            </button>
+                        </div>
 
-                    <div className="lnb-toggle">
-                        <span className="lnb-toggle--label">메뉴 감추기</span>
-                        <button className="lnb-toggle--btn" onClick={() => { setBurger(!burger) }}>
-                            <img src={hamburger} alt="" />
-                        </button>
-                    </div>
+                        <LnbLookup />
 
-                    <LnbLookup />
-
-                    <h4 className="lnb-title">수학 학습 관리</h4>
-                    <div className="lnb-list">
-                        <div>
-                            {_map(nav, (ele) => {
-                                return (
-                                    <Li
-                                        ele={ele}
-                                        key={ele.name}
-                                        burger={burger}
-                                    />
-                                );
-                            })}
+                        <h4 className="lnb-title">수학 학습 관리</h4>
+                        <div className="lnb-list">
+                            <div>
+                                {_map(nav, (ele) => {
+                                    return (
+                                        <Li
+                                            ele={ele}
+                                            key={ele.name}
+                                            burger={burger}
+                                        />
+                                    );
+                                })}
+                            </div>
                         </div>
                     </div>
                 </nav>
@@ -133,7 +133,7 @@ const Li = ({ ele, burger }) => {
     }, [burger])
 
     return (
-        <div className={`lnb-items-warp ${minDepth ? "active" : ""}`} onMouseOver={()=>{setMinDepth(true)}} onMouseLeave={()=>{setMinDepth(false)}} >
+        <div className={`lnb-items-warp ${minDepth ? "active" : ""}`} onMouseOver={() => { setMinDepth(true) }} onMouseLeave={() => { setMinDepth(false) }} >
             <div
                 className={`lnb-item ${"/" + ele.href === location.pathname ? "active" : ""}`}
             >
@@ -151,17 +151,17 @@ const Li = ({ ele, burger }) => {
             {
                 <div className={`lnb-item__depth ${depth ? "active" : ""}`}>
                     <div>
-                            {
-                               ele.depth && <div className="spe">{ele.name}</div>
-                            }
                         {
-                            
+                            ele.depth && <div className="spe">{ele.name}</div>
+                        }
+                        {
+
                             ele.depth?.map(a => {
                                 return (<div className="depth">
                                     <Link to={`/${a.href}`}>
-                                       
+
                                         <p className="item new">
-                                            {a.name} 
+                                            {a.name}
                                         </p>
                                     </Link>
                                 </div>)
@@ -172,8 +172,8 @@ const Li = ({ ele, burger }) => {
                             !ele.depth && (
                                 <Link to={`/${ele.href}`}>
                                     <p className="item new">
-                                            {ele.name}
-                                        </p>
+                                        {ele.name}
+                                    </p>
                                 </Link>
                             )
                         }

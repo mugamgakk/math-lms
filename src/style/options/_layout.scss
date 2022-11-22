@@ -58,6 +58,12 @@
 .lnb {
     width: 320px;
     min-height: calc(100vh - 60px);
+    background-color: #333A3D;
+
+    .lnb-content{
+        position: sticky;
+        top: 0;
+    }
     
     &-toggle {
         display: flex;
@@ -132,7 +138,6 @@
         background-color: #333A3D;
         color: #fff;
         padding: 10px 20px;
-        height: 100%;
 
         .lnb-item{
             height: 50px;
