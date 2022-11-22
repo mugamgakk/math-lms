@@ -12,19 +12,19 @@ function UiPage() {
                 <div>
                     <button className='btn-search btn-green'><Icon icon={"search"} />검색</button>
                     <pre>
-                        {
-                            `
+                    {
+                        `
                         <button className='btn-search btn-green'><Icon icon={"search"} />검색</button>
                         `
-                        }
+                    }
                     </pre>
-                    <button className='btn-reload btn-grey'><Icon icon={"reload"} />새로고침</button>
+                    <button className='btn-reload btn-grey'><Icon icon={"reload"}/>새로고침</button>
                     <pre>
-                        {
-                            `
+                    {
+                        `
                         <button className='btn-reload btn-grey'><Icon icon={"reload"}/>새로고침</button>
                         `
-                        }
+                    }
                     </pre>
                     <button className='btn-green'>btn-green</button>
                     <button className='btn-green' disabled>btn-green</button>
@@ -58,14 +58,14 @@ function UiPage() {
 
             <div className='mb-20'>
                 <h3>select</h3>
-                <SelectBase />
-                <SelectBase disabled={true} />
+                <SelectBase/>
+                <SelectBase disabled={true}/>
             </div>
 
             <div className='mb-20'>
                 <h3>checkbox</h3>
-                <Checkbox color='green' disabled={true} checked />
-                <Checkbox color='orange' checked={true} />
+                <Checkbox color='green' disabled={true} checked/>
+                <Checkbox color='orange' checked={true}/>
                 <Checkbox color='green' checked={true} />
             </div>
 
@@ -82,7 +82,7 @@ function UiPage() {
                 <div className='searchInput'>
                     <input type='text' className="textInput" placeholder='학생 이름을 입력하세요' />
                     <button className='searchInput-btn'>
-                        <Icon icon={"search"} style={{ color: '#00A37F', fontSize: '20px' }} />
+                        <Icon icon={"search"} style={{color:'#00A37F',fontSize:'20px'}}/>
                     </button>
                 </div>
                 <pre>
@@ -98,34 +98,150 @@ function UiPage() {
                     }
                 </pre>
             </div>
+            <div className='mb-20'>
+                <h3 className=''>table</h3>
+                <table className='table tableA'>
+                    <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>이름</th>
+                            <th>학년</th>
+                            <th>캐럿(갯수)</th>
+                            <th>미네랄(갯수)</th>
+                            <th>포인트(점수)</th>
+                            <th>내역</th>
+                            <th>누적 포인트</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>내용</td>
+                            <td>내용</td>
+                            <td>내용</td>
+                            <td>내용</td>
+                            <td>내용</td>
+                            <td>내용</td>
+                            <td>내용</td>
+                            <td>내용</td>
+                        </tr>
+                        <tr>
+                            <td>내용</td>
+                            <td>내용</td>
+                            <td>내용</td>
+                            <td>내용</td>
+                            <td>내용</td>
+                            <td>내용</td>
+                            <td>내용</td>
+                            <td>내용</td>
+                        </tr>
+                        <tr>
+                            <td>내용</td>
+                            <td>내용</td>
+                            <td>내용</td>
+                            <td>내용</td>
+                            <td>내용</td>
+                            <td>내용</td>
+                            <td>내용</td>
+                            <td>내용</td>
+                        </tr>
+                        <tr>
+                            <td>내용</td>
+                            <td>내용</td>
+                            <td>내용</td>
+                            <td>내용</td>
+                            <td>내용</td>
+                            <td>내용</td>
+                            <td>내용</td>
+                            <td>내용</td>
+                        </tr>
+                      
+                    </tbody>
+                </table>
+            <pre>
+            {
+                `
+                <table className='table tableA'>
+                    <thead>
+                        <tr>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>   
 
-            <div>
-                <h3>Modal</h3>
+                    ① table 넓이 고정값 주기
+                    ② 가상 th 하나 추가
+                    ③ 스크롤 width: 8px
+                    ④ th, td 넓이단위 %
+                `
+                }
+            </pre>
+             <table className='table tableB'>
+                    <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>이름(아이디)</th>
+                            <th>학년</th>
+                            <th>학생 화면</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><div>1</div></td>
+                            <td><div className='name'>강수학(Kangsh)</div></td>
+                            <td><div>중2</div></td>
+                            <td><div><button className='btn-table'>로그인</button></div></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>1</div>
+                            </td>
+                            <td><div className='name'>강수학(Kangsh)</div></td>
+                            <td><div>중2</div></td>
+                            <td><div><button className='btn-table'>로그인</button></div></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>1</div>
+                            </td>
+                            <td><div className='name'>강수학(Kangsh)</div></td>
+                            <td><div>중2</div></td>
+                            <td><div><button className='btn-table'>로그인</button></div></td>
+                        </tr>
+                  
+                      
+                    </tbody>
+                </table>
                 <pre>
-                    {
-                        `
-                        <div className="modal">
-                        <div className="modal-content">
-                            <div className="modal-header fj">
-                                <h2 className='modal-title'>title</h2>
-                                <button className='btn'>
-                                    <Icon icon={"close"} />
-                                </button>
-                            </div>
-                            <div className="modal-body">
-        
-                            </div>
-                            <div className="modal-footer">
-        
-                            </div>
-                        </div>
-                    </div>
-                        `
-                    }
-
-                </pre>
+            {
+                `
+            <table className='table tableB'>
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>이름(아이디)</th>
+                        <th>학년</th>
+                        <th>학생 화면</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><div>1</div></td>
+                        <td><div className='name'>강수학(Kangsh)</div></td>
+                        <td><div>중2</div></td>
+                        <td><div><button className='btn-table'>로그인</button></div></td>
+                    </tr>
+                </tbody>
+            </table>
+                `
+                }
+            </pre>
             </div>
-
             <style>
                 {`
                     .ui-color{
