@@ -54,7 +54,7 @@ function EvaluationJindanContent() {
     let [resultModal, setResultModal] = useState(false);
 
     return (
-        <div className="bg col-8">
+        <div className="bg bg-content">
             <Box className="mb-3">
                 진단 평가 진행 순서 <br />
                 1. 학년 학기를 선택하여 진단 평가지를 인쇄 합니다 . 학생의 현재 학년 학기의 직전

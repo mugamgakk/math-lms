@@ -59,12 +59,12 @@ function StudentsSearch() {
     }, [userList]);
 
     return (
-        <div className="bg col-4 mr-3">
-            <header className="row mb-3">
-                <div className="col-6 pr-2">
+        <div className="bg bg-list">
+            <header className="row">
+                <div>
                     <ClassSelect width={"100%"} onChange={(ele) => { setClassOption(ele) }} value={classOption} options={classList} />
                 </div>
-                <div className="col-6 pl-2">
+                <div>
                     <input
                         type={"text"}
                         placeholder="이름"
@@ -109,7 +109,7 @@ function StudentsSearch() {
 
             <div className="text-center mt-10">
                 <button
-                    className="btn"
+                    className="btn btn-orange"
                     onClick={() => {
                         setUserList(user);
                         setNameSearch("");
@@ -143,7 +143,7 @@ const Tr = memo(({ res, clickStudent, getUser, index }) => {
             </td>
             <td style={{ width: "20%" }}>{res.school_grade}</td>
             <td style={{ width: "30%" }}>
-                <button className="btn">로그인</button>
+                <button className="btn-green">로그인</button>
             </td>
         </tr>
     )

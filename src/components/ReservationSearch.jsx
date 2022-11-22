@@ -68,7 +68,7 @@ function ReservationSearch() {
     }, []);
 
     return (
-        <div className="bg col-4 mr-3">
+        <div className="bg bg-list">
             <div className="row mb-2">
                 <div className="col-6 pr-2">
                     <LmsDatePicker

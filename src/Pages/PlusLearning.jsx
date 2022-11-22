@@ -46,7 +46,7 @@ function PlusLearning() {
             </div>
             <div className="row">
                 <StudentsSearch />
-                <div className='bg col-8'>
+                <div className='bg bg-content'>
 
                     {
                         clickStudent === null

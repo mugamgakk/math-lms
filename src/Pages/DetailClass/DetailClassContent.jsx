@@ -16,7 +16,7 @@ function DetailClassContent({ setLocation }) {
     let [tabState, setTabState] = useState(0);
 
     return (
-        <div className='bg col-8'>
+        <div className='bg bg-content'>
             {
                 clickStudent === null
                     ? <AlertBox name="수업 관리 시작" />

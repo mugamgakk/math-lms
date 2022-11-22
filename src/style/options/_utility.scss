@@ -57,53 +57,6 @@
     justify-content: flex-end;
 }
 
-.font-12{
-    @include font-style(12);
-}
-.font-14{
-    @include font-style(14);
-}
-.font-16{
-    @include font-style(16);
-}
-.font-18{
-    @include font-style(18);
-}
-
-
-.modal-bg{
-    position: fixed;
-    background-color: rgba(0,0,0,0.6);
-    left: 0;
-    top: 0;
-    z-index: 100;
-    width: 100%;
-    height: 100%;
-    justify-content: center;
-    text-align: left;
-
-    .modal-content{
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        background-color: #fff;
-        transform: translate(-50%,-50%);
-        min-width: 300px;
-        
-        header{
-            background-color: $orange;
-            padding: 10px;
-        }
-
-        .modal-body{
-            padding: 10px;
-        }
-    }
-}
-
-
-
-
 
 .border{
     border: $border;
