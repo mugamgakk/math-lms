@@ -14,9 +14,9 @@ function ContentHeader({ title, location, icon }) {
                 {
                     location?.map(a => {
                         return (
-                            <>
+                            <span key={a}>
                                 {a} <Icon icon={"arrowA"} />
-                            </>
+                            </span>
                         )
                     })
                 }
