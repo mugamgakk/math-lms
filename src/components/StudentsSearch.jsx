@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import ClassSelect from "./ui/select/ClassSelect";
-import SearchBtn from "./ui/button/SearchBtn";
 import useStudentsStore from "../store/useStudentsStore";
 import { useEffect } from "react";
 import SkeletonTable from "./SkeletonTable";
 import { memo } from "react";
 import { useCallback } from "react";
+import Icon from "./Icon";
 
 function StudentsSearch() {
     let { user, setClickStudent, clickStudent, getStudentsData, resetStudent, classList } = useStudentsStore();
@@ -59,17 +59,20 @@ function StudentsSearch() {
     }, [userList]);
 
     return (
-        <div className="bg bg-list">
-            <header className="row">
-                <div>
-                    <ClassSelect width={"100%"} onChange={(ele) => { setClassOption(ele) }} value={classOption} options={classList} />
-                </div>
-                <div>
-                    <input
-                        type={"text"}
-                        placeholder="이름"
-                        className="form-control"
-                        style={{ width: "calc(100% - 30px)" }}
+        <div className="bg bg-list student-list">
+            <header className="student-list-header">
+                <h3 className="title">학생 선택</h3>
+                <div className="fj">
+                    <ClassSelect
+                        onChange={(ele) => { setClassOption(ele) }}
+                        value={classOption}
+                        options={classList}
+                        width="50%"
+                    />
+                    <input type='text'
+                        className="textInput"
+                        placeholder='내용을 입력하세요'
+                        style={{ width: "50%", margin: "0 4px" }}
                         value={nameSearch}
                         onChange={(e) => {
                             setNameSearch(e.target.value);
@@ -80,41 +83,44 @@ function StudentsSearch() {
                             }
                         }}
                     />
-                    <SearchBtn onClick={searchStudents} />
+                    <button className='btn-search btn-green'><Icon icon={"search"} />검색</button>
                 </div>
             </header>
+            <div className="student-list-body">
+                <div className="table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style={{ width: "20%" }}>No.</th>
+                                <th style={{ width: "30%" }}>이름(아이디)</th>
+                                <th style={{ width: "20%" }}>학년</th>
+                                <th style={{ width: "30%" }}>학생 화면</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody style={{ maxHeight: "600px" }}>
+                            {skeleton && <SkeletonTable R={14} D={4} />}
 
-            <div className="table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th style={{ width: "20%" }}>No.</th>
-                            <th style={{ width: "30%" }}>이름(아이디)</th>
-                            <th style={{ width: "20%" }}>학년</th>
-                            <th style={{ width: "30%" }}>학생 화면</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody style={{ maxHeight: "600px" }}>
-                        {skeleton && <SkeletonTable R={14} D={4} />}
+                            {userList?.map((res, i) => {
+                                return <Tr res={res} key={res.usr_seq} index={i} getUser={getUser} clickStudent={clickStudent} />
+                            })}
+                        </tbody>
+                    </table>
 
-                        {userList?.map((res, i) => {
-                            return <Tr res={res} key={res.usr_seq} index={i} getUser={getUser} clickStudent={clickStudent} />
-                        })}
-                    </tbody>
-                </table>
+                    {userList?.length === 0 && <div className="text-center">학생이 없습니다</div>}
+                </div>
 
-                {userList?.length === 0 && <div className="text-center p-10">학생이 없습니다</div>}
             </div>
 
-            <div className="text-center mt-10">
+            <div className="student-list-footer">
                 <button
-                    className="btn btn-orange"
+                    className="btn-grey btn-icon"
                     onClick={() => {
                         setUserList(user);
                         setNameSearch("");
                     }}
                 >
+                    <Icon icon={"reload"}/>
                     목록 초기화
                 </button>
             </div>

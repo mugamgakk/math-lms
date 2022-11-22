@@ -4,18 +4,50 @@
 
 .attendence{
     &-head{
+        position: relative;
+        margin-bottom: 60px;
         
+        &::after{
+            content: "";
+            height: 1px;
+            background-color: #eee;
+            position: absolute;
+            left: -30px;
+            width: calc(100% + 60px);
+            bottom: -20px;
+        }
     }
 
     &-body{
-        padding: 30px;
-
         .search{
             display: flex;
             justify-content: flex-end;
             margin-bottom: 10px;
         }
     }
+
+    &-footer{
+        text-align: right;
+        margin-top: 20px;
+    }
 }
 
+// 학생별 수업관리 학생 리스트
+.student-list{
+    
+    &-header{
+        margin-bottom: 20px;
 
+        .title{
+            @include font-style(24);
+            color: #222;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+    }
+
+    &-footer{
+        margin-top: 20px;
+        text-align: center;
+    }
+}

@@ -16,6 +16,7 @@
 
     &.btn-icon{
         @include flex;
+        display: inline-flex;
         
         i{
             font-size: 16px;

@@ -10,7 +10,8 @@ function ClassSelect({
     value = [],
     defaultValue = "선택하세요",
     disabled,
-    className
+    className,
+    style
 }) {
     let [selectOpen, setSelectOpen] = useState(false);
     let [choiceArr, setChoiceArr] = useState(value);
@@ -77,7 +78,7 @@ function ClassSelect({
         <div
             tabIndex={1}
             style={{ width: width }}
-            className={`select ${selectOpen ? "active" : ""} ${disabled ? "disabled" : ""} ${className}` + ' mr-10'}
+            className={`select ${selectOpen ? "active" : ""} ${disabled ? "disabled" : ""} ${className}`}
             onBlur={() => {
                 setSelectOpen(false);
             }}

@@ -29,7 +29,7 @@ function Attendance() {
             <div className="attendence bg">
                 <div className='attendence-head d-flex'>
                     <DateNext value={date} style={{ marginRight: "4px" }} />
-                    <LmsDatePicker />
+                    <LmsDatePicker value={date} />
                 </div>
                 <div className='attendence-body'>
                     <div className='search'>
@@ -61,6 +61,9 @@ function Attendance() {
                             }
                         </tbody>
                     </table>
+                    <div className='attendence-footer'>
+                        <button type='button' className='btn-green'>출결 내용 저장</button>
+                    </div>
                 </div>
             </div>
         </>
