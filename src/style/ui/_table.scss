@@ -1,0 +1,180 @@
+.table{
+    // 테이블 공통속성
+    thead{
+        tr{
+            width: 100%;
+            display:flex;
+            border-top: 2px solid #664e3d;
+            border-bottom: 2px solid #664e3d;
+            th{
+                @include font-style(17);
+                color: #664e3d;
+                background: #e6ddd8;
+                border-right: 1px solid #cfbfb7;
+                padding: 13px 0;
+            }
+        }
+    }
+    tbody{
+        display: block;
+        overflow: auto;
+    }
+
+    &.tableA{
+        width: 1000px;
+        th{
+            &:nth-last-child(2),
+            &:last-child{
+                border-right:none;
+            }
+            &:nth-child(1){
+                width: 12.5%;
+            }
+            &:nth-child(2){
+                width: 12.5%;
+            }
+            &:nth-child(3){
+                width: 12.5%;
+            }
+            &:nth-child(4){
+                width: 12.5%;
+            }
+            &:nth-child(5){
+                width: 12.5%;
+            }
+            &:nth-child(6){
+                width: 12.5%;
+            }
+            &:nth-child(7){
+                width: 12.5%;
+            }
+            &:nth-child(8){
+                width: 11.7%;
+            }
+            &:last-child{
+                width: 0.8%;
+            }
+        }
+        tbody{
+            height: 130px;
+        tr{
+            width: 100%;
+            display: flex;
+
+            td{
+                border: none;
+                border-right:1px solid #dee2e6;
+                border-bottom:1px solid #dee2e6;
+                &:nth-child(1){
+                    border-left:1px solid #dee2e6;
+
+                    width: 12.6%;
+                }
+                &:nth-child(2){
+                    width: 12.6%;
+                }
+                &:nth-child(3){
+                    width: 12.6%;
+                }
+                &:nth-child(4){
+                    width: 12.6%;
+                }
+                &:nth-child(5){
+                    width: 12.6%;
+                }
+                &:nth-child(6){
+                    width: 12.6%;
+                }
+                &:nth-child(7){
+                    width: 12.6%;
+                }
+                &:last-child{
+                    width: 11.80%;
+                }
+            }
+            }
+        }
+    }
+    &.tableB{
+        width: 420px;
+        
+        th{
+            &:last-child{
+                border-right:none;
+            }
+            &:nth-child(1){
+                width: 40px;
+            }
+            &:nth-child(2){
+                width: 180px;
+            }
+            &:nth-child(3){
+                width: 60px;
+            }
+            &:nth-child(4){
+                width: 140px;
+            }
+        }
+        tbody{
+            background: #f6f6f6;
+            padding: 11px;
+            height: 150px;
+            overflow: auto;
+            tr{
+                display: flex;
+                margin-bottom: 2px;
+                td{
+                    background: #fff;
+                    border: none;
+                    border-top: 1px solid #ddd;
+                    border-bottom: 1px solid #ddd;
+                    padding: 10px 0;
+                   
+                    >div{
+                        border-right: 1px solid #dbe4e2;
+                    }
+                    .name{
+                        color: #0a9e7d;
+                        font-weight: bold;
+                        text-align: left;
+                        padding-left: 10px; 
+                    }
+                    &:first-child{
+                        border-radius: 10px 0 0 10px;
+                        border-left: 1px solid #ddd;
+                        width: 10%;
+                    }
+                    &:nth-child(2){
+                        width: 43%;
+                    }
+                    &:nth-child(3){
+                        width: 16%;
+                    }
+                    &:last-child{
+                        border-radius: 0 10px 10px 0;
+                        border-right: 1px solid #ddd;
+                        width: 31%;
+                        >div{
+                            border-right:none;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+tbody::-webkit-scrollbar {
+    width: 8px;
+}
+tbody::-webkit-scrollbar-track {
+    background-color: #e4e4e4;
+    border-radius: 100px;
+}
+tbody::-webkit-scrollbar-thumb {
+    border-radius: 100px;
+}
+
+tbody::-webkit-scrollbar-thumb {
+    border-radius: 100px;
+    background-color: #aaa;
+}
