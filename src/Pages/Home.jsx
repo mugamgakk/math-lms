@@ -156,7 +156,6 @@ const Li = ({ ele, burger }) => {
         setMinDepth(false);
     }, [burger]);
 
-
     return (
         <div
             className={`lnb-items-warp ${minDepth ? "active" : ""}`}
@@ -166,6 +165,10 @@ const Li = ({ ele, burger }) => {
             onMouseLeave={() => {
                 setMinDepth(false);
             }}
+            // tabIndex="1"
+            // onBlur={() => {
+            //     setDepth(false);
+            // }}
         >
             <div className={`lnb-item ${location.pathname.includes(ele.href) ? "active" : ""}`}>
                 <Link to={`${ele.href}`}>
@@ -178,7 +181,6 @@ const Li = ({ ele, burger }) => {
                         onClick={() => {
                             setDepth(!depth);
                         }}
-                        onBlur={()=>{setDepth(false)}}
                     ></button>
                 )}
             </div>
