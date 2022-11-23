@@ -72,10 +72,13 @@ function UiPage() {
             <div className='mb-20'>
                 <h3 className=''>inputbox</h3>
                 <input type='text' className="textInput" placeholder='내용을 입력하세요' />
+                <input type='text' className="textInput" placeholder='내용을 입력하세요' disabled/>
                 <pre>
                     {
                         `
                             <input type='text' className="textInput" placeholder='내용을 입력하세요' />
+                            <input type='text' className="textInput" placeholder='내용을 입력하세요' disabled/>
+
                         `
                     }
                 </pre>

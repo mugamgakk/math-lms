@@ -11,6 +11,14 @@
         border: 1px solid #666;
         color: #444;
     }
+    &:disabled,
+    &.disabled
+    {
+        color: #ccc;
+        border: 1px solid #e5e5e5;
+        background: #f2f2f2;
+    }
+    
 }
 .searchInput{
     position: relative;
