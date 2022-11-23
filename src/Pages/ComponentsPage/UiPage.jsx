@@ -58,6 +58,33 @@ function UiPage() {
                 </div>
             </div>
 
+            <div>
+                <h3>Modal</h3>
+                <pre>
+                    {
+                        `
+                        <div className="modal">
+                        <div className="modal-content">
+                            <div className="modal-header fj">
+                                <h2 className='modal-title'>title</h2>
+                                <button className='btn'>
+                                    <Icon icon={"close"} />
+                                </button>
+                            </div>
+                            <div className="modal-body">
+        
+                            </div>
+                            <div className="modal-footer">
+        
+                            </div>
+                        </div>
+                    </div>
+                        `
+                    }
+
+                </pre>
+            </div>
+
             <div className='mb-20'>
                 <h3>select</h3>
                 <SelectBase/>

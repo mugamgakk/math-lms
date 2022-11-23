@@ -33,3 +33,9 @@
     color: #222;
     margin: 0 15px;
 }
+
+.ChangeMonth{
+    h4{
+        @extend .next-date;
+    }
+}

@@ -10,6 +10,8 @@ import AttendanceReason from "../modal/AttendanceReason";
 import FadeLoader from "react-spinners/FadeLoader";
 import { useEffect } from "react";
 import { useRef } from "react";
+import DateNext from "../../../components/DateNext";
+import LmsDatePicker from "../../../components/LmsDatePicker";
 
 export const Box = styled.div`
     width: 107.83px;
@@ -127,10 +129,25 @@ function AttendanceManagement() {
                 <AttendanceReason firstDay={firstDay} setModal={setModal} clickStudent={clickStudent} clickDay={clickDay} />
             )}
 
-            <header className="fj">
+            <div className="fj" style={{marginTop : "20px"}}>
+                <div className="d-flex">
+                        <ChangeMonth
+                            clickStudent={clickStudent}
+                            onChange={(ele) => {
+                                getData(ele);
+                                setFirstDay(ele);
+                            }}
+                        />
+                        <LmsDatePicker
+                            // value={date}
+                            // onChange={(day) => {
+                            //     setDate(day);
+                            // }}
+                            maxDate={new Date()}
+                        />
+                </div>
                 <div>
-                    <button
-                        className="btn"
+                    <button className="btn-grey mr-10"
                         onClick={() => {
                             let copy = [...data];
 
@@ -142,29 +159,18 @@ function AttendanceManagement() {
 
                             setData(copy);
                         }}
-                    >
-                        선택에서 출석
-                    </button>
+                    >선택 - 출석</button>
+                    <button className="btn-green"
+                        onClick={()=>{
+                            if(window.confirm("저장하시겠습니까?") === false){
+                                return 
+                            }else{
+                                saveAttendance()
+                            }
+                        }}
+                    >출결저장</button>
                 </div>
-                <ChangeMonth
-                    clickStudent={clickStudent}
-                    onChange={(ele) => {
-                        getData(ele);
-                        setFirstDay(ele);
-                    }}
-                />
-                <div>
-                    <button className="btn" onClick={()=>{
-                        if(window.confirm("저장하시겠습니까?") === false){
-                            return 
-                        }else{
-                            saveAttendance()
-                        }
-                    }}>
-                        출결저장
-                    </button>
-                </div>
-            </header>
+            </div>
             <table>
                 <thead>
                     <tr>

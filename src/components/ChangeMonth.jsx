@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import Icon from './Icon';
 
 // 현재월 첫날
 const firstDate = ()=>{
@@ -39,12 +40,13 @@ function ChangeMonth({value = firstDate(), onChange, clickStudent}) {
 
 
     return ( 
-        <div>
-            <button className='btn btn-s' onClick={()=>{changeDate(-1)}}>&lt;</button>
-            <strong>
+        <div className='ChangeMonth fa'>
+                        <button className='btn-arrow fc' onClick={()=>{changeDate(-1)}}><Icon icon={"arrowA"} style={{transform : "rotate(180deg)", color : "#888"}}/></button>
+
+            <h4>
                 {`${$y}년 ${$M + 1}월`}
-            </strong>
-            <button className='btn btn-s' onClick={()=>{changeDate(1)}}>&gt;</button>
+            </h4>
+            <button className='btn-arrow fc' onClick={()=>{changeDate(1)}}><Icon icon={"arrowA"} style={{color : "#888"}} /></button>
         </div>
      );
 }
