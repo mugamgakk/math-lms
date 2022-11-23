@@ -159,7 +159,25 @@
                 }
                 td{
                     border: none;
-                    @include flex;                    
+                    position: relative;
+                    @include flex;
+
+                    &::after{
+                        content: "";
+                        width: 1px;
+                        height: 30px;
+                        background-color: #eee;
+                        position: absolute;
+                        right: 0;
+                        top: 50%;
+                        transform: translateY(-50%);
+                    }
+
+                    &:last-child{
+                        &::after{
+                            display: none;
+                        }
+                    }
                 }
             }
             
