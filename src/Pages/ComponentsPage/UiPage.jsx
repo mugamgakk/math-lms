@@ -199,7 +199,7 @@ function UiPage() {
                         </tr>
                         <tr>
                             <td>
-                                <div>1</div>
+                                <div>2</div>
                             </td>
                             <td><div className='name'>강수학(Kangsh)</div></td>
                             <td><div>중2</div></td>
@@ -214,7 +214,6 @@ function UiPage() {
                             <td><div><button className='btn-table'>로그인</button></div></td>
                         </tr>
                   
-                      
                     </tbody>
                 </table>
                 <pre>
