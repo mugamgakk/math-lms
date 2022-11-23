@@ -28,11 +28,6 @@
             margin-bottom: 10px;
         }
 
-        tbody td:nth-child(1){
-            @include flex;
-            color: $green;
-            font-weight: 500;
-        }
     }
 
     &-footer {
@@ -60,4 +55,35 @@
     }
 }
 
+.LbtDayOption{
+    .option{
+        background-color: #f2eeeb;
+        padding: 20px;
+        margin-top: 15px;
+
+        p{
+            font-weight: 600;
+            @include font-style(18);
+            color: #664e3d;
+        }
+
+        .book-list{
+            display: flex;
+            height: 120px;
+            overflow-y: auto;
+            .title{
+                width: 146px;
+                padding: 20px 15px;
+                background-color: #e6ddd8;
+            }
+
+            .book{
+                width: 262px;
+                background-color: $white;
+                padding: 15px 5px;
+                overflow-y: auto;
+            }
+        }
+    }
+}
 

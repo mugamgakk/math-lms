@@ -1,8 +1,6 @@
 import dayjs from "dayjs";
 import React, { useState, memo } from "react";
 import LbtModal from "./modal/LbtModal";
-import DatePicker from "react-date-picker"; // 데이트 피커
-import styled from "styled-components";
 import useStudentsStore from "../../store/useStudentsStore";
 import useLbtStore from "../../store/useLbtStore";
 import LmsDatePicker from "../../components/LmsDatePicker";
@@ -10,19 +8,9 @@ import LmsDatePicker from "../../components/LmsDatePicker";
 const today = new Date();
 const oneMonthAgo = dayjs(today).subtract(1, "M").$d;
 
-const Box = styled.div`
-    width: 500px;
-    height: 70px;
-    background: #ccc;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 20px 0;
-`;
-
 const list = ["중2-1 노벰", "중2-2 엑사스", "중2-2 노벰", "중2-1 엑사스"];
 
-const LbtDayOption = memo(({dataNum})=> {
+const LbtDayOption = memo(({ dataNum }) => {
     let [value, setValue] = useState({
         startDay: oneMonthAgo,
         endDay: today,
@@ -31,8 +19,8 @@ const LbtDayOption = memo(({dataNum})=> {
     });
 
     let [createModal, setCreateModal] = useState(false);
-    let clickStudent = useStudentsStore(state=>state.clickStudent);
-    let setCreateInfo = useLbtStore(state=>state.setCreateInfo);
+    let clickStudent = useStudentsStore((state) => state.clickStudent);
+    let setCreateInfo = useLbtStore((state) => state.setCreateInfo);
 
     const checkAll = (checked) => {
         if (checked) {
@@ -53,56 +41,59 @@ const LbtDayOption = memo(({dataNum})=> {
         }
     };
 
-    const createLbt = ()=>{
-
-        if(dataNum > 50){
+    const createLbt = () => {
+        if (dataNum > 50) {
             alert("분석표가 최대 50개까지 저장됩니다. (현재 갯수 50개)");
-            return
+            return;
         }
 
-        if(value.checkList.length ===0){
+        if (value.checkList.length === 0) {
             alert("학습 분석표를 생성할 교재를 선택해주세요");
-            return 
+            return;
         }
 
         let option = {
-            name : clickStudent.um_nm,
-            age : clickStudent.school_grade,
-            date : dayjs(value.startDay).format("YYYY.MM.DD") + " ~ " +  dayjs(value.endDay).format("YYYY.MM.DD"),
-            book : [...value.checkList]
+            name: clickStudent.um_nm,
+            age: clickStudent.school_grade,
+            date:
+                dayjs(value.startDay).format("YYYY.MM.DD") +
+                " ~ " +
+                dayjs(value.endDay).format("YYYY.MM.DD"),
+            book: [...value.checkList],
         };
 
-        if(value.option === false){
+        if (value.option === false) {
             alert("학습 기간을 설정해 주세요.");
-            return 
+            return;
         }
 
         setCreateInfo(option);
         setCreateModal(true);
-    }
+    };
 
     return (
-        <div>
-            {
-                createModal && <LbtModal value={value} setCreateModal={setCreateModal}/>
-            }
-            <ol>
-                <li className="fj mb-3">
-                    1. 학습기간을 설정해 주세요.
-                    <div className="d-flex">
+        <div className="LbtDayOption">
+            {createModal && <LbtModal value={value} setCreateModal={setCreateModal} />}
+
+            <div className="option">
+                <div className="fa fj" style={{ marginBottom: "20px" }}>
+                    <p>1. 학습기간을 설정해 주세요.</p>
+                    <div className="fa">
                         <LmsDatePicker
-                            onChange={day=> setValue({ ...value, startDay: day })}
+                            onChange={(day) => setValue({ ...value, startDay: day })}
                             maxDate={today}
                             value={value.startDay}
+                            style={{ marginRight: "10px" }}
                         />
-                        ~
+                        <span style={{ marginRight: "10px" }}>~</span>
                         <LmsDatePicker
-                            onChange={day=> setValue({ ...value, endDay: day })}
+                            onChange={(day) => setValue({ ...value, endDay: day })}
                             maxDate={today}
                             value={value.endDay}
+                            style={{ marginRight: "10px" }}
                         />
                         <button
-                            className="btn"
+                            className="btn-grey"
                             onClick={() => {
                                 setValue({ ...value, option: true });
                             }}
@@ -110,14 +101,36 @@ const LbtDayOption = memo(({dataNum})=> {
                             설정
                         </button>
                     </div>
-                </li>
-                <li className="fj">
-                    2. 학습 분석표를 생성할 교재를 선택해 주세요.
+                </div>
+                <div className="fj" style={{ alignItems: "flex-start" }}>
+                    <div>
+                        <p>2. 학습 분석표를 생성할 교재를 선택해 주세요.</p>
+                        <div style={{marginTop : "54px"}}>
+                            <button
+                                className="btn-grey mr-10"
+                                onClick={() => {
+                                    setValue({
+                                        ...value,
+                                        option: false,
+                                        startDay: oneMonthAgo,
+                                        endDay: today,
+                                    });
+                                }}
+                            >
+                                초기화
+                            </button>
+                            <button className="btn-green" onClick={createLbt}>
+                                생성
+                            </button>
+                        </div>
+                    </div>
                     {value.option === false ? (
-                        <Box>학습 기간을 설정해 주세요.</Box>
+                        <p>
+                            학습 기간을 설정해 주세요.
+                        </p>
                     ) : (
                         <div className="book-list">
-                            <div>
+                            <div className="title">
                                 <label htmlFor="학습한교재">학습한 교재</label>
                                 <input
                                     type="checkbox"
@@ -128,7 +141,7 @@ const LbtDayOption = memo(({dataNum})=> {
                                     }}
                                 />
                             </div>
-                            <ul>
+                            <ul className="book">
                                 {list.map((a) => {
                                     return (
                                         <li key={a}>
@@ -147,24 +160,11 @@ const LbtDayOption = memo(({dataNum})=> {
                             </ul>
                         </div>
                     )}
-                </li>
-            </ol>
-            <div className="text-center">
-                <button
-                    className="btn"
-                    onClick={() => {
-                        setValue({ ...value, option: false, startDay : oneMonthAgo, endDay : today });
-                    }}
-                >
-                    초기화
-                </button>
-                <button className="btn" onClick={createLbt}>
-                    생성
-                </button>
+                </div>
+
             </div>
         </div>
     );
-})
+});
 
 export default LbtDayOption;
-
