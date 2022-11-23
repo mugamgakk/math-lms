@@ -14,7 +14,7 @@ const firstDate = ()=>{
     return dayjs(a);
 }
 
-function ChangeMonth({value = firstDate(), onChange, clickStudent}) {
+function ChangeMonth({value = firstDate(), onChange, clickStudent, style, className = ""}) {
 
     let [day, setDay] = useState(value)
 
@@ -40,7 +40,7 @@ function ChangeMonth({value = firstDate(), onChange, clickStudent}) {
 
 
     return ( 
-        <div className='ChangeMonth fa'>
+        <div className={`ChangeMonth fa ${className}`} style={style}>
                         <button className='btn-arrow fc' onClick={()=>{changeDate(-1)}}><Icon icon={"arrowA"} style={{transform : "rotate(180deg)", color : "#888"}}/></button>
 
             <h4>

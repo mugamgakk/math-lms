@@ -133,16 +133,13 @@ function AttendanceManagement() {
                 <div className="d-flex">
                         <ChangeMonth
                             clickStudent={clickStudent}
+                            className="mr-10"
                             onChange={(ele) => {
                                 getData(ele);
                                 setFirstDay(ele);
                             }}
                         />
                         <LmsDatePicker
-                            // value={date}
-                            // onChange={(day) => {
-                            //     setDate(day);
-                            // }}
                             maxDate={new Date()}
                         />
                 </div>
