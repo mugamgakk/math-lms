@@ -7,6 +7,7 @@ import ContentHeader from "../components/ContentHeader";
 import DateNext from "../components/DateNext";
 import Icon from "../components/Icon";
 import LmsDatePicker from "../components/LmsDatePicker";
+import SkeletonTable from "../components/SkeletonTable";
 import ClassSelect from "../components/ui/select/ClassSelect";
 import { _cloneDeep } from "../methods/methods";
 import attendanceStore from "../store/attendanceStore";
@@ -18,15 +19,18 @@ const att = [
     { value: "A", label: "결석" },
 ];
 function Attendance() {
-    const getCopyData = attendanceStore(state=>state.getCopyData);
-    const copyData = attendanceStore(state=>state.copyData);
+    const getCopyData = attendanceStore(state => state.getCopyData);
+    const copyData = attendanceStore(state => state.copyData);
 
     let [date, setDate] = useState(new Date());
     let [classList, setClassList] = useState([]);
     let [studentList, setStudentList] = useState([]);
     let [searchText, setSearchText] = useState("");
 
+    let [loading, setLoading] = useState(true);
+
     const getData = async () => {
+        setLoading(true);
         const param = {
             mode: "get_daily",
             ymd: date,
@@ -42,6 +46,7 @@ function Attendance() {
 
         setClassList(class_list);
         setStudentList(student_list);
+        setLoading(false)
     };
     useEffect(() => {
         getData();
@@ -70,6 +75,7 @@ function Attendance() {
                         onChange={(day) => {
                             setDate(day);
                         }}
+                        maxDate={new Date()}
                     />
                 </div>
                 <div className="attendence-body">
@@ -91,22 +97,30 @@ function Attendance() {
                         </button>
                     </div>
 
-                    <table>
+                    <table className='table tableA'>
                         <thead>
                             <tr>
-                                <th scope="col">학생명 (아이디)</th>
-                                <th scope="col">출결 체크</th>
-                                <th scope="col">출결 사유</th>
+                                <th scope="col" style={{width : "13%"}}>학생명 (아이디)</th>
+                                <th scope="col" style={{width : "26%"}}>출결 체크</th>
+                                <th scope="col" style={{width : "61%"}}>출결 사유</th>
+                                <th></th>
                             </tr>
                         </thead>
-                        <tbody>
-                            {studentList?.map((ele, i) => {
-                                return <Tr ele={ele} index={i} key={"index" + i} />;
-                            })}
+                        <tbody style={{maxHeight : "462px"}}>
+                            {
+                                loading
+                                ? <SkeletonTable R={7} width={["13%","26%", "61%"]}/>
+                                : (
+                                    studentList?.map((ele, i) => {
+                                        return <Tr ele={ele} index={i} key={"index" + i} />;
+                                    })
+                                )
+                            }
+                            
                         </tbody>
                     </table>
                     <div className="attendence-footer">
-                        <button type="button" className="btn-green" onClick={()=>{ console.log(copyData)}}>
+                        <button type="button" className="btn-green" onClick={() => { console.log(copyData) }}>
                             출결 내용 저장
                         </button>
                     </div>
@@ -119,41 +133,44 @@ function Attendance() {
 const Tr = memo(({ ele, index }) => {
     let [text, setText] = useState((ele.reason ??= ""));
     let [state, setSTate] = useState(ele.attd);
-    const changeCopyData = attendanceStore(state=>state.changeCopyData);
+    const changeCopyData = attendanceStore(state => state.changeCopyData);
 
     return (
         <tr>
-            <td>
+            <td style={{width : "13%"}}>
                 {ele.um_nm} ({ele.um_id})
             </td>
-            <td>
+            <td style={{width : "26%"}}>
                 {att.map((a) => {
                     return (
                         <button
                             key={a.value}
                             onClick={() => {
                                 setSTate(a.value);
-                                changeCopyData({index, attd : a.value, 속성 : "attd"})
+                                changeCopyData({ index, attd: a.value, 속성: "attd" })
                             }}
-                            
-                            className={`${a.value === state ? "btn-orange" : "btn-grey-border"}`}
+
+                            className={`mr-10 ${a.value === state ? "btn-orange" : "btn-grey-border"}`}
                         >
                             {a.label}
                         </button>
                     );
                 })}
             </td>
-            <td>
+            <td style={{width : "61%"}} className="d-flex">
                 <input
                     type="text"
                     value={text}
                     onChange={(e) => {
                         setText(e.target.value);
-                        changeCopyData({index, attd : e.target.value, 속성 : "reason"})
+                        changeCopyData({ index, attd: e.target.value, 속성: "reason" })
                     }}
                     className="textInput mr-10"
                     placeholder="내용을 입력하세요"
                 />
+                <div style={{width : "100px"}}>
+                    <button className="btn-grey-border">저장</button>
+                </div>
             </td>
         </tr>
     );

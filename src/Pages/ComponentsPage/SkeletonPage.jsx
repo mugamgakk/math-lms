@@ -30,7 +30,7 @@ function SkeletonPage() {
                     </tr>
                 </thead>
                 <tbody>
-                    {skeleton && <SkeletonTable R={4} D={4} />}
+                    {skeleton && <SkeletonTable R={4} width={["20%","20%","20%","40%"]} />}
                     {/* props로 Tr의 숫자 Td의 갯수를 넣어주면 됨 */}
 
                     {!skeleton && (

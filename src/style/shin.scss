@@ -27,6 +27,12 @@
             justify-content: flex-end;
             margin-bottom: 10px;
         }
+
+        tbody td:nth-child(1){
+            @include flex;
+            color: $green;
+            font-weight: 500;
+        }
     }
 
     &-footer {

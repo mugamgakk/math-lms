@@ -74,7 +74,7 @@ function StudentsSearch({children}) {
                     />
                     <input type='text'
                         className="textInput"
-                        placeholder='내용을 입력하세요'
+                        placeholder='학생명을 입력하세요'
                         style={{ width: "50%", margin: "0 4px" }}
                         value={nameSearch}
                         onChange={(e) => {
@@ -90,7 +90,35 @@ function StudentsSearch({children}) {
                 </div>
             </header>
             <div className="student-list-body">
-                    <table>
+
+            <table className='table tableB'>
+                <thead>
+                    <tr>
+                        <th style={{width : "9.52380%"}}>번호</th>
+                        <th style={{width : "42.85714%"}}>이름(아이디)</th>
+                        <th style={{width : "14.28571%"}}>학년</th>
+                        <th style={{width : "33.33333%"}}>학생 화면</th>
+                    </tr>
+                </thead>
+
+                <tbody style={{ maxHeight: "550px" }}>
+
+                            {userList?.map((res, i) => {
+                                return <Tr res={res} key={res.usr_seq} index={i} getUser={getUser} clickStudent={clickStudent} />
+                            })}
+                        </tbody>
+{/* 
+                <tbody>
+                    <tr>
+                        <td><div>1</div></td>
+                        <td><div className='name'>강수학(Kangsh)</div></td>
+                        <td><div>중2</div></td>
+                        <td><div><button className='btn-table'>로그인</button></div></td>
+                    </tr>
+                </tbody> */}
+            </table>
+
+                    {/* <table>
                         <thead>
                             <tr>
                                 <th style={{ width: "20%" }}>No.</th>
@@ -106,7 +134,7 @@ function StudentsSearch({children}) {
                                 return <Tr res={res} key={res.usr_seq} index={i} getUser={getUser} clickStudent={clickStudent} />
                             })}
                         </tbody>
-                    </table>
+                    </table> */}
 
                     {userList?.length === 0 && <div className="text-center">학생이 없습니다</div>}
 
@@ -134,22 +162,34 @@ const Tr = memo(({ res, clickStudent, getUser, index }) => {
         <tr
             style={res.usr_seq === clickStudent?.usr_seq ? { backgroundColor: "#dee2e6" } : {}}
         >
-            <td style={{ width: "20%" }}>{index + 1}</td>
+            <td style={{width : "9.52380%"}}>
+                <div>
+                {index + 1}
+                </div>
+            </td>
             <td
-                style={{ cursor: "pointer", width: "30%" }}
+                style={{ cursor: "pointer", width: "42.85714%" }}
                 onClick={() => {
                     getUser(res);
                 }}
             >
+                <div>
                 {res.um_nm}(
                 {res.um_id.length > 7
                     ? res.um_id.substr(0, 5) + ".".repeat(3)
                     : res.um_id}
                 )
+                </div>
             </td>
-            <td style={{ width: "20%" }}>{res.school_grade}</td>
-            <td style={{ width: "30%" }}>
-                <button className="btn-green">로그인</button>
+            <td style={{width : "14.28571%"}}>
+                <div>
+                    {res.school_grade}
+                </div>
+            </td>
+            <td style={{width : "33.33333%"}}>
+                <div>
+                <button className="btn-table">로그인</button>
+                </div>
             </td>
         </tr>
     )
