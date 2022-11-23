@@ -21,15 +21,34 @@ import Ui from "./Pages/ComponentsPage/UiPage";
 
 import Authentication from "./components/Authentication";
 import Attendance from "./Pages/Attendance";
-import DetailClass from "./Pages/DetailClass";
-import PlusLearning from "./Pages/PlusLearning";
-import TodayClass from "./Pages/TodayClass";
-import Evaluation from "./Pages/Evaluation";
-import Statistics from "./Pages/Statistics";
-import Reference from "./Pages/ReferenceNotification";
-import { lazy } from "react";
 
-const ErrorPage = lazy(() => import("./Pages/ErrorPage.jsx"))
+import TodayClass from "./Pages/TodayClass";
+
+//학생별 수업관리
+import DetailClass from "./Pages/DetailClass";
+import ClassManagement from "./Pages/DetailClass/classTabs/ClassManagement";
+import WrongAnswerMaster from "./Pages/DetailClass/classTabs/WrongAnswerMaster";
+import LearningBreakdownTable from "./Pages/DetailClass/classTabs/LearningBreakdownTable";
+import AttendanceManagement from "./Pages/DetailClass/classTabs/AttendanceManagement";
+
+// 플러스 학습
+import PlusLearning from "./Pages/PlusLearning";
+import Narrative from "./Pages/PlusLearning/Narrative";
+import TextBook from "./Pages/PlusLearning/TextBook";
+
+// 평가관리
+import Evaluation from "./Pages/Evaluation";
+import EvaluationRoutine from "./Pages/Evaluation/EvaluationRoutine";
+import EvaluationJindan from "./Pages/Evaluation/EvaluationJindan";
+
+// 자료 및 알림
+import DataService from "./Pages/DataService";
+import Reference from "./Pages/ReferenceNotification/Reference";
+import Notification from "./Pages/ReferenceNotification/Notification";
+
+import Statistics from "./Pages/Statistics";
+
+import ErrorPage from "./Pages/ErrorPage.jsx";
 
 function App() {
 
@@ -38,12 +57,26 @@ function App() {
             <Routes>
                 <Route path="/" element={<Authentication />}>
                     <Route path="attendance" element={<Attendance />} />
-                    <Route path="detail-class" element={<DetailClass />} />
-                    <Route path="plus-learning" element={<PlusLearning />} />
                     <Route path="today-class" element={<TodayClass />} />
-                    <Route path="evaluation" element={<Evaluation />} />
+                    <Route path="detail-class" element={<DetailClass />}>
+                        <Route path="management" element={<ClassManagement />} />
+                        <Route path="wrong-answer" element={<WrongAnswerMaster />} />
+                        <Route path="table" element={<LearningBreakdownTable />} />
+                        <Route path="attend" element={<AttendanceManagement />} />
+                    </Route>
+                    <Route path="plus-learning" element={<PlusLearning />}>
+                        <Route path="narrative" element={<Narrative/>}/>
+                        <Route path="textBook" element={<TextBook/>}/>
+                    </Route>
+                    <Route path="evaluation" element={<Evaluation />}>
+                        <Route path="routine" element={<EvaluationRoutine/>}/>
+                        <Route path="jindan" element={<EvaluationJindan/>}/>
+                    </Route>
+                    <Route path="data-service" element={<DataService />}>
+                        <Route path="reference" element={<Reference/>}/>
+                        <Route path="notification" element={<Notification/>}/>
+                    </Route>
                     <Route path="statistics" element={<Statistics />} />
-                    <Route path="Reference" element={<Reference />} />
                 </Route>
 
                 <Route path="/components" element={<Components />}>
