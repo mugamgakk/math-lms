@@ -5,7 +5,7 @@
             width: 100%;
             display:flex;
             border-top: 2px solid #664e3d;
-            border-bottom: 2px solid #664e3d;
+            border-bottom: 2px solid #a19893;
             th{
                 @include font-style(17);
                 color: #664e3d;
@@ -17,6 +17,7 @@
     tbody{
         display: block;
         overflow-y: scroll;
+        overflow-x: hidden;
     }
     
     &.tableA{
@@ -129,6 +130,7 @@
             background: #f6f6f6;
             padding: 11px;
             overflow-y: scroll;
+            overflow-x: hidden;
             tr{
                 display: flex;
                 margin-bottom: 2px;
