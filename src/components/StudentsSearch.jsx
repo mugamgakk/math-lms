@@ -160,7 +160,7 @@ const Tr = memo(({ res, clickStudent, getUser, index }) => {
 
     return (
         <tr
-            style={res.usr_seq === clickStudent?.usr_seq ? { backgroundColor: "#dee2e6" } : {}}
+            className={res.usr_seq === clickStudent?.usr_seq ? "active" : ""}
         >
             <td style={{width : "9.52380%"}}>
                 <div>

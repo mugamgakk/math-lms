@@ -141,62 +141,23 @@
                 display: flex;
                 margin-bottom: 2px;
                 position: relative;
+                background-color: #fff;
+                border: 1px solid #ddd;
+                border-radius: $radius;
+                height: 50px;
+
                 cursor: pointer;
+
                 &:hover,
                 &.active{
-                    &::before{
-                        content:'';
-                        display: block;
-                        position: absolute;
-                        left: 0;
-                        top: 0;
-                        width: calc(100% - 4px);
-                        height: 93%;
-                        border-radius: 5px;
-                        border: 2px solid #ea7851;
-                    }
+                    border: solid 2px #ea7851;
                     td{
                     background: #ffeee8;
                     }
                 }
                 td{
-                    background: #fff;
                     border: none;
-                    border-top: 1px solid #ddd;
-                    border-bottom: 1px solid #ddd;
-                    padding: 10px 0;
-                   .btn-table{
-                    position: relative;
-                    z-index: 1;
-                   }
-                    >div{
-                        border-right: 1px solid #dbe4e2;
-                    }
-                    .name{
-                        color: #0a9e7d;
-                        font-weight: bold;
-                        text-align: left;
-                        padding-left: 10px; 
-                    }
-                    &:first-child{
-                        border-radius: 5px 0 0 5px;
-                        border-left: 1px solid #ddd;
-                        width: 10%;
-                    }
-                    &:nth-child(2){
-                        width: 43%;
-                    }
-                    &:nth-child(3){
-                        width: 16%;
-                    }
-                    &:last-child{
-                        border-radius: 0 5px 5px 0;
-                        border-right: 1px solid #ddd;
-                        width: 31%;
-                        >div{
-                            border-right:none;
-                        }
-                    }
+                    @include flex;                    
                 }
             }
             
