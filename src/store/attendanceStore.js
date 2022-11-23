@@ -1,26 +1,16 @@
 import create from "zustand";
-import ajax from "../ajax";
 
 const attendanceStore = create((set) => ({
-    date: new Date(),
-    classList: [],
-    studentList: [],
-    copyStudentList: [],
-    searchText: "",
-    getList: async ({date, searchText, classList}) => {
-        const param = {
-            mode: "get_daily",
-            ymd: date,
-            class_cd: classList,
-            qstr: searchText,
-        };
+    copyData : [],
+    getCopyData : (param)=> set (state=> ({copyData : param})),
+    changeCopyData : ({index, attd, 속성})=> {
+        return set (state=> {
 
-        let res = await ajax("class_daily.php", { data: param });
+            state.copyData[index][속성] = attd;
 
-        const { class_list, student_list } = res.data;
-
-        return set((state) => ({ classList: class_list, studentList: student_list, copyStudentList :  student_list}));
-    },
+           return ({copyData :state.copyData})
+        })
+    }
 }));
 
 export default attendanceStore;

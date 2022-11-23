@@ -1,0 +1,21 @@
+.alert-box{
+    background-color: #f2eeeb;
+    height: 140px;
+    padding: 20px;
+    color: #444;
+    @include flex(center,start);
+    flex-direction: column;
+
+    h4{
+        font-weight: 600;
+    }
+
+    strong{
+        color: #eb615a;
+        margin-right: 5px;
+    }
+
+    p{
+        font-weight: 400;
+    }
+}

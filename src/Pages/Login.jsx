@@ -47,7 +47,7 @@ function Login() {
                 // 로그인 완료
                 case 1:
                     localStorage.setItem("GplumMathIsLogin", "true");
-                    window.location = "/";
+                    window.location = "/attendance";
                     break;
                 // 로그인 중복
                 case -2:
@@ -59,7 +59,7 @@ function Login() {
                             data: data,
                         }).then((res) => {
                             localStorage.setItem("GplumMathIsLogin", "true");
-                            window.location = "/";
+                            window.location = "/attendance";
                         });
                     } else {
                         return;
@@ -67,7 +67,7 @@ function Login() {
                     break;
                 case -1:
                     localStorage.setItem("GplumMathIsLogin", "true");
-                    window.location = "/";
+                    window.location = "/attendance";
                     break;
                 case 0:
                     alert(res.data.msg);

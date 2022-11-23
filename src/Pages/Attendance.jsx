@@ -1,18 +1,50 @@
 import React from "react";
 import { useEffect } from "react";
+import { memo } from "react";
 import { useState } from "react";
+import ajax from "../ajax";
 import ContentHeader from "../components/ContentHeader";
 import DateNext from "../components/DateNext";
 import Icon from "../components/Icon";
 import LmsDatePicker from "../components/LmsDatePicker";
 import ClassSelect from "../components/ui/select/ClassSelect";
+import { _cloneDeep } from "../methods/methods";
 import attendanceStore from "../store/attendanceStore";
 
+const att = [
+    { value: "P", label: "출석" },
+    { value: "L", label: "지각" },
+    { value: "E", label: "조퇴" },
+    { value: "A", label: "결석" },
+];
 function Attendance() {
-    const { date, classList, studentList, searchText, getList } = attendanceStore((state) => state);
+    const getCopyData = attendanceStore(state=>state.getCopyData);
+    const copyData = attendanceStore(state=>state.copyData);
 
+    let [date, setDate] = useState(new Date());
+    let [classList, setClassList] = useState([]);
+    let [studentList, setStudentList] = useState([]);
+    let [searchText, setSearchText] = useState("");
+
+    const getData = async () => {
+        const param = {
+            mode: "get_daily",
+            ymd: date,
+            class_cd: classList,
+            qstr: searchText,
+        };
+
+        let res = await ajax("class_daily.php", { data: param });
+
+        const { class_list, student_list } = res.data;
+
+        getCopyData(_cloneDeep(student_list));
+
+        setClassList(class_list);
+        setStudentList(student_list);
+    };
     useEffect(() => {
-        getList({ date, searchText, classList });
+        getData();
     }, []);
 
     return (
@@ -26,8 +58,19 @@ function Attendance() {
 
             <div className="attendence bg">
                 <div className="attendence-head d-flex">
-                    <DateNext value={date} style={{ marginRight: "4px" }} />
-                    <LmsDatePicker value={date} />
+                    <DateNext
+                        value={date}
+                        onChange={(day) => {
+                            setDate(day);
+                        }}
+                        style={{ marginRight: "4px" }}
+                    />
+                    <LmsDatePicker
+                        value={date}
+                        onChange={(day) => {
+                            setDate(day);
+                        }}
+                    />
                 </div>
                 <div className="attendence-body">
                     <div className="search">
@@ -57,13 +100,13 @@ function Attendance() {
                             </tr>
                         </thead>
                         <tbody>
-                            {studentList.map((ele, i) => {
-                                return <Tr ele={ele} key={"index" + i} />;
+                            {studentList?.map((ele, i) => {
+                                return <Tr ele={ele} index={i} key={"index" + i} />;
                             })}
                         </tbody>
                     </table>
                     <div className="attendence-footer">
-                        <button type="button" className="btn-green">
+                        <button type="button" className="btn-green" onClick={()=>{ console.log(copyData)}}>
                             출결 내용 저장
                         </button>
                     </div>
@@ -73,23 +116,47 @@ function Attendance() {
     );
 }
 
-const Tr = ({ ele }) => {
+const Tr = memo(({ ele, index }) => {
+    let [text, setText] = useState((ele.reason ??= ""));
+    let [state, setSTate] = useState(ele.attd);
+    const changeCopyData = attendanceStore(state=>state.changeCopyData);
+
     return (
         <tr>
             <td>
                 {ele.um_nm} ({ele.um_id})
             </td>
             <td>
-                <button className="btn-grey-border">출석</button>
-                <button className="btn-grey-border">지각</button>
-                <button className="btn-grey-border">조퇴</button>
-                <button className="btn-grey-border">결석</button>
+                {att.map((a) => {
+                    return (
+                        <button
+                            key={a.value}
+                            onClick={() => {
+                                setSTate(a.value);
+                                changeCopyData({index, attd : state, 속성 : "attd"})
+                            }}
+                            
+                            className={`${a.value === state ? "btn-orange" : "btn-grey-border"}`}
+                        >
+                            {a.label}
+                        </button>
+                    );
+                })}
             </td>
             <td>
-                <input type="text" className="textInput mr-10" placeholder="내용을 입력하세요" />
+                <input
+                    type="text"
+                    value={text}
+                    onChange={(e) => {
+                        setText(e.target.value);
+                        changeCopyData({index, attd : text, 속성 : "reason"})
+                    }}
+                    className="textInput mr-10"
+                    placeholder="내용을 입력하세요"
+                />
             </td>
         </tr>
     );
-};
+});
 
 export default Attendance;

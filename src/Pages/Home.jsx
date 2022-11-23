@@ -157,7 +157,7 @@ const Li = ({ ele, burger }) => {
                         {
 
                             ele.depth?.map(a => {
-                                return (<div className="depth">
+                                return (<div className="depth" key={a.href}>
                                     <Link to={`/${a.href}`}>
 
                                         <p className="item new">
