@@ -178,6 +178,7 @@ const Li = ({ ele, burger }) => {
                         onClick={() => {
                             setDepth(!depth);
                         }}
+                        onBlur={()=>{setDepth(false)}}
                     ></button>
                 )}
             </div>

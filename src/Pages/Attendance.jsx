@@ -133,7 +133,7 @@ const Tr = memo(({ ele, index }) => {
                             key={a.value}
                             onClick={() => {
                                 setSTate(a.value);
-                                changeCopyData({index, attd : state, 속성 : "attd"})
+                                changeCopyData({index, attd : a.value, 속성 : "attd"})
                             }}
                             
                             className={`${a.value === state ? "btn-orange" : "btn-grey-border"}`}
@@ -149,7 +149,7 @@ const Tr = memo(({ ele, index }) => {
                     value={text}
                     onChange={(e) => {
                         setText(e.target.value);
-                        changeCopyData({index, attd : text, 속성 : "reason"})
+                        changeCopyData({index, attd : e.target.value, 속성 : "reason"})
                     }}
                     className="textInput mr-10"
                     placeholder="내용을 입력하세요"

@@ -236,7 +236,12 @@
         }
 
         .lnb-item__depth{
-            display: none;
+            // display: none;
+            max-height: 0px;
+            transition: max-height 0.6s;
+            overflow: hidden;
+
+
             padding: 0 10px;
             & > div{
                 padding: 15px;
@@ -247,7 +252,8 @@
             }
 
             &.active{
-                display: block
+                max-height : 170px;
+                // display: block
             }
 
             .depth{
