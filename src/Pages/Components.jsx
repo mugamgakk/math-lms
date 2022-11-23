@@ -9,7 +9,7 @@ function Components() {
     });
 
     return (
-        <div className="container">
+        <div className="__components-container">
             <ul className='row'>
                 <li style={{marginRight : "20px"}}><Link to="/">Home</Link></li>
                 <li style={{marginRight : "20px"}}><Link to="/components/prismazoom">이미지 축소 확대</Link></li>
@@ -29,6 +29,15 @@ function Components() {
             </ul>
           <Outlet/>
             
+            <style>
+{`
+    .__components-container{
+        width : 1200px;
+        margin : 0 auto
+    }
+`}
+
+            </style>
         </div>
     );
 }

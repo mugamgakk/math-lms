@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { useCallback } from "react";
-import { Outlet, Link, useNavigate, useLocation } from "react-router-dom";
+import { Outlet, Link, useNavigate, useLocation, Navigate } from "react-router-dom";
 import ajax from "../ajax";
 import { _each, _map } from "../methods/methods";
 import LnbLookup from "./Home/LnbLookup";
@@ -90,6 +90,8 @@ function Home() {
 
     return (
         <main id="main">
+            {location.pathname === "/" && <Navigate to="/attendance" />}
+
             <header id="header">
                 <div className="header-layout">
                     <img src={logo} alt="logo" className="logo" />
