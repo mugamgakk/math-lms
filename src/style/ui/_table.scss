@@ -131,6 +131,7 @@
                 }
             }
         }
+    
         tbody{
             background: #f6f6f6;
             padding: 11px;
@@ -140,27 +141,23 @@
                 display: flex;
                 margin-bottom: 2px;
                 position: relative;
-                &:hover{
-                    cursor: pointer;
-                      &::before{
+                cursor: pointer;
+                &:hover,
+                &.active{
+                    &::before{
                         content:'';
                         display: block;
                         position: absolute;
                         left: 0;
                         top: 0;
-                        width: 99%;
+                        width: calc(100% - 4px);
                         height: 93%;
-                        border: 2px solid #ea7851;
                         border-radius: 5px;
-                        z-index: 1;
-                      }
-                      td{
-                        background: #ffeee8;
-                        .btn-table{
-                            position: relative;
-                            z-index: 2;
-                        }
-                      }
+                        border: 2px solid #ea7851;
+                    }
+                    td{
+                    background: #ffeee8;
+                    }
                 }
                 td{
                     background: #fff;
@@ -168,7 +165,10 @@
                     border-top: 1px solid #ddd;
                     border-bottom: 1px solid #ddd;
                     padding: 10px 0;
-                   
+                   .btn-table{
+                    position: relative;
+                    z-index: 1;
+                   }
                     >div{
                         border-right: 1px solid #dbe4e2;
                     }
@@ -199,8 +199,33 @@
                     }
                 }
             }
+            
         }
     }
+}
+.tableC{
+    thead{
+        border-top: 2px solid #664e3d;
+        border-bottom: 2px solid #a19893;
+        tr{
+            &:first-child{
+                border-bottom: 1px solid #cfbfb7;
+            }
+            th{
+                border: none;
+                @include font-style(17);
+                color: #664e3d;
+                background: #e6ddd8;
+                border-right: 1px solid #cfbfb7;
+            }
+        }
+    }
+}
+.bb{
+    border-bottom: 1px solid #cfbfb7;
+}
+.br{
+    border-right: 1px solid #cfbfb7;
 }
 tbody::-webkit-scrollbar {
     width: 8px;

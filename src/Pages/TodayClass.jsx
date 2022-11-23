@@ -75,13 +75,13 @@ function TodayClass(){
                             ><Icon icon={"reload"}/>새로고침</button>
                         </div>
                     </header>  
-                    <table className=''>
+                    <table className='tableC'>
                         <thead>
                             <tr>
                                 <th rowSpan={2}>학생명 (아이디)</th>
                                 <th rowSpan={2}>교재</th>
                                 <th rowSpan={2}>단원</th>
-                                <th rowSpan={2} colSpan={5}>수행 현황</th>
+                                <th colSpan={5} className='bb'>수행 현황</th>
                                 <th rowSpan={2}>학습 완료</th>
                             </tr>
                             <tr>
@@ -89,7 +89,7 @@ function TodayClass(){
                                 <th>개념 확인</th>
                                 <th>개념 설명</th>
                                 <th>유형 학습</th>
-                                <th>맞춤 클리닉</th>
+                                <th className="br">맞춤 클리닉</th>
                             </tr>
                         </thead>
                     </table>

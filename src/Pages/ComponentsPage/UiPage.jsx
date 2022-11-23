@@ -2,8 +2,10 @@ import React from 'react';
 import SelectBase from '../../components/ui/select/SelectBase';
 import Checkbox from '../../components/Checkbox';
 import Icon from "../../components/Icon";
+import { useState } from 'react';
 
 function UiPage() {
+
     return (
         <div style={{ padding: '10px 20px' }}>
 
@@ -193,7 +195,7 @@ function UiPage() {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr className='active'>
                             <td><div>1</div></td>
                             <td><div className='name'>강수학(Kangsh)</div></td>
                             <td><div>중2</div></td>
@@ -223,7 +225,7 @@ function UiPage() {
                 `
             <table className='table tableB'>
                 <thead>
-                    <tr>
+                    <tr className='active'>
                         <th>번호</th>
                         <th>이름(아이디)</th>
                         <th>학년</th>
