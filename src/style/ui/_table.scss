@@ -57,10 +57,15 @@
             }
         }
         tbody{
+            border-bottom: 1px solid #ddd;
             tr{
                 width: 100%;
                 display: flex;
-
+                &:last-child{
+                    td{
+                        border-bottom: none;
+                    }
+                }
                 td{
                     border: none;
                     border-right:1px solid #dee2e6;

@@ -87,7 +87,6 @@ function TodayClass(){
                             <tr>
                                 <th></th>
                                 <th></th>
-                                <th></th>
                                 <th>개념 강의</th>
                                 <th>개념 확인</th>
                                 <th>개념 설명</th>
