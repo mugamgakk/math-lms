@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { useEffect } from 'react';
 import SearchBtn from '../../components/ui/button/SearchBtn';
 import ClassSelect from '../../components/ui/select/ClassSelect';
-
+import Icon from '../../components/Icon';
 
 function TodayClassSearch({data,setFindList,option = []}) {
     
@@ -50,7 +50,7 @@ function TodayClassSearch({data,setFindList,option = []}) {
             <ClassSelect width={"200px"} value={sel} onChange={ele=>{ setSel(ele) }} options={option} />
             <input
                 type="text"
-                className="textInput mr-10"
+                className="textInput mr-10 ml-10"
                 placeholder="학생"
                 style={{ width: "200px" }}
                 value={search}
@@ -62,7 +62,8 @@ function TodayClassSearch({data,setFindList,option = []}) {
                 onChange={(e)=>{
                     setSearch(e.target.value);
                 }} />
-            <SearchBtn onClick={findUser}/>
+                <button type='button' className='btn-search btn-green mr-10' onClick={findUser}><Icon icon={"search"} />검색</button>
+
         </div>
      );
 }

@@ -174,10 +174,9 @@ function UiPage() {
                     </tbody>
                 </table>   
 
-                    ① table 넓이 고정값 주기
-                    ② 가상 th 하나 추가
-                    ③ 스크롤 width: 8px
-                    ④ th, td 넓이단위 %
+                    ① 가상 th 하나 추가
+                    ② 스크롤 width: 8px
+                    ③ th, td 넓이단위 %
                 `
                 }
             </pre>
