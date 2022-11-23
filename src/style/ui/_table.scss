@@ -137,6 +137,8 @@
             padding: 11px;
             overflow-y: scroll;
             overflow-x: hidden;
+            border-bottom: 1px solid #ddd;
+
             tr{
                 display: flex;
                 margin-bottom: 2px;
