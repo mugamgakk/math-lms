@@ -203,6 +203,7 @@
             height: 20px;
             margin-left: 40px;
             position: relative;
+            
             &::before{
                 content: "";
                 width: 3px;
@@ -330,12 +331,13 @@
 
         &.active{
             position: relative;
+            
             .lnb-item__depth{
                 position: absolute;
                 display: block;
                 z-index: 1;
                 top: -15px;
-                left: 80px;
+                left: 180px;
                 padding: 15px 0;
 
                 .depth{

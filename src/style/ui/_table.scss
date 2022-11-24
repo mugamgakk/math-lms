@@ -159,6 +159,7 @@
                 td{
                     border: none;
                     @include flex;
+                    position: relative;
 
                     &::after{
                         content: "";

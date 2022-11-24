@@ -17,6 +17,15 @@
 .text-orange{
     color: $orange;
 }
+.text-alery{
+    color: $alert;
+}
+
+.alert-text{
+    @include font-style;
+    font-weight: 600;
+    color: $alert;
+}
 
 .sr-only{
     width: 1px;

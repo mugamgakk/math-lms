@@ -223,26 +223,26 @@ function UiPage() {
                     </thead>
                     <tbody>
                         <tr className='active'>
-                            <td><div>1</div></td>
-                            <td><div className='name'>강수학(Kangsh)</div></td>
-                            <td><div>중2</div></td>
-                            <td><div><button className='btn-table'>로그인</button></div></td>
+                            <td>1</td>
+                            <td>강수학(Kangsh)</td>
+                            <td>중2</td>
+                            <td><button className='btn-table'>로그인</button></td>
                         </tr>
                         <tr>
                             <td>
-                                <div>2</div>
+                                2
                             </td>
-                            <td><div className='name'>강수학(Kangsh)</div></td>
-                            <td><div>중2</div></td>
-                            <td><div><button className='btn-table'>로그인</button></div></td>
+                            <td>강수학(Kangsh)</td>
+                            <td>중2</td>
+                            <td><button className='btn-table'>로그인</button></td>
                         </tr>
                         <tr>
                             <td>
-                                <div>1</div>
+                                1
                             </td>
-                            <td><div className='name'>강수학(Kangsh)</div></td>
-                            <td><div>중2</div></td>
-                            <td><div><button className='btn-table'>로그인</button></div></td>
+                            <td>강수학(Kangsh)</td>
+                            <td>중2</td>
+                            <td><button className='btn-table'>로그인</button></td>
                         </tr>
                   
                     </tbody>

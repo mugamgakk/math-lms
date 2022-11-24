@@ -4,6 +4,7 @@ import LbtModal from "./modal/LbtModal";
 import useStudentsStore from "../../store/useStudentsStore";
 import useLbtStore from "../../store/useLbtStore";
 import LmsDatePicker from "../../components/LmsDatePicker";
+import Checkbox from "../../components/Checkbox";
 
 const today = new Date();
 const oneMonthAgo = dayjs(today).subtract(1, "M").$d;
@@ -131,27 +132,29 @@ const LbtDayOption = memo(({ dataNum }) => {
                     ) : (
                         <div className="book-list">
                             <div className="title">
-                                <label htmlFor="학습한교재">학습한 교재</label>
-                                <input
-                                    type="checkbox"
-                                    id="학습한교재"
-                                    checked={list.length === value.checkList.length}
-                                    onChange={(e) => {
-                                        checkAll(e.target.checked);
-                                    }}
+                                <label htmlFor="학습한교재" className="mr-10">학습한 교재</label>
+                                <Checkbox
+                                id="학습한교재"
+                                color="orange"
+                                checked={list.length === value.checkList.length}
+                                onChange={(e) => {
+                                    checkAll(e.target.checked);
+                                }}
                                 />
                             </div>
                             <ul className="book">
                                 {list.map((a) => {
                                     return (
                                         <li key={a}>
-                                            <input
+                                            <Checkbox
                                                 type="checkbox"
+                                                color="orange"
                                                 id={a}
                                                 checked={value.checkList.includes(a)}
                                                 onChange={(e) => {
                                                     oneCheck(e.target.checked, a);
                                                 }}
+                                                className="mr-10"
                                             />
                                             <label htmlFor={a}>{a}</label>
                                         </li>

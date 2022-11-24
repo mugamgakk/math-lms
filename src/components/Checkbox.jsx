@@ -7,9 +7,9 @@ const guidGenerator = ()=>{
     return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
 }
 
-function Checkbox({ color = "green", id = guidGenerator(), checked, onChange, disabled }) {
+function Checkbox({ color = "green", id = guidGenerator(), checked, onChange, disabled, className="" }) {
     return (
-        <div className={"check-" + color}>
+        <div className={`check-${color} ${className}`}>
             <input
                 type="checkbox"
                 id={id}
