@@ -8,9 +8,7 @@ import useStudentsStore from "../../../store/useStudentsStore";
 import AttendanceDay from "../AttendanceDay";
 import AttendanceReason from "../modal/AttendanceReason";
 import FadeLoader from "react-spinners/FadeLoader";
-import { useEffect } from "react";
 import { useRef } from "react";
-import DateNext from "../../../components/DateNext";
 import LmsDatePicker from "../../../components/LmsDatePicker";
 
 export const Box = styled.div`
@@ -25,21 +23,21 @@ export const Box = styled.div`
 const override = {
     position: "absolute",
     left: "50%",
-    top: "50%",
-    transform: "translate(-50%, -50%)"
-  }
+    top: "200px",
+    transform: "translateY(-50%)"
+}
 
-  const bg = {
-    position : "absolute", 
-    left: 0, 
-    top: 0, 
-    width: "100%", 
-    height : "100%",
-    backgroundColor : "rgba(0,0,0,0.3)",
-    zIndex : 1
-  }
+const bg = {
+    position: "absolute",
+    left: 0,
+    top: 0,
+    width: "100%",
+    height: "100%",
+    backgroundColor: "rgba(256,256,256,0.6)",
+    zIndex: 1
+}
 
-  
+
 
 function AttendanceManagement() {
     const clickStudent = useStudentsStore((state) => state.clickStudent);
@@ -96,8 +94,8 @@ function AttendanceManagement() {
         }
 
         setData(dataArr);
-        setTimeout(()=>{setSpin(false)},300)
-        
+        setTimeout(() => { setSpin(false) }, 300)
+
     };
 
     // 저장
@@ -131,19 +129,20 @@ function AttendanceManagement() {
                 <AttendanceReason firstDay={firstDay} setModal={setModal} clickStudent={clickStudent} clickDay={clickDay} />
             )}
 
-            <div className="fj" style={{marginTop : "20px"}}>
+            <div className="AttendanceManagement-header" style={{ marginTop: "20px" }}>
                 <div className="d-flex">
-                        <ChangeMonth
-                            clickStudent={clickStudent}
-                            className="mr-10"
-                            onChange={(ele) => {
-                                getData(ele);
-                                setFirstDay(ele);
-                            }}
-                        />
-                        <LmsDatePicker
-                            maxDate={new Date()}
-                        />
+                    <ChangeMonth
+                        clickStudent={clickStudent}
+                        className="mr-10"
+                        onChange={(ele) => {
+                            getData(ele);
+                            setFirstDay(ele);
+                        }}
+                    />
+                    <LmsDatePicker
+                        maxDate={new Date()}
+                        maxDetail={"year"}
+                    />
                 </div>
                 <div>
                     <button className="btn-grey mr-10"
@@ -160,42 +159,30 @@ function AttendanceManagement() {
                         }}
                     >선택 - 출석</button>
                     <button className="btn-green"
-                        onClick={()=>{
-                            if(window.confirm("저장하시겠습니까?") === false){
-                                return 
-                            }else{
+                        onClick={() => {
+                            if (window.confirm("저장하시겠습니까?") === false) {
+                                return
+                            } else {
                                 saveAttendance()
                             }
                         }}
                     >출결저장</button>
                 </div>
             </div>
-            <table className='table tableB'>
-                    <thead>
-                        <tr>
-                            <th style={{width : "14.2857%"}}>Sun</th>
-                            <th style={{width : "14.2857%"}}>Mon</th>
-                            <th style={{width : "14.2857%"}}>Tus</th>
-                            <th style={{width : "14.2857%"}}>Wed</th>
-                            <th style={{width : "14.2857%"}}>Thu</th>
-                            <th style={{width : "14.2857%"}}>Fri</th>
-                            <th style={{width : "14.2857%"}}>Sat</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                </table>   
-            <div style={{ display: "flex", flexWrap: "wrap", position: "relative" }}>
-                {
-                    spin && (
-                        <div style={bg}>
-                            <FadeLoader color={"#fff"} cssOverride={override} size={150} />
-                        </div>
-                    )
-                }
-                
 
-                <BeforeMonth firstDay={firstDay} />
-                {
+            <div className="lms-calendar">
+                <div className="lms-calendar-header">
+                        <div className="D">Sun</div>
+                        <div className="D">Mon</div>
+                        <div className="D">Tus</div>
+                        <div className="D">Wed</div>
+                        <div className="D">Thu</div>
+                        <div className="D">Fri</div>
+                        <div className="D">Sat</div>
+                </div>
+                <div className="lms-calendar-body">
+                        <BeforeMonth firstDay={firstDay} />
+                        {
                     data && data.map((a, i) => {
                         return (
                             <AttendanceDay
@@ -210,6 +197,14 @@ function AttendanceManagement() {
                 }
 
                 <NextMonth firstDay={firstDay} />
+                </div>
+            {
+                spin && (
+                    <div style={bg}>
+                        <FadeLoader color={"#00A37F"} cssOverride={override} size={150} />
+                    </div>
+                )
+            }
             </div>
         </>
     );
@@ -226,9 +221,11 @@ const BeforeMonth = memo(({ firstDay }) => {
     let arr = [];
     for (let i = prevDate - prevDay; i <= prevDate; i++) {
         arr.push(
-            <Box key={i} bg="#eee">
+            <div key={i} className="day not-day">
+                <div className="num">
                 {i}
-            </Box>
+                </div>
+            </div>
         );
     }
 
@@ -249,9 +246,11 @@ const NextMonth = memo(({ firstDay }) => {
     let arr = [];
     for (let i = 1; i <= 7 - (prevDay + 1); i++) {
         arr.push(
-            <Box key={i} bg="#eee">
+            <div key={i} className="day not-day">
+                <div className="num">
                 {i}
-            </Box>
+                </div>
+            </div>
         );
     }
 

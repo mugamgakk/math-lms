@@ -124,3 +124,20 @@
     }
 }
 
+.AttendanceManagement-header{
+    position: relative;
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    &::after{
+        content: "";
+        height: 1px;
+        background-color: #eee;
+        position: absolute;
+        left: -30px;
+        width: calc(100% + 60px);
+        bottom: 0px;
+    }
+}

@@ -1,4 +1,5 @@
 import React, { memo } from "react";
+import SelectAttan from "../../components/ui/select/SelectAttan";
 import SelectBase from "../../components/ui/select/SelectBase";
 import { Box } from "./classTabs/AttendanceManagement";
 
@@ -13,19 +14,18 @@ const options = [
 const AttendanceDay = memo(({ item, changeData, setModal, setClickDay}) => {
 
     return (
-        <Box bg="white">
+        <div className="day">
             {typeof item === "object" ? (
                 <>
-                    <p>{item.daynum}</p>
-                    <SelectBase
-                        width="80px"
-                        defaultValue="선택"
+                    <div className="num">
+                    {item.daynum}
+                    </div>
+                    <SelectAttan
                         onChange={(ele) => {
 
                             changeData({ day: item.daynum, attd: ele.value });
                         }}
                         value={item.attd}
-                        options={options}
                     />
                     {item.attd && item.attd !== "P" ? (
                         <button className="btn-table" onClick={async () => {
@@ -37,9 +37,11 @@ const AttendanceDay = memo(({ item, changeData, setModal, setClickDay}) => {
                     )}
                 </>
             ) : (
-                item
+                <div className="num">
+                    {item}
+                </div>
             )}
-        </Box>
+        </div>
     );
 });
 

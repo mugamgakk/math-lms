@@ -1,0 +1,59 @@
+.lms-calendar{
+    position: relative;
+    
+    &-header{
+        display: flex;
+        background-color:#e6ddd8;
+        border-top: 2px solid $brown;
+        border-bottom:2px solid #aea59f;
+
+        .D{
+            @include font-style(17);
+            font-weight: 600;
+            color: $brown;
+            width: calc(100% / 7);
+            text-align: center;
+            height: 35px;
+            line-height: 35px;
+            border-right: 1px solid #c9beb8;
+
+            &:last-child{
+                border-right: none;
+            }
+        }
+        .D:first-child{
+            color: #fa4646;
+        }
+    }
+
+    &-body{
+        display: flex;
+        flex-wrap: wrap;
+        border-left: 1px solid #eee;
+        
+        .day{
+            width: calc(100% / 7);
+            height: 90px;
+            border-bottom: 1px solid #eee;
+            border-right: 1px solid #eee;
+        }
+
+        .not-day{
+            background-color: #f6f6f6;
+            .num{
+                color: #cccccc;
+            }
+        }
+        .num{
+            width: 30px;
+            height: 30px;
+            border-bottom: 1px solid #eee;
+            border-right: 1px solid #eee;
+            @include flex;
+            font-size: 16px;
+            font-weight: 400;
+            color: #666;
+            display: inline-flex;
+        }
+    }
+}
