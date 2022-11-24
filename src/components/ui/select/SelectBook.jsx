@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
+import Icon from "../../Icon";
 
 function SelectBook({
     width = "130px",
@@ -56,7 +57,7 @@ function SelectBook({
                     setSelectOpen(!selectOpen);
                 }}
             >
-                <h4>
+                <h4 className="fa">
                     <strong className="mr-2">
                     {chiceItem ? chiceItem.label : defaultValue}
                     </strong>
@@ -71,7 +72,9 @@ function SelectBook({
                 onClick={() => {
                     setSelectOpen(!selectOpen);
                 }}
-            ></div>
+            >
+                <Icon icon={"select_typeA"} />
+            </div>
             <div className="select-list-box">
                 <ul className="select-list">
                     {options &&

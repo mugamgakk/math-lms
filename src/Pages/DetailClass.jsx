@@ -5,6 +5,8 @@ import useStudentsStore from "../store/useStudentsStore";
 import AlertBox from "../components/AlertBox";
 import UserInfo from "../components/UserInfo";
 import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const classItems = [
     { name: "수업관리", href: "management" },
@@ -17,6 +19,15 @@ function DetailClass() {
     const location = useLocation();
     const navigate = useNavigate();
     const clickStudent = useStudentsStore((state) => state.clickStudent);
+    let [current, setCurrent] = useState("");
+
+    useEffect(()=>{
+        classItems.forEach(ele=>{
+            if(location.pathname.includes(ele.href)){
+                setCurrent(ele.name)
+            }
+        })
+    },[location.pathname])
 
     return (
         <>
@@ -24,15 +35,15 @@ function DetailClass() {
 
             <ContentHeader
                 title={"학생별 수업 관리"}
-                location={["마이페이지", "수학 학습 관리"]}
+                location={["마이페이지", "수학 학습 관리", "학생별 수업 관리"]}
                 icon="studentManagement"
-                current={"학생별 수업 관리"}
+                current={current}
             />
             <div className="row">
                 <StudentsSearch />
                 <div className="bg bg-content student-content">
                     {clickStudent === null ? (
-                        <AlertBox name="수업 관리 시작" />
+                        <AlertBox name={current} />
                     ) : (
                         <>
                             <div className="tabs-header">

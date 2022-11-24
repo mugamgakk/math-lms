@@ -9,6 +9,44 @@
     position: relative;
     display: inline-block;
     cursor: pointer;
+
+    .checkbox{
+        width: 16px;
+        height: 16px;
+        border-radius: $radius;
+        border: solid 1px #ccc;
+        display: inline-block;
+        margin-left: 15px;
+        position: relative;
+        
+        &.active{
+            background-color: $green;
+            border: none;
+
+            &::before {
+                content: "";
+                position: absolute;
+                width: 2.2px;
+                height: 7px;
+                transform: rotate(132deg);
+                background-color: $white;
+                top: 6px;
+                left: 22%;
+            }
+            &::after {
+                content: "";
+                position: absolute;
+                width: 2.2px;
+                height: 11px;
+                left: 52%;
+                transform: rotate(38deg);
+                background-color: $white;
+                top: 2px;
+            }
+        }
+
+        
+    }
     
     .select-view{
         height: 100%;
