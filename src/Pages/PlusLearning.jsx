@@ -4,6 +4,7 @@ import StudentsSearch from "../components/StudentsSearch";
 import useStudentsStore from "../store/useStudentsStore";
 import AlertBox from "../components/AlertBox";
 import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 function PlusLearning() {
     const navigate = useNavigate();
@@ -11,7 +12,14 @@ function PlusLearning() {
 
     const clickStudent = useStudentsStore((state) => state.clickStudent);
     let { resetStudent } = useStudentsStore((state) => state);
-    let [current, setCurrent] = useState("서술형 따라잡기")
+    let [current, setCurrent] = useState("")
+
+    // url 변화
+    useEffect(()=>{
+        location.pathname.includes("narrative")
+        ? setCurrent("서술형 따라잡기")
+        : setCurrent("교과서 적중문제")
+    },[location.pathname])
 
     return (
         <>

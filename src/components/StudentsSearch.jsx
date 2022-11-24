@@ -107,17 +107,23 @@ function StudentsSearch({ children }) {
                     </thead>
 
                     <tbody style={{ maxHeight: "550px" }}>
-                        {userList?.map((res, i) => {
-                            return (
-                                <Tr
-                                    res={res}
-                                    key={res.usr_seq}
-                                    index={i}
-                                    getUser={getUser}
-                                    clickStudent={clickStudent}
-                                />
-                            );
-                        })}
+                        {
+                            skeleton
+                                ? <SkeletonTable R={10} width={["9.52380%", "42.85714%", "14.28571%", "33.33333%"]} />
+                                : (
+                                    userList?.map((res, i) => {
+                                        return (
+                                            <Tr
+                                                res={res}
+                                                key={res.usr_seq}
+                                                index={i}
+                                                getUser={getUser}
+                                                clickStudent={clickStudent}
+                                            />
+                                        );
+                                    })
+                                )
+                        }
                     </tbody>
                 </table>
 

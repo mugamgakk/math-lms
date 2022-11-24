@@ -10,11 +10,11 @@ function SkeletonTable({ R, width }) {
             {
                 R.map((a, i) => {
                     return (
-                        <tr key={i}>
+                        <tr key={i} className={style.tr}>
                             {
                                 width?.map((dd, i) => {
                                     return (
-                                        <td key={i + 100} style={{width : dd, padding : "8px"}}>
+                                        <td key={i + 100} style={{width : dd, padding : "8px"}} className={style.td}>
                                             <div className={style.box}></div>
                                         </td>
                                     )

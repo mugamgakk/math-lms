@@ -25,3 +25,18 @@
     background-color: rgb(238, 238, 238);
     overflow: hidden;
   }
+
+  .tr{
+    &:hover{
+      background-color: #fff !important;
+      border: none !important;
+    }
+  }
+  .td{
+    display: table-column !important;
+    background: #fff !important;
+
+    &:hover{
+      background: #fff !important;
+    }
+  }

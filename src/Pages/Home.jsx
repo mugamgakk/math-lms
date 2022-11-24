@@ -59,8 +59,6 @@ function Home() {
     let [burger, setBurger] = useState(false);
     let location = useLocation();
 
-    // let dd = useTable(".tbody");
-
     const navigate = useNavigate();
 
     const logoutFn = useCallback(() => {
