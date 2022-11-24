@@ -70,6 +70,8 @@
                     border: none;
                     border-right:1px solid #dee2e6;
                     border-bottom:1px solid #dee2e6;
+                    padding: 10px;
+
                     &:first-child{
                         border-left:1px solid hsl(210, 14%, 89%);
                         width: calc((100% + 8px)/8);
@@ -142,13 +144,10 @@
             tr{
                 display: flex;
                 margin-bottom: 2px;
-                position: relative;
                 background-color: #fff;
                 border: 1px solid #ddd;
                 border-radius: $radius;
                 height: 50px;
-
-                cursor: pointer;
 
                 &:hover,
                 &.active{
@@ -159,7 +158,6 @@
                 }
                 td{
                     border: none;
-                    position: relative;
                     @include flex;
 
                     &::after{

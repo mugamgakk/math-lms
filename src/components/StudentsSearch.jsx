@@ -7,8 +7,9 @@ import { memo } from "react";
 import { useCallback } from "react";
 import Icon from "./Icon";
 
-function StudentsSearch({children}) {
-    let { user, setClickStudent, clickStudent, getStudentsData, resetStudent, classList } = useStudentsStore();
+function StudentsSearch({ children }) {
+    let { user, setClickStudent, clickStudent, getStudentsData, resetStudent, classList } =
+        useStudentsStore();
     let [userList, setUserList] = useState(null);
     let [nameSearch, setNameSearch] = useState("");
     let [skeleton, setSkeleton] = useState(true);
@@ -19,7 +20,6 @@ function StudentsSearch({children}) {
     const getUser = useCallback((list) => {
         setClickStudent(list);
     }, []);
-
 
     // 검색
     const searchStudents = () => {
@@ -37,9 +37,9 @@ function StudentsSearch({children}) {
 
     useEffect(() => {
         if (classList.length !== 0) {
-            setClassOption(classList)
+            setClassOption(classList);
         }
-    }, [classList])
+    }, [classList]);
 
     useEffect(() => {
         resetStudent();
@@ -61,20 +61,23 @@ function StudentsSearch({children}) {
     return (
         <div className="bg bg-list student-list">
             <header className="student-list-header">
-                    <h3 className="title fj">
-                        학생 선택
+                <h3 className="title fj">
+                    학생 선택
                     {children}
-                        </h3>
+                </h3>
                 <div className="fj">
                     <ClassSelect
-                        onChange={(ele) => { setClassOption(ele) }}
+                        onChange={(ele) => {
+                            setClassOption(ele);
+                        }}
                         value={classOption}
                         options={classList}
                         width="50%"
                     />
-                    <input type='text'
+                    <input
+                        type="text"
                         className="textInput"
-                        placeholder='학생명을 입력하세요'
+                        placeholder="학생명을 입력하세요"
                         style={{ width: "50%", margin: "0 4px" }}
                         value={nameSearch}
                         onChange={(e) => {
@@ -86,58 +89,39 @@ function StudentsSearch({children}) {
                             }
                         }}
                     />
-                    <button className='btn-search btn-green'><Icon icon={"search"} />검색</button>
+                    <button className="btn-search btn-green">
+                        <Icon icon={"search"} />
+                        검색
+                    </button>
                 </div>
             </header>
             <div className="student-list-body">
+                <table className="table tableB">
+                    <thead>
+                        <tr>
+                            <th style={{ width: "9.52380%" }}>번호</th>
+                            <th style={{ width: "42.85714%" }}>이름(아이디)</th>
+                            <th style={{ width: "14.28571%" }}>학년</th>
+                            <th style={{ width: "33.33333%" }}>학생 화면</th>
+                        </tr>
+                    </thead>
 
-            <table className='table tableB'>
-                <thead>
-                    <tr>
-                        <th style={{width : "9.52380%"}}>번호</th>
-                        <th style={{width : "42.85714%"}}>이름(아이디)</th>
-                        <th style={{width : "14.28571%"}}>학년</th>
-                        <th style={{width : "33.33333%"}}>학생 화면</th>
-                    </tr>
-                </thead>
+                    <tbody style={{ maxHeight: "550px" }}>
+                        {userList?.map((res, i) => {
+                            return (
+                                <Tr
+                                    res={res}
+                                    key={res.usr_seq}
+                                    index={i}
+                                    getUser={getUser}
+                                    clickStudent={clickStudent}
+                                />
+                            );
+                        })}
+                    </tbody>
+                </table>
 
-                <tbody style={{ maxHeight: "550px" }}>
-
-                            {userList?.map((res, i) => {
-                                return <Tr res={res} key={res.usr_seq} index={i} getUser={getUser} clickStudent={clickStudent} />
-                            })}
-                        </tbody>
-{/* 
-                <tbody>
-                    <tr>
-                        <td><div>1</div></td>
-                        <td><div className='name'>강수학(Kangsh)</div></td>
-                        <td><div>중2</div></td>
-                        <td><div><button className='btn-table'>로그인</button></div></td>
-                    </tr>
-                </tbody> */}
-            </table>
-
-                    {/* <table>
-                        <thead>
-                            <tr>
-                                <th style={{ width: "20%" }}>No.</th>
-                                <th style={{ width: "30%" }}>이름(아이디)</th>
-                                <th style={{ width: "20%" }}>학년</th>
-                                <th style={{ width: "30%" }}>학생 화면</th>
-                            </tr>
-                        </thead>
-                        <tbody style={{ maxHeight: "600px" }}>
-                            {skeleton && <SkeletonTable R={14} D={4} />}
-
-                            {userList?.map((res, i) => {
-                                return <Tr res={res} key={res.usr_seq} index={i} getUser={getUser} clickStudent={clickStudent} />
-                            })}
-                        </tbody>
-                    </table> */}
-
-                    {userList?.length === 0 && <div className="text-center">학생이 없습니다</div>}
-
+                {userList?.length === 0 && <div className="text-center">학생이 없습니다</div>}
             </div>
 
             <div className="student-list-footer">
@@ -148,7 +132,7 @@ function StudentsSearch({children}) {
                         setNameSearch("");
                     }}
                 >
-                    <Icon icon={"reload"}/>
+                    <Icon icon={"reload"} />
                     목록 초기화
                 </button>
             </div>
@@ -157,42 +141,25 @@ function StudentsSearch({children}) {
 }
 
 const Tr = memo(({ res, clickStudent, getUser, index }) => {
-
     return (
-        <tr
-            className={res.usr_seq === clickStudent?.usr_seq ? "active" : ""}
-        >
-            <td style={{width : "9.52380%"}}>
-                <div>
-                {index + 1}
-                </div>
-            </td>
+        <tr className={res.usr_seq === clickStudent?.usr_seq ? "active" : ""}>
+            <td style={{ width: "9.52380%" }}>{index + 1}</td>
             <td
                 style={{ cursor: "pointer", width: "42.85714%" }}
                 onClick={() => {
                     getUser(res);
                 }}
+                className="text-green"
             >
-                <div>
                 {res.um_nm}(
-                {res.um_id.length > 7
-                    ? res.um_id.substr(0, 5) + ".".repeat(3)
-                    : res.um_id}
-                )
-                </div>
+                {res.um_id.length > 10 ? res.um_id.substr(0, 10) + ".".repeat(3) : res.um_id})
             </td>
-            <td style={{width : "14.28571%"}}>
-                <div>
-                    {res.school_grade}
-                </div>
-            </td>
-            <td style={{width : "33.33333%"}}>
-                <div>
+            <td style={{ width: "14.28571%" }}>{res.school_grade}</td>
+            <td style={{ width: "33.33333%" }}>
                 <button className="btn-table">로그인</button>
-                </div>
             </td>
         </tr>
-    )
-})
+    );
+});
 
 export default StudentsSearch;

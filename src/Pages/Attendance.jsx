@@ -150,7 +150,7 @@ const Tr = memo(({ ele, index }) => {
                                 changeCopyData({ index, attd: a.value, 속성: "attd" })
                             }}
 
-                            className={`mr-10 ${a.value === state ? "btn-orange" : "btn-grey-border"}`}
+                            className={`${a.value === state ? "btn-orange" : "btn-grey-border"}`}
                         >
                             {a.label}
                         </button>

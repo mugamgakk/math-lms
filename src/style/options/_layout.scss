@@ -333,7 +333,7 @@
             .lnb-item__depth{
                 position: absolute;
                 display: block;
-                z-index: 2;
+                z-index: 1;
                 top: -15px;
                 left: 80px;
                 padding: 15px 0;
@@ -448,5 +448,50 @@
         @include font-style(18);
         @include flex;
         font-weight: 600;
+    }
+}
+
+.content-tabs {
+    display: flex;
+    li{
+        @include font-style(20);
+        font-weight: 500;
+        color: #888;
+        margin-right: 20px;
+        cursor: pointer;
+
+        &.active{
+            color: #222;
+            position: relative;
+            font-weight: 600;
+
+            &::after{
+                content: "";
+                width: 100%;
+                position: absolute;
+                height: 2px;
+                background-color: $green;
+                left: 0;
+                bottom: -10px;
+            }
+        }
+
+        &:last-child{
+            margin-right: 0;
+        }
+    }
+}
+
+.content-tabs2{
+    @extend .content-tabs;
+    position: relative;
+    top: -7px;
+
+    li{
+        &.active{
+            &::after{
+                bottom: -5px;
+            }
+        }
     }
 }
