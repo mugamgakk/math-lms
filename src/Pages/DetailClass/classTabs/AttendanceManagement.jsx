@@ -14,10 +14,12 @@ import DateNext from "../../../components/DateNext";
 import LmsDatePicker from "../../../components/LmsDatePicker";
 
 export const Box = styled.div`
-    width: 107.83px;
+    width: 14.2857%;
     height: 107.83px;
     background-color: ${(props) => props.bg};
     padding: 10px;
+    border-right : 1px solid #eee;
+    border-bottom : 1px solid #eee;
 `;
 
 const override = {
@@ -168,19 +170,20 @@ function AttendanceManagement() {
                     >출결저장</button>
                 </div>
             </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th style={{ color: "red" }}>일</th>
-                        <th>월</th>
-                        <th>화</th>
-                        <th>수</th>
-                        <th>목</th>
-                        <th>금</th>
-                        <th style={{ color: "red" }}>토</th>
-                    </tr>
-                </thead>
-            </table>
+            <table className='table tableB'>
+                    <thead>
+                        <tr>
+                            <th style={{width : "14.2857%"}}>Sun</th>
+                            <th style={{width : "14.2857%"}}>Mon</th>
+                            <th style={{width : "14.2857%"}}>Tus</th>
+                            <th style={{width : "14.2857%"}}>Wed</th>
+                            <th style={{width : "14.2857%"}}>Thu</th>
+                            <th style={{width : "14.2857%"}}>Fri</th>
+                            <th style={{width : "14.2857%"}}>Sat</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>   
             <div style={{ display: "flex", flexWrap: "wrap", position: "relative" }}>
                 {
                     spin && (
@@ -223,7 +226,7 @@ const BeforeMonth = memo(({ firstDay }) => {
     let arr = [];
     for (let i = prevDate - prevDay; i <= prevDate; i++) {
         arr.push(
-            <Box key={i} bg="#ddd">
+            <Box key={i} bg="#eee">
                 {i}
             </Box>
         );
@@ -246,7 +249,7 @@ const NextMonth = memo(({ firstDay }) => {
     let arr = [];
     for (let i = 1; i <= 7 - (prevDay + 1); i++) {
         arr.push(
-            <Box key={i} bg="#ddd">
+            <Box key={i} bg="#eee">
                 {i}
             </Box>
         );

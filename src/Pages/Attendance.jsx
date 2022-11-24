@@ -80,11 +80,11 @@ function Attendance() {
                 </div>
                 <div className="attendence-body">
                     <div className="search">
-                        <ClassSelect className={"mr-10"} />
+                        <ClassSelect className={"mr-10"} defaultValue="반 선택" />
                         <input
                             type="text"
                             className="textInput mr-10"
-                            placeholder="내용을 입력하세요"
+                            placeholder="학생명을 입력하세요"
                             style={{ width: "200px" }}
                         />
                         <button className="btn-green btn-icon mr-10">
@@ -100,23 +100,23 @@ function Attendance() {
                     <table className='table tableA'>
                         <thead>
                             <tr>
-                                <th scope="col" style={{width : "13%"}}>학생명 (아이디)</th>
-                                <th scope="col" style={{width : "26%"}}>출결 체크</th>
-                                <th scope="col" style={{width : "61%"}}>출결 사유</th>
+                                <th scope="col" style={{ width: "13%" }}>학생명 (아이디)</th>
+                                <th scope="col" style={{ width: "26%" }}>출결 체크</th>
+                                <th scope="col" style={{ width: "61%" }}>출결 사유</th>
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody style={{maxHeight : "462px"}}>
+                        <tbody style={{ maxHeight: "462px" }}>
                             {
                                 loading
-                                ? <SkeletonTable R={7} width={["13%","26%", "61%"]}/>
-                                : (
-                                    studentList?.map((ele, i) => {
-                                        return <Tr ele={ele} index={i} key={"index" + i} />;
-                                    })
-                                )
+                                    ? <SkeletonTable R={7} width={["13%", "26%", "61%"]} />
+                                    : (
+                                        studentList?.map((ele, i) => {
+                                            return <Tr ele={ele} index={i} key={"index" + i} />;
+                                        })
+                                    )
                             }
-                            
+
                         </tbody>
                     </table>
                     <div className="attendence-footer">
@@ -135,12 +135,14 @@ const Tr = memo(({ ele, index }) => {
     let [state, setSTate] = useState(ele.attd);
     const changeCopyData = attendanceStore(state => state.changeCopyData);
 
+    let [pen, setPen] = useState(false);
+
     return (
         <tr>
-            <td style={{width : "13%"}}>
-                {ele.um_nm} ({ele.um_id})
+            <td style={{ width: "13%" }}>
+                {ele.um_nm}({ele.um_id})
             </td>
-            <td style={{width : "26%"}}>
+            <td style={{ width: "26%" }}>
                 {att.map((a) => {
                     return (
                         <button
@@ -157,19 +159,25 @@ const Tr = memo(({ ele, index }) => {
                     );
                 })}
             </td>
-            <td style={{width : "61%"}} className="d-flex">
-                <input
-                    type="text"
-                    value={text}
-                    onChange={(e) => {
-                        setText(e.target.value);
-                        changeCopyData({ index, attd: e.target.value, 속성: "reason" })
-                    }}
-                    className="textInput mr-10"
-                    placeholder="내용을 입력하세요"
-                />
-                <div style={{width : "100px"}}>
-                    <button className="btn-grey-border">저장</button>
+            <td style={{ width: "61%" }} className="d-flex">
+                <div className="pencil-input mr-10">
+                    <button type="button" onClick={()=>{setPen(!pen)}}></button>
+                    <input
+                        type="text"
+                        value={text}
+                        onChange={(e) => {
+                            setText(e.target.value);
+                            changeCopyData({ index, attd: e.target.value, 속성: "reason" })
+                        }}
+                        className="textInput"
+                        placeholder="내용을 입력하세요"
+                        disabled={!pen}
+                    />
+                </div>
+                <div style={{ width: "100px" }}>
+                    {
+                        pen && <button className="btn-grey-border">저장</button>
+                    }
                 </div>
             </td>
         </tr>

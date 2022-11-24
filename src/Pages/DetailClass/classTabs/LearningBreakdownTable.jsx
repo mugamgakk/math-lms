@@ -83,46 +83,35 @@ function LearningBreakdownTable() {
                 ❖ 분석표 목록에는 학생별로 최대 50개까지 저장됩니다.({lbtList?.length}/50)
             </strong>
             <br />
-            <button className="btn-grey-border mr-10" onClick={removeList} style={{marginTop : "10px"}}>선택 삭제</button>
+            <button className="btn-grey-border mr-10" onClick={removeList} style={{ marginTop: "10px" }}>선택 삭제</button>
             <strong className="alert-text">[분석표 삭제 유의 !] 분석 결과는 생성일에 따라 달라질 수 있습니다.</strong>
 
-            <div className="table-box" style={{ height: "300px" }}>
-                <table>
-                    <colgroup>
-                        <col style={{ width: "50px" }} />
-                        <col style={{ width: "150px" }} />
-                        <col style={{ width: "150px" }} />
-                        <col style={{ width: "auto" }} />
-                        <col style={{ width: "70px" }} />
-                        <col style={{ width: "90px" }} />
-                    </colgroup>
-                    <thead>
-                        <tr>
-                            <th scope="col">선택</th>
-                            <th scope="col">학습 기간</th>
-                            <th scope="col">분석표 생성일</th>
-                            <th scope="col">학습한 교재</th>
-                            <th scope="col">생성자</th>
-                            <th scope="col">학습 분석표</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {skeleton && <SkeletonTable R={4} D={6} />}
-
-                        {lbtList?.map((item) => {
-                            return (
-                                <Tr
-                                    key={item._id}
-                                    data={item}
-                                    item={item.info}
-                                    choiceArr={choiceArr}
-                                    checkboxChecked={checkboxChecked}
-                                />
-                            );
-                        })}
-                    </tbody>
-                </table>
-            </div>
+            <table className='table tableA'>
+                <thead>
+                    <tr>
+                        <th style={{ width: "8.8206%" }} >선택</th>
+                        <th style={{ width: "24.6778%" }} >학습 기간</th>
+                        <th style={{ width: "12.7849%" }} >분석표 생성일</th>
+                        <th style={{ width: "32.6065%" }} >학습한 교재</th>
+                        <th style={{ width: "9.8116%" }} >생성자</th>
+                        <th style={{ width: "11.7938%" }} >학습 분석표</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {lbtList?.map((item) => {
+                        return (
+                            <Tr
+                                key={item._id}
+                                data={item}
+                                item={item.info}
+                                choiceArr={choiceArr}
+                                checkboxChecked={checkboxChecked}
+                            />
+                        );
+                    })}
+                </tbody>
+            </table>
         </div>
     );
 }
@@ -132,7 +121,7 @@ const Tr = ({ item, checkboxChecked, choiceArr, data }) => {
 
     return (
         <tr>
-            <td>
+            <td style={{ width: "8.8206%" }} >
                 <input
                     type="checkbox"
                     checked={choiceArr.includes(data)}
@@ -141,11 +130,11 @@ const Tr = ({ item, checkboxChecked, choiceArr, data }) => {
                     }}
                 />
             </td>
-            <td>{item.date}</td>
-            <td>{item.makeDay}</td>
-            <td>{item.book}</td>
-            <td>{item.maker}</td>
-            <td>
+            <td style={{ width: "24.6778%" }} >{item.date}</td>
+            <td style={{ width: "12.7849%" }} >{item.makeDay}</td>
+            <td style={{ width: "32.6065%" }} >{item.book}</td>
+            <td style={{ width: "9.8116%" }} >{item.maker}</td>
+            <td style={{ width: "11.7938%" }} >
                 {modal && <LbtResultModal data={data} setModal={setModal} />}
                 <button
                     className="btn"

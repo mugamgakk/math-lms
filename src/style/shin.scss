@@ -28,11 +28,47 @@
             margin-bottom: 10px;
         }
 
+        table{
+            td:first-child{
+                color: $green;
+                font-weight: 500;
+                @include flex;
+            }
+            td:nth-child(2){
+                @include flex;
+                button{
+                    margin-right: 10px;
+                    &:last-child{
+                        margin-right: 0px;
+                    }
+                }
+            }
+        }
+
     }
 
     &-footer {
         text-align: right;
         margin-top: 20px;
+    }
+}
+
+.pencil-input{
+    display: inline-block;
+    width: 100%;
+    position: relative;
+    input{
+        padding-left: 40px;
+    }
+    button{
+        width: 40px;
+        height: 40px;
+        background-image: url("../assets/pencil.svg");
+        background-position: center;
+        background-repeat: no-repeat;
+        position: absolute;
+        left: 0;
+        top: 0;
     }
 }
 

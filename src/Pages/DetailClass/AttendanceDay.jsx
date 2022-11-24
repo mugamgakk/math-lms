@@ -13,7 +13,7 @@ const options = [
 const AttendanceDay = memo(({ item, changeData, setModal, setClickDay}) => {
 
     return (
-        <Box bg="#ccc">
+        <Box bg="white">
             {typeof item === "object" ? (
                 <>
                     <p>{item.daynum}</p>
@@ -28,7 +28,7 @@ const AttendanceDay = memo(({ item, changeData, setModal, setClickDay}) => {
                         options={options}
                     />
                     {item.attd && item.attd !== "P" ? (
-                        <button className="btn" onClick={async () => {
+                        <button className="btn-table" onClick={async () => {
                             setModal(true);
                             setClickDay(item.daynum)
                         }}>사유보기</button>
