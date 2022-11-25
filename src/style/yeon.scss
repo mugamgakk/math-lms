@@ -45,25 +45,42 @@
                 >*{
                     padding: 9px 0;
                 }
-                .state3{
-                    .playBtn{
-                        border: 2px solid #666;
-                        width: 30px;
-                        height: 30px;
-                        background: #fff;
-                        border-radius: 50%;
-                        position: relative;
-                        i{
-                            position: absolute;
-                            top: 6px;
-                            left: 9px;
-                        }
-                    }
+            }
+            .playBtn{
+                border: 2px solid #666;
+                width: 30px;
+                height: 30px;
+                background: #fff;
+                border-radius: 50%;
+                position: relative;
+                margin-bottom: 4px;
+                i{
+                    position: absolute;
+                    top: 6px;
+                    left: 9px;
                 }
+            }
+            .btn-orange{
+               position: relative;
+                &::after{
+                    content:'';
+                    display: block;
+                    position: absolute;
+                    width: 1px;
+                    height: 20px;
+                    background: #fff;
+                    @include pos-center;
+                }
+            }
+            .state5{
+                flex-direction: column;
             }
         }
         button{
             @include font-style(16);
+            width: 100px;
+            height: 30px;
+            padding: 0;
         }
         .disabled{
             background: #f6f6f6;

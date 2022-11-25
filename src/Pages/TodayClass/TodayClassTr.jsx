@@ -28,8 +28,9 @@ function TodayClassTr({data,name,book}){
                 {
                     data.state3 ? data.state3?.assessment ? (
                         <div>
-                            <button className='btn-orange' onClick={()=>setAssModal(true)}>
-                            이해:{data.state3.uds} 전달:{data.state3.send}
+                            <button className='btn-orange' onClick={()=>setAssModal(true)} style={{ fontSize: '14px' }}>
+                            이해 {data.state3.uds}&nbsp;
+                            전달 {data.state3.send}
                             </button>
                         </div>
                     ) : <button className='btn-table' onClick={()=>setAssModal(true)}>수행 평가</button> 
@@ -38,14 +39,13 @@ function TodayClassTr({data,name,book}){
                 </div>
                 <div className={`state4 fc br ${data.state4 ? '' : 'disabled'}`} style={{ width:'9.846%' }}>{data.state4}</div>
                 <div className={`state5 fc br ${data.state5 ? '' : 'disabled'}`} style={{ width:'9.846%' }}>
-                    
                     { 
                         data.state5 ?
                         data.state5 == 'Pass' ? 'Pass' : (
-                            <div>
-                            <div>{data.state5}</div>
-                            <button className='printBtn btn' onClick={()=>closeModal(true)}>인쇄</button>
-                            </div>
+                            <>
+                            <div style={{ marginBottom:'4px' }}>{data.state5}</div>
+                            <button className='btn-table' onClick={()=>closeModal(true)} style={{ width:'100px' }}><Icon icon={"print"} style={{color:'#666',marginRight:'6px'}}/>인쇄</button>
+                            </>
                         ) : null
                     }
                 </div>

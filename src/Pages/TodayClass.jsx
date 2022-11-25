@@ -56,7 +56,6 @@ function TodayClass(){
                     value={date} 
                     onChange={day=>setDate(day)}
                     style={{ marginRight: "4px" }}
-                    
                     />
                     <LmsDatePicker
                         value={date}
