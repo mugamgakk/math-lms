@@ -66,49 +66,57 @@ function TodayClass(){
                     />
                 </div>
                 <div className="tableWrap">
-                    <header className="table-header row">
+                    <header className="table-top row">
                         <div style={{ display:'flex' }}>
                             <TodayClassSearch data={findTodayList} setFindList={setFindList} option={classList}/>
-                            <button
-                                className="btn-reload btn-grey"
-                                onClick={() => setReloadState(!reloadState)}
-                            ><Icon icon={"reload"}/>새로고침</button>
+                            <button class="btn-grey btn-icon" onClick={() => setReloadState(!reloadState)}><i class="icon-font ft-icon ic-reload undefined"></i>새로고침</button>
                         </div>
                     </header>  
                     <table className='tableC'>
+                        <colgroup>
+                            <col width='9.33%'/>
+                            <col width='9.33%'/>
+                            <col width='32%'/>
+                            <col width='8%'/>
+                            <col width='8%'/>
+                            <col width='8%'/>
+                            <col width='8%'/>
+                            <col width='8%'/>
+                            <col width='9.33%'/>
+                        </colgroup>
                         <thead>
                             <tr>
                                 <th rowSpan={2}>학생명 (아이디)</th>
                                 <th rowSpan={2}>교재</th>
                                 <th rowSpan={2}>단원</th>
                                 <th colSpan={5} className='bb'>수행 현황</th>
-                                <th rowSpan={2}>학습 완료</th>
+                                <th rowSpan={2} className='b-none'>학습 완료</th>
                             </tr>
                             <tr>
                                 <th>개념 강의</th>
                                 <th>개념 확인</th>
                                 <th>개념 설명</th>
                                 <th>유형 학습</th>
-                                <th className="br">맞춤 클리닉</th>
+                                <th>맞춤 클리닉</th>
                             </tr>
                         </thead>
                     </table>
-                   
+                   <div className="scrollWrap scroll">
                     { findTodayList &&
                         findTodayList.map((a,i) => {
                             return (
-                                <div className="todayWrap" key={i}>
-                                    <span className="name">{a.name}</span>
-                                    <div>
+                                <div className="item flex" key={i}>
+                                    <div className="name br bb" style={{ width:'9.31%' }}><strong>{a.name}</strong>{a.nickName}</div>
+                                    <div style={{ width:'90.69%' }}>
                                         {a.book.map((a,i) => {
                                             return (
-                                                <div className="bookTitWrap" key={i}>
-                                                    <span className="bookTit">{a.bookTit}</span>
-                                                    <div className="classTitWrap"> 
+                                                <div className="book flex" key={i} >
+                                                    <span className="book-name fc br bb" style={{ width: '10.3%' }}>{a.bookTit}</span>
+                                                    <div className="classTitWrap" style={{ width: '89.7%' }}> 
                                                         {a.className.map((a,i) => {
                                                             return (
-                                                                <div className="stateWrap" key={i}>
-                                                                    <span className="classTit">{a.tit}</span>
+                                                                <div className="stateWrap flex bb" key={i}>
+                                                                    <span className="classTit fa br" style={{ width:'39.4%',paddingLeft:'9px' }}>{a.tit}</span>
                                                                     <Tr 
                                                                     key={a.tit} 
                                                                     data={a} 
@@ -124,6 +132,7 @@ function TodayClass(){
                                 </div>
                             );
                         })}
+                    </div>
                     </div>
             </div>
         </>

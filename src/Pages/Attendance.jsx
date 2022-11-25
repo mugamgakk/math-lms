@@ -106,7 +106,7 @@ function Attendance() {
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody style={{ maxHeight: "462px" }}>
+                        <tbody className='scroll' style={{ maxHeight: "462px" }}>
                             {
                                 loading
                                     ? <SkeletonTable R={7} width={["13%", "26%", "61%"]} />

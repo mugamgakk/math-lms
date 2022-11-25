@@ -4,6 +4,7 @@ import AttModal from './AttModal';
 import PrintModal from '../../components/PrintModal';
 import { fileDown } from "../../methods/methods";
 import 오디오입니동 from "../../test.mp3";
+import Icon from '../../components/Icon';
 
 function TodayClassTr({data,name,book}){
 
@@ -14,29 +15,29 @@ function TodayClassTr({data,name,book}){
 
     return(
         <>
-                <div className={data.state1 ? 'state1' : 'state1 disabled'}>{data.state1}</div>
-                <div className={data.state2 ? 'state2' : 'state2 disabled'}>{data.state2}</div>
-                <div className={data.state3 ? 'state3' : 'state3 disabled'}>
+                <div className={`state1 fc br ${data.state1 ? '' : 'disabled'}`} style={{ width:'9.846%' }}>{data.state1}</div>
+                <div className={`state2 fc br ${data.state2 ? '' : 'disabled'}`} style={{ width:'9.846%' }}>{data.state2}</div>
+                <div className={`state3 fc br ${data.state3 ? '' : 'disabled'}`} style={{ width:'9.846%',flexDirection:'column' }}>
                 {
                     data.state3 && (
-                        <div className="btn-wrap">
-                        <button className={ data.state3.newplay ? 'btnPlay new' : 'btnPlay'} onClick={()=>setAssModal(true)} >play</button>
-                        </div>
+                        <button className={`playBtn ${data.state3.newplay ? 'new' : ''}`} onClick={()=>setAssModal(true)} >
+                            <Icon icon={"play"} style={{ fontSize:'14px',color:'#444' }} />
+                        </button>
                     )
                 }
                 {
                     data.state3 ? data.state3?.assessment ? (
                         <div>
-                            <button className='evalBtn btn' onClick={()=>setAssModal(true)}>
+                            <button className='btn-orange' onClick={()=>setAssModal(true)}>
                             이해:{data.state3.uds} 전달:{data.state3.send}
                             </button>
                         </div>
-                    ) : <button className='evalBtn btn' onClick={()=>setAssModal(true)}>수행 평가</button> 
+                    ) : <button className='btn-table' onClick={()=>setAssModal(true)}>수행 평가</button> 
                     : null
                 }
                 </div>
-                <div className={data.state4 ? 'state4' : 'state4 disabled'}>{data.state4}</div>
-                <div className={data.state5 ? 'state5' : 'state5 disabled'}>
+                <div className={`state4 fc br ${data.state4 ? '' : 'disabled'}`} style={{ width:'9.846%' }}>{data.state4}</div>
+                <div className={`state5 fc br ${data.state5 ? '' : 'disabled'}`} style={{ width:'9.846%' }}>
                     
                     { 
                         data.state5 ?
@@ -48,7 +49,7 @@ function TodayClassTr({data,name,book}){
                         ) : null
                     }
                 </div>
-                <div className="att"><button className="attBtn btn" onClick={()=>setAttModal(true)}>학습 태도</button>
+                <div className="fc" style={{ width:'11.37%' }}><button className="btn-table" onClick={()=>setAttModal(true)}>학습 태도</button>
                     {
                     attModal ? 
                     <AttModal 

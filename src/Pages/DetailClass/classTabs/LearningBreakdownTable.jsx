@@ -98,7 +98,7 @@ function LearningBreakdownTable() {
                         <th></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className="scroll">
                     {lbtList?.map((item) => {
                         return (
                             <Tr

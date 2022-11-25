@@ -1,5 +1,4 @@
 import "./style/component.scss";
-import "./style/common.scss";
 import { Routes, Route } from "react-router-dom";
 
 import Login from "./Pages/Login";
