@@ -6,7 +6,7 @@ function ContentHeader({ title, location, icon, current }) {
     return (
         <header className='fj content-head'>
             <div className='title fa'>
-                <Icon icon={icon} style={{ color: "#00A37F" }} />
+                <Icon icon={icon} style={{ color: "#00A37F" , fontSize:'24px'}} />
                 <h3>{title}</h3>
             </div>
             <p className='location'>

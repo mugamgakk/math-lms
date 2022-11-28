@@ -19,7 +19,6 @@
         overflow-y: scroll;
         overflow-x: hidden;
     }
-    
     &.tableA{
         width: 100%;
         th{
@@ -153,7 +152,7 @@
                 &.active{
                     border: solid 2px #ea7851;
                     td{
-                    background: #ffeee8;
+                        background: #ffeee8;
                     }
                 }
                 td{
@@ -183,7 +182,9 @@
         }
     }
 }
+
 .tableC{
+    width: 100%;
     thead{
         border-top: 2px solid #664e3d;
         border-bottom: 2px solid #a19893;
@@ -200,25 +201,33 @@
             }
         }
     }
+   
+    .bb{
+        border-bottom: 1px solid #cfbfb7;
+    }
+    .br{
+        border-right: 1px solid #cfbfb7;
+    }
+    .b-none{
+        border: none !important;
+    }
 }
-.bb{
-    border-bottom: 1px solid #cfbfb7;
+
+.b-none{
+    border: none;
 }
-.br{
-    border-right: 1px solid #cfbfb7;
-}
-tbody::-webkit-scrollbar {
+.scroll::-webkit-scrollbar {
     width: 8px;
 }
-tbody::-webkit-scrollbar-track {
+.scroll::-webkit-scrollbar-track {
     background-color: #e4e4e4;
     border-radius: 100px;
 }
-tbody::-webkit-scrollbar-thumb {
+.scroll::-webkit-scrollbar-thumb {
     border-radius: 100px;
 }
 
-tbody::-webkit-scrollbar-thumb {
+.scroll::-webkit-scrollbar-thumb {
     border-radius: 100px;
     background-color: #aaa;
 }

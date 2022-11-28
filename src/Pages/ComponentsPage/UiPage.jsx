@@ -20,14 +20,7 @@ function UiPage() {
                         `
                     }
                     </pre>
-                    <button className='btn-reload btn-grey'><Icon icon={"reload"}/>새로고침</button>
-                    <pre>
-                    {
-                        `
-                        <button className='btn-reload btn-grey'><Icon icon={"reload"}/>새로고침</button>
-                        `
-                    }
-                    </pre>
+                   
                     <button className='btn-green'>btn-green</button>
                     <button className='btn-green' disabled>btn-green</button>
                     <button className='btn-green-border'>btn-green-light</button>
@@ -146,7 +139,7 @@ function UiPage() {
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className='scroll'>
                         <tr>
                             <td>내용</td>
                             <td>내용</td>
@@ -221,7 +214,7 @@ function UiPage() {
                             <th>학생 화면</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className='scroll'>
                         <tr className='active'>
                             <td>1</td>
                             <td>강수학(Kangsh)</td>

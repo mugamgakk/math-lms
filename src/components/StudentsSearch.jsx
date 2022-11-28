@@ -106,7 +106,7 @@ function StudentsSearch({ children }) {
                         </tr>
                     </thead>
 
-                    <tbody style={{ maxHeight: "550px" }}>
+                    <tbody className='scroll' style={{ maxHeight: "550px" }}>
                         {
                             skeleton
                                 ? <SkeletonTable R={10} width={["9.52380%", "42.85714%", "14.28571%", "33.33333%"]} />
