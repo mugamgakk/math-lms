@@ -38,15 +38,28 @@ function Attendance() {
             qstr: searchText,
         };
 
-        let res = await ajax("class_daily.php", { data: param });
+        try{
+            let res = await ajax("class_daily.php", { data: param });
 
-        const { class_list, student_list } = res.data;
 
-        getCopyData(_cloneDeep(student_list));
+            const { class_list, student_list } = res.data;
 
-        setClassList(class_list);
-        setStudentList(student_list);
-        setLoading(false)
+            if(!class_list){
+                throw new Error("데이터가 없습니다.");
+            }
+
+            getCopyData(_cloneDeep(student_list));
+
+            setClassList(class_list);
+            setStudentList(student_list);
+            
+            setLoading(false)
+        }catch(err){
+            alert(err);
+            setLoading(false);
+        }
+
+        
     };
     useEffect(() => {
         getData();
