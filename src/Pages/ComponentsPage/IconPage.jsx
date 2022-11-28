@@ -4,21 +4,22 @@ import { useState } from "react";
 import Icon from "../../components/Icon";
 
 const arr = [
-    'apple',        'arrowA',
-    'attendence',   'calendar',
-    'close',        'download',
-    'evaluation',   'file',
-    'info',         'lnbDetail',
-    'logout',       'menu_btn(close)',
-    'more',         'notification',
-    'pencil',       'play',
-    'plus',         'plusLearning',
-    'point',        'print',
-    'reload',       'remove',
-    'search',       'select_typeA',
-    'select_typeB', 'studentManagement',
-    'todayClass',   'volume',
-    'warning',      'hamburger'
+    'apple',             'arrowA',
+    'attendence',        'calendar',
+    'close',             'download',
+    'evaluation',        'fast',
+    'file',              'hamburger',
+    'info',              'lnbDetail',
+    'logout',            'menu_btn(close)',
+    'more',              'notification',
+    'pencil',            'play',
+    'plus',              'plusLearning',
+    'point',             'print',
+    'reload',            'remove',
+    'search',            'select_typeA',
+    'select_typeB',      'select_typeC',
+    'studentManagement', 'todayClass',
+    'volume',            'warning'
   ];
 
 function IconPage() {
