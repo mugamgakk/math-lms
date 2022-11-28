@@ -39,7 +39,6 @@ function Login() {
         ajax("/user.php", {
             data: data,
         }).then((res) => {
-            setLoading(false);
 
             console.log(res);
 
@@ -73,6 +72,8 @@ function Login() {
                     alert(res.data.msg);
                     return;
             }
+            setLoading(false);
+
         });
     };
 

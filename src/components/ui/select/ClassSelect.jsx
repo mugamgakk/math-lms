@@ -17,22 +17,20 @@ function ClassSelect({
     let [choiceArr, setChoiceArr] = useState(value);
     let [text, setText] = useState("");
 
-    const checkedItem = useCallback(
-        (checked, ele) => {
-            if (checked) {
-                // 삭제
-                let result = choiceArr.filter((a) => a !== ele);
-                onChange && onChange(result);
-                setChoiceArr(result);
-            } else {
-                // 추가
-                let result = [...choiceArr, ele];
-                onChange && onChange(result);
-                setChoiceArr(result);
-            }
-        },
-        [choiceArr]
-    );
+    const checkedItem = (checked, ele) => {
+        console.log(checked)
+        if (checked) {
+            // 삭제
+            let result = choiceArr.filter((a) => a.class_cd !== ele.class_cd);
+            onChange && onChange(result);
+            setChoiceArr(result);
+        } else {
+            // 추가
+            let result = [...choiceArr, ele];
+            onChange && onChange(result);
+            setChoiceArr(result);
+        }
+    }
 
     const allCheck = useCallback(() => {
         if (options.length === choiceArr.length) {
@@ -78,7 +76,7 @@ function ClassSelect({
         <div
             tabIndex={1}
             style={{ width: width }}
-            className={`select ${selectOpen ? "active" : ""} ${disabled ? "disabled" : ""} ${className}`}
+            className={`ClassSelect select ${selectOpen ? "active" : ""} ${disabled ? "disabled" : ""} ${className}`}
             onBlur={() => {
                 setSelectOpen(false);
             }}
@@ -106,15 +104,15 @@ function ClassSelect({
                     </li> */}
                     <li className="fa" onClick={allCheck}>
                         <div
-                            className={`check-state ${
-                                options.length === choiceArr.length ? "all" : ""
-                            } ${
-                                choiceArr.length > 0 && choiceArr.length < options.length
+                            className={`check-state ${options.length === choiceArr.length ? "all" : ""
+                                } ${choiceArr.length > 0 && choiceArr.length < options.length
                                     ? "is-item"
                                     : ""
-                            }`}
+                                }`}
                         ></div>
-                        (전체 선택)
+                        <div className="label">
+                            (전체 선택)
+                        </div>
                     </li>
                     {options &&
                         options.map((a, i) => {
@@ -122,13 +120,15 @@ function ClassSelect({
                                 <li
                                     key={i}
                                     onClick={(e) => {
-                                        let isClass = e.target.classList.contains("active");
+                                        let isClass = e.currentTarget.classList.contains("active");
                                         checkedItem(isClass, a);
                                     }}
-                                    className={`fa ${choiceArr.includes(a) ? "active" : ""}`}
+                                    className={`fa ${choiceArr.some(ele => a.class_cd === ele.class_cd) ? "active" : ""}`}
                                 >
+                                    <div className="label">
+                                        {a.class_name}
+                                    </div>
                                     <div className="checkbox"></div>
-                                    {a.class_name}
                                 </li>
                             );
                         })}

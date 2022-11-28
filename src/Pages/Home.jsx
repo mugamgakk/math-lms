@@ -77,9 +77,7 @@ function Home() {
             // console.log(res)
             if (res.data.ok === -1) {
                 setUserId(res.data.user_id);
-            }
-
-            if (res.data.ok !== -1) {
+            }else{
                 alert("로그인이 만료되었습니다.");
                 logoutFn();
             }

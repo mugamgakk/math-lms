@@ -57,8 +57,28 @@
     display: inline-block;
     width: 100%;
     position: relative;
-    input{
-        padding-left: 40px;
+    textarea{
+        padding: 6px 50px;
+        height: 40px;
+        @include font-style();
+        font-weight: 400;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+
+        &::placeholder{
+            color: #ccc;
+        }
+
+        &:focus{
+            border: 1px solid #666;
+            color: #444;
+        }
+
+        &:disabled{
+            color: #ccc;
+            border: 1px solid #e5e5e5;
+            background: #f2f2f2;
+        }
     }
     button{
         width: 40px;

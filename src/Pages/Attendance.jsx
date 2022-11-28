@@ -1,5 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
+import { useRef } from "react";
 import { memo } from "react";
 import { useState } from "react";
 import ajax from "../ajax";
@@ -38,13 +39,14 @@ function Attendance() {
             qstr: searchText,
         };
 
-        try{
+        try {
             let res = await ajax("class_daily.php", { data: param });
 
+            console.log(res);
 
             const { class_list, student_list } = res.data;
 
-            if(!class_list){
+            if (!class_list) {
                 throw new Error("데이터가 없습니다.");
             }
 
@@ -52,14 +54,14 @@ function Attendance() {
 
             setClassList(class_list);
             setStudentList(student_list);
-            
+
             setLoading(false)
-        }catch(err){
+        } catch (err) {
             alert(err);
             setLoading(false);
         }
 
-        
+
     };
     useEffect(() => {
         getData();
@@ -93,7 +95,7 @@ function Attendance() {
                 </div>
                 <div className="attendence-body">
                     <div className="search">
-                        <ClassSelect className={"mr-10"} defaultValue="반 선택" />
+                        <ClassSelect className={"mr-10"} defaultValue="반 선택" options={classList} />
                         <input
                             type="text"
                             className="textInput mr-10"
@@ -116,7 +118,6 @@ function Attendance() {
                                 <th scope="col" style={{ width: "13%" }}>학생명 (아이디)</th>
                                 <th scope="col" style={{ width: "26%" }}>출결 체크</th>
                                 <th scope="col" style={{ width: "61%" }}>출결 사유</th>
-                                <th></th>
                             </tr>
                         </thead>
                         <tbody className='scroll' style={{ maxHeight: "462px" }}>
@@ -129,7 +130,6 @@ function Attendance() {
                                         })
                                     )
                             }
-
                         </tbody>
                     </table>
                     <div className="attendence-footer">
@@ -149,6 +149,12 @@ const Tr = memo(({ ele, index }) => {
     const changeCopyData = attendanceStore(state => state.changeCopyData);
 
     let [pen, setPen] = useState(false);
+
+    const reSize = (e) => {
+        const ele = e.target;
+
+        setText(ele.value);
+    }
 
     return (
         <tr>
@@ -174,8 +180,19 @@ const Tr = memo(({ ele, index }) => {
             </td>
             <td style={{ width: "61%" }} className="d-flex">
                 <div className="pencil-input mr-10">
-                    <button type="button" onClick={()=>{setPen(!pen)}}></button>
-                    <input
+                    <button type="button" onClick={() => { setPen(!pen) }}></button>
+                    <textarea
+                        style={{ overflow: "visible" }}
+                        onChange={reSize}
+                        placeholder="사유 입력(50자 이내)"
+                        value={text}
+                        disabled={!pen}
+                        maxLength={50}
+                    >
+
+
+                    </textarea>
+                    {/* <input
                         type="text"
                         value={text}
                         onChange={(e) => {
@@ -183,9 +200,10 @@ const Tr = memo(({ ele, index }) => {
                             changeCopyData({ index, attd: e.target.value, 속성: "reason" })
                         }}
                         className="textInput"
-                        placeholder="내용을 입력하세요"
+                        placeholder="사유 입력(50자 이내)"
+                        maxLength={50}
                         disabled={!pen}
-                    />
+                    /> */}
                 </div>
                 <div style={{ width: "100px" }}>
                     {
@@ -196,5 +214,14 @@ const Tr = memo(({ ele, index }) => {
         </tr>
     );
 });
+
+// var obj = {
+//     table : "DB.CMS_math_paper",
+//     age : 123
+// }
+
+// var json = JSON.stringify(obj);
+
+// console.log(JSON.parse(json));
 
 export default Attendance;
