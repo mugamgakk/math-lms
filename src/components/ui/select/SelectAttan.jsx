@@ -49,7 +49,9 @@ function SelectAttan({value, onChange}) {
                 {choice ? choice.label : "선택"}
             </div>
             <div className="SelectAttan-button" onClick={()=>{setActive(!active)}} >
-                <button onBlur={()=>{setActive(false)}}>ㅇ</button>
+                <button onBlur={()=>{setActive(false)}}>
+                <Icon icon={"select_typeC"} style={{transform : "scale(0.4)"}} />
+                </button>
             </div>
             <div className="SelectAttan-option">
                 <ul>

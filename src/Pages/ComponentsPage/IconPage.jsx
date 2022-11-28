@@ -42,14 +42,14 @@ function IconPage() {
                     `
                 }
             </pre>
-            <style>
+            {/* <style>
                 {`
                 i{
                     font-size : 3rem;
                     cursor: pointer;
                 }
             `}
-            </style>
+            </style> */}
         </div>
     );
 }

@@ -16,10 +16,11 @@ const AttendanceDay = memo(({ item, changeData, setModal, setClickDay}) => {
     return (
         <div className="day">
             {typeof item === "object" ? (
-                <>
+                <div className="d-flex">
                     <div className="num">
                     {item.daynum}
                     </div>
+                    <div className="check-attd">
                     <SelectAttan
                         onChange={(ele) => {
 
@@ -35,7 +36,8 @@ const AttendanceDay = memo(({ item, changeData, setModal, setClickDay}) => {
                     ) : (
                         ""
                     )}
-                </>
+                    </div>
+                </div>
             ) : (
                 <div className="num">
                     {item}

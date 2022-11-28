@@ -20,8 +20,8 @@ const att = [
     { value: "A", label: "결석" },
 ];
 function Attendance() {
-    const getCopyData = attendanceStore(state => state.getCopyData);
-    const copyData = attendanceStore(state => state.copyData);
+    const getCopyData = attendanceStore((state) => state.getCopyData);
+    const copyData = attendanceStore((state) => state.copyData);
 
     let [date, setDate] = useState(new Date());
     let [classList, setClassList] = useState([]);
@@ -29,6 +29,7 @@ function Attendance() {
     let [searchText, setSearchText] = useState("");
 
     let [loading, setLoading] = useState(true);
+    let banOptions = useRef([]);
 
     const getData = async () => {
         setLoading(true);
@@ -52,16 +53,15 @@ function Attendance() {
 
             getCopyData(_cloneDeep(student_list));
 
+            banOptions.current = class_list;
             setClassList(class_list);
             setStudentList(student_list);
 
-            setLoading(false)
+            setLoading(false);
         } catch (err) {
             alert(err);
             setLoading(false);
         }
-
-
     };
     useEffect(() => {
         getData();
@@ -95,7 +95,14 @@ function Attendance() {
                 </div>
                 <div className="attendence-body">
                     <div className="search">
-                        <ClassSelect className={"mr-10"} defaultValue="반 선택" options={classList} />
+                        <ClassSelect
+                            className={"mr-10"}
+                            defaultValue="반 선택"
+                            value={classList}
+                            onChange={(ele) => setClassList(ele)}
+                            options={banOptions.current}
+                            width="200px"
+                        />
                         <input
                             type="text"
                             className="textInput mr-10"
@@ -112,28 +119,38 @@ function Attendance() {
                         </button>
                     </div>
 
-                    <table className='table tableA'>
+                    <table className="table tableA">
                         <thead>
                             <tr>
-                                <th scope="col" style={{ width: "13%" }}>학생명 (아이디)</th>
-                                <th scope="col" style={{ width: "26%" }}>출결 체크</th>
-                                <th scope="col" style={{ width: "61%" }}>출결 사유</th>
+                                <th scope="col" style={{ width: "13%" }}>
+                                    학생명 (아이디)
+                                </th>
+                                <th scope="col" style={{ width: "26%" }}>
+                                    출결 체크
+                                </th>
+                                <th scope="col" style={{ width: "61%" }}>
+                                    출결 사유
+                                </th>
                             </tr>
                         </thead>
-                        <tbody className='scroll' style={{ maxHeight: "462px" }}>
-                            {
-                                loading
-                                    ? <SkeletonTable R={7} width={["13%", "26%", "61%"]} />
-                                    : (
-                                        studentList?.map((ele, i) => {
-                                            return <Tr ele={ele} index={i} key={"index" + i} />;
-                                        })
-                                    )
-                            }
+                        <tbody className="scroll" style={{ maxHeight: "462px" }}>
+                            {loading ? (
+                                <SkeletonTable R={7} width={["13%", "26%", "61%"]} />
+                            ) : (
+                                studentList?.map((ele, i) => {
+                                    return <Tr ele={ele} index={i} key={"index" + i} />;
+                                })
+                            )}
                         </tbody>
                     </table>
                     <div className="attendence-footer">
-                        <button type="button" className="btn-green" onClick={() => { console.log(copyData) }}>
+                        <button
+                            type="button"
+                            className="btn-green"
+                            onClick={() => {
+                                console.log(copyData);
+                            }}
+                        >
                             출결 내용 저장
                         </button>
                     </div>
@@ -146,7 +163,7 @@ function Attendance() {
 const Tr = memo(({ ele, index }) => {
     let [text, setText] = useState((ele.reason ??= ""));
     let [state, setSTate] = useState(ele.attd);
-    const changeCopyData = attendanceStore(state => state.changeCopyData);
+    const changeCopyData = attendanceStore((state) => state.changeCopyData);
 
     let [pen, setPen] = useState(false);
 
@@ -154,7 +171,7 @@ const Tr = memo(({ ele, index }) => {
         const ele = e.target;
 
         setText(ele.value);
-    }
+    };
 
     return (
         <tr>
@@ -168,9 +185,8 @@ const Tr = memo(({ ele, index }) => {
                             key={a.value}
                             onClick={() => {
                                 setSTate(a.value);
-                                changeCopyData({ index, attd: a.value, 속성: "attd" })
+                                changeCopyData({ index, attd: a.value, 속성: "attd" });
                             }}
-
                             className={`${a.value === state ? "btn-orange" : "btn-grey-border"}`}
                         >
                             {a.label}
@@ -180,7 +196,12 @@ const Tr = memo(({ ele, index }) => {
             </td>
             <td style={{ width: "61%" }} className="d-flex">
                 <div className="pencil-input mr-10">
-                    <button type="button" onClick={() => { setPen(!pen) }}></button>
+                    <button
+                        type="button"
+                        onClick={() => {
+                            setPen(!pen);
+                        }}
+                    ></button>
                     <textarea
                         style={{ overflow: "visible" }}
                         onChange={reSize}
@@ -188,10 +209,7 @@ const Tr = memo(({ ele, index }) => {
                         value={text}
                         disabled={!pen}
                         maxLength={50}
-                    >
-
-
-                    </textarea>
+                    ></textarea>
                     {/* <input
                         type="text"
                         value={text}
@@ -206,9 +224,7 @@ const Tr = memo(({ ele, index }) => {
                     /> */}
                 </div>
                 <div style={{ width: "100px" }}>
-                    {
-                        pen && <button className="btn-grey-border">저장</button>
-                    }
+                    {pen && <button className="btn-grey-border">저장</button>}
                 </div>
             </td>
         </tr>

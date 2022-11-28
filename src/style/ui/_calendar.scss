@@ -55,5 +55,18 @@
             color: #666;
             display: inline-flex;
         }
+
+        .check-attd{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            padding-top: 10px;
+            padding-right: 10px;
+
+            .SelectAttan{
+                margin-bottom: 5px;
+            }
+        }
     }
 }

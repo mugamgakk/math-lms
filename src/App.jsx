@@ -22,6 +22,7 @@ import Authentication from "./components/Authentication";
 import Attendance from "./Pages/Attendance";
 
 import TodayClass from "./Pages/TodayClass";
+import Home from "./Pages/Home";
 
 //학생별 수업관리
 import DetailClass from "./Pages/DetailClass";
@@ -54,7 +55,7 @@ function App() {
     return (
         <div>
             <Routes>
-                <Route path="/" element={<Authentication />}>
+                <Route path="/" element={<Home />}>
                     <Route path="attendance" element={<Attendance />} />
                     <Route path="today-class" element={<TodayClass />} />
                     <Route path="detail-class" element={<DetailClass />}>
