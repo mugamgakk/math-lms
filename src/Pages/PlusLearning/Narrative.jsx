@@ -7,6 +7,7 @@ import SkeletonTable from "../../components/SkeletonTable";
 import ajax from "../../ajax";
 import NarrativeTr from "./NarrativeTr";
 import { _cloneDeep } from "../../methods/methods";
+import Checkbox from "../../components/Checkbox";
 
 const 단원 = [
     { value: 1, label: "수와 식의 계산" },
@@ -87,7 +88,7 @@ function Narrative() {
 
             if (checkedList.length === 0) {
                 alert("1개이상 선택하세요");
-                return 
+                return
             };
 
             const idData = checkedList.map(id => id.sc_seq);
@@ -141,15 +142,15 @@ function Narrative() {
     return (
         <div className="Narrative">
             <UserInfo clickStudent={clickStudent} />
-            <p>
+            <p className="alert-text" style={{ marginTop: "20px" }}>
                 학습하는 교재의 학년, 학기에 해당하는 서술형 문제를 오픈, 출력할 수
                 있습니다.(학년-학기별 공통)
             </p>
-            <div className="fj mb-3">
+            <div className="fj" style={{ margin: "10px 0px" }}>
                 <div>
-                    <button className="btn" onClick={() => { openState(true) }}>선택 오픈</button>
-                    <button className="btn" onClick={() => { openState(false) }}>선택 오픈 취소</button>
-                    <button className="btn" onClick={() => {
+                    <button className="btn-grey-border mr-10" onClick={() => { openState(true) }}>선택 오픈</button>
+                    {/* <button className="btn" onClick={() => { openState(false) }}>선택 오픈 취소</button> */}
+                    <button className="btn-grey-border" onClick={() => {
                         if (checkedList.length === 0) alert("1개이상 선택하세요");
 
                     }}>선택 인쇄</button>
@@ -162,6 +163,7 @@ function Narrative() {
                         onChange={(ele) => {
                             setUnit(ele);
                         }}
+                        className="mr-10"
                         defaultValue="대단원"
                     />
                     <SelectBase
@@ -171,42 +173,34 @@ function Narrative() {
                         onChange={(ele) => {
                             setSituation(ele);
                         }}
+                        className="mr-10"
                         defaultValue="상태"
                     />
-                    <button className="btn" onClick={getList}>조회</button>
+                    <button className="btn-grey" onClick={getList}>조회</button>
                 </div>
             </div>
-            <table>
-                <colgroup>
-                    <col style={{ width: "50px" }} />
-                    <col style={{ width: "100px" }} />
-                    <col style={{ width: "auto" }} />
-                    <col style={{ width: "100px" }} />
-                    <col style={{ width: "100px" }} />
-                    <col style={{ width: "100px" }} />
-                </colgroup>
+
+            <table className='table tableA'>
                 <thead>
                     <tr>
-                        <th>
-                            선택{" "}
-                            <input
-                                type="checkbox"
+                        <th scope="row" style={{width : "8.80316%"}}>
+                            <Checkbox
                                 checked={initialData.length === checkedList.length && checkedList.length !== 0}
                                 onChange={checkAll}
                             />
+                            선택
                         </th>
-                        <th>대단원</th>
-                        <th>주제</th>
-                        <th>상태</th>
-                        <th>채점</th>
-                        <th>시험지</th>
+                        <th scope="row" style={{width : "17.60633%"}}>대단원</th>
+                        <th scope="row" style={{width : "35.11374%"}}>주제</th>
+                        <th scope="row" style={{width : "13.84767%"}}>상태</th>
+                        <th scope="row" style={{width : "13.25420%"}}>채점</th>
+                        <th scope="row" style={{width : "11.37487%"}}>시험지</th>
                     </tr>
                 </thead>
-                <tbody>
-
+                <tbody className="scroll">
                     {
                         skeleton
-                            ? <SkeletonTable R={6} D={6} />
+                            ? <SkeletonTable R={6} width={["8.80316%","17.60633%", "35.11374%", "13.84767%", "13.25420%", "11.37487%"]} />
                             : plusData.map((ele, i) => {
                                 return (
                                     <NarrativeTr
@@ -218,7 +212,6 @@ function Narrative() {
                                 );
                             })
                     }
-
                 </tbody>
             </table>
         </div>

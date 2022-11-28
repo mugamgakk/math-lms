@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import { useState } from "react";
 import Icon from "../../Icon";
 
-function SelectBase({ width = "130px", onChange, options, value, defaultValue = "선택하세요", disabled }) {
+function SelectBase({ width = "130px", onChange, options, value, defaultValue = "선택하세요", disabled, className = "" }) {
     let [selectOpen, setSelectOpen] = useState(false);
     
     const openSelect = useCallback(() => {
@@ -22,7 +22,7 @@ function SelectBase({ width = "130px", onChange, options, value, defaultValue = 
     return (
         <div tabIndex={1}
             style={{ width: width }}
-            className={`select ${selectOpen ? "active" : ""} ${disabled ? "disabled" : ""}`} 
+            className={`select ${selectOpen ? "active" : ""} ${disabled ? "disabled" : ""} ${className}`} 
             onBlur={() => { setSelectOpen(false) }}
         >
             <div className="select-view" onClick={openSelect}>

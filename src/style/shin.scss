@@ -1,22 +1,18 @@
 // 출석체크
 
-%content-border {
-    content: "";
-    height: 1px;
-    background-color: #eee;
-    position: absolute;
-    left: -30px;
-    width: calc(100% + 60px);
-    bottom: 0px;
-}
-
 .attendence {
     &-head {
         position: relative;
         margin-bottom: 60px;
 
         &::after {
-            @extend %content-border;
+            content: "";
+            height: 1px;
+            background-color: #eee;
+            position: absolute;
+            left: -30px;
+            width: calc(100% + 60px);
+            bottom: 0px;
             bottom: -20px;
         }
     }
@@ -28,23 +24,22 @@
             margin-bottom: 10px;
         }
 
-        table{
-            td:first-child{
+        table {
+            td:first-child {
                 color: $green;
                 font-weight: 500;
                 @include flex;
             }
-            td:nth-child(2){
+            td:nth-child(2) {
                 @include flex;
-                button{
+                button {
                     margin-right: 10px;
-                    &:last-child{
+                    &:last-child {
                         margin-right: 0px;
                     }
                 }
             }
         }
-
     }
 
     &-footer {
@@ -53,11 +48,11 @@
     }
 }
 
-.pencil-input{
+.pencil-input {
     display: inline-block;
     width: 100%;
     position: relative;
-    textarea{
+    textarea {
         padding: 6px 50px;
         height: 40px;
         @include font-style();
@@ -65,22 +60,22 @@
         border: 1px solid #ccc;
         border-radius: 4px;
 
-        &::placeholder{
+        &::placeholder {
             color: #ccc;
         }
 
-        &:focus{
+        &:focus {
             border: 1px solid #666;
             color: #444;
         }
 
-        &:disabled{
+        &:disabled {
             color: #ccc;
             border: 1px solid #e5e5e5;
             background: #f2f2f2;
         }
     }
-    button{
+    button {
         width: 40px;
         height: 40px;
         background-image: url("../assets/pencil.svg");
@@ -111,30 +106,30 @@
     }
 }
 
-.LbtDayOption{
-    .option{
+.LbtDayOption {
+    .option {
         background-color: #f2eeeb;
         padding: 20px;
         margin-top: 15px;
         margin-bottom: 20px;
 
-        p{
+        p {
             font-weight: 600;
             @include font-style(18);
             color: #664e3d;
         }
 
-        .book-list{
+        .book-list {
             display: flex;
             height: 120px;
             overflow-y: auto;
-            .title{
+            .title {
                 width: 146px;
                 padding: 20px 15px;
                 background-color: #e6ddd8;
             }
 
-            .book{
+            .book {
                 width: 262px;
                 background-color: $white;
                 padding: 15px 5px;
@@ -144,14 +139,14 @@
     }
 }
 
-.AttendanceManagement-header{
+.AttendanceManagement-header {
     position: relative;
     padding-bottom: 20px;
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
 
-    &::after{
+    &::after {
         content: "";
         height: 1px;
         background-color: #eee;
@@ -159,5 +154,46 @@
         left: -30px;
         width: calc(100% + 60px);
         bottom: 0px;
+    }
+}
+
+.AttendanceReason {
+    width: auto;
+    height: auto;
+    right: 0px;
+    bottom: 0px;
+    position: static;
+
+    .title{
+        height: 50px;
+        border-bottom: 1px solid #ddd;
+        @include font-style(24);
+        font-weight: 600;
+        color: #222;
+        line-height: 50px;
+        padding-left: 24px;
+    }
+
+    .modal-content{
+        position: fixed;
+        z-index: 1;
+        left: auto;
+        top: auto;
+        right: 100px;
+        bottom: 100px;
+        transform: none;
+        box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.24);
+    }
+
+    .text-area{
+        padding: 23px;
+        textarea{
+            width: 300px;
+            height: 100px;
+            border-radius: $radius;
+            @include font-style(17);
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
     }
 }

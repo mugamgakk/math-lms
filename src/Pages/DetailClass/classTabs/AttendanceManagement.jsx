@@ -157,7 +157,7 @@ function AttendanceManagement() {
 
                             setData(copy);
                         }}
-                    >선택 - 출석</button>
+                    >선택 → 출석</button>
                     <button className="btn-green"
                         onClick={() => {
                             if (window.confirm("저장하시겠습니까?") === false) {

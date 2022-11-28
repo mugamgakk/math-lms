@@ -3,6 +3,7 @@ import React from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import ajax from "../../../ajax";
+import Icon from "../../../components/Icon";
 
 const Modal = styled.div`
     padding: 20px;
@@ -53,28 +54,48 @@ function AttendanceReason({ setModal, clickStudent, firstDay, clickDay }) {
     }, []);
 
     return (
-        <Modal>
-            <h4>출결사유</h4>
-            <textarea
-                rows="10"
-                cols={40}
-                value={reason}
-                onChange={(e) => {
-                    setReason(e.target.value);
-                }}
-            ></textarea>
-            <button
-                className="btn"
-                onClick={() => {
-                    setModal(false);
-                }}
-            >
-                취소
-            </button>
-            <button className="btn" onClick={saveReason}>
-                저장
-            </button>
-        </Modal>
+        <div className="modal AttendanceReason">
+            <div className="modal-content">
+                <div className="modal-header">
+                    <h4 className="modal-title">[진단 평가] 회원 연동</h4>
+                    <button className="btn" onClick={()=>{
+                            setModal(false);
+                    }}>
+                        <Icon icon={"close"} />
+                    </button>
+                </div>
+                <div className="modal-body">
+                    <h4 className="title">
+                         출결 사유
+                    </h4>
+                    <div className="text-area">
+                    <textarea
+                        rows="10"
+                        cols={40}
+                        value={reason}
+                        placeholder="사유를 입력해 주세요."
+                        onChange={(e) => {
+                            setReason(e.target.value);
+                        }}
+                    ></textarea>
+                    </div>
+                </div>
+                <div className="modal-footer">
+                    <button
+                        className="btn-grey-border"
+                        onClick={() => {
+                            setModal(false);
+                        }}
+                        style={{marginRight : "20px"}}
+                    >
+                        취소
+                    </button>
+                    <button className="btn-orange" onClick={saveReason}>
+                        저장
+                    </button>
+                </div>
+            </div>
+        </div>
     );
 }
 
