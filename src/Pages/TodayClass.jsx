@@ -36,8 +36,7 @@ function TodayClass(){
 
     let [checkState, setCheckState] = useState([]);
 
-    const [reloadState,setReloadState] = useState(false);
-    useEffect(()=>{},[reloadState])
+
         
     const [value, onChange] = React.useState(new Date());
     const [openCalendar, setOpenCalendar] = React.useState(false);
@@ -65,11 +64,9 @@ function TodayClass(){
                     />
                 </div>
                 <div className="tableWrap">
-                    <header className="table-top row">
-                        <div style={{ display:'flex' }}>
+                    <header className="table-top row fj">
+                            <div className="warning fa"><Icon icon={"warning"} style={{ color:'#eb615a', marginRight: '6px'}} />학생 이름 클릭 시 학생 교재별 상세 보기에서 오답 정복하기와 학습분석표 생성 및 출력이 가능합니다.</div>
                             <TodayClassSearch data={findTodayList} setFindList={setFindList} option={classList}/>
-                            <button class="btn-grey btn-icon" onClick={() => setReloadState(!reloadState)}><i class="icon-font ft-icon ic-reload undefined"></i>새로고침</button>
-                        </div>
                     </header>  
                     <table className='tableC'>
                         <colgroup>

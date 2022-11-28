@@ -198,8 +198,8 @@ function UiPage() {
                     </tbody>
                 </table>   
 
-                    * tr 넓이 calc(100% + 8px)
-                    * 스크롤 width: 8px
+                    * tr 넓이 calc(100% + 10px)
+                    * 스크롤 width: 10px
                     * 스크롤되는 컨텐츠에 scroll 클래스 
                 `
                 }
