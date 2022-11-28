@@ -28,7 +28,7 @@ function TodayClassTr({data,name,book}){
                 {
                     data.state3 ? data.state3?.assessment ? (
                         <div>
-                            <button className='btn-orange' onClick={()=>setAssModal(true)} style={{ fontSize: '14px' }}>
+                            <button className='asse btn-orange' onClick={()=>setAssModal(true)} style={{ fontSize: '14px' }}>
                             이해 {data.state3.uds}&nbsp;
                             전달 {data.state3.send}
                             </button>
@@ -67,7 +67,7 @@ function TodayClassTr({data,name,book}){
                     {
                     printModal ? 
                     <PrintModal 
-                    title={`${name}/${book}/${data.tit}/${data.sodanwon}`}
+                    title={`<strong>${name}</strong>${book}<em></em>${data.tit}<em></em>${data.sodanwon}`}
                     closeModal={closeModal}
                     /> 
                     : null

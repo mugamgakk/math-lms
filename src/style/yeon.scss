@@ -5,17 +5,31 @@
 
 // 오늘의 수업
 .TodayClass{
+    position: relative;
+    &::after{
+        content:'';
+        height: 1px;
+        background: #eee;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+
+    }
     .date-area{
         display: flex;
-        margin-top: 10px;
     }
 
     .table-top{
-        justify-content: flex-end;
+        margin-top: 50px;
         margin-bottom: 10px;
         .update{
             vertical-align: middle;
             margin-left: 5px;
+        }
+        .warning{
+            color: #ea5750;
+            font-weight: 600;
         }
     }
     .tableC{
@@ -60,8 +74,9 @@
                     left: 9px;
                 }
             }
-            .btn-orange{
+            .asse{
                position: relative;
+               height: 30px;
                 &::after{
                     content:'';
                     display: block;
@@ -79,7 +94,6 @@
         button{
             @include font-style(16);
             width: 100px;
-            height: 30px;
             padding: 0;
         }
         .disabled{
@@ -94,8 +108,7 @@
         .flex{
             display: flex;
         }
-}
-
+    }
 }
 
 

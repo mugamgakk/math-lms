@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileArrowDown, faPlay, faPause, faBackwardFast } from "@fortawesome/free-solid-svg-icons";
 import { fileDown } from "../../methods/methods";
 import ajax from "../../ajax";
+import Icon from "../../components/Icon";
 
 const speedOption = [1, 1.25, 1.5, 1.75, 2];
 
@@ -156,14 +157,12 @@ function AssessmentModal ({setAssModal}) {
     return (
         <div className="modal">
             <div className="modal-content">
-                <div className="modal-header">
-                    <div className="tit">
-                        <strong>[수행 평가]</strong>
-                           {title}
-                    </div>
-                    <button className="close" onClick={() => setAssModal(false)}>X</button>
+                <div className="modal-header fj">
+                    <h2 className="modal-title">수행 평가</h2>
+                    <button className="btn" onClick={() => setAssModal(false)}><Icon icon={"close"} /></button>
                 </div>
                 <div className="modal-body">
+                           {title}
                     {
                         audioState && (
                             <div className="audio">
@@ -255,8 +254,8 @@ function AssessmentModal ({setAssModal}) {
                     </table>
                 </div>
                 <div className="modal-footer">
-                    <button className='btn' onClick={() => setAssModal(false)}>취소</button>
-                    <button className='btn' onClick={formConfirm}>저장</button>
+                    <button className='btn-grey-border mr-4' onClick={() => setAssModal(false)}>취소</button>
+                    <button className='btn-orange' onClick={formConfirm}>저장</button>
                 </div>
             </div>
             </div>
