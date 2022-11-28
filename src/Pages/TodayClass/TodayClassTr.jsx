@@ -29,8 +29,8 @@ function TodayClassTr({data,name,book}){
                     data.state3 ? data.state3?.assessment ? (
                         <div>
                             <button className='btn-orange' onClick={()=>setAssModal(true)} style={{ fontSize: '14px' }}>
-                            이해{data.state3.uds}&nbsp;
-                            전달{data.state3.send}
+                            이해 {data.state3.uds}&nbsp;
+                            전달 {data.state3.send}
                             </button>
                         </div>
                     ) : <button className='btn-table' onClick={()=>setAssModal(true)}>수행 평가</button> 
@@ -43,7 +43,7 @@ function TodayClassTr({data,name,book}){
                         data.state5 ?
                         data.state5 == 'Pass' ? 'Pass' : (
                             <>
-                            <div style={{ marginBottom:'4px' }}>{data.state5}</div>
+                            <div style={{}}>{data.state5}</div>
                             <button className='btn-table' onClick={()=>closeModal(true)} style={{ width:'100px' }}><Icon icon={"print"} style={{color:'#666',marginRight:'6px'}}/>인쇄</button>
                             </>
                         ) : null

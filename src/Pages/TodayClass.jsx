@@ -105,13 +105,13 @@ function TodayClass(){
                         findTodayList.map((a,i) => {
                             return (
                                 <div className="item flex" key={i}>
-                                    <div className="name br bb" style={{ width:'9.31%' }}><strong>{a.name}</strong>{a.nickName}</div>
-                                    <div style={{ width:'90.69%' }}>
+                                    <div className="name br bb" style={{ width:'9.33%' }}><strong>{a.name}</strong>{a.nickName}</div>
+                                    <div style={{ width:'90.67%' }}>
                                         {a.book.map((a,i) => {
                                             return (
                                                 <div className="book flex" key={i} >
-                                                    <span className="book-name fc br bb" style={{ width: '10.3%' }}>{a.bookTit}</span>
-                                                    <div className="classTitWrap" style={{ width: '89.7%' }}> 
+                                                    <span className="book-name fc br bb" style={{ width: '10.29%' }}>{a.bookTit}</span>
+                                                    <div className="classTitWrap" style={{ width: '89.71%' }}> 
                                                         {a.className.map((a,i) => {
                                                             return (
                                                                 <div className="stateWrap flex bb" key={i}>
