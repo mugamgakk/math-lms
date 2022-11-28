@@ -119,6 +119,7 @@ function ClassManagement({clickStudent}){
                             <th rowSpan={2}>단원</th>
                             <th colSpan={5} className='bb'>수행 현황</th>
                             <th rowSpan={2} className='b-none'>학습 완료</th>
+                            <th rowSpan={2} className='b-none'>학습 완료</th>
                         </tr>
                         <tr>
                             <th>개념 강의</th>
