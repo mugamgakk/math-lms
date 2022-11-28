@@ -47,16 +47,15 @@ function AttModal ({setAttModal}) {
     }
     return(
         <div className="modal">
-        <div className="dim"></div>
-        <div className='attModal cmmnModal'>
-            <div className="attModal-head cmmnModal-head">
+        <div className='modal-content'>
+            <div className="modal-header">
                     <div className="tit">
                         <strong>[학습 태도 평가]</strong>
                         {title}
                     </div>
                     <button className="close" onClick={() => setAttModal(false)}>X</button>
             </div>
-            <div className="attModal-body cmmnModal-body">
+            <div className="modal-body">
                 <h5>이 단원의 학습 태도를 10점 만점으로 평가해 주세요.</h5>
                 <ul>
                     {
@@ -69,7 +68,7 @@ function AttModal ({setAttModal}) {
                     }
                 </ul>
             </div>
-            <div className="attModal-foot cmmnModal-foot">
+            <div className="modal-footer">
                 <button className="btn" onClick={()=>setAttModal(false)}>취소</button>
                 <button className="btn" onClick={formConfirm}>평가 완료</button>
             </div>

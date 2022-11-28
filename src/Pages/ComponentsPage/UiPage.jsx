@@ -136,7 +136,6 @@ function UiPage() {
                             <th>포인트(점수)</th>
                             <th>내역</th>
                             <th>누적 포인트</th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody className='scroll'>
@@ -199,9 +198,9 @@ function UiPage() {
                     </tbody>
                 </table>   
 
-                    ① 가상 th 하나 추가
-                    ② 스크롤 width: 8px
-                    ③ th, td 넓이단위 %
+                    * tr 넓이 calc(100% + 8px)
+                    * 스크롤 width: 8px
+                    * 스크롤되는 컨텐츠에 scroll 클래스 
                 `
                 }
             </pre>
@@ -265,6 +264,70 @@ function UiPage() {
                 }
             </pre>
             </div>
+            <table className='tableC'>
+                <colgroup>
+                    <col width='9.33%'/>
+                    <col width='9.33%'/>
+                    <col width='32%'/>
+                    <col width='8%'/>
+                    <col width='8%'/>
+                    <col width='8%'/>
+                    <col width='8%'/>
+                    <col width='8%'/>
+                    <col width='9.33%'/>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th rowSpan={2}>학생명 (아이디)</th>
+                        <th rowSpan={2}>교재</th>
+                        <th rowSpan={2}>단원</th>
+                        <th colSpan={5} className='bb'>수행 현황</th>
+                        <th rowSpan={2} className='b-none'>학습 완료</th>
+                    </tr>
+                    <tr>
+                        <th>개념 강의</th>
+                        <th>개념 확인</th>
+                        <th>개념 설명</th>
+                        <th>유형 학습</th>
+                        <th>맞춤 클리닉</th>
+                    </tr>
+                </thead>
+            </table>
+            <pre>
+            {
+                `
+            <table className='tableC'>
+                    <colgroup>
+                        <col width='9.33%'/>
+                        <col width='9.33%'/>
+                        <col width='32%'/>
+                        <col width='8%'/>
+                        <col width='8%'/>
+                        <col width='8%'/>
+                        <col width='8%'/>
+                        <col width='8%'/>
+                        <col width='9.33%'/>
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th rowSpan={2}>학생명 (아이디)</th>
+                            <th rowSpan={2}>교재</th>
+                            <th rowSpan={2}>단원</th>
+                            <th colSpan={5} className='bb'>수행 현황</th>
+                            <th rowSpan={2} className='b-none'>학습 완료</th>
+                        </tr>
+                        <tr>
+                            <th>개념 강의</th>
+                            <th>개념 확인</th>
+                            <th>개념 설명</th>
+                            <th>유형 학습</th>
+                            <th>맞춤 클리닉</th>
+                        </tr>
+                    </thead>
+            </table>
+                `
+                }
+            </pre>
             <style>
                 {`
                     .ui-color{
