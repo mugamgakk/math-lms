@@ -154,18 +154,16 @@ function AssessmentModal ({setAssModal}) {
  
      }
     return (
-        <>
         <div className="modal">
-            <div className="dim"></div>
-            <div className='asseModal cmmnModal'>
-                <div className="asseModal-head cmmnModal-head">
+            <div className="modal-content">
+                <div className="modal-header">
                     <div className="tit">
                         <strong>[수행 평가]</strong>
                            {title}
                     </div>
                     <button className="close" onClick={() => setAssModal(false)}>X</button>
                 </div>
-                <div className="asseModal-body cmmnModal-body">
+                <div className="modal-body">
                     {
                         audioState && (
                             <div className="audio">
@@ -256,14 +254,12 @@ function AssessmentModal ({setAssModal}) {
                         </tbody>
                     </table>
                 </div>
-                <div className="asseModal-foot cmmnModal-foot">
+                <div className="modal-footer">
                     <button className='btn' onClick={() => setAssModal(false)}>취소</button>
                     <button className='btn' onClick={formConfirm}>저장</button>
                 </div>
             </div>
-
-        </div>
-        </>
+            </div>
     )
 }
 export default AssessmentModal;
