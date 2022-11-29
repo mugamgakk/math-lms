@@ -176,3 +176,72 @@
         }
     }
 }
+
+.PlusLearningGradingTextBookModal{
+    .text-alert{
+        @include font-style(16);
+        line-height: 27px;
+    }
+
+    .btn-group{
+        button{
+            width: 80px;
+            min-width: 80px;
+        }
+    }
+
+    .answer-list{
+        background-color: #fff;
+        border-radius: $radius;
+        overflow: hidden;
+        margin-top: 20px;
+
+        li{
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            height: 40px;
+            
+            div{
+                @include flex;
+                border-right: 1px solid #ddd;
+            }
+
+            div:nth-child(1){
+                width: 80px;
+            }
+            div:nth-child(2){
+                width: 100%;
+            }
+            div:nth-child(3){
+                width: 150px;
+                border: none;
+            }
+
+            &:first-child{
+                background-color: $brown;
+                color: $white;
+                border-bottom: none;
+            }
+            &:last-child{
+                border-bottom: none;
+            }
+        }
+    }
+
+    .btn-red{
+        background-color: #eb615a;
+        color: #fff;
+        height: 30px;
+        width: 60px;
+        border-radius: $radius;
+        @include font-style(16);
+        font-weight: 500;
+    }
+
+    .btn-red-border{
+        @extend .btn-red;
+        border: 1px solid #eb615a;
+        background-color: $white;
+        color: #eb615a;
+    }
+}

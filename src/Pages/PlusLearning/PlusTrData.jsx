@@ -69,7 +69,7 @@ const PlusTrData = memo(({ res, type }) => {
                 {printModal && <PrintModal title={`제목임`} closeModal={setPrintModal} />}
 
                 <button
-                    className="btn"
+                    className="btn-table"
                     disabled={res.시험지 ? false : true}
                     onClick={() => {
                         setPrintModal(true);

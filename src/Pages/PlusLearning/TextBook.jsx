@@ -1,86 +1,173 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import UserInfo from "../../components/UserInfo";
 import useStudentsStore from "../../store/useStudentsStore";
-import TextBookSearch from "./TextBookSearch";
 import PlusTrData from "./PlusTrData";
+import Icon from "../../components/Icon";
+import LmsDatePicker from "../../components/LmsDatePicker";
+import SelectBase from "../../components/ui/select/SelectBase";
+import Checkbox from "../../components/Checkbox";
+import PlusLearningGradingTextBookModal from "./PlusLearningGradingTextBookModal";
 
 const data = [
     {
         id: 1,
-        대단원: "수와 식의 계산",
-        주제: "거듭제곱(1)",
+        교과서: "교학사",
+        대단원: "1. 수와 식",
+        소단원: "1. 유리수와 순환소수",
         상태: "학습완료",
-        채점: { point: 8, 재응시: 2 },
-        시험지: true,
+        채점: { totalScore: 25, score: 8, point: "64점", 재응시: 2 }
     },
     {
         id: 2,
-        대단원: "수와 식의 계산",
-        주제: "거듭제곱(2)",
-        상태: "오픈전",
-        채점: "시험지 채점",
-        시험지: true,
+        교과서: "금성",
+        대단원: "1. 수와 식",
+        소단원: "1. 유리수와 순환소수",
+        상태: "학습완료",
+        채점: { totalScore: 25, score: 8, point: "64점", 재응시: 2 }
     },
     {
         id: 3,
-        대단원: "수와 식의 계산",
-        주제: "03> 제곱인 수 만들기",
-        상태: "학습중",
-        채점: "온라인 채점",
-        시험지: false,
-    },
-    {
-        id: 4,
-        대단원: "수와 식의 계산",
-        주제: "04> 약수의 개수 구하기",
+        교과서: "동아(강)",
+        대단원: "1. 수와 식",
+        소단원: "1. 유리수와 순환소수",
         상태: "학습완료",
-        채점: { point: 8, 재응시: 2 },
-        시험지: false,
-    },
+        채점: { totalScore: 25, score: 8, point: "64점", 재응시: 2 }
+    }
 ];
+
+const studyBook = [
+    { value: "교과서 (전체)", label: "교과서 (전체)" },
+    { value: "교학사", label: "교학사" },
+    { value: "금성", label: "금성" },
+    { value: "동아(강)", label: "동아(강)" },
+    { value: "동아(박)", label: "동아(박)" },
+    { value: "미래엔", label: "미래엔" },
+    { value: "비상", label: "비상" },
+    { value: "신사고", label: "신사고" },
+    { value: "지학사", label: "지학사" },
+    { value: "천재(류)", label: "천재(류)" },
+    { value: "천재(이)", label: "천재(이)" }
+];
+
+const studyState = [
+    { value: "오픈전", label: "오픈전" },
+    { value: "학습 중", label: "학습 중" },
+    { value: "학습 완료", label: "학습 완료" }
+]
 
 
 function TextBook() {
+    const clickStudent = useStudentsStore(state => state.clickStudent)
     let [plusData, setPlusData] = useState(data);
-    const clickStudent = useStudentsStore(state=>state.clickStudent)
+    let [selectBook, setSelectBook] = useState(studyBook[0]);
+    let [selectState, setSelectState] = useState();
+    let [startDay, setStartDay] = useState(new Date());
+    let [endDay, setEndDay] = useState(new Date());
 
 
     return (
         <div>
             <UserInfo clickStudent={clickStudent} />
-            <p>
-                ※ 학습하는 교재의 학년 , 학기에 해당하는 교과서별 내신적중 를 오픈 , 출력할 수
-                있습니다 학년 학기별 공통
-            </p>
-            <p>※ 기간을 설정하여 결과 리포트를 인쇄할 수 있습니다. (저장되지 않음)</p>
-
-            <div className="d-flex fj mb-3">
-                <div>
-                    <button className="btn">선택 오픈</button>
-                    <button className="btn">선택 인쇄</button>
-                    <button className="btn">결과 리포트</button>
-                </div>
-                <TextBookSearch />
+            <div className="fj" style={{ margin: "20px 0" }}>
+                <p className="text-alert">
+                    ※ 학습하는 교재의 학년 , 학기에 해당하는 교과서별 내신적중 를 오픈 , 출력할 수
+                    있습니다 학년 학기별 공통
+                    <br />
+                    ※ 기간을 설정하여 결과 리포트를 인쇄할 수 있습니다. (저장되지 않음)
+                </p>
+                <button className="btn-grey btn-icon"><Icon icon={"reload"} /> 조회 초기화</button>
             </div>
-            <table>
+
+            <div className="fj">
+                <div>
+                    <button className="btn-grey-border mr-10">선택 오픈</button>
+                    <button className="btn-grey-border mr-10">선택 인쇄</button>
+                    <button className="btn-green mr-10">결과 리포트</button>
+                    <SelectBase
+                        onChange={(ele) => {
+                            setSelectBook(ele);
+                        }}
+                        width="130px"
+                        options={studyBook}
+                        value={selectBook}
+                        className="mr-10"
+                    />
+                    <SelectBase
+                        onChange={(ele) => {
+                            setSelectState(ele);
+                        }}
+                        width="130px"
+                        options={studyState}
+                        value={selectState}
+                        defaultValue="상태"
+                    />
+                </div>
+
+                <div className="d-flex">
+                    <LmsDatePicker
+                        value={startDay}
+                        width="130px"
+                        onChange={(day) => { setStartDay(day) }}
+                    />
+                    <span className="water">
+                        ~
+                    </span>
+                    <LmsDatePicker
+                        value={endDay}
+                        width="130px"
+                        onChange={(day) => { setEndDay(day) }}
+                        style={{ marginRight: "10px" }}
+                    />
+                    <button className='btn-grey'>조회</button>
+                </div>
+            </div>
+
+            <table className='table tableA' style={{ marginTop: "10px" }}>
                 <thead>
                     <tr>
-                        <th>선택</th>
-                        <th>대단원</th>
-                        <th>주제</th>
-                        <th>상태</th>
-                        <th>채점</th>
-                        <th>채점</th>
+                        <th style={{ width: "8%" }}><Checkbox /> 선택</th>
+                        <th style={{ width: "10%" }}>교과서</th>
+                        <th style={{ width: "12%" }}>대단원</th>
+                        <th style={{ width: "20%" }}>소단원</th>
+                        <th style={{ width: "16.66666%" }}>상태</th>
+                        <th style={{ width: "16.66666%" }}>채점</th>
+                        <th style={{ width: "16.66666%" }}>시험지</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className="scroll">
                     {plusData.map((res) => {
-                        return <PlusTrData key={res.id} type="textBook" res={res} />;
+                        return <Tr ele={res} />
                     })}
                 </tbody>
             </table>
         </div>
     );
+}
+
+const Tr = ({ ele }) => {
+
+    let [modal, setModal] = useState(false);
+
+    return (
+        <tr>
+            <td className="fc" style={{ width: "8%" }}><Checkbox /></td>
+            <td className="fc" style={{ width: "10%" }}>{ele.교과서}</td>
+            <td className="fc" style={{ width: "12%" }}>{ele.대단원}</td>
+            <td className="fc" style={{ width: "20%" }}>{ele.소단원}</td>
+            <td className="fc" style={{ width: "16.66666%" }}> <button className="btn-table">{ele.상태}</button> </td>
+            <td className="fc" style={{ width: "16.66666%" }}>
+                <div>
+                    <p> {ele.채점.point} ({ele.채점.score}/{ele.채점.totalScore}) </p>
+                    <button className="btn-table">재응시({ele.채점.재응시})</button>
+                    <button className="btn-table" onClick={() => { setModal(!modal) }}>채점하기</button>
+                    {
+                        modal && <PlusLearningGradingTextBookModal setModal={setModal} />
+                    }
+                </div>
+            </td>
+            <td className="fc" style={{ width: "16.66666%" }}><button className="btn-table">인쇄</button></td>
+        </tr>
+    )
 }
 
 export default TextBook;
