@@ -2,9 +2,9 @@
   font-family: 'icon-font';
   font-style: normal;
   font-weight: 400;
-  src: url("icon-font.eot?6c22653633532414f662f1e2f9ecc7cc?#iefix") format("embedded-opentype"),
-url("icon-font.woff2?6c22653633532414f662f1e2f9ecc7cc") format("woff2"),
-url("icon-font.woff?6c22653633532414f662f1e2f9ecc7cc") format("woff");
+  src: url("icon-font.eot?9710a1f18cd5b61fd291a7decca334fc?#iefix") format("embedded-opentype"),
+url("icon-font.woff2?9710a1f18cd5b61fd291a7decca334fc") format("woff2"),
+url("icon-font.woff?9710a1f18cd5b61fd291a7decca334fc") format("woff");
 }
 
 .icon-font, .ic-icons {
@@ -55,29 +55,30 @@ url("icon-font.woff?6c22653633532414f662f1e2f9ecc7cc") format("woff");
 .ic-calendar:before { content: "\f104"; }
 .ic-close:before { content: "\f105"; }
 .ic-download:before { content: "\f106"; }
-.ic-evaluation:before { content: "\f107"; }
-.ic-fast:before { content: "\f108"; }
-.ic-file:before { content: "\f109"; }
-.ic-hamburger:before { content: "\f10a"; }
-.ic-info:before { content: "\f10b"; }
-.ic-lnbDetail:before { content: "\f10c"; }
-.ic-logout:before { content: "\f10d"; }
-.ic-menu_btn(close):before { content: "\f10e"; }
-.ic-more:before { content: "\f10f"; }
-.ic-notification:before { content: "\f110"; }
-.ic-pencil:before { content: "\f111"; }
-.ic-play:before { content: "\f112"; }
-.ic-plus:before { content: "\f113"; }
-.ic-plusLearning:before { content: "\f114"; }
-.ic-point:before { content: "\f115"; }
-.ic-print:before { content: "\f116"; }
-.ic-reload:before { content: "\f117"; }
-.ic-remove:before { content: "\f118"; }
-.ic-search:before { content: "\f119"; }
-.ic-select_typeA:before { content: "\f11a"; }
-.ic-select_typeB:before { content: "\f11b"; }
-.ic-select_typeC:before { content: "\f11c"; }
-.ic-studentManagement:before { content: "\f11d"; }
-.ic-todayClass:before { content: "\f11e"; }
-.ic-volume:before { content: "\f11f"; }
-.ic-warning:before { content: "\f120"; }
+.ic-downloadB:before { content: "\f107"; }
+.ic-evaluation:before { content: "\f108"; }
+.ic-fast:before { content: "\f109"; }
+.ic-file:before { content: "\f10a"; }
+.ic-hamburger:before { content: "\f10b"; }
+.ic-info:before { content: "\f10c"; }
+.ic-lnbDetail:before { content: "\f10d"; }
+.ic-logout:before { content: "\f10e"; }
+.ic-menu_btn(close):before { content: "\f10f"; }
+.ic-more:before { content: "\f110"; }
+.ic-notification:before { content: "\f111"; }
+.ic-pencil:before { content: "\f112"; }
+.ic-play:before { content: "\f113"; }
+.ic-plus:before { content: "\f114"; }
+.ic-plusLearning:before { content: "\f115"; }
+.ic-point:before { content: "\f116"; }
+.ic-print:before { content: "\f117"; }
+.ic-reload:before { content: "\f118"; }
+.ic-remove:before { content: "\f119"; }
+.ic-search:before { content: "\f11a"; }
+.ic-select_typeA:before { content: "\f11b"; }
+.ic-select_typeB:before { content: "\f11c"; }
+.ic-select_typeC:before { content: "\f11d"; }
+.ic-studentManagement:before { content: "\f11e"; }
+.ic-todayClass:before { content: "\f11f"; }
+.ic-volume:before { content: "\f120"; }
+.ic-warning:before { content: "\f121"; }
