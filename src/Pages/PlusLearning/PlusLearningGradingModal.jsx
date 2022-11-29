@@ -363,10 +363,14 @@ function PlusLearningGradingModal({ setModal, sc_seq }) {
                         onClick={() => {
                             setModal(false);
                         }}
+                        style={{minWidth : "100px"}}
                     >
                         취소
                     </button>
-                    <button className="btn-orange">수정</button>
+                    <button 
+                    className="btn-orange"
+                    style={{minWidth : "100px"}}
+                    >수정</button>
                 </div>
             </div>
         </div>
