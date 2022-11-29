@@ -7,6 +7,7 @@ const arr = [
     'apple',             'arrowA',
     'attendence',        'calendar',
     'close',             'download',
+    'downloadB',
     'evaluation',        'fast',
     'file',              'hamburger',
     'info',              'lnbDetail',
