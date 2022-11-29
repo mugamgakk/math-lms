@@ -9,6 +9,7 @@ import PrismaZoom from "react-prismazoom";
 import { useCallback } from "react";
 import useStudentsStore from "../../store/useStudentsStore";
 import ajax from "../../ajax";
+import Icon from "../../components/Icon";
 
 function PlusLearningGradingModal({ setModal, sc_seq }) {
     const clickStudent = useStudentsStore((state) => state.clickStudent);
@@ -129,7 +130,7 @@ function PlusLearningGradingModal({ setModal, sc_seq }) {
             }, 0);
 
             setScore(num);
-        } catch (err) {}
+        } catch (err) { }
     };
 
     useEffect(() => {
@@ -140,21 +141,31 @@ function PlusLearningGradingModal({ setModal, sc_seq }) {
         <div className="modal">
             <div className="modal-content">
                 <div className="modal-header mb-3 fj">
-                    <h4>{qData?.ptitle}</h4>
-                    <button
-                        className="btn"
+                    <h4 className="title">서술형 따라잡기</h4>
+                    <button className='btn'
                         onClick={() => {
                             setModal(false);
                         }}
                     >
-                        X
+                        <Icon icon={"close"} />
                     </button>
                 </div>
-                <div className="modal-body row" style={{ width: "1100px", padding: "10px" }}>
-                    <div className="col-6 mr-3">
+                <div className="modal-body">
+                    <div className="modal-name">
+                        <strong className="name">
+                            강수학
+                        </strong>
+                        <ul className="list">
+                            <li>중2-1</li>
+                            <li>I. 수와 식의 계산</li>
+                            <li>번호, 주제</li>
+                        </ul>
+                    </div>
+                    <div className="row">
+                    <div className="col-6">
                         <div className="btn-group mb-3">
                             <button
-                                className={`btn ${qnum === 1 ? "active" : ""}`}
+                                className={`btn-grey ${qnum === 1 ? "btn-green" : ""}`}
                                 onClick={() => {
                                     setQnum(1);
                                     getData(1);
@@ -163,7 +174,7 @@ function PlusLearningGradingModal({ setModal, sc_seq }) {
                                 1번 문항
                             </button>
                             <button
-                                className={`btn ${qnum === 2 ? "active" : ""}`}
+                                className={`btn-grey ${qnum === 2 ? "btn-green" : ""}`}
                                 onClick={() => {
                                     setQnum(2);
                                     getData(2);
@@ -270,15 +281,7 @@ function PlusLearningGradingModal({ setModal, sc_seq }) {
                         </div>
 
                         <div className="text-center">
-                            <button
-                                className="btn mr-3"
-                                onClick={() => {
-                                    setModal(false);
-                                }}
-                            >
-                                취소
-                            </button>
-                            <button className="btn">수정</button>
+
                         </div>
                     </div>
 
@@ -334,6 +337,18 @@ function PlusLearningGradingModal({ setModal, sc_seq }) {
                             </div>
                         </div>
                     </div>
+                    </div>
+                </div>
+                <div className="modal-footer">
+                    <button
+                        className="btn-grey-border mr-10"
+                        onClick={() => {
+                            setModal(false);
+                        }}
+                    >
+                        취소
+                    </button>
+                    <button className="btn-orange">수정</button>
                 </div>
             </div>
         </div>

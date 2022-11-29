@@ -9,6 +9,8 @@
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
         box-shadow 0.15s ease-in-out;
     white-space: nowrap;
+    @include flex;
+    display: inline-flex;
 
     &:disabled {
         cursor: not-allowed;
@@ -142,6 +144,7 @@
     border: 1px solid $border;
     color: #444;
     background: #fff;
+    min-width: 100px;
 
     &:hover{
         background-color: #eee;

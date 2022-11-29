@@ -14,13 +14,13 @@ function UiPage() {
                 <div>
                     <button className='btn-search btn-green'><Icon icon={"search"} />검색</button>
                     <pre>
-                    {
-                        `
+                        {
+                            `
                         <button className='btn-search btn-green'><Icon icon={"search"} />검색</button>
                         `
-                    }
+                        }
                     </pre>
-                   
+
                     <button className='btn-green'>btn-green</button>
                     <button className='btn-green' disabled>btn-green</button>
                     <button className='btn-green-border'>btn-green-light</button>
@@ -58,13 +58,23 @@ function UiPage() {
                         `
                         <div className="modal">
                         <div className="modal-content">
-                            <div className="modal-header fj">
+                            <div className="modal-header">
                                 <h2 className='modal-title'>title</h2>
                                 <button className='btn'>
                                     <Icon icon={"close"} />
                                 </button>
                             </div>
                             <div className="modal-body">
+                            <div className="modal-name">
+                                <strong className="name">
+                                    강수학
+                                </strong>
+                                <ul className="list">
+                                    <li>중2-1</li>
+                                    <li>I. 수와 식의 계산</li>
+                                    <li>번호, 주제</li>
+                                </ul>
+                            </div>
         
                             </div>
                             <div className="modal-footer">
@@ -80,21 +90,21 @@ function UiPage() {
 
             <div className='mb-20'>
                 <h3>select</h3>
-                <SelectBase/>
-                <SelectBase disabled={true}/>
+                <SelectBase />
+                <SelectBase disabled={true} />
             </div>
 
             <div className='mb-20'>
                 <h3>checkbox</h3>
-                <Checkbox color='green' disabled={true} checked/>
-                <Checkbox color='orange' checked={true}/>
+                <Checkbox color='green' disabled={true} checked />
+                <Checkbox color='orange' checked={true} />
                 <Checkbox color='green' checked={true} />
             </div>
 
             <div className='mb-20'>
                 <h3 className=''>inputbox</h3>
                 <input type='text' className="textInput" placeholder='내용을 입력하세요' />
-                <input type='text' className="textInput" placeholder='내용을 입력하세요' disabled/>
+                <input type='text' className="textInput" placeholder='내용을 입력하세요' disabled />
                 <pre>
                     {
                         `
@@ -107,7 +117,7 @@ function UiPage() {
                 <div className='searchInput'>
                     <input type='text' className="textInput" placeholder='학생 이름을 입력하세요' />
                     <button className='searchInput-btn'>
-                        <Icon icon={"search"} style={{color:'#00A37F',fontSize:'20px'}}/>
+                        <Icon icon={"search"} style={{ color: '#00A37F', fontSize: '20px' }} />
                     </button>
                 </div>
                 <pre>
@@ -179,12 +189,12 @@ function UiPage() {
                             <td>내용</td>
                             <td>내용</td>
                         </tr>
-                      
+
                     </tbody>
                 </table>
-            <pre>
-            {
-                `
+                <pre>
+                    {
+                        `
                 <table className='table tableA'>
                     <thead>
                         <tr>
@@ -202,9 +212,9 @@ function UiPage() {
                     * 스크롤 width: 10px
                     * 스크롤되는 컨텐츠에 scroll 클래스 
                 `
-                }
-            </pre>
-             <table className='table tableB'>
+                    }
+                </pre>
+                <table className='table tableB'>
                     <thead>
                         <tr>
                             <th>번호</th>
@@ -236,12 +246,12 @@ function UiPage() {
                             <td>중2</td>
                             <td><button className='btn-table'>로그인</button></td>
                         </tr>
-                  
+
                     </tbody>
                 </table>
                 <pre>
-            {
-                `
+                    {
+                        `
             <table className='table tableB'>
                 <thead>
                     <tr className='active'>
@@ -261,20 +271,20 @@ function UiPage() {
                 </tbody>
             </table>
                 `
-                }
-            </pre>
+                    }
+                </pre>
             </div>
             <table className='tableC'>
                 <colgroup>
-                    <col width='9.33%'/>
-                    <col width='9.33%'/>
-                    <col width='32%'/>
-                    <col width='8%'/>
-                    <col width='8%'/>
-                    <col width='8%'/>
-                    <col width='8%'/>
-                    <col width='8%'/>
-                    <col width='9.33%'/>
+                    <col width='9.33%' />
+                    <col width='9.33%' />
+                    <col width='32%' />
+                    <col width='8%' />
+                    <col width='8%' />
+                    <col width='8%' />
+                    <col width='8%' />
+                    <col width='8%' />
+                    <col width='9.33%' />
                 </colgroup>
                 <thead>
                     <tr>
@@ -294,8 +304,8 @@ function UiPage() {
                 </thead>
             </table>
             <pre>
-            {
-                `
+                {
+                    `
             <table className='tableC'>
                     <colgroup>
                         <col width='9.33%'/>

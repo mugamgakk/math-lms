@@ -26,6 +26,51 @@
         font-weight: 600;
     }
 
+    &-name{
+        height: 50px;
+        border-bottom: 1px solid #ddd;
+        display: flex;
+        align-items: center;
+        padding-left: 20px;
+
+        strong.name{
+            @include font-style(24);
+            color: #222;
+            font-weight: 600;
+            margin-right: 12px;
+        }
+
+        .list{
+            display: flex;
+
+            li{
+                color: #444;
+                @include font-style;
+                font-weight: 400;
+                margin-right: 10px;
+                position: relative;
+
+                &::after{
+                    content: "";
+                    position: absolute;
+                    width: 1px;
+                    height: 18px;
+                    background-color: #eee;
+                    top: 4px;
+                    right: -5px;
+                }
+
+                &:last-child{
+                    margin-right: 0;
+                    &::after{
+                        display: none;
+                    }
+                }
+
+            }
+        }
+    }
+
     &-header{
         background-color: $green;
         color: #fff;

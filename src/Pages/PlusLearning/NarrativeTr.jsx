@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import ajax from '../../ajax';
+import Checkbox from '../../components/Checkbox';
+import Icon from '../../components/Icon';
 import PrintModal from '../../components/PrintModal';
 import PlusLearningGradingModal from './PlusLearningGradingModal';
 
@@ -29,9 +31,8 @@ function NarrativeTr({ ele, checkOne, checkedList }) {
 
     return (
         <tr>
-            <td style={{width : "8.80316%"}}>
-                <input
-                    type="checkbox"
+            <td style={{width : "8.80316%"}} className="text-center" >
+                <Checkbox
                     checked={checkedList.includes(ele)}
                     onChange={(e) => {
                         checkOne(e.target.checked, ele);
@@ -40,27 +41,28 @@ function NarrativeTr({ ele, checkOne, checkedList }) {
             </td>
             <td style={{width : "17.60633%"}}>{ele.ltitle}</td>
             <td style={{width : "35.11374%"}}>{ele.sc_title}</td>
-            <td style={{width : "13.84767%"}}>
+            <td style={{width : "13.84767%"}} className="text-center">
                 {
                     ele.sc_status === "S"
                         ? (<>
                             {scStatus[ele.sc_status]}
-                            <button className='btn'>오픈 취소</button>
+                            <button className='btn-table'>오픈 취소</button>
                         </>)
-                        : scStatus[ele.sc_status]
+                        :<button className='btn-table'>오픈 취소</button>
+                        // : scStatus[ele.sc_status]
                 }
             </td>
-            <td style={{width : "13.25420%"}}>
+            <td style={{width : "13.25420%"}} className="text-center">
                 {
                     {
-                        P: "-",
-                        S: (
+                        S: "-",
+                        P: (
                             <>
                                 {
                                     gradingModal && <PlusLearningGradingModal sc_seq={ele.sc_seq} setModal={setGradingModal}/>
                                 }
                                 시험지채점
-                                <button className='btn' onClick={()=>{setGradingModal(true)}}>채점하기</button>
+                                <button className='btn-table' onClick={()=>{setGradingModal(true)}}>채점하기</button>
                             </>
                         ),
                         C: (
@@ -72,11 +74,11 @@ function NarrativeTr({ ele, checkOne, checkedList }) {
                     }[ele.sc_status]
                 }
             </td>
-            <td style={{width : "11.37487%"}}>
+            <td style={{width : "11.37487%"}} className="text-center">
                 {
                     printModal && <PrintModal closeModal={setPrintModal}/>
                 }
-                <button className='btn' onClick={()=>{setPrintModal(true)}}>인쇄</button>
+                <button className='btn-table' onClick={()=>{setPrintModal(true)}}><Icon icon="print" style={{marginRight : "6px"}}/> 인쇄</button>
             </td>
         </tr>
     );
