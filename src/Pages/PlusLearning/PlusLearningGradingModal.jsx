@@ -138,7 +138,7 @@ function PlusLearningGradingModal({ setModal, sc_seq }) {
     }, [qnum]);
 
     return (
-        <div className="modal">
+        <div className="modal PlusLearningGradingModal">
             <div className="modal-content">
                 <div className="modal-header mb-3 fj">
                     <h4 className="title">서술형 따라잡기</h4>
@@ -162,77 +162,98 @@ function PlusLearningGradingModal({ setModal, sc_seq }) {
                         </ul>
                     </div>
                     <div className="row">
-                    <div className="col-6">
-                        <div className="btn-group mb-3">
-                            <button
-                                className={`btn-grey ${qnum === 1 ? "btn-green" : ""}`}
-                                onClick={() => {
-                                    setQnum(1);
-                                    getData(1);
-                                }}
-                            >
-                                1번 문항
-                            </button>
-                            <button
-                                className={`btn-grey ${qnum === 2 ? "btn-green" : ""}`}
-                                onClick={() => {
-                                    setQnum(2);
-                                    getData(2);
-                                }}
-                            >
-                                2번 문항
-                            </button>
-                        </div>
+                        <div className="layout">
+                            <div className="problem-btn">
+                                <button
+                                    className={`btn-grey ${qnum === 1 ? "btn-green" : ""}`}
+                                    onClick={() => {
+                                        setQnum(1);
+                                        getData(1);
+                                    }}
+                                >
+                                    1번 문항
+                                </button>
+                                <button
+                                    className={`btn-grey ${qnum === 2 ? "btn-green" : ""}`}
+                                    onClick={() => {
+                                        setQnum(2);
+                                        getData(2);
+                                    }}
+                                >
+                                    2번 문항
+                                </button>
+                            </div>
 
-                        <div className="problem mb-3" style={{ height: "250px", overflow: "auto" }}>
-                            <img
-                                src={qData?.aimage_path + qData?.qimg_filename}
-                                alt="문제 영역"
-                                width={"100%"}
-                            />
-                        </div>
+                            <div className="problem">
+                                <img
+                                    src={qData?.aimage_path + qData?.qimg_filename}
+                                    alt="문제 영역"
+                                    width={"100%"}
+                                />
+                            </div>
 
-                        <table className="mb-3">
-                            <colgroup>
-                                <col style={{ width: "auto" }} />
-                                <col style={{ width: "100px" }} />
-                                <col style={{ width: "100px" }} />
-                            </colgroup>
-                            <thead>
-                                <tr>
-                                    <th>채점 기준</th>
-                                    <th>배점</th>
-                                    <th>점수</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {qData?.score.map((ele, i) => {
-                                    return <Tr ele={ele} key={i} selectUpdate={selectUpdate} />;
-                                })}
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td>합계</td>
-                                    <td>
-                                        {qData?.score.reduce((prev, ele) => {
-                                            return ele.point + prev;
-                                        }, 0)}{" "}
-                                        점
-                                    </td>
-                                    <td>
-                                        {qData?.score.reduce((prev, ele) => {
-                                            return ele.stdpoint + prev;
-                                        }, 0)}{" "}
-                                        점
-                                    </td>
-                                </tr>
-                            </tfoot>
-                        </table>
+                            <table className='table tableA'>
+                                <thead>
+                                    <tr>
+                                        <th style={{ width: "71.9298%" }}>채점 기준</th>
+                                        <th style={{ width: "10.5263%" }}>배점</th>
+                                        <th style={{ width: "17.5438%" }}>점수</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {qData?.score.map((ele, i) => {
+                                        return <Tr ele={ele} key={i} selectUpdate={selectUpdate} />;
+                                    })}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td style={{ width: "71.9298%" }}>합계</td>
+                                        <td style={{ width: "10.5263%" }}>
+                                            {qData?.score.reduce((prev, ele) => {
+                                                return ele.point + prev;
+                                            }, 0)}
+                                        </td>
+                                        <td style={{ width: "17.5438%" }}>
+                                            {qData?.score.reduce((prev, ele) => {
+                                                return ele.stdpoint + prev;
+                                            }, 0)}
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
 
-                        <label htmlFor="option">선생님 의견 (첨삭)</label>
-                        <textarea id="option" rows="10" defaultValue={qData?.comment}></textarea>
+                            <div className="opinion">
+                                <h5>선생님 의견 (첨삭)</h5>
+                                <textarea id="option" defaultValue={qData?.comment}></textarea>
+                            </div>
 
-                        <div className="file-wrap fj">
+                            <div className="upload">
+                                <div className="upload-file mr-10">
+                                    <div className="file">
+                                        <Icon icon={"file"} />
+                                        첨부 파일1.pdf
+                                    </div>
+                                </div>
+                                <div className="upload-button mr-10">
+                                    <input
+                                        type="file"
+                                        onChange={(e) => {
+                                            upload(e.target.files);
+                                        }}
+                                        id="upload"
+                                        name="upload"
+                                        style={{ display: "none" }}
+                                        multiple
+                                    />
+                                    <label htmlFor="upload">
+                                        첨부 파일
+                                    </label>
+                                </div>
+                                <button type="button" className="mr-10">+</button>
+                                <button type="button">-</button>
+                            </div>
+
+                            {/* <div className="file-wrap fj">
                             <div
                                 className="file-view border"
                                 style={{ minWidth: "100px", height: "80px" }}
@@ -261,82 +282,74 @@ function PlusLearningGradingModal({ setModal, sc_seq }) {
                                 })}
                             </div>
                             <div className="file-button">
-                                <input
-                                    type="file"
-                                    onChange={(e) => {
-                                        upload(e.target.files);
-                                    }}
-                                    id="upload"
-                                    name="upload"
-                                    style={{ display: "none" }}
-                                    multiple
-                                />
-                                <label htmlFor="upload" className="d-flex">
-                                    첨부 파일
-                                </label>
+                                
                                 <button className="btn" onClick={removeFile}>
                                     선택 삭제
                                 </button>
                             </div>
+                        </div> */}
                         </div>
 
-                        <div className="text-center">
-
-                        </div>
-                    </div>
-
-                    <div className="col-6">
-                        <div style={{ height: "50%" }}>
-                            <h4 style={{ padding: "5px", backgroundColor: "skyblue" }}>모범답안</h4>
-                            <div style={{ height: "calc(100% - 30px)", overflow: "auto" }}>
-                                <img
-                                    src="https://img.animalplanet.co.kr/news/2022/03/14/700/uxh9813j6ydgv2vd6npp.jpg"
-                                    alt=""
-                                    width={"100%"}
-                                />
+                        <div className="layout">
+                            <div className="answer">
+                                <h4 className="answer-header" style={{ backgroundColor: "#e6ddd8", color: "#444" }}>
+                                    모범답안
+                                </h4>
+                                <div className="answer-body">
+                                    <img
+                                        src="https://img.animalplanet.co.kr/news/2022/03/14/700/uxh9813j6ydgv2vd6npp.jpg"
+                                        alt=""
+                                        width={"100%"}
+                                    />
+                                </div>
                             </div>
-                        </div>
-                        <div style={{ height: "50%" }}>
-                            <h4
-                                className="fj"
-                                style={{ padding: "5px", backgroundColor: "skyblue" }}
-                            >
-                                학생 답안지
-                                <div className="btn-group">
-                                    <button
-                                        className="btn"
-                                        onClick={() => {
-                                            prizmaZoom.current.zoomIn(1);
-                                        }}
-                                    >
-                                        플러스
+                            <div className="answer">
+                                <h4 className="answer-header" style={{ backgroundColor: "#e6ddd8", color: "#444" }}>
+                                    학생 답안지
+                                </h4>
+                                <div className="answer-body" style={{overflow : "hidden"}}>
+                                    <PrismaZoom ref={prizmaZoom}>
+                                        <img
+                                            src={
+                                                "https://img.animalplanet.co.kr/news/2022/03/14/700/uxh9813j6ydgv2vd6npp.jpg"
+                                            }
+                                        />
+                                    </PrismaZoom>
+                                    <button type="button" className="plus">
+                                        <Icon icon={"lnbDetail"} />
                                     </button>
-                                    <button
-                                        className="btn"
-                                        onClick={() => {
-                                            prizmaZoom.current.zoomOut(1);
-                                        }}
-                                    >
-                                        마이너스
+                                    <button type="button" className="download">
+                                        <Icon icon={"lnbDetail"} />
                                     </button>
                                 </div>
-                            </h4>
-                            <div style={{ height: "calc(100% - 30px)", overflow: "auto" }}>
-                                <PrismaZoom ref={prizmaZoom}>
-                                    <img
-                                        src={
-                                            "https://img.animalplanet.co.kr/news/2022/03/14/700/uxh9813j6ydgv2vd6npp.jpg"
-                                        }
-                                        style={{
-                                            width: "100%",
-                                            height: "100%",
-                                            objectFit: "cover",
-                                        }}
-                                    />
-                                </PrismaZoom>
                             </div>
+                            {/* <div className="answer">
+                                <h4
+                                    className="fj"
+                                    style={{ padding: "5px", backgroundColor: "skyblue" }}
+                                >
+                                    학생 답안지
+                                    <div className="btn-group">
+                                        <button
+                                            className="btn"
+                                            onClick={() => {
+                                                prizmaZoom.current.zoomIn(1);
+                                            }}
+                                        >
+                                            플러스
+                                        </button>
+                                        <button
+                                            className="btn"
+                                            onClick={() => {
+                                                prizmaZoom.current.zoomOut(1);
+                                            }}
+                                        >
+                                            마이너스
+                                        </button>
+                                    </div>
+                                </h4>
+                            </div> */}
                         </div>
-                    </div>
                     </div>
                 </div>
                 <div className="modal-footer">

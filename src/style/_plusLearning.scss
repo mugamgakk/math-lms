@@ -1,0 +1,150 @@
+// 플러스 러닝
+.PlusLearningGradingModal{
+    .modal-content{
+        width: 1200px;
+    }
+    .layout{
+        width: 50%;
+        padding: 20px;
+        border-right: 1px solid #ddd;
+
+        &:last-child{
+            border-right: none;
+        }
+    }
+
+    .problem-btn{
+        margin-bottom: 20px;
+
+        button{
+            min-width: 100px;
+        }
+    }
+
+    .problem{
+        border: 1px solid #ddd;
+        height: 240px;
+        overflow-y: auto;
+        margin-bottom: 20px;
+    }
+
+    .table{
+        th{
+            height: 35px;
+        }
+        td{
+            height: 45px;
+        }
+        th, td{
+            padding: 0;
+        }
+        thead{
+            height: 35px;
+        }
+    }
+
+    .opinion{
+        h5{
+            background-color: #e6ddd8;
+            border-top: 2px solid #664e3d;
+            border-bottom: 2px solid #a19893;
+            height: 35px;
+            @include flex;
+            @include font-style(17);
+            color: #664e3d;
+            font-weight: 600;
+
+        }
+
+        textarea{
+            height: 150px;
+            border-top: none;
+            padding: 10px;
+            @include font-style();
+        }
+    }
+
+    .upload{
+        display: flex;
+        div, button, label{
+            height: 40px;
+
+        }
+
+        &-file{
+            width: calc(100% - 200px);
+            border: 1px solid #aaa;
+            padding-left: 15px;
+            
+            .file{
+                @include flex(start);
+                color: #444;
+                i{
+                    margin-right: 8px
+                }
+            }
+        }
+        &-button{
+            label{
+                @include flex();
+                background-color: $orange;
+                color: $white;
+                width: 90px;
+            }
+        }
+        button{
+            width: 40px;
+            background-color: #eee;
+            border: 1px solid #ccc;
+            font-weight: 500;
+            color: #444;
+            font-size: 18px;
+        }
+    }
+
+    .answer{
+        height: 340px;
+        border: 1px solid #ddd;
+        background-color: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 30px;
+        
+        &-header{
+            height: 40px;
+            padding-left: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        &-body{
+            position: relative;
+            height: calc(100% - 40px);
+            img{
+                object-fit: cover;
+                width: 100%;
+                height: 100%;
+            }
+
+            .plus{
+                position: absolute;
+                width: 40px;
+                height: 40px;
+                bottom: 30px;
+                right: 80px;
+                background-color: #000;
+                border-radius: 50%;
+                color: $white;
+                opacity: 0.6;
+            }
+
+            .download{
+                @extend .plus;
+            }
+        }
+
+        &:last-child{
+            margin-bottom: 0;
+        }
+    }
+}
