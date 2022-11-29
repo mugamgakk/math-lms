@@ -165,7 +165,7 @@ function PlusLearningGradingModal({ setModal, sc_seq }) {
                         <div className="layout">
                             <div className="problem-btn">
                                 <button
-                                    className={`btn-grey ${qnum === 1 ? "btn-green" : ""}`}
+                                    className={`mr-10 ${qnum === 1 ? "btn-green" : "btn-grey"}`}
                                     onClick={() => {
                                         setQnum(1);
                                         getData(1);
@@ -174,7 +174,7 @@ function PlusLearningGradingModal({ setModal, sc_seq }) {
                                     1번 문항
                                 </button>
                                 <button
-                                    className={`btn-grey ${qnum === 2 ? "btn-green" : ""}`}
+                                    className={`${qnum === 2 ? "btn-green" : "btn-grey"}`}
                                     onClick={() => {
                                         setQnum(2);
                                         getData(2);
@@ -186,34 +186,54 @@ function PlusLearningGradingModal({ setModal, sc_seq }) {
 
                             <div className="problem">
                                 <img
-                                    src={qData?.aimage_path + qData?.qimg_filename}
+                                    src="https://www.sisajournal.com/news/photo/202106/218128_126408_257.jpg"
                                     alt="문제 영역"
                                     width={"100%"}
                                 />
                             </div>
 
-                            <table className='table tableA'>
+                            <table>
+                                <colgroup>
+                                    <col style={{width : "71.9298%"}}  />
+                                    <col style={{width : "10.5263%"}}  />
+                                    <col style={{width : "17.5438%"}}  />
+                                </colgroup>
                                 <thead>
                                     <tr>
-                                        <th style={{ width: "71.9298%" }}>채점 기준</th>
-                                        <th style={{ width: "10.5263%" }}>배점</th>
-                                        <th style={{ width: "17.5438%" }}>점수</th>
+                                        <th>채점 기준</th>
+                                        <th>배점</th>
+                                        <th>점수</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr>
+                                        <td>가분수로 바꾸어 계산을 하였다</td>
+                                        <td>2</td>
+                                        <td>3</td>
+                                    </tr>
+                                    <tr>
+                                        <td>자연수는 자연수끼리, 분수는 분수끼리 계산을 하였다.</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>대분수로 바꾸어 답을 나타내었다.</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
                                     {qData?.score.map((ele, i) => {
                                         return <Tr ele={ele} key={i} selectUpdate={selectUpdate} />;
                                     })}
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td style={{ width: "71.9298%" }}>합계</td>
-                                        <td style={{ width: "10.5263%" }}>
+                                        <td style={{textAlign : "center"}}>합계</td>
+                                        <td>
                                             {qData?.score.reduce((prev, ele) => {
                                                 return ele.point + prev;
                                             }, 0)}
                                         </td>
-                                        <td style={{ width: "17.5438%" }}>
+                                        <td>
                                             {qData?.score.reduce((prev, ele) => {
                                                 return ele.stdpoint + prev;
                                             }, 0)}
@@ -304,7 +324,7 @@ function PlusLearningGradingModal({ setModal, sc_seq }) {
                                 </div>
                             </div>
                             <div className="answer">
-                                <h4 className="answer-header" style={{ backgroundColor: "#e6ddd8", color: "#444" }}>
+                                <h4 className="answer-header" style={{ backgroundColor: "#664e3d", color: "#fff" }}>
                                     학생 답안지
                                 </h4>
                                 <div className="answer-body" style={{overflow : "hidden"}}>
@@ -315,40 +335,25 @@ function PlusLearningGradingModal({ setModal, sc_seq }) {
                                             }
                                         />
                                     </PrismaZoom>
-                                    <button type="button" className="plus">
+                                    <button type="button" className="plus"
+                                        onClick={() => {
+                                            prizmaZoom.current.zoomIn(1);
+                                        }}
+                                    >
                                         <Icon icon={"lnbDetail"} />
                                     </button>
+                                    <button type="button" className="minus"
+                                        onClick={() => {
+                                            prizmaZoom.current.zoomOut(1);
+                                        }}
+                                    >
+                                       ㅡ
+                                    </button>
                                     <button type="button" className="download">
-                                        <Icon icon={"lnbDetail"} />
+                                        <Icon icon={"downloadB"} />
                                     </button>
                                 </div>
                             </div>
-                            {/* <div className="answer">
-                                <h4
-                                    className="fj"
-                                    style={{ padding: "5px", backgroundColor: "skyblue" }}
-                                >
-                                    학생 답안지
-                                    <div className="btn-group">
-                                        <button
-                                            className="btn"
-                                            onClick={() => {
-                                                prizmaZoom.current.zoomIn(1);
-                                            }}
-                                        >
-                                            플러스
-                                        </button>
-                                        <button
-                                            className="btn"
-                                            onClick={() => {
-                                                prizmaZoom.current.zoomOut(1);
-                                            }}
-                                        >
-                                            마이너스
-                                        </button>
-                                    </div>
-                                </h4>
-                            </div> */}
                         </div>
                     </div>
                 </div>
