@@ -140,6 +140,7 @@ function PlusLearningGradingModal({ setModal, sc_seq }) {
     return (
         <div className="modal PlusLearningGradingModal">
             <div className="modal-content">
+                <div className="modal-container">
                 <div className="modal-header mb-3 fj">
                     <h4 className="title">서술형 따라잡기</h4>
                     <button className='btn'
@@ -371,6 +372,7 @@ function PlusLearningGradingModal({ setModal, sc_seq }) {
                     className="btn-orange"
                     style={{minWidth : "100px"}}
                     >수정</button>
+                </div>
                 </div>
             </div>
         </div>

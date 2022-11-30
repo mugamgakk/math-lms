@@ -141,6 +141,7 @@ function Narrative() {
 
     return (
         <div className="Narrative">
+
             <UserInfo clickStudent={clickStudent} />
             <p className="alert-text" style={{ marginTop: "20px" }}>
                 학습하는 교재의 학년, 학기에 해당하는 서술형 문제를 오픈, 출력할 수

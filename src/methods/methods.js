@@ -2,6 +2,13 @@ import FileSaver from "file-saver";
 import JSZip from "jszip";
 import html2canvas from "html2canvas";
 
+export function toggleBodyScroll(param){
+    if(param === true){
+        document.body.style.overflow = "hidden";
+    }else{
+        document.body.style.overflow = "unset";
+    }
+}
 
 function weekChange(param) {
     switch (param) {

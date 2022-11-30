@@ -1,6 +1,6 @@
 // 플러스 러닝
 .PlusLearningGradingModal{
-    .modal-content{
+    .modal-container{
         width: 1200px;
     }
     .layout{
@@ -243,5 +243,14 @@
         border: 1px solid #eb615a;
         background-color: $white;
         color: #eb615a;
+    }
+}
+
+@media screen and (max-width : 1800px){
+
+    .modal-content{
+        width: 766px !important;
+        height: 531px !important;
+        overflow: scroll;
     }
 }

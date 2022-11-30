@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import React from "react";
 import { useEffect } from "react";
 import { useRef } from "react";
@@ -11,7 +10,6 @@ import Icon from "../components/Icon";
 import LmsDatePicker from "../components/LmsDatePicker";
 import SkeletonTable from "../components/SkeletonTable";
 import ClassSelect from "../components/ui/select/ClassSelect";
-import { setCookie } from "../cookie";
 import { _cloneDeep } from "../methods/methods";
 import attendanceStore from "../store/attendanceStore";
 
