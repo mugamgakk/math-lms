@@ -1,12 +1,12 @@
 .table{
     // 테이블 공통속성
-    thead{
-        tr{
+    >thead{
+        >tr{
             width: 100%;
             display:flex;
             border-top: 2px solid #664e3d;
             border-bottom: 2px solid #a19893;
-            th{
+            >th{
                 @include font-style(17);
                 color: #664e3d;
                 background: #e6ddd8;
@@ -14,48 +14,51 @@
             }
         }
     }
-    tbody{
+    >tbody{
         display: block;
         overflow-y: scroll;
         overflow-x: hidden;
     }
     &.tableA{
         width: 100%;
-        th{
-            padding: 13px 0;
-            // &:nth-last-child(2),
-            // &:last-child{
-            //     border-right:none;
-            // }
-            &:nth-child(1){
-                width: calc(100%/8);
+        >thead{
+            >tr{
+                >th{
+                    padding: 13px 0;
+                    // &:nth-last-child(2),
+                    // &:last-child{
+                    //     border-right:none;
+                    // }
+                    &:nth-child(1){
+                        width: calc(100%/8);
+                    }
+                    &:nth-child(2){
+                        width: calc(100%/8);
+                    }
+                    &:nth-child(3){
+                        width: calc(100%/8);
+                    }
+                    &:nth-child(4){
+                        width: calc(100%/8);
+                    }
+                    &:nth-child(5){
+                        width: calc(100%/8);
+                    }
+                    &:nth-child(6){
+                        width: calc(100%/8);
+                    }
+                    &:nth-child(7){
+                        width: calc(100%/8);
+                    }
+                    &:nth-child(8){
+                        width: calc(100%/8);
+                    }
+                }
             }
-            &:nth-child(2){
-                width: calc(100%/8);
-            }
-            &:nth-child(3){
-                width: calc(100%/8);
-            }
-            &:nth-child(4){
-                width: calc(100%/8);
-            }
-            &:nth-child(5){
-                width: calc(100%/8);
-            }
-            &:nth-child(6){
-                width: calc(100%/8);
-            }
-            &:nth-child(7){
-                width: calc(100%/8);
-            }
-            &:nth-child(8){
-                width: calc(100%/8);
-            }
-           
         }
-        tbody{
+        >tbody{
             border-bottom: 1px solid #ddd;
-            tr{
+            >tr{
                 width: calc(100% + 10px);
                 display: flex;
                 &:last-child{
@@ -63,7 +66,7 @@
                         border-bottom: none;
                     }
                 }
-                td{
+                >td{
                     border: none;
                     border-right:1px solid #dee2e6;
                     border-bottom:1px solid #dee2e6;
@@ -107,38 +110,38 @@
     }
     &.tableB{
         width: 100%;
-        thead{
-            tr{
+        >thead{
+            >tr{
                 border-bottom: 2px solid #a19893;
-            }
-            th{
-                padding: 5px 0;
-                &:last-child{
-                    border-right:none;
-                }
-                &:nth-child(1){
-                    width: 10%;
-                }
-                &:nth-child(2){
-                    width: 45%;
-                }
-                &:nth-child(3){
-                    width: 15%;
-                }
-                &:nth-child(4){
-                    width: 30%;
+                >th{
+                    padding: 5px 0;
+                    &:last-child{
+                        border-right:none;
+                    }
+                    &:nth-child(1){
+                        width: 10%;
+                    }
+                    &:nth-child(2){
+                        width: 45%;
+                    }
+                    &:nth-child(3){
+                        width: 15%;
+                    }
+                    &:nth-child(4){
+                        width: 30%;
+                    }
                 }
             }
         }
     
-        tbody{
+        >tbody{
             background: #f6f6f6;
             padding: 11px;
             overflow-y: scroll;
             overflow-x: hidden;
             border-bottom: 1px solid #ddd;
 
-            tr{
+            >tr{
                 display: flex;
                 margin-bottom: 2px;
                 background-color: #fff;
@@ -153,7 +156,8 @@
                         background: #ffeee8;
                     }
                 }
-                td{
+                
+                >td{
                     border: none;
                     @include flex;
                     position: relative;
@@ -183,14 +187,14 @@
 
 .tableC{
     width: 100%;
-    thead{
+    >thead{
         border-top: 2px solid #664e3d;
         border-bottom: 2px solid #a19893;
-        tr{
+        >tr{
             &:first-child{
                 border-bottom: 1px solid #cfbfb7;
             }
-            th{
+            >th{
                 border: none;
                 @include font-style(17);
                 color: #664e3d;

@@ -7,7 +7,7 @@ const arr = [
     'apple',             'arrowA',
     'attendence',        'calendar',
     'close',             'download',
-    'downloadB',
+    'downloadB',         'mute',
     'evaluation',        'fast',
     'file',              'hamburger',
     'info',              'lnbDetail',
@@ -43,14 +43,14 @@ function IconPage() {
                     `
                 }
             </pre>
-            {/* <style>
+            <style>
                 {`
                 i{
                     font-size : 3rem;
                     cursor: pointer;
                 }
             `}
-            </style> */}
+            </style>
         </div>
     );
 }

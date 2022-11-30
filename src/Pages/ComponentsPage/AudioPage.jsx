@@ -3,7 +3,6 @@ import { useState } from "react";
 import ReactAudioPlayer from "react-audio-player";
 import SelectBase from "../../components/ui/select/SelectBase";
 import 오디오입니동 from "../../test.mp3";
-import style from "../../style/style-module/Audio.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileArrowDown, faPlay, faPause, faBackwardFast } from "@fortawesome/free-solid-svg-icons";
 import { fileDown } from "../../methods/methods";
@@ -130,8 +129,8 @@ function AudioPage() {
 
             <div className="fj" style={{ width: "500px" }}>
                 {minTime}
-                <div className={style.audio_bar} onClick={clickChange}>
-                    <div className={style.audio_bar_itme} ref={audioBar}></div>
+                <div className='audio-bar' onClick={clickChange}>
+                    <div className='bar-range' ref={audioBar}></div>
                 </div>
                 {maxTime}
             </div>
@@ -169,7 +168,7 @@ function AudioPage() {
                     onChange={(el) => speedChange(el)}
                 />
                 <button
-                    className={style.download_btn}
+                    className='audio-download'
                     onClick={() => {
                         fileDown(오디오입니동);
                     }}
