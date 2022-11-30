@@ -10,6 +10,14 @@ export function toggleBodyScroll(param){
     }
 }
 
+export function falseModal(e,target){
+    
+    if(e.target === e.currentTarget){
+        var 변경 = target;
+        변경(false)
+    }
+}
+
 function weekChange(param) {
     switch (param) {
         case 0:

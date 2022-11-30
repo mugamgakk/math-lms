@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import ajax from '../../ajax';
 import Checkbox from '../../components/Checkbox';
 import Icon from '../../components/Icon';
 import PrintModal from '../../components/PrintModal';
+import { toggleBodyScroll } from '../../methods/methods';
 import PlusLearningGradingModal from './PlusLearningGradingModal';
 
 const scStatus = {
@@ -28,6 +30,13 @@ function NarrativeTr({ ele, checkOne, checkedList }) {
 
         }
     }
+    useEffect(()=>{
+        if(gradingModal){
+            toggleBodyScroll(true);
+        }else{
+            toggleBodyScroll(false);
+        }
+    },[gradingModal])
 
     return (
         <tr>

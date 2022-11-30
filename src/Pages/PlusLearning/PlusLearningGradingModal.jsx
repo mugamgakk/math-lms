@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import SelectBase from "../../components/ui/select/SelectBase";
-import { getByteSize } from "../../methods/methods";
+import { falseModal, getByteSize } from "../../methods/methods";
 import PrismaZoom from "react-prismazoom";
 import { useCallback } from "react";
 import useStudentsStore from "../../store/useStudentsStore";
@@ -138,7 +138,7 @@ function PlusLearningGradingModal({ setModal, sc_seq }) {
     }, [qnum]);
 
     return (
-        <div className="modal PlusLearningGradingModal">
+        <div className="modal PlusLearningGradingModal" onClick={(e)=>{falseModal(e, setModal)}}>
             <div className="modal-content">
                 <div className="modal-container">
                 <div className="modal-header mb-3 fj">
