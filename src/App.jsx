@@ -55,7 +55,7 @@ function App() {
     return (
         <div>
             <Routes>
-                <Route path="/" element={<Home />}>
+                <Route path="/" element={<Authentication />}>
                     <Route path="attendance" element={<Attendance />} />
                     <Route path="today-class" element={<TodayClass />} />
                     <Route path="detail-class" element={<DetailClass />}>

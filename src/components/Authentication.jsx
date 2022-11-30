@@ -1,19 +1,11 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import ajax from '../ajax';
 import Home from '../Pages/Home';
+import { getCookie } from '../cookie';
 
-async function Authentication() {
+function Authentication() {
     
-    let res = await ajax("/user.php", {data : {mode : "login"}})
-    
-    console.log(res.data.ok);
-
-    if(res.data.ok == 1){
-        return <Home/>
-    }else{
-        return <Navigate to="/login" />
-    }
+    return getCookie("gplumLMSlogin") ? <Home/> : <Navigate to="/login" />
 
 }
 

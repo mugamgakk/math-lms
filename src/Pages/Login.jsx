@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ajax from "../ajax";
 import logo from "../assets/logo.svg";
 import useInput from "../hooks/useInput";
-import { useEffect } from "react";
+import { setCookie } from "../cookie";
 
 function Login() {
     let [textValue, setTextValue] = useInput({
@@ -45,6 +45,8 @@ function Login() {
             switch (res.data.ok) {
                 // 로그인 완료
                 case 1:
+                    // 프론트에서 로그인 확인 쿠키
+                    setCookie("gplumLMSlogin", "true")
                     window.location = "/attendance";
                     break;
                 // 로그인 중복
@@ -56,6 +58,7 @@ function Login() {
                         ajax("/user.php", {
                             data: data,
                         }).then((res) => {
+                            setCookie("gplumLMSlogin", "true")
                             window.location = "/attendance";
                         });
                     } else {
@@ -63,6 +66,7 @@ function Login() {
                     }
                     break;
                 case -1:
+                    setCookie("gplumLMSlogin", "true")
                     window.location = "/attendance";
                     break;
                 case 0:

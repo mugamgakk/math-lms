@@ -7,6 +7,7 @@ import LnbLookup from "./Home/LnbLookup";
 import Icon from "../components/Icon";
 import logo from "../assets/logo.svg";
 import hamburger from "../assets/hamburger.svg";
+import { getCookie, removeCookie } from "../cookie";
 
 const nav = [
     { icon: "attendence", name: "출석체크", href: "/attendance" },
@@ -14,7 +15,7 @@ const nav = [
     {
         icon: "studentManagement",
         name: "학생별 수업 관리",
-        href: "/detail-class",
+        href: "/detail-class/management",
         depth: [
             { name: "수업관리", href: "/detail-class/management" },
             { name: "오답 정복하기", href: "/detail-class/wrong-answer" },
@@ -25,7 +26,7 @@ const nav = [
     {
         icon: "plusLearning",
         name: "플러스 학습",
-        href: "/plus-learning",
+        href: "/plus-learning/narrative",
         depth: [
             { name: "서술형 따라잡기", href: "/plus-learning/narrative" },
             { name: "교과서별 내신적중", href: "/plus-learning/textBook" },
@@ -34,7 +35,7 @@ const nav = [
     {
         icon: "evaluation",
         name: "평가 관리",
-        href: "/evaluation",
+        href: "/evaluation/routine",
         depth: [
             { name: "재원생 정기평가", href: "/evaluation/routine" },
             { name: "진단평가", href: "/evaluation/jindan" },
@@ -43,7 +44,7 @@ const nav = [
     {
         icon: "notification",
         name: "자료 및 알림",
-        href: "/data-service",
+        href: "/data-service/reference",
         depth: [
             { name: "자료실", href: "/data-service/reference" },
             { name: "학습 알림", href: "/data-service/notification" },
@@ -62,6 +63,8 @@ function Home() {
     const navigate = useNavigate();
 
     const logoutFn = useCallback(() => {
+        removeCookie("gplumLMSlogin");
+
         ajax("/user.php", {
             data: { mode: "logout" },
         }).then(() => {
@@ -81,7 +84,7 @@ function Home() {
                 logoutFn();
             }
         });
-    }, []);
+    }, [location.pathname]);
 
     return (
         <main id="main">
