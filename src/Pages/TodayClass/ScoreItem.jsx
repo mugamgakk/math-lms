@@ -6,11 +6,13 @@ function ScoreItem ({tit = null,idx,numClick,totalData}) {
     return(
         <>
             {
-                tit && <div>{tit}</div>  
+                tit && <h6>{tit}</h6>  
             }
+        <div className="fc" style={{ width: '100%' }}>
             {
                 barArray.map(v => <span className={totalData[idx] == v ? 'scoreNum active' : 'scoreNum'} key={v} onClick={()=>numClick(idx,v)}>{v}</span>)
             }
+        </div>
         </>
     )
 }

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ScoreItem from './ScoreItem';
 import ajax from "../../ajax";
+import pencil from "../../assets/pencil.svg";
+import Icon from "../../components/Icon";
 
 function AttModal ({setAttModal}) {
     let scoreTitList = [
@@ -47,30 +49,37 @@ function AttModal ({setAttModal}) {
     }
     return(
         <div className="modal">
-        <div className='modal-content'>
-            <div className="modal-header">
-                    <div className="tit">
-                        <strong>[학습 태도 평가]</strong>
-                        {title}
-                    </div>
-                    <button className="close" onClick={() => setAttModal(false)}>X</button>
-            </div>
+        <div className='modal-content attModal'>
+            <div className="modal-header fj">
+                    <h2 className="modal-title">학습 태도 평가</h2>
+                    <button className="btn" onClick={() => setAttModal(false)}><Icon icon={"close"} /></button>
+                </div>
             <div className="modal-body">
-                <h5>이 단원의 학습 태도를 10점 만점으로 평가해 주세요.</h5>
-                <ul>
+                <div className="modal-name" style={{ paddingLeft:'20px' }}>
+                    <strong className="name">강수학</strong>
+                    <ul className="list">
+                        <li>중2-1</li>
+                        <li>I. 수와 식의 계산</li>
+                        <li>번호, 주제</li>
+                    </ul>
+                </div>
+                <div className="contents" style={{ padding:'20px' }}>
+                    <h5 className="m-tit"><img src={pencil} style={{marginRight: '8px'}}/>학생의 개념 이해력과 전달력 점수를 입력해 주세요.</h5>
                     {
                         scoreTitList.map((tit,idx)=> {
                             return(
-                                <ScoreItem key={idx} tit={tit} idx={idx} numClick={numClick} totalData={totalData}/>
+                                <div className="contents-item">
+                                    <ScoreItem key={idx} tit={tit} idx={idx} numClick={numClick} totalData={totalData}/>
+                                </div>
                             )
                         })
                             
                     }
-                </ul>
+                </div>
             </div>
             <div className="modal-footer">
-                <button className="btn" onClick={()=>setAttModal(false)}>취소</button>
-                <button className="btn" onClick={formConfirm}>평가 완료</button>
+                <button className="btn-grey-border mr-4" onClick={()=>setAttModal(false)}>취소</button>
+                <button className="btn-orange" onClick={formConfirm}>평가 완료</button>
             </div>
         </div>
         </div>
