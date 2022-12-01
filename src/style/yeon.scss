@@ -173,9 +173,7 @@
                 margin-bottom: 6px;
                 font-weight: 500;
             }
-            .scoreNum{
-                margin: 0 5px;
-            }
+            
         
         }
     }
@@ -190,6 +188,7 @@
     text-align: center;
     line-height: 32px;
     font-size: 17px;
+    margin: 0 5px;
     cursor: pointer;
     &.active{
         color: #fff;

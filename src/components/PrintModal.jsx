@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Pagination from "./Pagination";
 import ReactToPrint from "react-to-print"; // pdf, 인쇄
+import Icon from "./Icon";
+import Checkbox from "./Checkbox";
 
 function PrintModal({ closeModal, title = "제목임" }) {
     const printComponent = React.useRef();
@@ -21,59 +23,45 @@ function PrintModal({ closeModal, title = "제목임" }) {
         e.preventDefault();
     }
 
+
     return (
-        <>
             <div className="modal">
-                <div className="dim"></div>
-                <div className="printModal cmmnModal">
-                    <div className="printModal-head cmmnModal-head">
-                        <div className="tit">{title}</div>
-                        <button className="close" onClick={() => closeModal(false)}>
-                            X
-                        </button>
+                <div className="modal-content printModal">
+                    <div className="modal-header fj">
+                        <h2 className="modal-title">{title}</h2>
+                        <button className="btn" onClick={() => closeModal(false)}><Icon icon={"close"} /></button>
                     </div>
-                    <div className="printModal-body cmmnModal-body">
-                        <div className="btn-area fj">
+                    <div className="modal-body">
+                        <div className="modal-name" style={{ paddingLeft:'20px' }}>
+                            <strong className="name">강수학</strong>
+                            <ul className="list">
+                                <li>중2-1</li>
+                                <li>I. 수와 식의 계산</li>
+                                <li>번호, 주제</li>
+                            </ul>
+                        </div>
+                        <div className="btn-area fj mb-10">
                             <div className="btn-area__left">
                                 <button
-                                    className={viewState === "question" ? "btn active" : "btn"}
+                                    className={`view-btn mr-4 ${viewState === "question" ? "active" : ''}`}
                                     onClick={() => setViewState("question")}
                                 >
                                     문제 보기
                                 </button>
                                 <button
-                                    className={viewState === "solution" ? "btn active" : "btn"}
+                                    className={`view-btn ${viewState === "solution" ? "active" : ""}`}
                                     onClick={() => setViewState("solution")}
                                 >
                                     풀이 보기
                                 </button>
                             </div>
                             <div className="btn-area__right">
-                                <button className={"btn" + `${checkData.includes("question") ? " active" : ''}`}>
-                                    <input
-                                        type="checkbox"
-                                        id="question"
-                                        checked={checkData.includes("question") ? true : false}
-                                        onChange={(e) => {
-                                            checkState(e.target.checked, "question");
-                                        }}
-                                    />
-                                    <label htmlFor="question">문제지</label>
-                                </button>
-
-                                <button className={"btn" + `${checkData.includes("solution") ? " active" : ''}`}>
-                                    <input
-                                        type="checkbox"
-                                        id="solution"
-                                        checked={checkData.includes("solution") ? true : false}
-                                        onChange={(e) => {
-                                            checkState(e.target.checked, "solution");
-                                        }}
-                                    />
-                                    <label htmlFor="solution">풀이지</label>
-                                </button>
+                                <Checkbox color='green' checked={checkData.includes("question")} id='question' onChange={(e)=> checkState(e.target.checked, "question")}/>
+                                <label htmlFor="question">문제지</label>
+                                <Checkbox color='green' checked={checkData.includes("solution")} id='solution' onChange={(e)=> checkState(e.target.checked, "solution")}/>
+                                <label htmlFor="solution">풀이지</label>
                                 <ReactToPrint
-                                    trigger={() => <button className="btn">인쇄하기</button>}
+                                    trigger={() => <button className="btn-grey-border"><Icon icon={"print"} style={{marginRight:'6px',fontSize:'14px'}}/>인쇄</button>}
                                     content={() => printComponent.current}
                                 />
                                     <div style={{ display: "none" }}>
@@ -97,13 +85,12 @@ function PrintModal({ closeModal, title = "제목임" }) {
                             }
                         </div>
                     </div>
-                    <div className="printModal-foot cmmnModal-foot">
+                    <div className="modal-footer">
                         {/* <Pagination /> */}
                         <PrintPagination totalPage={7}/>
                     </div>
                 </div>
             </div>
-        </>
     );
 }
 

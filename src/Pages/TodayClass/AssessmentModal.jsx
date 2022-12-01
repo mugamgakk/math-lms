@@ -60,11 +60,9 @@ function AssessmentModal ({setAssModal}) {
      // 오디오 진행바
      let audioBar = useRef();
      let volumeBar = useRef();
- 
      let [valumeItem, setValumeItem] = useState(0.5);
      let [minTime, setMinTime] = useState("0 : 00");
      let [maxTime, setMaxTime] = useState("0 : 00");
-     
      useEffect(()=>{
         if(valumeItem === 0){
             setMuteState(true);
@@ -80,7 +78,7 @@ function AssessmentModal ({setAssModal}) {
      let [muteState, setMuteState] = useState(false);
  
      let allTime = useRef(0);
- 
+     
      // 재생버튼
      const start = () => {
          let 오디오 = audio.current.audioEl.current;
@@ -128,7 +126,7 @@ function AssessmentModal ({setAssModal}) {
      // 진행 할때
      const audioIng = (time) => {
          let 현재시간퍼센트 = (time / allTime.current) * 100;
-         audioBar.current.style.width = `${현재시간퍼센트}%`;
+        //  audioBar.current.style.width = `${현재시간퍼센트}%`;
  
          const min = parseInt(time / 60);
          const sec = Math.round(time % 60);
@@ -146,7 +144,7 @@ function AssessmentModal ({setAssModal}) {
          const widthRatio = offsetX / width;
  
          const toTime = Math.round(widthRatio * 오디오.duration);
-         audioBar.current.style.width = `${toTime}%`;
+        //  audioBar.current.style.width = `${toTime}%`;
  
          오디오.currentTime = toTime;
      };
@@ -205,7 +203,14 @@ function AssessmentModal ({setAssModal}) {
                                     {/* <div className='audio-bar' onClick={clickChange}>
                                         <div className='bar-range' ref={audioBar}></div>
                                     </div> */}
-                                    <input  type="range" className="audio-bar"/>
+                                    <input 
+                                    type="range" 
+                                    className="audio-bar" 
+                                    ref={audioBar}
+                                    min={0}
+                                    max={100}
+                                    onChange={()=> {console.log(audioBar)}}
+                                    />
                                 <div className="foot fj" style={{ marginTop:'17px' }}>
                                     <div className='audio-volume'>
                                         <button className={muteState ? 'mute' : ''} onClick={()=>{

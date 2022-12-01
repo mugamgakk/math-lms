@@ -109,3 +109,25 @@
         }
     }
 }
+
+.printModal{
+    .btn-area{
+        padding: 20px 20px 0 20px;
+        button{
+            width: 100px;
+            height: 40px;
+        }
+        .view-btn{
+            @include font-style(17);
+            background: #eee;
+            color: #666;
+            line-height: 37px !important;
+            border-radius: 4px;
+            &.active{
+                border: 2px solid #00a37f;
+                color: #00a37f;
+                background: #fff;
+            }
+        }
+    }
+}

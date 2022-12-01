@@ -53,7 +53,7 @@ function AttModal ({setAttModal}) {
             <div className="modal-header fj">
                     <h2 className="modal-title">학습 태도 평가</h2>
                     <button className="btn" onClick={() => setAttModal(false)}><Icon icon={"close"} /></button>
-                </div>
+            </div>
             <div className="modal-body">
                 <div className="modal-name" style={{ paddingLeft:'20px' }}>
                     <strong className="name">강수학</strong>

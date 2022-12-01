@@ -67,7 +67,7 @@ function TodayClassTr({data,name,book}){
                     {
                     printModal ? 
                     <PrintModal 
-                    title={`<strong>${name}</strong>${book}<em></em>${data.tit}<em></em>${data.sodanwon}`}
+                    title='맞춤 클리닉'
                     closeModal={closeModal}
                     /> 
                     : null
