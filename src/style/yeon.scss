@@ -135,9 +135,7 @@
             }
         }
         h5{
-            @include font-style(20);
-            color: #664e3d;
-            margin-top: 20px;
+           
         }
         table{
             width: 100%;
@@ -161,7 +159,30 @@
         }
     }
 }
+.attModal{
+    width: 600px;
+    .contents{
+        &-item{
+            border-bottom: 1px solid #eee;
+            padding: 10px 0;
+            &:first-of-type{
+                border-top: 2px solid #664e3d;
+            }
+            h6{
+                @include font-style(18);
+                margin-bottom: 6px;
+                font-weight: 500;
+            }
+            .scoreNum{
+                margin: 0 5px;
+            }
+        
+        }
+    }
+    
+}
 .scoreNum{
+    display: inline-block;
     width: 32px;
     height: 32px;
     border-radius: 50%;
@@ -173,6 +194,15 @@
     &.active{
         color: #fff;
         background: #ea7851;
+    }
+}
+.m-tit{
+    @include font-style(20);
+    color: #664e3d;
+    img{
+        position: relative;
+        top: 2px;
+        margin-right: 8px;
     }
 }
 

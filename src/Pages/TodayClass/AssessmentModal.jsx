@@ -256,7 +256,7 @@ function AssessmentModal ({setAssModal}) {
                             )
                         }
                         </div>
-                        <h5><img src={pencil} style={{marginRight: '8px'}}/>학생의 개념 이해력과 전달력 점수를 입력해 주세요.</h5>
+                        <h5 className="m-tit" style={{ marginTop: '20px' }}><img src={pencil}/>학생의 개념 이해력과 전달력 점수를 입력해 주세요.</h5>
                         <table>
                             <colgroup>
                                 <col width='120px'/>
@@ -268,7 +268,7 @@ function AssessmentModal ({setAssModal}) {
                                     return(
                                         <tr key={idx}>
                                             <th>{tit}</th>
-                                            <td className="fj">
+                                            <td>
                                                 <ScoreItem numClick={numClick} idx={idx} totalData={totalData}/>
                                             </td>
                                         </tr>
