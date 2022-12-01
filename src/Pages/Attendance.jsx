@@ -209,18 +209,6 @@ const Tr = memo(({ ele, index }) => {
                         disabled={!pen}
                         maxLength={50}
                     ></textarea>
-                    {/* <input
-                        type="text"
-                        value={text}
-                        onChange={(e) => {
-                            setText(e.target.value);
-                            changeCopyData({ index, attd: e.target.value, 속성: "reason" })
-                        }}
-                        className="textInput"
-                        placeholder="사유 입력(50자 이내)"
-                        maxLength={50}
-                        disabled={!pen}
-                    /> */}
                 </div>
                 <div style={{ width: "100px" }}>
                     {pen && <button className="btn-grey-border">저장</button>}

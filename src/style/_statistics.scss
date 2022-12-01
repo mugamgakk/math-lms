@@ -1,3 +1,21 @@
+.carat{
+    display: inline-block;
+    width: 26px;
+    height: 22px;
+    background-image: url("../assets/img/carat.png");
+    background-position: center;
+    background-size: cover;
+}
+
+.mineral{
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-image: url("../assets/img/mineral.png");
+    background-position: center;
+    background-size: cover;
+}
+
 .Statistics{
     .tabs-header{
         strong{
@@ -75,5 +93,46 @@
         width: 100%;
         margin-top: 14px;
         border-bottom: 1px solid #ddd;
+        thead{
+            background-color: #e6ddd8;
+            border-top: 2px solid $brown;
+            border-bottom: 2px solid #a19893;
+            th{
+                @include font-style(17);
+                color: $brown;
+                font-weight: 600;
+                height: 35px;
+                text-align: center;
+                border-right: 1px solid #cfbfb7;
+
+                &:last-child{
+                    border-right: none;
+                }
+            }
+            
+        }
+        td{
+            height: 40px;
+            text-align: center;
+            border-right: 1px solid #ddd;
+            color: #444;
+            font-weight: 400;
+            &:nth-child(2){
+                font-weight: 400 !important;
+            }
+        }
+        tr{
+            border-bottom: 1px solid #ddd;
+            border-left: 1px solid #ddd;
+        }
+
+        tfoot{
+            td:first-child{
+                background-color: #f2eeeb;
+                color: $brown;
+                @include font-style(17);
+                font-weight: 600;
+            }
+        }
     }
 }

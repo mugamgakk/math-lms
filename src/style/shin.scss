@@ -300,3 +300,46 @@
         cursor: pointer;
     }
 }
+
+.ReservationModal-modal{
+    .modal-content{
+        min-width: 660px;
+    }
+
+    table{
+        td{
+            padding: 10px;
+        }
+        td:first-child{
+            font-weight: 600;
+            width: 147px;
+            text-align: center;
+        }
+
+        .btn-box{
+            min-width: 40px;
+            width: 40px;
+            height: 40px;
+            border: 1px solid #666;
+            border-radius: $radius;
+        }
+
+        textarea{
+            height: 100px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: $radius;
+            @include font-style;
+
+            &::placeholder{
+                color: #aaa;
+            }
+        }
+        .dash{
+            margin: 0 10px;
+        }
+        // tr{
+        //     border-bottom: 1px solid #ddd;
+        // }
+    }
+}

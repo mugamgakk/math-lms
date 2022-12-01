@@ -8,6 +8,7 @@ import Icon from "../../components/Icon";
 import LmsDatePicker from "../../components/LmsDatePicker";
 import SkeletonTable from "../../components/SkeletonTable";
 import { comma } from "../../methods/methods";
+import { falseModal } from "../../methods/methods";
 
 const 오늘 = new Date();
 const beforeOneMonth = dayjs(오늘).subtract(1, "M").$d;
@@ -55,11 +56,11 @@ function PointModal({ title, setModal, userId }) {
     }, []);
 
     return (
-        <div className="modal PointModal">
+        <div className="modal PointModal" onClick={(e)=>{ falseModal(e, setModal) }}>
             <div className="modal-content">
                 <div className="modal-header">
                     <h2 className="modal-title">학습 포인트 내역</h2>
-                    <button className="btn">
+                    <button className="btn" onClick={()=>{setModal(false)}}>
                         <Icon icon={"close"} />
                     </button>
                 </div>
@@ -95,9 +96,10 @@ function PointModal({ title, setModal, userId }) {
 
                         <table>
                             <colgroup>
+                                    <col style={{width : "25%"}}/>
                                     <col style={{width : "10%"}}/>
-                                    <col style={{width : "10%"}}/>
-                                    <col style={{width : "10%"}}/>
+                                    <col style={{width : "20%"}}/>
+                                    <col style={{width : "35%"}}/>
                                     <col style={{width : "10%"}}/>
                             </colgroup>
                             <thead>
@@ -111,11 +113,14 @@ function PointModal({ title, setModal, userId }) {
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
+                                    <td>2022.08.31  15:15:15</td>
+                                    <td>중1-1</td>
+                                    <td>교과서별 내신적중</td>
+                                    <td>교학사 Ⅰ- 1. 소인수분해</td>
+                                    <td>
+                                        <div className="carat"></div>
+                                        <div className="mineral"></div>
+                                    </td>
                                 </tr>
                             </tbody>
                             <tfoot>
@@ -124,7 +129,8 @@ function PointModal({ title, setModal, userId }) {
                                         획득한 학습 포인트 : 점
                                     </td>
                                     <td>
-                                        s
+                                        <div className="carat"></div>
+                                        <div className="mineral"></div>
                                     </td>
                                 </tr>
                             </tfoot>
@@ -132,7 +138,7 @@ function PointModal({ title, setModal, userId }) {
                     </div>
                 </div>
                 <div className="modal-footer">
-                    <button className="btn-orange">확인</button>
+                    <button className="btn-orange" onClick={()=>{setModal(false)}}>확인</button>
                 </div>
             </div>
         </div>

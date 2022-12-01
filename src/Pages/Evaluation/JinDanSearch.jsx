@@ -5,12 +5,14 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import LmsDatePicker from "../../components/LmsDatePicker";
 import jindanStore from "../../store/jindanStore";
+import ReservationModal from "./ReservationModal";
 
 function JinDanSearch() {
     const navigate = useNavigate();
     const location = useLocation();
     const resetJindan = jindanStore(state=>state.resetJindan);
 
+    let [reservModal, setReservModal] = useState(false);
     let [list, setList] = useState(null);
     
     useEffect(() => {
@@ -23,6 +25,12 @@ function JinDanSearch() {
     },[]);
 
     return (
+        <>
+        {
+            reservModal && <ReservationModal close={setReservModal}/>
+        }
+        
+
         <div className="bg bg-list JinDanSearch">
             <header className="JinDanSearch-header" style={{ marginBottom: "10px" }}>
                 <h4>평가 관리</h4>
@@ -78,9 +86,10 @@ function JinDanSearch() {
                 </tbody>
             </table>
             <div className="text-center" style={{marginTop : "20px"}}>
-                <button className="btn-grey">진단평가 예약</button>
+                <button className="btn-grey" onClick={()=>{setReservModal(true)}}>진단평가 예약</button>
             </div>
         </div>
+        </>
     );
 }
 
