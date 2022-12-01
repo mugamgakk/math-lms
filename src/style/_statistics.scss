@@ -10,13 +10,12 @@
         }
     }
 
-    td{
-        @include flex;
+    .Statistics-table{
+        td:nth-child(2){
+            font-weight: 500;
+        }
     }
 
-    td.align-left{
-        justify-content: flex-start;
-    }
 }
 
 .StatisticsStandard{

@@ -26,10 +26,8 @@
             td:first-child {
                 color: $green;
                 font-weight: 500;
-                @include flex;
             }
             td:nth-child(2) {
-                @include flex;
                 button {
                     margin-right: 10px;
                     &:last-child {

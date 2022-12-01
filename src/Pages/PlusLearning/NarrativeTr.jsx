@@ -40,7 +40,7 @@ function NarrativeTr({ ele, checkOne, checkedList }) {
 
     return (
         <tr>
-            <td style={{width : "8.80316%"}} className="text-center" >
+            <td style={{width : "8.80316%"}} >
                 <Checkbox
                     checked={checkedList.includes(ele)}
                     onChange={(e) => {
@@ -50,7 +50,7 @@ function NarrativeTr({ ele, checkOne, checkedList }) {
             </td>
             <td style={{width : "17.60633%"}}>{ele.ltitle}</td>
             <td style={{width : "35.11374%"}}>{ele.sc_title}</td>
-            <td style={{width : "13.84767%"}} className="text-center">
+            <td style={{width : "13.84767%"}}>
                 {
                     ele.sc_status === "S"
                         ? (<>
@@ -61,7 +61,8 @@ function NarrativeTr({ ele, checkOne, checkedList }) {
                         // : scStatus[ele.sc_status]
                 }
             </td>
-            <td style={{width : "13.25420%"}} className="text-center">
+            <td style={{width : "13.25420%"}}>
+                <div>
                 {
                     {
                         S: "-",
@@ -82,8 +83,9 @@ function NarrativeTr({ ele, checkOne, checkedList }) {
                         )
                     }[ele.sc_status]
                 }
+                </div>
             </td>
-            <td style={{width : "11.37487%"}} className="text-center">
+            <td style={{width : "11.37487%"}}>
                 {
                     printModal && <PrintModal closeModal={setPrintModal}/>
                 }

@@ -1,4 +1,10 @@
 // 플러스 러닝
+.Narrative-table, .TextBook-table{
+    td{
+        // @include flex;
+    }
+}
+
 .PlusLearningGradingModal{
     .modal-container{
         width: 1200px;
@@ -32,25 +38,6 @@
         width: 100%;
         margin-bottom: 20px;
 
-        tr{
-            display: table-row !important;
-        }
-        td, th{
-            text-align: center;
-            padding: 0 !important;
-        }
-        td:first-child{
-            text-align: left;
-        }
-        thead{
-            height: 35px;
-        }
-        tbody{
-            display: table-row-group !important;
-            td{
-                height: 45px;
-            }
-        }
         tfoot{
             background-color: #f2eeeb;
             border-top: 2px solid #b9a89c;

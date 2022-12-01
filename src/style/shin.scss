@@ -22,6 +22,15 @@
         }
     }
 
+    table{
+        td:nth-child(2){
+            font-weight: 500;
+        }
+        tr:hover{
+
+        }
+    }
+
     &-footer {
         margin-top: 20px;
         text-align: center;

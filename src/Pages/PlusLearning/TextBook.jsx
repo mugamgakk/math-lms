@@ -122,7 +122,7 @@ function TextBook() {
                 </div>
             </div>
 
-            <table className='table tableA' style={{ marginTop: "10px" }}>
+            <table className='table tableA TextBook-table' style={{ marginTop: "10px" }}>
                 <thead>
                     <tr>
                         <th style={{ width: "8%" }}><Checkbox /> 선택</th>
@@ -135,8 +135,8 @@ function TextBook() {
                     </tr>
                 </thead>
                 <tbody className="scroll">
-                    {plusData.map((res) => {
-                        return <Tr ele={res} />
+                    {plusData.map((res,i) => {
+                        return <Tr ele={res} key={i} />
                     })}
                 </tbody>
             </table>
@@ -150,22 +150,22 @@ const Tr = ({ ele }) => {
 
     return (
         <tr>
-            <td className="fc" style={{ width: "8%" }}><Checkbox /></td>
-            <td className="fc" style={{ width: "10%" }}>{ele.교과서}</td>
-            <td className="fc" style={{ width: "12%" }}>{ele.대단원}</td>
-            <td className="fc" style={{ width: "20%" }}>{ele.소단원}</td>
-            <td className="fc" style={{ width: "16.66666%" }}> <button className="btn-table">{ele.상태}</button> </td>
-            <td className="fc" style={{ width: "16.66666%" }}>
-                <div>
+            <td style={{ width: "8%" }}><Checkbox /></td>
+            <td style={{ width: "10%" }}>{ele.교과서}</td>
+            <td style={{ width: "12%" }}>{ele.대단원}</td>
+            <td style={{ width: "20%" }}>{ele.소단원}</td>
+            <td style={{ width: "16.66666%" }}> <button className="btn-table">{ele.상태}</button> </td>
+            <td style={{ width: "16.66666%" }}>
+                <div className="text-center">
                     <p> {ele.채점.point} ({ele.채점.score}/{ele.채점.totalScore}) </p>
-                    <button className="btn-table">재응시({ele.채점.재응시})</button>
+                    <button className="btn-table mb-5">재응시({ele.채점.재응시})</button>
                     <button className="btn-table" onClick={() => { setModal(!modal) }}>채점하기</button>
                     {
                         modal && <PlusLearningGradingTextBookModal setModal={setModal} />
                     }
                 </div>
             </td>
-            <td className="fc" style={{ width: "16.66666%" }}><button className="btn-table">인쇄</button></td>
+            <td style={{ width: "16.66666%" }}><button className="btn-table">인쇄</button></td>
         </tr>
     )
 }

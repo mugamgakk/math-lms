@@ -176,7 +176,7 @@ function Statistics() {
                     </div>
                 </div>
 
-                <table ref={tableRef} className="table tableA" style={{marginTop : "10px"}}>
+                <table ref={tableRef} className="table tableA Statistics-table" style={{marginTop : "10px"}}>
                     <thead>
                         <tr>
                             <th style={{width : "4.0026%"}}>번호</th>

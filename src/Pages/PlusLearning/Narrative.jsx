@@ -181,7 +181,7 @@ function Narrative() {
                 </div>
             </div>
 
-            <table className='table tableA'>
+            <table className='table tableA Narrative-table'>
                 <thead>
                     <tr>
                         <th scope="row" style={{width : "8.80316%"}}>
