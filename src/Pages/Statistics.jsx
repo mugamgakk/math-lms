@@ -10,6 +10,7 @@ import SkeletonTable from "../components/SkeletonTable";
 import ClassSelect from "../components/ui/select/ClassSelect";
 import LmsDatePicker from "../components/LmsDatePicker";
 import { memo } from "react";
+import Icon from "../components/Icon";
 
 function Statistics() {
     // table data
@@ -22,7 +23,10 @@ function Statistics() {
     // class list
     let [classList, setClassList] = useState([]);
     let [initialClass, setInitialClass] = useState([]);
-    
+
+    // 포인트 지급 기준
+    let [standard, setStandard] = useState(false);
+
     const tableRef = useRef(null);
 
     // search name
@@ -76,7 +80,7 @@ function Statistics() {
         setValue(arrSort(point_list, "um_nm"));
 
         setClassList(class_list);
-        setInitialClass(class_list)
+        setInitialClass(class_list);
 
         setSkeleton(false);
     };
@@ -87,94 +91,122 @@ function Statistics() {
 
     return (
         <>
-            <ContentHeader title={"학습 포인트 현황"} location={["마이페이지","수학" ,"학습 포인트 현황"]} />
-
-            <div className="bg">
             {/* 지플럼 수학 학습 포인트 지급 기준 */}
-            <StatisticsStandard />
+            {
+                standard && <StatisticsStandard setStandard={setStandard}/>
+            }
+            
+            <ContentHeader
+                title={"학습 포인트 현황"}
+                location={["마이페이지", "수학", "학습 포인트 현황"]}
+            />
 
-            <div className="Statistics-search fj mb-3">
-                <div>
-                    <button className="btn" onClick={resetList}>
-                        초기화
-                    </button>
-                    <button
-                        className="btn"
-                        onClick={() => {
-                            if (window.confirm("다운로드 하시겠습니까?")) {
-                                onDownload();
-                            } else {
-                                return;
-                            }
-                        }}
-                    >
-                        다운로드
-                    </button>
+            <div className="bg Statistics">
+                <div className="tabs-header">
+                    <strong>&lt;지플럼 수학 학습 포인트 지급 기준 &gt;</strong>
+                    <button className="btn-orange" onClick={()=>{setStandard(true)}}>확인</button>
                 </div>
 
-                <div className="StatisticsSearch d-flex">
+                <div className="fj">
+                    <div className="fa">
+                        <button
+                            className="btn-grey-border btn-icon mr-10"
+                            style={{ minWidth: "100px" }}
+                            onClick={() => {
+                                if (window.confirm("다운로드 하시겠습니까?")) {
+                                    onDownload();
+                                } else {
+                                    return;
+                                }
+                            }}
+                        >
+                            <Icon icon={"downloadB"} style={{ transform: "rotate(180deg)" }} />
+                            다운로드
+                        </button>
+                        <button
+                            className="btn-grey"
+                            onClick={resetList}
+                            style={{ minWidth: "100px" }}
+                        >
+                            초기화
+                        </button>
+                    </div>
 
-                    <ClassSelect width={"200px"} value={classList} options={initialClass} />
-
-                    <LmsDatePicker
-                        value={startDay}
-                        onChange={(day) => {
-                            setStartDay(day);
-                        }}
-                    />
-                    ~
-                    <LmsDatePicker
-                        value={lastDay}
-                        onChange={(day) => {
-                            setLastDay(day);
-                        }}
-                    />
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="학생 이름"
-                        value={studentName}
-                        onChange={(e) => {
-                            setStudentName(e.target.value);
-                        }}
-                    />
-                    <button type="button" className="btn" onClick={getPointData}>
-                        조회
-                    </button>
+                    <div className="fa">
+                        <ClassSelect
+                            width={"200px"}
+                            value={classList}
+                            options={initialClass}
+                            className="mr-10"
+                        />
+                        <LmsDatePicker
+                            value={startDay}
+                            onChange={(day) => {
+                                setStartDay(day);
+                            }}
+                        />
+                        <span className="water">~</span>
+                        <LmsDatePicker
+                            value={lastDay}
+                            style={{ marginRight: "10px" }}
+                            onChange={(day) => {
+                                setLastDay(day);
+                            }}
+                        />
+                        <input
+                            type="text"
+                            className="textInput mr-10"
+                            placeholder="학생이름을 입력하세요"
+                            value={studentName}
+                            onChange={(e) => {
+                                setStudentName(e.target.value);
+                            }}
+                            style={{ width: "194px" }}
+                        />
+                        <button
+                            type="button"
+                            className="btn-grey"
+                            style={{ minWidth: "100px" }}
+                            onClick={getPointData}
+                        >
+                            조회
+                        </button>
+                    </div>
                 </div>
-            </div>
 
-            <table ref={tableRef}>
-                <thead>
-                    <tr>
-                        <th>No.</th>
-                        <th>이름(아이디)</th>
-                        <th>학년</th>
-                        <th>캐럿(개)</th>
-                        <th>미네랄(개)</th>
-                        <th>
-                            <div style={{display : "inline-flex"}}>
-                            획득 포인트(점)
-                            <button
-                                className={"btn-sort" + `${sortPoint === "asc" ? " asc" : ""}`}
-                                onClick={sortList}
-                            ></button>
-                            </div>
-                        </th>
-                        <th>내역</th>
-                        <th>총 누적 포인트(점)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {skeleton ? (
-                        <SkeletonTable R={5} D={8} />
-                    ) : (
-                        value.map((a, i) => {
-                            return <Tr key={i} list={a} index={i} />;
-                        })
-                    )}
-                </tbody>
-            </table>
+                <table ref={tableRef} className="table tableA" style={{marginTop : "10px"}}>
+                    <thead>
+                        <tr>
+                            <th style={{width : "4.0026%"}}>번호</th>
+                            <th style={{width : "27.0847%"}}>이름</th>
+                            <th style={{width : "8.6724%"}}>학년</th>
+                            <th style={{width : "12.008%"}}>캐럿(갯수)</th>
+                            <th style={{width : "12.008%"}}>미네랄(갯수)</th>
+                            <th style={{width : "12.008%"}}>
+                                <div style={{ display: "inline-flex" }}>
+                                    획득 포인트(점)
+                                    <button
+                                        className={
+                                            "btn-sort" + `${sortPoint === "asc" ? " asc" : ""}`
+                                        }
+                                        onClick={sortList}
+                                    ></button>
+                                </div>
+                            </th>
+                            <th style={{width : "12.008%"}}>내역</th>
+                            <th style={{width : "12.2081%"}}>총 누적 포인트(점)</th>
+                        </tr>
+                    </thead>
+                    <tbody className="scroll">
+                        {skeleton ? (
+                            <SkeletonTable R={5} width={[]} />
+                        ) : (
+                            value.map((a, i) => {
+                                return <Tr key={i} list={a} index={i} />;
+                            })
+                        )}
+                    </tbody>
+                </table>
             </div>
         </>
     );
@@ -185,20 +217,20 @@ const Tr = memo(({ list, index }) => {
 
     return (
         <tr>
-            <td>{index + 1}</td>
-            <td>
+            <td style={{width : "4.0026%"}}>{index + 1}</td>
+            <td className="align-left text-green" style={{width : "27.0847%"}}>
                 {list.um_nm} ({list.um_id})
             </td>
-            <td>{list.school_grade}</td>
-            <td>{list.ct}</td>
-            <td>{list.mi}</td>
-            <td>{comma(list.point)}</td>
-            <td>
+            <td style={{width : "8.6724%"}}>{list.school_grade}</td>
+            <td style={{width : "12.008%"}}>{list.ct}</td>
+            <td style={{width : "12.008%"}}>{list.mi}</td>
+            <td style={{width : "12.008%"}}>{comma(list.point)}</td>
+            <td style={{width : "12.2081%"}}>
                 {modal && (
                     <PointModal userId={list.usr_seq} title={list.um_nm} setModal={setModal} />
                 )}
                 <button
-                    className="btn"
+                    className="btn-table"
                     onClick={() => {
                         setModal(true);
                     }}

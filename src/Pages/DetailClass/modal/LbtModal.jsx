@@ -1,7 +1,5 @@
 import React, { useState, useRef } from "react";
-import style from "../../../style/style-module/lbtModal.module.scss";
 import LbtCheckbox from "../LbtCheckbox";
-import CreateLbt from "../CreateLbt/CreateLbt";
 import useLbtStore from "../../../store/useLbtStore";
 import { falseModal } from "../../../methods/methods";
 import Icon from "../../../components/Icon";

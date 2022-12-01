@@ -2,6 +2,12 @@ import React from "react";
 import EvaluationRoutineContent from "./EvaluationRoutineContent";
 import styled from "styled-components";
 import style from "../../style/style-module/EvaluationOrder.module.scss";
+import StudentsSearch from "../../components/StudentsSearch";
+import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
+import ContentHeader from "../../components/ContentHeader";
+import AlertBox from "../../components/AlertBox";
+import UserInfo from "../../components/UserInfo";
+import useStudentsStore from "../../store/useStudentsStore";
 
 const Box = styled.div`
     padding: 5px;
@@ -9,25 +15,44 @@ const Box = styled.div`
 `;
 
 function EvaluationRoutine() {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const clickStudent = useStudentsStore((state) => state.clickStudent);
 
     return (
         <>
-            <Box className="mb-3">
-                <h4>정기평가 진행 순서</h4>
-                <ol className={style.evaluation_order}>
-                    <li>평가를 진행할 시험지를 선택 오픈합니다.</li>
-                    <li>오픈한 평가지를 인쇄하여 학생에게 제공합니다</li>
-                    <li>
-                        문제별 답안을 입력합니다 학생이 지플럼 학습 화면에서 직접 입력할
-                        수도 있습니다
-                    </li>
-                    <li>자동 생성된 성적표를 확인 후 인쇄합니다</li>
-                </ol>
+            <ContentHeader
+                title={"평가 관리"}
+                location={["마이페이지", "수학 학습 관리", "평가 관리"]}
+                icon="evaluation"
+                current="재원생 정기평가"
+            />
 
-                <strong>모든 평가는 1회만 응시 가능합니다.</strong>
-            </Box>
+            <div className="row">
+                <StudentsSearch>
+                    <ul className="content-tabs2">
+                        <li
+                            onClick={() => {
+                                navigate("/evaluation/routine");
+                            }}
+                            className={`active`}
+                        >
+                            재원생 정기평가
+                        </li>
+                        <li
+                            onClick={() => {
+                                navigate("/evaluation/jindan");
+                            }}
+                        >
+                            진단평가
+                        </li>
+                    </ul>
+                </StudentsSearch>
 
-            <EvaluationRoutineContent />
+                <div className="bg bg-content">
+                    {clickStudent === null ? <AlertBox name="재원생 정기평가" /> : <EvaluationRoutineContent />}
+                </div>
+            </div>
         </>
     );
 }

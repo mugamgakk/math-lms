@@ -1,0 +1,80 @@
+.Statistics{
+    .tabs-header{
+        strong{
+            color: $orange;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+        button{
+            min-width: 70px;
+        }
+    }
+
+    td{
+        @include flex;
+    }
+
+    td.align-left{
+        justify-content: flex-start;
+    }
+}
+
+.StatisticsStandard{
+    .modal-content{
+        width: 1040px;
+    }
+
+    &-body{
+        padding: 30px 50px;
+
+        th,td{
+            text-align: center;
+            border-right: 1px solid #ddd;
+
+            
+        }
+        
+        thead{
+            background-color: #e6ddd8;
+            color: $brown;
+            border-bottom: 2px solid #a19893;
+
+            th{
+                font-weight: 600;
+                @include font-style(17);
+                height: 35px;
+            }
+        }
+        table{
+            width: 100%;
+            border-bottom: 2px solid $brown;
+            border-top: 2px solid $brown;
+            border-left: 1px solid #ddd;
+
+            tr{
+                border-bottom: 1px solid #ddd;
+            }
+
+            td{
+                height: 40px;
+                color: #444;
+                font-weight: 400;
+            }
+        }
+    }
+}
+
+.PointModal{
+    &-body{
+        padding: 20px;
+    }
+
+    .modal-content{
+        width: 1040px;
+    }
+    table{
+        width: 100%;
+        margin-top: 14px;
+        border-bottom: 1px solid #ddd;
+    }
+}
