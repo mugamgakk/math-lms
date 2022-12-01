@@ -63,6 +63,9 @@ function AssessmentModal ({setAssModal}) {
      let [valumeItem, setValumeItem] = useState(0.5);
      let [minTime, setMinTime] = useState("0 : 00");
      let [maxTime, setMaxTime] = useState("0 : 00");
+
+
+
      useEffect(()=>{
         if(valumeItem === 0){
             setMuteState(true);

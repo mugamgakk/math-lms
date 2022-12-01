@@ -105,7 +105,7 @@
         border-top: 1px solid #ddd;
 
         button{
-            min-width: 100px;
+            // min-width: 100px;
         }
     }
 }
@@ -130,4 +130,11 @@
             }
         }
     }
+    .contents{
+        width: calc(100% - 40px);
+        margin: 0 auto;
+        border: 1px solid #eee;
+        border-radius: $radius;
+    }
+    
 }

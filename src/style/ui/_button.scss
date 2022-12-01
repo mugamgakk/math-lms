@@ -210,3 +210,21 @@
 }
 
 
+.pageNum{
+    @include font-style(16);
+    color: #666;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: $radius;
+    margin: 0 2px;
+    &.active{
+        background: #ea7851;
+        color: #fff;
+        border: none;
+
+    }
+}

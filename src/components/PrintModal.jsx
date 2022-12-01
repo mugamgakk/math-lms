@@ -3,6 +3,7 @@ import Pagination from "./Pagination";
 import ReactToPrint from "react-to-print"; // pdf, 인쇄
 import Icon from "./Icon";
 import Checkbox from "./Checkbox";
+import { falseModal } from '../methods/methods'
 
 function PrintModal({ closeModal, title = "제목임" }) {
     const printComponent = React.useRef();
@@ -25,7 +26,7 @@ function PrintModal({ closeModal, title = "제목임" }) {
 
 
     return (
-            <div className="modal">
+            <div className="modal" onClick={(e)=>falseModal(e,closeModal)}>
                 <div className="modal-content printModal">
                     <div className="modal-header fj">
                         <h2 className="modal-title">{title}</h2>
@@ -57,9 +58,9 @@ function PrintModal({ closeModal, title = "제목임" }) {
                             </div>
                             <div className="btn-area__right">
                                 <Checkbox color='green' checked={checkData.includes("question")} id='question' onChange={(e)=> checkState(e.target.checked, "question")}/>
-                                <label htmlFor="question">문제지</label>
+                                <label htmlFor="question" className="mr-10">문제지</label>
                                 <Checkbox color='green' checked={checkData.includes("solution")} id='solution' onChange={(e)=> checkState(e.target.checked, "solution")}/>
-                                <label htmlFor="solution">풀이지</label>
+                                <label htmlFor="solution" className="mr-10">풀이지</label>
                                 <ReactToPrint
                                     trigger={() => <button className="btn-grey-border"><Icon icon={"print"} style={{marginRight:'6px',fontSize:'14px'}}/>인쇄</button>}
                                     content={() => printComponent.current}
@@ -115,7 +116,7 @@ const PrintPagination = ({totalPage = 20, pageLength = 10})=>{
         const result = [];
 
         for(let i = firstPage; i <= lastPage; i++){
-            result.push(<button key={i} onClick={()=>{setPage(i)}} className={"btn " + `${page === i ? "active" : ""}`}>{i}</button>)
+            result.push(<button key={i} onClick={()=>{setPage(i)}} className={"pageNum " + `${page === i ? "active" : ""}`}>{i}</button>)
         }
 
         if(totalPage > pageLength){
