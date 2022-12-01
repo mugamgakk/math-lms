@@ -5,13 +5,21 @@ import PrintModal from '../../components/PrintModal';
 import { fileDown } from "../../methods/methods";
 import 오디오입니동 from "../../test.mp3";
 import Icon from '../../components/Icon';
-
+import { toggleBodyScroll } from '../../methods/methods'
 function TodayClassTr({data,name,book}){
 
     // 모달 상태 관리
     let [attModal,setAttModal] = useState(false);
     let [assModal,setAssModal] = useState(false);
     let [printModal,closeModal] = useState(false);
+
+    useEffect(()=>{
+        if(attModal || assModal || printModal){
+            toggleBodyScroll(true)
+        }else{
+            toggleBodyScroll(false)
+        }
+    },[attModal,assModal,printModal]);
 
     return(
         <>
