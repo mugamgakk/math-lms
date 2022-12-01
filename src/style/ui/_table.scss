@@ -72,6 +72,9 @@
                     border-bottom:1px solid #dee2e6;
                     padding: 10px;
                     @include flex(center);
+                    &.fs{
+                        justify-content: start;
+                    }
                     &:first-child{
                         border-left:1px solid hsl(210, 14%, 89%);
                         width: calc(100%/8);
