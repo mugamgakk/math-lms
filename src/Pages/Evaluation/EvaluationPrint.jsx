@@ -2,6 +2,7 @@ import React from "react";
 import { useRef } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
+import Icon from "../../components/Icon";
 import SelectBase from "../../components/ui/select/SelectBase";
 
 const 학년 = [
@@ -39,10 +40,10 @@ function EvaluationPrint() {
     }
 
     return (
-        <div className="fa mb-3">
+        <div className="EvaluationPrint">
             <h4>진단 평가지</h4>
             <SelectBase
-                width={100}
+                width={140}
                 value={grade}
                 onChange={(ele) => {
                     setGrade(ele);
@@ -52,13 +53,15 @@ function EvaluationPrint() {
                 defaultValue="학년"
             />
             <SelectBase
-                width={100}
+                width={140}
                 value={semester}
                 onChange={(ele) => setSemester(ele)}
                 options={initialSemester}
                 defaultValue="학기"
             />
-            <button className="btn" onClick={print}>인쇄</button>
+            <button className="btn-grey-border btn-icon" onClick={print}>
+            <Icon icon={"print"} />
+            인쇄</button>
         </div>
     );
 }

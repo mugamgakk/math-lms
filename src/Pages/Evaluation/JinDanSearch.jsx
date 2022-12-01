@@ -9,6 +9,7 @@ import jindanStore from "../../store/jindanStore";
 function JinDanSearch() {
     const navigate = useNavigate();
     const location = useLocation();
+    const resetJindan = jindanStore(state=>state.resetJindan);
 
     let [list, setList] = useState(null);
     
@@ -17,6 +18,8 @@ function JinDanSearch() {
             console.log(res)
             setList(res.data.list);
         });
+
+        resetJindan();
     },[]);
 
     return (

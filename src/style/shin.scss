@@ -208,6 +208,7 @@
     }
 }
 
+// 진단평가
 .JinDanSearch{
     &-header{
         @include flex(sb);
@@ -231,5 +232,62 @@
             font-weight: 500;
             color: $green;
         }
+    }
+}
+
+.jindan-order{
+    background-color:#f2eeeb;
+    padding: 10px;
+    margin-bottom: 16px;
+
+    h4{
+        font-weight: 600px;
+        color: #664e3d;
+        margin-bottom: 30px;
+    }
+    p{
+        color: #664e3d;
+        font-size: 16px;
+        font-weight: 600;
+    }
+    .text-alert{
+        color: #eb615a;
+    }
+}
+
+.EvaluationPrint{
+    @include flex;
+    height: 70px;
+    border-radius: $radius;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    margin-bottom: 16px;
+
+    h4{
+        margin-right: 10px;
+    }
+
+    .select{
+        margin-right: 10px;
+    }
+    button{
+        min-width: 100px;
+    }
+}
+
+.jindan-table{
+    td{
+        @include flex;
+    }
+}
+
+.MemberLinkModal{
+    th{
+        text-align: center;
+    }
+    td:first-child{
+        font-weight: 500;
+        color: $green;
+        cursor: pointer;
     }
 }
