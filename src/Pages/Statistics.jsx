@@ -97,8 +97,10 @@ function Statistics() {
             }
             
             <ContentHeader
-                title={"학습 포인트 현황"}
-                location={["마이페이지", "수학", "학습 포인트 현황"]}
+                title={"학습 포인트"}
+                location={["마이페이지", "수학 학습 관리"]}
+                current={"학습 포인트 현황"}
+                icon="point"
             />
 
             <div className="bg Statistics">

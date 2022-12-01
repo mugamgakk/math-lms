@@ -16,6 +16,8 @@ function PlusLearning() {
 
     // url 변화
     useEffect(()=>{
+        resetStudent();
+
         location.pathname.includes("narrative")
         ? setCurrent("서술형 따라잡기")
         : setCurrent("교과서 적중문제")
@@ -35,21 +37,17 @@ function PlusLearning() {
                 <StudentsSearch>
                     <ul className="content-tabs2">
                         <li
-                            className={`${location.pathname.includes("narrative") ? " active" : ""}`}
+                            className={`${current === "서술형 따라잡기" ? " active" : ""}`}
                             onClick={() => {
                                 navigate("/plus-learning/narrative");
-                                resetStudent();
-                                setCurrent("서술형 따라잡기");
                             }}
                         >
                             서술형 따라잡기
                         </li>
                         <li
-                            className={`${location.pathname.includes("textBook") ? " active" : ""}`}
+                            className={`${current === "교과서 적중문제" ? " active" : ""}`}
                             onClick={() => {
                                 navigate("/plus-learning/textBook");
-                                resetStudent();
-                                setCurrent("교과서 적중문제")
                             }}
                         >
                             교과서 적중문제
