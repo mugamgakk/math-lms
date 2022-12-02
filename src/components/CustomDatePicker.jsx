@@ -2,8 +2,14 @@ import React, { useMemo, useState } from "react";
 import { useCallback } from "react";
 import Icon from "./Icon";
 
-
-function CustomDatePicker({ value = new Date(), onChange, className = "", style, maxDate , minDate }) {
+function CustomDatePicker({
+    value = new Date(),
+    onChange,
+    className = "",
+    style,
+    maxDate,
+    minDate,
+}) {
     let [dateValue, setDateValue] = useState(value);
     let [open, setOpen] = useState(false);
 
@@ -29,11 +35,10 @@ function CustomDatePicker({ value = new Date(), onChange, className = "", style,
 
     // onChange 이벤트
     const choiceDay = (event, day) => {
-
         const isDisabled = event.currentTarget.classList.contains("disabled");
 
-        if(isDisabled) return ;
-        
+        if (isDisabled) return;
+
         let 선택날짜 = new Date(dateValue.setDate(day));
 
         onChange && onChange(선택날짜);
@@ -54,8 +59,7 @@ function CustomDatePicker({ value = new Date(), onChange, className = "", style,
     };
 
     // 현재 날짜 선택
-    const isSameDate = (day)=>{
-
+    const isSameDate = (day) => {
         const 값년도 = value.getFullYear();
         const 값달 = value.getMonth();
         const 값일 = value.getDate();
@@ -68,125 +72,135 @@ function CustomDatePicker({ value = new Date(), onChange, className = "", style,
         const 달력달 = 선택날짜.getMonth();
         const 달력일 = 선택날짜.getDate();
 
-        if(값년도 === 달력년도 && 값달 === 달력달 && 값일 === 달력일){
-            return true
-        }else{
-            return false
+        if (값년도 === 달력년도 && 값달 === 달력달 && 값일 === 달력일) {
+            return true;
+        } else {
+            return false;
         }
-    }
+    };
 
     // 최소날짜
-    const minDateFn = useCallback((day)=>{
-
-        if(!minDate){
-            return 
-        }
-
-        const aliasDate = new Date(dateValue);
-
-        let 선택날짜 = new Date(aliasDate.setDate(day));
-
-
-        return 선택날짜 < minDate
-    },[minDate]);
-
-    // 최대날짜
-    const maxDateFn = useCallback((day)=>{
-
-        if(!maxDate){
-            return 
-        }
-
-        const aliasDate = new Date(dateValue);
-
-        let 선택날짜 = new Date(aliasDate.setDate(day));
-
-
-        return 선택날짜 > maxDate
-    },[maxDate])
-
-    return (
-        <button className="CustomDatePicker-btn" onBlur={()=>{ setOpen(false) }}>
-            <span onClick={()=>{setOpen(!open)}}>
-               달력에서 선택 <Icon icon={"calendar"} />
-            </span>
-
-            {
-                open && (
-                    <div className={`CustomDatePicker ${className}`} style={style}>
-                <div className="CustomDatePicker-header">
-                    <div
-                        onClick={() => {
-                            dateChange(-1);
-                        }}
-                    >
-                        왼쪽
-                    </div>
-                    <div>{dayFormat()}</div>
-                    <div
-                        onClick={() => {
-                            dateChange(1);
-                        }}
-                    >
-                        오른쪽
-                    </div>
-                </div>
-                <div className="CustomDatePicker-body">
-                    <div className="date">
-                        <div className="date-header">
-                            <div>일</div>
-                            <div>월</div>
-                            <div>화</div>
-                            <div>수</div>
-                            <div>목</div>
-                            <div>금</div>
-                            <div>토</div>
-                        </div>
-                        <div className="date-body">
-                            {prevDay.map((a, i) => {
-                                // 숫자 넣으려면 변수넣으면 됨
-                                return (
-                                    <div key={i} className="day disabled">
-                                        {a}
-                                    </div>
-                                );
-                            })}
-                            {currentDay.map((a, i) => {
-                                // 숫자 넣으려면 변수넣으면 됨
-                                return (
-                                    <div
-                                        key={i}
-                                        className={`day ${isSameDate(a)? "current-day" : ""} ${minDateFn(a) ? "disabled" : ""} ${maxDateFn(a) ? "disabled" : ""}`}
-                                        onClick={(e) => {
-                                            choiceDay(e,a);
-                                        }}
-                                    >
-                                        {a}
-                                    </div>
-                                );
-                            })}
-                            {nextDay.map((a, i) => {
-                                // 숫자 넣으려면 변수넣으면 됨
-                                return (
-                                    <div key={i} className="day disabled">
-                                        {a}
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </div>
-                </div>
-            </div>
-                )
+    const minDateFn = useCallback(
+        (day) => {
+            if (!minDate) {
+                return;
             }
 
-            
+            const aliasDate = new Date(dateValue);
+
+            let 선택날짜 = new Date(aliasDate.setDate(day));
+
+            return 선택날짜 < minDate;
+        },
+        [minDate]
+    );
+
+    // 최대날짜
+    const maxDateFn = useCallback(
+        (day) => {
+            if (!maxDate) {
+                return;
+            }
+
+            const aliasDate = new Date(dateValue);
+
+            let 선택날짜 = new Date(aliasDate.setDate(day));
+
+            return 선택날짜 > maxDate;
+        },
+        [maxDate]
+    );
+
+    return (
+        <button
+            className="CustomDatePicker-btn"
+            onBlur={() => {
+                setOpen(false);
+            }}
+        >
+            <span
+                onClick={() => {
+                    setOpen(!open);
+                }}
+            >
+                달력에서 선택 <Icon icon={"calendar"} />
+            </span>
+
+            {open && (
+                <div className={`CustomDatePicker ${className}`} style={style}>
+                    <div className="CustomDatePicker-header">
+                        <div
+                            onClick={() => {
+                                dateChange(-1);
+                            }}
+                            className="btn"
+                        >
+                            <Icon icon={"arrowA"} style={{transform : "rotate(180deg) scale(0.6)"}} />
+                        </div>
+                        <div className="format">{dayFormat()}</div>
+                        <div
+                            onClick={() => {
+                                dateChange(1);
+                            }}
+                            className="btn"
+                        >
+                            <Icon icon={"arrowA"} 
+                                style={{ transform: "scale(0.6)" }}
+                            />
+                        </div>
+                    </div>
+                    <div className="CustomDatePicker-body">
+                        <div className="date">
+                            <div className="date-header">
+                                <div>일</div>
+                                <div>월</div>
+                                <div>화</div>
+                                <div>수</div>
+                                <div>목</div>
+                                <div>금</div>
+                                <div>토</div>
+                            </div>
+                            <div className="date-body">
+                                {prevDay.map((a, i) => {
+                                    // 숫자 넣으려면 변수넣으면 됨
+                                    return (
+                                        <div key={i} className="day disabled">
+                                            {a}
+                                        </div>
+                                    );
+                                })}
+                                {currentDay.map((a, i) => {
+                                    // 숫자 넣으려면 변수넣으면 됨
+                                    return (
+                                        <div
+                                            key={i}
+                                            className={`day ${isSameDate(a) ? "current-day" : ""} ${
+                                                minDateFn(a) ? "disabled" : ""
+                                            } ${maxDateFn(a) ? "disabled" : ""}`}
+                                            onClick={(e) => {
+                                                choiceDay(e, a);
+                                            }}
+                                        >
+                                            {a}
+                                        </div>
+                                    );
+                                })}
+                                {nextDay.map((a, i) => {
+                                    // 숫자 넣으려면 변수넣으면 됨
+                                    return (
+                                        <div key={i} className="day disabled">
+                                            {a}
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </button>
     );
 }
-
-
-
 
 // 이전월
 const BeforeMonth = (day) => {

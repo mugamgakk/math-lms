@@ -22,7 +22,7 @@ function DatePickerPage() {
 
 
             <CustomDatePicker value={test} onChange={e=>{ setTest(e) }}/>
-            <CustomDatePickerMonth/>
+            <CustomDatePickerMonth value={test} onChange={e=>{ setTest(e) }}/>
 
             <div>
                 <LmsDatePicker

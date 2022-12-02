@@ -10,7 +10,7 @@ function CustomDatePickerMonth({
     style,
     className = "",
     maxDate,
-    minDate 
+    minDate,
 }) {
     let [open, setOpen] = useState(false);
     let [dateValue, setDateValue] = useState(value);
@@ -106,21 +106,28 @@ function CustomDatePickerMonth({
             </span>
             {open && (
                 <div className={`CustomDatePicker ${className}`} style={style}>
-                    <div className="CustomDatePicker-header">
+                    <div className="CustomDatePicker-header" style={{marginBottom : "20px"}}>
                         <div
                             onClick={() => {
                                 dateChange(-1);
                             }}
+                            className="btn"
                         >
-                            왼쪽
+                            <Icon
+                                icon={"arrowA"}
+                                style={{ transform: "rotate(180deg) scale(0.6)" }}
+                            />
                         </div>
-                        <div>{dateValue.getFullYear()}</div>
+                        <div className="format">{dateValue.getFullYear()}</div>
                         <div
                             onClick={() => {
                                 dateChange(1);
                             }}
+                            className="btn"
                         >
-                            오른쪽
+                            <Icon icon={"arrowA"}
+                                style={{ transform: "scale(0.6)" }}
+                            />
                         </div>
                     </div>
                     <div className="CustomDatePicker-body">
@@ -129,7 +136,7 @@ function CustomDatePickerMonth({
                                 return (
                                     <div
                                         className={`month-item ${
-                                            isSameDate(a) ? "text-alert" : ""
+                                            isSameDate(a) ? "current-month" : ""
                                         } ${minDateFn(a) ? "disabled" : ""} ${
                                             maxDateFn(a) ? "disabled" : ""
                                         }`}
@@ -138,7 +145,7 @@ function CustomDatePickerMonth({
                                         }}
                                         key={i}
                                     >
-                                        {a}
+                                        {a}월
                                     </div>
                                 );
                             })}
