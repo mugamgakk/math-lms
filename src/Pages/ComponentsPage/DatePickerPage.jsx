@@ -15,47 +15,45 @@ function DatePickerPage() {
 
     const [next, setNext] = useState(new Date());
 
-    const [test, setTest]= useState(new Date());
+    const [test, setTest] = useState(new Date());
 
     return (
         <div style={{ marginTop: "100px" }}>
-
-
-            <CustomDatePicker value={test} onChange={e=>{ setTest(e) }}/>
-            <CustomDatePickerMonth value={test} onChange={e=>{ setTest(e) }}/>
-
-            <div>
-                <LmsDatePicker
-                    value={lmsDValue}
-                    onChange={(ele) => { setLmsDValue(ele) }}
-                />
-                <button className="btn">버튼</button>
-            </div>
+            <h2>커스텀 데이트 피커</h2>
+            <CustomDatePicker
+                value={test}
+                onChange={(e) => {
+                    setTest(e);
+                }}
+            />
+            <CustomDatePickerMonth
+                value={test}
+                onChange={(e) => {
+                    setTest(e);
+                }}
+            />
 
             <h2>PROPS</h2>
             <pre>
                 {`
                 maxDate : 최대 선택할수 있는 날짜 설정
                 minDate : 최소 선택할수 있는 날짜 설정
-                minDetail : 최대 선택할수 있는 날짜 범위
-                minDetail : 최소 선택할수 있는 날짜 범위 ("month", "year", "decade" or
-                "century".)
                 onChange : onChange 파라미터에 변경시 날짜 들어있음
                 value : 값
-                width : width값 설정 기본값 150px
-                disabled : 기본값 false
-
                 ex : 
-                const [lmsValue, setLmsValue] = useState(new Date());
+                const [test, setTest]= useState(new Date());
 
-                <LmsDatePicker width={"150px"} value={lmsDValue} onChange={(ele)=>{setLmsDValue(ele)}}/>
+                <CustomDatePicker value={test} onChange={e=>{ setTest(e) }}/>
 
                 `}
             </pre>
 
-            <DateNext value={next} onChange={(day) => { setNext(day) }} />
-
-
+            <DateNext
+                value={next}
+                onChange={(day) => {
+                    setNext(day);
+                }}
+            />
 
             {/* 
             <div className="picker-group">
