@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ajax from "../../../ajax";
+import { falseModal } from '../../../methods/methods';
+import Icon from '../../../components/Icon';
 
 let progress = {개념 : '34.8%', 유형 : '71.6%'}
 let per = ['0%','20%','40%','60%','80%','100%']
@@ -37,57 +39,60 @@ function ProgressModal({setProgressState,name}){
 
 
     return(
-        <div className="modal">
-            <div className="dim"></div>
-            <div className='progressModal cmmnModal'>
-                <div className="progressModal-head cmmnModal-head">
-                    <div className="tit">
-                        <strong>[학습 태도 평가]{name}</strong>
-                    </div>
-                    <button className="close" onClick={() => setProgressState(false)}>X</button>
+        <div className="modal" onClick={(e)=>falseModal(e,setProgressState)}>
+            <div className='modal-content progressModal'>
+                <div className="modal-header fj">
+                       <h2 className="modal-title">학습 진행률</h2>
+                    <button className="btn" onClick={() => setProgressState(false)}><Icon icon={"close"} /></button>
                 </div>
-                <div className="progressModal-body cmmnModal-body">
-                    <div className='top fj'>
-                        <div className="top-table">
-                            <div className='top-table__tit'>학습 진행률</div>
+                <div className="modal-body">
+                    <div className="modal-name" style={{ paddingLeft:'20px' }}>
+                        <strong className="name">강수학</strong>
+                        <ul className="list">
+                            <li>중2-1</li>
+                            <li>I. 수와 식의 계산</li>
+                            <li>번호, 주제</li>
+                        </ul>
+                    </div>
+                    <div className="top-table">
+                        <div className='top-table__tit'>학습 진행률</div>
+                        <ul className='top-table__bar'>
+                            <li>
+                                <div className="tit">개념서</div>
+                                <div className='gageWrap'>
+                                    <span className='gageWrap-gage' style={{ width: `${progress.개념}` }}>{progress.개념}</span>
+                                    {
+                                        per.map(item=>{
+                                            return <div className='gageWrap-item' key={item}>{item}</div>
+                                        })
+                                    }
+                                </div>
+                            </li>
+                            <li>
+                                <div className="tit">개념서</div>
+                                <div className='gageWrap'>
+                                    <span className='gageWrap-gage' style={{ width: `${progress.유형}` }}>{progress.유형}</span>
+                                    {
+                                        per.map(item=>{
+                                            return <div className='gageWrap-item' key={item}>{item}</div>
+                                        })
+                                    }
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div className="top-table">
+                        <div className='top-table__tit'>교재 학습 정답률</div>
                             <ul className='top-table__bar'>
                                 <li>
                                     <div className="tit">개념서</div>
-                                    <div className='gageWrap'>
-                                        <span className='gageWrap-gage' style={{ width: `${progress.개념}` }}>{progress.개념}</span>
-                                        {
-                                            per.map(item=>{
-                                                return <div className='gageWrap-item' key={item}>{item}</div>
-                                            })
-                                        }
-                                    </div>
+                                    <div className="con">{progress.개념}</div>
                                 </li>
                                 <li>
-                                    <div className="tit">개념서</div>
-                                    <div className='gageWrap'>
-                                        <span className='gageWrap-gage' style={{ width: `${progress.유형}` }}>{progress.유형}</span>
-                                        {
-                                            per.map(item=>{
-                                                return <div className='gageWrap-item' key={item}>{item}</div>
-                                            })
-                                        }
-                                    </div>
+                                    <div className="tit">유형서</div>
+                                    <div className="con">90.6%</div>
                                 </li>
                             </ul>
-                        </div>
-                        <div className="top-table">
-                            <div className='top-table__tit'>교재 학습 정답률</div>
-                                <ul className='top-table__bar'>
-                                    <li>
-                                        <div className="tit">개념서</div>
-                                        <div className="con">{progress.개념}</div>
-                                    </li>
-                                    <li>
-                                        <div className="tit">유형서</div>
-                                        <div className="con">90.6%</div>
-                                    </li>
-                                </ul>
-                        </div>
                     </div>
                     {/* 아르케 */}
                     {/* <div className='top fj'>

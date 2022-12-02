@@ -16,6 +16,7 @@
         }
         
     }
+
     .scroll{
         max-height: 482px;
         tr{
@@ -25,12 +26,14 @@
                 >div{
                     @include flex(center);
                     flex-direction: column;
-                }
-                
+                }   
+            }
+            .fs{
+                padding: 9px 0 9px 10px !important;
             }
         }
-        
     }
+
     .btn-brown{
       background: #8f7361;
       height: 30px;

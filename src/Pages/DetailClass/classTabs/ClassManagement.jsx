@@ -150,7 +150,7 @@ function ClassManagement(){
                         <tbody className="scroll">
                             <>
                                 <tr className='unit1'>
-                                    <td style={{ width:'91.09%' }}>
+                                    <td className="fs" style={{ width:'91.09%' }}>
                                         {data && data[0].unit1}
                                     </td>
                                     <td style={{ width:'8.91%' }}>
@@ -185,7 +185,7 @@ const Tr = ({data,studyDone,ucode,retry,setCheckList,wrongPopList}) => {
 
     return(
         <tr>         
-            <td style={{ width:'19.8%' }}>{data.title}</td>
+            <td className='fs' style={{ width:'19.8%' }}>{data.title}</td>
             <td style={{ width: '11.88%'}} className={!data.state1 ? 'disabled' : ''}>{data.state1}</td>
             <td style={{ width: '11.88%'}}>
                 <div>
