@@ -14,26 +14,13 @@ function DatePickerPage() {
 
     const [next, setNext] = useState(new Date());
 
+    const [test, setTest]= useState(new Date());
+
     return (
         <div style={{ marginTop: "100px" }}>
 
 
-
-            <CustomDatePicker/>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            <CustomDatePicker value={test} onChnage={e=>{ setTest(e) }}/>
 
             <div>
                 <LmsDatePicker
