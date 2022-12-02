@@ -64,7 +64,7 @@ function TodayClassSearch({data,setFindList,option = []}) {
                     setSearch(e.target.value);
                 }} />
                 <button type='button' className='btn-search btn-green mr-10' onClick={findUser}><Icon icon={"search"} />검색</button>
-                <button class="btn-grey btn-icon" onClick={() => setReloadState(!reloadState)}><i class="icon-font ft-icon ic-reload undefined"></i>새로고침</button>
+                <button class="btn-grey btn-icon" onClick={() => setReloadState(!reloadState)}><Icon icon={"reload"} />새로고침</button>
 
         </div>
      );

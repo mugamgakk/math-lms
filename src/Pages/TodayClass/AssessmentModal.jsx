@@ -63,7 +63,7 @@ function AssessmentModal ({setAssModal}) {
      let [valumeItem, setValumeItem] = useState(0.5);
      let [minTime, setMinTime] = useState("0 : 00");
      let [maxTime, setMaxTime] = useState("0 : 00");
-
+    
 
 
      useEffect(()=>{
@@ -95,6 +95,7 @@ function AssessmentModal ({setAssModal}) {
          let 오디오 = audio.current.audioEl.current;
  
          allTime.current = 오디오.duration;
+         audioBar.current.value = 0;
  
          let 분 = parseInt(오디오.duration / 60);
          let 초 = Math.round(오디오.duration % 60);
@@ -129,28 +130,28 @@ function AssessmentModal ({setAssModal}) {
      // 진행 할때
      const audioIng = (time) => {
          let 현재시간퍼센트 = (time / allTime.current) * 100;
-        //  audioBar.current.style.width = `${현재시간퍼센트}%`;
- 
+         audioBar.current.style.background = `linear-gradient(to right, #ea7851 0%, #ea7851 ${현재시간퍼센트}%, #ccc ${현재시간퍼센트}%, #ccc 100%)`;
+         audioBar.current.value = 현재시간퍼센트;
          const min = parseInt(time / 60);
          const sec = Math.round(time % 60);
          setMinTime(`${min} : ${sec < 10 ? "0" + sec : sec}`);
      };
  
-     const clickChange = (e) => {
-         const 오디오 = audio.current.audioEl.current;
+    //  const clickChange = (e) => {
+    //      const 오디오 = audio.current.audioEl.current;
  
-         const rect = e.target.getBoundingClientRect();
-         const width = rect.width;
-         // ele width 값
-         const offsetX = e.nativeEvent.offsetX;
+    //      const rect = e.target.getBoundingClientRect();
+    //      const width = rect.width;
+    //      // ele width 값
+    //      const offsetX = e.nativeEvent.offsetX;
  
-         const widthRatio = offsetX / width;
+    //      const widthRatio = offsetX / width;
  
-         const toTime = Math.round(widthRatio * 오디오.duration);
-        //  audioBar.current.style.width = `${toTime}%`;
+    //      const toTime = Math.round(widthRatio * 오디오.duration);
+    //      audioBar.current.style.background = `linear-gradient(to right, dodgerblue 0%, dodgerblue ${toTime}%, #ccc ${toTime}%, #ccc 100%)`;
  
-         오디오.currentTime = toTime;
-     };
+    //      오디오.currentTime = toTime;
+    //  };
  
      const forwardRadio = (time)=>{
          let 오디오 = audio.current.audioEl.current;
@@ -212,7 +213,7 @@ function AssessmentModal ({setAssModal}) {
                                     ref={audioBar}
                                     min={0}
                                     max={100}
-                                    onChange={()=> {console.log(audioBar)}}
+                                    onChange={(e)=>{console.log(e.target.value)}}
                                     />
                                 <div className="foot fj" style={{ marginTop:'17px' }}>
                                     <div className='audio-volume'>
