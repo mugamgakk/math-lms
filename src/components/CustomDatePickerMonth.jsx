@@ -93,9 +93,9 @@ function CustomDatePickerMonth({
     return (
         <button
             className="CustomDatePicker-btn"
-            // onBlur={() => {
-            //     setOpen(false);
-            // }}
+            onBlur={() => {
+                setOpen(false);
+            }}
         >
             <span
                 onClick={() => {
