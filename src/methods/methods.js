@@ -14,7 +14,7 @@ export function falseModal(e,target){
     
     if(e.target === e.currentTarget){
         var 변경 = target;
-        변경(false)
+        변경(false);
     }
 }
 

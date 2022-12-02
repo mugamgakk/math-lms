@@ -1,0 +1,91 @@
+
+// 오늘의 수업
+.TodayClass{
+    position: relative;
+    &::after{
+        content:'';
+        height: 1px;
+        background: #eee;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+
+    }
+    .date-area{
+        display: flex;
+    }
+
+    .table-top{
+        margin-top: 50px;
+        margin-bottom: 10px;
+        .update{
+            vertical-align: middle;
+            margin-left: 5px;
+        }
+    }
+    .tableC{
+        th{
+            padding: 6px 0;
+        }
+    }
+    .scrollWrap{
+        border-left: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        max-height:727px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        .item{
+            width: calc(100% + 10px);
+            .name{
+                @include flex(center,start);
+                flex-direction: column;
+                padding-left:9px;
+                strong{
+                    color: #00a37f;
+                    font-weight: bold;
+                }
+            }
+            .stateWrap{
+                >*{
+                    padding: 9px 0;
+                }
+            }
+            .asse{
+               position: relative;
+               width: 100px;
+               height: 30px;
+                &::after{
+                    content:'';
+                    display: block;
+                    position: absolute;
+                    width: 1px;
+                    height: 20px;
+                    background: #fff;
+             
+                }
+            }
+            .state5{
+                flex-direction: column;
+            }
+            .btn-table{
+                @include font-style(16);
+                padding: 0;
+
+            }
+        }
+        .disabled{
+            background: #f6f6f6;
+        }
+        .br{
+            border-right: 1px solid #ddd
+        }
+        .bb{
+            border-bottom: 1px solid #ddd;
+        }
+        .flex{
+            display: flex;
+        }
+    }
+}
