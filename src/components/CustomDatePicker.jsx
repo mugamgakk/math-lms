@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import Icon from "./Icon";
 
 
-function CustomDatePicker({ value = new Date(), onChnage, className = "", style, maxDate , minDate }) {
+function CustomDatePicker({ value = new Date(), onChange, className = "", style, maxDate , minDate }) {
     let [dateValue, setDateValue] = useState(value);
     let [open, setOpen] = useState(false);
 
@@ -36,7 +36,7 @@ function CustomDatePicker({ value = new Date(), onChnage, className = "", style,
         
         let 선택날짜 = new Date(dateValue.setDate(day));
 
-        onChnage && onChnage(선택날짜);
+        onChange && onChange(선택날짜);
     };
 
     // 날짜 포맷

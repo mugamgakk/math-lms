@@ -5,6 +5,7 @@ import LmsDatePicker from "../../components/LmsDatePicker";
 import TimeDatePicker from "./TimeDatePicker";
 
 import CustomDatePicker from "../../components/CustomDatePicker";
+import CustomDatePickerMonth from "../../components/CustomDatePickerMonth";
 
 function DatePickerPage() {
     const [value, onChange] = useState(new Date());
@@ -20,7 +21,8 @@ function DatePickerPage() {
         <div style={{ marginTop: "100px" }}>
 
 
-            <CustomDatePicker value={test} onChnage={e=>{ setTest(e) }}/>
+            <CustomDatePicker value={test} onChange={e=>{ setTest(e) }}/>
+            <CustomDatePickerMonth/>
 
             <div>
                 <LmsDatePicker
