@@ -4,6 +4,8 @@ import DateNext from "../../components/DateNext";
 import LmsDatePicker from "../../components/LmsDatePicker";
 import TimeDatePicker from "./TimeDatePicker";
 
+import CustomDatePicker from "../../components/CustomDatePicker";
+
 function DatePickerPage() {
     const [value, onChange] = useState(new Date());
     const [openCalendar, setOpenCalendar] = useState(false);
@@ -14,6 +16,23 @@ function DatePickerPage() {
 
     return (
         <div style={{ marginTop: "100px" }}>
+
+
+
+            <CustomDatePicker/>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
             <div>

@@ -45,9 +45,10 @@
 }
 
 .pencil-input {
-    display: inline-block;
+    display:inline-flex;
     width: 100%;
     position: relative;
+
     textarea {
         padding: 6px 50px;
         height: 40px;
@@ -71,6 +72,7 @@
             background: #f2f2f2;
         }
     }
+    
     button {
         width: 40px;
         height: 40px;

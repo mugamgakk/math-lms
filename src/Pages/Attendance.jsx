@@ -40,10 +40,12 @@ function Attendance() {
             qstr: searchText,
         };
 
+        // console.log(param);
+
         try {
             let res = await ajax("class_daily.php", { data: param });
 
-            console.log(res);
+            // console.log(res);
 
             const { class_list, student_list } = res.data;
 
@@ -51,17 +53,25 @@ function Attendance() {
                 throw new Error("데이터가 없습니다.");
             }
 
+            // store에 copy 데이터
             getCopyData(_cloneDeep(student_list));
 
+            // 반 초기값
             banOptions.current = class_list;
+
+            // 반 값
             setClassList(class_list);
+            
+            // 리스트 값
             setStudentList(student_list);
 
+            setSearchText("")
             setLoading(false);
         } catch (err) {
             setLoading(false);
         }
     };
+
     useEffect(() => {
         getData();
     }, []);
@@ -107,12 +117,18 @@ function Attendance() {
                             className="textInput mr-10"
                             placeholder="학생명을 입력하세요"
                             style={{ width: "200px" }}
+                            onChange={e=>{ setSearchText(e.target.value) }}
+                            onKeyUp={(e)=>{
+                                if(e.key === "Enter"){
+                                    getData();
+                                }
+                            }}
                         />
-                        <button className="btn-green btn-icon mr-10">
+                        <button className="btn-green btn-icon mr-10" onClick={getData}>
                             <Icon icon={"search"} />
                             검색
                         </button>
-                        <button className="btn-grey btn-icon">
+                        <button className="btn-grey btn-icon" onClick={()=>{getData("reload")}}>
                             <Icon icon={"reload"} />
                             새로고침
                         </button>
@@ -170,6 +186,8 @@ const Tr = memo(({ ele, index }) => {
         const ele = e.target;
 
         setText(ele.value);
+        changeCopyData({ index, value: ele.value, 속성: "reason" });
+
     };
 
     return (
@@ -184,7 +202,7 @@ const Tr = memo(({ ele, index }) => {
                             key={a.value}
                             onClick={() => {
                                 setSTate(a.value);
-                                changeCopyData({ index, attd: a.value, 속성: "attd" });
+                                changeCopyData({ index, value: a.value, 속성: "attd" });
                             }}
                             className={`${a.value === state ? "btn-orange" : "btn-grey-border"}`}
                         >
@@ -193,7 +211,7 @@ const Tr = memo(({ ele, index }) => {
                     );
                 })}
             </td>
-            <td style={{ width: "61%" }} className="d-flex">
+            <td style={{ width: "61%" }}>
                 <div className="pencil-input mr-10">
                     <button
                         type="button"
@@ -211,7 +229,7 @@ const Tr = memo(({ ele, index }) => {
                     ></textarea>
                 </div>
                 <div style={{ width: "100px" }}>
-                    {pen && <button className="btn-grey-border">저장</button>}
+                    {pen && <button className="btn-grey-border" onClick={()=>{ console.log(text) }}>저장</button>}
                 </div>
             </td>
         </tr>

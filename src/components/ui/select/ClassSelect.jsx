@@ -18,7 +18,6 @@ function ClassSelect({
     let [text, setText] = useState("");
 
     const checkedItem = (checked, ele) => {
-        console.log(checked)
         if (checked) {
             // 삭제
             let result = choiceArr.filter((a) => a.class_cd !== ele.class_cd);
