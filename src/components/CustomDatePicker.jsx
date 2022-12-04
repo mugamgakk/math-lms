@@ -1,9 +1,12 @@
 import React, { useMemo, useState } from "react";
+import { useEffect } from "react";
 import { useCallback } from "react";
 import Icon from "./Icon";
 
+const 오늘 = new Date();
+
 function CustomDatePicker({
-    value = new Date(),
+    value = 오늘,
     onChange,
     className = "",
     style,
@@ -28,7 +31,9 @@ function CustomDatePicker({
     const dateChange = (num) => {
         var 달 = dateValue.getMonth();
 
-        let 변경달 = new Date(dateValue.setMonth(달 + num));
+        const aliasDate = new Date(dateValue);
+
+        let 변경달 = new Date(aliasDate.setMonth(달 + num));
 
         setDateValue(변경달);
     };
@@ -72,6 +77,7 @@ function CustomDatePicker({
         const 달력달 = 선택날짜.getMonth();
         const 달력일 = 선택날짜.getDate();
 
+
         if (값년도 === 달력년도 && 값달 === 달력달 && 값일 === 달력일) {
             return true;
         } else {
@@ -92,7 +98,7 @@ function CustomDatePicker({
 
             return 선택날짜 < minDate;
         },
-        [minDate]
+        [dateValue]
     );
 
     // 최대날짜
@@ -108,8 +114,12 @@ function CustomDatePicker({
 
             return 선택날짜 > maxDate;
         },
-        [maxDate]
+        [dateValue]
     );
+
+    useEffect(()=>{
+        setDateValue(value)
+    },[value])
 
     return (
         <button

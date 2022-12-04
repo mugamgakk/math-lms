@@ -146,6 +146,7 @@
 
                 &.disabled{
                     color: #ddd;
+                    cursor: default;
                 }
             }
 
@@ -165,12 +166,19 @@
             font-weight: 500;
             color: #666;
             cursor: pointer;
+
+            &.disabled{
+                color: #ddd;
+                cursor: default;
+            }
         }
 
         .current-month{
             color: $orange;
             font-weight: 600;
         }
+
+        
     }
 
 }

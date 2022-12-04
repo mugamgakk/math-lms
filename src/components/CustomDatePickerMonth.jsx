@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useCallback } from "react";
 import { useMemo } from "react";
 import { useState } from "react";
 import Icon from "./Icon";
 
+const 오늘 = new Date();
+
 function CustomDatePickerMonth({
-    value = new Date(),
+    value = 오늘,
     onChange,
     style,
     className = "",
@@ -24,7 +26,9 @@ function CustomDatePickerMonth({
     const dateChange = (num) => {
         var 년도 = dateValue.getFullYear();
 
-        let 변경년도 = new Date(dateValue.setFullYear(년도 + num));
+        const aliasDate = new Date(dateValue);
+
+        let 변경년도 = new Date(aliasDate.setFullYear(년도 + num));
 
         setDateValue(변경년도);
     };
@@ -62,7 +66,7 @@ function CustomDatePickerMonth({
     };
 
     // 최소날짜
-    const minDateFn = (month) => {
+    const minDateFn = useCallback((month) => {
         if (!minDate) {
             return;
         }
@@ -72,23 +76,28 @@ function CustomDatePickerMonth({
         let 선택날짜 = new Date(aliasDate.setMonth(month));
 
         return 선택날짜 < minDate;
-    };
+    },[dateValue]);
 
     // 최대날짜
     const maxDateFn = useCallback(
-        (day) => {
+        (month) => {
             if (!maxDate) {
                 return;
             }
 
             const aliasDate = new Date(dateValue);
 
-            let 선택날짜 = new Date(aliasDate.setDate(day));
+
+            let 선택날짜 = new Date(aliasDate.setMonth(month));
 
             return 선택날짜 > maxDate;
         },
-        [maxDate]
+        [dateValue]
     );
+
+    useEffect(()=>{
+        setDateValue(value)
+    },[value])
 
     return (
         <button
