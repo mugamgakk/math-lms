@@ -219,9 +219,9 @@
                     .img-bottom {
                         width: 100%;
                         margin-bottom: 10px;
-                        display:flex;
-                        align-items: flex-start;
-                        justify-content: flex-start;
+                        // display:flex;
+                        // align-items: flex-start;
+                        // justify-content: flex-start;
                         span{
                             @include font-style(20);
                             margin-right: 10px;
