@@ -19,6 +19,12 @@ function Login() {
     const loginAction = async (e) => {
         e.preventDefault();
 
+        if(textValue.id === "common"){
+            setCookie("gplumLMSlogin", "true")
+            window.location = "/attendance";
+            return;
+        }
+
         if (textValue.id === "") {
             alert("아이디를 입력하세요.");
             return;

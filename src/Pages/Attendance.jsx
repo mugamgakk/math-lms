@@ -7,6 +7,7 @@ import { useState } from "react";
 import ajax from "../ajax";
 import ContentHeader from "../components/ContentHeader";
 import CustomDatePicker from "../components/CustomDatePicker";
+import CustomDatePickerMonth from "../components/CustomDatePickerMonth";
 import DateNext from "../components/DateNext";
 import Icon from "../components/Icon";
 import LmsDatePicker from "../components/LmsDatePicker";
@@ -113,7 +114,7 @@ function Attendance() {
                         style={{ marginRight: "4px" }}
                     />
 
-                    <CustomDatePicker
+                    <CustomDatePickerMonth
                     value={date}
                     onChange={(day) => {
                         setDate(day);

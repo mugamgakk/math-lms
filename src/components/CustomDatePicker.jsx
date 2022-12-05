@@ -13,6 +13,7 @@ function CustomDatePicker({
     style,
     maxDate,
     minDate,
+    label = false
 }) {
     let [dateValue, setDateValue] = useState(value);
     let [open, setOpen] = useState(false);
@@ -148,7 +149,7 @@ function CustomDatePicker({
                         >
                             <Icon icon={"arrowA"} style={{transform : "rotate(180deg) scale(0.6)"}} />
                         </div>
-                        <div className="format">{dayFormat()}</div>
+                        <div className="format">{label ? dayFormat() : "달력에서 선택" }</div>
                         <div
                             onClick={() => {
                                 dateChange(1);

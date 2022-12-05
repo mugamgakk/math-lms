@@ -51,12 +51,12 @@ function CustomDatePickerMonth({
     // 현재 날짜 선택
     const isSameDate = (month) => {
         // console.log(dateValue)
-        const 값년도 = dateValue.getFullYear();
-        const 값달 = dateValue.getMonth();
+        const 값년도 = value.getFullYear();
+        const 값달 = value.getMonth();
 
-        // console.log(값달)
+        const aliasDate = new Date(dateValue);
 
-        let 선택날짜 = new Date(new Date().setMonth(month - 1));
+        let 선택날짜 = new Date(aliasDate.setMonth(month - 1));
 
         const 달력년도 = 선택날짜.getFullYear();
         const 달력달 = 선택날짜.getMonth();

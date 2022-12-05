@@ -73,6 +73,8 @@ function Home() {
     }, []);
 
     useEffect(() => {
+        if(getCookie("gplumLMSlogin")) return ;
+        
         ajax("/user.php", {
             data: { mode: "login" },
         }).then((res) => {
