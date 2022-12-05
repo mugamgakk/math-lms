@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import React from "react";
 import { useEffect } from "react";
 import { useRef } from "react";
@@ -32,16 +33,16 @@ function Attendance() {
     let [loading, setLoading] = useState(true);
     let banOptions = useRef([]);
 
+    const defaultList = useRef();
+
     const getData = async () => {
         setLoading(true);
         const param = {
             mode: "get_daily",
-            ymd: date,
+            ymd: dayjs(date).format("YYYYMMDD"),
             class_cd: classList,
             qstr: searchText,
         };
-
-        // console.log(param);
 
         try {
             let res = await ajax("class_daily.php", { data: param });
@@ -56,6 +57,10 @@ function Attendance() {
 
             // store에 copy 데이터
             getCopyData(_cloneDeep(student_list));
+
+            
+            // 새로고침을 위한 copy 데이터
+            defaultList.current = _cloneDeep(student_list);
 
             // 반 초기값
             banOptions.current = class_list;
@@ -72,6 +77,18 @@ function Attendance() {
             setLoading(false);
         }
     };
+
+    const saveList = async ()=>{
+        let data = {
+            mode : "set_daily",
+            ymd: dayjs(date).format("YYYYMMDD"),
+            student_list : copyData
+        }
+
+        let res = await ajax("/class_daily.php", {data});
+
+        console.log(res);
+    }
 
     useEffect(() => {
         getData();
@@ -131,7 +148,7 @@ function Attendance() {
                             <Icon icon={"search"} />
                             검색
                         </button>
-                        <button className="btn-grey btn-icon" onClick={()=>{getData("reload")}}>
+                        <button className="btn-grey btn-icon" onClick={()=>{ setStudentList(_cloneDeep(defaultList.current)) }}>
                             <Icon icon={"reload"} />
                             새로고침
                         </button>
@@ -165,9 +182,7 @@ function Attendance() {
                         <button
                             type="button"
                             className="btn-green"
-                            onClick={() => {
-                                console.log(copyData);
-                            }}
+                            onClick={saveList}
                         >
                             출결 내용 저장
                         </button>
@@ -179,6 +194,7 @@ function Attendance() {
 }
 
 const Tr = memo(({ ele, index }) => {
+
     let [text, setText] = useState((ele.reason ??= ""));
     let [state, setSTate] = useState(ele.attd);
     const changeCopyData = attendanceStore((state) => state.changeCopyData);
@@ -192,6 +208,14 @@ const Tr = memo(({ ele, index }) => {
         changeCopyData({ index, value: ele.value, 속성: "reason" });
 
     };
+
+    useEffect(()=>{
+        setText(ele.reason ??= "");
+        setSTate(ele.attd);
+        if(!ele.reason){
+            setPen(false);
+        }
+    },[ele])
 
     return (
         <tr>
