@@ -14,29 +14,34 @@ function TodayClass(){
     let [classList,setClassList] = useState();
 
     useEffect(()=>{
-
-        ajax("/class.php/", { data : {
-
-                mode : 'get_today_class',
-                ymd : "2022-01-01",
-                class_cd : 137283785634112704,
-                qstr : "김수학"
-            
-            }
-        }).then(res=>{
-
-            let { class_list, today_list} = res.data;
-
-                console.log(res);
-                setFindList(today_list); 
-                setClassList(class_list);
-        })
-       
+        getList();
     },[])
 
+    const getList = async () => {
+
+        let url = "/class.php";
+        let query = {
+            mode: "get_today_class",
+            ymd : "2022-01-01",
+            class_cd : 137283785634112704,
+            qstr : "김수학"
+        };
+        
+        
+        let res = await ajax(url, {data: query});
+        let { class_list, today_list} = res.data;
+
+
+        console.log(res);
+
+        setFindList(today_list); 
+        setClassList(class_list);
+     }
+
+
+
+
     let [checkState, setCheckState] = useState([]);
-
-
         
     const [value, onChange] = React.useState(new Date());
     const [openCalendar, setOpenCalendar] = React.useState(false);

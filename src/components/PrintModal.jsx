@@ -4,12 +4,16 @@ import ReactToPrint from "react-to-print"; // pdf, 인쇄
 import Icon from "./Icon";
 import Checkbox from "./Checkbox";
 import { falseModal } from '../methods/methods'
+import { useEffect } from "react";
+import ajax from "../ajax";
 
-function PrintModal({ closeModal, title = "제목임" }) {
+function PrintModal({ closeModal, title = "제목임" , cls_seq}) {
     const printComponent = React.useRef();
 
     let [viewState, setViewState] = useState("question");
     let [checkData, setCheckData] = useState(["question"]);
+    let [lists, setLists] = useState(null);
+    let [page, setPage] = useState(1);
 
     const checkState = (checked, ele) => {
         if (checked) {
@@ -19,10 +23,52 @@ function PrintModal({ closeModal, title = "제목임" }) {
         }
     };
 
+    console.log(lists);
     // 우클릭 드래그 방지 
     const eventAlert = (e)=>{
         e.preventDefault();
     }
+
+    useEffect(()=>{
+        setPage(1);
+    },[viewState])
+
+    useEffect(()=>{
+        getPrint();
+    },[]);
+
+   
+    const getPrint = async () => {
+
+        let url = "/print.php";
+        let query = {
+            mode: "print",
+            cls_seq : cls_seq ,
+            ucode:'15M11TRA32',
+            kind:'CC'
+        };
+        
+        let res = await ajax(url, {data: query});
+        
+        getArray(res.data);
+        
+    }
+    
+    const getArray = (data) => {
+         
+            let length = data.length;
+            let divide = Math.floor(length/4) + (Math.floor( length % 4 ) > 0 ? 1 : 0);
+            let newArray = [];
+
+            for(let i=0; i< divide; i++){
+                newArray.push( data.splice(0,4));
+            }
+
+            setLists(newArray);
+
+     }
+
+
 
 
     return (
@@ -65,7 +111,7 @@ function PrintModal({ closeModal, title = "제목임" }) {
                                     trigger={() => <button className="btn-grey-border"><Icon icon={"print"} style={{marginRight:'6px',fontSize:'14px'}}/>인쇄</button>}
                                     content={() => printComponent.current}
                                 />
-                                    <div style={{ display: "none" }}>
+                                    {/* <div style={{ display: "none" }}>
                                         <div ref={printComponent}>
                                             {
                                                 checkData.includes("question") && <div>문제</div>
@@ -74,30 +120,134 @@ function PrintModal({ closeModal, title = "제목임" }) {
                                                 checkData.includes("solution") && <div>정답</div>
                                             }
                                         </div>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
+                      
                         <div className="contents">
                             {
-                                {
-                                    question: <div onContextMenu={eventAlert} onDragStart={eventAlert}>문제</div>,
-                                    solution: <div onContextMenu={eventAlert} onDragStart={eventAlert}>정답</div>,
-                                }[viewState]
+                                viewState == 'question' && (
+                                    <>
+                                    <table className="contents-tit">
+                                        <colgroup>
+                                            <col width='100px'/>
+                                            <col width='100px'/>
+                                            <col width='80px'/>
+                                            <col width='90px'/>
+                                            <col width='80px'/>
+                                            <col width='100px'/>
+                                            <col width='100px'/>
+                                            <col width='130px'/>
+                                            <col width='100px'/>
+                                            <col width='80px'/>
+                                        </colgroup>
+                                        <tr>
+                                            <th>맞춤 클리닉</th>
+                                            <td>중1-1 뜨레스</td>
+                                            <th>학년</th>
+                                            <td>중1</td>
+                                            <th>이름</th>
+                                            <td>조현준</td>
+                                            <th>학습일</th>
+                                            <td>2022.07.12</td>
+                                            <th>점수</th>
+                                            <td>/26</td>
+                                        </tr>
+                                    </table>
+                                    <div className='contents-inner scroll'>
+                                        <ol onContextMenu={eventAlert} onDragStart={eventAlert} ref={checkData.includes("question") && printComponent}>
+                                                {
+                                                    lists && lists[page - 1].map((list,i)=>{
+                                                        
+                                                        return(
+                                                                <li style={{ paddingTop:'25px' }}>
+                                                                    <div className="img-top fj">
+                                                                        <strong>{list.qseq < 10 ? `0${list.qseq}` : list.qseq}</strong>
+                                                                        <span className="tit">{list.qa_keyword}</span>
+                                                                    </div>
+                                                                    <img className='q-img' src={`https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${list.qa_code}_Q.png` } alt="" />
+                                                                {
+                                                                    ['①','②','③','④','⑤'].map((num,i)=>{
+                                                                        return(
+                                                                            <div className="img-bottom fa" style={{justifyContent:'start'}}>
+                                                                                <span>{num}</span><img src={`https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${list.qa_code}_${i+1}.png` }/>
+                                                                            </div>
+                                                                        ) 
+                                                                    })
+                                                                }
+                                                                </li>
+                                                        )
+                                                    })
+                                                }
+                                            </ol>
+                                        </div>
+                                    </>
+                                )
+                            }
+                            {
+                                viewState == 'solution' && (
+                                    <>
+                                     <table className="contents-tit">
+                                        <colgroup>
+                                            <col width='100px'/>
+                                            <col width='100px'/>
+                                            <col width='80px'/>
+                                            <col width='90px'/>
+                                            <col width='80px'/>
+                                            <col width='100px'/>
+                                            <col width='100px'/>
+                                            <col width='130px'/>
+                                            <col width='100px'/>
+                                            <col width='80px'/>
+                                        </colgroup>
+                                        <tr>
+                                            <th>맞춤 클리닉</th>
+                                            <td>중1 뜨레스</td>
+                                            <th>학년</th>
+                                            <td>중1</td>
+                                            <th>이름</th>
+                                            <td>조현준</td>
+                                            <th>학습일</th>
+                                            <td>2022.07.12</td>
+                                            <th>점수</th>
+                                            <td>/26</td>
+                                        </tr>
+                                    </table>
+                                    <div className='contents-inner scroll'>
+                                    <ol className='solution' onContextMenu={eventAlert} onDragStart={eventAlert}>
+                                            {
+                                                lists && lists[page - 1].map((list,i)=>{
+                                                    
+                                                    return(
+                                                        <li style={{ paddingTop:'25px' }}>
+                                                                <div className="img-top fj">
+                                                                    <strong>{list.qseq < 10 ? `0${list.qseq}` : list.qseq}</strong>
+                                                                    <span className="tit">{list.qa_keyword}</span>
+                                                                </div>
+                                                            <img src={`https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${list.qa_code}_S.png` } style={{ marginTop:'20px' }} alt="" />
+                                                        </li>
+                                                    )
+                                                })
+                                            }
+                                    </ol>
+                                    </div>
+                                    </>
+                                )
+                              
                             }
                         </div>
                     </div>
                     <div className="modal-footer">
                         {/* <Pagination /> */}
-                        <PrintPagination totalPage={7}/>
+                        <PrintPagination totalPage={lists && lists.length} page={page} setPage={setPage}/>
                     </div>
                 </div>
             </div>
     );
 }
 
-const PrintPagination = ({totalPage = 20, pageLength = 10})=>{
+const PrintPagination = ({totalPage = 20, pageLength = 10,page,setPage})=>{
 
-    let [page, setPage] = useState(1);
 
     const PageRender = ()=>{
         let pageGroup = Math.ceil(page / pageLength);
