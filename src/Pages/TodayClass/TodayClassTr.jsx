@@ -6,6 +6,7 @@ import { fileDown } from "../../methods/methods";
 import 오디오입니동 from "../../test.mp3";
 import Icon from '../../components/Icon';
 import { toggleBodyScroll } from '../../methods/methods'
+import PrintModalClinic from '../../components/PrintModal_clinic';
 function TodayClassTr({data}){
 
     // 모달 상태 관리
@@ -75,7 +76,7 @@ function TodayClassTr({data}){
                     }
                     {
                     printModal ? 
-                    <PrintModal 
+                    <PrintModalClinic 
                     title='맞춤 클리닉'
                     closeModal={closeModal}
                     cls_seq={data.cls_seq}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Pagination from "./Pagination";
 import ReactToPrint from "react-to-print"; // pdf, 인쇄
 import Icon from "./Icon";
@@ -50,29 +50,28 @@ function PrintModal({ closeModal, title = "제목임" , cls_seq}) {
         
         let res = await ajax(url, {data: query});
         
-        getArray(res.data);
+        setLists(res.data);
         
     }
+
+    let height = useRef(0);
+
+    const addHeight = (url) =>{
+        let img = new Image();
+        img.src = url;
+        height = 175 + ((img.height*431)/img.width);
+        return height;
+    }
     
-    const getArray = (data) => {
-         
-            let length = data.length;
-            let divide = Math.floor(length/4) + (Math.floor( length % 4 ) > 0 ? 1 : 0);
-            let newArray = [];
-
-            for(let i=0; i< divide; i++){
-                newArray.push( data.splice(0,4));
-            }
-
-            setLists(newArray);
-     }
+    
 
 
 
+  
 
     return (
             <div className="modal" onClick={(e)=>falseModal(e,closeModal)}>
-                <div className="modal-content printModal">
+                <div className="modal-content printModal printModalClinic">
                     <div className="modal-header fj">
                         <h2 className="modal-title">{title}</h2>
                         <button className="btn" onClick={() => closeModal(false)}><Icon icon={"close"} /></button>
@@ -154,12 +153,13 @@ function PrintModal({ closeModal, title = "제목임" , cls_seq}) {
                                         </tr>
                                     </table>
                                     <div className='contents-inner scroll'>
-                                        <ol onContextMenu={eventAlert} onDragStart={eventAlert}>
+                                        <div onContextMenu={eventAlert} onDragStart={eventAlert}>
+                                            <div className="ol">
                                                 {
-                                                    lists && lists[page - 1].map((list,i)=>{
-                                                        
+                                                    lists && lists.map((list,i)=>{
+                                                        let newHeight =  addHeight(`https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${list.qa_code}_Q.png`);
                                                         return(
-                                                                <li style={{ paddingTop:'25px' }}>
+                                                            <>
                                                                     <div className="img-top fj">
                                                                         <strong>{list.qseq < 10 ? `0${list.qseq}` : list.qseq}</strong>
                                                                         <span className="tit">{list.qa_keyword}</span>
@@ -167,6 +167,13 @@ function PrintModal({ closeModal, title = "제목임" , cls_seq}) {
                                                                     <img className='q-img' src={`https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${list.qa_code}_Q.png` } alt="" />
                                                                 {
                                                                     ['①','②','③','④','⑤'].map((num,i)=>{
+                                                                        
+                                                                        let img = new Image();
+                                                                        img.src = `https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${list.qa_code}_${i+1}.png`;
+                                                                        console.log(img.height);
+                                                                        // newHeight += ((img.height*431)/img.width);
+                                                                        // console.log(newHeight);
+
                                                                         return(
                                                                             <div className="img-bottom fa" style={{justifyContent:'start'}}>
                                                                                 <span>{num}</span><img src={`https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${list.qa_code}_${i+1}.png` }/>
@@ -174,71 +181,21 @@ function PrintModal({ closeModal, title = "제목임" , cls_seq}) {
                                                                         ) 
                                                                     })
                                                                 }
-                                                                </li>
-                                                        )
-                                                    })
-                                                }
-                                            </ol>
+                                                                <div className="white" style={{ width: '50%',height:'100px' }}></div>
+                                                            </>
+                                                                )
+                                                            })
+                                                        }
+                                                    </div>
+                                            </div>
                                         </div>
                                     </>
                                 )
                             }
-                            {
-                                viewState == 'solution' && (
-                                    <>
-                                     <table className="contents-tit">
-                                        <colgroup>
-                                            <col width='100px'/>
-                                            <col width='100px'/>
-                                            <col width='80px'/>
-                                            <col width='90px'/>
-                                            <col width='80px'/>
-                                            <col width='100px'/>
-                                            <col width='100px'/>
-                                            <col width='130px'/>
-                                            <col width='100px'/>
-                                            <col width='80px'/>
-                                        </colgroup>
-                                        <tr>
-                                            <th>맞춤 클리닉</th>
-                                            <td>중1 뜨레스</td>
-                                            <th>학년</th>
-                                            <td>중1</td>
-                                            <th>이름</th>
-                                            <td>조현준</td>
-                                            <th>학습일</th>
-                                            <td>2022.07.12</td>
-                                            <th>점수</th>
-                                            <td>/26</td>
-                                        </tr>
-                                    </table>
-                                    <div className='contents-inner scroll'>
-                                    <ol className='solution' onContextMenu={eventAlert} onDragStart={eventAlert}>
-                                            {
-                                                lists && lists[page - 1].map((list,i)=>{
-                                                    
-                                                    return(
-                                                        <li style={{ paddingTop:'25px' }}>
-                                                                <div className="img-top fj">
-                                                                    <strong>{list.qseq < 10 ? `0${list.qseq}` : list.qseq}</strong>
-                                                                    <span className="tit">{list.qa_keyword}</span>
-                                                                </div>
-                                                            <img src={`https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${list.qa_code}_S.png` } style={{ marginTop:'20px' }} alt="" />
-                                                        </li>
-                                                    )
-                                                })
-                                            }
-                                    </ol>
-                                    </div>
-                                    </>
-                                )
-                              
-                            }
                         </div>
                     </div>
                     <div className="modal-footer">
-                        {/* <Pagination /> */}
-                        <PrintPagination totalPage={lists && lists.length} page={page} setPage={setPage}/>
+                        {/* <PrintPagination totalPage={lists && lists.length} page={page} setPage={setPage}/> */}
                     </div>
                 </div>
             </div>
