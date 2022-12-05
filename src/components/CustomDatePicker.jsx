@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import React, { useMemo, useState } from "react";
 import { useEffect } from "react";
 import { useCallback } from "react";
@@ -123,7 +124,7 @@ function CustomDatePicker({
 
     return (
         <button
-            className="CustomDatePicker-btn"
+            className={`CustomDatePicker-btn ${className}`}
             onBlur={() => {
                 setOpen(false);
             }}
@@ -133,7 +134,7 @@ function CustomDatePicker({
                     setOpen(!open);
                 }}
             >
-                달력에서 선택 <Icon icon={"calendar"} />
+                {dayjs(value).format("YYYY-MM-DD")} <Icon icon={"calendar"} />
             </span>
 
             {open && (
