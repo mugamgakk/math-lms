@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import UserInfo from "../../components/UserInfo";
 import useStudentsStore from "../../store/useStudentsStore";
-import PlusTrData from "./PlusTrData";
 import Icon from "../../components/Icon";
 import LmsDatePicker from "../../components/LmsDatePicker";
 import SelectBase from "../../components/ui/select/SelectBase";

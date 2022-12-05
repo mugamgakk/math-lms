@@ -110,6 +110,9 @@ function Login() {
                         className="textInput"
                         value={textValue.password}
                         onChange={setTextValue}
+                        onKeyUp={(e)=>{
+                            if(e.key === "Enter") loginAction(e);
+                        }}
                     />
                 </div>
                 <div className="d-flex">

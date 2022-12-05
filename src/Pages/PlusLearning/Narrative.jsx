@@ -11,7 +11,7 @@ import Checkbox from "../../components/Checkbox";
 
 const 단원 = [
     { value: 1, label: "수와 식의 계산" },
-    { value: 2, label: "수와 수의 곱샘" }
+    { value: 2, label: "수와 수의 곱샘" },
 ];
 const stateOptions = [
     { value: "P", label: "오픈전" },
@@ -27,7 +27,7 @@ const DATA = [
         sc_status: "P",
         sc_std_score: 18,
         sc_max_score: 20,
-        sc_per_score: 90
+        sc_per_score: 90,
     },
     {
         sc_seq: 123,
@@ -36,7 +36,7 @@ const DATA = [
         sc_status: "S",
         sc_std_score: 18,
         sc_max_score: 20,
-        sc_per_score: 90
+        sc_per_score: 90,
     },
     {
         sc_seq: 123,
@@ -45,7 +45,7 @@ const DATA = [
         sc_status: "C",
         sc_std_score: 18,
         sc_max_score: 20,
-        sc_per_score: 90
+        sc_per_score: 90,
     },
     {
         sc_seq: 123,
@@ -54,9 +54,9 @@ const DATA = [
         sc_status: "P",
         sc_std_score: 18,
         sc_max_score: 20,
-        sc_per_score: 90
+        sc_per_score: 90,
     },
-]
+];
 
 function Narrative() {
     const { clickStudent, bookList } = useStudentsStore((state) => state);
@@ -76,38 +76,36 @@ function Narrative() {
 
     const checkAll = (e) => {
         e.target.checked ? setCheckedList(plusData) : setCheckedList([]);
-    }
+    };
 
     const checkOne = (checked, ele) => {
-        checked ? setCheckedList([...checkedList, ele]) : setCheckedList(checkedList.filter((a) => a !== ele))
-    }
+        checked
+            ? setCheckedList([...checkedList, ele])
+            : setCheckedList(checkedList.filter((a) => a !== ele));
+    };
 
     // 선택오픈, 오픈 취소
     const openState = async (isOpen) => {
         try {
-
             if (checkedList.length === 0) {
                 alert("1개이상 선택하세요");
-                return
-            };
-
-            const idData = checkedList.map(id => id.sc_seq);
-            const data = {
-                arr_sc_seq: idData
+                return;
             }
 
-            isOpen ? data.mode = "ct_open" : data.mode = "ct_close";
+            const idData = checkedList.map((id) => id.sc_seq);
+            const data = {
+                arr_sc_seq: idData,
+            };
+
+            isOpen ? (data.mode = "ct_open") : (data.mode = "ct_close");
 
             let res = await ajax("class_plus.php", { data });
 
-            console.log(res)
-
-
+            console.log(res);
         } catch (err) {
-            console.log(err)
+            console.log(err);
         }
-    }
-
+    };
 
     const getList = async () => {
         setSkeleton(true);
@@ -117,31 +115,29 @@ function Narrative() {
             usr_seq: clickStudent.usr_seq,
             qlno: unit?.value,
             qstatus: situation?.value,
-            qbkcd: bookList.value
-        }
+            qbkcd: bookList.value,
+        };
 
         try {
             let res = await ajax("class_plus.php", { data });
 
-            console.log(res)
+            console.log(res);
 
             setPlusData(_cloneDeep(res.data));
             setInitialData(_cloneDeep(res.data));
 
             setSkeleton(false);
-
         } catch (msg) {
             setSkeleton(false);
         }
-    }
+    };
 
     useEffect(() => {
-        getList()
-    }, [clickStudent])
+        getList();
+    }, [clickStudent]);
 
     return (
         <div className="Narrative">
-
             <UserInfo clickStudent={clickStudent} />
             <p className="alert-text" style={{ marginTop: "20px" }}>
                 학습하는 교재의 학년, 학기에 해당하는 서술형 문제를 오픈, 출력할 수
@@ -149,12 +145,23 @@ function Narrative() {
             </p>
             <div className="fj" style={{ margin: "10px 0px" }}>
                 <div>
-                    <button className="btn-grey-border mr-10" onClick={() => { openState(true) }}>선택 오픈</button>
+                    <button
+                        className="btn-grey-border mr-10"
+                        onClick={() => {
+                            openState(true);
+                        }}
+                    >
+                        선택 오픈
+                    </button>
                     {/* <button className="btn" onClick={() => { openState(false) }}>선택 오픈 취소</button> */}
-                    <button className="btn-grey-border" onClick={() => {
-                        if (checkedList.length === 0) alert("1개이상 선택하세요");
-
-                    }}>선택 인쇄</button>
+                    <button
+                        className="btn-grey-border"
+                        onClick={() => {
+                            if (checkedList.length === 0) alert("1개이상 선택하세요");
+                        }}
+                    >
+                        선택 인쇄
+                    </button>
                 </div>
                 <div className="row">
                     <SelectBase
@@ -177,51 +184,71 @@ function Narrative() {
                         className="mr-10"
                         defaultValue="상태"
                     />
-                    <button className="btn-grey" onClick={getList}>조회</button>
+                    <button className="btn-grey" onClick={getList}>
+                        조회
+                    </button>
                 </div>
             </div>
 
-            <table className='table tableA Narrative-table'>
+            <table className="table tableA Narrative-table">
                 <thead>
                     <tr>
-                        <th scope="row" style={{width : "8.80316%"}}>
+                        <th scope="row" style={{ width: "8.80316%" }}>
                             <Checkbox
-                                checked={initialData.length === checkedList.length && checkedList.length !== 0}
+                                checked={
+                                    initialData.length === checkedList.length &&
+                                    checkedList.length !== 0
+                                }
                                 onChange={checkAll}
                             />
                             선택
                         </th>
-                        <th scope="row" style={{width : "17.60633%"}}>대단원</th>
-                        <th scope="row" style={{width : "35.11374%"}}>주제</th>
-                        <th scope="row" style={{width : "13.84767%"}}>상태</th>
-                        <th scope="row" style={{width : "13.25420%"}}>채점</th>
-                        <th scope="row" style={{width : "11.37487%"}}>시험지</th>
+                        <th scope="row" style={{ width: "17.60633%" }}>
+                            대단원
+                        </th>
+                        <th scope="row" style={{ width: "35.11374%" }}>
+                            주제
+                        </th>
+                        <th scope="row" style={{ width: "13.84767%" }}>
+                            상태
+                        </th>
+                        <th scope="row" style={{ width: "13.25420%" }}>
+                            채점
+                        </th>
+                        <th scope="row" style={{ width: "11.37487%" }}>
+                            시험지
+                        </th>
                     </tr>
                 </thead>
                 <tbody className="scroll">
-                    {
-                        skeleton
-                            ? <SkeletonTable R={6} width={["8.80316%","17.60633%", "35.11374%", "13.84767%", "13.25420%", "11.37487%"]} />
-                            : plusData.map((ele, i) => {
-                                return (
-                                    <NarrativeTr
-                                        ele={ele}
-                                        key={`key${i}`}
-                                        checkOne={checkOne}
-                                        checkedList={checkedList}
-                                    />
-                                );
-                            })
-                    }
+                    {skeleton ? (
+                        <SkeletonTable
+                            R={6}
+                            width={[
+                                "8.80316%",
+                                "17.60633%",
+                                "35.11374%",
+                                "13.84767%",
+                                "13.25420%",
+                                "11.37487%",
+                            ]}
+                        />
+                    ) : (
+                        plusData.map((ele, i) => {
+                            return (
+                                <NarrativeTr
+                                    ele={ele}
+                                    key={`key${i}`}
+                                    checkOne={checkOne}
+                                    checkedList={checkedList}
+                                />
+                            );
+                        })
+                    )}
                 </tbody>
             </table>
         </div>
     );
 }
-
-
-
-
-
 
 export default Narrative;

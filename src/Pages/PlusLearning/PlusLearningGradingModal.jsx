@@ -110,7 +110,7 @@ function PlusLearningGradingModal({ setModal, sc_seq }) {
         총파일크기.current = 총파일크기.current - 체크된파일사이즈;
     };
 
-    const getData = async (qnum) => {
+    const getData = async () => {
         const data = {
             mode: "ct_score",
             sc_seq: sc_seq,
@@ -119,9 +119,10 @@ function PlusLearningGradingModal({ setModal, sc_seq }) {
         };
 
         try {
-            let res = await axios.post("http://192.168.11.178:8080/pluslearning/popup", data);
+            
+            let res = await ajax("/class_plus.php" ,{data : data})
 
-            setQdata(res.data);
+            // setQdata(res.data);
 
             console.log(res.data);
 

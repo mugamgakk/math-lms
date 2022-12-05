@@ -5,6 +5,7 @@ import { memo } from "react";
 import { useState } from "react";
 import ajax from "../ajax";
 import ContentHeader from "../components/ContentHeader";
+import CustomDatePicker from "../components/CustomDatePicker";
 import DateNext from "../components/DateNext";
 import Icon from "../components/Icon";
 import LmsDatePicker from "../components/LmsDatePicker";
@@ -94,13 +95,15 @@ function Attendance() {
                         }}
                         style={{ marginRight: "4px" }}
                     />
-                    <LmsDatePicker
-                        value={date}
-                        onChange={(day) => {
-                            setDate(day);
-                        }}
-                        maxDate={new Date()}
+
+                    <CustomDatePicker
+                    value={date}
+                    onChange={(day) => {
+                        setDate(day);
+                    }}
+                    maxDate={new Date()}
                     />
+                   
                 </div>
                 <div className="attendence-body">
                     <div className="search">
