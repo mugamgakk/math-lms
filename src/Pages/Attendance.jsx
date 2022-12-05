@@ -173,7 +173,7 @@ function Attendance() {
                                 <SkeletonTable R={7} width={["13%", "26%", "61%"]} />
                             ) : (
                                 studentList?.map((ele, i) => {
-                                    return <Tr ele={ele} index={i} key={"index" + i} />;
+                                    return <Tr ele={ele} index={i} date={date} key={"index" + i} />;
                                 })
                             )}
                         </tbody>
@@ -193,7 +193,7 @@ function Attendance() {
     );
 }
 
-const Tr = memo(({ ele, index }) => {
+const Tr = memo(({ ele, index, date }) => {
 
     let [text, setText] = useState((ele.reason ??= ""));
     let [state, setSTate] = useState(ele.attd);
@@ -208,6 +208,21 @@ const Tr = memo(({ ele, index }) => {
         changeCopyData({ index, value: ele.value, 속성: "reason" });
 
     };
+
+    const saveReason = async ()=>{
+        const data = {
+            mode:  "set_reason",
+            ymd : dayjs(date).format("YYYYMMDD"),
+            reason : text,
+            usr_seq : ele.user_seq
+        }
+
+        // console.log(data);
+        let res = await ajax("/class_daily.php", {data});
+
+        if(res.data.ok == 1) alert("저장이 완료되었습니다.");
+
+    }
 
     useEffect(()=>{
         setText(ele.reason ??= "");
@@ -256,7 +271,7 @@ const Tr = memo(({ ele, index }) => {
                     ></textarea>
                 </div>
                 <div style={{ width: "100px" }}>
-                    {pen && <button className="btn-grey-border" onClick={()=>{ console.log(text) }}>저장</button>}
+                    {pen && <button className="btn-grey-border" onClick={saveReason}>저장</button>}
                 </div>
             </td>
         </tr>
