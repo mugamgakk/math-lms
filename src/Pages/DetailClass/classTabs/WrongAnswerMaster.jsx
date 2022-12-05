@@ -40,7 +40,7 @@ const data = {
         },
     ]
 }
-function WrongAnswer({clickStudent}) {
+function WrongAnswer() {
     // let {data,removeList,filterData} = useStore(state=>state);
 
     let [checkData,setCheckData] = useState([]);
@@ -50,6 +50,7 @@ function WrongAnswer({clickStudent}) {
     let today = dayjs(new Date()).format('YYYY-MM-DD');
     let monthAge = dayjs(new Date()).subtract(1,'month').format('YYYY-MM-DD');
     let bookList = useStudentsStore((state) => state.bookList);
+    let clickStudent = useStudentsStore((state) => state.clickStudent);
     
     // useEffect(()=>{
     //     ajax("/class_wrong.php", { data : {

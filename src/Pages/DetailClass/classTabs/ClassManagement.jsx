@@ -7,6 +7,7 @@ import useStudentsStore from "../../../store/useStudentsStore";
 import { useCallback } from "react";
 import Icon from "../../../components/Icon";
 import Checkbox from "../../../components/Checkbox";
+import PrintModal from "../../../components/PrintModal";
 
 function ClassManagement(){
     let [progressMo, setProgressState] = useState(false);
@@ -135,7 +136,7 @@ function ClassManagement(){
                             <th rowSpan={2}>단원</th>
                             <th colSpan={5} className='bb'>수행 현황</th>
                             <th rowSpan={2}>학습 완료</th>
-                            <th rowSpan={2} className='b-none'>오답<br />정복하기<button className="btn-brown">생성</button></th>
+                            <th rowSpan={2} className='b-none'>오답<br />정복하기<button className="btn-brown" onClick>생성</button></th>
                         </tr>
                         <tr>
                             <th>개념 강의</th>
@@ -182,6 +183,8 @@ function ClassManagement(){
 
 const Tr = ({data,studyDone,ucode,retry,setCheckList,wrongPopList}) => {
     let [resultPop, setResultPop] = useState(false);
+    let [printMo, setPrintMo] = useState(false);
+
 
     return(
         <tr>         
@@ -234,17 +237,22 @@ const Tr = ({data,studyDone,ucode,retry,setCheckList,wrongPopList}) => {
                 {
                     Object.keys(data.state5).length !== 0 
                     ?  ( data.state5.avail ? (
-                            <div>
+                        <div>
                                 <div>{data.state5.score}</div>
-                                <button className="btn-table" style={{ marginBottom:'4px' }}><Icon icon={"print"} style={{color:'#666',marginRight:'6px'}}/>인쇄</button>
+                                <button className="btn-table" style={{ marginBottom:'4px' }} onClick={()=>setPrintMo(true)}>
+                                    <Icon icon={"print"} style={{color:'#666',marginRight:'6px'}}/>
+                                    인쇄</button>
+                                    {
+                                        printMo && <PrintModal closeModal={setPrintMo}/>
+                                    }
                                 <button className="btn-orange wh-103">재응시({data.state5.retry})</button>
                             </div>
                         ) : (
-                                <div>-</div>
-                        )
-                    )
-                    : null 
-                }
+                            <div>-</div>
+                            )
+                            )
+                            : null 
+                        }
             </td>
             
             <td style={{ width: '11.88%'}}>
