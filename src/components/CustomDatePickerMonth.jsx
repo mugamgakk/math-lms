@@ -50,23 +50,21 @@ function CustomDatePickerMonth({
     
     // 현재 날짜 선택
     const isSameDate = (month) => {
-        // console.log(dateValue)
-        const 값년도 = value.getFullYear();
-        const 값달 = value.getMonth();
+
+        const 값날짜 = dayjs(value).format("YYYYMM");
 
         const aliasDate = new Date(dateValue);
 
-        let 선택날짜 = new Date(aliasDate.setMonth(month - 1));
+        const 선택날짜 = new Date(aliasDate.setMonth(month - 1));
 
-        const 달력년도 = 선택날짜.getFullYear();
-        const 달력달 = 선택날짜.getMonth();
+        const 달력달 = dayjs(선택날짜).format("YYYYMM");
 
-
-        if (값년도 === 달력년도 && 값달 === 달력달) {
-            return true;
-        } else {
-            return false;
+        if(값날짜 === 달력달){
+            return true
+        }else{
+            return false
         }
+
     };
 
     // 최소날짜
@@ -79,8 +77,8 @@ function CustomDatePickerMonth({
 
         let 선택날짜 = new Date(aliasDate.setMonth(month - 1));
 
-            let a = dayjs(선택날짜).format("YYYYMMDD")
-            let b = dayjs(maxDate).format("YYYYMMDD")
+            let a = dayjs(선택날짜).format("YYYYMM")
+            let b = dayjs(maxDate).format("YYYYMM")
 
             if(a === b){
                 return false
@@ -100,8 +98,8 @@ function CustomDatePickerMonth({
 
             let 선택날짜 = new Date(aliasDate.setMonth(month - 1));
 
-            let a = dayjs(선택날짜).format("YYYYMMDD")
-            let b = dayjs(maxDate).format("YYYYMMDD")
+            let a = dayjs(선택날짜).format("YYYYMM")
+            let b = dayjs(maxDate).format("YYYYMM")
 
             if(a === b){
                 return false
