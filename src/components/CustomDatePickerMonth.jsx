@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import React, { useEffect } from "react";
 import { useCallback } from "react";
 import { useMemo } from "react";
@@ -20,7 +21,7 @@ function CustomDatePickerMonth({
     // html render
     var month = useMemo(() => {
         return monthRender();
-    }, [dateValue]);
+    }, []);
 
     // 년도 변경 버튼 함수
     const dateChange = (num) => {
@@ -39,24 +40,27 @@ function CustomDatePickerMonth({
 
         if (isDisabled) return;
 
-        let 선택날짜 = new Date(dateValue.setMonth(month - 1));
-
-        onChange && onChange(선택날짜);
-    };
-
-    // 현재 날짜 선택
-    const isSameDate = (month) => {
-        const 값년도 = value.getFullYear();
-        const 값달 = value.getMonth();
-
         const aliasDate = new Date(dateValue);
 
         let 선택날짜 = new Date(aliasDate.setMonth(month - 1));
 
+        onChange && onChange(선택날짜);
+    };
+
+    
+    // 현재 날짜 선택
+    const isSameDate = (month) => {
+        // console.log(dateValue)
+        const 값년도 = dateValue.getFullYear();
+        const 값달 = dateValue.getMonth();
+
+        // console.log(값달)
+
+        let 선택날짜 = new Date(new Date().setMonth(month - 1));
+
         const 달력년도 = 선택날짜.getFullYear();
         const 달력달 = 선택날짜.getMonth();
 
-        // console.log(달력달)
 
         if (값년도 === 달력년도 && 값달 === 달력달) {
             return true;
@@ -73,9 +77,16 @@ function CustomDatePickerMonth({
 
         const aliasDate = new Date(dateValue);
 
-        let 선택날짜 = new Date(aliasDate.setMonth(month));
+        let 선택날짜 = new Date(aliasDate.setMonth(month - 1));
 
-        return 선택날짜 < minDate;
+            let a = dayjs(선택날짜).format("YYYYMMDD")
+            let b = dayjs(maxDate).format("YYYYMMDD")
+
+            if(a === b){
+                return false
+            }
+
+            return a < b;
     },[dateValue]);
 
     // 최대날짜
@@ -87,10 +98,16 @@ function CustomDatePickerMonth({
 
             const aliasDate = new Date(dateValue);
 
+            let 선택날짜 = new Date(aliasDate.setMonth(month - 1));
 
-            let 선택날짜 = new Date(aliasDate.setMonth(month));
+            let a = dayjs(선택날짜).format("YYYYMMDD")
+            let b = dayjs(maxDate).format("YYYYMMDD")
 
-            return 선택날짜 > maxDate;
+            if(a === b){
+                return false
+            }
+
+            return a > b;
         },
         [dateValue]
     );

@@ -190,6 +190,7 @@ function CustomDatePicker({
                                             } ${maxDateFn(a) ? "disabled" : ""}`}
                                             onClick={(e) => {
                                                 choiceDay(e, a);
+                                                setOpen(false);
                                             }}
                                         >
                                             {a}

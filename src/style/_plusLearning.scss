@@ -38,11 +38,76 @@
         width: 100%;
         margin-bottom: 20px;
 
+        thead{
+            background-color:#e6ddd8;
+            border-top: 2px solid $brown;
+            border-bottom: 2px solid#a19893;
+            height: 35px;
+
+            th{
+                font-size: 17px;
+                font-weight: 600;
+                color: $brown;
+                text-align: center;
+                border-right: 1px solid #cfbfb7;
+
+                &:last-child{
+                    border-right: none;
+                }
+            }
+        }
+        tbody{
+            td{
+                font-size: 20px;
+                font-weight: 400;
+                color: #444;height: 44px;
+                border-right: 1px solid #ccc;
+                text-align: center;
+
+                .select{
+                    text-align: left;
+                    height: 30px;
+                    &.active{
+                        .select-list-box{
+                            top: 29px;
+                        }
+                        
+                        .select-btn{
+                            top: 6px;
+                        }
+                    }
+                    &-btn{
+                        top: 3px;
+                    }
+                }
+                &:first-child{
+                    text-align: left;
+                }
+                &:last-child{
+                    border-right: none;
+                }
+            }
+            tr{
+                border-bottom: 1px solid #eee;
+                &:last-child{
+                    border-bottom: none;
+                }
+            }
+        }
+
         tfoot{
             background-color: #f2eeeb;
             border-top: 2px solid #b9a89c;
             border-bottom: 2px solid #b9a89c;
             height: 45px;
+
+            td{
+                border-right: 1px solid#eed8d1;
+                text-align: center;
+                &:last-child{
+                    border-right: none;
+                }
+            }
         }
     }
 
@@ -70,15 +135,16 @@
 
     .upload{
         display: flex;
-        div, button, label{
+        button, label{
             height: 40px;
-
         }
 
         &-file{
             width: calc(100% - 200px);
             border: 1px solid #aaa;
             padding-left: 15px;
+            height: 40px;
+            overflow: auto;
             
             .file{
                 @include flex(start);

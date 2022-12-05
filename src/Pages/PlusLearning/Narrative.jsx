@@ -19,44 +19,6 @@ const stateOptions = [
     { value: "C", label: "완료" },
 ];
 
-const DATA = [
-    {
-        sc_seq: 123,
-        ltitle: "I. 수와 식의 계산",
-        sc_title: "01> 거듭제곱 ⑴",
-        sc_status: "P",
-        sc_std_score: 18,
-        sc_max_score: 20,
-        sc_per_score: 90,
-    },
-    {
-        sc_seq: 123,
-        ltitle: "I. 수와 식의 계산",
-        sc_title: "01> 거듭제곱 ⑴",
-        sc_status: "S",
-        sc_std_score: 18,
-        sc_max_score: 20,
-        sc_per_score: 90,
-    },
-    {
-        sc_seq: 123,
-        ltitle: "I. 수와 식의 계산",
-        sc_title: "01> 거듭제곱 ⑴",
-        sc_status: "C",
-        sc_std_score: 18,
-        sc_max_score: 20,
-        sc_per_score: 90,
-    },
-    {
-        sc_seq: 123,
-        ltitle: "I. 수와 식의 계산",
-        sc_title: "01> 거듭제곱 ⑴",
-        sc_status: "P",
-        sc_std_score: 18,
-        sc_max_score: 20,
-        sc_per_score: 90,
-    },
-];
 
 function Narrative() {
     const { clickStudent, bookList } = useStudentsStore((state) => state);
@@ -101,9 +63,9 @@ function Narrative() {
 
             let res = await ajax("class_plus.php", { data });
 
-            console.log(res);
+            // console.log(res);
         } catch (err) {
-            console.log(err);
+            // console.log(err);
         }
     };
 
@@ -118,10 +80,12 @@ function Narrative() {
             qbkcd: bookList.value,
         };
 
-        try {
-            let res = await ajax("class_plus.php", { data });
+        // console.log(data);
 
-            console.log(res);
+        try {
+            let res = await ajax("/class_plus.php", { data });
+
+            // console.log(res);
 
             setPlusData(_cloneDeep(res.data));
             setInitialData(_cloneDeep(res.data));
@@ -206,7 +170,7 @@ function Narrative() {
                         <th scope="row" style={{ width: "17.60633%" }}>
                             대단원
                         </th>
-                        <th scope="row" style={{ width: "35.11374%" }}>
+                        <th scope="row" style={{ width: "34.11374%" }}>
                             주제
                         </th>
                         <th scope="row" style={{ width: "13.84767%" }}>
@@ -215,7 +179,7 @@ function Narrative() {
                         <th scope="row" style={{ width: "13.25420%" }}>
                             채점
                         </th>
-                        <th scope="row" style={{ width: "11.37487%" }}>
+                        <th scope="row" style={{ width: "12.37487%" }}>
                             시험지
                         </th>
                     </tr>
@@ -227,10 +191,10 @@ function Narrative() {
                             width={[
                                 "8.80316%",
                                 "17.60633%",
-                                "35.11374%",
+                                "34.11374%",
                                 "13.84767%",
                                 "13.25420%",
-                                "11.37487%",
+                                "12.37487%",
                             ]}
                         />
                     ) : (

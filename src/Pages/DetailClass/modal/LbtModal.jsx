@@ -4,6 +4,8 @@ import useLbtStore from "../../../store/useLbtStore";
 import { falseModal } from "../../../methods/methods";
 import Icon from "../../../components/Icon";
 import Checkbox from "../../../components/Checkbox";
+import { useEffect } from "react";
+import ajax from "../../../ajax";
 
 const dataLists = [
     {
@@ -45,6 +47,14 @@ function LbtModal({ setCreateModal }) {
     const allCheck = (checked) => {
         setAllCheckBtn(!allCheckBtn);
     }
+
+    const getRegult = async ()=>{
+        let res = ajax("/class_result.php", {})
+    }
+
+    useEffect(()=>{
+
+    },[])
 
     return (
         <div className="modal LbtModal" onClick={(e) => { falseModal(e, setCreateModal) }}>

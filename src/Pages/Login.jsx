@@ -62,6 +62,7 @@ function Login() {
                             window.location = "/attendance";
                         });
                     } else {
+                        setLoading(false);
                         return;
                     }
                     break;
@@ -70,6 +71,7 @@ function Login() {
                     window.location = "/attendance";
                     break;
                 case 0:
+                    setLoading(false);
                     alert(res.data.msg);
                     return;
             }

@@ -88,7 +88,13 @@ const LbtDayOption = memo(() => {
                             >
                                 초기화
                             </button>
-                            <button className="btn-green">생성</button>
+                            <button className="btn-green" onClick={()=>{
+                            if(checkList.length === 0){
+                                alert("학습기간을 설정 후 교재를 선택해주세요");
+                                return;
+                            }
+                                setCreateModal(true)
+                            }}>생성</button>
                         </div>
                     </div>
                     {bookList.length === 0 ? (

@@ -3,7 +3,7 @@ import React from 'react';
 
 function LbtResultModal() {
     return ( 
-        <div></div>
+        <div className='modal'></div>
      );
 }
 

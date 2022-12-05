@@ -87,7 +87,7 @@ function Attendance() {
 
         let res = await ajax("/class_daily.php", {data});
 
-        console.log(res);
+        alert("잠시후에 시도해주세요");
     }
 
     useEffect(() => {

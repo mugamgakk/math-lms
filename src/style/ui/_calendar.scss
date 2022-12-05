@@ -36,6 +36,15 @@
             height: 90px;
             border-bottom: 1px solid #eee;
             border-right: 1px solid #eee;
+
+            &:nth-last-child(7n){
+                &:not(.not-day){
+
+                    .num {
+                        color: #fa4646;
+                    }
+                }
+            }
         }
 
         .not-day{

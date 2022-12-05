@@ -8,18 +8,9 @@ import LbtDayOption from "../LbtDayOption";
 import LbtResultModal from "../modal/LbtResultModal";
 
 function LearningBreakdownTable() {
-    let [lbtList, setLbtList] = useState(null);
+    let [lbtList, setLbtList] = useState([]);
     let [choiceArr, setChoiceArr] = useState([]);
-    let { lbtData, getLbtData, skeleton } = useLbtStore();
-    const clickStudent = useStudentsStore(state => state.clickStudent)
-
-    const checkboxChecked = (checked, item) => {
-        if (checked) {
-            setChoiceArr([...choiceArr, item]);
-        } else {
-            setChoiceArr(choiceArr.filter((a) => a !== item));
-        }
-    };
+    const clickStudent = useStudentsStore((state) => state.clickStudent);
 
     const removeList = () => {
         if (choiceArr.length === 0) {
@@ -32,67 +23,79 @@ function LearningBreakdownTable() {
         }
     };
 
+    const allCheck = (checked) => {
+        checked ? setChoiceArr(lbtList) : setChoiceArr([]);
+    };
 
+    const oneCheck = (checked, ele)=>{
+        checked ? setChoiceArr([...lbtList, ele]) : setChoiceArr(choiceArr.filter(a=> a !== ele ));
+    }
+
+    // 리스트 함수
     const getAnalyticsList = async () => {
         const data = {
             mode: "analytics_list",
-            usr_seq: clickStudent.usr_seq
-        }
+            usr_seq: clickStudent.usr_seq,
+        };
 
         try {
             const res = await ajax("/class_result.php", { data });
 
-            console.log("@@", res)
-
+            // console.log("@@", res)
+            setLbtList(res.data);
         } catch (errMsg) {
-            alert(errMsg.message)
+            console.log(errMsg);
         }
-    }
+    };
 
     useEffect(() => {
-        getLbtData();
-        getAnalyticsList()
+        getAnalyticsList();
     }, []);
-
-    useEffect(() => {
-        setLbtList(lbtData);
-    }, [lbtData]);
 
     return (
         <div>
-            <LbtDayOption dataNum={lbtData.length} />
+            <LbtDayOption />
 
             <strong className="alert-text">
                 ❖ 분석표 목록에는 학생별로 최대 50개까지 저장됩니다.({lbtList?.length}/50)
             </strong>
             <br />
             <div className="mb-10">
-                <button className="btn-grey-border mr-10" onClick={removeList} style={{ marginTop: "10px" }}>선택 삭제</button>
-                <strong className="alert-text">[분석표 삭제 유의 !] 분석 결과는 생성일에 따라 달라질 수 있습니다.</strong>
+                <button
+                    className="btn-grey-border mr-10"
+                    onClick={removeList}
+                    style={{ marginTop: "10px" }}
+                >
+                    선택 삭제
+                </button>
+                <strong className="alert-text">
+                    [분석표 삭제 유의 !] 분석 결과는 생성일에 따라 달라질 수 있습니다.
+                </strong>
             </div>
 
-            <table className='table tableA'>
+            <table className="table tableA">
                 <thead>
                     <tr>
-                        <th style={{ width: "8.8206%" }} > <Checkbox color="orange"/> 선택</th>
-                        <th style={{ width: "24.6778%" }} >학습 기간</th>
-                        <th style={{ width: "12.7849%" }} >분석표 생성일</th>
-                        <th style={{ width: "32.6065%" }} >학습한 교재</th>
-                        <th style={{ width: "9.8116%" }} >생성자</th>
-                        <th style={{ width: "11.7938%" }} >학습 분석표</th>
+                        <th style={{ width: "8.8206%" }}>
+                            <Checkbox
+                                color="orange"
+                                onChange={(e) => {
+                                    allCheck(e.target.checked);
+                                }}
+                                checked={choiceArr.length === lbtList.length}
+                            />
+                            선택
+                        </th>
+                        <th style={{ width: "24.6778%" }}>학습 기간</th>
+                        <th style={{ width: "12.7849%" }}>분석표 생성일</th>
+                        <th style={{ width: "32.6065%" }}>학습한 교재</th>
+                        <th style={{ width: "9.8116%" }}>생성자</th>
+                        <th style={{ width: "11.7938%" }}>학습 분석표</th>
                     </tr>
                 </thead>
                 <tbody className="scroll">
-                    {lbtList?.map((item) => {
-                        return (
-                            <Tr
-                                key={item._id}
-                                data={item}
-                                item={item.info}
-                                choiceArr={choiceArr}
-                                checkboxChecked={checkboxChecked}
-                            />
-                        );
+                    {lbtList?.map((item,i) => {
+                        return <Tr key={i} item={item} choiceArr={choiceArr} oneCheck={oneCheck} />;
                     })}
                 </tbody>
             </table>
@@ -100,29 +103,25 @@ function LearningBreakdownTable() {
     );
 }
 
-const Tr = ({ item, checkboxChecked, choiceArr, data }) => {
+const Tr = ({ item, choiceArr, oneCheck }) => {
     let [modal, setModal] = useState(false);
 
     return (
         <tr>
-            <td style={{ width: "8.8206%" }} >
-                <input
-                    type="checkbox"
-                    checked={choiceArr.includes(data)}
-                    onChange={(e) => {
-                        checkboxChecked(e.target.checked, data);
-                    }}
-                />
+            <td style={{ width: "8.8206%" }}>
+                <Checkbox color="orange" checked={choiceArr.includes(item)} onChange={e=> { oneCheck(e.target.checked, item) }} />
             </td>
-            <td style={{ width: "24.6778%" }} >{item.date}</td>
-            <td style={{ width: "12.7849%" }} >{item.makeDay}</td>
-            <td style={{ width: "32.6065%" }} >{item.book}</td>
-            <td style={{ width: "9.8116%" }} >{item.maker}</td>
-            <td style={{ width: "11.7938%" }} >
-                {modal && <LbtResultModal data={data} setModal={setModal} />}
+            <td style={{ width: "24.6778%" }}>{item.prt_period}</td>
+            <td style={{ width: "12.7849%" }}>{item.reg_dt.replace(/\//g, "-")}</td>
+            <td style={{ width: "32.6065%" }}>{item.bk_name}</td>
+            <td style={{ width: "9.8116%" }}>{item.reg_nm}</td>
+            <td style={{ width: "11.7938%" }}>
+                {modal && <LbtResultModal setModal={setModal} />}
                 <button
-                    className="btn"
+                    className="btn-table"
+                    style={{ minWidth: "80px" }}
                     onClick={() => {
+                        console.log("@@@@@@@@");
                         setModal(true);
                     }}
                 >
