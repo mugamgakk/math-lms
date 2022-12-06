@@ -49,7 +49,9 @@ function PrintModal({ closeModal, title = "제목임" , cls_seq}) {
         };
         
         let res = await ajax(url, {data: query});
-        
+
+        console.log(res);
+
         getArray(res.data);
         
     }

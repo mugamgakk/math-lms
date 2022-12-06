@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState, useEffect } from "react";
 import ajax from "../../../ajax";
 import Checkbox from "../../../components/Checkbox";
@@ -12,11 +13,15 @@ function LearningBreakdownTable() {
     let [choiceArr, setChoiceArr] = useState([]);
     const clickStudent = useStudentsStore((state) => state.clickStudent);
 
+    // 삭제
     const removeList = () => {
         if (choiceArr.length === 0) {
             alert("학습 분석표를 선택하세요");
         } else {
             if (window.confirm("선택한 학습 분석표를 삭제하시겠습니까?")) {
+
+                setLbtList(lbtList.filter(a=> !choiceArr.includes(a) ))
+
             } else {
                 return;
             }
@@ -28,7 +33,7 @@ function LearningBreakdownTable() {
     };
 
     const oneCheck = (checked, ele)=>{
-        checked ? setChoiceArr([...lbtList, ele]) : setChoiceArr(choiceArr.filter(a=> a !== ele ));
+        checked ? setChoiceArr([...choiceArr, ele]) : setChoiceArr(choiceArr.filter(a=> a !== ele ));
     }
 
     // 리스트 함수
@@ -39,9 +44,9 @@ function LearningBreakdownTable() {
         };
 
         try {
-            const res = await ajax("/class_result.php", { data });
+            // const res = await ajax("/class_result.php", { data });
+            const res = await axios("/json/detailclass_table.json");
 
-            // console.log("@@", res)
             setLbtList(res.data);
         } catch (errMsg) {
             console.log(errMsg);
@@ -93,7 +98,7 @@ function LearningBreakdownTable() {
                         <th style={{ width: "11.7938%" }}>학습 분석표</th>
                     </tr>
                 </thead>
-                <tbody className="scroll">
+                <tbody className="scroll" style={{maxHeight : "250px"}}>
                     {lbtList?.map((item,i) => {
                         return <Tr key={i} item={item} choiceArr={choiceArr} oneCheck={oneCheck} />;
                     })}
@@ -113,7 +118,7 @@ const Tr = ({ item, choiceArr, oneCheck }) => {
             </td>
             <td style={{ width: "24.6778%" }}>{item.prt_period}</td>
             <td style={{ width: "12.7849%" }}>{item.reg_dt.replace(/\//g, "-")}</td>
-            <td style={{ width: "32.6065%" }}>{item.bk_name}</td>
+            <td style={{ width: "32.6065%", wordBreak : "keep-all" }} >{item.bk_name}</td>
             <td style={{ width: "9.8116%" }}>{item.reg_nm}</td>
             <td style={{ width: "11.7938%" }}>
                 {modal && <LbtResultModal setModal={setModal} />}

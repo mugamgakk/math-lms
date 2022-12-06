@@ -5,6 +5,7 @@ import useStudentsStore from "../../store/useStudentsStore";
 import Checkbox from "../../components/Checkbox";
 import ajax from "../../ajax";
 import CustomDatePicker from "../../components/CustomDatePicker";
+import axios from "axios";
 
 const today = new Date();
 const oneMonthAgo = dayjs(today).subtract(1, "M").$d;
@@ -23,13 +24,15 @@ const LbtDayOption = memo(() => {
 
     let [checkList, setCheckList] = useState([]);
 
-    const allCheck = (checked)=>{
+    const allCheck = (checked) => {
         checked ? setCheckList(bookList) : setCheckList([]);
-    }
+    };
 
-    const oneCheck = (checked, ele)=>{
-        checked ? setCheckList([...checkList , ele]) : setCheckList(checkList.filter(a=> a !== ele));
-    }
+    const oneCheck = (checked, ele) => {
+        checked
+            ? setCheckList([...checkList, ele])
+            : setCheckList(checkList.filter((a) => a !== ele));
+    };
 
     const bookOption = async () => {
         const data = {
@@ -39,9 +42,8 @@ const LbtDayOption = memo(() => {
             usr_seq: clickStudent.usr_seq,
         };
 
-        // console.log(data);
-
-        const res = await ajax("/class_result.php", { data });
+        // const res = await ajax("/class_result.php", { data });
+        const res = await axios("/json/detailclass_table_book.json");
 
         const { bk_list, wrong_list } = res.data;
 
@@ -90,13 +92,18 @@ const LbtDayOption = memo(() => {
                             >
                                 초기화
                             </button>
-                            <button className="btn-green" onClick={()=>{
-                            if(checkList.length === 0){
-                                alert("학습기간을 설정 후 교재를 선택해주세요");
-                                return;
-                            }
-                                setCreateModal(true)
-                            }}>생성</button>
+                            <button
+                                className="btn-green"
+                                onClick={() => {
+                                    if (bookList.length === 0) {
+                                        alert("학습기간을 설정 후 교재를 선택해주세요");
+                                        return;
+                                    }
+                                    setCreateModal(true);
+                                }}
+                            >
+                                생성
+                            </button>
                         </div>
                     </div>
                     {bookList.length === 0 ? (
@@ -111,7 +118,9 @@ const LbtDayOption = memo(() => {
                                     id="학습한교재"
                                     color="orange"
                                     checked={checkList.length === bookList.length}
-                                    onChange={(e)=>{ allCheck(e.currentTarget.checked) }}
+                                    onChange={(e) => {
+                                        allCheck(e.currentTarget.checked);
+                                    }}
                                 />
                             </div>
                             <ul className="book">
@@ -124,7 +133,9 @@ const LbtDayOption = memo(() => {
                                                 id={ele.bk_cd}
                                                 className="mr-10"
                                                 checked={checkList.includes(ele)}
-                                                onChange={e=>{ oneCheck(e.currentTarget.checked, ele) }}
+                                                onChange={(e) => {
+                                                    oneCheck(e.currentTarget.checked, ele);
+                                                }}
                                             />
                                             <label htmlFor={ele.bk_cd}>{ele.bk_name}</label>
                                         </li>

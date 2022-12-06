@@ -61,7 +61,7 @@ function LbtModal({ setCreateModal }) {
             <div className="modal-content">
                 <div className="modal-header">
                     <h4 className="modal-title">분석표 생성</h4>
-                    <button className='btn'>
+                    <button className='btn' onClick={()=>{setCreateModal(false)}}>
                         <Icon icon={"close"} />
                     </button>
                 </div>
@@ -122,7 +122,7 @@ function LbtModal({ setCreateModal }) {
                     </div>
                 </div>
                 <div className="modal-footer">
-                    <button className="btn-grey-border" style={{ marginRight: "5px" }}>닫기</button>
+                    <button className="btn-grey-border" style={{ marginRight: "5px" }} onClick={()=>{setCreateModal(false)}}>닫기</button>
                     <button className="btn-orange">생성하기</button>
                 </div>
             </div>

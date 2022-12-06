@@ -48,9 +48,10 @@ function DetailClass() {
                         <>
                             <div className="tabs-header">
                                 <ul className="content-tabs">
-                                    {classItems.map((a) => {
+                                    {classItems.map((a,i) => {
                                         return (
                                             <li
+                                                key={i}
                                                 onClick={()=>{
                                                     navigate("/detail-class/" + a.href)
                                                 }}

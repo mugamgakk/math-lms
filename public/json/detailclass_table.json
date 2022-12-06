@@ -1,0 +1,47 @@
+[
+    {
+        "prt_seq": "12312",
+        "prt_period": "20221101~20221211",
+        "reg_dt": "2022/12/01",
+        "bk_name": "중등1-1 개념서, 중등 2 -1 뜨레드",
+        "reg_nm": "김영덕",
+        "fileurl": "https://file.parallaxedu.com/pxm/gplum/pathreptfile.pdf",
+        "u_seq": "34"
+    },
+    {
+        "prt_seq": "3839",
+        "prt_period": "20221002~20221021",
+        "reg_dt": "2022/12/01",
+        "bk_name": "중등1-1 뜨레스",
+        "reg_nm": "김천재",
+        "fileurl": "https://file.parallaxedu.com/pxm/gplum/pathreptfile.pdf",
+        "u_seq": "24"
+    },
+    {
+        "prt_seq": "1566",
+        "prt_period": "20221101~20221012",
+        "reg_dt": "2022/12/01",
+        "bk_name": "중등2-1 개념서",
+        "reg_nm": "양서술",
+        "fileurl": "https://file.parallaxedu.com/pxm/gplum/pathreptfile.pdf",
+        "u_seq": "341"
+    },
+    {
+        "prt_seq": "225",
+        "prt_period": "20221002~20221021",
+        "reg_dt": "2022/12/01",
+        "bk_name": "중등1-2 개념서,중등1-1 개념서,중등1-1 뜨레스",
+        "reg_nm": "김보배",
+        "fileurl": "https://file.parallaxedu.com/pxm/gplum/pathreptfile.pdf",
+        "u_seq": "1235"
+    },
+    {
+        "prt_seq": "1585",
+        "prt_period": "20221005~20221021",
+        "reg_dt": "2022/12/01",
+        "bk_name": "중등1-1 뜨레스",
+        "reg_nm": "김도덕",
+        "fileurl": "https://file.parallaxedu.com/pxm/gplum/pathreptfile.pdf",
+        "u_seq": "32"
+    }
+]
