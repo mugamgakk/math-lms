@@ -56,7 +56,7 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
 
         setTimeout(() => {
             for (let ele of 문제들) {
-                if (높이 + ele.높이 > 1200) {
+                if (높이 + ele.높이 > 2400) {
                     순서++;
 
                 }
@@ -70,12 +70,12 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
 
             총결과.push(result);
 
+            setLists(총결과);
             console.log(총결과);
+
         }, 1000);
 
-        // let arr = [];
-
-        // arr.push(totalHeight(res.data));
+    
     };
 
     const 문제만들기 = (ele) => {
@@ -86,9 +86,19 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
 
             obj.문제 = a.qa_path;
 
+            obj.높이 = 225;
+
             높이얻기(a.qa_path, function (높이) {
-                obj.높이 = 높이;
+                obj.높이 += 높이;
             });
+
+            obj.qa_keyword = a.qa_keyword;
+            obj.correct_a = a.correct_a;
+            obj.vd_code = a.vd_code;
+            obj.similar_a = a.similar_a;
+            obj.qa_type = a.qa_type;
+            obj.qseq = a.qseq;
+            obj.qa_code = a.qa_code;
 
             obj.선지 = [];
             for (let i = 1; i <= 5; i++) {
@@ -118,29 +128,6 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
         });
     };
 
-    const totalHeight = (data) => {
-        let newArray = [...data];
-        let height = 0;
-        let arr = [];
-
-        newArray.forEach((a, i) => {
-            if (height > 2400) return;
-            let img = new Image();
-
-            img.src = a.qa_path;
-            height += 175 + (img.height * 431) / img.width;
-
-            for (let i = 0; i < 5; i++) {
-                let img = new Image();
-                img.src = `https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${a.qa_code}_${
-                    i + 1
-                }.png`;
-                height += (img.height * 431) / img.width;
-            }
-            arr.push(a);
-        });
-        // console.log(arr);
-    };
 
     return (
         <div className="modal" onClick={(e) => falseModal(e, closeModal)}>
@@ -250,7 +237,7 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
                                     <div onContextMenu={eventAlert} onDragStart={eventAlert}>
                                         <div className="ol">
                                             {lists &&
-                                                lists[0].map((list, i) => {
+                                                lists[0][page - 1].map((list, i) => {
                                                     return (
                                                         <>
                                                             <div className="img-top fj">
@@ -265,11 +252,12 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
                                                             </div>
                                                             <img
                                                                 className="q-img"
-                                                                src={list.qa_path}
+                                                                src={list.문제}
                                                                 alt=""
                                                             />
-                                                            {["①", "②", "③", "④", "⑤"].map(
-                                                                (num, i) => {
+                                                            {
+                                                            list.선지.map(
+                                                                (a, i) => {
                                                                     return (
                                                                         <div
                                                                             className="img-bottom fa"
@@ -278,12 +266,19 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
                                                                                     "start",
                                                                             }}
                                                                         >
-                                                                            <span>{num}</span>
-                                                                            <img
-                                                                                src={`https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${
-                                                                                    list.qa_code
-                                                                                }_${i + 1}.png`}
-                                                                            />
+                                                                            <span>
+                                                                            {
+                                                                                {
+                                                                                    0 : '①',
+                                                                                    1 : '②',
+                                                                                    2 : '③',
+                                                                                    3 : '④',
+                                                                                    4 : '⑤',
+
+                                                                                }[i]
+                                                                            }
+                                                                            </span>
+                                                                            <img src={a} />
                                                                         </div>
                                                                     );
                                                                 }
@@ -303,10 +298,76 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
                                 </div>
                             </>
                         )}
+                        {viewState == "solution" && (
+                            <>
+                                <table className="contents-tit">
+                                    <colgroup>
+                                        <col width="100px" />
+                                        <col width="100px" />
+                                        <col width="80px" />
+                                        <col width="90px" />
+                                        <col width="80px" />
+                                        <col width="100px" />
+                                        <col width="100px" />
+                                        <col width="130px" />
+                                        <col width="100px" />
+                                        <col width="80px" />
+                                    </colgroup>
+                                    <tr>
+                                        <th>맞춤 클리닉</th>
+                                        <td>중1-1 뜨레스</td>
+                                        <th>학년</th>
+                                        <td>중1</td>
+                                        <th>이름</th>
+                                        <td>조현준</td>
+                                        <th>학습일</th>
+                                        <td>2022.07.12</td>
+                                        <th>점수</th>
+                                        <td>/26</td>
+                                    </tr>
+                                </table>
+                                <div className="contents-inner scroll">
+                                    <div onContextMenu={eventAlert} onDragStart={eventAlert}>
+                                        <div className="ol">
+                                            {lists &&
+                                                lists[0][page - 1].map((list, i) => {
+                                                    return (
+                                                        <>
+                                                            <div className="img-top fj">
+                                                                <strong>
+                                                                    {list.qseq < 10
+                                                                        ? `0${list.qseq}`
+                                                                        : list.qseq}
+                                                                </strong>
+                                                                <span className="tit">
+                                                                    {list.qa_keyword}
+                                                                </span>
+                                                            </div>
+                                                            <img
+                                                                className="q-img"
+                                                                src={`https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${list.qa_code}_S.png`}
+                                                                alt=""
+                                                            />
+                                                            <div
+                                                                className="white"
+                                                                style={{
+                                                                    width: "50%",
+                                                                    height: "100px",
+                                                                }}
+                                                            ></div>
+                                                        </>
+                                                    );
+                                                })
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </>
+                        )}
                     </div>
                 </div>
                 <div className="modal-footer">
-                    {/* <PrintPagination totalPage={lists && lists.length} page={page} setPage={setPage}/> */}
+                    <PrintPagination totalPage={lists && lists[0].length} page={page} setPage={setPage}/>
                 </div>
             </div>
         </div>
