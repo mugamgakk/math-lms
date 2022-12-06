@@ -31,6 +31,7 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
 
     useEffect(() => {
         setPage(1);
+        getPrint();
     }, [viewState]);
 
     useEffect(() => {
@@ -47,6 +48,8 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
         };
 
         let res = await ajax(url, { data: query });
+
+        // console.log("@@@@@@@@@@@",res)
 
         let 문제들 = 문제만들기(res.data);
         let 총결과 = [];
@@ -71,9 +74,8 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
             총결과.push(result);
 
             setLists(총결과);
-            console.log(총결과);
 
-        }, 1000);
+        }, 500);
 
     
     };
@@ -84,11 +86,17 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
         ele.forEach((a) => {
             let obj = {};
 
-            obj.문제 = a.qa_path;
+            if(viewState === "question"){
+                obj.문제 = `https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${a.qa_code}_Q.png`;
+                obj.높이 = 200;
+            }else{
+                obj.문제 = `https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${a.qa_code}_S.png`;
+                obj.높이 = 200;
+            }
 
-            obj.높이 = 225;
+            
 
-            높이얻기(a.qa_path, function (높이) {
+            높이얻기(obj.문제, function (높이) {
                 obj.높이 += 높이;
             });
 
@@ -101,17 +109,22 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
             obj.qa_code = a.qa_code;
 
             obj.선지 = [];
-            for (let i = 1; i <= 5; i++) {
-                obj.선지.push(
-                    `https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${a.qa_code}_${i}.png`
-                );
-                높이얻기(
-                    `https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${a.qa_code}_${i}.png`,
-                    function (높이) {
-                        obj.높이 += 높이;
-                    }
-                );
+
+            if(viewState === "question"){
+                for (let i = 1; i <= 5; i++) {
+                    obj.선지.push(
+                        `https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${a.qa_code}_${i}.png`
+                    );
+                    높이얻기(
+                        `https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${a.qa_code}_${i}.png`,
+                        function (높이) {
+                            obj.높이 += 높이;
+                        }
+                    );
+                }
             }
+
+            console.log(obj);
 
             arr.push(obj);
         });
