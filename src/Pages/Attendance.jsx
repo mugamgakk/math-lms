@@ -196,8 +196,6 @@ function Attendance() {
 
 const Tr = memo(({ ele, index, date }) => {
 
-    console.log(ele.attd)
-
     let [text, setText] = useState((ele.reason ??= ""));
     let [state, setSTate] = useState(ele.attd);
     const changeCopyData = attendanceStore((state) => state.changeCopyData);

@@ -7,198 +7,147 @@ import Checkbox from "../../../components/Checkbox";
 import { useEffect } from "react";
 import ajax from "../../../ajax";
 
-const dataLists = [
-    {
-        option: "교재 학습 분석",
-        optionItem: [
-            "단원 학습 현황",
-            "단원별 정답률 및 향상도/수행평가",
-            "행동 영역 분석",
-            "내용 영역 분석",
-        ],
-    },
-    {
-        option: "플러스 학습 분석",
-        optionItem: ["서술형 따라잡기", "교과서별 내신적중"],
-    },
-    {
-        option: "평가 분석",
-        optionItem: ["단원평가 분석", "총괄평가 분석"],
-    },
-    {
-        option: "학습 태도 분석",
-        optionItem: ["학원 출경 상황", "온라인 학습 분석", "획득한 학습 포인트", "학습 태도 평가"],
-    },
-    {
-        option: "선생님의견",
-        optionItem: ["123"],
-    },
-];
-
-
 function LbtModal({ setCreateModal }) {
-    const [allCheckBtn, setAllCheckBtn] = useState(false);
-    const printComponent = useRef();
+    const dataLists = useLbtStore((state) => state.dataLists);
+    const checkedList = useLbtStore((state) => state.checkedList);
+    const allCheckfnL = useLbtStore((state) => state.allCheckfnL);
 
-    // 적용을 눌렀을때 데이터를 가져오기위한
-    const [count, setCount] = useState(0);
-    const createData = useLbtStore(state => state.createData);
+    const getRegult = async () => {
+        const data = {
+            mode: "get_analytics_tot",
+            avg: 1, //평균표시
+            lec_stat: 1, // 단원별 학습
+            lec_assa: 0, //단원별 정답률 향상도/수행병가
+            an_act: 1, //행동 영역 분석
+            an_con: 1, //내용 영역 분석
+            plus_ct: 1, //플러스 서술
+            plus_tb: 1, //플러스 내신
+            an_ut: 1, //단원평가분석
+            an_bt: 1, //총괄평가분석
+            attd_stat: 1, //학원 출결상황
+            an_online: 1, //온라인 학습분석
+            point: 1, //획득 학습포인트
+            attd_eval: 1, //학습태도 평가
+            tch_comm: 1, //선생님의견,
+            art_an: 1, //AI분석,
+            arr_bk_cd: ["m11-co1", "m11-no1"], //교재코드 배열
+            sdate: "2022-01-01", //분석표 생성시 선택된 기간
+            edate: "2022-01-01", //분석표 생성시 선택된 기간
+        };
 
-    const allCheck = (checked) => {
-        setAllCheckBtn(!allCheckBtn);
+        let res = await ajax("/class_result.php", { data });
+
+        console.log(res);
+    };
+    
+    const isAllCheck = ()=>{
+        let result1 = 0;
+        let result2 = 0;
+        dataLists.forEach(a=>{
+            result1 += a.optionItem.length
+        })
+        checkedList.forEach(a=>{
+            result2 += a.optionItem.length
+        })
+
+        return result1 === result2
     }
 
-    const getRegult = async ()=>{
-        let res = ajax("/class_result.php", {})
-    }
-
-    useEffect(()=>{
-
-    },[])
+    useEffect(() => {
+        getRegult();
+    }, []);
 
     return (
-        <div className="modal LbtModal" onClick={(e) => { falseModal(e, setCreateModal) }}>
+        <div
+            className="modal LbtModal"
+            onClick={(e) => {
+                falseModal(e, setCreateModal);
+            }}
+        >
             <div className="modal-content">
                 <div className="modal-header">
                     <h4 className="modal-title">분석표 생성</h4>
-                    <button className='btn' onClick={()=>{setCreateModal(false)}}>
+                    <button
+                        className="btn"
+                        onClick={() => {
+                            setCreateModal(false);
+                        }}
+                    >
                         <Icon icon={"close"} />
                     </button>
                 </div>
                 <div className="modal-body">
                     <div className="modal-name">
-                        <strong className="name">
-                            종합 학습 분석표 생성하기
-                        </strong>
+                        <strong className="name">종합 학습 분석표 생성하기</strong>
                     </div>
                     <div className="LbtModal-body">
                         <div className="left">
-                            <div className="head">
-                                ※ 평균 표시
-                            </div>
+                            <div className="head">※ 평균 표시</div>
                             <div className="body">
                                 <div className="part">
                                     <div className="part-title">
-                                        <Checkbox color="orange" id="all" onChange={(e) => { allCheck(e.target.checked) }} />
+                                        <Checkbox
+                                            color="orange"
+                                            id="all"
+                                            checked={isAllCheck()}
+                                            onChange={e=>{ allCheckfnL(e.target.checked) }}
+                                        />
                                         <label htmlFor="all">모두 선택 / 해제</label>
                                     </div>
                                 </div>
-                                <div className="part">
-                                    <div className="part-title">
-                                        <Checkbox color="orange" id="a" />
-                                        <label htmlFor="a">교재 학습 분석</label>
-                                    </div>
-                                    <ul className="part-list">
-                                        <li>
-                                            <Checkbox color="orange" id="b" />
-                                            <label htmlFor="b">교재 학습 분석</label>
-                                        </li>
-                                        <li>
-                                            <Checkbox color="orange" id="c" />
-                                            <label htmlFor="c">교재 학습 분석</label>
-                                        </li>
-                                    </ul>
+                                {dataLists.map((a, i) => {
+                                    return <LbtCheckbox ele={a} key={i} checkedItem={checkedList[i]} />;
+                                })}
+                                <div className="text-center">
+                                    <button className="btn-grey-border" style={{minWidth : "100px"}}>적용</button>
                                 </div>
+                            </div>
+                        </div>
+                        <div className="right">
+                            <div className="head">
+                                <span style={{ marginRight: "10px" }}>사유하고 질문하라.</span>
+                                Parallax Thingking!
+                            </div>
+                            <div className="body">
                                 {
-                                    dataLists.map(a => {
+                                    checkedList.map((a,i)=>{
                                         return (
-                                            <LbtCheckbox ele={a} />
+                                            <div key={i}>
+                                                {
+                                                    a.optionItem.length > 0 && (
+                                                        <div>
+                                                            <h4>{a.option}</h4>
+                                                            {
+                                                                a.optionItem.map(dd=>{
+                                                                    return <div key={dd}>{dd.label}</div>
+                                                                })
+                                                            }
+                                                            
+                                                        </div>
+                                                    )
+                                                }
+                                                
+                                            </div>
                                         )
                                     })
                                 }
                             </div>
                         </div>
-                        <div className="right">
-                            <div className="head">
-                                <span style={{ marginRight: "10px" }}>
-                                    사유하고 질문하라.
-                                </span>
-                                Parallax Thingking!
-                            </div>
-                            <div className="body">
-
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div className="modal-footer">
-                    <button className="btn-grey-border" style={{ marginRight: "5px" }} onClick={()=>{setCreateModal(false)}}>닫기</button>
-                    <button className="btn-orange">생성하기</button>
+                    <button
+                        className="btn-grey-border mr-10"
+                        onClick={() => {
+                            setCreateModal(false);
+                        }}
+                    >
+                        닫기
+                    </button>
+                    <button className="btn-orange mr-10">생성하기</button>
                 </div>
             </div>
         </div>
-        // <div
-        //     className={style.modal}
-        //     onClick={(e) => {
-        //         if (e.target === e.currentTarget) {
-        //             setCreateModal(false)
-        //         }
-        //     }}
-        // >
-        //     <div className={style.content}>
-        //         <h4>종합 학습 분석표 생성하기</h4>
-        //         <div className="row">
-        //             <div className={style.left}>
-
-        //                 <strong>
-        //                     평균 표시(
-        //                     <input
-        //                         type="checkbox"
-        //                         className={style.formConrol}
-        //                         defaultChecked
-        //                         disabled
-        //                     />
-        //                     Y
-        //                     <input type="checkbox" className={style.formConrol} disabled />
-        //                     N)
-        //                 </strong>
-
-        //                 <div>
-        //                     <button
-        //                         className="btn"
-        //                         onClick={()=>{
-        //                             setAllCheckBtn(!allCheckBtn)
-        //                         }}
-        //                     >
-        //                         모두 선택 / 해제
-        //                     </button>
-        //                 </div>
-
-        //                 <div className="contentGroup">
-        //                     {dataLists.map((checkbox, i) => {
-        //                         return (
-        //                             <LbtCheckbox key={i} checkbox={checkbox} count={count} allCheckBtn={allCheckBtn} />
-        //                         );
-        //                     })}
-        //                 </div>
-
-        //                 <button
-        //                     className="btn"
-        //                     onClick={()=>{setCount(count + 1)}}
-        //                 >
-        //                     적용
-        //                 </button>
-        //             </div>
-        //             <div className={style.rightWrap}>
-        //                 <CreateLbt printComponent={printComponent} />
-        //             </div>
-        //         </div>
-        //         <div className={style.btnGroup}>
-        //             <button className="btn" onClick={()=>{
-        //                 createData();
-        //                 setCreateModal(false)
-        //             }}>생성</button>
-        //             <button
-        //                 className="btn"
-        //                 onClick={() => {
-        //                     setCreateModal(false)
-        //                 }}
-        //             >
-        //                 닫기
-        //             </button>
-        //         </div>
-        //     </div>
-        // </div>
     );
 }
 

@@ -40,7 +40,7 @@ function PointModal({ title, setModal, userId }) {
         // const res = await ajax(url, {data: params,});
 
         const res = await axios("/json/statistics_point.json");
-        let dd = await new Promise((resulve)=>{setTimeout(()=>{resulve();},1000)});
+        // let dd = await new Promise((resulve)=>{setTimeout(()=>{resulve();},1000)});
 
         // console.log(JSON.stringify(res.data));
 

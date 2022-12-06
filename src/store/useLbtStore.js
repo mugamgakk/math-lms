@@ -1,51 +1,76 @@
 import create from "zustand";
-import axios from "axios";
-import dayjs from "dayjs";
+import { _cloneDeep } from "../methods/methods";
+
+const dataLists = [
+    {
+        option: "교재 학습 분석",
+        optionItem: [
+            { label: "단원 학습 현황", value: "lec_stat" },
+            { label: "단원별 정답률 및 향상도/수행평가", value: "lec_assa" },
+            { label: "행동 영역 분석", value: "an_act" },
+            { label: "내용 영역 분석", value: "an_con" },
+        ],
+    },
+    {
+        option: "플러스 학습 분석",
+        optionItem: [
+            { label: "서술형 따라잡기", value: "plus_ct" },
+            { label: "교과서별 내신적중", value: "plus_tb" },
+        ],
+    },
+    {
+        option: "평가 분석",
+        optionItem: [
+            { label: "단원평가 분석", value: "an_ut" },
+            { label: "총괄평가 분석", value: "an_bt" },
+        ],
+    },
+    {
+        option: "학습 태도 분석",
+        optionItem: [
+            { label: "학원 출결 상황", value: "attd_stat" },
+            { label: "온라인 학습 분석", value: "an_online" },
+            { label: "획득한 학습 포인트", value: "point" },
+            { label: "학습 태도 평가", value: "attd_eval" },
+        ],
+    },
+    {
+        option: "선생님의견",
+        optionItem: [
+            { label: "선생님의견", value: "tch_comm" },
+            { label: "AI분석", value: "art_an" },
+        ],
+    },
+];
 
 const useLbtStore = create((set) => ({
-    lbtData: [],
-    createLbtInfo: { name: "", age: "", date: "", book: [], maker: "김교사", capus: "대치 캠퍼스" },
-    createLbtData: [
-        { option: "교재 학습 분석", optionItem: [] },
-        { option: "플러스 학습 분석", optionItem: [] },
-        { option: "평가 분석", optionItem: [] },
-        { option: "학습 태도 분석", optionItem: [] },
-        { option: "선생님의견", optionItem: [] },
-    ],
-    skeleton: true,
-    getLbtData: async () => {
-        let res = await axios.post("http://192.168.11.178:8080/lbt/list");
+    dataLists: _cloneDeep(dataLists),
+    checkedList: _cloneDeep(dataLists),
+    setCheckedList: ({ key, value }) => {
+        return set((state) => {
+            let clone = _cloneDeep(state.checkedList);
 
-        set({ lbtData: res.data.list, skeleton: false });
-    },
-
-    setCreateInfo: (param) =>
-        set((state) => {
-            return { createLbtInfo: { ...state.createLbtInfo, ...param } };
-        }),
-    setCreateData: (param) =>
-        set((state) => {
-            let copy = [...state.createLbtData];
-
-            copy.forEach((a) => {
-                if (a.option === param.option) {
-                    a.optionItem = param.optionItem;
+            for (let ele of clone) {
+                if (ele.option === key) {
+                    ele.optionItem = value;
+                    break;
                 }
-            });
-            return { createLbtData: copy };
-        }),
-    createData: async (param) =>
-        set((state) => {
-            let obj = {
-                info: state.createLbtInfo,
-                data: state.createLbtData,
-            };
-            obj.info.makeDay = dayjs(new Date()).format("YYYY-MM-DD");
+            }
+          return ({ checkedList: clone })
+        });
+    },
+    allCheckfnL: (checked) => {
+        let clone = _cloneDeep(dataLists);
 
-            axios.post("http://192.168.11.178:8080/lbt", obj);
-
-            return { lbtData: [...state.lbtData, obj] };
-        }),
+        if (checked) {
+            return set((state) => ({ checkedList: clone }));
+        } else {
+            for (let ele of clone) {
+                ele.optionItem = [];
+            }
+            return set((state) => ({ checkedList: clone }));
+        }
+    },
 }));
 
 export default useLbtStore;
