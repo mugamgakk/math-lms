@@ -68,7 +68,7 @@ function Home() {
         ajax("/user.php", {
             data: { mode: "logout" },
         }).then(() => {
-            window.location = "/login";
+            navigate("/login");
         });
     }, []);
 

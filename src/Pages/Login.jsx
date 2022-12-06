@@ -3,8 +3,12 @@ import ajax from "../ajax";
 import logo from "../assets/logo.svg";
 import useInput from "../hooks/useInput";
 import { setCookie } from "../cookie";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+    const navigate = useNavigate();
+
+
     let [textValue, setTextValue] = useInput({
         id: "",
         password: "",
@@ -46,8 +50,9 @@ function Login() {
                 // 로그인 완료
                 case 1:
                     // 프론트에서 로그인 확인 쿠키
-                    setCookie("gplumLMSlogin", "true")
-                    window.location = "/attendance";
+                    setCookie("gplumLMSlogin", "true");
+                    navigate("/attendance");
+                    // window.location = "/attendance";
                     break;
                 // 로그인 중복
                 case -2:
@@ -59,7 +64,8 @@ function Login() {
                             data: data,
                         }).then((res) => {
                             setCookie("gplumLMSlogin", "true")
-                            window.location = "/attendance";
+                            navigate("/attendance");
+
                         });
                     } else {
                         setLoading(false);
@@ -68,7 +74,8 @@ function Login() {
                     break;
                 case -1:
                     setCookie("gplumLMSlogin", "true")
-                    window.location = "/attendance";
+                    navigate("/attendance");
+
                     break;
                 case 0:
                     setLoading(false);

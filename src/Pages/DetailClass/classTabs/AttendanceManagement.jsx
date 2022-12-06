@@ -16,16 +16,16 @@ export const Box = styled.div`
     height: 107.83px;
     background-color: ${(props) => props.bg};
     padding: 10px;
-    border-right : 1px solid #eee;
-    border-bottom : 1px solid #eee;
+    border-right: 1px solid #eee;
+    border-bottom: 1px solid #eee;
 `;
 
 const override = {
     position: "absolute",
     left: "50%",
     top: "200px",
-    transform: "translateY(-50%)"
-}
+    transform: "translateY(-50%)",
+};
 
 const bg = {
     position: "absolute",
@@ -34,18 +34,20 @@ const bg = {
     width: "100%",
     height: "100%",
     backgroundColor: "rgba(256,256,256,0.6)",
-    zIndex: 1
-}
-
-
+    zIndex: 1,
+};
 
 function AttendanceManagement() {
     const clickStudent = useStudentsStore((state) => state.clickStudent);
     let [data, setData] = useState();
     // 데이터
     let [firstDay, setFirstDay] = useState(new Date());
+    // 사유 모달
     let [modal, setModal] = useState(false);
+
+    // 클릭한 날짜
     let [clickDay, setClickDay] = useState(1);
+    // 스피너
     let [spin, setSpin] = useState(true);
 
     // 변경유무
@@ -57,7 +59,7 @@ function AttendanceManagement() {
 
         copy[day - 1].attd = attd;
 
-        changeState.current = true
+        changeState.current = true;
 
         setData(copy);
     };
@@ -75,7 +77,7 @@ function AttendanceManagement() {
             dataArr.push(i);
         }
 
-        setData(dataArr)
+        setData(dataArr);
 
         const data = {
             mode: "view",
@@ -85,7 +87,6 @@ function AttendanceManagement() {
         const res = await ajax("/class_daily.php", { data });
 
         for (let i = 1; i <= 마지막날짜; i++) {
-
             for (const key of res.data) {
                 if (i === parseInt(key.daynum)) {
                     dataArr[i - 1] = key;
@@ -94,13 +95,13 @@ function AttendanceManagement() {
         }
 
         setData(dataArr);
-        setTimeout(() => { setSpin(false) }, 300)
-
+        setTimeout(() => {
+            setSpin(false);
+        }, 300);
     };
 
     // 저장
     const saveAttendance = async () => {
-
         let arr = [];
 
         data.forEach((a) => {
@@ -126,7 +127,12 @@ function AttendanceManagement() {
     return (
         <>
             {modal && (
-                <AttendanceReason firstDay={firstDay} setModal={setModal} clickStudent={clickStudent} clickDay={clickDay} />
+                <AttendanceReason
+                    firstDay={firstDay}
+                    setModal={setModal}
+                    clickStudent={clickStudent}
+                    clickDay={clickDay}
+                />
             )}
 
             <div className="AttendanceManagement-header" style={{ marginTop: "20px" }}>
@@ -139,13 +145,11 @@ function AttendanceManagement() {
                             setFirstDay(ele);
                         }}
                     />
-                    <LmsDatePicker
-                        maxDate={new Date()}
-                        maxDetail={"year"}
-                    />
+                    <LmsDatePicker maxDate={new Date()} maxDetail={"year"} />
                 </div>
                 <div>
-                    <button className="btn-grey mr-10"
+                    <button
+                        className="btn-grey mr-10"
                         onClick={() => {
                             let copy = [...data];
 
@@ -157,54 +161,56 @@ function AttendanceManagement() {
 
                             setData(copy);
                         }}
-                    >선택 → 출석</button>
-                    <button className="btn-green"
+                    >
+                        선택 → 출석
+                    </button>
+                    <button
+                        className="btn-green"
                         onClick={() => {
                             if (window.confirm("저장하시겠습니까?") === false) {
-                                return
+                                return;
                             } else {
-                                saveAttendance()
+                                saveAttendance();
                             }
                         }}
-                    >출결저장</button>
+                    >
+                        출결저장
+                    </button>
                 </div>
             </div>
 
             <div className="lms-calendar">
                 <div className="lms-calendar-header">
-                        <div className="D">Sun</div>
-                        <div className="D">Mon</div>
-                        <div className="D">Tus</div>
-                        <div className="D">Wed</div>
-                        <div className="D">Thu</div>
-                        <div className="D">Fri</div>
-                        <div className="D">Sat</div>
+                    <div className="D">Sun</div>
+                    <div className="D">Mon</div>
+                    <div className="D">Tus</div>
+                    <div className="D">Wed</div>
+                    <div className="D">Thu</div>
+                    <div className="D">Fri</div>
+                    <div className="D">Sat</div>
                 </div>
                 <div className="lms-calendar-body">
-                        <BeforeMonth firstDay={firstDay} />
-                        {
-                    data && data.map((a, i) => {
-                        return (
-                            <AttendanceDay
-                                item={a}
-                                key={i}
-                                changeData={changeData}
-                                setModal={setModal}
-                                setClickDay={setClickDay}
-                            />
-                        );
-                    })
-                }
+                    <BeforeMonth firstDay={firstDay} />
+                    {data &&
+                        data.map((a, i) => {
+                            return (
+                                <AttendanceDay
+                                    item={a}
+                                    key={i}
+                                    changeData={changeData}
+                                    setModal={setModal}
+                                    setClickDay={setClickDay}
+                                />
+                            );
+                        })}
 
-                <NextMonth firstDay={firstDay} />
+                    <NextMonth firstDay={firstDay} />
                 </div>
-            {
-                spin && (
+                {spin && (
                     <div style={bg}>
                         <FadeLoader color={"#00A37F"} cssOverride={override} size={150} />
                     </div>
-                )
-            }
+                )}
             </div>
         </>
     );
@@ -222,9 +228,7 @@ const BeforeMonth = memo(({ firstDay }) => {
     for (let i = prevDate - prevDay; i <= prevDate; i++) {
         arr.push(
             <div key={i} className="day not-day">
-                <div className="num">
-                {i}
-                </div>
+                <div className="num">{i}</div>
             </div>
         );
     }
@@ -247,9 +251,7 @@ const NextMonth = memo(({ firstDay }) => {
     for (let i = 1; i <= 7 - (prevDay + 1); i++) {
         arr.push(
             <div key={i} className="day not-day">
-                <div className="num">
-                {i}
-                </div>
+                <div className="num">{i}</div>
             </div>
         );
     }

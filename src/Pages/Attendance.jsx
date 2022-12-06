@@ -48,7 +48,7 @@ function Attendance() {
         try {
             let res = await ajax("class_daily.php", { data: param });
 
-            // console.log(res);
+            console.log(res);
 
             const { class_list, student_list } = res.data;
 
