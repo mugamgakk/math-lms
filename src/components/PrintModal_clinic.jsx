@@ -6,6 +6,7 @@ import Checkbox from "./Checkbox";
 import { falseModal } from '../methods/methods'
 import { useEffect } from "react";
 import ajax from "../ajax";
+import { useNavigate } from "react-router-dom";
 
 function PrintModal({ closeModal, title = "제목임" , cls_seq}) {
     const printComponent = React.useRef();
@@ -37,7 +38,6 @@ function PrintModal({ closeModal, title = "제목임" , cls_seq}) {
         getPrint();
     },[]);
 
-   
     const getPrint = async () => {
 
         let url = "/print.php";
@@ -50,24 +50,36 @@ function PrintModal({ closeModal, title = "제목임" , cls_seq}) {
         
         let res = await ajax(url, {data: query});
         
-        setLists(res.data);
+        console.log(res.data);
+
+        let arr = [];
+
+        arr.push(totalHeight(res.data));
+    }
+
+    const totalHeight = (data) => {
         
+        let newArray = [...data];
+        let height = 0;
+        let arr = [];
+
+        newArray.forEach((a,i) => {
+            if(height > 2400) return;
+                let img = new Image();
+                
+                img.src = a.qa_path;
+                height += 175 + ((img.height*431)/img.width);
+
+                for(let i=0; i<5; i++){
+                    let img = new Image();
+                    img.src = `https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${a.qa_code}_${i+1}.png`;
+                    height += ((img.height*431)/img.width);
+                } 
+                arr.push(a);
+        });
+        console.log(arr);
     }
 
-    let height = useRef(0);
-
-    const addHeight = (url) =>{
-        let img = new Image();
-        img.src = url;
-        height = 175 + ((img.height*431)/img.width);
-        return height;
-    }
-    
-    
-
-
-
-  
 
     return (
             <div className="modal" onClick={(e)=>falseModal(e,closeModal)}>
@@ -156,23 +168,16 @@ function PrintModal({ closeModal, title = "제목임" , cls_seq}) {
                                         <div onContextMenu={eventAlert} onDragStart={eventAlert}>
                                             <div className="ol">
                                                 {
-                                                    lists && lists.map((list,i)=>{
-                                                        let newHeight =  addHeight(`https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${list.qa_code}_Q.png`);
+                                                    lists && lists[0].map((list,i)=>{
                                                         return(
                                                             <>
                                                                     <div className="img-top fj">
                                                                         <strong>{list.qseq < 10 ? `0${list.qseq}` : list.qseq}</strong>
                                                                         <span className="tit">{list.qa_keyword}</span>
                                                                     </div>
-                                                                    <img className='q-img' src={`https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${list.qa_code}_Q.png` } alt="" />
+                                                                    <img className='q-img' src={list.qa_path} alt="" />
                                                                 {
                                                                     ['①','②','③','④','⑤'].map((num,i)=>{
-                                                                        
-                                                                        let img = new Image();
-                                                                        img.src = `https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${list.qa_code}_${i+1}.png`;
-                                                                        console.log(img.height);
-                                                                        // newHeight += ((img.height*431)/img.width);
-                                                                        // console.log(newHeight);
 
                                                                         return(
                                                                             <div className="img-bottom fa" style={{justifyContent:'start'}}>
