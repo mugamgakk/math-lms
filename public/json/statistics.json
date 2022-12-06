@@ -1,0 +1,140 @@
+{
+    "class_list": [
+        { "class_cd": "1429662002349505", "class_name": "수학테스트 1" },
+        { "class_cd": "5787654", "class_name": "수학과 함께" },
+        { "class_cd": "5787654654", "class_name": "덧샘과 함께" },
+        { "class_cd": "4546565", "class_name": "뺄샘과 함께" }
+    ],
+    "point_list": [
+        {
+            "usr_seq": "442",
+            "um_id": "sjkjw",
+            "school_grade": "중2",
+            "um_nm": "김영희",
+            "ct": 4,
+            "mi": 5,
+            "point": 4666,
+            "total_point": 20900
+        },
+        {
+            "usr_seq": "515",
+            "um_id": "ffww4",
+            "school_grade": "중1",
+            "um_nm": "고재덕",
+            "ct": 3,
+            "mi": 7,
+            "point": 250,
+            "total_point": 123256
+        },
+        {
+            "usr_seq": "3465",
+            "um_id": "qweqwe123",
+            "school_grade": "중1",
+            "um_nm": "김재화",
+            "ct": 2,
+            "mi": 1,
+            "point": 20,
+            "total_point": 444
+        },
+        {
+            "usr_seq": "5454",
+            "um_id": "stkjhsd",
+            "school_grade": "초6",
+            "um_nm": "상상이",
+            "ct": 4,
+            "mi": 2,
+            "point": 20,
+            "total_point": 51321
+        },
+        {
+            "usr_seq": "3465",
+            "um_id": "asdloijk12",
+            "school_grade": "중1",
+            "um_nm": "김연혜",
+            "ct": 6,
+            "mi": 5,
+            "point": 52215,
+            "total_point": 123
+        },
+        {
+            "usr_seq": "3465",
+            "um_id": "552vw",
+            "school_grade": "중1",
+            "um_nm": "양다일",
+            "ct": 2,
+            "mi": 1,
+            "point": 52,
+            "total_point": 1234
+        },
+        {
+            "usr_seq": "45235",
+            "um_id": "asdfdds",
+            "school_grade": "중1",
+            "um_nm": "김민수",
+            "ct": 5,
+            "mi": 3,
+            "point": 13,
+            "total_point": 63542
+        },
+        {
+            "usr_seq": "3465",
+            "um_id": "wkdmgo13",
+            "school_grade": "중2",
+            "um_nm": "강호동",
+            "ct": 3,
+            "mi": 1,
+            "point": 215,
+            "total_point": 500
+        },
+        {
+            "usr_seq": "4577",
+            "um_id": "fwef55",
+            "school_grade": "중1",
+            "um_nm": "고민민",
+            "ct": 5,
+            "mi": 4,
+            "point": 12,
+            "total_point": 154
+        },
+        {
+            "usr_seq": "3465",
+            "um_id": "wkdmgo13",
+            "school_grade": "중2",
+            "um_nm": "김수학",
+            "ct": 3,
+            "mi": 1,
+            "point": 215,
+            "total_point": 500
+        },
+        {
+            "usr_seq": "4577",
+            "um_id": "fwef55",
+            "school_grade": "중1",
+            "um_nm": "함수수",
+            "ct": 5,
+            "mi": 4,
+            "point": 12,
+            "total_point": 154
+        },
+        {
+            "usr_seq": "3465",
+            "um_id": "wkdmgo13",
+            "school_grade": "중2",
+            "um_nm": "김제곱",
+            "ct": 3,
+            "mi": 1,
+            "point": 215,
+            "total_point": 500
+        },
+        {
+            "usr_seq": "4577",
+            "um_id": "fwef55",
+            "school_grade": "중1",
+            "um_nm": "김뺄샘",
+            "ct": 5,
+            "mi": 4,
+            "point": 12,
+            "total_point": 154
+        }
+    ]
+}

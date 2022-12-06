@@ -11,6 +11,8 @@ import ClassSelect from "../components/ui/select/ClassSelect";
 import LmsDatePicker from "../components/LmsDatePicker";
 import { memo } from "react";
 import Icon from "../components/Icon";
+import axios from "axios";
+import CustomDatePicker from "../components/CustomDatePicker";
 
 function Statistics() {
     // table data
@@ -73,10 +75,14 @@ function Statistics() {
             // order: "desc",
         };
 
-        let res = await ajax(url, { data: query });
+        // let res = await ajax(url, { data: query });
+        let res = await axios("/json/statistics.json");
+
+        let dd = await new Promise((resulve)=>{setTimeout(()=>{resulve();},1000)});
 
         let { class_list, point_list } = res.data;
-
+        
+        // 가나다순 정렬
         setValue(arrSort(point_list, "um_nm"));
 
         setClassList(class_list);
@@ -141,16 +147,18 @@ function Statistics() {
                             options={initialClass}
                             className="mr-10"
                         />
-                        <LmsDatePicker
+                        <CustomDatePicker
                             value={startDay}
+                            label={true}
                             onChange={(day) => {
                                 setStartDay(day);
                             }}
                         />
                         <span className="water">~</span>
-                        <LmsDatePicker
+                        <CustomDatePicker
                             value={lastDay}
-                            style={{ marginRight: "10px" }}
+                            label={true}
+                            className="mr-10"
                             onChange={(day) => {
                                 setLastDay(day);
                             }}
@@ -199,9 +207,9 @@ function Statistics() {
                             <th style={{width : "12.2081%"}}>총 누적 포인트(점)</th>
                         </tr>
                     </thead>
-                    <tbody className="scroll">
+                    <tbody className="scroll" style={{maxHeight : "550px"}}>
                         {skeleton ? (
-                            <SkeletonTable R={5} width={[]} />
+                            <SkeletonTable R={10} width={["4.0026%","27.0847%", "8.6724%", "12.008%", "12.008%", "12.008%", "12.008%", "12.2081%"]} />
                         ) : (
                             value.map((a, i) => {
                                 return <Tr key={i} list={a} index={i} />;
@@ -220,7 +228,7 @@ const Tr = memo(({ list, index }) => {
     return (
         <tr>
             <td style={{width : "4.0026%"}}>{index + 1}</td>
-            <td className="align-left text-green" style={{width : "27.0847%"}}>
+            <td className="fs text-green" style={{width : "27.0847%"}}>
                 {list.um_nm} ({list.um_id})
             </td>
             <td style={{width : "8.6724%"}}>{list.school_grade}</td>

@@ -1,8 +1,31 @@
 {
-    "class_list" : [
-
+    "class_list": [
+        { "class_cd": "137283785634112703", "class_name": "수학 4학년2학기" },
+        { "class_cd": "156375553574227600", "class_name": "수학반1" },
+        { "class_cd": "156438389285464300", "class_name": "수학3학년" },
+        { "class_cd": "156885455761152600", "class_name": "초등수학반" },
+        { "class_cd": "161242204261415900", "class_name": "수학테스트_월수금_중1" },
+        { "class_cd": "161337582077000500", "class_name": "오늘의수학" },
+        { "class_cd": "163487969615148300", "class_name": "패럴랙스_수학4" },
+        { "class_cd": "163487983288316200", "class_name": "패럴랙스_수학5" },
+        { "class_cd": "163661767120046900", "class_name": "수학테스트_화목_중2" },
+        { "class_cd": "163661770408831700", "class_name": "수학테스트_매일_중3" },
+        { "class_cd": "163661882490489400", "class_name": "수학테스트_매일_중1" },
+        { "class_cd": "163661884874037600", "class_name": "수학테스트_매일_중2" },
+        { "class_cd": "163661888648500900", "class_name": "수학테스트_월수금_중3" },
+        { "class_cd": "163911924373636100", "class_name": "수학테스트" },
+        { "class_cd": "163946616887121600", "class_name": "수학_중등2" },
+        { "class_cd": "163947179862886800", "class_name": "수학테스트_팟" },
+        { "class_cd": "164387484214591200", "class_name": "수학테스트" }
     ],
     "student_list": [
-        
+        {"user_seq":"1234","um_id":"cyber7kr","um_nm":"조예지","attd":"A","reason":null},
+        {"user_seq":"34223","um_id":"jkjsu3","um_nm":"김건우","attd":"E","reason": "배아파서 조퇴"},
+        {"user_seq":"122","um_id":"fiwn2","um_nm":"차인표","attd":"P","reason":null},
+        {"user_seq":"3255","um_id":"wik5","um_nm":"김건우","attd":"P","reason":null},
+        {"user_seq":"434","um_id":"asdljkfh5","um_nm":"김박박","attd":"L","reason":null},
+        {"user_seq":"123","um_id":"sdas4","um_nm":"공공공","attd":"P","reason":null},
+        {"user_seq":"44","um_id":"tlsgudl1","um_nm":"김삯갓","attd":"A","reason":null},
+        {"user_seq":"123","um_id":"ganghodong","um_nm":"강호동","attd":"P","reason":null}
     ]
 }

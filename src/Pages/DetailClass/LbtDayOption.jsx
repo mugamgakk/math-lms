@@ -62,6 +62,7 @@ const LbtDayOption = memo(() => {
                             onChange={(day) => setStartDay(day)}
                             maxDate={new Date()}
                             minDate={dayjs(new Date()).subtract(1, "M").$d}
+                            label={true}
                         />
                         <span className="water">~</span>
                         <CustomDatePicker
@@ -70,6 +71,7 @@ const LbtDayOption = memo(() => {
                             className="mr-10"
                             maxDate={new Date()}
                             minDate={dayjs(new Date()).subtract(1, "M").$d}
+                            label={true}
                         />
                         <button className="btn-grey" onClick={bookOption}>
                             설정

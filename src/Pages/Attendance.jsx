@@ -1,3 +1,4 @@
+import axios from "axios";
 import dayjs from "dayjs";
 import React from "react";
 import { useEffect } from "react";
@@ -46,9 +47,8 @@ function Attendance() {
         };
 
         try {
-            let res = await ajax("class_daily.php", { data: param });
-
-            console.log(res);
+            // let res = await ajax("class_daily.php", { data: param });
+            let res = await axios("/json/attendance.json");
 
             const { class_list, student_list } = res.data;
 
@@ -93,7 +93,7 @@ function Attendance() {
 
     useEffect(() => {
         getData();
-    }, []);
+    }, [date]);
 
     return (
         <>
@@ -114,7 +114,7 @@ function Attendance() {
                         style={{ marginRight: "4px" }}
                     />
 
-                    <CustomDatePickerMonth
+                    <CustomDatePicker
                     value={date}
                     onChange={(day) => {
                         setDate(day);
@@ -195,6 +195,8 @@ function Attendance() {
 }
 
 const Tr = memo(({ ele, index, date }) => {
+
+    console.log(ele.attd)
 
     let [text, setText] = useState((ele.reason ??= ""));
     let [state, setSTate] = useState(ele.attd);

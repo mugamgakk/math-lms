@@ -135,7 +135,7 @@ function CustomDatePicker({
                     setOpen(!open);
                 }}
             >
-                {dayjs(value).format("YYYY-MM-DD")} <Icon icon={"calendar"} />
+                {label ? dayjs(value).format("YYYY-MM-DD") : "달력에서 선택"} <Icon icon={"calendar"} />
             </span>
 
             {open && (
@@ -149,7 +149,7 @@ function CustomDatePicker({
                         >
                             <Icon icon={"arrowA"} style={{transform : "rotate(180deg) scale(0.6)"}} />
                         </div>
-                        <div className="format">{label ? dayFormat() : "달력에서 선택" }</div>
+                        <div className="format">{dayFormat()}</div>
                         <div
                             onClick={() => {
                                 dateChange(1);

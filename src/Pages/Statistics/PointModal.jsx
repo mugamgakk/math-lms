@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import DatePicker from "react-date-picker";
 import ajax from "../../ajax";
+import CustomDatePicker from "../../components/CustomDatePicker";
 import Icon from "../../components/Icon";
 import LmsDatePicker from "../../components/LmsDatePicker";
 import SkeletonTable from "../../components/SkeletonTable";
@@ -36,11 +37,12 @@ function PointModal({ title, setModal, userId }) {
             edate: dayjs(lastDay).format("YYYY-MM-DD"),
         };
 
-        const res = await ajax(url, {
-            data: params,
-        });
+        // const res = await ajax(url, {data: params,});
 
-        console.log(res);
+        const res = await axios("/json/statistics_point.json");
+        let dd = await new Promise((resulve)=>{setTimeout(()=>{resulve();},1000)});
+
+        // console.log(JSON.stringify(res.data));
 
         setList(res.data.list);
 
@@ -56,11 +58,21 @@ function PointModal({ title, setModal, userId }) {
     }, []);
 
     return (
-        <div className="modal PointModal" onClick={(e)=>{ falseModal(e, setModal) }}>
+        <div
+            className="modal PointModal"
+            onClick={(e) => {
+                falseModal(e, setModal);
+            }}
+        >
             <div className="modal-content">
                 <div className="modal-header">
                     <h2 className="modal-title">학습 포인트 내역</h2>
-                    <button className="btn" onClick={()=>{setModal(false)}}>
+                    <button
+                        className="btn"
+                        onClick={() => {
+                            setModal(false);
+                        }}
+                    >
                         <Icon icon={"close"} />
                     </button>
                 </div>
@@ -75,14 +87,23 @@ function PointModal({ title, setModal, userId }) {
                     <div className="PointModal-body">
                         <div className="fj">
                             <div></div>
-                            <div className="d-flex">
-                                <LmsDatePicker
+                            <div className="fa">
+                                <CustomDatePicker
+                                    label={true}
+                                    onChange={(day) => {
+                                        setStartDay(day);
+                                    }}
+                                    value={startDay}
+                                />
+
+                                <span className="water">~</span>
+                                <CustomDatePicker
+                                    label={true}
                                     onChange={(day) => {
                                         setLastDay(day);
                                     }}
                                     value={lastDay}
-                                    minDetail="month"
-                                    style={{ marginRight: "5px" }}
+                                    className="mr-10"
                                 />
                                 <button
                                     className="btn-grey"
@@ -96,11 +117,11 @@ function PointModal({ title, setModal, userId }) {
 
                         <table>
                             <colgroup>
-                                    <col style={{width : "25%"}}/>
-                                    <col style={{width : "10%"}}/>
-                                    <col style={{width : "20%"}}/>
-                                    <col style={{width : "35%"}}/>
-                                    <col style={{width : "10%"}}/>
+                                <col style={{ width: "20%" }} />
+                                <col style={{ width: "10%" }} />
+                                <col style={{ width: "20%" }} />
+                                <col style={{ width: "35%" }} />
+                                <col style={{ width: "15%" }} />
                             </colgroup>
                             <thead>
                                 <tr>
@@ -112,25 +133,37 @@ function PointModal({ title, setModal, userId }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>2022.08.31  15:15:15</td>
-                                    <td>중1-1</td>
-                                    <td>교과서별 내신적중</td>
-                                    <td>교학사 Ⅰ- 1. 소인수분해</td>
-                                    <td>
-                                        <div className="carat"></div>
-                                        <div className="mineral"></div>
-                                    </td>
-                                </tr>
+                                {list?.map((a) => {
+                                    return (
+                                        <tr>
+                                            <td>{a.date}</td>
+                                            <td>{a.grade}</td>
+                                            <td>{a.book}</td>
+                                            <td>{a.title}</td>
+                                            <td>
+                                                {a.ct > 0 && <div className="carat"></div>}
+                                                {a.mi > 0 && <div className="mineral"></div>}
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <td colSpan={4}>
-                                        획득한 학습 포인트 : 점
+                                        획득한 학습 포인트 : { comma(totalPoint.total_point)} 점
                                     </td>
                                     <td>
-                                        <div className="carat"></div>
-                                        <div className="mineral"></div>
+                                        <div className="fc">
+                                            <div className="fa mr-10">
+                                                <div className="carat"></div>
+                                                {totalPoint.total_ct}개
+                                            </div>
+                                            <div className="fa">
+                                                <div className="mineral"></div>
+                                                {totalPoint.total_mi}개
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             </tfoot>
@@ -138,7 +171,14 @@ function PointModal({ title, setModal, userId }) {
                     </div>
                 </div>
                 <div className="modal-footer">
-                    <button className="btn-orange" onClick={()=>{setModal(false)}}>확인</button>
+                    <button
+                        className="btn-orange"
+                        onClick={() => {
+                            setModal(false);
+                        }}
+                    >
+                        확인
+                    </button>
                 </div>
             </div>
         </div>
