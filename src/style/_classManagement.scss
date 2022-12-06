@@ -46,3 +46,104 @@
         margin-top: 4px;
     }
 }
+
+.progressModal{
+    width: 1080px;
+    .top{
+        padding: 20px;
+        &-table{
+            border-top: 2px solid #664e3d;
+            height: 70px;
+            &__tit{
+                font-size: 17px;
+                color: #664e3d;
+                height: 100%;
+                font-weight: 600;
+                background: #e6ddd8;
+                border-right: 1px solid #cfbfb7;
+                border-bottom: 1px solid #cfbfb7;
+            
+            }
+            &__bar{
+                height: 100%;
+                li{
+                    height: 50%;
+                    position: relative;
+                    .tit{
+                        font-size: 17px;
+                        width: 80px;
+                        font-weight: 600;
+                        color: #664e3d;
+                        height: 100%;
+                        background:#e6ddd8;
+                        border-bottom: 1px solid #cfbfb7;
+                        
+                    }
+                    .gageWrap{
+                        height: 100%;
+                        border-bottom: 1px solid #eee;
+                        &-gage{
+                            position: absolute;
+                            color: #fff;
+                            background: #ea7851;
+                            height: 20px;
+                            @include font-style(17);
+                            @include flex;
+                        }
+                        &-item{
+                            width: 113px;
+                            font-size: 17px;
+                            color: #ccc;
+                            height: 100%;
+                            border-right: 1px solid #eee;
+                            @include flex;
+                        }
+                    }
+                    .con{
+                        height: 100%;
+                        width: 100px;
+                        border-bottom: 1px solid #eee;
+                        border-right: 1px solid #eee;
+                        
+                    }
+                }
+            }
+
+        }
+    }    
+    .contents{
+        padding: 20px;
+        table{
+            thead{
+                text-align: center;
+            }
+            tbody{
+                max-height: 400px;
+                .unit1{
+                    @include font-style(20);
+                    background: #f2eeeb;
+                    border-bottom: 1px solid #cfbfb7;
+                    border-top: 1px solid #cfbfb7;
+                    font-weight: 500;
+                }
+                tr{
+                    &:first-child{
+                        td{
+                            border-top: none;
+                        }
+                    }
+                }
+                .empty{
+                    background: #dddddd;
+                }
+               
+            }
+        }
+    }
+
+
+}
+
+.creationModal{
+    width: 1080px;
+}
