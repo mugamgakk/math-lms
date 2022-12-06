@@ -88,10 +88,10 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
 
             if(viewState === "question"){
                 obj.문제 = `https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${a.qa_code}_Q.png`;
-                obj.높이 = 200;
+                obj.높이 = 250;
             }else{
                 obj.문제 = `https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${a.qa_code}_S.png`;
-                obj.높이 = 200;
+                obj.높이 = 100;
             }
 
             
@@ -209,7 +209,7 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
                                 content={() => printComponent.current}
                             />
                             <div style={{ display: "none" }}>
-                                <div ref={printComponent}>
+                                <div >
                                     {checkData.includes("question") && <div>문제</div>}
                                     {checkData.includes("solution") && <div>정답</div>}
                                 </div>
@@ -217,7 +217,7 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
                         </div>
                     </div>
 
-                    <div className="contents">
+                    <div className="contents" ref={printComponent}>
                         {viewState == "question" && (
                             <>
                                 <table className="contents-tit">
@@ -300,7 +300,7 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
                                                                 className="white"
                                                                 style={{
                                                                     width: "50%",
-                                                                    height: "100px",
+                                                                    height: "150px",
                                                                 }}
                                                             ></div>
                                                         </>
