@@ -56,8 +56,8 @@ function SelectAttan({value, onChange}) {
             <div className="SelectAttan-option">
                 <ul>
                     {
-                        options.map(a=>{
-                            return <li style={{backgroundColor : a.color}} onClick={()=>{update(a)}}>{a.label}</li>
+                        options.map((a,i)=>{
+                            return <li key={i} style={{backgroundColor : a.color}} onClick={()=>{update(a)}}>{a.label}</li>
                         })
                     }
                 </ul>

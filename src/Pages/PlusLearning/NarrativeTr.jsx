@@ -28,7 +28,7 @@ function NarrativeTr({ ele, checkOne, checkedList }) {
             let res = await ajax("class_plus.php", data);
         } catch (err) {}
     };
-    
+
     useEffect(() => {
         if (gradingModal) {
             toggleBodyScroll(true);
@@ -51,15 +51,15 @@ function NarrativeTr({ ele, checkOne, checkedList }) {
             <td style={{ width: "34.11374%" }}>{ele.sc_title}</td>
             <td style={{ width: "13.84767%" }}>
                 {
-                    ele.sc_status === "S" ? (
-                        <>
-                            {scStatus[ele.sc_status]}
-                            <button className="btn-table">오픈 취소</button>
-                        </>
-                    ) : (
-                        <button className="btn-table">오픈 취소</button>
-                    )
-                    // : scStatus[ele.sc_status]
+                    {
+                        P: "오픈전",
+                        S: (
+                            <div className="text-center">
+                                학습 중<button className="btn-table">오픈 취소</button>
+                            </div>
+                        ),
+                        C: "학습완료",
+                    }[ele.sc_status]
                 }
             </td>
             <td style={{ width: "13.25420%" }}>
@@ -89,7 +89,7 @@ function NarrativeTr({ ele, checkOne, checkedList }) {
                             C: (
                                 <div className="text-center">
                                     {ele.sc_std_score} / {ele.sc_max_score}
-                                    <button className="btn" onClick={reTry}>
+                                    <button className="btn-table" onClick={reTry}>
                                         재응시(2)
                                     </button>
                                 </div>

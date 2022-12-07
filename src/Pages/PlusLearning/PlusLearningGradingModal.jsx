@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import SelectBase from "../../components/ui/select/SelectBase";
-import { falseModal, getByteSize } from "../../methods/methods";
+import { falseModal, fileDown } from "../../methods/methods";
 import PrismaZoom from "react-prismazoom";
 import { useCallback } from "react";
 import useStudentsStore from "../../store/useStudentsStore";
@@ -193,7 +193,8 @@ function PlusLearningGradingModal({ setModal, sc_seq }) {
                                         width={"100%"}
                                     />
                                 </div>
-
+                            
+                                <div className="option-wrap">
                                 <table>
                                     <colgroup>
                                         <col style={{ width: "71.9298%" }} />
@@ -238,15 +239,7 @@ function PlusLearningGradingModal({ setModal, sc_seq }) {
                                 </div>
 
                                 <div className="upload">
-                                    <div className="upload-file mr-10">
-                                        <div className="file">
-                                            <Icon icon={"file"} />
-                                            첨부 파일1.pdf
-                                        </div>
-                                        <div className="file">
-                                            <Icon icon={"file"} />
-                                            첨부 파일1.pdf
-                                        </div>
+                                    <div className="upload-file mr-10 fs">
                                         <div className="file">
                                             <Icon icon={"file"} />
                                             첨부 파일1.pdf
@@ -269,6 +262,7 @@ function PlusLearningGradingModal({ setModal, sc_seq }) {
                                         +
                                     </button>
                                     <button type="button">-</button>
+                                </div>
                                 </div>
                             </div>
 
@@ -298,30 +292,21 @@ function PlusLearningGradingModal({ setModal, sc_seq }) {
                                     <div className="answer-body" style={{ overflow: "hidden" }}>
                                         <PrismaZoom ref={prizmaZoom}>
                                             <img
-                                                src={
-                                                    "https://img.animalplanet.co.kr/news/2022/03/14/700/uxh9813j6ydgv2vd6npp.jpg"
-                                                }
+                                                src={"https://file.parallaxedu.com/pxm/gplum/data/M11/tres/15M11TRA3104PR0010_2021_Q.png"}
                                             />
                                         </PrismaZoom>
                                         <button
                                             type="button"
                                             className="plus"
                                             onClick={() => {
-                                                prizmaZoom.current.zoomIn(1);
+                                                window.open("https://file.parallaxedu.com/pxm/gplum/data/M11/tres/15M11TRA3104PR0010_2021_Q.png");
                                             }}
                                         >
                                             <Icon icon={"lnbDetail"} />
                                         </button>
-                                        <button
-                                            type="button"
-                                            className="minus"
-                                            onClick={() => {
-                                                prizmaZoom.current.zoomOut(1);
-                                            }}
-                                        >
-                                            ㅡ
-                                        </button>
-                                        <button type="button" className="download">
+                                        <button type="button" className="download" onClick={()=>{
+                                            fileDown("https://file.parallaxedu.com/pxm/gplum/data/M11/tres/15M11TRA3104PR0010_2021_Q.png", "image.jpg");
+                                        }}>
                                             <Icon icon={"downloadB"} />
                                         </button>
                                     </div>

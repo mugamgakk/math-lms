@@ -61,7 +61,8 @@ const getByteSize = (size) => {
 const fileDown = (file, fileName = file.originalFileName) => {
     // var blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
     // FileSaver.saveAs(blob, fileName)
-    FileSaver.saveAs(file, fileName)
+    FileSaver.saveAs(file, fileName);
+    // FileSaver.saveAs("https://httpbin.org/image", "image.jpg");
 }
 
 // zip 만들어주는 함수
@@ -117,6 +118,7 @@ const comma = (num)=>{
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+// jpg다운로드 (display none 일때는 안됨)
 export function htmlToImg (target, filName = "download", format = "jpeg"){
       html2canvas(target).then((canvas) => {
             const imgFile = canvas.toDataURL("image/" + format);

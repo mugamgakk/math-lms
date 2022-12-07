@@ -34,6 +34,11 @@
         margin-bottom: 20px;
     }
 
+    .option-wrap{
+        height: 390px;
+        overflow: auto;
+    }
+
     table{
         width: 100%;
         margin-bottom: 20px;
@@ -93,6 +98,8 @@
                     border-bottom: none;
                 }
             }
+
+            
         }
 
         tfoot{
@@ -201,16 +208,16 @@
                 width: 40px;
                 height: 40px;
                 bottom: 30px;
-                right: 130px;
+                right:80px;
                 background-color: rgba(0,0,0,0.6);
                 border-radius: 50%;
                 color: $white;
             }
 
-            .minus{
-                @extend .plus;
-                right:80px;
-            }
+            // .minus{
+            //     @extend .plus;
+            //     right:80px;
+            // }
             
             .download{
                 @extend .plus;
@@ -289,6 +296,7 @@
         border-radius: $radius;
         @include font-style(16);
         font-weight: 500;
+        border: none
     }
 
     .btn-red-border{

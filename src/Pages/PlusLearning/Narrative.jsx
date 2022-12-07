@@ -8,6 +8,7 @@ import ajax from "../../ajax";
 import NarrativeTr from "./NarrativeTr";
 import { _cloneDeep } from "../../methods/methods";
 import Checkbox from "../../components/Checkbox";
+import axios from "axios";
 
 const 단원 = [
     { value: 1, label: "수와 식의 계산" },
@@ -83,11 +84,13 @@ function Narrative() {
         // console.log(data);
 
         try {
-            let res = await ajax("/class_plus.php", { data });
+            // let res = await ajax("/class_plus.php", { data });
+            let res = await axios("/json/pluslearning_narrative.json");
 
-            // console.log(res);
+            console.log(res.data);
 
             setPlusData(_cloneDeep(res.data));
+
             setInitialData(_cloneDeep(res.data));
 
             setSkeleton(false);

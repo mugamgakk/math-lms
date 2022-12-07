@@ -4,6 +4,7 @@ import useStudentsStore from "../../store/useStudentsStore";
 import Icon from "../../components/Icon";
 import LmsDatePicker from "../../components/LmsDatePicker";
 import SelectBase from "../../components/ui/select/SelectBase";
+import CustomDatePicker from "../../components/CustomDatePicker";
 import Checkbox from "../../components/Checkbox";
 import PlusLearningGradingTextBookModal from "./PlusLearningGradingTextBookModal";
 
@@ -102,20 +103,22 @@ function TextBook() {
                     />
                 </div>
 
-                <div className="d-flex">
-                    <LmsDatePicker
+                <div className="fa">
+                    <CustomDatePicker
                         value={startDay}
                         width="130px"
                         onChange={(day) => { setStartDay(day) }}
+                        label={true}
                     />
                     <span className="water">
                         ~
                     </span>
-                    <LmsDatePicker
+                    <CustomDatePicker
                         value={endDay}
                         width="130px"
                         onChange={(day) => { setEndDay(day) }}
-                        style={{ marginRight: "10px" }}
+                        label={true}
+                        className="mr-10"
                     />
                     <button className='btn-grey'>조회</button>
                 </div>

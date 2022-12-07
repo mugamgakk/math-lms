@@ -9,7 +9,7 @@ import ajax from "../../../ajax";
 import logo from "../../../assets/img/parallax-logo.png";
 import LbtCheckboxResult from "../LbtCheckboxResult";
 import ReactToPrint from "react-to-print";
-import html2pdf from "html2pdf.js";
+import { htmlToImg } from "../../../methods/methods";
 
 function LbtModal({ setCreateModal }) {
     const dataLists = useLbtStore((state) => state.dataLists);
@@ -17,6 +17,7 @@ function LbtModal({ setCreateModal }) {
     const allCheckfnL = useLbtStore((state) => state.allCheckfnL);
 
     const printComponent = React.useRef();
+    const imgComponent = React.useRef();
 
     let [viewItem, setViewItem] = useState(null);
 
@@ -117,7 +118,7 @@ function LbtModal({ setCreateModal }) {
                                 })}
                             </div>
                         </div>
-                        <div className="right lbt-print" ref={printComponent}>
+                        <div className="right lbt-print">
                             <div className="head">사유하고 질문하라. Parallax Thingking!</div>
                             <div className="body">
                                 <div className="body-title fj">
@@ -210,14 +211,117 @@ function LbtModal({ setCreateModal }) {
                                     })}
                             </div>
                         </div>
+                        {/* 인쇄하기 영역 */}
                         <div className="d-none">
                             <div className="right lbt-print" ref={printComponent}>
                                 <div className="head">사유하고 질문하라. Parallax Thingking!</div>
                                 <div className="body" style={{ height: "auto" }}>
                                     <div className="body-title fj">
                                         <h3>
-                                            패럴랙스 수학{" "}
-                                            <span className="text-orange">교과서별 내신적중</span>{" "}
+                                            패럴랙스 수학
+                                            <span className="text-orange">교과서별 내신적중</span>
+                                            분석표
+                                        </h3>
+                                        <img src={logo} alt="" />
+                                    </div>
+                                    <table className="lbt">
+                                        <colgroup>
+                                            <col style={{ width: "80px" }} />
+                                            <col style={{ width: "auto" }} />
+                                            <col style={{ width: "80px" }} />
+                                            <col style={{ width: "auto" }} />
+                                        </colgroup>
+                                        <tbody>
+                                            <tr>
+                                                <th>캠퍼스</th>
+                                                <td>대치 캠퍼스</td>
+                                                <th>학년</th>
+                                                <td>중2</td>
+                                            </tr>
+                                            <tr>
+                                                <th>이름</th>
+                                                <td>강수학</td>
+                                                <th>교과서</th>
+                                                <td>교학사 외</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    {viewItem &&
+                                        viewItem.map((a, i) => {
+                                            return (
+                                                <div key={i} className="lbt-content">
+                                                    {a.optionItem.length > 0 && (
+                                                        <div>
+                                                            {a.optionItem.map((dd, i) => {
+                                                                return (
+                                                                    <>
+                                                                        <div
+                                                                            className="title"
+                                                                            key={i}
+                                                                        >
+                                                                            {dd.label}
+                                                                        </div>
+                                                                        <table className="lbt">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>교과서</th>
+                                                                                    <th>단원명</th>
+                                                                                    <th>점수</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td rowSpan={3}>
+                                                                                        교학사
+                                                                                    </td>
+                                                                                    <td className="text-left">
+                                                                                        Ⅲ. 일차함수
+                                                                                        1.
+                                                                                        일차함수와
+                                                                                        그래프
+                                                                                    </td>
+                                                                                    <td>88점</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td className="text-left">
+                                                                                        Ⅲ. 일차함수
+                                                                                        1.
+                                                                                        일차함수와
+                                                                                        그래프
+                                                                                    </td>
+                                                                                    <td>88점</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td className="text-left">
+                                                                                        Ⅲ. 일차함수
+                                                                                        1.
+                                                                                        일차함수와
+                                                                                        그래프
+                                                                                    </td>
+                                                                                    <td>88점</td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </>
+                                                                );
+                                                            })}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            );
+                                        })}
+                                </div>
+                            </div>
+                        </div>
+                        {/* jpg 다운로드 영역 */}
+                        <div style={{position : "absolute", left : "1500px"}}>
+                            <div className="right lbt-print" ref={imgComponent}>
+                                <div className="head">사유하고 질문하라. Parallax Thingking!</div>
+                                <div className="body" style={{ height: "auto" }}>
+                                    <div className="body-title fj">
+                                        <h3>
+                                            패럴랙스 수학
+                                            <span className="text-orange">교과서별 내신적중</span>
                                             분석표
                                         </h3>
                                         <img src={logo} alt="" />
@@ -323,22 +427,15 @@ function LbtModal({ setCreateModal }) {
                         닫기
                     </button>
 
-                    <ReactToPrint
-                        trigger={() => <button className="btn-brown  mr-10">다운로드</button>}
-                        content={() => printComponent.current}
-                        print={async (printIframe) => {
-                            const document = printIframe.contentDocument;
-                            if (document) {
-                                await html2pdf().set({ filename: "download.pdf" }).from(printComponent.current).save();
-                            }
-                        }}
-                    />
-
-                    {/* <button
+                    <button
                         className="btn-brown  mr-10"
+                        onClick={() => {
+                            htmlToImg(imgComponent.current);
+                        }}
                     >
                         다운로드
-                    </button> */}
+                    </button>
+
                     <ReactToPrint
                         trigger={() => <button className="btn-orange">인쇄하기</button>} //  trigger : 인쇄를 명령할 컴포넌트를 넣어주기
                         content={() => printComponent.current} // content : 인쇄 대상 ref를 넘겨주기
