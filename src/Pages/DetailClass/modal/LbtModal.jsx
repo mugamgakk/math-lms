@@ -6,11 +6,14 @@ import Icon from "../../../components/Icon";
 import Checkbox from "../../../components/Checkbox";
 import { useEffect } from "react";
 import ajax from "../../../ajax";
+import logo from "../../../assets/img/parallax-logo.png"
 
 function LbtModal({ setCreateModal }) {
     const dataLists = useLbtStore((state) => state.dataLists);
     const checkedList = useLbtStore((state) => state.checkedList);
     const allCheckfnL = useLbtStore((state) => state.allCheckfnL);
+
+    let [viewItem, setViewItem] = useState(null);
 
     const getRegult = async () => {
         const data = {
@@ -37,7 +40,7 @@ function LbtModal({ setCreateModal }) {
 
         let res = await ajax("/class_result.php", { data });
 
-        console.log(res);
+        setViewItem(checkedList)
     };
     
     const isAllCheck = ()=>{
@@ -99,30 +102,82 @@ function LbtModal({ setCreateModal }) {
                                     return <LbtCheckbox ele={a} key={i} checkedItem={checkedList[i]} />;
                                 })}
                                 <div className="text-center">
-                                    <button className="btn-grey-border" style={{minWidth : "100px"}}>적용</button>
+                                    <button className="btn-grey-border" style={{minWidth : "100px"}} onClick={()=>{
+                                        getRegult()
+                                    }} >적용</button>
                                 </div>
                             </div>
                         </div>
-                        <div className="right">
+                        <div className="right lbt-print">
                             <div className="head">
-                                <span style={{ marginRight: "10px" }}>사유하고 질문하라.</span>
+                                사유하고 질문하라.
                                 Parallax Thingking!
                             </div>
                             <div className="body">
+                                <div className="body-title fj">
+                                    <h3>패럴랙스 수학 <span className="text-orange">교과서별 내신적중</span> 분석표</h3>
+                                    <img src={logo} alt="" />
+                                </div>
+                                <table className="lbt">
+                                    <colgroup>
+                                        <col style={{width : "80px"}} />
+                                        <col style={{width : "auto"}} />
+                                        <col style={{width : "80px"}} />
+                                        <col style={{width : "auto"}} />
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th>캠퍼스</th>
+                                            <td>대치 캠퍼스</td>
+                                            <th>학년</th>
+                                            <td>중2</td>
+                                        </tr>
+                                        <tr>
+                                            <th>이름</th>
+                                            <td>강수학</td>
+                                            <th>교과서</th>
+                                            <td>교학사 외</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                                 {
-                                    checkedList.map((a,i)=>{
+                                    viewItem && viewItem.map((a,i)=>{
                                         return (
-                                            <div key={i}>
+                                            <div key={i} className="lbt-content">
                                                 {
                                                     a.optionItem.length > 0 && (
                                                         <div>
-                                                            <h4>{a.option}</h4>
                                                             {
-                                                                a.optionItem.map(dd=>{
-                                                                    return <div key={dd}>{dd.label}</div>
+                                                                a.optionItem.map((dd,i)=>{
+                                                                    return <>
+                                                                        <div className="title" key={i}>{dd.label}</div>
+                                                                        <table className="lbt">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>교과서</th>
+                                                                                    <th>단원명</th>
+                                                                                    <th>점수</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td rowSpan={3}>교학사</td>
+                                                                                    <td className="text-left">Ⅲ. 일차함수 1. 일차함수와 그래프</td>
+                                                                                    <td>88점</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td className="text-left">Ⅲ. 일차함수 1. 일차함수와 그래프</td>
+                                                                                    <td>88점</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td className="text-left">Ⅲ. 일차함수 1. 일차함수와 그래프</td>
+                                                                                    <td>88점</td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </>
                                                                 })
                                                             }
-                                                            
                                                         </div>
                                                     )
                                                 }

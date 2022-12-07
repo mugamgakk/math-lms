@@ -200,7 +200,7 @@ const Tr = memo(({ ele, index, date }) => {
     let [state, setSTate] = useState(ele.attd);
     const changeCopyData = attendanceStore((state) => state.changeCopyData);
 
-    let [pen, setPen] = useState(false);
+    let [pen, setPen] = useState(ele.reason ? true : false);
 
     const reSize = (e) => {
         const ele = e.target;

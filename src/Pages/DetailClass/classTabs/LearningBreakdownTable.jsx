@@ -121,7 +121,7 @@ const Tr = ({ item, choiceArr, oneCheck }) => {
             <td style={{ width: "32.6065%", wordBreak : "keep-all" }} >{item.bk_name}</td>
             <td style={{ width: "9.8116%" }}>{item.reg_nm}</td>
             <td style={{ width: "11.7938%" }}>
-                {modal && <LbtResultModal setModal={setModal} />}
+                {modal && <LbtResultModal setCreateModal={setModal} />}
                 <button
                     className="btn-table"
                     style={{ minWidth: "80px" }}

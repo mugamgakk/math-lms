@@ -197,25 +197,91 @@
                 }
             }
         }
-        .right{
-            width: 766px;
+        
+    }
+}
 
-            .head{
-                height: 38px;
-                background-color: #a22025;
-                @include flex;
-                @include font-style(17);
-                font-weight: 600;
-                color: #fff;
+.right.lbt-print{
+    width: 766px;
+
+    .head{
+        height: 38px;
+        background-color: #057064;
+        @include flex;
+        @include font-style(17);
+        font-weight: 600;
+        color: #fff;
+    }
+    .body{
+        padding: 20px 40px;
+        height: 530px;
+        overflow-y: auto;
+
+        &-title{
+            margin-bottom: 20px;
+            h3{
+                @include font-style(24);
             }
-            .body{
-                padding: 20px 40px;
-                height: 530px;
-                overflow-y: auto;
+        }
+
+        .lbt{
+            border-top: 2px solid $brown;
+            border-bottom: 1px solid #d0c0b8;
+            width: 100%;
+            margin-bottom: 20px;
+
+            th,td{
+                padding: 5px
+            }
+
+            tr{
+                border-bottom: 1px solid #eee;
+            }
+
+            th{
+                @include font-style(13);
+                color: $brown;
+                font-weight: 600;
+                background-color: #eae0d9;
+                text-align: center;
+            }
+            
+            .text-left{
+                text-align: left;
+            }
+
+
+            thead{
+                th{
+                    border-right: 1px solid #cfbfb7;
+                    &:last-child{
+                        border-right: none
+                    }
+                }
+            }
+
+            td{
+                @include font-style(14);
+                font-weight: 500;
+                text-align: center;
+                border-right: 1px solid #eee;
+
+                &:last-child{
+                    border-right: none;
+                }
             }
         }
     }
+
+    .lbt-content{
+        .title{
+            font-weight: 700;
+            color: $brown;
+            margin-bottom: 10px
+        }
+    }
 }
+
 
 // 진단평가
 .JinDanSearch{
