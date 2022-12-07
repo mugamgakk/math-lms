@@ -1,8 +1,11 @@
-import React, { useState, useEffect, useRef, memo } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import CreationCheck from '../CreationCheck';
 import ajax from "../../../ajax";
 import dayjs from "dayjs";
-import { useMemo } from "react";
+import useStudentsStore from "../../../store/useStudentsStore";
+import Icon from "../../../components/Icon";
+import { falseModal } from '../../../methods/methods';
+import axios from "axios";
 
 const source = ['개념서', '뜨레스', '엑사스','노벰','맞춤클리닉'];
 const type = ['객관식','주관식','서술형','정오 체크'];
@@ -51,14 +54,17 @@ const data = [
         },
     ]
 
-function CreationModal({setCreationMo,stuInfo,bookList}){
+function CreationModal({setCreationMo,ucode}){
 
     let [checkState,setCheckState] = useState([]);
     let [dataList,setDataList] = useState(data);
     let [newList, setNewList] = useState(dataList);
+    const clickStudent = useStudentsStore((state) => state.clickStudent);
+    let bookList = useStudentsStore((state) => state.bookList);
     let ref = useRef(false);
 
-    console.log(checkState);
+    console.log(clickStudent);
+    // console.log(checkState);
 
 
     let [obj,setObj] = useState({
@@ -67,22 +73,24 @@ function CreationModal({setCreationMo,stuInfo,bookList}){
         level : level,
     });
 
-    // useEffect(()=>{
-    //     createWrongAnswer();
-    // },[]);
+    useEffect(()=>{
+        createWrongAnswer();
+    },[]);
 
-    // const createWrongAnswer = async () => {
-    //     let url = "/class_wrong.php/";
-    //     let query = {
-    //         mode: "wa_create_list",
-    //         usr_seq : 80,
-    //         arr_ucode : 'CO'
-    //     };
+    const createWrongAnswer = async () => {
+        // let url = "/class_wrong.php";
+        // let query = {
+        //     mode: "wa_create_list",
+        //     usr_seq : clickStudent.usr_seq,
+        //     arr_ucode : ucode,
+        // };
 
-    //     let res = await ajax(url, { data: query });
-    //     console.log(res);
-    //     // setDataList(res);
-    // }
+        // let res = await ajax(url, { data: query });
+        const res = await axios("/json/creationModal_table.json");
+
+        console.log(res);
+        // setDataList(res);
+    }
 
  
     useEffect(()=>{
@@ -157,7 +165,7 @@ function CreationModal({setCreationMo,stuInfo,bookList}){
         let url = "/class_wrong.php/";
         let query = {
             mode: "wa_create_save",
-            usr_seq : stuInfo.usr_seq,
+            usr_seq : clickStudent.usr_seq,
             qa_no : checkState
         };
             
@@ -174,19 +182,18 @@ function CreationModal({setCreationMo,stuInfo,bookList}){
     let [title,setTitle] = useState(`${bookList.label}_오답 정복하기_${today}`);
 
     return(
-        <div className="modal">
-            <div className="dim"></div>
-            <div className='creationModal cmmnModal'>
-                <div className="creationModal-head cmmnModal-head">
-                    <div className="tit">
-                        <strong>[오답 정복하기 생성]{stuInfo.um_nm}/{bookList.label}</strong>
-                    </div>
-                    <button className="close" onClick={()=>setCreationMo(false)}>X</button>
+        <div className="modal" onClick={(e)=>falseModal(e,setCreationMo)}>
+            <div className='modal-content creationModal'>
+            <div className="modal-header fj">
+                       <h2 className="modal-title">오답 정복하기 생성</h2>
+                    <button className="btn" onClick={() => setCreationMo(false)}><Icon icon={"close"} /></button>
                 </div>
-                <div className="creationModal-body cmmnModal-body">
-                    <div className='top mb-10'>
-                        <div className="top-tit">제목</div>
-                        <input type='text' className="top-con" value={title} onChange={(e)=>setTitle(e.target.value)} />
+                <div className="modal-body">
+                    <div className="modal-name" style={{ paddingLeft:'20px' }}>
+                        <strong className="name">{clickStudent.um_nm}</strong>
+                        <ul className="list">
+                            <li>{bookList.label}</li>
+                        </ul>
                     </div>
                     <table>
                         <colgroup>
@@ -263,10 +270,10 @@ function CreationModal({setCreationMo,stuInfo,bookList}){
                         </tbody>
                     </table>
                 </div>
-                <div className="creationModal-foot cmmnModal-foot">
-                    <button className="btn">미리보기</button>
-                    <button className="btn" onClick={sendList}>생성하기</button>
-                    <button className="btn" onClick={()=>setCreationMo(false)}>닫기</button>
+                <div className="modal-footer">
+                    <button className="btn-grey" onClick={()=>setCreationMo(false)}>닫기</button>
+                    <button className="btn-orange" onClick={sendList}>생성하기</button>
+                    <button className="btn-brown">미리보기</button>
                 </div>
             </div>
         </div>

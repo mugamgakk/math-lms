@@ -1,0 +1,53 @@
+[
+    {
+        "qa_seq" : "123",
+        "ltitle" : "i.수와 연산",
+        "utitle" : "1.소인수분해",
+        "keyword" : "소수와 합성수",
+        "source" : "뜨레스",
+        "no" : "1",
+        "type" : "객관식",
+        "level" :"중"
+    },
+    {
+        "qa_seq" : "123",
+        "ltitle" : "i.수와 연산",
+        "utitle" : "1.소인수분해",
+        "keyword" : "소인수분해",
+        "source" : "뜨레스",
+        "no" : "1",
+        "type" : "객관식",
+        "level" :"중"
+    },
+    {
+        "qa_seq" : "123",
+        "ltitle" : "i.수와 연산",
+        "utitle" : "1.소인수분해",
+        "keyword" : "소인수분해",
+        "source" : "뜨레스",
+        "no" : "1",
+        "type" : "객관식",
+        "level" :"최상"
+    },
+    {
+        "qa_seq" : "123",
+        "ltitle" : "i.수와 연산",
+        "utitle" : "2.최대공약수와 그 활용",
+        "keyword" : "최대공약수의 활용",
+        "source" : "개념서",
+        "no" : "12",
+        "type" : "객관식",
+        "level" :"중"
+    },
+    {
+        "qa_seq" : "123",
+        "ltitle" : "i.수와 연산",
+        "utitle" : "2.최대공약수와 그 활용",
+        "keyword" : "최대공약수 구하기",
+        "source" : "뜨레스",
+        "no" : "10",
+        "type" : "객관식",
+        "level" :"중상"
+    }
+   
+]

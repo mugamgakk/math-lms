@@ -113,16 +113,14 @@ function ClassManagement(){
             {
                 creationMo && <CreationModal 
                 setCreationMo={setCreationMo} 
-                stuInfo={clickStudent} 
                 ucode={wrongPopList}
-                bookList={bookList}
                 />
             }
            <div className="table-wrap">
 
                 <table className='tableC'>
                     <colgroup>
-                        <col width='19.8%'/>
+                        <col width='19.71%'/>
                         <col width='11.88%'/>
                         <col width='11.88%'/>
                         <col width='11.88%'/>
@@ -136,7 +134,7 @@ function ClassManagement(){
                             <th rowSpan={2}>단원</th>
                             <th colSpan={5} className='bb'>수행 현황</th>
                             <th rowSpan={2}>학습 완료</th>
-                            <th rowSpan={2} className='b-none'>오답<br />정복하기<button className="btn-brown" onClick>생성</button></th>
+                            <th rowSpan={2} className='b-none'>오답<br />정복하기<button className="btn-brown" onClick={()=>setCreationMo(true)}>생성</button></th>
                         </tr>
                         <tr>
                             <th>개념 강의</th>
