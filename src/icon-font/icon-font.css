@@ -2,9 +2,9 @@
   font-family: 'icon-font';
   font-style: normal;
   font-weight: 400;
-  src: url("icon-font.eot?bf2ada1a2e41ce15bac12abbedb1bacb?#iefix") format("embedded-opentype"),
-url("icon-font.woff2?bf2ada1a2e41ce15bac12abbedb1bacb") format("woff2"),
-url("icon-font.woff?bf2ada1a2e41ce15bac12abbedb1bacb") format("woff");
+  src: url("icon-font.eot?29d2d6942229d99565520ada7214c784?#iefix") format("embedded-opentype"),
+url("icon-font.woff2?29d2d6942229d99565520ada7214c784") format("woff2"),
+url("icon-font.woff?29d2d6942229d99565520ada7214c784") format("woff");
 }
 
 .icon-font, .ic-icons {
@@ -75,10 +75,11 @@ url("icon-font.woff?bf2ada1a2e41ce15bac12abbedb1bacb") format("woff");
 .ic-reload:before { content: "\f118"; }
 .ic-remove:before { content: "\f119"; }
 .ic-search:before { content: "\f11a"; }
-.ic-select_typeA:before { content: "\f11b"; }
-.ic-select_typeB:before { content: "\f11c"; }
-.ic-select_typeC:before { content: "\f11d"; }
-.ic-studentManagement:before { content: "\f11e"; }
-.ic-todayClass:before { content: "\f11f"; }
-.ic-volume:before { content: "\f120"; }
-.ic-warning:before { content: "\f121"; }
+.ic-selct_typeC:before { content: "\f11b"; }
+.ic-select_typeA:before { content: "\f11c"; }
+.ic-select_typeB:before { content: "\f11d"; }
+.ic-select_typeC:before { content: "\f11e"; }
+.ic-studentManagement:before { content: "\f11f"; }
+.ic-todayClass:before { content: "\f120"; }
+.ic-volume:before { content: "\f121"; }
+.ic-warning:before { content: "\f122"; }

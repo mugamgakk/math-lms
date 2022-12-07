@@ -84,6 +84,13 @@ function ClassManagement(){
         }
 
     }
+    
+    // 오답정복하기 클릭
+
+    const confirmWrongModal = (length) => {
+        if(length == 0) return window.alert('1개 이상 선택해주세요.');
+        setCreationMo(true);
+    }
 
     const allCheck = (checked) => {
         if(!checked){
@@ -96,7 +103,6 @@ function ClassManagement(){
             setWrongPopList([...arr]);
         }
     }
-
 
     return(
         <div className='detailClass classManagement'>
@@ -134,11 +140,11 @@ function ClassManagement(){
                             <th rowSpan={2}>단원</th>
                             <th colSpan={5} className='bb'>수행 현황</th>
                             <th rowSpan={2}>학습 완료</th>
-                            <th rowSpan={2} className='b-none'>오답<br />정복하기<button className="btn-brown" onClick={()=>setCreationMo(true)}>생성</button></th>
+                            <th rowSpan={2} className='b-none'>오답<br />정복하기<button className="btn-creation" onClick={()=>confirmWrongModal(wrongPopList.length)}>생성</button></th>
                         </tr>
                         <tr>
                             <th>개념 강의</th>
-                            <th>개념 확인<button className="btn-brown">일괄 재응시</button></th>
+                            <th>개념 확인<button className="btn-creation">일괄 재응시</button></th>
                             <th>개념 설명</th>
                             <th>유형 학습</th>
                             <th>맞춤 클리닉</th>

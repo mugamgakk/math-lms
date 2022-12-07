@@ -34,12 +34,15 @@
         }
     }
 
-    .btn-brown{
+    .btn-creation{
       background: #8f7361;
       height: 30px;
       @include font-style(16);
       min-width: 0 !important;
       margin-top: 4px;
+      color: #fff;
+      border-radius: $radius;
+      padding: 0 10px;
     }
     .btn-table{
         @include font-style(16);
@@ -146,4 +149,96 @@
 
 .creationModal{
     width: 1080px;
+    .contents{
+        padding: 20px;
+        &-tit{
+            height: 50px;
+            margin-bottom: 20px;
+            .tit{
+                border-top: 2px solid #664e3d;
+                background: #e6ddd8;
+                color: #664e3d;
+                border-bottom: 1px solid #cfbfb7;
+                height: 100%;
+                font-weight: 600;
+                width: 80px;
+                
+            }
+            .text{
+                height: 100%;
+                border-top: 2px solid #664e3d;
+                border-bottom: 1px solid #eee;
+                width: calc(100% - 80px);
+                padding-left: 9px;
+                input{
+                    position: relative;
+                    top: 1px;
+                }
+            }
+        }
+        &-table{
+            th{
+                @include flex;        
+                padding: 5px 0 !important;  
+                position: relative;      
+            }
+            tbody{
+                border-left: 1px solid #ddd;
+              tr{
+                &:last-child{
+                    border-bottom: 1px solid #ddd;
+                }
+                td{
+                    border-left: none !important;
+                }
+              }
+            }
+            .btn-table{
+                min-width: 0 !important;
+                width: 70px !important;
+                padding: 0 !important;
+            }
+          
+        }
+    }
+    .toggle{
+        cursor: pointer;
+        i{
+            transform:scale(0.4);
+        }
+            &.open{
+                i{
+                    transform:scale(0.4)rotate(180deg);
+
+                }
+            }
+    }
+    .filter{
+        position: absolute;
+        left: 0;
+        width: 100px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+        top: 43px;
+        padding: 5px;
+        z-index: 1;
+
+        .checkWrap{
+            margin-bottom:3px;
+
+            label{
+                @include font-style(14);
+                color: #664e3d;
+                font-weight: normal;
+                margin-left: 4px;
+            }
+        }
+        .line{
+            height: 1px;
+            border-bottom: 1px dashed #664e3d;
+            margin: 5px 0;
+        }
+    }
+   
 }
