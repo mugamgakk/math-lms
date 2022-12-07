@@ -5,8 +5,11 @@ import DatePicker from "react-date-picker";
 import PrintModal from '../../../components/PrintModal';
 import dayjs from "dayjs"
 import useStudentsStore from "../../../store/useStudentsStore";
-
-
+import Icon from "../../../components/Icon";
+import axios from "axios";
+import Checkbox from "../../../components/Checkbox";
+import LmsDatePicker from "../../../components/LmsDatePicker";
+import CreationModal_detail from "../modal/CreationModal_detail";
 const options = [
     { value: null, label: "전체" },
     { value: '중2-1노벰', label: '중2-1노벰' },
@@ -14,74 +17,70 @@ const options = [
     { value: '중2-2노벰', label: '중2-2노벰' },
 ];
 
-// const data = {
-//     bk_list : [
-//         { bk_cd : 'M12_C12', bk_name: '중2-1노벰'},
-//         { bk_cd : 'M12_C12', bk_name: '중2-1노벰'},
-//     ],
-//     wrong_list : [
-//         {
-//             wa_seq : 123,
-//             reg_dt : "2021-01-01",
-//             bk_name : "중2-1 뜨레스",
-//             wa_title : "제목 중2-1뜨레스 _강수학 말줄임표 없이",
-//             wa_range : "줄바꿈은<br>어떻게<br>할것인가",
-//             wa_qnum : 30,
-//             wa_status : "학습중",
-//         },
-//         {
-//             wa_seq : 124,
-//             reg_dt : "2021-01-01",
-//             bk_name : "중2-2 노벰",
-//             wa_title : "제목 중2-1뜨레스 _강수학 말줄임표 없이",
-//             wa_range : "줄바꿈은<br>어떻게<br>할것인가",
-//             wa_qnum : 30,
-//             wa_status : "학습중",
-//         },
-//     ]
-// }
+
 function WrongAnswer() {
     let [checkData,setCheckData] = useState([]);
     let [wrongList, setWrongList] = useState(null);
     let [filterData, setFilterData] = useState(null);
     let [selectOption, setSelectOption] = useState(null);
-    let today = dayjs(new Date()).format('YYYY-MM-DD');
-    let monthAge = dayjs(new Date()).subtract(1,'month').format('YYYY-MM-DD');
-    let bookList = useStudentsStore((state) => state.bookList);
-    let clickStudent = useStudentsStore((state) => state.clickStudent);
+    let [date,setDate] = useState(new Date());
+   
+    useEffect(()=>{
+        console.log(checkData);
+    },[checkData])
     
     useEffect(()=>{
         getData();
     },[]);
     
-    console.log(selectOption);
     const getData = async () => {
-        let url = "/class_wrong.php";
-        let query = {
-            mode: "list",
-            usr_seq : clickStudent.usr_seq,
-            sdate : monthAge,
-            edate : today,
-        };
+        // let url = "/class_wrong.php";
+        // let query = {
+        //     mode: "list",
+        //     usr_seq : clickStudent.usr_seq,
+        //     sdate : monthAge,
+        //     edate : today,
+        // };
         
-        let res = await ajax(url, {data: query});
-        let data = res.data;
+        // let res = await ajax(url, {data: query});
+        // let data = res.data;
+        const res = await axios("/json/wrongAnswer_table.json");
 
-        console.log(data);
-        setWrongList(data.wrong_list);
+        console.log(res.data);
+        setWrongList(res.data.wrong_list);
+        setFilterData(res.data.wrong_list);
 
         let arr = [{value:null, label:'전체'}];
 
-        data.bk_list.forEach(list=>{
+        res.data.bk_list.forEach(list=>{
             arr.push({value: list.bk_cd, label: list.bk_name});
         });
 
         setSelectOption(arr);
 
-        
+    }
+
+    const allCheck = (checked) => {
+        if(checked){
+            let arr = [];
+            filterData && filterData.map(list=>{
+                arr.push(list.wa_seq);
+            });
+            
+            setCheckData(arr);
+        }else{
+            setCheckData([]);
+        }
 
     }
     
+    const checkFunc = (checked,data) => {
+        if(checked){
+            setCheckData([...checkData, data]);
+        }else{
+            setCheckData(checkData.filter(item=>item !== data));
+        }
+    }
     // useEffect(()=>{
     //     if(selectOption == '전체'){
     //         setRenderData(data);
@@ -109,11 +108,11 @@ function WrongAnswer() {
     let [startDay, setStartDay] = useState(oneMonthAgo);
     let [option, setOption] = useState(false);
 
-    let [lastDay, setLastDay] = useState(new Date());
+    let [endDay, setEndDay] = useState(new Date());
     let [subjectArr, setSubjectArr] = useState([]);
 
     const optionBtn = () => {
-        if (startDay !== "" && lastDay !== "") {
+        if (startDay !== "" && endDay !== "") {
             setOption(true);
         }
     };
@@ -123,71 +122,55 @@ function WrongAnswer() {
      return (
         <>
         <div className='detailClass wrongAnswerMaster'>
-                <p>※ 오답 정복하기는 학생별 오답 맞춤 학습지입니다 학생 화면 나의 오답 목록에 반영</p>
-            <div className="top fj">
-                <div className="top-left">
-                    <button className="btn">선택 삭제</button>
+                <p className="warning mb-20 mt-20">※ 오답 정복하기는 학생별 오답 맞춤 학습지입니다 학생 화면 나의 오답 목록에 반영</p>
+            <div className="top fj" style={{ marginBottom:'20px' }}>
+                <div className="top-left fj">
+                    <button className="btn-grey-border mr-10">선택 삭제</button>
                     <SelectBase 
                         onChange={(ele)=>{setSelectOption(ele)}} 
                         options={selectOption && selectOption} // 모든 옵션들 <br/>
                         value={selectOption}  //현재 값 <br/>
                     />
                 </div>
-                <div className="top-right">
-
-                <DatePicker
-                    className="datepicker-base"
-                    onChange={(day) => {
-                        setStartDay(day);
-                    }}
-                    value={startDay}
-                    maxDate={new Date()}
-                    clearIcon={null}
-                    openCalendarOnFocus={false}
-                    format={"yyyy-MM-dd"}
+                <div className="top-right fj">
+                    <LmsDatePicker
+                        value={startDay}
+                        width="130px"
+                        onChange={(day) => { setStartDay(day) }}
                     />
-                    ~
-                <DatePicker
-                    className="datepicker-base"
-                    onChange={(day) => {
-                        setLastDay(day);
-                    }}
-                    value={lastDay}
-                    maxDate={new Date()}
-                    clearIcon={null}
-                    openCalendarOnFocus={false}
-                    format={"yyyy-MM-dd"}
+                    <span className="water">
+                        ~
+                    </span>
+                    <LmsDatePicker
+                        value={endDay}
+                        width="130px"
+                        onChange={(day) => { setEndDay(day) }}
+                        style={{ marginRight: "10px" }}
                     />
-                <button className="btn" onClick={optionBtn} >조회</button>
+              
+                <button className='btn-search btn-green' onClick={optionBtn}><Icon icon={"search"} />조회</button>
                 </div>
             </div>
-            <table>
-                <colgroup>
-                    <col width='5%'/>
-                    <col width='15%'/>
-                    <col width='15%'/>
-                    <col width='15%'/>
-                    <col width='20%'/>
-                    <col width='10%'/>
-                    <col width='15%'/>
-                    <col width='15%'/>
-                </colgroup>
+            <table className="table tableA">
                 <thead>
                         <tr>
-                            <th>선택</th>
-                            <th>생성일</th>
-                            <th>교재</th>
-                            <th>제목</th>
-                            <th>범위</th>
-                            <th>문항 수</th>
-                            <th>상태</th>
-                            <th>시험지</th>
+                            <th style={{ width:'6.95%' }}>
+                                <Checkbox color='orange' onChange={(e)=>allCheck(e.target.checked)} checked={filterData && checkData.length == filterData.length}/>
+                                선택
+                            </th>
+                            <th style={{ width:'11.82%' }}>생성일</th>
+                            <th style={{ width:'11.82%' }}>교재</th>
+                            <th style={{ width:'21.76%' }}>제목</th>
+                            <th style={{ width:'16.3%' }}>범위</th>
+                            <th style={{ width:'7.85%' }}>문항 수</th>
+                            <th style={{ width:'11.72%' }}>상태</th>
+                            <th style={{ width:'11.82%' }}>시험지</th>
                         </tr>
                 </thead>
-                <tbody>
+                <tbody className="scroll"> 
                     {
-                        filterData && filterData.map(data=>{
-                            return <Tr data={data} checkData={checkData} setCheckData={setCheckData} />
+                        wrongList && wrongList.map(data=>{
+                            return <Tr data={data} checkData={checkData} checkFunc={checkFunc} setCheckData={setCheckData} />
                         })
                         
                     }
@@ -199,52 +182,44 @@ function WrongAnswer() {
      );
 }
 
-const Tr = ({data,checkData,setCheckData})=>{
-    let [modalState, setModalState] = useState(false);
-    let getDate = data.date.split('-').join('');
-
-    const closeModal = () => {
-        setModalState(false)
-    }
-
-    const checkFunc = (checked,data) => {
-        if(checked){
-            setCheckData([...checkData, data]);
-        }else{
-            setCheckData(checkData.filter(item=>item !== data));
-        }
-    }
-
+const Tr = ({data,checkData,checkFunc})=>{
+    let [printModal, setPrintModal] = useState(false);
+    let [creationMo, setCreationMo] = useState(false);
 
     return(
-        <tr key={data.id}>
-            <td>
-                <input type="checkbox" 
-                onChange={(e)=>checkFunc(e.target.checked,data)} 
-                checked={checkData.includes(data)}/>
+        <tr key={data.wa_seq}>
+            <td style={{ width:'6.95%' }}>
+                <Checkbox color='orange' onChange={(e)=>checkFunc(e.target.checked,data.wa_seq)} checked={checkData.includes(data.wa_seq)}/>
             </td>
-            <td>{data.date}</td>
-            <td>{data.book}</td>
-            <td>{data.tit}</td>
-            <td>
+            <td style={{ width:'11.82%' }}>{data.reg_dt}</td>
+            <td style={{ width:'11.82%' }}>{data.bk_name}</td>
+            <td style={{ width:'21.76%' }} onClick={()=>setCreationMo(true)}>
+                <div className="title">
+                    {data.wa_title}
+                </div>
                 {
-                    data.range.map((range,i)=>{
+                    creationMo && <CreationModal_detail setCreationMo={setCreationMo} seq={data.wa_seq}/>
+                }
+            </td>
+            <td style={{ width:'16.3%',flexDirection:'column' }}>
+                {
+                    data.wa_range.map((range,i)=>{
                         return(
                             <div key={i}>{range}</div>
                             )
                         })
                 }
             </td>
-            <td>{data.count}</td>
-            <td>
-                <div>{data.state}</div>
+            <td style={{ width:'7.85%' }}>{data.wa_seq}</td>
+            <td style={{ width:'11.72%',flexDirection:'column' }}>
+                <div className={data.wa_status == '학습 완료' ? 'done' : ''}>{data.wa_status}</div>
                 { 
-                    data.state == '학습 중' && <button className="btn">완료</button>
+                    data.wa_status == '학습 중' && <button className="btn-orange">완료</button>
                 }
             </td>
-            <td><button className="btn" onClick={()=> setModalState(true)}>인쇄</button>
+            <td style={{ width:'11.82%' }}><button className="btn-table" onClick={()=> setPrintModal(true)}><Icon icon={"print"} style={{ marginRight:'5px' }} />인쇄</button>
             {
-                modalState && <PrintModal closeModal={closeModal} title={`[오답 정복하기]${data.name}/${getDate}_${data.book}_오답 정복하기`}/>
+                printModal && <PrintModal closeModal={setPrintModal}/>
             }
             </td>
         </tr>

@@ -43,16 +43,16 @@ function CreationCheck({ data, keyName,setObj, obj, tit}) {
                         <label htmlFor={`${data[0]}_all`}>전체</label>
                     </div>
                     <div className="line"></div>
-                    {   data.map((item) => {
-                        return (
-                            <div className="checkWrap fs">
-                                <Checkbox color='orange' id={item} checked={checkData.includes(item)} onChange={(e) => oneCheckfunc(e.target, item)} />  
-                                <label htmlFor={item}>{item}</label>
-                            </div>
-                                
+                        {  
+                            data.map((item) => {
+                                return (
+                                    <div className="checkWrap fs">
+                                        <Checkbox color='orange' id={item} checked={checkData.includes(item)} onChange={(e) => oneCheckfunc(e.target, item)} />  
+                                        <label htmlFor={item}>{item}</label>
+                                    </div>
                                 );
-                            })}
-                    </div>
+                        })}
+                </div>
             </div>
             )}
         </>
