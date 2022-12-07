@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import UserInfo from "../../components/UserInfo";
 import useStudentsStore from "../../store/useStudentsStore";
 import Icon from "../../components/Icon";
-import LmsDatePicker from "../../components/LmsDatePicker";
 import SelectBase from "../../components/ui/select/SelectBase";
 import CustomDatePicker from "../../components/CustomDatePicker";
 import Checkbox from "../../components/Checkbox";
 import PlusLearningGradingTextBookModal from "./PlusLearningGradingTextBookModal";
+import PrintModal from "../../components/PrintModal_clinic";
 
 const data = [
     {
@@ -149,6 +149,7 @@ function TextBook() {
 const Tr = ({ ele }) => {
 
     let [modal, setModal] = useState(false);
+    let [printModal, setPrintModal] = useState(false);
 
     return (
         <tr>
@@ -167,7 +168,12 @@ const Tr = ({ ele }) => {
                     }
                 </div>
             </td>
-            <td style={{ width: "16.66666%" }}><button className="btn-table">인쇄</button></td>
+            <td style={{ width: "16.66666%" }}>
+                {
+                    printModal && <PrintModal title="교과서 적중문제" closeModal={setPrintModal}/>
+                }
+                <button className="btn-table" onClick={()=>{setPrintModal(true)}}>인쇄</button>
+                </td>
         </tr>
     )
 }

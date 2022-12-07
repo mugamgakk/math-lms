@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import ajax from "../../ajax";
 import Checkbox from "../../components/Checkbox";
 import Icon from "../../components/Icon";
-import PrintModal from "../../components/PrintModal";
+import PrintModal from "../../components/PrintModal_clinic";
 import { toggleBodyScroll } from "../../methods/methods";
 import PlusLearningGradingModal from "./PlusLearningGradingModal";
 

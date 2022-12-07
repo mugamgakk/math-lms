@@ -9,6 +9,7 @@ import NarrativeTr from "./NarrativeTr";
 import { _cloneDeep } from "../../methods/methods";
 import Checkbox from "../../components/Checkbox";
 import axios from "axios";
+import PrintModal from "../../components/PrintModal_clinic";
 
 const 단원 = [
     { value: 1, label: "수와 식의 계산" },
@@ -35,7 +36,11 @@ function Narrative() {
     let [checkedList, setCheckedList] = useState([]);
     let [skeleton, setSkeleton] = useState(true);
 
-    const [initialData, setInitialData] = useState([]);
+    let [printModal, setPrintModal] = useState(false);
+
+    const [initialData, setInitialData] = useState([]);;
+
+
 
     const checkAll = (e) => {
         e.target.checked ? setCheckedList(plusData) : setCheckedList([]);
@@ -105,6 +110,9 @@ function Narrative() {
 
     return (
         <div className="Narrative">
+            {
+                printModal && <PrintModal closeModal={setPrintModal}/>
+            }
             <UserInfo clickStudent={clickStudent} />
             <p className="alert-text" style={{ marginTop: "20px" }}>
                 학습하는 교재의 학년, 학기에 해당하는 서술형 문제를 오픈, 출력할 수
@@ -120,11 +128,14 @@ function Narrative() {
                     >
                         선택 오픈
                     </button>
-                    {/* <button className="btn" onClick={() => { openState(false) }}>선택 오픈 취소</button> */}
                     <button
                         className="btn-grey-border"
                         onClick={() => {
-                            if (checkedList.length === 0) alert("1개이상 선택하세요");
+                            if (checkedList.length === 0){
+                                alert("1개이상 선택하세요");
+                            } else{
+                                setPrintModal(true)
+                            }
                         }}
                     >
                         선택 인쇄

@@ -5,6 +5,8 @@ import { useState } from "react";
 import styled from "styled-components";
 import { useCallback } from "react";
 import { memo } from "react";
+import Icon from "../../components/Icon";
+import CustomDatePicker from "../../components/CustomDatePicker";
 
 const Btn = styled.button`
     width: 15px;
@@ -34,23 +36,22 @@ const 학년 = [
     "중등 3학년",
 ];
 
-function ResultSave({ modal }) {
+function ResultSave({ setModal }) {
     let [result, setResult] = useState([data.slice(0, 10), data.slice(10, 20), data.slice(20, 30)]);
     let [info, setInfo] = useState({
-        resDay : new Date(),
+        resDay: new Date(),
         name: "",
         school: "",
         call: "",
-        grade : "",
-        semester : ""
+        grade: "",
+        semester: "",
     });
-
 
     const checkResult = useCallback((테이블인덱스, 배열인덱스, 답) => {
         // console.log(테이블인덱스, 배열인덱스, 답)
 
         let copyArr = [...result];
-        console.log(copyArr)
+        console.log(copyArr);
 
         if (Array.isArray(답)) {
             let 기존값 = copyArr[테이블인덱스][배열인덱스].학생답;
@@ -62,9 +63,9 @@ function ResultSave({ modal }) {
             }
         } else {
             let 기존값 = copyArr[테이블인덱스][배열인덱스].학생답;
-            if(기존값 === 답){
-                copyArr[테이블인덱스][배열인덱스].학생답 = null
-            }else{
+            if (기존값 === 답) {
+                copyArr[테이블인덱스][배열인덱스].학생답 = null;
+            } else {
                 copyArr[테이블인덱스][배열인덱스].학생답 = 답;
             }
         }
@@ -73,52 +74,66 @@ function ResultSave({ modal }) {
     }, []);
 
     return (
-        <div className="modal-bg">
+        <div className="modal">
             <div className="modal-content" style={{ width: "1200px" }}>
-                <header>
-                    <h4>진단평가 결과 등록</h4>
-                </header>
-                <div className="modal-body">
-                    <table className="mb-10">
+                <div className="modal-header">
+                    <h2 className="modal-title">진단평가 결과 등록</h2>
+                    <button
+                        className="btn"
+                        onClick={() => {
+                            setModal(false);
+                        }}
+                    >
+                        <Icon icon={"close"} />
+                    </button>
+                </div>
+                <div className="modal-body" style={{ padding: "35px" }}>
+                    <table className="table-base">
                         <tbody>
                             <tr>
-                                <td>예약 명단</td>
+                                <th>예약 명단</th>
                                 <td style={{ textAlign: "left" }}>
-                                    <DatePicker
-                                        className="datepicker-base"
-                                        clearIcon={null}
-                                        openCalendarOnFocus={false}
-                                        format={"yyyy-MM-dd"}
-                                        onChange={el=>{setInfo({...info,resDay : el })}}
+                                    <CustomDatePicker
+                                        onChange={(el) => {
+                                            setInfo({ ...info, resDay: el });
+                                        }}
                                         value={info.resDay}
                                     />
                                     <SelectBase defaultValue="이름" width={"200px"} />
                                 </td>
                             </tr>
-                        </tbody>
-                    </table>
-                    <table>
-                        <tbody>
                             <tr>
-                                <td colSpan={2}>평가지 정보</td>
+                                <th colSpan={2}>평가지 정보</th>
                                 <td style={{ textAlign: "left" }} colSpan={3}>
-                                    <SelectBase defaultValue="학년" value={info.grade} onChange={el=>setInfo({...info, grade : el})} options={학년} width={"200px"} />
-                                    <SelectBase defaultValue="학기" value={info.semester} onChange={el=>setInfo({...info, semester : el})} options={["1학기", "2학기"]} width={"200px"} />
+                                    <SelectBase
+                                        defaultValue="학년"
+                                        value={info.grade}
+                                        onChange={(el) => setInfo({ ...info, grade: el })}
+                                        options={학년}
+                                        width={"200px"}
+                                    />
+                                    <SelectBase
+                                        defaultValue="학기"
+                                        value={info.semester}
+                                        onChange={(el) => setInfo({ ...info, semester: el })}
+                                        options={["1학기", "2학기"]}
+                                        width={"200px"}
+                                    />
                                 </td>
                             </tr>
                             <tr>
-                                <td rowSpan={3}>학생정보</td>
-                                <td>이름</td>
+                                <th rowSpan={3}>학생정보</th>
+                                <th>이름</th>
                                 <td>
                                     <input
                                         type="text"
                                         onChange={(e) => {
                                             setInfo({ ...info, name: e.target.value });
                                         }}
-                                        className="form-control"
+                                        className="textInput"
                                     />
                                 </td>
-                                <td>평가일</td>
+                                <th>평가일</th>
                                 <td style={{ textAlign: "left" }}>
                                     <DatePicker
                                         className="datepicker-base"
@@ -130,33 +145,35 @@ function ResultSave({ modal }) {
                                 </td>
                             </tr>
                             <tr>
-                                <td>학교</td>
+                                <th>학교</th>
                                 <td>
                                     <input
                                         type="text"
-                                        className="form-control"
+                                        className="textInput"
                                         onChange={(e) => {
                                             setInfo({ ...info, school: e.target.value });
                                         }}
                                     />
                                 </td>
-                                <td>학년</td>
+                                <th>학년</th>
                                 <td>
                                     <SelectBase options={학년} />
                                 </td>
                             </tr>
                             <tr>
-                                <td>연락처(전화번호)</td>
+                                <th>연락처(전화번호)</th>
                                 <td colSpan={3}>
                                     <input
                                         type="text"
-                                        className="form-control"
+                                        className="textInput"
                                         maxLength={13}
                                         value={info.call}
                                         onChange={(e) => {
-                                            let target = e.target.value
-                                            let dd = target.replace(/[^0-9]/g, '').replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
-                                            console.log(dd)
+                                            let target = e.target.value;
+                                            let dd = target
+                                                .replace(/[^0-9]/g, "")
+                                                .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+                                            console.log(dd);
                                             setInfo({ ...info, call: dd });
                                         }}
                                     />
@@ -180,37 +197,50 @@ function ResultSave({ modal }) {
                             );
                         })}
                     </div>
-
-                    <div className="text-center my-10">
-                        <button className="btn" onClick={()=>{
-                            if(window.confirm("입력한 답안을 모두 확인하세요. 완료하시겠습니까?")){
-                                console.log(result)
-                                // modal(false)
-                            }
-                        }}>입력완료</button>
-                        <button className="btn" onClick={()=>{modal(false)}}>취소</button>
-                    </div>
+                </div>
+                <div className="modal-footer">
+                <button
+                            className="btn-grey-border mr-10"
+                            onClick={() => {
+                                setModal(false);
+                            }}
+                        >
+                            취소
+                        </button>
+                        <button
+                            className="btn-orange"
+                            onClick={() => {
+                                if (
+                                    window.confirm(
+                                        "입력한 답안을 모두 확인하세요. 완료하시겠습니까?"
+                                    )
+                                ) {
+                                    setModal(false);
+                                    // modal(false)
+                                }
+                            }}
+                        >
+                            입력완료
+                        </button>
+                        
                 </div>
             </div>
         </div>
     );
 }
 
-
 const Table = memo(({ tableList, checkResult, arrIndex }) => {
-
-
     return (
-        <table>
+        <table className="table-base">
             <thead>
                 <tr>
-                    <td>번호</td>
-                    <td>정답</td>
-                    <td>학생 답</td>
+                    <th>번호</th>
+                    <th>정답</th>
+                    <th>학생 답</th>
                 </tr>
             </thead>
             <tbody>
-                {tableList.map((dd, index) => {
+            {tableList.map((dd, index) => {
                     return (
                         <tr key={dd.id}>
                             <td>{dd.id}</td>

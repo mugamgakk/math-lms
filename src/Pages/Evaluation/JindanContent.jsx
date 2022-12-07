@@ -4,7 +4,7 @@ import DatePicker from "react-date-picker";
 import dayjs from "dayjs";
 import ResultSave from "./ResultSave";
 import MemberLinkModal from "./MemberLinkModal";
-import LmsDatePicker from "../../components/LmsDatePicker";
+import CustomDatePicker from "../../components/CustomDatePicker";
 import Icon from "../../components/Icon";
 import { useEffect } from "react";
 import axios from "axios";
@@ -20,10 +20,15 @@ function JindanContent() {
 
     let [resultModal, setResultModal] = useState(false);
 
+    const getList = async ()=>{
+        let res = await axios("/json/jindan_list.json");
+
+        setData(res.data);
+        
+    }
+
     useEffect(() => {
-        axios.post("http://localhost:8080/list").then((res) => {
-            setData(res.data.list);
-        });
+        getList();
     }, []);
     return (
         <div className="bg bg-content">
@@ -40,12 +45,17 @@ function JindanContent() {
                     연동하지 않은 평가 결과는 개인 정보 보호 정책에 따라 1 년 후 삭제됩니다 .
                 </p>
             </div>
+
+            {/* 진단 평가지 */}
             <EvaluationPrint />
 
             <div className="fj" style={{ marginBottom: "10px" }}>
                 <div>
                     <button className="btn-grey-border mr-10">선택 삭제</button>
-                    {resultModal && <ResultSave modal={setResultModal} />}
+
+                    {/* 결과 등록 */}
+                    {resultModal && <ResultSave setModal={setResultModal} />}
+                    
                     <button
                         className="btn-green"
                         onClick={() => {
@@ -56,15 +66,17 @@ function JindanContent() {
                     </button>
                 </div>
                 <div className="d-flex fa">
-                    <LmsDatePicker
+                    <CustomDatePicker
                         onChange={(day) => setValue({ ...value, start: day })}
                         value={value.start}
+                        label={true}
                     />
                     <span className="water">~</span>
-                    <LmsDatePicker
+                    <CustomDatePicker
                         onChange={(day) => setValue({ ...value, end: day })}
-                        style={{ marginRight: "10px" }}
+                        className="mr-10"
                         value={value.end}
+                        label={true}
                     />
                     <input
                         type="text"

@@ -3,7 +3,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import LmsDatePicker from "../../components/LmsDatePicker";
+import CustomDatePicker from "../../components/CustomDatePicker";
 import jindanStore from "../../store/jindanStore";
 import ReservationModal from "./ReservationModal";
 
@@ -15,12 +15,16 @@ function JinDanSearch() {
     let [reservModal, setReservModal] = useState(false);
     let [list, setList] = useState(null);
     
-    useEffect(() => {
-        axios.post("http://localhost:8080/reserv").then((res) => {
-            console.log(res)
-            setList(res.data.list);
-        });
+ 
+    const getList = async ()=>{
+        let res = await axios("/json/jindan.json");
 
+        setList(res.data);
+    }
+
+
+    useEffect(() => {
+        getList()
         resetJindan();
     },[]);
 
@@ -53,10 +57,10 @@ function JinDanSearch() {
                     </li>
                 </ul>
             </header>
-            <div style={{ marginBottom: "10px" }}>
-                <LmsDatePicker style={{ width: "146px" }} />
+            <div style={{ marginBottom: "10px" }} className="fa">
+                <CustomDatePicker label={true} />
                 <span className="water">~</span>
-                <LmsDatePicker style={{ width: "146px" }} />
+                <CustomDatePicker label={true} />
             </div>
             <div style={{ marginBottom: "10px" }}>
                 <input

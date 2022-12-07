@@ -32,7 +32,7 @@ function MemberLinkModal({ setModal }) {
             <div className="modal-content">
                 <div className="modal-header">
                     <h2 className="modal-title">[진단평가] 회원연동</h2>
-                    <button className="btn">
+                    <button className="btn" onClick={()=>{setModal(false)}}>
                         <Icon icon={"close"} />
                     </button>
                 </div>
