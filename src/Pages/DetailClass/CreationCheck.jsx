@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
+import Checkbox from "../../components/Checkbox";
+import Icon from "../../components/Icon";
 
-function CreationCheck({ data, keyName,setObj, obj }) {
+function CreationCheck({ data, keyName,setObj, obj, tit}) {
     let [toggleState, setToggleState] = useState(false);
     // 초기값 모두 선택
     let [checkData, setCheckData] = useState(data);
@@ -28,44 +30,32 @@ function CreationCheck({ data, keyName,setObj, obj }) {
     };
 
     return (
-        <div className="buttonWrap">
-            <button className="checkToggle" onClick={() => setToggleState(!toggleState)}></button>
+            <>
+            <div className={`toggle ${toggleState ? 'open' : 'close'}`} onClick={() => setToggleState(!toggleState)}>
+                <Icon icon={"select_typeC"} />
+                {tit}
+            </div>
             {toggleState && (
+            <div className="filter">
                 <div className="selectWrap">
                     <div className="checkWrap">
-                        <input
-                            type="checkbox"
-                            className={
-                                checkData.length > 0 && checkData.length < data.length
-                                    ? "checkAll isCheck"
-                                    : "checkAll"
-                                // allCheck === 1 ? 'checkAll isCheck' : 'checkAll'
-                            }
-                            id={`${data[0]}_all`}
-                            name="all"
-                            onChange={(e) => allCheckfunc(e.target.checked)}
-                            // 초기값 data를 넣었을때 전체 체크 오류
-                            checked={checkData.length === data.length ? true : false}
-                        />
+                        <Checkbox color='orange' id={`${data[0]}_all`} checked={ checkData.length === data.length } onChange={(e) => allCheckfunc(e.target.checked)} />  
                         <label htmlFor={`${data[0]}_all`}>전체</label>
                     </div>
-                    {data.map((item) => {
+                    <div className="line"></div>
+                    {   data.map((item) => {
                         return (
-                            <div className="checkWrap" key={item}>
-                                <input
-                                    type="checkbox"
-                                    name={item}
-                                    id={item}
-                                    onChange={(e) => oneCheckfunc(e.target, item)}
-                                    checked={checkData.includes(item)}
-                                />
+                            <div className="checkWrap fs">
+                                <Checkbox color='orange' id={item} checked={checkData.includes(item)} onChange={(e) => oneCheckfunc(e.target, item)} />  
                                 <label htmlFor={item}>{item}</label>
                             </div>
-                        );
-                    })}
-                </div>
+                                
+                                );
+                            })}
+                    </div>
+            </div>
             )}
-        </div>
+        </>
     );
 }
 
