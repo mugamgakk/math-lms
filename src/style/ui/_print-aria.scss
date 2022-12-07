@@ -1,0 +1,36 @@
+.print-aria {
+    // position: fixed;
+    // z-index: 100;
+    // left: 0;
+    // top: -10px;
+    // height: 297mm;
+    // width: 210mm;
+    .page {
+        width: 1150px;
+        margin-bottom: 100px;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        align-content: space-between;
+        height: 1625px;
+
+        .card {
+            width: 50%;
+            padding: 20px;
+            img{
+                width: 100%;
+            }
+        }
+
+        // &::after{
+        //     content: "";
+        //     width: 1px;
+        //     height: 100%;
+        //     background-color: #ccc;
+        //     position: absolute;
+        //     left: 50%;
+        //     top: 0;
+        //     transform: translateX(-50%);
+        // }
+    }
+}
