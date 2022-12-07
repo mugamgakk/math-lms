@@ -5,8 +5,7 @@ import ajax from "../ajax";
 import Tr from './TodayClass/TodayClassTr';
 import DateNext from "../components/DateNext";
 import Icon from '../components/Icon';
-import LmsDatePicker from "../components/LmsDatePicker";
-
+import CustomDatePicker from "../components/CustomDatePicker";
 function TodayClass(){
 
     let [findTodayList, setFindList] = useState(null);
@@ -61,11 +60,12 @@ function TodayClass(){
                     onChange={day=>setDate(day)}
                     style={{ marginRight: "4px" }}
                     />
-                    <LmsDatePicker
-                        value={date}
-                        onChange={(day) => {
-                            setDate(day);
-                        }}
+                    <CustomDatePicker
+                    value={date}
+                    onChange={(day) => {
+                        setDate(day);
+                    }}
+                    maxDate={new Date()}
                     />
                 </div>
                 <div className="tableWrap">

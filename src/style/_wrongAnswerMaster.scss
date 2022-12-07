@@ -1,0 +1,16 @@
+.wrongAnswerMaster{
+    .table{
+        td{
+            .title{
+                // width: 100%;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis; 
+            }
+            .done{
+                color: #ea7851;
+
+            }
+        }
+    }
+}

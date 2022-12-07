@@ -222,26 +222,25 @@ const Tr = ({data,studyDone,ucode,retry,setCheckList,wrongPopList}) => {
               
                 
             </td>
-            <td  style={{ width: '11.88%'}} onClick={()=>setResultPop(true)}>
+            <td style={{ width: '11.88%'}} onClick={()=>setResultPop(true)}>
                 <div>
-
-                {data.state4.score}
-                <button 
-                className={`btn-orange wh-103 ${data.state4.avail ? 'btn' : 'btn disabled'}`}
-                onClick={(e)=>{
-                    e.stopPropagation();
-                    retry(ucode);
-                }}>재응시({data.state4.retry})</button>
+                    {data.state4.score}
+                    <button 
+                    className={`btn-orange wh-103 ${data.state4.avail ? 'btn' : 'btn disabled'}`}
+                    onClick={(e)=>{
+                        e.stopPropagation();
+                        retry(ucode);
+                    }}>재응시({data.state4.retry})</button>
                 </div>
                 {
                     resultPop && <ResultPopModal setResultPop={setResultPop} />
                 }
             </td>
-            <td  style={{ width: '11.88%'}} className={Object.keys(data.state5).length == 0 ? 'disabled' : ''}>
+            <td style={{ width: '11.88%'}} className={Object.keys(data.state5).length == 0 ? 'disabled' : ''}>
                 {
                     Object.keys(data.state5).length !== 0 
                     ?  ( data.state5.avail ? (
-                        <div>
+                            <div>
                                 <div>{data.state5.score}</div>
                                 <button className="btn-table" style={{ marginBottom:'4px' }} onClick={()=>setPrintMo(true)}>
                                     <Icon icon={"print"} style={{color:'#666',marginRight:'6px'}}/>

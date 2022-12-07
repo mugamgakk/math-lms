@@ -12,7 +12,7 @@
     {
         "qa_seq" : "2",
         "ltitle" : "I.수와 연산",
-        "utitle" : "1.소인수분해",
+        "utitle" : "2.최대공약수",
         "keyword" : "소인수분해",
         "source" : "뜨레스",
         "no" : "1",
@@ -22,7 +22,7 @@
     {
         "qa_seq" : "3",
         "ltitle" : "I.수와 연산",
-        "utitle" : "1.소인수분해",
+        "utitle" : "3.최소공배수",
         "keyword" : "소인수분해",
         "source" : "뜨레스",
         "no" : "1",
@@ -32,62 +32,21 @@
     {
         "qa_seq" : "4",
         "ltitle" : "I.수와 연산",
-        "utitle" : "2.최대공약수와 그 활용",
-        "keyword" : "최대공약수의 활용",
-        "source" : "개념서",
-        "no" : "12",
+        "utitle" : "3.최소공배수",
+        "keyword" : "소인수분해",
+        "source" : "뜨레스",
+        "no" : "1",
         "type" : "객관식",
-        "level" :"중"
+        "level" :"최상"
     },
     {
-        "qa_seq" : "6",
-        "ltitle" : "I.수와 연산",
-        "utitle" : "2.최대공약수와 그 활용",
-        "keyword" : "최대공약수 구하기",
+        "qa_seq" : "5",
+        "ltitle" : "S.정수와 유리수",
+        "utitle" : "1.정수",
+        "keyword" : "소인수분해",
         "source" : "뜨레스",
-        "no" : "10",
+        "no" : "1",
         "type" : "객관식",
-        "level" :"중상"
-    },
-    {
-        "qa_seq" : "7",
-        "ltitle" : "I.수와 연산",
-        "utitle" : "2.최대공약수와 그 활용",
-        "keyword" : "최대공약수 구하기",
-        "source" : "뜨레스",
-        "no" : "10",
-        "type" : "객관식",
-        "level" :"중상"
-    },
-    {
-        "qa_seq" : "8",
-        "ltitle" : "I.수와 연산",
-        "utitle" : "2.최대공약수와 그 활용",
-        "keyword" : "최대공약수 구하기",
-        "source" : "뜨레스",
-        "no" : "10",
-        "type" : "객관식",
-        "level" :"중상"
-    },
-    {
-        "qa_seq" : "9",
-        "ltitle" : "I.수와 연산",
-        "utitle" : "3.최소공배수와 그 활용",
-        "keyword" : "공배수와 최소공배수",
-        "source" : "뜨레스",
-        "no" : "10",
-        "type" : "객관식",
-        "level" :"하"
-    },
-    {
-        "qa_seq" : "10",
-        "ltitle" : "I.수와 연산",
-        "utitle" : "3.최소공배수와 그 활용",
-        "keyword" : "최소공배수 구하기",
-        "source" : "뜨레스",
-        "no" : "10",
-        "type" : "객관식",
-        "level" :"최하"
+        "level" :"최상"
     }
-   
 ]
