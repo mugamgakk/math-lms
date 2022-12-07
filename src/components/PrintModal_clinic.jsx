@@ -155,33 +155,6 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
                                 <div ref={printComponent} className="print-aria">
                                     {checkData.includes("question") && (
                                         <>
-                                            {/* <table className="contents-tit">
-                                                    <colgroup>
-                                                        <col width="100px" />
-                                                        <col width="100px" />
-                                                        <col width="80px" />
-                                                        <col width="90px" />
-                                                        <col width="80px" />
-                                                        <col width="100px" />
-                                                        <col width="100px" />
-                                                        <col width="130px" />
-                                                        <col width="100px" />
-                                                        <col width="80px" />
-                                                    </colgroup>
-                                                <tr>
-                                                    <th>맞춤 클리닉</th>
-                                                    <td>중1-1 뜨레스</td>
-                                                    <th>학년</th>
-                                                    <td>중1</td>
-                                                    <th>이름</th>
-                                                    <td>조현준</td>
-                                                    <th>학습일</th>
-                                                    <td>2022.07.12</td>
-                                                    <th>점수</th>
-                                                    <td>/26</td>
-                                                </tr>
-                                            </table> */}
-
                                             {listP &&
                                                 listP.map((a) => {
                                                     return (
@@ -240,7 +213,42 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
                                                 })}
                                         </>
                                     )}
-                                    {checkData.includes("solution") && <div>정답</div>}
+                                    {checkData.includes("solution") && (
+                                         <>
+                                         {solveListP &&
+                                             solveListP.map((a) => {
+                                                 return (
+                                                     <div className="page">
+                                                         {a.map((list) => {
+                                                             return (
+                                                                 <div
+                                                                     className="card"
+                                                                 >
+                                                                     <div className="card-head">
+                                                                         <strong>
+                                                                             {list.qseq < 10
+                                                                                 ? `0${list.qseq}`
+                                                                                 : list.qseq}
+                                                                         </strong>
+                                                                         <span>
+                                                                             {list.qa_keyword}
+                                                                         </span>
+                                                                     </div>
+                                                                     <div className="card-body">
+                                                                         <img
+                                                                             src={list.qa_path}
+                                                                             alt=""
+                                                                         />
+                                                                         <div style={{height : "100px"}}></div>
+                                                                     </div>
+                                                                 </div>
+                                                             );
+                                                         })}
+                                                     </div>
+                                                 );
+                                             })}
+                                     </>
+                                    )}
                                 </div>
                             </div>
                         </div>

@@ -17,7 +17,21 @@
         .card {
             width: 50%;
             padding: 20px;
-            img{
+
+            &-head {
+                @include flex(sb);
+                margin-bottom: 20px;
+                strong {
+                    @include font-style(36);
+                    color: $green;
+                }
+                span {
+                    @include font-style(20);
+                    font-weight: 600;
+                }
+            }
+
+            img {
                 width: 100%;
             }
         }
