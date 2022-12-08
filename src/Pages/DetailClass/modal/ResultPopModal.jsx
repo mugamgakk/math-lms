@@ -1,27 +1,39 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ajax from "../../../ajax";
 import Icon from '../../../components/Icon';
 import { falseModal } from '../../../methods/methods';
+import axios from 'axios';
 
 let data = new Array(20).fill().map((v,i)=> i );
 
-function ResultPopMoal({setResultPop,title='강수학/중2-1개념서/I. 수와 연산/1. 소인수분해/개념 확인'}) {
+function ResultPopMoal({setResultPop}) {
 
-    
+    let [dataList,setDataList] = useState(null);
+    let [clickState,setClickState] = useState(0);
+    useState(()=>{
+        console.log(clickState);
+    },[clickState])
         useEffect(()=>{
-            ajax("/class_pop.php", { data : {
-                mode : 'qa_result',
-                usr_seq : 80,
-                bk_cd : '15m11coa11',
-                sd_kind : 'CO'
-            }
-            }).then(res=>{
-                console.log(res);
-            }).catch((error)=>{
-                console.log(error);
-            })
-    },[]);
+            // ajax("/class_pop.php", { data : {
+            //     mode : 'qa_result',
+            //     usr_seq : 80,
+            //     bk_cd : '15m11coa11',
+            //     sd_kind : 'CO'
+            // }
+            // }).then(res=>{
+            //     console.log(res);
+            // }).catch((error)=>{
+            //     console.log(error);
+            // })
+            getData();
+        },[]);
 
+        const getData = async() => {
+            const res = await axios("/json/resultPop_table.json");
+            console.log(res);
+            setDataList(res.data);
+
+        }
 
     return ( 
             <div className="modal" onClick={(e)=>{
@@ -49,7 +61,11 @@ function ResultPopMoal({setResultPop,title='강수학/중2-1개념서/I. 수와 
                         </div>
                         <div className='contents'>
                             <div className="contents-l">
-                                <h5 className='mb-10'>결과: 10/12</h5>
+                                <div className="top mb-10">
+                                    맞힌 개수
+                                    <strong>9 개 / {dataList && dataList.length} 개</strong>
+                                    2022. 7. 12
+                                </div>
                                 <table className='table tableA'>
                                     <thead>
                                         <tr>
@@ -62,13 +78,15 @@ function ResultPopMoal({setResultPop,title='강수학/중2-1개념서/I. 수와 
                                     </thead>
                                     <tbody className='scroll' style={{ height: '480px' }}>
                                         {
-                                            data.map((item,i) => {
+                                            dataList && dataList.map((item,i) => {
                                                 return(
-                                                    <tr key={item}>
-                                                        <td style={{ width: '15%',fontWeight:'600',cursor:'pointer'}}>{i+1}</td>
-                                                        <td style={{ width: '20%'}}>①</td>
-                                                        <td style={{ width: '20%'}}>①</td>
-                                                        <td style={{ width: '20%'}}><button className='btn-correct'>정답</button></td>
+                                                    <tr key={i} className={clickState == i ? 'active' : ''}>
+                                                        <td onClick={()=> setClickState(i)} style={{ width: '15%',fontWeight:'600',cursor:'pointer'}}>{i+1}</td>
+                                                        <td style={{ width: '20%'}}>{item.answer}</td>
+                                                        <td style={{ width: '20%'}}>{item.stu_answer}</td>
+                                                        <td style={{ width: '20%'}}><button className={item.state ? 'btn-correct' : 'btn-incorrect'}>
+                                                            {item.state ? '정답' : '오답'}
+                                                            </button></td>
                                                         <td style={{ width: '25%'}}><button className='btnPlay'></button></td>
                                                     </tr>
                                                 )
@@ -77,8 +95,24 @@ function ResultPopMoal({setResultPop,title='강수학/중2-1개념서/I. 수와 
                                     </tbody>
                                 </table>
                             </div>
-                            <div className="contents-r">
-                                        
+                            <div className="contents-r scroll">
+                                <div>
+                                    <div className='top fj' style={{ marginBottom:'15px' }}>
+                                        <h1>{clickState < 9 ? `0${clickState+1}` : clickState+1}</h1>
+                                        <span>소인수분해</span>
+                                    </div>
+                                    
+                                    <img className='img-q' src={`https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${dataList && dataList[clickState].qa_code}_Q.png`} alt="" style={{marginBottom:'20px'}}/>
+                                    {
+                                        ['①','②','③','④','⑤'].map((b,i)=>{
+                                            return(
+                                                <div className='choice fa'>
+                                                <span>{b}</span><img className='img-f' src={`https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${dataList && dataList[clickState].qa_code}_${i+1}.png`}/>
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                </div>
                             </div>
                         </div>
                     </div>

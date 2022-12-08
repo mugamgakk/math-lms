@@ -198,7 +198,7 @@ const Tr = ({data,checkData,checkFunc})=>{
             </td>
             <td style={{ width:'11.82%' }}>{data.reg_dt}</td>
             <td style={{ width:'11.82%' }}>{data.bk_name}</td>
-            <td style={{ width:'21.76%', cursor:'pointer' }} onClick={()=>setCreationMo(true)}>
+            <td style={{ width:'21.76%' }} onClick={()=>setCreationMo(true)}>
                 <div className="title">
                     {data.wa_title}
                 </div>

@@ -14,3 +14,156 @@
         }
     }
 }
+.resultPopModal{
+    width: 1080px;
+    .contents{
+        background: #f7f3f0;
+        padding: 20px;
+        display:flex;
+        align-items: end;
+        &-l{
+            width: 400px;
+            margin-right: 10px;
+            .top{
+                @include font-style(18);
+                strong{
+                    @include font-style(20);
+                    color: #fff;
+                    font-weight: 600;
+                    background: #be9e7f;
+                    padding: 3px 15px;
+                    border-radius: $radius;
+                    margin: 0 10px;
+                }
+            }
+            thead{
+                tr{
+                    border-top: none;
+                    width: 100%;
+                    th{
+                        background: #664e3d;
+                        color: #fff;
+                        text-align: center;
+                        position: relative;
+                        border-right: none;
+                        padding: 8px 0 !important;
+                        &::after{
+                            content:'';
+                            display: block;
+                            position: absolute;
+                            width: 1px;
+                            height: 30px;
+                            right: 0;
+                            top: 50%;
+                            transform: translateY(-50%);
+                            background: #473326;
+                        }
+                    }
+                }
+            }
+            tbody{
+                border-left: 1px solid #dee2e6;
+                background: #fff;
+                border-radius: 0 0 8px 8px;
+                tr{
+                    &:last-child{
+                        border-bottom: 1px solid #dee2e6;
+                    }
+                    &:hover{
+                        td{
+                            background: #ffe8e0;
+                        }
+                    }
+                    &.active{
+                        td{
+                            background: #ffe8e0;
+                        }
+                    }
+                }
+
+                td{
+                    background: #fff;
+                    &:first-child{
+                        border-left: none !important;
+                    }
+                    .btn-correct{
+                        width: 60px;
+                        height: 30px;
+                        border-radius: $radius;
+                        background: #eb615a;
+                        color: #fff;
+                        @include font-style(16);
+                    }
+                    .btn-incorrect{
+                        width: 60px;
+                        height: 30px;
+                        border-radius: $radius;
+                        background: #fff;
+                        color: #eb615a;
+                        border: 1px solid #eb615a;
+                        @include font-style(16);
+
+                    }
+                }
+                .btnPlay{
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                    background: #666;
+                    position: relative;
+                    left: -5px;
+                    &::after{
+                        content:'';
+                        display: block;
+                        position: absolute;
+                        top: 50%;
+                        left: 40%;
+                        transform: translateY(-50%);
+                        border-bottom: 6px solid transparent;
+                        border-top: 6px solid transparent;
+                        border-left: 9px solid #fff;
+                        border-right: 9px solid transparent;
+
+                    }
+                }
+
+            }
+        }
+        &-r{
+            width: 630px;
+            height: 558px;
+            border-radius: 8px;
+            background: #fff;
+            padding: 30px 40px;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            max-height: none !important;
+            .top{
+                h1{
+                    font-size: 36px;
+                    font-weight: bold;
+                    color: #057064;
+                }
+                span{
+                    font-size: 20px;
+                    font-weight: 600;
+            }
+        }
+        .choice{
+            margin-bottom: 20px;
+            font-size: 30px;
+            font-weight: 400;
+            span{
+                margin-right: 10px;
+                position: relative;
+                top: 3px;
+            }
+        }
+        img{
+            width: 100%;
+        }
+            
+        }
+    }
+}
+
