@@ -23,15 +23,15 @@ function CreationModal({setCreationMo,seq}){
     },[]);
 
     const createWrongAnswer = async () => {
-        let url = "/class_wrong.php";
-        let query = {
-            mode: "wa_detail",
-            wa_seq: seq,
-        };
+        // let url = "/class_wrong.php";
+        // let query = {
+        //     mode: "wa_detail",
+        //     wa_seq: seq,
+        // };
 
-        let res = await ajax(url, { data: query });
-        console.log(res);
-        // const res = await axios("/json/creationModal_table.json");
+        // let res = await ajax(url, { data: query });
+        // console.log(res);
+        const res = await axios("/json/creationModalDetail_table.json");
         setDataList(res.data);
     }
 
@@ -71,16 +71,16 @@ function CreationModal({setCreationMo,seq}){
                         <table className="table tableA">
                             <thead>
                                 <tr>
-                                    <th style={{ width:'50px',flexDirection:'column' }}>No.</th>
-                                    <th style={{ width:'130px' }}>대단원</th>
-                                    <th style={{ width:'180px' }}>소단원</th>
-                                    <th style={{ width:'180px' }}>개념(키워드)</th>
-                                    <th style={{ width:'90px' }}>출처</th>
-                                    <th style={{ width:'50px' }}>번호</th>
-                                    <th style={{ width:'100px' }}>문제 형식</th>
-                                    <th style={{ width:'90px' }}>난이도</th>
-                                    <th style={{ width:'90px' }}>문제 보기</th>
-                                    <th style={{ width:'80px' }}>정답</th>
+                                    <th style={{ width:'4.81%',flexDirection:'column' }}>No.</th>
+                                    <th style={{ width:'12.51%' }}>대단원</th>
+                                    <th style={{ width:'17.32%' }}>소단원</th>
+                                    <th style={{ width:'17.32%' }}>개념(키워드)</th>
+                                    <th style={{ width:'8.66%' }}>출처</th>
+                                    <th style={{ width:'4.81%' }}>번호</th>
+                                    <th style={{ width:'9.62%' }}>문제 형식</th>
+                                    <th style={{ width:'8.66%' }}>난이도</th>
+                                    <th style={{ width:'8.66%' }}>문제 보기</th>
+                                    <th style={{ width:'7.69%' }}>정답</th>
                                 </tr>
                             </thead>
                             <tbody className="scroll" style={{ height:'429px' }}>
@@ -110,18 +110,18 @@ function CreationModal({setCreationMo,seq}){
 const Tr = ({data}) => {
     return(
         <tr key={data.no}>
-        <td style={{ width:'50px' }}>{data.no}</td>
-        <td style={{ width:'130px' }}>{data.ltitle}</td>
-        <td style={{ width:'180px' }}>{data.utitle}</td>
-        <td style={{ width:'180px' }}>{data.keyword}</td>
-        <td style={{ width:'90px' }}>{data.source}</td>
-        <td style={{ width:'50px' }}>{data.qa_seq}</td>
-        <td style={{ width:'100px' }}>{data.type}</td>
-        <td style={{ width:'90px' }}>{data.level}</td>
-        <td style={{ width:'90px' }}>
+        <td style={{ width:'4.81%' }}>{data.no}</td>
+        <td style={{ width:'12.51%' }}>{data.ltitle}</td>
+        <td style={{ width:'17.32%' }}>{data.utitle}</td>
+        <td style={{ width:'17.32%' }}>{data.keyword}</td>
+        <td style={{ width:'8.66%' }}>{data.source}</td>
+        <td style={{ width:'4.81%' }}>{data.qa_seq}</td>
+        <td style={{ width:'9.62%' }}>{data.type}</td>
+        <td style={{ width:'8.66%' }}>{data.level}</td>
+        <td style={{ width:'8.66%' }}>
             <button className='btn-table'>보기</button>
         </td>
-        <td style={{ width:'80px' }}>{data.wa_no}</td>
+        <td style={{ width:'7.69%' }}>{data.crt_ans}</td>
     </tr>
     )
 };

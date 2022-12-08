@@ -152,19 +152,20 @@ function EvaluationRoutineContent() {
                 </div>
                 <div className="fj">
                     <CustomDatePicker
-                        lable={true}
-                        onChange={(day) => {
-                            setStartDay(day);
-                        }}
                         value={startDay}
+                        width="130px"
+                        onChange={(day) => { setStartDay(day) }}
+                        label={true}
                     />
-                    <span className="water">~</span>
+                    <span className="water">
+                        ~
+                    </span>
                     <CustomDatePicker
-                        lable={true}
-                        onChange={(day) => {
-                            setEndDay(day);
-                        }}
                         value={endDay}
+                        width="130px"
+                        onChange={(day) => { setEndDay(day) }}
+                        label={true}
+                        className="mr-10"
                     />
                     <button className='btn-search btn-green ml-10 mr-10' onClick={getList}><Icon icon={"search"} />조회</button>
                     <button class="btn-grey btn-icon"><Icon icon={"reload"} />새로고침</button>

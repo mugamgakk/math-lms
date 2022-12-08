@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect} from "react";
 import SelectBase from '../../../components/ui/select/SelectBase';
 import ajax from "../../../ajax";
 import DatePicker from "react-date-picker";
-import PrintModal from '../../../components/PrintModal';
+import PrintModal_clinic from '../../../components/PrintModal_clinic';
 import dayjs from "dayjs"
 import useStudentsStore from "../../../store/useStudentsStore";
 import Icon from "../../../components/Icon";
@@ -109,9 +109,9 @@ function WrongAnswer() {
     }, []);
 
     let [startDay, setStartDay] = useState(oneMonthAgo);
-    let [option, setOption] = useState(false);
-
     let [endDay, setEndDay] = useState(new Date());
+    
+    let [option, setOption] = useState(false);
     let [subjectArr, setSubjectArr] = useState([]);
 
     const optionBtn = () => {
@@ -198,7 +198,7 @@ const Tr = ({data,checkData,checkFunc})=>{
             </td>
             <td style={{ width:'11.82%' }}>{data.reg_dt}</td>
             <td style={{ width:'11.82%' }}>{data.bk_name}</td>
-            <td style={{ width:'21.76%' }} onClick={()=>setCreationMo(true)}>
+            <td style={{ width:'21.76%', cursor:'pointer' }} onClick={()=>setCreationMo(true)}>
                 <div className="title">
                     {data.wa_title}
                 </div>
@@ -224,7 +224,7 @@ const Tr = ({data,checkData,checkFunc})=>{
             </td>
             <td style={{ width:'11.82%' }}><button className="btn-table" onClick={()=> setPrintModal(true)}><Icon icon={"print"} style={{ marginRight:'5px' }} />인쇄</button>
             {
-                printModal && <PrintModal closeModal={setPrintModal}/>
+                printModal && <PrintModal_clinic closeModal={setPrintModal}/>
             }
             </td>
         </tr>

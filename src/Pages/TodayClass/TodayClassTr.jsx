@@ -6,7 +6,6 @@ import { fileDown } from "../../methods/methods";
 import 오디오입니동 from "../../test.mp3";
 import Icon from '../../components/Icon';
 import { toggleBodyScroll } from '../../methods/methods'
-import PrintModalClinic from '../../components/PrintModal_clinic';
 function TodayClassTr({data}){
 
     // 모달 상태 관리
@@ -25,9 +24,9 @@ function TodayClassTr({data}){
 
     return(
         <>
-                <div className={`state1 fc br ${data.state1 ? '' : 'disabled'}`} style={{ width:'9.846%' }}>{data.state1}</div>
-                <div className={`state2 fc br ${data.state2 ? '' : 'disabled'}`} style={{ width:'9.846%' }}>{data.state2}</div>
-                <div className={`state3 fc br ${data.state3 ? '' : 'disabled'}`} style={{ width:'9.846%',flexDirection:'column' }}>
+                <div className={`state1 fc br ${data.state1 ? (data.state1 === '100%' && 'active' ) : 'disabled'}`} style={{ width:'9.846%' }}>{data.state1}</div>
+                <div className={`state2 fc br ${data.state2 ? (data.state1 === '100%' && 'active' ) : 'disabled'}`} style={{ width:'9.846%' }}>{data.state2}</div>
+                <div className={`state3 fc br ${data.state3 ? (data.state1 === '100%' && 'active' ) : 'disabled'}`} style={{ width:'9.846%',flexDirection:'column' }}>
                 {
                     data.state3 && (
                         <button className={`playBtn ${data.state3.newplay ? 'new' : ''}`} onClick={()=>setAssModal(true)} >
@@ -37,7 +36,7 @@ function TodayClassTr({data}){
                 }
                 {
                     data.state3 ? data.state3?.assessment ? (
-                        <div>
+                        <div className={data.state1 === '100%' && 'active' }>
                             <button className='asse btn-orange' onClick={()=>setAssModal(true)} style={{ fontSize: '14px' }}>
                             이해 {data.state3.uds}&nbsp;
                             전달 {data.state3.send}
@@ -47,7 +46,7 @@ function TodayClassTr({data}){
                     : null
                 }
                 </div>
-                <div className={`state4 fc br ${data.state4 ? '' : 'disabled'}`} style={{ width:'9.846%' }}>{data.state4}</div>
+                <div className={`state4 fc br ${data.state4 ? (data.state1 === '100%' && 'active' ) : 'disabled'}`} style={{ width:'9.846%' }}>{data.state4}</div>
                 <div className={`state5 fc br ${data.state5 ? '' : 'disabled'}`} style={{ width:'9.846%' }}>
                     { 
                         data.state5 ?
@@ -76,7 +75,7 @@ function TodayClassTr({data}){
                     }
                     {
                     printModal ? 
-                    <PrintModalClinic 
+                    <PrintModal
                     title='맞춤 클리닉'
                     closeModal={closeModal}
                     cls_seq={data.cls_seq}

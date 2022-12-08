@@ -1,0 +1,68 @@
+[
+    {
+        "qa_seq": "123",
+        "ltitle": "i.수와 연산",
+        "utitle": "1.소인수분해",
+        "keyword": "소수와 합성수",
+        "source": "개념서",
+        "no": "1",
+        "type": "객관식",
+        "level": "최상",
+        "crt_ans":"③, ④"
+    },
+    {
+        "qa_seq": "123",
+        "ltitle": "i.수와 연산",
+        "utitle": "1.소인수분해",
+        "keyword": "소수와 합성수",
+        "source": "뜨레스",
+        "no": "2",
+        "type": "객관식",
+        "level": "중",
+        "crt_ans":"④"
+    },
+    {
+        "qa_seq": "123",
+        "ltitle": "i.수와 연산",
+        "utitle": "1.소인수분해",
+        "keyword": "소수와 합성수",
+        "source": "개념서",
+        "no": "3",
+        "type": "서술형",
+        "level": "중상",
+        "crt_ans":"④"
+    },
+    {
+        "qa_seq": "123",
+        "ltitle": "i.수와 연산",
+        "utitle": "1.소인수분해",
+        "keyword": "소수와 합성수",
+        "source": "뜨레스",
+        "no": "4",
+        "type": "서술형",
+        "level": "상",
+        "crt_ans":"①,②"
+    },
+    {
+        "qa_seq": "123",
+        "ltitle": "i.수와 연산",
+        "utitle": "1.소인수분해",
+        "keyword": "소수와 합성수",
+        "source": "개념서",
+        "no": "5",
+        "type": "주관식",
+        "level": "중",
+        "crt_ans":"②"
+    },
+    {
+        "qa_seq": "123",
+        "ltitle": "i.수와 연산",
+        "utitle": "1.소인수분해",
+        "keyword": "소수와 합성수",
+        "source": "뜨레스",
+        "no": "6",
+        "type": "객관식",
+        "level": "하",
+        "crt_ans":"③"
+    }
+]

@@ -72,7 +72,9 @@
             .btn-table{
                 @include font-style(16);
                 padding: 0;
-
+            }
+            .active{
+                background:  #fff0eb;
             }
         }
         .disabled{
