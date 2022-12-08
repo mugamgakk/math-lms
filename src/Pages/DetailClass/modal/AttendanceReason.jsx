@@ -15,11 +15,11 @@ const Modal = styled.div`
     z-index: 10;
 `;
 
-function AttendanceReason({ setModal, clickStudent, firstDay, clickDay }) {
+function AttendanceReason({ setModal, clickStudent, month, clickDay }) {
     let [reason, setReason] = useState("");
 
     const saveReason = async () => {
-        const 날짜 = dayjs(firstDay).set("date", clickDay).format("YYYYMMDD");
+        const 날짜 = dayjs(month).set("date", clickDay).format("YYYYMMDD");
 
         const param = {
             mode: "set_reason",
@@ -34,7 +34,7 @@ function AttendanceReason({ setModal, clickStudent, firstDay, clickDay }) {
     };
 
     const getData = async () => {
-        const 날짜 = dayjs(firstDay).set("date", clickDay).format("YYYYMMDD");
+        const 날짜 = dayjs(month).set("date", clickDay).format("YYYYMMDD");
 
         const data = {
             mode: "get_reason",
