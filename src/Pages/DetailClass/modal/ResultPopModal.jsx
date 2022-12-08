@@ -3,6 +3,7 @@ import ajax from "../../../ajax";
 import Icon from '../../../components/Icon';
 import { falseModal } from '../../../methods/methods';
 import axios from 'axios';
+import ReactPlayer from 'react-player';
 
 let data = new Array(20).fill().map((v,i)=> i );
 
@@ -10,6 +11,8 @@ function ResultPopMoal({setResultPop}) {
 
     let [dataList,setDataList] = useState(null);
     let [clickState,setClickState] = useState(0);
+    let [video, setVideo] = useState(false);
+
     useState(()=>{
         console.log(clickState);
     },[clickState])
@@ -87,7 +90,11 @@ function ResultPopMoal({setResultPop}) {
                                                         <td style={{ width: '20%'}}><button className={item.state ? 'btn-correct' : 'btn-incorrect'}>
                                                             {item.state ? '정답' : '오답'}
                                                             </button></td>
-                                                        <td style={{ width: '25%'}}><button className='btnPlay'></button></td>
+                                                        <td style={{ width: '25%'}}><button className='btnPlay' onClick={()=>setVideo(true)}></button>
+                                                        {
+                                                            video && <VideoPlayer closeModal={setVideo} />
+                                                        }
+                                                        </td>
                                                     </tr>
                                                 )
                                             })
@@ -125,6 +132,26 @@ function ResultPopMoal({setResultPop}) {
                 </div>
             </div>
     );
+}
+
+function VideoPlayer ({closeModal}){
+    return(
+        <div className='videoPlayer'>
+            <div className='top'>
+            <button className='fc' onClick={()=>closeModal(false)}><Icon icon={"close"} style={{fontSize:'25px'}}/></button>
+            </div>
+            <ReactPlayer 
+            url='https://youtu.be/QoGyp3yeDkc' 
+            width='100%'       
+            height='500px'        
+            playing={true}       
+            // muted={true}        
+            controls={true}       
+            // light={false} 
+            />
+        </div>
+    )
+
 }
 
 export default ResultPopMoal;

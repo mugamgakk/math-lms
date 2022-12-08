@@ -7,7 +7,7 @@ import useStudentsStore from "../../../store/useStudentsStore";
 import { useCallback } from "react";
 import Icon from "../../../components/Icon";
 import Checkbox from "../../../components/Checkbox";
-import PrintModal from "../../../components/PrintModal";
+import PrintModal_clinic from "../../../components/PrintModal_clinic";
 
 function ClassManagement(){
     let [progressMo, setProgressState] = useState(false);
@@ -246,7 +246,7 @@ const Tr = ({data,studyDone,ucode,retry,setCheckList,wrongPopList}) => {
                                     <Icon icon={"print"} style={{color:'#666',marginRight:'6px'}}/>
                                     인쇄</button>
                                     {
-                                        printMo && <PrintModal closeModal={setPrintMo}/>
+                                        printMo && <PrintModal_clinic closeModal={setPrintMo}/>
                                     }
                                 <button className="btn-orange wh-103">재응시({data.state5.retry})</button>
                             </div>
