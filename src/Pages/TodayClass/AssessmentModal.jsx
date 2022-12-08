@@ -61,6 +61,7 @@ function AssessmentModal ({setAssModal}) {
      let audioBar = useRef();
      let volumeBar = useRef();
      let [valumeItem, setValumeItem] = useState(0.5);
+     let [audioItem, setAudioItem] = useState(0);
      let [minTime, setMinTime] = useState("0 : 00");
      let [maxTime, setMaxTime] = useState("0 : 00");
     
@@ -79,7 +80,6 @@ function AssessmentModal ({setAssModal}) {
      let [speenValue, setSpeedValue] = useState(speedOption[0]);
      let [playState, setPlayState] = useState(false);
      let [muteState, setMuteState] = useState(false);
- 
      let allTime = useRef(0);
      
      // 재생버튼
@@ -95,7 +95,8 @@ function AssessmentModal ({setAssModal}) {
          let 오디오 = audio.current.audioEl.current;
  
          allTime.current = 오디오.duration;
-         audioBar.current.value = 0;
+        //  audioBar.current.value = 0;
+        setAudioItem(0);
  
          let 분 = parseInt(오디오.duration / 60);
          let 초 = Math.round(오디오.duration % 60);
@@ -131,7 +132,8 @@ function AssessmentModal ({setAssModal}) {
      const audioIng = (time) => {
          let 현재시간퍼센트 = (time / allTime.current) * 100;
          audioBar.current.style.background = `linear-gradient(to right, #ea7851 0%, #ea7851 ${현재시간퍼센트}%, #ccc ${현재시간퍼센트}%, #ccc 100%)`;
-         audioBar.current.value = 현재시간퍼센트;
+        //  audioBar.current.value = 현재시간퍼센트;
+        setAudioItem(현재시간퍼센트);
          const min = parseInt(time / 60);
          const sec = Math.round(time % 60);
          setMinTime(`${min} : ${sec < 10 ? "0" + sec : sec}`);
@@ -152,9 +154,16 @@ function AssessmentModal ({setAssModal}) {
  
     //      오디오.currentTime = toTime;
     //  };
- 
+
+    //  오디오진행바 onChange
+     const moveAudioBar = (value) => {
+        console.log(value);
+
+
+     } 
      const forwardRadio = (time)=>{
          let 오디오 = audio.current.audioEl.current;
+         console.log(오디오);
          let changeTime = 오디오.currentTime + time
          if(changeTime < 0){
              changeTime = 0
@@ -212,8 +221,8 @@ function AssessmentModal ({setAssModal}) {
                                     className="audio-bar" 
                                     ref={audioBar}
                                     min={0}
-                                    max={100}
-                                    onChange={(e)=>{console.log(e.target.value)}}
+                                    value={audioItem}
+                                    onChange={(e)=>moveAudioBar(e.target.value)}
                                     />
                                 <div className="foot fj" style={{ marginTop:'17px' }}>
                                     <div className='audio-volume'>

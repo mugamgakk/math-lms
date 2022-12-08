@@ -174,8 +174,8 @@ function WrongAnswer() {
                 </thead>
                 <tbody className="scroll"> 
                     {
-                        wrongList && wrongList.map(data=>{
-                            return <Tr data={data} checkData={checkData} checkFunc={checkFunc} setCheckData={setCheckData} />
+                        wrongList && wrongList.map((data,i)=>{
+                            return <Tr key={i} data={data} checkData={checkData} checkFunc={checkFunc} setCheckData={setCheckData} />
                         })
                         
                     }
