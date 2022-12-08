@@ -24,9 +24,9 @@ function TodayClassTr({data}){
 
     return(
         <>
-                <div className={`state1 fc br ${data.state1 ? (data.state1 === '100%' && 'active' ) : 'disabled'}`} style={{ width:'9.846%' }}>{data.state1}</div>
-                <div className={`state2 fc br ${data.state2 ? (data.state1 === '100%' && 'active' ) : 'disabled'}`} style={{ width:'9.846%' }}>{data.state2}</div>
-                <div className={`state3 fc br ${data.state3 ? (data.state1 === '100%' && 'active' ) : 'disabled'}`} style={{ width:'9.846%',flexDirection:'column' }}>
+                <div className={`state1 fc br ${data.state1 ? (data.state1 == '100%' && 'active' ) : 'disabled'}`} style={{ width:'9.846%' }}>{data.state1}</div>
+                <div className={`state2 fc br ${data.state2 ? (data.state1 == '100%' && 'active' ) : 'disabled'}`} style={{ width:'9.846%' }}>{data.state2}</div>
+                <div className={`state3 fc br ${data.state3 ? (data.state1 == '100%' && 'active' ) : 'disabled'}`} style={{ width:'9.846%',flexDirection:'column' }}>
                 {
                     data.state3 && (
                         <button className={`playBtn ${data.state3.newplay ? 'new' : ''}`} onClick={()=>setAssModal(true)} >
@@ -46,7 +46,7 @@ function TodayClassTr({data}){
                     : null
                 }
                 </div>
-                <div className={`state4 fc br ${data.state4 ? (data.state1 === '100%' && 'active' ) : 'disabled'}`} style={{ width:'9.846%' }}>{data.state4}</div>
+                <div className={`state4 fc br ${data.state4 ? (data.state1 == '100%' && 'active' ) : 'disabled'}`} style={{ width:'9.846%' }}>{data.state4}</div>
                 <div className={`state5 fc br ${data.state5 ? '' : 'disabled'}`} style={{ width:'9.846%' }}>
                     { 
                         data.state5 ?

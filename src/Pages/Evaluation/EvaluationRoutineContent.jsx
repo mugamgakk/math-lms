@@ -1,8 +1,6 @@
 import React, { useRef, useEffect, useState, memo, useMemo, useCallback } from "react";
 import SelectBase from "../../components/ui/select/SelectBase";
-import PrintModal from "../../../src/components/PrintModal";
 import MarkingModal from "./MarkingModal";
-import LmsDatePicker from "../../components/LmsDatePicker";
 import dayjs from "dayjs";
 import useStudentsStore from "../../store/useStudentsStore";
 import ajax from "../../ajax";
@@ -10,6 +8,8 @@ import UserInfo from "../../components/UserInfo";
 import Icon from "../../components/Icon";
 import CustomDatePicker from "../../components/CustomDatePicker";
 import Checkbox from "../../components/Checkbox";
+import ViewTranscriptsModal from "./ViewTranscriptsModal";
+import PrintModal_clinic from '../../components/PrintModal_clinic';
 
 const 평가종류 = [
     { value: "총괄 평가", label: "총괄 평가" },
@@ -221,6 +221,7 @@ function EvaluationRoutineContent() {
 }
 
 const Tr = memo(({ item, check, setCheck }) => {
+    let [viewModal, setViewModal] = useState(false);
     let [printModal, setPrintModal] = useState(false);
     let [markingModal, setMarkingModal] = useState(false);
     const clickStudent = useStudentsStore((state) => state.clickStudent);
@@ -247,6 +248,8 @@ const Tr = memo(({ item, check, setCheck }) => {
                 <button className="btn-table" onClick={()=>setPrintModal(true)}>
                    <Icon icon={'print'} style={{marginRight:'5px',fontSize:'16px'}}/> 인쇄
                     </button>
+                    { printModal && <PrintModal_clinic closeModal={setPrintModal} />}
+
             </td>
             <td style={{ width:'13.49%' }}>
                 {item.ev_date ? (
@@ -265,10 +268,10 @@ const Tr = memo(({ item, check, setCheck }) => {
                         <p>
                             {item.ev_per_score}점({item.ev_std_score}/{item.ev_max_score})
                         </p>
-                        <button className="btn-table" onClick={() => setPrintModal(true)}>
+                        <button className="btn-table" onClick={() => setViewModal(true)}>
                             성적표 보기
                         </button>
-                        {printModal && <PrintModal closeModal={setPrintModal} />}
+                        {viewModal && <ViewTranscriptsModal closeModal={setViewModal} />}
                     </>
                 ) : (
                     <button className="btn" onClick={() => setMarkingModal(true)}>

@@ -64,7 +64,12 @@ function AssessmentModal ({setAssModal}) {
      let [audioItem, setAudioItem] = useState(0);
      let [minTime, setMinTime] = useState("0 : 00");
      let [maxTime, setMaxTime] = useState("0 : 00");
-    
+      
+     useEffect(()=>{
+        if(audioItem > 0){
+            audioBar.current.style.background = `linear-gradient(to right, #ea7851 0%, #ea7851 ${audioItem}%, #ccc ${audioItem}%, #ccc 100%)`;
+        }
+     },[audioItem]);
 
 
      useEffect(()=>{
@@ -81,7 +86,7 @@ function AssessmentModal ({setAssModal}) {
      let [playState, setPlayState] = useState(false);
      let [muteState, setMuteState] = useState(false);
      let allTime = useRef(0);
-     
+   
      // 재생버튼
      const start = () => {
          let 오디오 = audio.current.audioEl.current;
@@ -131,12 +136,12 @@ function AssessmentModal ({setAssModal}) {
      // 진행 할때
      const audioIng = (time) => {
          let 현재시간퍼센트 = (time / allTime.current) * 100;
-         audioBar.current.style.background = `linear-gradient(to right, #ea7851 0%, #ea7851 ${현재시간퍼센트}%, #ccc ${현재시간퍼센트}%, #ccc 100%)`;
         //  audioBar.current.value = 현재시간퍼센트;
         setAudioItem(현재시간퍼센트);
          const min = parseInt(time / 60);
          const sec = Math.round(time % 60);
          setMinTime(`${min} : ${sec < 10 ? "0" + sec : sec}`);
+        //  console.log(audioItem);
      };
  
     //  const clickChange = (e) => {
@@ -157,7 +162,10 @@ function AssessmentModal ({setAssModal}) {
 
     //  오디오진행바 onChange
      const moveAudioBar = (value) => {
-        console.log(value);
+        let 오디오 = audio.current.audioEl.current;
+    
+        console.log(오디오.currentTime);
+        console.log(오디오.duration);
 
 
      } 
@@ -205,7 +213,6 @@ function AssessmentModal ({setAssModal}) {
                                     listenInterval={listenSpeed}
                                     onListen={audioIng}
                                     onEnded={() => {
-                                        audioBar.current.style.width = `${100}%`;
                                         setMinTime(maxTime);
                                         setPlayState(true);
                                     }}
