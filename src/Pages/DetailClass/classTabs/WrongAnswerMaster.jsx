@@ -121,6 +121,11 @@ function WrongAnswer() {
     };
 
 
+    const removeConfirm = (checkData) => {
+        if(checkData.length == 0) return window.alert('1개 이상 선택해주세요');
+        window.alert('삭제 완료');
+        setCheckData([]);
+    }
 
      return (
         <>
@@ -128,7 +133,7 @@ function WrongAnswer() {
                 <p className="warning mb-20 mt-20">※ 오답 정복하기는 학생별 오답 맞춤 학습지입니다 학생 화면 나의 오답 목록에 반영</p>
             <div className="top fj" style={{ marginBottom:'20px' }}>
                 <div className="top-left fj">
-                    <button className="btn-grey-border mr-10">선택 삭제</button>
+                    <button className="btn-grey-border mr-10" onClick={()=>removeConfirm(checkData)}>선택 삭제</button>
                     <SelectBase 
                         onChange={(ele)=>{setSelecChoice(ele)}} 
                         options={selectOption && selectOption} // 모든 옵션들 <br/>
