@@ -10,6 +10,7 @@ import axios from "axios";
 import Checkbox from "../../../components/Checkbox";
 import LmsDatePicker from "../../../components/LmsDatePicker";
 import CreationModal_detail from "../modal/CreationModal_detail";
+import CustomDatePicker from "../../../components/CustomDatePicker";
 const options = [
     { value: null, label: "전체" },
     { value: '중2-1노벰', label: '중2-1노벰' },
@@ -22,9 +23,10 @@ function WrongAnswer() {
     let [checkData,setCheckData] = useState([]);
     let [wrongList, setWrongList] = useState(null);
     let [filterData, setFilterData] = useState(null);
+    let [selectChoice,setSelecChoice] = useState(null);
     let [selectOption, setSelectOption] = useState(null);
     let [date,setDate] = useState(new Date());
-   
+   console.log(selectOption)
     useEffect(()=>{
         console.log(checkData);
     },[checkData])
@@ -57,6 +59,7 @@ function WrongAnswer() {
         });
 
         setSelectOption(arr);
+        setSelecChoice(arr[0])
 
     }
 
@@ -127,25 +130,27 @@ function WrongAnswer() {
                 <div className="top-left fj">
                     <button className="btn-grey-border mr-10">선택 삭제</button>
                     <SelectBase 
-                        onChange={(ele)=>{setSelectOption(ele)}} 
+                        onChange={(ele)=>{setSelecChoice(ele)}} 
                         options={selectOption && selectOption} // 모든 옵션들 <br/>
-                        value={selectOption}  //현재 값 <br/>
+                        value={selectChoice}  //현재 값 <br/>
                     />
                 </div>
                 <div className="top-right fj">
-                    <LmsDatePicker
+                    <CustomDatePicker
                         value={startDay}
                         width="130px"
                         onChange={(day) => { setStartDay(day) }}
+                        label={true}
                     />
                     <span className="water">
                         ~
                     </span>
-                    <LmsDatePicker
+                    <CustomDatePicker
                         value={endDay}
                         width="130px"
                         onChange={(day) => { setEndDay(day) }}
-                        style={{ marginRight: "10px" }}
+                        label={true}
+                        className="mr-10"
                     />
               
                 <button className='btn-search btn-green' onClick={optionBtn}><Icon icon={"search"} />조회</button>
