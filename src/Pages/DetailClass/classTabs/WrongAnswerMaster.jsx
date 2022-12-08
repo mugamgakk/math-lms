@@ -11,6 +11,7 @@ import Checkbox from "../../../components/Checkbox";
 import LmsDatePicker from "../../../components/LmsDatePicker";
 import CreationModal_detail from "../modal/CreationModal_detail";
 import CustomDatePicker from "../../../components/CustomDatePicker";
+import { useNavigate } from "react-router-dom";
 const options = [
     { value: null, label: "전체" },
     { value: '중2-1노벰', label: '중2-1노벰' },
@@ -119,7 +120,6 @@ function WrongAnswer() {
             setOption(true);
         }
     };
-
 
     const removeConfirm = (checkData) => {
         if(checkData.length == 0) return window.alert('1개 이상 선택해주세요');

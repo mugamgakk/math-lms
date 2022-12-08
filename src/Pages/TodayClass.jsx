@@ -1,4 +1,5 @@
 import React, { useEffect, useState, memo } from "react";
+import { useNavigate } from "react-router-dom";
 import ContentHeader from "../components/ContentHeader";
 import TodayClassSearch from "./TodayClass/TodayClassSearch"
 import ajax from "../ajax";
@@ -6,11 +7,13 @@ import Tr from './TodayClass/TodayClassTr';
 import DateNext from "../components/DateNext";
 import Icon from '../components/Icon';
 import CustomDatePicker from "../components/CustomDatePicker";
+
 function TodayClass(){
 
     let [findTodayList, setFindList] = useState(null);
     let [date,setDate] = useState(new Date());
     let [classList,setClassList] = useState();
+    let navigate = useNavigate();
 
     useEffect(()=>{
         getList();
@@ -107,7 +110,7 @@ function TodayClass(){
                         findTodayList.map((a,i) => {
                             return (
                                 <div className="item flex" key={i}>
-                                    <div className="name br bb" style={{ width:'9.33%' }}><strong>{a.name}</strong>{a.nickName}</div>
+                                    <div className="name br bb" style={{ width:'9.33%' }}><strong onClick={()=>navigate('/detail-class/management')}>{a.name}</strong>{a.nickName}</div>
                                     <div style={{ width:'90.67%' }}>
                                         {a.book.map((a,i) => {
                                             return (
