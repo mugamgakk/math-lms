@@ -9,7 +9,8 @@ import AttendanceDay from "../AttendanceDay";
 import AttendanceReason from "../modal/AttendanceReason";
 import FadeLoader from "react-spinners/FadeLoader";
 import { useRef } from "react";
-import LmsDatePicker from "../../../components/LmsDatePicker";
+import CustomDatePickerMonth from "../../../components/CustomDatePickerMonth";
+import { useEffect } from "react";
 
 export const Box = styled.div`
     width: 14.2857%;
@@ -52,6 +53,8 @@ function AttendanceManagement() {
 
     // 변경유무
     let changeState = useRef(false);
+
+    let [month, setMonth] = useState(new Date());
 
     // 셀렉트 변경시
     const changeData = ({ day, attd }) => {
@@ -117,18 +120,18 @@ function AttendanceManagement() {
             list: arr,
         };
 
-        // console.log(param);
-
         const res = await ajax("/class_daily.php", { data: param });
-
-        // console.log(res);
     };
+
+    useEffect(() => {
+        getData(month);
+    }, [month, clickStudent]);
 
     return (
         <>
             {modal && (
                 <AttendanceReason
-                    firstDay={firstDay}
+                    month={month}
                     setModal={setModal}
                     clickStudent={clickStudent}
                     clickDay={clickDay}
@@ -138,14 +141,19 @@ function AttendanceManagement() {
             <div className="AttendanceManagement-header" style={{ marginTop: "20px" }}>
                 <div className="d-flex">
                     <ChangeMonth
-                        clickStudent={clickStudent}
-                        className="mr-10"
+                        style={{ marginRight: "10px" }}
+                        value={month}
                         onChange={(ele) => {
-                            getData(ele);
-                            setFirstDay(ele);
+                            setMonth(ele);
                         }}
                     />
-                    <LmsDatePicker maxDate={new Date()} maxDetail={"year"} />
+                    <CustomDatePickerMonth
+                        maxDate={new Date()}
+                        value={month}
+                        onChange={(day) => {
+                            setMonth(day);
+                        }}
+                    />
                 </div>
                 <div>
                     <button
@@ -190,7 +198,7 @@ function AttendanceManagement() {
                     <div className="D">Sat</div>
                 </div>
                 <div className="lms-calendar-body">
-                    <BeforeMonth firstDay={firstDay} />
+                    <BeforeMonth month={month} />
                     {data &&
                         data.map((a, i) => {
                             return (
@@ -204,7 +212,7 @@ function AttendanceManagement() {
                             );
                         })}
 
-                    <NextMonth firstDay={firstDay} />
+                    <NextMonth month={month} />
                 </div>
                 {spin && (
                     <div style={bg}>
@@ -216,8 +224,8 @@ function AttendanceManagement() {
     );
 }
 
-const BeforeMonth = memo(({ firstDay }) => {
-    let { $y, $M } = dayjs(firstDay);
+const BeforeMonth = memo(({ month }) => {
+    let { $y, $M } = dayjs(month);
 
     // 이전 달의 마지막 날 날짜와 요일 구하기
     const startDay = new Date($y, $M, 0);
@@ -240,8 +248,8 @@ const BeforeMonth = memo(({ firstDay }) => {
     }
 });
 
-const NextMonth = memo(({ firstDay }) => {
-    let { $y, $M } = dayjs(firstDay);
+const NextMonth = memo(({ month }) => {
+    let { $y, $M } = dayjs(month);
 
     // 이전 달의 마지막 날 날짜와 요일 구하기
     const startDay = new Date($y, $M + 1, 0);
