@@ -9,6 +9,7 @@ import Icon from "../../components/Icon";
 import { useEffect } from "react";
 import axios from "axios";
 import CheckBox from "../../components/Checkbox";
+import JindanLBT from "./JindanLBT"
 
 function JindanContent() {
     let [value, setValue] = useState({
@@ -128,6 +129,7 @@ function JindanContent() {
 
 const Tr = ({ item }) => {
     let [modal, setModal] = useState(false);
+    let [jindanModal, setJindanModal] = useState(false);
 
     return (
         <tr>
@@ -141,7 +143,11 @@ const Tr = ({ item }) => {
             <td style={{ width: "11.4087%" }}>{item.level}</td>
             <td style={{ width: "8.8293%" }}>{item.score}</td>
             <td style={{ width: "11.8055%" }}>
-                <button className="btn-table">보기</button>
+                {
+                    jindanModal && <JindanLBT setModal={setJindanModal}/>
+                }
+                
+                <button className="btn-table" onClick={()=>{setJindanModal(true)}}>보기</button>
             </td>
             <td style={{ width: "13.8888%" }}>
                 {modal && <MemberLinkModal setModal={setModal} />}

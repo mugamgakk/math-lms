@@ -55,6 +55,8 @@ function Attendance() {
 
             const { class_list, student_list } = res.data;
 
+            console.log(student_list);
+
             if (!class_list) {
                 throw new Error("데이터가 없습니다.");
             }
@@ -80,6 +82,14 @@ function Attendance() {
             setLoading(false);
         }
     };
+
+    const searchUser = (param)=>{
+        let regexp = new RegExp(searchText);
+
+        let result = studentList.filter(a=> regexp.test(a.um_nm));
+
+        setStudentList(result);
+    }
 
     const saveList = async () => {
         let data = {
@@ -144,11 +154,11 @@ function Attendance() {
                             }}
                             onKeyUp={(e) => {
                                 if (e.key === "Enter") {
-                                    getData();
+                                    searchUser();
                                 }
                             }}
                         />
-                        <button className="btn-green btn-icon mr-10" onClick={getData}>
+                        <button className="btn-green btn-icon mr-10" onClick={searchUser}>
                             <Icon icon={"search"} />
                             검색
                         </button>
@@ -292,7 +302,8 @@ const Tr = memo(({ ele, index, date, allAtten }) => {
                         placeholder="사유 입력(50자 이내)"
                         value={text}
                         disabled={!pen}
-                        maxLength={50}
+                        onKeyDown={resizeaa}
+                        onKeyUp={resizeaa}
                     ></textarea>
                 </div>
                 <div style={{ width: "100px" }}>
@@ -306,5 +317,10 @@ const Tr = memo(({ ele, index, date, allAtten }) => {
         </tr>
     );
 });
+
+function resizeaa(e) {
+    e.target.style.height = "1px";
+    e.target.style.height = (2 + e.target.scrollHeight)+"px";
+  }
 
 export default Attendance;

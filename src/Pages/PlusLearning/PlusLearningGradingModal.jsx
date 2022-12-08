@@ -188,7 +188,7 @@ function PlusLearningGradingModal({ setModal, sc_seq }) {
 
                                 <div className="problem">
                                     <img
-                                        src="https://www.sisajournal.com/news/photo/202106/218128_126408_257.jpg"
+                                        src="https://file.parallaxedu.com/pxm/gplum/data/M11/tres/15M11TRA3104PR0010_2021_Q.png"
                                         alt="문제 영역"
                                         width={"100%"}
                                     />

@@ -99,6 +99,7 @@ function JinDanSearch() {
 
 const Tr = ({ele}) => {
     const {jindanStudent,setJindanStudent} = jindanStore();
+    let [modal, setModal] = useState(false);
     
     return (
         <tr className={`${jindanStudent?.이름 === ele.이름 ? "active" : ""}`}>
@@ -106,7 +107,10 @@ const Tr = ({ele}) => {
             <td style={{ width: "42%" }}>{ele.예약일시}</td>
             <td style={{ width: "33%" }}>{ele.연락처}</td>
             <td style={{ width: "20%" }}>
-                <button className="btn-table" style={{ minWidth: "50px" }}>
+                {
+                    modal && <ReservationModal close={setModal}/>
+                }
+                <button className="btn-table" style={{ minWidth: "50px" }} onClick={()=>{ setModal(true) }} >
                     보기
                 </button>
             </td>
