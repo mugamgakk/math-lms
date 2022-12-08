@@ -35,6 +35,9 @@ function Attendance() {
     let [loading, setLoading] = useState(true);
     let banOptions = useRef([]);
 
+    // 모두 출석 count
+    let [allAtten, setAllAtten] = useState(0);
+
     const defaultList = useRef();
 
     const getData = async () => {
@@ -59,7 +62,6 @@ function Attendance() {
             // store에 copy 데이터
             getCopyData(_cloneDeep(student_list));
 
-            
             // 새로고침을 위한 copy 데이터
             defaultList.current = _cloneDeep(student_list);
 
@@ -68,28 +70,28 @@ function Attendance() {
 
             // 반 값
             setClassList(class_list);
-            
+
             // 리스트 값
             setStudentList(student_list);
 
-            setSearchText("")
+            setSearchText("");
             setLoading(false);
         } catch (err) {
             setLoading(false);
         }
     };
 
-    const saveList = async ()=>{
+    const saveList = async () => {
         let data = {
-            mode : "set_daily",
+            mode: "set_daily",
             ymd: dayjs(date).format("YYYYMMDD"),
-            student_list : copyData
-        }
+            student_list: copyData,
+        };
 
-        let res = await ajax("/class_daily.php", {data});
+        let res = await ajax("/class_daily.php", { data });
 
         alert("잠시후에 시도해주세요");
-    }
+    };
 
     useEffect(() => {
         getData();
@@ -115,13 +117,12 @@ function Attendance() {
                     />
 
                     <CustomDatePicker
-                    value={date}
-                    onChange={(day) => {
-                        setDate(day);
-                    }}
-                    maxDate={new Date()}
+                        value={date}
+                        onChange={(day) => {
+                            setDate(day);
+                        }}
+                        maxDate={new Date()}
                     />
-                   
                 </div>
                 <div className="attendence-body">
                     <div className="search">
@@ -138,9 +139,11 @@ function Attendance() {
                             className="textInput mr-10"
                             placeholder="학생명을 입력하세요"
                             style={{ width: "200px" }}
-                            onChange={e=>{ setSearchText(e.target.value) }}
-                            onKeyUp={(e)=>{
-                                if(e.key === "Enter"){
+                            onChange={(e) => {
+                                setSearchText(e.target.value);
+                            }}
+                            onKeyUp={(e) => {
+                                if (e.key === "Enter") {
                                     getData();
                                 }
                             }}
@@ -149,7 +152,12 @@ function Attendance() {
                             <Icon icon={"search"} />
                             검색
                         </button>
-                        <button className="btn-grey btn-icon" onClick={()=>{ setStudentList(_cloneDeep(defaultList.current)) }}>
+                        <button
+                            className="btn-grey btn-icon"
+                            onClick={() => {
+                                setStudentList(_cloneDeep(defaultList.current));
+                            }}
+                        >
                             <Icon icon={"reload"} />
                             새로고침
                         </button>
@@ -161,8 +169,16 @@ function Attendance() {
                                 <th scope="col" style={{ width: "13%" }}>
                                     학생명 (아이디)
                                 </th>
-                                <th scope="col" style={{ width: "26%" }}>
-                                    출결 체크
+                                <th scope="col" style={{ width: "26%" }} className="f-column">
+                                    <div>출결 체크</div>
+                                    <button
+                                        className="btn-table"
+                                        onClick={() => {
+                                            setAllAtten(allAtten + 1);
+                                        }}
+                                    >
+                                        모두 출석
+                                    </button>
                                 </th>
                                 <th scope="col" style={{ width: "61%" }}>
                                     출결 사유
@@ -174,17 +190,21 @@ function Attendance() {
                                 <SkeletonTable R={7} width={["13%", "26%", "61%"]} />
                             ) : (
                                 studentList?.map((ele, i) => {
-                                    return <Tr ele={ele} index={i} date={date} key={"index" + i} />;
+                                    return (
+                                        <Tr
+                                            ele={ele}
+                                            index={i}
+                                            date={date}
+                                            key={"index" + i}
+                                            allAtten={allAtten}
+                                        />
+                                    );
                                 })
                             )}
                         </tbody>
                     </table>
                     <div className="attendence-footer">
-                        <button
-                            type="button"
-                            className="btn-green"
-                            onClick={saveList}
-                        >
+                        <button type="button" className="btn-green" onClick={saveList}>
                             출결 내용 저장
                         </button>
                     </div>
@@ -194,8 +214,7 @@ function Attendance() {
     );
 }
 
-const Tr = memo(({ ele, index, date }) => {
-
+const Tr = memo(({ ele, index, date, allAtten }) => {
     let [text, setText] = useState((ele.reason ??= ""));
     let [state, setSTate] = useState(ele.attd);
     const changeCopyData = attendanceStore((state) => state.changeCopyData);
@@ -207,31 +226,36 @@ const Tr = memo(({ ele, index, date }) => {
 
         setText(ele.value);
         changeCopyData({ index, value: ele.value, 속성: "reason" });
-
     };
 
-    const saveReason = async ()=>{
+    const saveReason = async () => {
         const data = {
-            mode:  "set_reason",
-            ymd : dayjs(date).format("YYYYMMDD"),
-            reason : text,
-            usr_seq : ele.user_seq
-        }
+            mode: "set_reason",
+            ymd: dayjs(date).format("YYYYMMDD"),
+            reason: text,
+            usr_seq: ele.user_seq,
+        };
 
         // console.log(data);
-        let res = await ajax("/class_daily.php", {data});
+        let res = await ajax("/class_daily.php", { data });
 
-        if(res.data.ok == 1) alert("저장이 완료되었습니다.");
+        if (res.data.ok == 1) alert("저장이 완료되었습니다.");
+    };
 
-    }
-
-    useEffect(()=>{
-        setText(ele.reason ??= "");
+    useEffect(() => {
+        setText((ele.reason ??= ""));
         setSTate(ele.attd);
-        if(!ele.reason){
+        if (!ele.reason) {
             setPen(false);
         }
-    },[ele])
+    }, [ele]);
+
+    useEffect(() => {
+        if (allAtten !== 0) {
+            setSTate("P");
+            changeCopyData({ index, value: "P", 속성: "attd" });
+        }
+    }, [allAtten]);
 
     return (
         <tr>
@@ -272,7 +296,11 @@ const Tr = memo(({ ele, index, date }) => {
                     ></textarea>
                 </div>
                 <div style={{ width: "100px" }}>
-                    {pen && <button className="btn-grey-border" onClick={saveReason}>저장</button>}
+                    {pen && (
+                        <button className="btn-grey-border" onClick={saveReason}>
+                            저장
+                        </button>
+                    )}
                 </div>
             </td>
         </tr>

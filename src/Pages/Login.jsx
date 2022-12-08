@@ -44,7 +44,7 @@ function Login() {
             data: data,
         }).then((res) => {
 
-            console.log(res);
+            // console.log(res);
 
             switch (res.data.ok) {
                 // 로그인 완료

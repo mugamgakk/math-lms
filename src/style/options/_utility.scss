@@ -87,6 +87,10 @@
     justify-content: flex-end;
 }
 
+.f-column{
+    flex-direction: column;
+}
+
 
 .border{
     border: $border;

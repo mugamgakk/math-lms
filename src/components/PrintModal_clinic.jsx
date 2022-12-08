@@ -156,7 +156,7 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
                                     {checkData.includes("question") && (
                                         <>
                                             {listP &&
-                                                listP.map((a) => {
+                                                listP?.map((a) => {
                                                     return (
                                                         <div className="page">
                                                             {a.map((list) => {
@@ -216,7 +216,7 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
                                     {checkData.includes("solution") && (
                                          <>
                                          {solveListP &&
-                                             solveListP.map((a) => {
+                                             solveListP?.map((a) => {
                                                  return (
                                                      <div className="page">
                                                          {a.map((list) => {
@@ -370,7 +370,7 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
                                     <div onContextMenu={eventAlert} onDragStart={eventAlert}>
                                         <div className="ol">
                                             {lists &&
-                                                solveList?.[page - 1].map((list, i) => {
+                                                solveList?.[page - 1]?.map((list, i) => {
                                                     return (
                                                         <>
                                                             <div className="img-top fj">

@@ -7,6 +7,7 @@ import CustomDatePicker from "../../components/CustomDatePicker";
 import Checkbox from "../../components/Checkbox";
 import PlusLearningGradingTextBookModal from "./PlusLearningGradingTextBookModal";
 import PrintModal from "../../components/PrintModal_clinic";
+import ReportModal from "./ReportModal";
 
 const data = [
     {
@@ -64,10 +65,17 @@ function TextBook() {
     let [startDay, setStartDay] = useState(new Date());
     let [endDay, setEndDay] = useState(new Date());
 
+    let [reportModal, setReportModal] = useState(false);
 
     return (
         <div>
             <UserInfo clickStudent={clickStudent} />
+
+            {
+                reportModal && <ReportModal setModal={setReportModal}/>
+            }
+            
+
             <div className="fj" style={{ margin: "20px 0" }}>
                 <p className="text-alert">
                     ※ 학습하는 교재의 학년 , 학기에 해당하는 교과서별 내신적중 를 오픈 , 출력할 수
@@ -82,7 +90,7 @@ function TextBook() {
                 <div>
                     <button className="btn-grey-border mr-10">선택 오픈</button>
                     <button className="btn-grey-border mr-10">선택 인쇄</button>
-                    <button className="btn-green mr-10">결과 리포트</button>
+                    <button className="btn-green mr-10" onClick={()=>{ setReportModal(true) }}>결과 리포트</button>
                     <SelectBase
                         onChange={(ele) => {
                             setSelectBook(ele);

@@ -11,6 +11,7 @@
                 color: #664e3d;
                 background: #e6ddd8;
                 border-right: 1px solid #cfbfb7;
+                @include flex;
             }
         }
     }
