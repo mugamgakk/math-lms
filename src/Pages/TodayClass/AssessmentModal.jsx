@@ -7,7 +7,7 @@ import ajax from "../../ajax";
 import Icon from "../../components/Icon";
 import pencil from "../../assets/pencil.svg";
 
-const speedOption = [1.0, 1.25, 1.5, 1.75, 2.0];
+const speedOption = ['1.0', '1.25', '1.5', '1.75', '2.0'];
 
 function AssessmentModal ({setAssModal}) {
     let assTit = [
@@ -82,11 +82,21 @@ function AssessmentModal ({setAssModal}) {
 
      let [listenSpeed, setListenSpeed] = useState(1000); // 1초에 한번
  
-     let [speenValue, setSpeedValue] = useState(speedOption[0]);
+     let [speedValue, setSpeedValue] = useState(0);
+
      let [playState, setPlayState] = useState(false);
      let [muteState, setMuteState] = useState(false);
      let allTime = useRef(0);
    
+    // 속도 바꿨을때
+    useEffect(()=>{
+        if(allTime.current > 0 ){
+            let 오디오 = audio.current.audioEl.current;
+            오디오.playbackRate = Number(speedOption[speedValue]);
+            setListenSpeed(1000 / Number(speedOption[speedValue]));
+        }
+    },[speedValue]);
+
      // 재생버튼
      const start = () => {
          let 오디오 = audio.current.audioEl.current;
@@ -101,7 +111,7 @@ function AssessmentModal ({setAssModal}) {
  
          allTime.current = 오디오.duration;
         //  audioBar.current.value = 0;
-        setAudioItem(0);
+        // setAudioItem(0);
  
          let 분 = parseInt(오디오.duration / 60);
          let 초 = Math.round(오디오.duration % 60);
@@ -122,16 +132,7 @@ function AssessmentModal ({setAssModal}) {
 
     //  mute 눌렀을때
  
-     // 속도 바꿨을때
-     const speedChange = (speed) => {
-         let 오디오 = audio.current.audioEl.current;
  
-         오디오.playbackRate = speed;
-         setSpeedValue(speed);
- 
-         setListenSpeed(1000 / speed);
-         // 오디오실행이벤트 속도를 바꿔주기 위해
-     };
  
      // 진행 할때
      const audioIng = (time) => {
@@ -141,24 +142,9 @@ function AssessmentModal ({setAssModal}) {
          const min = parseInt(time / 60);
          const sec = Math.round(time % 60);
          setMinTime(`${min} : ${sec < 10 ? "0" + sec : sec}`);
-        //  console.log(audioItem);
+
      };
- 
-    //  const clickChange = (e) => {
-    //      const 오디오 = audio.current.audioEl.current;
- 
-    //      const rect = e.target.getBoundingClientRect();
-    //      const width = rect.width;
-    //      // ele width 값
-    //      const offsetX = e.nativeEvent.offsetX;
- 
-    //      const widthRatio = offsetX / width;
- 
-    //      const toTime = Math.round(widthRatio * 오디오.duration);
-    //      audioBar.current.style.background = `linear-gradient(to right, dodgerblue 0%, dodgerblue ${toTime}%, #ccc ${toTime}%, #ccc 100%)`;
- 
-    //      오디오.currentTime = toTime;
-    //  };
+  
 
     //  오디오진행바 onChange
      const moveAudioBar = (value) => {
@@ -166,7 +152,13 @@ function AssessmentModal ({setAssModal}) {
     
         console.log(오디오.currentTime);
         console.log(오디오.duration);
+        console.log(value);
+        오디오.currentTime = Math.floor((value * 오디오.duration)/100);
 
+        const min = Math.floor((오디오.currentTime / 60));
+        const sec = Math.round(오디오.currentTime % 60);
+        setAudioItem(value);
+        setMinTime(`${min} : ${sec < 10 ? "0" + sec : sec}`);
 
      } 
      const forwardRadio = (time)=>{
@@ -177,9 +169,12 @@ function AssessmentModal ({setAssModal}) {
              changeTime = 0
          }
          audioIng(changeTime)
-         오디오.currentTime = changeTime
- 
+         오디오.currentTime = changeTime;
+        //  setAudioItem(Math.floor((100 * 오디오.currentTime)/오디오.duration));
      }
+
+
+
     return (
         <div className="modal">
             <div className="modal-content assessmentModal">
@@ -266,7 +261,15 @@ function AssessmentModal ({setAssModal}) {
                                         </button>
                                     </div>
                                     <div className="fj">
-                                        <button className="audio-speed mr-4">x 1.0 </button>
+                                        <button className="audio-speed mr-4"
+                                            onClick={()=>{
+                                                if(speedValue < 4){
+                                                    setSpeedValue(speedValue + 1)
+                                                }else{
+                                                    setSpeedValue(0);
+                                                }
+                                            }}
+                                        >x { speedOption[speedValue] }</button>
                                         <button
                                             className='audio-download'
                                             onClick={() => {

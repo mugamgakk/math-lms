@@ -53,7 +53,7 @@ function TodayClassTr({data}){
                         data.state5 == 'Pass' ? 'Pass' : (
                             <>
                             <div style={{}}>{data.state5}</div>
-                            <button className='btn-table' onClick={()=>closeModal(true)} style={{ width:'100px' }}><Icon icon={"print"} style={{color:'#666',marginRight:'6px'}}/>인쇄</button>
+                            <button className='btn-table btn-icon' onClick={()=>closeModal(true)} style={{ width:'100px' }}><Icon icon={"print"} style={{color:'#666'}}/>인쇄</button>
                             </>
                         ) : null
                     }
