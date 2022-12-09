@@ -81,9 +81,7 @@ function AssessmentModal ({setAssModal}) {
      },[valumeItem]);
 
      let [listenSpeed, setListenSpeed] = useState(1000); // 1초에 한번
- 
      let [speedValue, setSpeedValue] = useState(0);
-
      let [playState, setPlayState] = useState(false);
      let [muteState, setMuteState] = useState(false);
      let allTime = useRef(0);
@@ -129,10 +127,6 @@ function AssessmentModal ({setAssModal}) {
          // console.log(볼륨)
          // 볼륨은 0 ~ 1
      };
-
-    //  mute 눌렀을때
- 
- 
  
      // 진행 할때
      const audioIng = (time) => {
@@ -144,15 +138,10 @@ function AssessmentModal ({setAssModal}) {
          setMinTime(`${min} : ${sec < 10 ? "0" + sec : sec}`);
 
      };
-  
 
     //  오디오진행바 onChange
      const moveAudioBar = (value) => {
         let 오디오 = audio.current.audioEl.current;
-    
-        console.log(오디오.currentTime);
-        console.log(오디오.duration);
-        console.log(value);
         오디오.currentTime = Math.floor((value * 오디오.duration)/100);
 
         const min = Math.floor((오디오.currentTime / 60));
@@ -162,9 +151,10 @@ function AssessmentModal ({setAssModal}) {
 
      } 
      const forwardRadio = (time)=>{
+
          let 오디오 = audio.current.audioEl.current;
-         console.log(오디오);
          let changeTime = 오디오.currentTime + time
+
          if(changeTime < 0){
              changeTime = 0
          }
