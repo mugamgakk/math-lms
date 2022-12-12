@@ -1,3 +1,4 @@
+// yeonju
 import React from "react";
 
 function ScoreItem ({tit = null,idx,numClick,totalData}) {

@@ -1,3 +1,4 @@
+// yeonju
 import React, { useEffect, useState } from "react";
 import ScoreItem from './ScoreItem';
 import ajax from "../../ajax";
