@@ -8,10 +8,8 @@ import { useState } from "react";
 import ajax from "../ajax";
 import ContentHeader from "../components/ContentHeader";
 import CustomDatePicker from "../components/CustomDatePicker";
-import CustomDatePickerMonth from "../components/CustomDatePickerMonth";
 import DateNext from "../components/DateNext";
 import Icon from "../components/Icon";
-import LmsDatePicker from "../components/LmsDatePicker";
 import SkeletonTable from "../components/SkeletonTable";
 import ClassSelect from "../components/ui/select/ClassSelect";
 import { _cloneDeep } from "../methods/methods";
@@ -55,7 +53,6 @@ function Attendance() {
 
             const { class_list, student_list } = res.data;
 
-            console.log(student_list);
 
             if (!class_list) {
                 throw new Error("데이터가 없습니다.");
@@ -83,13 +80,13 @@ function Attendance() {
         }
     };
 
-    const searchUser = (param)=>{
+    const searchUser = (param) => {
         let regexp = new RegExp(searchText);
 
-        let result = studentList.filter(a=> regexp.test(a.um_nm));
+        let result = studentList.filter((a) => regexp.test(a.um_nm));
 
         setStudentList(result);
-    }
+    };
 
     const saveList = async () => {
         let data = {
@@ -147,7 +144,7 @@ function Attendance() {
                         <input
                             type="text"
                             className="textInput mr-10"
-                            placeholder="학생명을 입력하세요"
+                            placeholder="학생명(아이디)"
                             style={{ width: "200px" }}
                             onChange={(e) => {
                                 setSearchText(e.target.value);
@@ -182,7 +179,7 @@ function Attendance() {
                                 <th scope="col" style={{ width: "26%" }} className="f-column">
                                     <div>출결 체크</div>
                                     <button
-                                        className="btn-table"
+                                        className="btn-allcheck"
                                         onClick={() => {
                                             setAllAtten(allAtten + 1);
                                         }}
@@ -213,11 +210,11 @@ function Attendance() {
                             )}
                         </tbody>
                     </table>
-                    <div className="attendence-footer">
+                    {/* <div className="attendence-footer">
                         <button type="button" className="btn-green" onClick={saveList}>
                             출결 내용 저장
                         </button>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </>
@@ -269,8 +266,11 @@ const Tr = memo(({ ele, index, date, allAtten }) => {
 
     return (
         <tr>
-            <td style={{ width: "13%" }}>
-                {ele.um_nm}({ele.um_id})
+            <td style={{ width: "13%" }} className="fs">
+                <div>
+                    <div className="user-name">{ele.um_nm}</div>
+                    <div className="user-id">{ele.um_id}</div>
+                </div>
             </td>
             <td style={{ width: "26%" }}>
                 {att.map((a) => {
@@ -281,23 +281,25 @@ const Tr = memo(({ ele, index, date, allAtten }) => {
                                 setSTate(a.value);
                                 changeCopyData({ index, value: a.value, 속성: "attd" });
                             }}
-                            className={`${a.value === state ? "btn-orange" : "btn-grey-border"}`}
+                            className={`btn-grey-border ${
+                                a.value === state ? `attd-${a.value}` : ""
+                            }`}
                         >
                             {a.label}
                         </button>
                     );
                 })}
             </td>
-            <td style={{ width: "61%" }}>
+            <td style={{ width: "61%" }} className="fs">
                 <div className="pencil-input mr-10">
                     <button
                         type="button"
+                        className="btn-pencil"
                         onClick={() => {
                             setPen(!pen);
                         }}
                     ></button>
                     <textarea
-                        style={{ overflow: "visible" }}
                         onChange={reSize}
                         placeholder="사유 입력(50자 이내)"
                         value={text}
@@ -305,8 +307,6 @@ const Tr = memo(({ ele, index, date, allAtten }) => {
                         onKeyDown={resizeaa}
                         onKeyUp={resizeaa}
                     ></textarea>
-                </div>
-                <div style={{ width: "100px" }}>
                     {pen && (
                         <button className="btn-grey-border" onClick={saveReason}>
                             저장
@@ -320,7 +320,7 @@ const Tr = memo(({ ele, index, date, allAtten }) => {
 
 function resizeaa(e) {
     e.target.style.height = "1px";
-    e.target.style.height = (2 + e.target.scrollHeight)+"px";
-  }
+    e.target.style.height = 2 + e.target.scrollHeight + "px";
+}
 
 export default Attendance;

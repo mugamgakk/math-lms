@@ -15,13 +15,7 @@ const nav = [
     {
         icon: "studentManagement",
         name: "학생별 수업 관리",
-        href: "/detail-class",
-        depth: [
-            { name: "수업관리", href: "/detail-class/management" },
-            { name: "오답 정복하기", href: "/detail-class/wrong-answer" },
-            { name: "학습 분석표", href: "/detail-class/table" },
-            { name: "출결 관리", href: "/detail-class/attend" },
-        ],
+        href: "/detail-class"
     },
     {
         icon: "plusLearning",
@@ -56,7 +50,6 @@ const nav = [
 
 function Home() {
     let [userId, setUserId] = useState("");
-    let [guess, setGuess] = useState(false);
     let [burger, setBurger] = useState(false);
     let location = useLocation();
 
@@ -88,14 +81,15 @@ function Home() {
 
     return (
         <main id="main">
-            {location.pathname === "/" && <Navigate to="/attendance" />}
+            {/* 기본 default 오늘의 수업 */}
+            {location.pathname === "/" && <Navigate to="/today-class" />}
 
             <header id="header">
                 <div className="header-layout">
                     <img src={logo} alt="logo" className="logo" />
 
                     <div className="info">
-                        <strong className="info-name">{userId} 님</strong>
+                        <strong className="info-name">{"송파캠퍼스"} {userId} 님</strong>
                         <ul className="info-list">
                             <li>
                                 <Icon icon={"info"} />

@@ -51,8 +51,7 @@ function Login() {
                 case 1:
                     // 프론트에서 로그인 확인 쿠키
                     setCookie("gplumLMSlogin", "true");
-                    navigate("/attendance");
-                    // window.location = "/attendance";
+                    navigate("/");
                     break;
                 // 로그인 중복
                 case -2:
@@ -64,7 +63,7 @@ function Login() {
                             data: data,
                         }).then((res) => {
                             setCookie("gplumLMSlogin", "true")
-                            navigate("/attendance");
+                            navigate("/");
 
                         });
                     } else {
@@ -74,7 +73,7 @@ function Login() {
                     break;
                 case -1:
                     setCookie("gplumLMSlogin", "true")
-                    navigate("/attendance");
+                    navigate("/");
 
                     break;
                 case 0:

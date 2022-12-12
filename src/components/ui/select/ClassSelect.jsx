@@ -1,22 +1,26 @@
 import React, { useState } from "react";
 import { useCallback } from "react";
 import { useEffect } from "react";
+import ajax from "../../../ajax";
 import Icon from "../../Icon";
 
 function ClassSelect({
     width = "170px",
     onChange,
-    options = [],
     value = [],
     defaultValue = "선택하세요",
     disabled,
     className,
-    style
 }) {
+    // 토글
     let [selectOpen, setSelectOpen] = useState(false);
-    let [choiceArr, setChoiceArr] = useState(value);
+    // 체크된 배열
+    let [choiceArr, setChoiceArr] = useState([]);
+    // 외 ***반
     let [text, setText] = useState("");
+    let [options, setOptions] = useState([]);
 
+    // 1개 체크 함수
     const checkedItem = (checked, ele) => {
         if (checked) {
             // 삭제
@@ -31,13 +35,24 @@ function ClassSelect({
         }
     }
 
+    // 전체 체크 함수
     const allCheck = useCallback(() => {
-        if (options.length === choiceArr.length) {
-            setChoiceArr([]);
-        } else {
-            setChoiceArr(options);
-        }
+        options.length === choiceArr.length ? setChoiceArr([]) : setChoiceArr(options)
     }, [choiceArr]);
+
+    const getOptions = async ()=>{
+        const data = {
+            mode : "get_tch_class"
+        }
+
+        const res = await ajax("/class.php", {data});
+        
+        const classList = res.data.class_list;
+
+        setOptions(classList);
+        setChoiceArr(classList)
+    }
+
 
     useEffect(() => {
         if (value.length !== 0) {
@@ -70,6 +85,11 @@ function ClassSelect({
             setText(defaultValue);
         }
     }, [choiceArr]);
+
+    useEffect(()=>{
+        // option 호출
+        getOptions()
+    },[])
 
     return (
         <div

@@ -23,11 +23,40 @@
         }
 
         table {
-            td:first-child {
-                color: $green;
-                font-weight: 500;
+            th{
+                padding: 4px !important;
+                font-size: 18px !important;
             }
+            td:first-child{
+                .user-name{
+                    font-weight: 600;
+                    color: $green;
+                }
+                .user-id{
+                    font-weight: 400;
+                    color: #666;
+                    font-size: 16px;
+                }
+            }
+
             td:nth-child(2) {
+                .attd-P{
+                    background-color: #addb4f;
+                    border: none;
+                }
+                .attd-L{
+                    background-color: #ffb547;
+                    border: none;
+
+                }
+                .attd-E{
+                    background-color: #3fc0e0;
+                    border: none;
+                }
+                .attd-A{
+                    background-color: #ff6666;
+                    border: none;
+                }
                 button {
                     margin-right: 10px;
                     &:last-child {
@@ -42,16 +71,27 @@
         text-align: right;
         margin-top: 20px;
     }
+
+    .btn-allcheck{
+        width: 90px;
+        height: 30px;
+        color: #fff;
+        border-radius: $radius;
+        background-color:#8f7361;
+        font-weight: 500;
+        @include font-style(16);
+        margin-top: 6px;
+    }
 }
 
 .pencil-input {
     display:inline-flex;
-    width: 100%;
+    width: 95%;
     position: relative;
 
     textarea {
-        padding: 6px 50px;
-        height: 40px;
+        padding: 11px 50px;
+        height: 50px;
         @include font-style();
         font-weight: 400;
         border: 1px solid #ccc;
@@ -72,10 +112,17 @@
             background: #f2f2f2;
         }
     }
+
+    .btn-grey-border{
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
     
-    button {
-        width: 40px;
-        height: 40px;
+    .btn-pencil {
+        width: 50px;
+        height: 50px;
         background-image: url("../assets/pencil.svg");
         background-position: center;
         background-repeat: no-repeat;

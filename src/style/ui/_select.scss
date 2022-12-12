@@ -75,7 +75,7 @@
         position: absolute;
         top: 42px;
         left: 0;
-        width: 100%;
+        min-width: 100%;
         z-index: 1;
         overflow: hidden;
         transition: max-height 0.3s;
