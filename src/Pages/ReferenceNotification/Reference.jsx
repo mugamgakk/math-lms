@@ -4,6 +4,7 @@ import SelectBase from "../../components/ui/select/SelectBase";
 import ReferenceContentsModal from './ReferenceContentsModal';
 import ReferenceRegistrationModal from './ReferenceRegistrationModal';
 import styled from 'styled-components';
+import Icon from '../../components/Icon';
 
 const 학년 = [
     { value: '전체', label: '전체' },
@@ -19,11 +20,19 @@ const search = [
 ];
 
 const NewBadge = styled.span`
-    padding: 0 3px;
     border-radius: 3px;
-    font-size: 10px;
     background: red;
     color: #fff;
+    width: 18px;
+    height: 18px;
+    font-size: 14px;
+    text-align: center;
+    line-height: 18px;
+    font-weight: 500;
+    position: relative;
+    top: -4px;
+    left: 5px;
+
 `
 function Reference() {
     let [gradeOption, setGradeOption] = useState('전체');
@@ -59,9 +68,9 @@ function Reference() {
      }
 
     return (
-            <div className="contents-body reference">
-                <div className="contents-body__top fj pt-10">
-                    <button className="btn" onClick={()=>setRegistModal(true)}>글쓰기</button>
+            <div className="reference">
+                <div className="top fj mb-20">
+                    <button className="btn-green btn-icon" onClick={()=>setRegistModal(true)}><Icon icon={"pencil"} />글쓰기</button>
                     <div className="btn-wrap d-flex">
                     <SelectBase 
                     onChange={(ele)=>setGradeOption(ele)}
@@ -69,50 +78,42 @@ function Reference() {
                     value={gradeOption}
                     defaultValue='전체'
                     width={'150px'}
+                    className={"mr-10"}
                     />
-
                     <SelectBase 
                     onChange={(ele)=>setQcate(ele)}
                     options={search}
                     value={qcate}
                     defaultValue='제목'
                     width={'150px'}
+                    className={"mr-10"}
                     />
 
                     <input 
                     type="text" 
-                    className='form-control' 
+                    className='textInput mr-10' 
                     placeholder='조회' 
                     style={{ width: '200px' }}
                     onChange={(e)=>setSearchInput(e.target.value)}
                     />
 
-                    <button className='btn' onClick={getList}>조회</button>
+                    <button className='btn-green btn-icon' onClick={getList}><Icon icon={"search"} />조회</button>
                     </div>
                 </div>
                 <div className="contents-body__middle pt-10">
-                    <table>
-                        <colgroup>
-                            <col style={{width:'5%'}}/>
-                            <col style={{width:'5%'}}/>
-                            <col style={{width:'48%'}}/>
-                            <col style={{width:'10%'}}/>
-                            <col style={{width:'12%'}}/>
-                            <col style={{width:'10%'}}/>
-                            <col style={{width:'10%'}}/>
-                        </colgroup>
+                    <table className='table tableA'>
                         <thead>
                             <tr>
-                                <td>No.</td>
-                                <td>대상</td>
-                                <td>글 제목</td>
-                                <td>첨부 파일</td>
-                                <td>작성자</td>
-                                <td>작성일</td>
-                                <td>조회수</td>
+                                <th style={{ width:'6.93%' }}>번호</th>
+                                <th style={{ width:'9.33%' }}>대상</th>
+                                <th style={{ width:'48.73%' }}>글 제목</th>
+                                <th style={{ width:'6.66%' }}>첨부 파일</th>
+                                <th style={{ width:'9.33%' }}>작성자</th>
+                                <th style={{ width:'9.33%' }}>작성일</th>
+                                <th style={{ width:'9.73%' }}>조회수</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody className='scroll' style={{ height:"588px" }}>
                             {
                                 lenderList ? lenderList.map((list,i)=>{
                                     return(
@@ -132,18 +133,15 @@ function Reference() {
     );
 }
 
-
-
 const Tr = memo(({list})=>{
     let [modal,setModal] = useState(false);
-
    
     return(
         <tr>
-            <td>{list.bd_seq}</td>         
-            <td>{list.bd_cate}</td>        
+            <td style={{ width:'6.93%' }}>{list.bd_seq}</td>         
+            <td style={{ width:'9.33%' }}>{list.bd_cate}</td>        
             {/* 제목 클릭하여 글내용 팝업 오픈 */}
-            <td onClick={()=>setModal(true)}>
+            <td className="title fs" style={{ width:'48.73%' }} onClick={()=>setModal(true)}>
                 {
                     modal && <ReferenceContentsModal seq={list.bd_seq} setModal={setModal}/>
                 }
@@ -161,14 +159,14 @@ const Tr = memo(({list})=>{
                     list.news > 0 && <NewBadge>N</NewBadge>
                 }
             </td>         
-            <td>
+            <td style={{ width:'6.66%' }}>
                 {
                     list.files > 0 && <span className='file'></span>
                 }
             </td>         
-            <td>{list.writer}</td>        
-            <td>{list.reg_dt}</td>         
-            <td>{list.hit}</td>         
+            <td style={{ width:'9.33%' }}>{list.writer}</td>        
+            <td style={{ width:'9.33%' }}>{list.reg_dt}</td>         
+            <td style={{ width:'9.73%' }}>{list.hit}</td>         
         </tr>
     )    
 });

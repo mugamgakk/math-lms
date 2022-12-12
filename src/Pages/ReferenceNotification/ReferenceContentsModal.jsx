@@ -3,6 +3,7 @@ import ajax from "../../ajax";
 import { fileDown } from '../../methods/methods';
 import FileSaver from "file-saver";
 import JSZip from "jszip";
+import Icon from '../../components/Icon';
 
 function ReferenceContentsModal({seq,setModal}) {
 
@@ -40,7 +41,16 @@ function ReferenceContentsModal({seq,setModal}) {
     console.log(contents);
     return ( 
         <div className="modal">
-            <div className="rfModal cmmnModal">
+            <div className="modal-content">
+            <div className="modal-header fj">
+                        <h2 className="modal-title">GNB패럴랙스</h2>
+                        <button className="btn" onClick={(e) => {
+                            e.stopPropagation();
+                            setModal(false)
+                        }}>
+                            <Icon icon={"close"} />
+                        </button>
+                    </div>
                 <h3>No.{seq}</h3>
                 {
                     contents && (
@@ -83,7 +93,7 @@ function ReferenceContentsModal({seq,setModal}) {
                     </div>
                     )
                 }
-                <div className="foot">
+                <div className="modal-footer">
                     <button className='btn'>이전 글 보기</button>
                     <button className='btn'>수정</button>
                     <button className='btn'>삭제</button>
