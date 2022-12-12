@@ -1,3 +1,4 @@
+// yeonju
 import React, { useState, useEffect } from "react";
 import ajax from "../../../ajax";
 import { falseModal } from '../../../methods/methods';

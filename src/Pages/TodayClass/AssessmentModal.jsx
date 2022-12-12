@@ -1,3 +1,4 @@
+// yeonju
 import React, { useEffect, useState, useRef } from "react";
 import ScoreItem from './ScoreItem'
 import ReactAudioPlayer from "react-audio-player";

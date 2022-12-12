@@ -1,3 +1,4 @@
+// yeonju
 import React, { useState } from 'react';
 import ReceiveMessage from './ReceiveMessage';
 import SendMessage from './SendMessage';

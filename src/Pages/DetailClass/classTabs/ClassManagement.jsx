@@ -1,3 +1,4 @@
+// yeonju
 import React, { useState, memo, useEffect } from "react";
 import ajax from "../../../ajax";
 import ProgressModal from '../modal/progressModal';
