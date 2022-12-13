@@ -13,7 +13,6 @@ import Icon from "../components/Icon";
 import SkeletonTable from "../components/SkeletonTable";
 import ClassSelect from "../components/ui/select/ClassSelect";
 import { _cloneDeep } from "../methods/methods";
-import attendanceStore from "../store/attendanceStore";
 
 const att = [
     { value: "P", label: "출석" },
@@ -22,18 +21,12 @@ const att = [
     { value: "A", label: "결석" },
 ];
 function Attendance() {
-    const getCopyData = attendanceStore((state) => state.getCopyData);
-    const copyData = attendanceStore((state) => state.copyData);
-
     let [date, setDate] = useState(new Date());
     let [classList, setClassList] = useState([]);
     let [studentList, setStudentList] = useState([]);
     let [searchText, setSearchText] = useState("");
 
     let [loading, setLoading] = useState(true);
-
-    // 모두 출석 count
-    let [allAtten, setAllAtten] = useState(0);
 
     const getData = async () => {
         setLoading(true);
@@ -45,18 +38,14 @@ function Attendance() {
         };
 
         try {
-            let res = await ajax("class_daily.php", { data: param });
-            // let res = await axios("/json/attendance.json");
+            // let res = await ajax("class_daily.php", { data: param });
+            let res = await axios("/json/attendance.json");
 
-            const { class_list, student_list } = res.data;
+            const { student_list } = res.data;
 
-
-            if (!class_list) {
-                throw new Error("데이터가 없습니다.");
+            if (!student_list) {
+                throw new Error("잠시후에 시도해주세요");
             }
-
-            // store에 copy 데이터
-            getCopyData(_cloneDeep(student_list));
 
             // 리스트 값
             setStudentList(student_list);
@@ -64,20 +53,39 @@ function Attendance() {
             setSearchText("");
             setLoading(false);
         } catch (err) {
+            alert(err);
             setLoading(false);
         }
     };
 
-    const saveList = async () => {
-        let data = {
-            mode: "set_daily",
-            ymd: dayjs(date).format("YYYYMMDD"),
-            student_list: copyData,
-        };
+    // 모두 출석 후 저장
+    const allCheckAttd = async () => {
+        let result = studentList.map((a) => {
+            a.attd = "P";
+            return { ...a };
+        });
 
-        let res = await ajax("/class_daily.php", { data });
+        let student_list = result.map((a) => {
+            return { usr_seq: a.user_seq, attd: a.attd };
+        });
 
-        alert("잠시후에 시도해주세요");
+        try {
+            let res = await ajax("class_daily.php", {
+                data: {
+                    mode: "set_daily",
+                    ymd: dayjs(date).format("YYYYMMDD"),
+                    student_list: student_list,
+                },
+            });
+
+            if (res.data.ok == 1) {
+                setStudentList(result);
+            } else {
+                throw new Error("다시 시도해주세요");
+            }
+        } catch (err) {
+            alert(err);
+        }
     };
 
     useEffect(() => {
@@ -138,10 +146,7 @@ function Attendance() {
                             <Icon icon={"search"} />
                             검색
                         </button>
-                        <button
-                            className="btn-grey btn-icon"
-                            onClick={getData}
-                        >
+                        <button className="btn-grey btn-icon" onClick={getData}>
                             <Icon icon={"reload"} />
                             새로고침
                         </button>
@@ -155,12 +160,7 @@ function Attendance() {
                                 </th>
                                 <th scope="col" style={{ width: "26%" }} className="f-column">
                                     <div>출결 체크</div>
-                                    <button
-                                        className="btn-allcheck"
-                                        onClick={() => {
-                                            setAllAtten(allAtten + 1);
-                                        }}
-                                    >
+                                    <button className="btn-allcheck" onClick={allCheckAttd}>
                                         모두 출석
                                     </button>
                                 </th>
@@ -174,44 +174,28 @@ function Attendance() {
                                 <SkeletonTable R={7} width={["13%", "26%", "61%"]} />
                             ) : (
                                 studentList?.map((ele, i) => {
-                                    return (
-                                        <Tr
-                                            ele={ele}
-                                            index={i}
-                                            date={date}
-                                            key={"index" + i}
-                                            allAtten={allAtten}
-                                        />
-                                    );
+                                    return <Tr ele={ele} date={date} key={"index" + i} />;
                                 })
                             )}
                         </tbody>
                     </table>
-                    {/* <div className="attendence-footer">
-                        <button type="button" className="btn-green" onClick={saveList}>
-                            출결 내용 저장
-                        </button>
-                    </div> */}
                 </div>
             </div>
         </>
     );
 }
 
-const Tr = memo(({ ele, index, date, allAtten }) => {
+const Tr = memo(({ ele, date }) => {
     let [text, setText] = useState((ele.reason ??= ""));
     let [state, setSTate] = useState(ele.attd);
-    const changeCopyData = attendanceStore((state) => state.changeCopyData);
-
     let [pen, setPen] = useState(ele.reason ? true : false);
 
     const reSize = (e) => {
         const ele = e.target;
-
         setText(ele.value);
-        changeCopyData({ index, value: ele.value, 속성: "reason" });
     };
 
+    // 사유 저장
     const saveReason = async () => {
         const data = {
             mode: "set_reason",
@@ -220,10 +204,23 @@ const Tr = memo(({ ele, index, date, allAtten }) => {
             usr_seq: ele.user_seq,
         };
 
-        // console.log(data);
         let res = await ajax("/class_daily.php", { data });
+        // console.log(res);
 
         if (res.data.ok == 1) alert("저장이 완료되었습니다.");
+    };
+
+    // 체크후 저장
+    const saveAtte = async () => {
+        const data = {
+            mode: "set_daily",
+            ymd: dayjs(date).format("YYYYMMDD"),
+            student_list: [{ usr_seq: ele.user_seq, attd: state }],
+        };
+        let res = await ajax("/class_daily.php", { data });
+        console.log(res);
+
+        if (res.data.ok !== 1) alert("잠시후에 시도해주세요");
     };
 
     useEffect(() => {
@@ -233,13 +230,6 @@ const Tr = memo(({ ele, index, date, allAtten }) => {
             setPen(false);
         }
     }, [ele]);
-
-    useEffect(() => {
-        if (allAtten !== 0) {
-            setSTate("P");
-            changeCopyData({ index, value: "P", 속성: "attd" });
-        }
-    }, [allAtten]);
 
     return (
         <tr>
@@ -256,7 +246,7 @@ const Tr = memo(({ ele, index, date, allAtten }) => {
                             key={a.value}
                             onClick={() => {
                                 setSTate(a.value);
-                                changeCopyData({ index, value: a.value, 속성: "attd" });
+                                saveAtte();
                             }}
                             className={`btn-grey-border ${
                                 a.value === state ? `attd-${a.value}` : ""
