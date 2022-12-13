@@ -2,7 +2,6 @@ import axios from "axios";
 import dayjs from "dayjs";
 import React from "react";
 import { useEffect } from "react";
-import { useRef } from "react";
 import { memo } from "react";
 import { useState } from "react";
 import ajax from "../ajax";
@@ -20,6 +19,7 @@ const att = [
     { value: "E", label: "조퇴" },
     { value: "A", label: "결석" },
 ];
+
 function Attendance() {
     let [date, setDate] = useState(new Date());
     let [classList, setClassList] = useState([]);
@@ -211,16 +211,23 @@ const Tr = memo(({ ele, date }) => {
     };
 
     // 체크후 저장
-    const saveAtte = async () => {
+    const saveAtte = async (attd) => {
+        setSTate(attd);
+
         const data = {
             mode: "set_daily",
             ymd: dayjs(date).format("YYYYMMDD"),
-            student_list: [{ usr_seq: ele.user_seq, attd: state }],
+            student_list: [{ usr_seq: ele.user_seq, attd: attd }],
         };
         let res = await ajax("/class_daily.php", { data });
-        console.log(res);
+        // console.log(res);
 
-        if (res.data.ok !== 1) alert("잠시후에 시도해주세요");
+        if (res.data.ok == 1){
+
+        }else{
+            alert("잠시후에 시도해주세요");
+            setSTate(state)
+        }
     };
 
     useEffect(() => {
@@ -245,8 +252,8 @@ const Tr = memo(({ ele, date }) => {
                         <button
                             key={a.value}
                             onClick={() => {
-                                setSTate(a.value);
-                                saveAtte();
+                                
+                                saveAtte(a.value);
                             }}
                             className={`btn-grey-border ${
                                 a.value === state ? `attd-${a.value}` : ""
