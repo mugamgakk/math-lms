@@ -8,6 +8,14 @@
 .assessmentModal{
     // width: 50%;
     width: 640px;
+
+    .audio-alert{
+        color: #ea5750;
+        height: 78px;
+        font-weight: 600;
+        @include font-style(18);
+        i{margin-right: 6px;}
+    }
     .contents{
         padding: 20px;
         &-audio{
@@ -15,6 +23,8 @@
             @include flex(center);
             flex-direction: column;
             padding: 15px 20px;
+            border-radius: $radius;
+
             .top{
                 width: 100%;
             }

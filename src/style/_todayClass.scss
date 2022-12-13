@@ -52,6 +52,7 @@
             }
             .asse{
                position: relative;
+               display: flex;
                width: 100px;
                height: 30px;
                 &::after{
@@ -61,7 +62,8 @@
                     width: 1px;
                     height: 20px;
                     background: #fff;
-             
+                    @include pos-center;
+                    left: 47.8%;
                 }
             }
             .state5{

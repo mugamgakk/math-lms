@@ -37,7 +37,13 @@ function ClassSelect({
 
     // 전체 체크 함수
     const allCheck = useCallback(() => {
-        options.length === choiceArr.length ? setChoiceArr([]) : setChoiceArr(options)
+        if(options.length === choiceArr.length){
+            setChoiceArr([]);
+            onChange && onChange([]);
+        }else{
+            setChoiceArr(options);
+            onChange && onChange(options);
+        }
     }, [choiceArr]);
 
     const getOptions = async ()=>{

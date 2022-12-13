@@ -27,7 +27,7 @@ function AssessmentModal ({setAssModal}) {
             console.log(res.data);
             setTotalData([res.data.uds,res.data.send]);
             setTitle(res.data.title);
-            setAudioState(res.data.file);
+            setAudioState(false);
         })
         
     },[])
@@ -185,7 +185,7 @@ function AssessmentModal ({setAssModal}) {
                     <div className="contents">
                         <div className='contents-audio audio'>
                             {
-                                audioState && (
+                                audioState ? (
                                     <>
                                     <div className="top fj">
                                     <input type="hidden" value={오디오입니동} />
@@ -273,6 +273,8 @@ function AssessmentModal ({setAssModal}) {
                                 </div>
                              </>
                             )
+
+                            : <div className="fa audio-alert"><Icon icon={"warning"} />제출된 녹음 파일이 없습니다.</div>
                         }
                         </div>
                         <h5 className="m-tit" style={{ marginTop: '20px' }}><img src={pencil}/>학생의 개념 이해력과 전달력 점수를 입력해 주세요.</h5>

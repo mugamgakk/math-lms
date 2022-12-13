@@ -2,7 +2,6 @@
 import React, { useEffect, useState, memo } from "react";
 import { useNavigate } from "react-router-dom";
 import ContentHeader from "../components/ContentHeader";
-import TodayClassSearch from "./TodayClass/TodayClassSearch";
 import ajax from "../ajax";
 import Tr from "./TodayClass/TodayClassTr";
 import DateNext from "../components/DateNext";
@@ -40,7 +39,7 @@ function TodayClass() {
 
     useEffect(() => {
         getList();
-    }, [date]);
+    }, [date, group]);
 
     return (
         <>

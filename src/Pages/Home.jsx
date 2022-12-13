@@ -73,8 +73,9 @@ function Home() {
             if (res.data.ok === -1) {
                 setUserId(res.data.user_id);
             }else{
+                removeCookie("gplumLMSlogin");
                 alert("로그인이 만료되었습니다.");
-                logoutFn();
+                navigate("/login");
             }
         });
     }, [location.pathname]);

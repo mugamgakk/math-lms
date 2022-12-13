@@ -90,7 +90,7 @@ function Attendance() {
 
     useEffect(() => {
         getData();
-    }, [date]);
+    }, [date, classList]);
 
     return (
         <>
@@ -125,7 +125,10 @@ function Attendance() {
                             className={"mr-10"}
                             defaultValue="반 선택"
                             value={classList}
-                            onChange={(ele) => setClassList(ele)}
+                            onChange={(ele) => {
+                                console.log(ele);
+                                setClassList(ele)
+                            }}
                             width="160px"
                         />
                         <input

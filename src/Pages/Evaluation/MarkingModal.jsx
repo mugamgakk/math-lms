@@ -54,9 +54,8 @@ function MarkingModal({data,title,setMarkingModal}) {
     
     return (
         <div className="modal">
-            <div className="dim"></div>
-            <div className='markingModal cmmnModal'>
-                <div className="markingModal-head cmmnModal-head">
+            <div className='modal-body'>
+                <div className="modal-head">
                     <div className="tit">
                         <strong>{title}</strong>
                     </div>
@@ -91,7 +90,7 @@ function MarkingModal({data,title,setMarkingModal}) {
                     <h5>평가 결과 등록</h5>
                     <MarkingTable answerList={answerList} setAnswerList={setAnswerList} />
                 </div>
-                <div className="markingModal-foot cmmnModal-foot">
+                <div className="modal-footer">
                     <button className='btn' onClick={sendAnswer}>입력 완료</button>
                     <button className='btn' onClick={()=>setMarkingModal(false)}>취소</button>
                 </div>
