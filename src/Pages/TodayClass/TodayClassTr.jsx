@@ -37,7 +37,7 @@ function TodayClassTr({data}){
                 }
                 {
                     data.state3 ? data.state3?.assessment ? (
-                        <div className={data.state1 === '100%' && 'active' }>
+                        <div className={data.state1 === '100%' ? 'active' : ""}>
                             <button className='asse btn-orange' onClick={()=>setAssModal(true)} style={{ fontSize: '14px' }}>
                             이해 {data.state3.uds}&nbsp;
                             전달 {data.state3.send}

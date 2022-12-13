@@ -31,12 +31,9 @@ function Attendance() {
     let [searchText, setSearchText] = useState("");
 
     let [loading, setLoading] = useState(true);
-    let banOptions = useRef([]);
 
     // 모두 출석 count
     let [allAtten, setAllAtten] = useState(0);
-
-    const defaultList = useRef();
 
     const getData = async () => {
         setLoading(true);
@@ -48,8 +45,8 @@ function Attendance() {
         };
 
         try {
-            // let res = await ajax("class_daily.php", { data: param });
-            let res = await axios("/json/attendance.json");
+            let res = await ajax("class_daily.php", { data: param });
+            // let res = await axios("/json/attendance.json");
 
             const { class_list, student_list } = res.data;
 
@@ -61,15 +58,6 @@ function Attendance() {
             // store에 copy 데이터
             getCopyData(_cloneDeep(student_list));
 
-            // 새로고침을 위한 copy 데이터
-            defaultList.current = _cloneDeep(student_list);
-
-            // 반 초기값
-            banOptions.current = class_list;
-
-            // 반 값
-            setClassList(class_list);
-
             // 리스트 값
             setStudentList(student_list);
 
@@ -78,14 +66,6 @@ function Attendance() {
         } catch (err) {
             setLoading(false);
         }
-    };
-
-    const searchUser = (param) => {
-        let regexp = new RegExp(searchText);
-
-        let result = studentList.filter((a) => regexp.test(a.um_nm));
-
-        setStudentList(result);
     };
 
     const saveList = async () => {
@@ -138,8 +118,7 @@ function Attendance() {
                             defaultValue="반 선택"
                             value={classList}
                             onChange={(ele) => setClassList(ele)}
-                            options={banOptions.current}
-                            width="200px"
+                            width="160px"
                         />
                         <input
                             type="text"
@@ -151,19 +130,17 @@ function Attendance() {
                             }}
                             onKeyUp={(e) => {
                                 if (e.key === "Enter") {
-                                    searchUser();
+                                    getData();
                                 }
                             }}
                         />
-                        <button className="btn-green btn-icon mr-10" onClick={searchUser}>
+                        <button className="btn-green btn-icon mr-10" onClick={getData}>
                             <Icon icon={"search"} />
                             검색
                         </button>
                         <button
                             className="btn-grey btn-icon"
-                            onClick={() => {
-                                setStudentList(_cloneDeep(defaultList.current));
-                            }}
+                            onClick={getData}
                         >
                             <Icon icon={"reload"} />
                             새로고침

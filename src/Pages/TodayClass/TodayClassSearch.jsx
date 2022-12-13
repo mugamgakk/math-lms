@@ -5,68 +5,32 @@ import SearchBtn from '../../components/ui/button/SearchBtn';
 import ClassSelect from '../../components/ui/select/ClassSelect';
 import Icon from '../../components/Icon';
 
-function TodayClassSearch({data,setFindList,option = []}) {
+function TodayClassSearch({data,setFindList}) {
     
     let [search, setSearch] = useState('');
-    let [sel, setSel] = useState(option);
-    const [reloadState,setReloadState] = useState(false);
-    useEffect(()=>{},[reloadState])
-    // 찾기 버튼
-    const findUser = () => {
-        let array = [];
-
-        data.forEach(function (a) {
-            let regexp = new RegExp(search);
-
-            if (regexp.test(a.name)) {
-                array.push(a);
-            }
-        });
-        setFindList(array);
-    };
-
-    useEffect(()=>{
-        
-        if(option.length !== 0){
-            setSel(option);
-        }
-    },[option])
-
-
-    const findBan = (choiceArr) => {
-        
-        const matchingArr = data.filter(a=>{
-            for(let ele of choiceArr){
-                if(a.반이름 === ele){
-                    return true
-                }
-            }
-        })
-        setFindList(matchingArr)
-        
-    }
-
+    // 반선택
+    let [group, setGroup] = useState();
 
     return ( 
         <div className='d-flex'>
-            <ClassSelect width={"200px"} value={sel} onChange={ele=>{ setSel(ele) }} options={option} />
+            <ClassSelect width={"200px"} value={group} onChange={ele=>{ setGroup(ele) }} />
+
             <input
                 type="text"
                 className="textInput mr-10 ml-10"
-                placeholder="학생"
+                placeholder="학생명(아이디)"
                 style={{ width: "200px" }}
                 value={search}
                 onKeyUp={(e)=>{
                     if(e.key === "Enter"){
-                        findUser()
+                        // findUser()
                     }
                 }}
                 onChange={(e)=>{
                     setSearch(e.target.value);
                 }} />
-                <button type='button' className='btn-search btn-green mr-10' onClick={findUser}><Icon icon={"search"} />검색</button>
-                <button className="btn-grey btn-icon" onClick={() => setReloadState(!reloadState)}><Icon icon={"reload"} />새로고침</button>
-
+                <button type='button' className='btn-search btn-green mr-10'><Icon icon={"search"} />검색</button>
+                <button className="btn-grey btn-icon"><Icon icon={"reload"} />새로고침</button>
         </div>
      );
 }
