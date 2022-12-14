@@ -1,7 +1,7 @@
 .attendence {
     &-head {
         position: relative;
-        margin-bottom: 60px;
+        margin-bottom: 70px;
 
         &::after {
             content: "";
@@ -19,7 +19,7 @@
         .search {
             display: flex;
             justify-content: flex-end;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
 
         table {
@@ -96,6 +96,7 @@
         font-weight: 400;
         border: 1px solid #ccc;
         border-radius: 4px;
+        padding-right: 20%;
 
         &::placeholder {
             color: #ccc;

@@ -193,10 +193,6 @@ const Tr = memo(({ ele, date }) => {
     let [state, setSTate] = useState(ele.attd);
     let [pen, setPen] = useState(ele.reason ? true : false);
 
-    const reSize = (e) => {
-        const ele = e.target;
-        setText(ele.value);
-    };
 
     // 사유 저장
     const saveReason = async () => {
@@ -243,7 +239,7 @@ const Tr = memo(({ ele, date }) => {
 
     return (
         <tr>
-            <td style={{ width: "13%" }} className="fs">
+            <td style={{ width: "13%", paddingLeft: "30px" }} className="fs">
                 <div>
                     <div className="user-name">{ele.um_nm}</div>
                     <div className="user-id">{ele.um_id}</div>
@@ -277,12 +273,15 @@ const Tr = memo(({ ele, date }) => {
                         }}
                     ></button>
                     <textarea
-                        onChange={reSize}
+                        onChange={(e)=>{
+                            setText(e.target.value)
+                        }}
                         placeholder="사유 입력(50자 이내)"
                         value={text}
                         disabled={!pen}
                         onKeyDown={resizeaa}
                         onKeyUp={resizeaa}
+                        maxLength="50"
                     ></textarea>
                     {pen && (
                         <button className="btn-grey-border" onClick={saveReason}>

@@ -6,10 +6,9 @@ import { arrSort } from '../methods/methods'
 const useStudentsStore = create(set=>({
     user: [],
     clickStudent : null,
-    classList : [],
     bookList : {},
     setBookList  : (param)=> set(state=> ({bookList : param})),
-    getStudentsData : async (classCd, queryStr)=>{
+    getStudentsData : async (classCd = [], queryStr = "")=>{
       // 리스트 가져오기
       
       const url = "/class_st.php"
@@ -20,15 +19,11 @@ const useStudentsStore = create(set=>({
       }
 
       const res = await ajax(url, {data});
+      // console.log(res);
 
-      // if(res.data.ok === 0){
-      //   localStorage.removeItem("GplumMathIsLogin")
-      //   window.location = "/login"
-      // }
+      const {student_list} = res.data;
 
-      const {class_list , student_list} = res.data;
-
-      return set (state=> ({user : arrSort(student_list, "um_nm"), classList : class_list}))
+      return set (state=> ({user : arrSort(student_list, "um_nm")}))
     },
     setClickStudent : (payload)=> set (state=> ({clickStudent : payload})),
     resetStudent : ()=> set (state=> ({clickStudent : null}) )

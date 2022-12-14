@@ -18,18 +18,31 @@ function AssessmentModal ({setAssModal}) {
 
     let [totalData, setTotalData] = useState([7,7]);
 
-    let [title,setTitle] = useState('');
+    let [title,setTitle] = useState([]);
     let [audioState,setAudioState] = useState();
 
+    const getData = async ()=>{
+        const data = {
+            mode : "get_assessment",
+            cls_seq : 12345
+        }
+        let res = await ajax("/class.php", {data});
+
+        console.log(res);
+        const title = res.data.title;
+        const audio = res.data.file;
+        const 이해력 = res.data.uds;
+        const 전달력 = res.data.send;
+
+        console.log()
+
+        setTotalData([이해력,전달력]);
+        setTitle(title.split("/").slice(1));
+        setAudioState(audio);
+    }
+
     useEffect(()=>{
-        ajax("/class.php/?mode=get_assessment", {
-        }).then(res=>{
-            console.log(res.data);
-            setTotalData([res.data.uds,res.data.send]);
-            setTitle(res.data.title);
-            setAudioState(false);
-        })
-        
+        getData();
     },[])
 
 
@@ -177,9 +190,11 @@ function AssessmentModal ({setAssModal}) {
                     <div className="modal-name">
                         <strong className="name">강수학</strong>
                         <ul className="list">
-                            <li>중2-1</li>
-                            <li>I. 수와 식의 계산</li>
-                            <li>번호, 주제</li>
+                            {
+                                title?.map(a=>{
+                                    return <li key={a}>{a}</li>
+                                })
+                            }
                         </ul>
                     </div>
                     <div className="contents">

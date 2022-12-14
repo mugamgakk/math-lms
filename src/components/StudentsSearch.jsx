@@ -8,38 +8,19 @@ import { useCallback } from "react";
 import Icon from "./Icon";
 
 function StudentsSearch({ children }) {
-    let { user, setClickStudent, clickStudent, getStudentsData, resetStudent, classList } =
+    let { user, setClickStudent, clickStudent, getStudentsData, resetStudent } =
         useStudentsStore();
+
     let [userList, setUserList] = useState(null);
     let [nameSearch, setNameSearch] = useState("");
     let [skeleton, setSkeleton] = useState(true);
-
     // 반선택
     let [classOption, setClassOption] = useState([]);
+
     //  클릭한 데이터
     const getUser = useCallback((list) => {
         setClickStudent(list);
     }, []);
-
-    // 검색
-    const searchStudents = () => {
-        setSkeleton(true);
-        let regexp = new RegExp(nameSearch);
-
-        let list = user.filter((a) => regexp.test(a.um_nm));
-
-        setUserList(list);
-
-        setSkeleton(false);
-
-        setNameSearch("");
-    };
-
-    useEffect(() => {
-        if (classList.length !== 0) {
-            setClassOption(classList);
-        }
-    }, [classList]);
 
     useEffect(() => {
         resetStudent();
@@ -47,9 +28,8 @@ function StudentsSearch({ children }) {
     }, []);
 
     useEffect(() => {
-        // setTimeout(() => {
+        // 학생 리스트
         user && setUserList(user);
-        // }, 200);
     }, [user]);
 
     useEffect(() => {
@@ -68,10 +48,10 @@ function StudentsSearch({ children }) {
                 <div className="fj">
                     <ClassSelect
                         onChange={(ele) => {
+                            getStudentsData(classOption, nameSearch);
                             setClassOption(ele);
                         }}
                         value={classOption}
-                        options={classList}
                         width="50%"
                     />
                     <input
@@ -85,11 +65,11 @@ function StudentsSearch({ children }) {
                         }}
                         onKeyUp={(e) => {
                             if (e.key === "Enter") {
-                                searchStudents();
+                                getStudentsData(classOption, nameSearch);
                             }
                         }}
                     />
-                    <button className="btn-search btn-green">
+                    <button className="btn-search btn-green" onClick={()=>{ getStudentsData(classOption, nameSearch); }}>
                         <Icon icon={"search"} />
                         검색
                     </button>
@@ -134,7 +114,7 @@ function StudentsSearch({ children }) {
                 <button
                     className="btn-grey btn-icon"
                     onClick={() => {
-                        setUserList(user);
+                        getStudentsData();
                         setNameSearch("");
                     }}
                 >
