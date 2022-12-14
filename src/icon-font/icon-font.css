@@ -2,9 +2,9 @@
   font-family: 'icon-font';
   font-style: normal;
   font-weight: 400;
-  src: url("icon-font.eot?29d2d6942229d99565520ada7214c784?#iefix") format("embedded-opentype"),
-url("icon-font.woff2?29d2d6942229d99565520ada7214c784") format("woff2"),
-url("icon-font.woff?29d2d6942229d99565520ada7214c784") format("woff");
+  src: url("icon-font.eot?a863851ca67be6d7101f1ea08ea02956?#iefix") format("embedded-opentype"),
+url("icon-font.woff2?a863851ca67be6d7101f1ea08ea02956") format("woff2"),
+url("icon-font.woff?a863851ca67be6d7101f1ea08ea02956") format("woff");
 }
 
 .icon-font, .ic-icons {
@@ -50,20 +50,20 @@ url("icon-font.woff?29d2d6942229d99565520ada7214c784") format("woff");
 }
 
 .ic-apple:before { content: "\f101"; }
-.ic-arrowA:before { content: "\f102"; }
-.ic-attendence:before { content: "\f103"; }
-.ic-calendar:before { content: "\f104"; }
-.ic-close:before { content: "\f105"; }
-.ic-download:before { content: "\f106"; }
-.ic-downloadB:before { content: "\f107"; }
-.ic-evaluation:before { content: "\f108"; }
-.ic-fast:before { content: "\f109"; }
-.ic-file:before { content: "\f10a"; }
-.ic-hamburger:before { content: "\f10b"; }
-.ic-info:before { content: "\f10c"; }
-.ic-lnbDetail:before { content: "\f10d"; }
-.ic-logout:before { content: "\f10e"; }
-.ic-menu_btn(close):before { content: "\f10f"; }
+.ic-attendence:before { content: "\f102"; }
+.ic-calendar:before { content: "\f103"; }
+.ic-close:before { content: "\f104"; }
+.ic-download:before { content: "\f105"; }
+.ic-evaluation:before { content: "\f106"; }
+.ic-file:before { content: "\f107"; }
+.ic-info:before { content: "\f108"; }
+.ic-lbt1:before { content: "\f109"; }
+.ic-lbt2:before { content: "\f10a"; }
+.ic-lbt3:before { content: "\f10b"; }
+.ic-lbt4:before { content: "\f10c"; }
+.ic-lbt5:before { content: "\f10d"; }
+.ic-lnbDetail:before { content: "\f10e"; }
+.ic-logout:before { content: "\f10f"; }
 .ic-more:before { content: "\f110"; }
 .ic-notification:before { content: "\f111"; }
 .ic-pencil:before { content: "\f112"; }
@@ -75,11 +75,9 @@ url("icon-font.woff?29d2d6942229d99565520ada7214c784") format("woff");
 .ic-reload:before { content: "\f118"; }
 .ic-remove:before { content: "\f119"; }
 .ic-search:before { content: "\f11a"; }
-.ic-selct_typeC:before { content: "\f11b"; }
-.ic-select_typeA:before { content: "\f11c"; }
-.ic-select_typeB:before { content: "\f11d"; }
-.ic-select_typeC:before { content: "\f11e"; }
-.ic-studentManagement:before { content: "\f11f"; }
-.ic-todayClass:before { content: "\f120"; }
-.ic-volume:before { content: "\f121"; }
-.ic-warning:before { content: "\f122"; }
+.ic-select_typeA:before { content: "\f11b"; }
+.ic-select_typeB:before { content: "\f11c"; }
+.ic-studentManagement:before { content: "\f11d"; }
+.ic-todayClass:before { content: "\f11e"; }
+.ic-volume:before { content: "\f11f"; }
+.ic-warning:before { content: "\f120"; }
