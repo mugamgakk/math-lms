@@ -1,0 +1,32 @@
+[
+    {
+        "ut_seq": "123",
+        "tb_name": "중2-1 노벰",
+        "ltitle": "I. 수와 연산",
+        "kind": "단원평가",
+        "ev_date": "2021-07-20",
+        "ev_std_score": "18",
+        "ev_max_score": "20",
+        "ev_per_score": "90"
+    },
+    {
+        "ut_seq": "124",
+        "tb_name": "중2-1 노벰",
+        "ltitle": "II. 문자와 식",
+        "kind": "단원평가",
+        "ev_date": "2021-07-20",
+        "ev_std_score": "18",
+        "ev_max_score": "20",
+        "ev_per_score": "90"
+    },
+    {
+        "ut_seq": "124",
+        "tb_name": "중2-1 노벰",
+        "ltitle": "III. 좌표평면과 그래프",
+        "kind": "단원평가",
+        "ev_date": "2021-07-20",
+        "ev_std_score": "18",
+        "ev_max_score": "20",
+        "ev_per_score": "90"
+    }
+]

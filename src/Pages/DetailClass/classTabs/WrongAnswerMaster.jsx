@@ -7,7 +7,6 @@ import PrintModal_clinic from '../../../components/PrintModal_clinic';
 import dayjs from "dayjs"
 import useStudentsStore from "../../../store/useStudentsStore";
 import Icon from "../../../components/Icon";
-import axios from "axios";
 import Checkbox from "../../../components/Checkbox";
 import LmsDatePicker from "../../../components/LmsDatePicker";
 import CreationModal_detail from "../modal/CreationModal_detail";
@@ -27,7 +26,9 @@ function WrongAnswer() {
     let [filterData, setFilterData] = useState(null);
     let [selectChoice,setSelecChoice] = useState(null);
     let [selectOption, setSelectOption] = useState(null);
+    const clickStudent = useStudentsStore(state=>state.clickStudent);
     let [date,setDate] = useState(new Date());
+
    console.log(selectOption)
     useEffect(()=>{
         console.log(checkData);
@@ -38,17 +39,16 @@ function WrongAnswer() {
     },[]);
     
     const getData = async () => {
-        // let url = "/class_wrong.php";
-        // let query = {
-        //     mode: "list",
-        //     usr_seq : clickStudent.usr_seq,
-        //     sdate : monthAge,
-        //     edate : today,
-        // };
+        let url = "/class_wrong.php";
+        let query = {
+            mode: "list",
+            usr_seq : clickStudent.usr_seq,
+            sdate : startDay,
+            edate : endDay,
+        };
         
-        // let res = await ajax(url, {data: query});
-        // let data = res.data;
-        const res = await axios("/json/wrongAnswer_table.json");
+        let res = await ajax(url, {data: query});
+        // const res = await axios("/json/wrongAnswer_table.json");
 
         console.log(res.data);
         setWrongList(res.data.wrong_list);
@@ -166,7 +166,7 @@ function WrongAnswer() {
                 <thead>
                         <tr>
                             <th style={{ width:'6.95%' }}>
-                                <Checkbox color='orange' onChange={(e)=>allCheck(e.target.checked)} checked={filterData && checkData.length == filterData.length}/>
+                                <Checkbox color='orange' onChange={(e)=>allCheck(e.target.checked)} checked={ checkData.length == filterData?.length }/>
                                 선택
                             </th>
                             <th style={{ width:'11.82%' }}>생성일</th>
@@ -213,13 +213,14 @@ const Tr = ({data,checkData,checkFunc})=>{
                 }
             </td>
             <td style={{ width:'16.3%',flexDirection:'column' }}>
-                {
+                {/* {
                     data.wa_range.map((range,i)=>{
                         return(
                             <div key={i}>{range}</div>
                             )
                         })
-                }
+                } */}
+                 {data.wa_range}
             </td>
             <td style={{ width:'7.85%' }}>{data.wa_seq}</td>
             <td style={{ width:'11.72%',flexDirection:'column' }}>

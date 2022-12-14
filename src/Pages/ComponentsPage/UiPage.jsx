@@ -3,6 +3,7 @@ import SelectBase from '../../components/ui/select/SelectBase';
 import Checkbox from '../../components/Checkbox';
 import Icon from "../../components/Icon";
 import { useState } from 'react';
+import RadioBox from '../../components/RadioBox';
 
 function UiPage() {
 
@@ -133,6 +134,26 @@ function UiPage() {
                     }
                 </pre>
             </div>
+            <div className='mb-20'>
+                <h3>radiobox</h3>
+                <RadioBox checked={true}/>
+                <RadioBox />
+                <pre>
+                    {
+                        `
+                            <RadioBox
+                                id={}
+                                checked={ }
+                                name={}
+                                onChange={ }
+                                label={}
+                                className={}
+                            />
+                        `
+                    }
+                </pre>
+            </div>
+
             <div className='mb-20'>
                 <h3 className=''>table</h3>
                 <table className='table tableA'>

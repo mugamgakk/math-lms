@@ -1,90 +1,229 @@
-[
-    {
-        "no":"1",
-        "answer":"①",
-        "stu_answer":"②",
-        "state":false,
-        "qa_path":"https://file.parallaxedu.com/pxm/gplum/data/M11/tres/",
-        "qa_code":"15M11TRA3104PR0020_2021"
-    },
-    {
-        "no":"2",
-        "answer":"⑤",
-        "stu_answer":"⑤",
-        "state":true,
-        "qa_path":"https://file.parallaxedu.com/pxm/gplum/data/M11/tres/",
-        "qa_code":"15M11TRA3104PR0080_2021"
-    },
-    {
-        "no":"3",
-        "answer":"②",
-        "stu_answer":"①",
-        "state":false,
-        "qa_path":"https://file.parallaxedu.com/pxm/gplum/data/M11/tres/",
-        "qa_code":"15M11TRA3104PR0070_2021"
-    },
-    {
-        "no":"4",
-        "answer":"③",
-        "stu_answer":"③",
-        "state":true,
-        "qa_path":"https://file.parallaxedu.com/pxm/gplum/data/M11/tres/",
-        "qa_code":"15M11TRA3104PR0060_2021"
-    },
-    {
-        "no":"5",
-        "answer":"③",
-        "stu_answer":"③",
-        "state":true,
-        "qa_path":"https://file.parallaxedu.com/pxm/gplum/data/M11/tres/",
-        "qa_code":"15M11TRA3104PR0020_2021"
-    },
-    {
-        "no":"6",
-        "answer":"③",
-        "stu_answer":"③",
-        "state":true,
-        "qa_path":"https://file.parallaxedu.com/pxm/gplum/data/M11/tres/",
-        "qa_code":"15M11TRA3104PR0020_2021"
-    },
-    {
-        "no":"6",
-        "answer":"③",
-        "stu_answer":"③",
-        "state":true,
-        "qa_path":"https://file.parallaxedu.com/pxm/gplum/data/M11/tres/",
-        "qa_code":"15M11TRA3104PR0020_2021"
-    },
-    {
-        "no":"6",
-        "answer":"③",
-        "stu_answer":"③",
-        "state":true,
-        "qa_path":"https://file.parallaxedu.com/pxm/gplum/data/M11/tres/",
-        "qa_code":"15M11TRA3104PR0020_2021"
-    },
-    {
-        "no":"6",
-        "answer":"③",
-        "stu_answer":"③",
-        "state":true,
-        "qa_path":"https://file.parallaxedu.com/pxm/gplum/data/M11/tres/",
-        "qa_code":"15M11TRA3104PR0020_2021"
-    },
-    {
-        "no":"6",
-        "answer":"③",
-        "stu_answer":"③",
-        "state":true,
-        "qa_path":"https://file.parallaxedu.com/pxm/gplum/data/M11/tres/",
-        "qa_code":"15M11TRA3104PR0020_2021"
-    },
-    {
-        "no":"6",
-        "answer":"③",
-        "stu_answer":"③",
-        "state":true,
-        "qa_path":"https://file.parallaxedu.com/pxm/gplum/data/M11/tres/",
-        "qa_code":"15M11TRA3104PR0020_2021"
-    }
-]
+{
+    "title": "강수학/소인수 분해/최대공약수와 그 활용",
+    "score": "2/100",
+    "reg_dt": null,
+    "qa_result": [
+        {
+            "no": "1",
+            "crt_ans": [
+                "1"
+            ],
+            "std_and": [
+                "2"
+            ],
+            "is_correct": "N",
+            "vd_path": "https://api.wecandeo.com/video/default/BOKNS9AQWrHpJ4jVxmPvPwwjosQWTPOS1sTOzuyoVI47FPtS6yk80Qieie",
+            "qseq": 1,
+            "qa_path": "https://file.parallaxedu.com/pxm/gplum/data/M11/tres/",
+            "qa_code": "15M11TRA3204PR0010_2021",
+            "cq_code": "15M11TRA4204PR012L_2021",
+            "vd_code": "15M11TRA3204PV0010_2021",
+            "qa_type": "O",
+            "qa_keyword": "다항식과 일차식",
+            "correct_a": "4",
+            "similar_a": null
+        },
+        {
+            "no": "2",
+            "crt_ans": [
+                "2"
+            ],
+            "std_and": [
+                "2"
+            ],
+            "is_correct": "Y",
+            "vd_path": "https://api.wecandeo.com/video/default/BOKNS9AQWrHpJ4jVxmPvPwwjosQWTPOS1sTOzuyoVI47FPtS6yk80Qieie",
+            "qseq": 1,
+            "qa_path": "https://file.parallaxedu.com/pxm/gplum/data/M11/tres/",
+            "qa_code": "15M11TRA3204PR0010_2021",
+            "cq_code": "15M11TRA4204PR012L_2021",
+            "vd_code": "15M11TRA3204PV0010_2021",
+            "qa_type": "O",
+            "qa_keyword": "다항식과 일차식",
+            "correct_a": "4",
+            "similar_a": null
+        },
+        {
+            "no": "3",
+            "crt_ans": [
+                "3"
+            ],
+            "std_and": [
+                "2"
+            ],
+            "is_correct": "N",
+            "vd_path": "http://path/file",
+            "qseq": 1,
+            "qa_path": "https://file.parallaxedu.com/pxm/gplum/data/M11/tres/",
+            "qa_code": "15M11TRA3204PR0010_2021",
+            "cq_code": "15M11TRA4204PR012L_2021",
+            "vd_code": "15M11TRA3204PV0010_2021",
+            "qa_type": "O",
+            "qa_keyword": "다항식과 일차식",
+            "correct_a": "4",
+            "similar_a": null
+        },
+        {
+            "no": "4",
+            "crt_ans": [
+                "4",
+                "3"
+            ],
+            "std_and": [
+                "2",
+                "1"
+            ],
+            "is_correct": "N",
+            "vd_path": "http://path/file",
+            "qseq": 1,
+            "qa_path": "https://file.parallaxedu.com/pxm/gplum/data/M11/tres/",
+            "qa_code": "15M11TRA3204PR0010_2021",
+            "cq_code": "15M11TRA4204PR012L_2021",
+            "vd_code": "15M11TRA3204PV0010_2021",
+            "qa_type": "O",
+            "qa_keyword": "다항식과 일차식",
+            "correct_a": "4",
+            "similar_a": null
+        },
+        {
+            "no": "5",
+            "crt_ans": [
+                "5"
+            ],
+            "std_and": [
+                "5"
+            ],
+            "is_correct": "Y",
+            "vd_path": null,
+            "qseq": 1,
+            "qa_path": "https://file.parallaxedu.com/pxm/gplum/data/M11/tres/",
+            "qa_code": "15M11TRA3204PR0010_2021",
+            "cq_code": "15M11TRA4204PR012L_2021",
+            "vd_code": "15M11TRA3204PV0010_2021",
+            "qa_type": "O",
+            "qa_keyword": "다항식과 일차식",
+            "correct_a": "4",
+            "similar_a": null
+        },
+        {
+            "no": "6",
+            "crt_ans": [
+                "1"
+            ],
+            "std_and": [
+                "2"
+            ],
+            "is_correct": "N",
+            "vd_path": "http://path/file",
+            "qseq": 1,
+            "qa_path": "https://file.parallaxedu.com/pxm/gplum/data/M11/tres/",
+            "qa_code": "15M11TRA3204PR0010_2021",
+            "cq_code": "15M11TRA4204PR012L_2021",
+            "vd_code": "15M11TRA3204PV0010_2021",
+            "qa_type": "O",
+            "qa_keyword": "다항식과 일차식",
+            "correct_a": "4",
+            "similar_a": null
+        },
+        {
+            "no": "7",
+            "crt_ans": [
+                "주관식"
+            ],
+            "std_and": [
+                "몰라"
+            ],
+            "is_correct": "N",
+            "vd_path": "http://path/file",
+            "qseq": 1,
+            "qa_path": "https://file.parallaxedu.com/pxm/gplum/data/M11/tres/",
+            "qa_code": "15M11TRA3204PR0010_2021",
+            "cq_code": "15M11TRA4204PR012L_2021",
+            "vd_code": "15M11TRA3204PV0010_2021",
+            "qa_type": "O",
+            "qa_keyword": "다항식과 일차식",
+            "correct_a": "4",
+            "similar_a": null
+        },
+        {
+            "no": "8",
+            "crt_ans": [
+                "3"
+            ],
+            "std_and": [
+                "3"
+            ],
+            "is_correct": "Y",
+            "vd_path": "http://path/file",
+            "qseq": 1,
+            "qa_path": "https://file.parallaxedu.com/pxm/gplum/data/M11/tres/",
+            "qa_code": "15M11TRA3204PR0010_2021",
+            "cq_code": "15M11TRA4204PR012L_2021",
+            "vd_code": "15M11TRA3204PV0010_2021",
+            "qa_type": "O",
+            "qa_keyword": "다항식과 일차식",
+            "correct_a": "4",
+            "similar_a": null
+        },
+        {
+            "no": "9",
+            "crt_ans": [
+                "4"
+            ],
+            "std_and": [
+                "3"
+            ],
+            "is_correct": "N",
+            "vd_path": null,
+            "qseq": 1,
+            "qa_path": "https://file.parallaxedu.com/pxm/gplum/data/M11/tres/",
+            "qa_code": "15M11TRA3204PR0010_2021",
+            "cq_code": "15M11TRA4204PR012L_2021",
+            "vd_code": "15M11TRA3204PV0010_2021",
+            "qa_type": "O",
+            "qa_keyword": "다항식과 일차식",
+            "correct_a": "4",
+            "similar_a": null
+        },
+        {
+            "no": "10",
+            "crt_ans": [
+                "5"
+            ],
+            "std_and": [
+                "3"
+            ],
+            "is_correct": "N",
+            "vd_path": "http://path/file",
+            "qseq": 1,
+            "qa_path": "https://file.parallaxedu.com/pxm/gplum/data/M11/tres/",
+            "qa_code": "15M11TRA3204PR0010_2021",
+            "cq_code": "15M11TRA4204PR012L_2021",
+            "vd_code": "15M11TRA3204PV0010_2021",
+            "qa_type": "O",
+            "qa_keyword": "다항식과 일차식",
+            "correct_a": "4",
+            "similar_a": null
+        },
+        {
+            "no": "11",
+            "crt_ans": [
+                "1"
+            ],
+            "std_and": [
+                "3"
+            ],
+            "is_correct": "N",
+            "vd_path": "http://path/file",
+            "qseq": 1,
+            "qa_path": "https://file.parallaxedu.com/pxm/gplum/data/M11/tres/",
+            "qa_code": "15M11TRA3204PR0010_2021",
+            "cq_code": "15M11TRA4204PR012L_2021",
+            "vd_code": "15M11TRA3204PV0010_2021",
+            "qa_type": "O",
+            "qa_keyword": "다항식과 일차식",
+            "correct_a": "4",
+            "similar_a": null
+        }
+    ]
+}

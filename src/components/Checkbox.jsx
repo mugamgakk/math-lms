@@ -20,7 +20,7 @@ function Checkbox({ color = "green", id = guidGenerator(), checked, onChange, di
                 disabled={disabled}
             />
             <label htmlFor={id}></label>
-        </div>
+        </div> 
     );
 }
 

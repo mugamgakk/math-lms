@@ -3,37 +3,33 @@ import React, { useEffect, useState } from 'react';
 import ajax from "../../../ajax";
 import Icon from '../../../components/Icon';
 import { falseModal } from '../../../methods/methods';
-import axios from 'axios';
 import ReactPlayer from 'react-player';
-
+import useStudentsStore from '../../../store/useStudentsStore';
 let data = new Array(20).fill().map((v,i)=> i );
 
-function ResultPopMoal({setResultPop}) {
+function ResultPopMoal({setResultPop,ucode}) {
 
+    const clickStudent = useStudentsStore(state=>state.clickStudent);
     let [dataList,setDataList] = useState(null);
     let [clickState,setClickState] = useState(0);
     let [video, setVideo] = useState(false);
 
-    useState(()=>{
-        console.log(clickState);
-    },[clickState])
-        useEffect(()=>{
-            // ajax("/class_pop.php", { data : {
-            //     mode : 'qa_result',
-            //     usr_seq : 80,
-            //     bk_cd : '15m11coa11',
-            //     sd_kind : 'CO'
-            // }
-            // }).then(res=>{
-            //     console.log(res);
-            // }).catch((error)=>{
-            //     console.log(error);
-            // })
-            getData();
-        },[]);
+   useEffect(()=>{
+        getData();
+   },[])
 
         const getData = async() => {
-            const res = await axios("/json/resultPop_table.json");
+
+            let url = '/class_result.php';
+            let query = {
+                mode : 'qa_result',
+                usr_seq : clickStudent.usr_seq,
+                ucode: ucode,
+                sd_kind : 'QA',
+                qseq : 1,
+            }
+
+            const res = await ajax( url, { data: query} );
             console.log(res);
             setDataList(res.data);
 
@@ -66,8 +62,8 @@ function ResultPopMoal({setResultPop}) {
                         <div className='contents'>
                             <div className="contents-l">
                                 <div className="top mb-10">
-                                    맞힌 개수
-                                    <strong>9 개 / {dataList && dataList.length} 개</strong>
+                                    맞힌 
+                                    <strong>{dataList && dataList.length} 개</strong>
                                     2022. 7. 12
                                 </div>
                                 <table className='table tableA'>
@@ -81,25 +77,29 @@ function ResultPopMoal({setResultPop}) {
                                         </tr>
                                     </thead>
                                     <tbody className='scroll' style={{ height: '480px' }}>
-                                        {
+                                        {/* {
                                             dataList && dataList.map((item,i) => {
                                                 return(
+                                                    <>
                                                     <tr key={i} className={clickState == i ? 'active' : ''}>
                                                         <td onClick={()=> setClickState(i)} style={{ width: '15%',fontWeight:'600',cursor:'pointer'}}>{i+1}</td>
                                                         <td style={{ width: '20%'}}>{item.answer}</td>
                                                         <td style={{ width: '20%'}}>{item.stu_answer}</td>
-                                                        <td style={{ width: '20%'}}><button className={item.state ? 'btn-correct' : 'btn-incorrect'}>
+                                                        <td style={{ width: '20%'}}>
+                                                            <button className={item.state ? 'btn-correct' : 'btn-incorrect'}>
                                                             {item.state ? '정답' : '오답'}
                                                             </button></td>
-                                                        <td style={{ width: '25%'}}><button className='btnPlay' onClick={()=>setVideo(true)}></button>
+                                                        <td style={{ width: '25%'}}>
+                                                            <button className='btnPlay' onClick={()=>setVideo(true)}></button>
                                                         {
                                                             video && <VideoPlayer closeModal={setVideo} />
                                                         }
                                                         </td>
                                                     </tr>
+                                                    </>
                                                 )
                                             })
-                                        }
+                                        } */}
                                     </tbody>
                                 </table>
                             </div>
@@ -110,7 +110,7 @@ function ResultPopMoal({setResultPop}) {
                                         <span>소인수분해</span>
                                     </div>
                                     
-                                    <img className='img-q' src={`https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${dataList && dataList[clickState].qa_code}_Q.png`} alt="" style={{marginBottom:'20px'}}/>
+                                    <img className='img-q' src={`https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${dataList && dataList.qa_code}_Q.png`} alt="" style={{marginBottom:'20px'}}/>
                                     {
                                         ['①','②','③','④','⑤'].map((b,i)=>{
                                             return(

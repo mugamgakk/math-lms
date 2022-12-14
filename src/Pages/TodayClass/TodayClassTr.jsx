@@ -105,7 +105,7 @@ function TodayClassTr({ data }) {
                     학습 태도
                 </button>
                 {attModal ? <AttModal setAttModal={setAttModal} /> : null}
-                {assModal ? <AssessmentModal setAssModal={setAssModal} /> : null}
+                {assModal ? <AssessmentModal closeModal={setAssModal} /> : null}
                 {printModal ? (
                     <PrintModal
                         title="맞춤 클리닉"
