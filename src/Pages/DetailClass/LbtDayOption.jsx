@@ -22,6 +22,7 @@ const LbtDayOption = memo(() => {
     // 학습교재
     let [bookList, setBookList] = useState([]);
 
+    // 체크된 교재
     let [checkList, setCheckList] = useState([]);
 
     const allCheck = (checked) => {
@@ -42,8 +43,10 @@ const LbtDayOption = memo(() => {
             usr_seq: clickStudent.usr_seq,
         };
 
-        // const res = await ajax("/class_result.php", { data });
-        const res = await axios("/json/detailclass_table_book.json");
+        const res = await ajax("/class_result.php", { data });
+        // const res = await axios("/json/detailclass_table_book.json");
+
+        // console.log(res);
 
         const { bk_list, wrong_list } = res.data;
 
@@ -53,6 +56,7 @@ const LbtDayOption = memo(() => {
 
     return (
         <div className="LbtDayOption">
+            
             {createModal && <LbtModal setCreateModal={setCreateModal} />}
 
             <div className="option">
@@ -62,7 +66,7 @@ const LbtDayOption = memo(() => {
                         <CustomDatePicker
                             value={startDay}
                             onChange={(day) => setStartDay(day)}
-                            maxDate={new Date()}
+                            maxDate={endDay}
                             minDate={dayjs(new Date()).subtract(1, "M").$d}
                             label={true}
                         />
@@ -72,7 +76,7 @@ const LbtDayOption = memo(() => {
                             onChange={(day) => setEndDay(day)}
                             className="mr-10"
                             maxDate={new Date()}
-                            minDate={dayjs(new Date()).subtract(1, "M").$d}
+                            minDate={startDay}
                             label={true}
                         />
                         <button className="btn-grey" onClick={bookOption}>

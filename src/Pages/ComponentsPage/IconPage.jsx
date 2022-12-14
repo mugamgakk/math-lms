@@ -20,7 +20,10 @@ const arr = [
     'search',            'select_typeA',
     'select_typeB',      'select_typeC',
     'studentManagement', 'todayClass',
-    'volume',            'warning'
+    'volume',            'warning',
+    'lbt1',               'lbt2',
+    'lbt3',               'lbt4',
+    'lbt5',               
   ];
 
 function IconPage() {

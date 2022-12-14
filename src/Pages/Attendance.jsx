@@ -38,8 +38,8 @@ function Attendance() {
         };
 
         try {
-            // let res = await ajax("class_daily.php", { data: param });
-            let res = await axios("/json/attendance.json");
+            let res = await ajax("class_daily.php", { data: param });
+            // let res = await axios("/json/attendance.json");
 
             const { student_list } = res.data;
 

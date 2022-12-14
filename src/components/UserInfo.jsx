@@ -14,7 +14,7 @@ function UserInfo({ clickStudent }) {
     let [multiSelect, setMultiSelect] = useState();
     // 셀렉트 옵션값
     let [optionsDefault, setoptionsDefault] = useState();
-    
+
     // 선택 북 
     let setBookList = useStudentsStore(state => state.setBookList);
 
@@ -29,7 +29,7 @@ function UserInfo({ clickStudent }) {
 
         let res = await ajax("class_manage.php", { data });
 
-        console.log("교재 6종",data);
+        // console.log("교재 6종",data);
         // console.log("교재 6종 선택",res);
 
     }
