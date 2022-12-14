@@ -4,9 +4,13 @@ import { arrSort } from '../methods/methods'
 
 
 const useStudentsStore = create(set=>({
+    // 학생 리스트
     user: [],
+    // 선택된 학생 리스트
     clickStudent : null,
+    // 교재 6종 
     bookList : {},
+    // 교재 6종 선택
     setBookList  : (param)=> set(state=> ({bookList : param})),
     getStudentsData : async (classCd = [], queryStr = "")=>{
       // 리스트 가져오기

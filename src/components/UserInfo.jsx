@@ -7,10 +7,15 @@ import SelectBook from './ui/select/SelectBook';
 
 function UserInfo({ clickStudent }) {
 
-    let [multiSelect, setMultiSelect] = useState();
+    // 셀렉트 선택값
     let [chiceItem, setChiceItem] = useState();
-
+    
+    // 셀렉트 체크값
+    let [multiSelect, setMultiSelect] = useState();
+    // 셀렉트 옵션값
     let [optionsDefault, setoptionsDefault] = useState();
+    
+    // 선택 북 
     let setBookList = useStudentsStore(state => state.setBookList);
 
     // 교재 6종 선택
@@ -24,52 +29,38 @@ function UserInfo({ clickStudent }) {
 
         let res = await ajax("class_manage.php", { data });
 
-        // console.log("교재 6종",data);
+        console.log("교재 6종",data);
         // console.log("교재 6종 선택",res);
 
     }
 
+    const getStudentBookList = async ()=>{
+        const data = {
+            mode: "std_info",
+            usr_seq: clickStudent.usr_seq
+        }
+
+        let res = await ajax("/class_manage.php", {data});
+
+        const bookList = res.data.bk_list.map(a=> ({value : a.bk_cd, label : a.bk_name}));
+
+        // 초기값  // 6개 기본 체크
+        setMultiSelect(bookList.slice(0, 6));
+        choiceBook(bookList.slice(0, 6))
+
+        // store에 넣을 선택값
+        setBookList(bookList[0]);
+
+        // select초기값
+        setChiceItem(bookList[0])
+
+        // option
+        setoptionsDefault(bookList);
+    }
+
     useEffect(() => {
         if (clickStudent) {
-            const data = {
-                mode: "std_info",
-                usr_seq: clickStudent.usr_seq
-            }
-            ajax("/class_manage.php", { data })
-                .then(res => {
-                    // console.log(res)
-
-                    // const options = res.data.bk_list.map(a=> ({value : a.bk_cd, label : a.bk_name}));
-
-                    const options = [
-                        { value: 123, label: "수학" },
-                        { value: 1323, label: "영어" },
-                        { value: 323, label: "도덕" },
-                        { value: 313, label: "기술" },
-                        { value: 3, label: "개그" },
-                        { value: 2, label: "찬양" },
-                        { value: 1, label: "축구" }
-                    ]
-
-                    // 초기값  // 6개 기본 체크
-                    setMultiSelect(options.slice(0, 6));
-
-                    // store에 넣을 초기값
-                    setBookList(options[0]);
-
-                    // select초기값
-                    setChiceItem(options[0])
-
-                    // option
-                    setoptionsDefault(options);
-
-                    return options.slice(0.6);
-
-                })
-                .then(data => {
-                    choiceBook(data);
-                })
-
+            getStudentBookList();
         }
     }, [clickStudent])
 
