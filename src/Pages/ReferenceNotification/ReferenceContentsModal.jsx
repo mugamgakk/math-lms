@@ -43,68 +43,66 @@ function ReferenceContentsModal({seq,setModal}) {
     return ( 
         <div className="modal">
             <div className="modal-content">
-            <div className="modal-header fj">
-                        <h2 className="modal-title">GNB패럴랙스</h2>
+                <div className="modal-header fj">
+                        <h2 className="modal-title">게시물 확인</h2>
                         <button className="btn" onClick={(e) => {
                             e.stopPropagation();
                             setModal(false)
                         }}>
                             <Icon icon={"close"} />
                         </button>
-                    </div>
-                <h3>No.{seq}</h3>
-                {
-                    contents && (
-                    <div className="table">
-                        <div className="tr">
-                            <div className="th">대상</div>
-                            <div className="td">{contents.bd_cate}</div>
-                            <div className="th">작성자</div>
-                            <div className="td">{contents.write}</div>
-                            <div className="th">작성일</div>
-                            <div className="td">{contents.reg_dt}</div>
-                            <div className="th">조회수</div>
-                            <div className="td">{contents.hit}</div>
-                        </div>
-                        <div className="tr">
-                            <div className="th">글제목</div>
-                            <div className="td">{contents.bd_title}</div>
-                        </div>
-                        <div className='textArea'>
-                            {contents.bd_content}
-                        </div>
-                        <div className='tr'>
-                            <div className="th">첨부파일</div>
-                            <div className="td fileTd">
-                                <div className='fileArea'>
-                                    {
-                                        contents.files.length > 0 && contents.files.map(file=>{
-                                            
-                                            return(
-                                                <div key={file.bf_seq} onClick={()=>fileDown(file.fileurl,file.filename)}>{file.filename}({file.filesize})</div>
-                                            )
-                                        })
-                                    }
+                </div>
+                <div className="modal-body">
+                    <strong className="name">{contents && contents.bd_title}</strong>
+                    {
+                        contents && (
+                            <>
+                            <div className='text-right'>조회수:{contents.hit}</div>
+                            <div className='fj'>
+                                <div>
+                                    <span>대상</span>
+                                    {contents.bd_cate}
                                 </div>
-                            </div> 
-                            <div className="td"><button className='btn'>선택 받기</button></div>
-                            <div className="td"><button className='btn'>모두 받기</button></div>
-                            
-                        </div>
-                    </div>
-                    )
-                }
+                                <div><span>작성자</span>{contents.write}</div>
+                                <div><span>작성일</span>{contents.reg_dt}</div>
+                            </div>
+                            <div className='textArea'>
+                                {contents.bd_content}
+                            </div>
+                            <div className='tr'>
+                                <div>첨부파일</div>
+                                <div className="td fileTd">
+                                    <div className='fileArea'>
+                                        {
+                                            contents.files.length > 0 && contents.files.map(file=>{
+                                                
+                                                return(
+                                                    <div key={file.bf_seq} onClick={()=>fileDown(file.fileurl,file.filename)}>{file.filename}({file.filesize})</div>
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                </div> 
+                                <div><button className='btn'>선택 받기</button></div>
+                                <div><button className='btn'>모두 받기</button></div>
+                                
+                            </div>
+                        </>
+                        )
+                    }
+                </div>
+
                 <div className="modal-footer">
-                    <button className='btn'>이전 글 보기</button>
-                    <button className='btn'>수정</button>
-                    <button className='btn'>삭제</button>
-                    <button className='btn' 
+                    <button className='btn-brown mr-10'>이전 글 보기</button>
+                    <button className='btn-orange-border mr-10' style={{ background: '#fff' }}>수정</button>
+                    <button className='btn-orange mr-10'>삭제</button>
+                    <button className='btn-grey mr-10' 
                     onClick={(e)=>{
                         setModal(false);
                         e.stopPropagation();
                     }}
                     >닫기</button>
-                    <button className='btn'>다음 글 보기</button>
+                    <button className='btn-brown'>다음 글 보기</button>
                 </div>
             </div>
         </div>
