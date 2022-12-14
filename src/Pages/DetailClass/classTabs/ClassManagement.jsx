@@ -194,14 +194,14 @@ const Tr = ({data,studyDone,ucode,retry,setCheckList,wrongPopList}) => {
     return(
         <tr>         
             <td className='fs' style={{ width:'19.8%' }}>{data.title}</td>
-            <td style={{ width: '11.88%'}} className={data.state1 ? (data.state1 === '100%' && 'active') : 'disabled' }>{data.state1}</td>
-            <td style={{ width: '11.88%'}} className={data.state1 === '100%' && 'active'}>
+            <td style={{ width: '11.88%'}} className={data.state1 ? (data.state1 === '100%' ? 'active' : '') : 'disabled' }>{data.state1}</td>
+            <td style={{ width: '11.88%'}} className={data.state1 === '100%' ? 'active' : ''}>
                 <div>
                     {data.state2.score}
                 <button className={`btn-orange wh-103 ${data.state2.avail ? '' : 'disabled'}`}>재응시({data.state2.retry})</button>
                 </div>
             </td>
-            <td  style={{ width: '11.88%'}} className={Object.keys(data.state3).length == 0 ? 'disabled' : (data.state1 === '100%' && 'active')}>
+            <td  style={{ width: '11.88%'}} className={Object.keys(data.state3).length == 0 ? 'disabled' : (data.state1 === '100%' ? 'active' : '')}>
                 {
                     Object.keys(data.state3).length !== 0 
                     ?  ( data.state3.file_url ? (
@@ -223,7 +223,7 @@ const Tr = ({data,studyDone,ucode,retry,setCheckList,wrongPopList}) => {
               
                 
             </td>
-            <td style={{ width: '11.88%'}} onClick={()=>setResultPop(true)} className={data.state1 === '100%' && 'active'}>
+            <td style={{ width: '11.88%'}} onClick={()=>setResultPop(true)} className={data.state1 === '100%' ? 'active' : ''}>
                 <div>
                     {data.state4.score}
                     <button 
@@ -237,7 +237,7 @@ const Tr = ({data,studyDone,ucode,retry,setCheckList,wrongPopList}) => {
                     resultPop && <ResultPopModal setResultPop={setResultPop} />
                 }
             </td>
-            <td style={{ width: '11.88%'}} className={Object.keys(data.state5).length == 0 ? 'disabled' : (data.state1 === '100%' && 'active')}>
+            <td style={{ width: '11.88%'}} className={Object.keys(data.state5).length == 0 ? 'disabled' : (data.state1 === '100%' ? 'active' : '')}>
                 {
                     Object.keys(data.state5).length !== 0 
                     ?  ( data.state5.avail ? (

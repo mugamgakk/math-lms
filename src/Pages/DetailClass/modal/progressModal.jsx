@@ -5,23 +5,8 @@ import { falseModal } from '../../../methods/methods';
 import Icon from '../../../components/Icon';
 import useStudentsStore from "../../../store/useStudentsStore";
 
-let progress = {개념 : '34.8%', 유형 : '71.6%'}
-let per = ['20%','40%','60%','80%','100%']
-let data = [
-    {
-        tit: 'I. 수와 식의 계산',
-        sodanwon: [
-            { tit : '1. 유한소수와 무한소수'},
-            { tit : '2. 유리수와 순환소수'},
-            { tit : '3. 단항식의 곱셈과 나눗셈'},
-            { tit : '4. 다항식의 덧셈과 뺄셈'},
-            { tit : '5. 단항식과 다항식의 곱셈과 나눗셈'},
-            { tit : '6. 유리수와 순환소수'},
-            { tit : '7. 유리수와 순환소수'},
-        ]
-    },
-]
-
+const progress = {개념 : '34.8%', 유형 : '71.6%'}
+const per = ['20%','40%','60%','80%','100%']
 
 function ProgressModal({setProgressState,name}){
     let [progressData,setProgressData] = useState(null);
@@ -71,7 +56,7 @@ function ProgressModal({setProgressState,name}){
                                 <li className="fs">
                                     <div className="tit fc">개념서</div>
                                     <div className='gageWrap fs'>
-                                        <span className='gageWrap-gage' style={{ width: `${progress.개념}` }}>{progress.개념}</span>
+                                        <span className='gageWrap-gage' style={{ width: `${progressData && progressData.prog_co}` }}>{progressData && progressData.prog_co}</span>
                                         {
                                             per.map(item=>{
                                                 return <div className='gageWrap-item' key={item}>{item}</div>
@@ -82,7 +67,7 @@ function ProgressModal({setProgressState,name}){
                                 <li className="fs">
                                     <div className="tit fc">유형서</div>
                                     <div className='gageWrap fs' >
-                                        <span className='gageWrap-gage' style={{ width: `${progress.유형}` }}>{progress.유형}</span>
+                                        <span className='gageWrap-gage' style={{ width: `${progressData && progressData.prog_pa}` }}>{progressData && progressData.prog_pa}</span>
                                         {
                                             per.map(item=>{
                                                 return <div className='gageWrap-item' key={item}>{item}</div>
@@ -93,27 +78,27 @@ function ProgressModal({setProgressState,name}){
                             </ul>
                         </div>
                         <div className="top-table fs">
-                                <div className='top-table__tit fc text-center' style={{ width:'100px'}}>교재 학습<br/>정답률</div>
+                                <div className='top-table__tit fc text-center'>교재 학습<br/>정답률</div>
                                 <ul className='top-table__bar'>
                                     <li className="fs">
                                         <div className="tit fc">개념서</div>
-                                        <div className="con fc">{progress.개념}</div>
+                                        <div className="con fc">{progressData && progressData.crt_per_co}</div>
                                     </li>
                                     <li className="fs">
                                         <div className="tit fc">유형서</div>
-                                        <div className="con fc">90.6%</div>
+                                        <div className="con fc">{progressData && progressData.crt_per_pa}</div>
                                     </li>
                                 </ul>
                         </div>
                     </div>
                     {/* 아르케 */}
                     {/* <div className='top fj'>
-                        <div className="top-table">
-                            <div className='top-table__tit'>학습 진행률</div>
+                        <div className="top-table fj" style={{ height:'35px' }}>
+                            <div className='top-table__tit fc' style={{ width:'140px'}}>학습 진행률</div>
                             <ul className='top-table__bar'>
-                                <li>
-                                    <div className='gageWrap'>
-                                        <span className='gageWrap-gage' style={{ width: `${progress.개념}` }}>{progress.개념}</span>
+                                <li className="fs" style={{ height:'100%' }}>
+                                    <div className='gageWrap fs'>
+                                        <span className='gageWrap-gage' style={{ width: `${progressData && progressData.prog_ar}` }}>{progressData && progressData.prog_ar}</span>
                                         {
                                             per.map(item=>{
                                                 return <div className='gageWrap-item'>{item}</div>
@@ -123,15 +108,15 @@ function ProgressModal({setProgressState,name}){
                                 </li>
                             </ul>
                         </div>
-                        <div className="top-table">
-                            <div className='top-table__tit'>교재 학습 정답률</div>
-                                <ul className='top-table__bar'>
-                                    <li>
-                                        <div className="tit">개념서</div>
-                                        <div className="con">{progress.개념}</div>
-                                    </li>
-                                </ul>
-                            </div>
+                        <div className="top-table fs" style={{ height:'35px' }}>
+                            <div className='top-table__tit fc text-center' style={{ width:'140px'}}>교재 학습 정답률</div>
+                            <ul className='top-table__bar'>
+                                <li className="fs" style={{ height:'100%'}}>
+                                    <div className="tit fc">개념서</div>
+                                    <div className="con fc">{progressData && progressData.crt_per_ar}</div>
+                                </li>
+                            </ul>
+                        </div>
                     </div> */}
                     <div className="contents">
                         <table className="tableC">
@@ -157,13 +142,29 @@ function ProgressModal({setProgressState,name}){
                                     <th>결과</th>
                                     <th>결과</th>
                                 </tr>
-
                             </thead>
+
+                            {/* 아르케 */}
+                            {/* <colgroup>
+                                <col width='60%' />
+                                <col width='20%' />
+                                <col width='20%' />
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th rowSpan={2}>단원명</th>
+                                    <th colSpan={2}>유형 학습</th>
+                                </tr>
+                                <tr>
+                                    <th>학습일자</th>
+                                    <th>결과</th>
+                                </tr>
+                            </thead> */}
                             </table>
                             <table className="table tableA">
                                 <tbody className="scroll">
 
-                            {
+                                {
                                 progressData && progressData.prog_list.map(list=>{
                                     return (
                                             <>
@@ -172,12 +173,17 @@ function ProgressModal({setProgressState,name}){
                                                     list.unit2.map(a=>{
                                                         return(
                                                             <tr>
+                                                                
                                                                 <td className='fs' style={{ width:'42.30%' }}>{a.title}</td>
                                                                 <td style={{ width:'11.53%' }}>{a.date_co}</td>
                                                                 <td style={{ width:'11.53%' }}>{a.score_co}</td>
                                                                 <td style={{ width:'11.53%' }}>{a.date_pa}</td>
                                                                 <td style={{ width:'11.53%' }}>{a.score_pa}</td>
                                                                 <td style={{ width:'11.53%' }}>{a.score_cc}</td>
+                                                                {/* 아르케 */}
+                                                                {/* <td className='fs' style={{ width: '60%' }}>{a.title}</td>
+                                                                <td style={{ width: '20%' }}>{a.date_pa}</td>
+                                                                <td style={{ width: '20%' }}>{a.score_pa}</td> */}
                                                             </tr>
                                                         )
                                                     })
