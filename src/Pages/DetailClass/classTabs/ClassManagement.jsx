@@ -9,6 +9,7 @@ import { useCallback } from "react";
 import Icon from "../../../components/Icon";
 import Checkbox from "../../../components/Checkbox";
 import PrintModal_clinic from "../../../components/PrintModal_clinic";
+import AssessmentModal from "../../TodayClass/AssessmentModal";
 
 function ClassManagement(){
     let [progressMo, setProgressState] = useState(false);
@@ -160,7 +161,7 @@ function ClassManagement(){
                                         {data && data[0].unit1}
                                     </td>
                                     <td style={{ width:'8.91%' }}>
-                                        <Checkbox color='green' id='all' checked={(data && wrongPopList.length == data[0].unit2.length)} onChange={(e) => allCheck(e.target.checked)}/>
+                                        <Checkbox color='green' id='all' checked={(data && wrongPopList.length == data[0]?.unit2.length)} onChange={(e) => allCheck(e.target.checked)}/>
                                     </td>
                                 </tr>
                                 {
@@ -189,6 +190,7 @@ function ClassManagement(){
 const Tr = ({data,studyDone,ucode,retry,setCheckList,wrongPopList}) => {
     let [resultPop, setResultPop] = useState(false);
     let [printMo, setPrintMo] = useState(false);
+    let [audioModal, setAudioModal] = useState(false);
 
 
     return(
@@ -206,10 +208,13 @@ const Tr = ({data,studyDone,ucode,retry,setCheckList,wrongPopList}) => {
                     Object.keys(data.state3).length !== 0 
                     ?  ( data.state3.file_url ? (
                             <div>
-                           <button className={`playBtn ${data.state3.newplay ? 'new' : ''}`} >
+                           <button className={`playBtn ${data.state3.newplay ? 'new' : ''}`} onClick={()=>setAudioModal(true)}>
                                 <Icon icon={"play"} style={{ fontSize:'14px',color:'#444' }} />
                             </button>
-                            <button className={`btn-orange wh-103 ${data.state3.avail ? 'btn' : 'btn disabled'}`}>이해:{data.state3.uds} 전달:{data.state3.send}</button>
+                            <button className={`btn-orange wh-103 ${data.state3.avail ? 'btn' : 'btn disabled'}`} onClick={()=>setAudioModal(true)}>이해:{data.state3.uds} 전달:{data.state3.send}</button>
+                            {
+                                audioModal && <AssessmentModal closeModal={setAudioModal}/>
+                            }
                             </div>
                         ) : (
                             <div>
@@ -234,7 +239,7 @@ const Tr = ({data,studyDone,ucode,retry,setCheckList,wrongPopList}) => {
                     }}>재응시({data.state4.retry})</button>
                 </div>
                 {
-                    resultPop && <ResultPopModal setResultPop={setResultPop} />
+                    resultPop && <ResultPopModal setResultPop={setResultPop} ucode={data.ucode}/>
                 }
             </td>
             <td style={{ width: '11.88%'}} className={Object.keys(data.state5).length == 0 ? 'disabled' : (data.state1 === '100%' ? 'active' : '')}>

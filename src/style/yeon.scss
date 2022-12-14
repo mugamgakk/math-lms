@@ -2,7 +2,7 @@
 @import "./classManagement";
 @import "./wrongAnswerMaster";
 @import "./EvaluationRoutineContent";
-@import "./reference";
+@import "./referenceNotification";
 
 // 수행평가 모달
 .assessmentModal{
@@ -37,9 +37,6 @@
                     transform: translateX(-50%);
                 }
             }
-        }
-        h5{
-           
         }
         table{
             width: 100%;

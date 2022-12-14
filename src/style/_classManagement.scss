@@ -20,9 +20,9 @@
 
     .scroll{
         max-height: 482px;
-        tr{
+        >tr{
             width: calc(100% + 8px);
-            td {
+            >td {
                 padding: 5px 0 !important;
                 >div{
                     @include flex(center);

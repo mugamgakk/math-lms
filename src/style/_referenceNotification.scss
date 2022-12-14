@@ -1,0 +1,28 @@
+.reference{
+    margin-top: 79px;
+    .table{
+        .title{
+            padding: 18px 0 18px 15px !important;
+        }
+    }
+}
+.notification{
+    padding-top: 40px;
+    .choice{
+        @include font-style(18);
+        &.active{
+            font-weight: 800;
+        }
+    }
+    .bar{
+        &::after{
+            content: '';
+            display: inline-block;
+            width: 1px;
+            height: 16px;
+            background: #ddd;
+            margin: 0 16px;
+
+        }
+    }
+}

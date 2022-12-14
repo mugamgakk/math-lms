@@ -5,6 +5,8 @@ import SelectBase from '../../components/ui/select/SelectBase';
 import ajax from "../../ajax";
 import ViewMessageModal from './ViewMessageModal';
 import WriteMessageModal from './WriteMessageModal';
+import Icon from '../../components/Icon';
+import RadioBox from '../../components/RadioBox';
 
 const viewList = [
     { value: 30, label: '30개' },
@@ -81,57 +83,54 @@ function SendMessage() {
 
     return (  
         <>
-            <div className="filters fj mt-10 mb-10"> 
-                <div className="filters-l">
-
-                    <div className='radioArea'>
-                        <input 
-                        type='radio' 
-                        name='mRadio' 
-                        id='contents'
-                        onChange={()=>setCoToState('co')}
-                        checked={coToState == 'co'}
-                        className='radioInput'/>
-                        <label htmlFor='contents'>내용</label>
-                    </div>
-                    <div className='radioArea'>
-                        <input 
-                        type='radio' 
-                        name='mRadio' 
-                        id='target'
-                        onChange={()=>setCoToState('to')}
-                        checked={coToState == 'to'}
-                        className='radioInput'/>
-                        <label htmlFor='target'>받는 사람</label>
-                    </div>
-                    <div className="searchWrap d-flex">
-                        <input type="text" 
-                        className='form-control' 
-                        style={{width:'200px'}}
-                        onChange={(e)=>setSearchInput(e.target.value)}
-                        />
-                        <SearchBtn />
-                        <SelectBase 
-                        onChange={(ele)=>setViewListState(ele)}
-                        defaultValue='목록 개수'
-                        options={viewList}
-                        value={viewListState}
+            <div className="filters fj mt-20 mb-20"> 
+                <div className="filters-l fa">
+                <button className="btn-grey mr-10" onClick={() => deleteList(checkList)}>선택 삭제</button>
+                <SelectBase 
+                    onChange={(ele)=>setViewListState(ele)}
+                    defaultValue='목록 개수'
+                    options={viewList}
+                    value={viewListState}
                     />
-                    </div>
                 </div>
-                <div className="filters-r">
-                    <button className="btn" onClick={() => setWriteModal(true)}>메세지 보내기</button>
-                    <button className="btn" onClick={() => deleteList(checkList)}>선택 삭제</button>
+                <div className="filters-r fa">
+                    <RadioBox 
+                    checked={coToState == 'co'} 
+                    onChange={()=>setCoToState('co')} 
+                    label={'내용'}
+                    className={'mr-10'}
+                    />
+                    <RadioBox 
+                    checked={coToState == 'to'} 
+                    onChange={()=>setCoToState('to')} 
+                    label={'받는 사람'}
+                    />
+                    <input
+                        type='text' 
+                        className="textInput mr-10" 
+                        placeholder='메세지 검색' 
+                        onChange={(e)=>setSearchInput(e.target.value)} 
+                        style={{ width: '200px' }}
+                        />
+                        <button type='button' 
+                        className='btn-search btn-green btn-icon mr-10'
+                        >
+                            <Icon icon={"search"} />검색
+                        </button>
+                        <button className="btn-orange" 
+                        onClick={() => setWriteModal(true)}
+                        style={{ width: '146px' }}
+                        >메세지 보내기</button>
                     {
                         writeModal && <WriteMessageModal setWriteModal={setWriteModal} />
                     }
                 </div>
             </div>
             <div className="messageList">
-                <table>
+                <table className='table tableA'>
                     <thead>
                         <tr>
-                            <td><input type="checkbox" 
+                            <th style={{ width:'3.33%' }}><input type="checkbox" 
                             id="all-check"
                             onChange={(e)=>allCheckState(e.target.checked)}
                             checked={
@@ -139,16 +138,16 @@ function SendMessage() {
                                 checkList.length === sendList.length
                                 : false
                             }
-                            /></td>
-                            <td>보낸 시각</td>
-                            <td>받는 사람</td>
-                            <td>첨부</td>
-                            <td>제목</td>
-                            <td>상태</td>
-                            <td>발송 취소</td>
+                            /></th>
+                            <th style={{ width:'13.33%' }}>보낸 시각</th>
+                            <th style={{ width:'10.66%' }}>받는 사람</th>
+                            <th style={{ width:'8%' }}>첨부</th>
+                            <th style={{ width:'38.66%' }}>제목</th>
+                            <th style={{ width:'15.26%' }}>상태</th>
+                            <th style={{ width:'10.73%' }}>발송 취소</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className='scroll'>
                         {
                             sendList && sendList.map((list,i)=> {
                                 return(
@@ -170,7 +169,7 @@ const Tr = memo(({list, checkState, checkList }) => {
 
     return(
         <tr>
-            <td>
+            <td style={{ width:'3.33%' }}>
                 <input type="checkbox"
                  name=""
                  id={list.seq}
@@ -179,12 +178,12 @@ const Tr = memo(({list, checkState, checkList }) => {
                  checked={checkList.includes(list.seq)}
                  />
             </td>
-            <td>{list.send_date}</td>
-            <td>{list.to_name}</td>
-            <td>
+            <td style={{ width:'13.33%' }}>{list.send_date}</td>
+            <td style={{ width:'10.66%' }}>{list.to_name}</td>
+            <td style={{ width:'8%' }}>
                 { list.files > 0 && <span className='file'></span> }
             </td>
-            <td onClick={(e)=>{
+            <td style={{ width:'38.66%' }} onClick={(e)=>{
                 e.stopPropagation();
                 setViewModal(true);
             }}>{list.subject}
@@ -198,7 +197,7 @@ const Tr = memo(({list, checkState, checkList }) => {
                 />
             }
             </td>
-            <td onClick={()=>setAfterReadModal(true)}>{list.status}
+            <td style={{ width:'15.26%' }} onClick={()=>setAfterReadModal(true)}>{list.status}
                 {/* {
                     (list.status.includes('/') && afterReadModal) && 
                     <AfterReadingModal 
@@ -207,7 +206,7 @@ const Tr = memo(({list, checkState, checkList }) => {
                     />
                 } */}
             </td>
-            <td>
+            <td style={{ width:'10.73%' }}>
                 {
                     list.btn_stat == 'cancel' ? <button className='btn'>발송 취소</button> : '-'
                 }

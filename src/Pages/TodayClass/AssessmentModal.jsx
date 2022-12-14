@@ -10,7 +10,7 @@ import pencil from "../../assets/pencil.svg";
 
 const speedOption = ['1.0', '1.25', '1.5', '1.75', '2.0'];
 
-function AssessmentModal ({setAssModal}) {
+function AssessmentModal ({closeModal}) {
     let assTit = [
        '개념 이해력',
        '전달력',
@@ -58,7 +58,7 @@ function AssessmentModal ({setAssModal}) {
         }).then(res=>{
 
            window.alert('제출완료');
-           setAssModal(false);
+           closeModal(false);
 
         })
     }
@@ -184,7 +184,7 @@ function AssessmentModal ({setAssModal}) {
             <div className="modal-content assessmentModal">
                 <div className="modal-header fj">
                     <h2 className="modal-title">수행 평가</h2>
-                    <button className="btn" onClick={() => setAssModal(false)}><Icon icon={"close"} /></button>
+                    <button className="btn" onClick={() => closeModal(false)}><Icon icon={"close"} /></button>
                 </div>
                 <div className="modal-body">
                     <div className="modal-name">
@@ -316,7 +316,7 @@ function AssessmentModal ({setAssModal}) {
                     </div>
                 </div>
                 <div className="modal-footer">
-                    <button className='btn-grey-border mr-4' onClick={() => setAssModal(false)}>취소</button>
+                    <button className='btn-grey-border mr-4' onClick={() => closeModal(false)}>취소</button>
                     <button className='btn-orange' onClick={formConfirm}>저장</button>
                 </div>
             </div>
