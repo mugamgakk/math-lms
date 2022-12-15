@@ -22,7 +22,53 @@
             height: 16px;
             background: #ddd;
             margin: 0 16px;
-
         }
+    }
+}
+.ReferenceContentsModal{
+    width: 870px;
+    .top{
+        border-bottom: 1px solid #eee;
+        padding-bottom: 23px;
+        padding: 20px;
+        h3{
+            @include font-style(24);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }   
+        &-tit{
+            @include font-style(18);
+            color: #666;
+            background: #eee;
+            width: 84px;
+            display: inline-block;
+            text-align: center;
+            border-radius: $radius;
+            margin-right: 8px;
+        }
+    }
+    .mid{
+        padding: 20px;
+        height: 450px;
+        overflow-y: auto;
+    }
+    .foot{
+        padding: 20px;
+        .file{
+            border: 1px solid #aaa;
+            border-radius: $border;
+            height: 100px;
+            padding: 10px 0 0 43px;
+            overflow-y: auto;
+            position: relative;
+            i{
+                position: absolute;
+                top: 10px;
+                left: 15px;
+            }
+        }
+    }
+    .date{
+        color: #888;
     }
 }

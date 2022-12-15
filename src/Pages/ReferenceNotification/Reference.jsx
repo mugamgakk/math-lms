@@ -126,7 +126,7 @@ function Reference() {
                     </table>
                 </div>
                 {
-                    registModal && <ReferenceRegistrationModal setRegistModal={setRegistModal}/>
+                    registModal && <ReferenceRegistrationModal setModal={setRegistModal}/>
                 }
 
                

@@ -6,11 +6,12 @@ import { getByteSize } from "../../methods/methods";
 import SelectBase from "../../components/ui/select/SelectBase";
 import ajax from "../../ajax";
 import { useEffect } from 'react';
+import Icon from '../../components/Icon';
 
 const 대상 = ['전체','초등','중등','고등'];
 const 유형 = ['일반','필독','공지','이벤트'];
 
-function ReferenceRegistrationModal({setRegistModal}) {
+function ReferenceRegistrationModal({setModal}) {
     let [target,setTarget] = useState('전체');
     let [category,setCategory] = useState('일반');
     let [title, setTitle] = useState('');
@@ -78,7 +79,7 @@ function ReferenceRegistrationModal({setRegistModal}) {
         }
         }).then(res=>{
             console.log(res);
-            setRegistModal(false);
+            setModal(false);
         }).catch(error=>{
             console.log('error');
         })
@@ -152,9 +153,17 @@ function ReferenceRegistrationModal({setRegistModal}) {
     );
     return ( 
         <div className="modal">
-            <div className="dim"></div>
-            <div className="rfModal registModal cmmnModal">
-                <div className="table">
+            <div className="modal-content">
+                <div className="modal-header fj">
+                        <h2 className="modal-title">게시물 확인</h2>
+                        <button className="btn" onClick={(e) => {
+                            e.stopPropagation();
+                            setModal(false)
+                        }}>
+                            <Icon icon={"close"} />
+                        </button>
+                </div>
+                <div className="modal-body">
                     <div className="tr">
                         <div className="th">대상</div>
                         <div className="td">
@@ -278,7 +287,7 @@ function ReferenceRegistrationModal({setRegistModal}) {
                 </div>
                 <div className="foot">
                     <button className='btn' onClick={formSubmit}>저장</button>
-                    <button className='btn' onClick={()=>setRegistModal(false)}>취소</button>
+                    <button className='btn' onClick={()=>setModal(false)}>취소</button>
                 </div>
             </div>
         </div>
