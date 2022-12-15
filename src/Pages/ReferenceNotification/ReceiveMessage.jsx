@@ -5,6 +5,9 @@ import SelectBase from '../../components/ui/select/SelectBase';
 import ajax from "../../ajax";
 import ViewMessageModal from './ViewMessageModal';
 import WriteMessageModal from './WriteMessageModal';
+import RadioBox from '../../components/RadioBox';
+import Icon from '../../components/Icon';
+import Checkbox from '../../components/Checkbox';
 
 const viewList = [
     { value: 30, label: '30개' },
@@ -17,6 +20,7 @@ function GetMessage() {
     let [coToState,setCoToState] = useState('co');
     let [viewListState,setViewListState] = useState();
     let [checkList, setCheckList] = useState([]);
+    let [searchInput, setSearchInput] = useState();
 
     useEffect(()=>{
         ajax("/notice.php", { data: {
@@ -65,62 +69,59 @@ function GetMessage() {
 
     return (  
         <>
-            <div className="filters fj mt-10 mb-10">
-                <div className="filters-l">
-                    <div className='radioArea'>
-                        <input 
-                        type='radio' 
-                        name='mRadio' 
-                        id='contents'
-                        onChange={()=>setCoToState('co')}
-                        checked={coToState == 'co'}
-                        className='radioInput'/>
-                        <label htmlFor='contents'>내용</label>
-                    </div>
-                    <div className='radioArea'>
-                        <input 
-                        type='radio' 
-                        name='mRadio' 
-                        id='target'
-                        onChange={()=>setCoToState('to')}
-                        checked={coToState == 'to'}
-                        className='radioInput'/>
-                        <label htmlFor='target'>받는 사람</label>
-                    </div>
-                    <div className="searchWrap d-flex">
-                        <input type="text" className='form-control' style={{width:'200px'}}/>
-                        <SearchBtn />
-                        <SelectBase 
-                        defaultValue='목록 개수'
-                        onChange={(ele)=>setViewListState(ele)}
-                        options={viewList}
-                        value={viewListState}
-                        width={'150px'}
-                        />
-                    </div>
+           <div className="filters fj mt-20 mb-20"> 
+                <div className="filters-l fa">
+                <button className="btn-grey mr-10" onClick={() => deleteList(checkList)}>선택 삭제</button>
+                <SelectBase 
+                    onChange={(ele)=>setViewListState(ele)}
+                    defaultValue='목록 개수'
+                    options={viewList}
+                    value={viewListState}
+                    />
                 </div>
-                <div className="filters-r">
-                    <button className="btn" onClick={()=>deleteList(checkList)}>선택 삭제</button>
+                <div className="filters-r fa">
+                    <RadioBox 
+                    checked={coToState == 'co'} 
+                    onChange={()=>setCoToState('co')} 
+                    label={'내용'}
+                    className={'mr-10'}
+                    />
+                    <RadioBox 
+                    checked={coToState == 'to'} 
+                    onChange={()=>setCoToState('to')} 
+                    label={'받는 사람'}
+                    />
+                    <input
+                        type='text' 
+                        className="textInput mr-10" 
+                        placeholder='메세지 검색' 
+                        onChange={(e)=>setSearchInput(e.target.value)} 
+                        style={{ width: '200px' }}
+                        />
+                        <button type='button' 
+                        className='btn-search btn-green btn-icon mr-10'
+                        >
+                            <Icon icon={"search"} />검색
+                        </button>
                 </div>
             </div>
             <div className="messageList">
-                <table>
+                <table className='table tableA'>
                     <thead>
                         <tr>
-                            <td><input type="checkbox" 
-                            id="all-check"
+                            <th style={{ width:'3.33%' }}>
+                             <Checkbox 
+                            id={'all'}
                             onChange={(e)=>allCheckState(e.target.checked)}
-                            checked={
-                                sendList ?
-                                checkList.length === sendList.length
-                                : false
-                            }
-                            /></td>
-                            <td>받은 시각</td>
-                            <td>보낸 사람</td>
-                            <td>학년</td>
-                            <td>제목</td>
-                            <td>답장</td>
+                            checked={ checkList?.length === sendList?.length }
+                            />
+                            <label htmlFor="all"></label>
+                            </th>
+                            <th style={{ width:'13.33%' }}>받은 시각</th>
+                            <th style={{ width:'10.66%' }}>보낸 사람</th>
+                            <th style={{ width:'8%' }}>학년</th>
+                            <th style={{ width:'54%' }}>제목</th>
+                            <th style={{ width:'10.66%' }}>답장</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -144,19 +145,16 @@ const Tr = memo(({list, checkState, checkList}) => {
     let [to,setTo] = useState(list.from_name);
     return(
         <tr>
-            <td>
-            <input type="checkbox"
-                 name=""
-                 id={list.seq}
-                 onChange={(e)=>checkState(e.target.checked,list.seq)}
-                 value=''
-                 checked={checkList.includes(list.seq)}
+            <td style={{ width:'3.33%' }}>
+                <Checkbox
+                  onChange={(e)=>checkState(e.target.checked,list.seq)}
+                  checked={checkList.includes(list.seq)}
                  />
             </td>
-            <td>{list.send_date}</td>
-            <td>{list.from_name}</td>
-            <td>{list.grade}</td>
-            <td onClick={(e)=>{
+            <td style={{ width:'13.33%' }}>{list.send_date}</td>
+            <td style={{ width:'10.66%' }}>{list.from_name}</td>
+            <td style={{ width:'8%' }}>{list.grade}</td>
+            <td style={{ width:'54%' }} onClick={(e)=>{
                 e.stopPropagation();
                 setViewModal(true);
                 }}>{list.subject}
@@ -172,7 +170,7 @@ const Tr = memo(({list, checkState, checkList}) => {
                 />
             }
             </td>
-            <td>
+            <td style={{ width:'10.66%' }}>
                 <button className='btn' onClick={()=>{
                     setWriteModal(true);
                     }}>답장 쓰기</button>

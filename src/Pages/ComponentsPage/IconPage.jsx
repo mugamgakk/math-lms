@@ -23,7 +23,7 @@ const arr = [
     'volume',            'warning',
     'lbt1',               'lbt2',
     'lbt3',               'lbt4',
-    'lbt5',               
+    'lbt5',               'clip'
   ];
 
 function IconPage() {

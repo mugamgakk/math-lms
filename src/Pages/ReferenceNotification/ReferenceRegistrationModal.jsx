@@ -8,12 +8,18 @@ import ajax from "../../ajax";
 import { useEffect } from 'react';
 import Icon from '../../components/Icon';
 import RadioBox from '../../components/RadioBox';
+import CheckBox from '../../components/Checkbox';
 
-const 대상 = ['전체','초등','중등','고등'];
+const 대상 = [
+    { value: null, label: '전체'},
+    { value: '초등', label: '초등'},
+    { value: '중등', label: '중등'},
+    { value: '고등', label: '고등'},
+];
 const 유형 = ['일반','필독','공지','이벤트'];
 
 function ReferenceRegistrationModal({setModal}) {
-    let [target,setTarget] = useState('전체');
+    let [target,setTarget] = useState();
     let [category,setCategory] = useState('일반');
     let [title, setTitle] = useState('');
     let [editorContents, setEditorContents] = useState();
@@ -156,7 +162,7 @@ function ReferenceRegistrationModal({setModal}) {
         <div className="modal">
             <div className="modal-content referenceRegistrationModal">
                 <div className="modal-header fj">
-                    <h2 className="modal-title">게시물 확인</h2>
+                    <h2 className="modal-title">게시물 등록</h2>
                     <button className="btn" onClick={(e) => {
                         e.stopPropagation();
                         setModal(false)
@@ -183,7 +189,7 @@ function ReferenceRegistrationModal({setModal}) {
                     </div>
                     <div className="tr fs mb-20">
                         <div className="th">게시글 유형</div>
-                        <div className="td fa">
+                        <div className="td fa" style={{ paddingLeft:'10px' }}>
                             {
                                 유형.map(item=>{
                                     return(
@@ -192,11 +198,12 @@ function ReferenceRegistrationModal({setModal}) {
                                         name={'modalRadio'}
                                         onChange={(e)=> {e.target.checked && setCategory(item)}}
                                         label={item}
-                                    />
-                                    )
-                                })
-                            }
-                        </div>
+                                        className={'category'}
+                                        />
+                                        )
+                                    })
+                                }
+                            </div>
                     </div>
                     <div className="tr fs mb-20">
                         <div className="th">글제목</div>
@@ -228,7 +235,7 @@ function ReferenceRegistrationModal({setModal}) {
                     <div>
                         <span>첨부파일</span>
                         <div className="file td fj">
-                            <div className='fileArea'>
+                            <div className='fileArea scroll' style={{ padding:'10px' }}>
                                 <input
                                     type="file"
                                     id="file"
@@ -239,7 +246,7 @@ function ReferenceRegistrationModal({setModal}) {
                                     multiple
                                 />
                 
-                                <div onDragOver={(e) => {
+                                <div style={{ height:'100%'}} onDragOver={(e) => {
                                         e.preventDefault();
                                         e.stopPropagation();
                                     }}
@@ -260,14 +267,15 @@ function ReferenceRegistrationModal({setModal}) {
                                     }}
                                 >
                                 {files.length === 0 && (
-                                    <p style={{ textAlign: "center", lineHeight:'102px' }}>여기에 첨부파일을 끌어오세요.</p>
+                                    <p className='fc' style={{height:"100%" }}>여기에 첨부파일을 끌어오세요.</p>
                                 )}
                                 {files.map((a, i) => {
                                     return (
                                         <div key={i}>
-                                              <input type="checkbox"
-                                                onChange={(e)=>checkFile(e.target.checked,a.name)}
-                                                checked={fileCheck.includes(a.name)}
+                                                <CheckBox  
+                                                    color='orange'
+                                                    onChange={(e)=>checkFile(e.target.checked,a.name)}
+                                                    checked={fileCheck.includes(a.name)}
                                                 />
                                             {a.name} ( {getByteSize(a.size)} )
                                         </div>

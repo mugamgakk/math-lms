@@ -162,7 +162,7 @@ const Tr = memo(({list})=>{
             </td>         
             <td style={{ width:'6.66%' }}>
                 {
-                    list.files > 0 && <span className='file'></span>
+                    list.files > 0 && <span className='file'><Icon icon={"clip"} style={{ fontSize:'30px' }} /></span>
                 }
             </td>         
             <td style={{ width:'9.33%' }}>{list.writer}</td>        

@@ -7,6 +7,7 @@ import ViewMessageModal from './ViewMessageModal';
 import WriteMessageModal from './WriteMessageModal';
 import Icon from '../../components/Icon';
 import RadioBox from '../../components/RadioBox';
+import Checkbox from '../../components/Checkbox';
 
 const viewList = [
     { value: 30, label: '30개' },
@@ -130,15 +131,15 @@ function SendMessage() {
                 <table className='table tableA'>
                     <thead>
                         <tr>
-                            <th style={{ width:'3.33%' }}><input type="checkbox" 
-                            id="all-check"
+                            <th style={{ width:'3.33%' }}>
+                            <Checkbox 
+                            id={'all'}
                             onChange={(e)=>allCheckState(e.target.checked)}
-                            checked={
-                                sendList ?
-                                checkList.length === sendList.length
-                                : false
-                            }
-                            /></th>
+                            checked={ checkList?.length === sendList?.length }
+                            />
+                            <label htmlFor="all"></label>
+
+                            </th>
                             <th style={{ width:'13.33%' }}>보낸 시각</th>
                             <th style={{ width:'10.66%' }}>받는 사람</th>
                             <th style={{ width:'8%' }}>첨부</th>
@@ -170,18 +171,15 @@ const Tr = memo(({list, checkState, checkList }) => {
     return(
         <tr>
             <td style={{ width:'3.33%' }}>
-                <input type="checkbox"
-                 name=""
-                 id={list.seq}
-                 onChange={(e)=>checkState(e.target.checked,list.seq)}
-                 value=''
-                 checked={checkList.includes(list.seq)}
+                 <Checkbox
+                  onChange={(e)=>checkState(e.target.checked,list.seq)}
+                  checked={checkList.includes(list.seq)}
                  />
             </td>
             <td style={{ width:'13.33%' }}>{list.send_date}</td>
             <td style={{ width:'10.66%' }}>{list.to_name}</td>
             <td style={{ width:'8%' }}>
-                { list.files > 0 && <span className='file'></span> }
+                { list.files > 0 && <span className='file'><Icon icon={"clip"} style={{ fontSize:'30px' }}/></span> }
             </td>
             <td style={{ width:'38.66%' }} onClick={(e)=>{
                 e.stopPropagation();
@@ -191,7 +189,6 @@ const Tr = memo(({list, checkState, checkList }) => {
                 viewModal && 
                 <ViewMessageModal 
                 setViewModal={setViewModal} 
-                tit='보낸' 
                 type='send'
                 seq={list.seq}
                 />
@@ -208,7 +205,7 @@ const Tr = memo(({list, checkState, checkList }) => {
             </td>
             <td style={{ width:'10.73%' }}>
                 {
-                    list.btn_stat == 'cancel' ? <button className='btn'>발송 취소</button> : '-'
+                    list.btn_stat == 'cancel' ? <button className='btn-table'>발송 취소</button> : '-'
                 }
             </td>
         </tr>
