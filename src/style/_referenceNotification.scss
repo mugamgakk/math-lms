@@ -22,7 +22,139 @@
             height: 16px;
             background: #ddd;
             margin: 0 16px;
-
         }
+    }
+}
+.referenceContentsModal{
+    width: 870px;
+    .top{
+        border-bottom: 1px solid #eee;
+        padding-bottom: 23px;
+        padding: 20px;
+        h3{
+            @include font-style(24);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }   
+        &-tit{
+            @include font-style(18);
+            color: #666;
+            background: #eee;
+            width: 84px;
+            display: inline-block;
+            text-align: center;
+            border-radius: $radius;
+            margin-right: 8px;
+        }
+    }
+    .mid{
+        padding: 20px;
+        height: 450px;
+        overflow-y: auto;
+    }
+    .foot{
+        padding: 20px;
+        .file{
+            border: 1px solid #aaa;
+            border-radius: $border;
+            height: 100px;
+            padding: 10px 0 0 43px;
+            overflow-y: auto;
+            position: relative;
+            i{
+                position: absolute;
+                top: 10px;
+                left: 15px;
+            }
+        }
+    }
+    .date{
+        color: #888;
+    }
+}
+.referenceRegistrationModal{
+    width: 1040px;
+    .modal-body{
+        padding: 50px 35px 20px 35px;
+        .tr{
+            height: 50px;
+            border-top: 2px solid #664e3d;
+            border-bottom: 2px solid #a19893;
+            .th{
+                height: 100%;
+                background: #e6ddd8;
+                @include font-style(17);
+                color: #664e3d;
+                font-weight: 600;
+                width: 16.66%;
+                @include flex;
+            }
+            .td{
+                height: 100%;
+                width: calc(100% - 160px);
+                @include font-style(17);
+                .textInput{
+                    width: calc(100% - 20px);
+                }
+                .category{
+                    margin-right: 10px;
+                    label{
+                        top: -3px;
+                    }
+                    input[type='radio']:checked + label::after{
+                        top: 4px;
+                    }
+                }
+            }
+            .td.w-160{
+                width: 16.66%;
+            }
+            &.editor{
+                height: 427px;
+                .td{
+                    position: relative;
+                    width: calc(100% - 160px);
+                    overflow: hidden;
+                    .ck.ck-editor{
+                        position: absolute;
+                        left:0;
+                        top:0;
+                        width: 100%;
+                        height: 100%;
+                        .ck-rounded-corners .ck.ck-editor__main>.ck-editor__editable, 
+                        .ck.ck-editor__main>.ck-editor__editable.ck-rounded-corners{
+                            height: 385px;
+                            
+                        }
+                    }
+                   
+                }
+            }
+        }
+        .file{
+            height: 104px;
+            .fileArea{
+            width: calc(100% - 90px);
+            margin-right: 13px;
+            border: 1px solid rgb(204, 204, 204);
+            border-radius: $radius;
+            height: 100%;
+            overflow-y: auto;
+                .check-orange{
+                    margin-right: 5px;
+                }
+            }
+            .fileBtn{
+                width: 90px;
+                height: 100%;
+                > *{
+                    min-width: none !important;
+                    width: 100%;
+                }
+            }
+        }
+    }
+    .modal-footer{
+        
     }
 }

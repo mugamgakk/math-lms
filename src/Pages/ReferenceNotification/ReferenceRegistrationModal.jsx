@@ -6,12 +6,20 @@ import { getByteSize } from "../../methods/methods";
 import SelectBase from "../../components/ui/select/SelectBase";
 import ajax from "../../ajax";
 import { useEffect } from 'react';
+import Icon from '../../components/Icon';
+import RadioBox from '../../components/RadioBox';
+import CheckBox from '../../components/Checkbox';
 
-const 대상 = ['전체','초등','중등','고등'];
+const 대상 = [
+    { value: null, label: '전체'},
+    { value: '초등', label: '초등'},
+    { value: '중등', label: '중등'},
+    { value: '고등', label: '고등'},
+];
 const 유형 = ['일반','필독','공지','이벤트'];
 
-function ReferenceRegistrationModal({setRegistModal}) {
-    let [target,setTarget] = useState('전체');
+function ReferenceRegistrationModal({setModal}) {
+    let [target,setTarget] = useState();
     let [category,setCategory] = useState('일반');
     let [title, setTitle] = useState('');
     let [editorContents, setEditorContents] = useState();
@@ -78,7 +86,7 @@ function ReferenceRegistrationModal({setRegistModal}) {
         }
         }).then(res=>{
             console.log(res);
-            setRegistModal(false);
+            setModal(false);
         }).catch(error=>{
             console.log('error');
         })
@@ -152,12 +160,20 @@ function ReferenceRegistrationModal({setRegistModal}) {
     );
     return ( 
         <div className="modal">
-            <div className="dim"></div>
-            <div className="rfModal registModal cmmnModal">
-                <div className="table">
-                    <div className="tr">
+            <div className="modal-content referenceRegistrationModal">
+                <div className="modal-header fj">
+                    <h2 className="modal-title">게시물 등록</h2>
+                    <button className="btn" onClick={(e) => {
+                        e.stopPropagation();
+                        setModal(false)
+                    }}>
+                        <Icon icon={"close"} />
+                    </button>
+                </div>
+                <div className="modal-body">
+                    <div className="tr fs mb-20">
                         <div className="th">대상</div>
-                        <div className="td">
+                        <div className="td fc w-160">
                         <SelectBase 
                         onChange={(ele)=>setTarget(ele)}
                         options={대상}
@@ -167,60 +183,59 @@ function ReferenceRegistrationModal({setRegistModal}) {
                     />
                         </div>
                         <div className="th">작성자</div>
-                        <div className="td">GNB패럴랙스</div>
+                        <div className="td fc w-160">GNB패럴랙스</div>
                         <div className="th">작성일</div>
-                        <div className="td">{createToday}</div>
+                        <div className="td fc w-160">{createToday}</div>
                     </div>
-                    <div className="tr">
+                    <div className="tr fs mb-20">
                         <div className="th">게시글 유형</div>
-                        <div className="td">
+                        <div className="td fa" style={{ paddingLeft:'10px' }}>
                             {
                                 유형.map(item=>{
                                     return(
-                                        <div className='radioArea'>
-                                            <input 
-                                            key={item.key} 
-                                            type='radio' 
-                                            name='radio' 
-                                            id={item} 
-                                            onChange={(e)=> {e.target.checked && setCategory(item)}}
-                                            checked={category === item}
-                                            className='radioInput'/>
-                                            <label htmlFor={item}>{item}</label>
-                                        </div>
-                                    )
-                                })
-                            }
-                        </div>
+                                        <RadioBox
+                                        checked={category === item}
+                                        name={'modalRadio'}
+                                        onChange={(e)=> {e.target.checked && setCategory(item)}}
+                                        label={item}
+                                        className={'category'}
+                                        />
+                                        )
+                                    })
+                                }
+                            </div>
                     </div>
-                    <div className="tr">
+                    <div className="tr fs mb-20">
                         <div className="th">글제목</div>
-                        <div className="td">
-                            <input type="text" onChange={(e)=>setTitle(e.target.value)} />
+                        <div className="td fc">
+                            <input type="text" className='textInput' onChange={(e)=>setTitle(e.target.value)} />
                         </div>
                     </div>
-                    <div className='editor'>
-                        <CKEditor
-                            editor={ClassicEditor}
-                            config={{placeholder: "내용을 입력하세요."}} 
-                            data=""
-                            onReady={(editor) => {
-                                // You can store the "editor" and use when it is needed.
-                                console.log("Editor is ready to use!", editor);
-                            }}
-                            onChange={(event, editor) => editorCon(event,editor)}
-                            onBlur={(event, editor) => {
-                                console.log("Blur.", editor);
-                            }}
-                            onFocus={(event, editor) => {
-                                console.log("Focus.", editor);
-                            }}
-                        />
+                    <div className='tr editor fs mb-20'>
+                        <div className="th">내용</div>
+                        <div className="td scroll">
+                            <CKEditor
+                                editor={ClassicEditor}
+                                config={{placeholder: "내용을 입력하세요."}} 
+                                data=""
+                                onReady={(editor) => {
+                                    // You can store the "editor" and use when it is needed.
+                                    console.log("Editor is ready to use!", editor);
+                                }}
+                                onChange={(event, editor) => editorCon(event,editor)}
+                                onBlur={(event, editor) => {
+                                    console.log("Blur.", editor);
+                                }}
+                                onFocus={(event, editor) => {
+                                    console.log("Focus.", editor);
+                                }}
+                            />
+                        </div>
                     </div>
-                    <div className='tr mt-10'>
-                        <div className="th">첨부파일</div>
-                        <div className="td fileTd">
-                            <div>
+                    <div>
+                        <span>첨부파일</span>
+                        <div className="file td fj">
+                            <div className='fileArea scroll' style={{ padding:'10px' }}>
                                 <input
                                     type="file"
                                     id="file"
@@ -231,9 +246,7 @@ function ReferenceRegistrationModal({setRegistModal}) {
                                     multiple
                                 />
                 
-                                <div
-                                    style={{ padding: "10px", border: "1px solid #ccc" }}
-                                    onDragOver={(e) => {
+                                <div style={{ height:'100%'}} onDragOver={(e) => {
                                         e.preventDefault();
                                         e.stopPropagation();
                                     }}
@@ -254,14 +267,15 @@ function ReferenceRegistrationModal({setRegistModal}) {
                                     }}
                                 >
                                 {files.length === 0 && (
-                                    <p style={{ textAlign: "center" }}>여기에 첨부파일을 끌어오세요</p>
+                                    <p className='fc' style={{height:"100%" }}>여기에 첨부파일을 끌어오세요.</p>
                                 )}
                                 {files.map((a, i) => {
                                     return (
                                         <div key={i}>
-                                              <input type="checkbox"
-                                                onChange={(e)=>checkFile(e.target.checked,a.name)}
-                                                checked={fileCheck.includes(a.name)}
+                                                <CheckBox  
+                                                    color='orange'
+                                                    onChange={(e)=>checkFile(e.target.checked,a.name)}
+                                                    checked={fileCheck.includes(a.name)}
                                                 />
                                             {a.name} ( {getByteSize(a.size)} )
                                         </div>
@@ -269,16 +283,19 @@ function ReferenceRegistrationModal({setRegistModal}) {
                                 })}
                                 </div>
                             </div>
+                            <div className='fileBtn fa f-column' style={{ justifyContent: 'space-between' }}>
+                                <label htmlFor="file" className="btn-grey-border">파일 찾기</label>
+                                <button className="btn-grey btn-icon" onClick={()=>removeFile(fileCheck)}>
+                                    <Icon icon={"remove"} />
+                                    삭제
+                                </button>
+                            </div>    
                         </div> 
-                        <div className="td">
-                        <label htmlFor="file" className="btn">업로드</label>
-                        <button className="btn" onClick={()=>removeFile(fileCheck)}>파일삭제</button>
-                        </div>    
                     </div>
                 </div>
-                <div className="foot">
-                    <button className='btn' onClick={formSubmit}>저장</button>
-                    <button className='btn' onClick={()=>setRegistModal(false)}>취소</button>
+                <div className="modal-footer">
+                    <button className='btn-grey mr-4' onClick={()=>setModal(false)}>취소</button>
+                    <button className='btn-orange' onClick={formSubmit}>저장</button>
                 </div>
             </div>
         </div>

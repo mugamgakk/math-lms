@@ -5,7 +5,6 @@ import SelectBase from "../../components/ui/select/SelectBase";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { getByteSize } from "../../methods/methods";
-import { faCropSimple } from '@fortawesome/free-solid-svg-icons';
 import { useMemo } from 'react';
 
 
@@ -130,7 +129,7 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
 
         let arr = [];
         files.length > 0 &&
-        files.forEach(file=>{
+        files.forEach(file => {
             const fileReader = new FileReader();
             fileReader.readAsDataURL(file);
             fileReader.onload = function(e) { 
@@ -267,15 +266,14 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
     }
 return (
         <div className="modal">
-            <div className="dim"></div>
-            <div className='writeMessageModal cmmnModal'>
-                <div className="writeMessageModal-head cmmnModal-head">
+            <div className='modal-content'>
+                <div className="modal-header">
                     <div className="tit">
                             <strong>[학습 알림]메시지 보내기</strong>
                     </div>
                     <button className='closeBtn' onClick={()=>setWriteModal(false)}>x</button>
                 </div>
-                <div className="writeMessageModal-body cmmnModal-body">
+                <div className="modal-body">
                     <div className="left">
                         {/* <SelectBase 
                         onChange={(ele)=>setClassOption(ele)}
@@ -411,7 +409,7 @@ return (
                         </table>
                     </div>
                 </div>
-                <div className="WriteMessageModal-foot cmmnModal-foot">
+                <div className="modal-footer">
                     <div className='reserveWrap fj'>
                         <input 
                         type="tel" 

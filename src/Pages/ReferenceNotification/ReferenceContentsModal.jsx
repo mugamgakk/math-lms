@@ -39,10 +39,9 @@ function ReferenceContentsModal({seq,setModal}) {
             })
     }
     
-    console.log(contents);
     return ( 
         <div className="modal">
-            <div className="modal-content">
+            <div className="modal-content referenceContentsModal">
                 <div className="modal-header fj">
                         <h2 className="modal-title">게시물 확인</h2>
                         <button className="btn" onClick={(e) => {
@@ -53,39 +52,38 @@ function ReferenceContentsModal({seq,setModal}) {
                         </button>
                 </div>
                 <div className="modal-body">
-                    <strong className="name">{contents && contents.bd_title}</strong>
                     {
                         contents && (
                             <>
-                            <div className='text-right'>조회수:{contents.hit}</div>
-                            <div className='fj'>
+                            <div className='top'>
+                                <h3>{contents && contents.bd_title}</h3>
+                                <div className='text-right'>조회수:{contents.hit}</div>
+                                <div className='fj'>
                                 <div>
-                                    <span>대상</span>
+                                    <span className='top-tit'>대상</span>
                                     {contents.bd_cate}
                                 </div>
-                                <div><span>작성자</span>{contents.write}</div>
-                                <div><span>작성일</span>{contents.reg_dt}</div>
+                                <div><span className='top-tit'>작성자</span>{contents.write}</div>
+                                <div className='date'>{contents.reg_dt}</div>
+                                </div>
                             </div>
-                            <div className='textArea'>
+                            <div className='mid scroll'>
                                 {contents.bd_content}
                             </div>
-                            <div className='tr'>
-                                <div>첨부파일</div>
-                                <div className="td fileTd">
-                                    <div className='fileArea'>
+                            <div className='foot'>
+                                <div className="file scroll">
+                                    <Icon icon={"file"} style={{color:'#666'}} /> 
                                         {
                                             contents.files.length > 0 && contents.files.map(file=>{
-                                                
                                                 return(
-                                                    <div key={file.bf_seq} onClick={()=>fileDown(file.fileurl,file.filename)}>{file.filename}({file.filesize})</div>
+                                                        <div key={file.bf_seq} onClick={()=>fileDown(file.fileurl,file.filename)}>{file.filename}({file.filesize})</div>
                                                 )
                                             })
                                         }
-                                    </div>
+                                </div>
+                                <div className='fe mt-20'>
+                                    <button className='btn-grey'>모두 받기</button>
                                 </div> 
-                                <div><button className='btn'>선택 받기</button></div>
-                                <div><button className='btn'>모두 받기</button></div>
-                                
                             </div>
                         </>
                         )
@@ -93,10 +91,10 @@ function ReferenceContentsModal({seq,setModal}) {
                 </div>
 
                 <div className="modal-footer">
-                    <button className='btn-brown mr-10'>이전 글 보기</button>
-                    <button className='btn-orange-border mr-10' style={{ background: '#fff' }}>수정</button>
-                    <button className='btn-orange mr-10'>삭제</button>
-                    <button className='btn-grey mr-10' 
+                    <button className='btn-brown mr-4'>이전 글 보기</button>
+                    <button className='btn-orange-border mr-4'>수정</button>
+                    <button className='btn-orange mr-4'>삭제</button>
+                    <button className='btn-grey mr-4' 
                     onClick={(e)=>{
                         setModal(false);
                         e.stopPropagation();

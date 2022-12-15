@@ -95,6 +95,7 @@
     @extend %button-base;
     border: 1px solid $orange;
     color: $orange;
+    background: #fff;
 
     &:hover {
         background-color: $orange;
