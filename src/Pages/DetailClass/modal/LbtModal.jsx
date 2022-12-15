@@ -15,7 +15,7 @@ function LbtModal({ setCreateModal }) {
 
     let [viewItem, setViewItem] = useState(null);
 
-    console.log(viewItem)
+    let canvas1 = useRef();
 
     const getRegult = async () => {
         const data = {
@@ -60,9 +60,96 @@ function LbtModal({ setCreateModal }) {
         return result1 === result2
     }
 
+    const draw1 = (위 = 90, 우 = 75, 아래 = 83, 좌 = 84)=>{
+        const ctx = canvas1.current.getContext("2d");
+        // 초기화
+        ctx.clearRect(0,0,canvas1.current.width, canvas1.current.height);
+        ctx.beginPath();
+        ctx.moveTo(100, 10);
+        ctx.lineTo(190, 100);
+        ctx.lineTo(100, 190);
+        ctx.lineTo(10, 100);
+        ctx.lineTo(100, 10);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "#ccc";
+        ctx.stroke();
+        
+        ctx.fillStyle = 'rgba(256,256,256,0.1)'; 
+        ctx.fill(); 
+        
+        ctx.beginPath();
+        ctx.moveTo(100, 60);
+        ctx.lineTo(140, 100);
+        ctx.lineTo(100, 140);
+        ctx.lineTo(60, 100);
+        ctx.lineTo(100, 60);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "#ccc";
+        ctx.stroke();
+        
+        ctx.beginPath();
+        ctx.moveTo(100, 90);
+        ctx.lineTo(110, 100);
+        ctx.lineTo(100, 110);
+        ctx.lineTo(90, 100);
+        ctx.lineTo(100, 90);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "#ccc";
+        ctx.stroke();
+
+        // 영역
+        ctx.beginPath();
+        // 위
+        ctx.moveTo(100, 200 - (100 + 위 / 1.11111111));
+        ctx.lineTo(100 + 우 / 1.11111111, 100);
+        ctx.lineTo(100, (100 + 아래 / 1.11111111));
+        ctx.lineTo(200 - (100 + 좌 / 1.11111111), 100);
+        ctx.lineTo(100, 200 - (100 + 위 / 1.11111111));
+
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "#ea7851";
+        ctx.stroke();
+
+        ctx.fillStyle = '#ea77512f'; 
+        ctx.fill(); 
+        
+        // 글자
+        ctx.font = "10px Pretendard";
+        ctx.fillStyle = "#444";
+        ctx.fillText("100", 75, 15);
+        ctx.font = "10px Pretendard";
+        ctx.fillStyle = "#444";
+        ctx.fillText("50", 80, 55);
+        ctx.font = "10px Pretendard";
+        ctx.fillStyle = "#444";
+        ctx.fillText("0", 85, 90);
+
+        // 위 사각형
+        ctx.fillStyle = '#ea7851';
+        ctx.fillRect(95, 195 - (100 + 위 / 1.11111111), 10, 10);
+        // 우
+        ctx.fillStyle = '#ea7851';
+        ctx.fillRect(95 + 우 / 1.11111111, 95, 10 ,10);
+        // 아래
+        ctx.fillStyle = '#ea7851';
+        ctx.fillRect(95, (95 + 아래 / 1.11111111), 10 ,10);
+        // 좌
+        ctx.fillStyle = '#ea7851';
+        ctx.fillRect(195 - (100 + 좌 / 1.11111111), 95, 10 ,10);
+
+        
+    }
+
     useEffect(() => {
         getRegult();
     }, []);
+    
+    useEffect(()=>{
+        // 행동 영역 분석 그래프
+        setTimeout(()=>{
+            draw1()
+        },500)
+    },[draw1])
 
     return (
         <div
@@ -193,7 +280,7 @@ function LbtModal({ setCreateModal }) {
                                                                 <div className="blue">유형 학습</div>
                                                                 <div className="red">맞춤 클리닉 향상</div>
                                                             </div>
-                                                            <table className="lbt-table lbt-table1">
+                                                            <table className="lbt-table lbt-table1" style={{ marginBottom: "20px" }}>
                                                                 <thead>
                                                                     <tr>
                                                                         <th colSpan={3}>단원별 정답률 및 향상도</th>
@@ -348,7 +435,7 @@ function LbtModal({ setCreateModal }) {
                                                     viewItem[0].optionItem.some(a => a.label === "행동 영역 분석") && (
                                                         <>
                                                             <h5 className="lbt-content-sub-title">행동 영역 분석</h5>
-                                                            <div className="d-flex">
+                                                            <div className="d-flex" style={{ marginBottom: "20px" }}>
                                                                 <div style={{ width: "60%" }}>
                                                                     <table className="lbt-table">
                                                                         <thead>
@@ -393,8 +480,12 @@ function LbtModal({ setCreateModal }) {
                                                                         <strong>문제해결력</strong> 두 가지 이상의 수학 개념이 포함되거나 두 단계 이상의 사고 과정이 필요한 문제를 해결하는 능력 <br />
                                                                     </p>
                                                                 </div>
-                                                                <div style={{ width: "40%" }}>
-                                                                    그래프
+                                                                <div style={{ width: "40%" }} className="lbt-graph1">
+                                                                    <span className="item1">계산력</span>
+                                                                    <span className="item2">이해력</span>
+                                                                    <span className="item3">추론력</span>
+                                                                    <span className="item4">문제 <br/>해결력</span>
+                                                                    <canvas width={200} height={200} ref={canvas1} ></canvas>
                                                                 </div>
                                                             </div>
                                                         </>
@@ -403,10 +494,10 @@ function LbtModal({ setCreateModal }) {
                                                 {
                                                     viewItem[0].optionItem.some(a => a.label === "내용 영역 분석") && (
                                                         <>
-                                                            <div className="d-flex fa">
+                                                            <div className="fa-end" style={{marginBottom : "20px"}}>
                                                                 <div style={{ width: "60%" }}>
                                                                     <h5 className="lbt-content-sub-title">내용 영역 분석</h5>
-                                                                    <table className="lbt-table">
+                                                                    <table className="lbt-table" >
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>내용영역</th>
@@ -456,11 +547,11 @@ function LbtModal({ setCreateModal }) {
                                                                     <span className="lbt-graph2-bg"></span>
                                                                     <span className="lbt-graph2-bg"></span>
 
+                                                                    <div className="lbt-graph2-bar" style={{width : "0%"}}></div>
+                                                                    <div className="lbt-graph2-bar" style={{width : "93%"}}></div>
                                                                     <div className="lbt-graph2-bar" style={{width : "80%"}}></div>
-                                                                    <div className="lbt-graph2-bar" style={{width : "70%"}}></div>
-                                                                    <div className="lbt-graph2-bar"></div>
-                                                                    <div className="lbt-graph2-bar"></div>
-                                                                    <div className="lbt-graph2-bar"></div>
+                                                                    <div className="lbt-graph2-bar" style={{width : "90%"}}></div>
+                                                                    <div className="lbt-graph2-bar" style={{width : "0%"}}></div>
                                                                 </div>
                                                             </div>
                                                         </>
@@ -502,22 +593,22 @@ function LbtModal({ setCreateModal }) {
                                                                     <tr>
                                                                         <td rowSpan={4}>교과서별 내신적중</td>
                                                                         <td>중 2-1</td>
-                                                                        <td>Ⅰ. 수와 식 1. 유리수와 순환소수 (교학사)</td>
+                                                                        <td className="text-left">Ⅰ. 수와 식 1. 유리수와 순환소수 (교학사)</td>
                                                                         <td>75/100</td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>중 2-1</td>
-                                                                        <td>Ⅰ. 수와 식 2. 식의 계산 (교학사)</td>
+                                                                        <td className="text-left">Ⅰ. 수와 식 2. 식의 계산 (교학사)</td>
                                                                         <td>85/100</td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>중 2-1</td>
-                                                                        <td>Ⅰ. 수와 식 1. 유리수와 순환소수 (금성)</td>
+                                                                        <td className="text-left">Ⅰ. 수와 식 1. 유리수와 순환소수 (금성)</td>
                                                                         <td>65/100</td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>중 2-1</td>
-                                                                        <td>Ⅰ. 수와 식 2. 식의 계산 (금성)</td>
+                                                                        <td className="text-left">Ⅰ. 수와 식 2. 식의 계산 (금성)</td>
                                                                         <td>70/100</td>
                                                                     </tr>
                                                                 </>
@@ -529,12 +620,12 @@ function LbtModal({ setCreateModal }) {
                                                                     <tr>
                                                                         <td rowSpan={2}>서술형 따라잡기</td>
                                                                         <td>중 2-1</td>
-                                                                        <td>Ⅰ. 수와 식 1. 유리수와 순환소수 (교학사)</td>
+                                                                        <td className="text-left">Ⅰ. 수와 식 1. 유리수와 순환소수 (교학사)</td>
                                                                         <td>75/100</td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>중 2-1</td>
-                                                                        <td>Ⅰ. 수와 식 1. 유리수와 순환소수 (금성)</td>
+                                                                        <td className="text-left">Ⅰ. 수와 식 1. 유리수와 순환소수 (금성)</td>
                                                                         <td>65/100</td>
                                                                     </tr>
                                                                 </>
