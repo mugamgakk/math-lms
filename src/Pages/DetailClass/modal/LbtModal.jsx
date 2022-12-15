@@ -16,6 +16,7 @@ function LbtModal({ setCreateModal }) {
     let [viewItem, setViewItem] = useState(null);
 
     let canvas1 = useRef();
+    let canvas2 = useRef();
 
     const getRegult = async () => {
         const data = {
@@ -60,10 +61,10 @@ function LbtModal({ setCreateModal }) {
         return result1 === result2
     }
 
-    const draw1 = (위 = 90, 우 = 75, 아래 = 83, 좌 = 84)=>{
+    const draw1 = (위 = 90, 우 = 75, 아래 = 83, 좌 = 84) => {
         const ctx = canvas1.current.getContext("2d");
         // 초기화
-        ctx.clearRect(0,0,canvas1.current.width, canvas1.current.height);
+        ctx.clearRect(0, 0, canvas1.current.width, canvas1.current.height);
         ctx.beginPath();
         ctx.moveTo(100, 10);
         ctx.lineTo(190, 100);
@@ -73,10 +74,10 @@ function LbtModal({ setCreateModal }) {
         ctx.lineWidth = 2;
         ctx.strokeStyle = "#ccc";
         ctx.stroke();
-        
-        ctx.fillStyle = 'rgba(256,256,256,0.1)'; 
-        ctx.fill(); 
-        
+
+        ctx.fillStyle = 'rgba(256,256,256,0.1)';
+        ctx.fill();
+
         ctx.beginPath();
         ctx.moveTo(100, 60);
         ctx.lineTo(140, 100);
@@ -86,7 +87,7 @@ function LbtModal({ setCreateModal }) {
         ctx.lineWidth = 2;
         ctx.strokeStyle = "#ccc";
         ctx.stroke();
-        
+
         ctx.beginPath();
         ctx.moveTo(100, 90);
         ctx.lineTo(110, 100);
@@ -110,9 +111,9 @@ function LbtModal({ setCreateModal }) {
         ctx.strokeStyle = "#ea7851";
         ctx.stroke();
 
-        ctx.fillStyle = '#ea77512f'; 
-        ctx.fill(); 
-        
+        ctx.fillStyle = '#ea77512f';
+        ctx.fill();
+
         // 글자
         ctx.font = "10px Pretendard";
         ctx.fillStyle = "#444";
@@ -129,27 +130,79 @@ function LbtModal({ setCreateModal }) {
         ctx.fillRect(95, 195 - (100 + 위 / 1.11111111), 10, 10);
         // 우
         ctx.fillStyle = '#ea7851';
-        ctx.fillRect(95 + 우 / 1.11111111, 95, 10 ,10);
+        ctx.fillRect(95 + 우 / 1.11111111, 95, 10, 10);
         // 아래
         ctx.fillStyle = '#ea7851';
-        ctx.fillRect(95, (95 + 아래 / 1.11111111), 10 ,10);
+        ctx.fillRect(95, (95 + 아래 / 1.11111111), 10, 10);
         // 좌
         ctx.fillStyle = '#ea7851';
-        ctx.fillRect(195 - (100 + 좌 / 1.11111111), 95, 10 ,10);
+        ctx.fillRect(195 - (100 + 좌 / 1.11111111), 95, 10, 10);
 
-        
+
+    }
+
+    const draw2 = (a = [50, 80], b = [80, 70], c = [80, 75], d = [85, 100]) => {
+        const ctx = canvas2.current.getContext("2d");
+        // 초기화
+        ctx.clearRect(0, 0, canvas2.current.width, canvas2.current.height);
+
+        for (let i = 0; i < 6; i++) {
+            ctx.beginPath();
+            ctx.moveTo(212, 95 - (16.66666 * i));
+            ctx.lineTo(20, 95 - (16.66666 * i));
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = "#ccc";
+            ctx.setLineDash([0]);
+            ctx.stroke();
+        }
+
+        ctx.font = "10px Pretendard";
+        ctx.fillStyle = "#444";
+        ctx.fillText("0점", 5, 100);
+        ctx.fillText("20점", 0, 83);
+        ctx.fillText("40점", 0, 65);
+        ctx.fillText("60점", 0, 48);
+        ctx.fillText("80점", 0, 33);
+        ctx.fillText("100점", 0, 15);
+
+        ctx.fillStyle = '#ea7851';
+        ctx.fillRect(25, 95 - (a[0] / 1.17647), 14, (a[0] / 1.17647));
+        ctx.fillStyle = '#c41b09';
+        ctx.fillRect(39, 95 - (a[1] / 1.17647), 14, (a[1] / 1.17647));
+        ctx.fillStyle = '#ea7851';
+        ctx.fillRect(75, 95 - (b[0] / 1.17647), 14, (b[0] / 1.17647));
+        ctx.fillStyle = '#c41b09';
+        ctx.fillRect(89, 95 - (b[1] / 1.17647), 14, (b[1] / 1.17647));
+        ctx.fillStyle = '#ea7851';
+        ctx.fillRect(125, 95 - (c[0] / 1.17647), 14, (c[0] / 1.17647));
+        ctx.fillStyle = '#c41b09';
+        ctx.fillRect(139, 95 - (c[1] / 1.17647), 14, (c[1] / 1.17647));
+        ctx.fillStyle = '#ea7851';
+        ctx.fillRect(175, 95 - (d[0] / 1.17647), 14, (d[0] / 1.17647));
+        ctx.fillStyle = '#c41b09';
+        ctx.fillRect(189, 95 - (d[1] / 1.17647), 14, (d[1] / 1.17647));
+
+
+        ctx.beginPath();
+        ctx.moveTo(28, 95 - (a[0] / 1.17647));
+        ctx.lineTo(185, 95 - (d[0] / 1.17647));
+        ctx.setLineDash([8]); // 간격이 20인 점선 설정
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "#ff0000";
+        ctx.stroke();
     }
 
     useEffect(() => {
         getRegult();
     }, []);
-    
-    useEffect(()=>{
+
+    useEffect(() => {
         // 행동 영역 분석 그래프
-        setTimeout(()=>{
-            draw1()
-        },500)
-    },[draw1])
+        setTimeout(() => {
+            draw1();
+            draw2();
+        }, 500)
+    }, [draw1])
 
     return (
         <div
@@ -212,7 +265,7 @@ function LbtModal({ setCreateModal }) {
                                     <img src={logo} alt="" />
                                 </div>
 
-                                <table className="lbt-table">
+                                <table className="lbt-table" style={{ marginBottom: "20px" }}>
                                     <colgroup>
                                         <col style={{ width: "80px" }} />
                                         <col style={{ width: "auto" }} />
@@ -268,7 +321,7 @@ function LbtModal({ setCreateModal }) {
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
-                                                            
+
                                                         </>
                                                     )
                                                 }
@@ -484,7 +537,7 @@ function LbtModal({ setCreateModal }) {
                                                                     <span className="item1">계산력</span>
                                                                     <span className="item2">이해력</span>
                                                                     <span className="item3">추론력</span>
-                                                                    <span className="item4">문제 <br/>해결력</span>
+                                                                    <span className="item4">문제 <br />해결력</span>
                                                                     <canvas width={200} height={200} ref={canvas1} ></canvas>
                                                                 </div>
                                                             </div>
@@ -494,7 +547,7 @@ function LbtModal({ setCreateModal }) {
                                                 {
                                                     viewItem[0].optionItem.some(a => a.label === "내용 영역 분석") && (
                                                         <>
-                                                            <div className="fa-end" style={{marginBottom : "20px"}}>
+                                                            <div className="fa-end" style={{ marginBottom: "20px" }}>
                                                                 <div style={{ width: "60%" }}>
                                                                     <h5 className="lbt-content-sub-title">내용 영역 분석</h5>
                                                                     <table className="lbt-table" >
@@ -547,11 +600,11 @@ function LbtModal({ setCreateModal }) {
                                                                     <span className="lbt-graph2-bg"></span>
                                                                     <span className="lbt-graph2-bg"></span>
 
-                                                                    <div className="lbt-graph2-bar" style={{width : "0%"}}></div>
-                                                                    <div className="lbt-graph2-bar" style={{width : "93%"}}></div>
-                                                                    <div className="lbt-graph2-bar" style={{width : "80%"}}></div>
-                                                                    <div className="lbt-graph2-bar" style={{width : "90%"}}></div>
-                                                                    <div className="lbt-graph2-bar" style={{width : "0%"}}></div>
+                                                                    <div className="lbt-graph2-bar" style={{ width: "0%" }}></div>
+                                                                    <div className="lbt-graph2-bar" style={{ width: "93%" }}></div>
+                                                                    <div className="lbt-graph2-bar" style={{ width: "80%" }}></div>
+                                                                    <div className="lbt-graph2-bar" style={{ width: "90%" }}></div>
+                                                                    <div className="lbt-graph2-bar" style={{ width: "0%" }}></div>
                                                                 </div>
                                                             </div>
                                                         </>
@@ -568,12 +621,12 @@ function LbtModal({ setCreateModal }) {
                                 {
                                     viewItem && viewItem[1].optionItem.length > 0
                                         ? (
-                                            <section className="lbt-content">
-                                                <h4 className="lbt-content-title fa">
+                                            <section className="lbt-content" style={{ marginBottom: "20px" }}>
+                                                <h4 className="lbt-content-title fa fj">
                                                     <span>
                                                         <Icon icon={"lbt2"} />{viewItem[1].option}
                                                     </span>
-                                                    <p>*  플러스 학습은 패럴랙스 수학 학원 선생님을 통해서만 학습이 가능합니다.</p>
+                                                    <p className="lbt-text">*  플러스 학습은 패럴랙스 수학 학원 선생님을 통해서만 학습이 가능합니다.</p>
                                                 </h4>
 
                                                 <table className="lbt-table">
@@ -643,16 +696,159 @@ function LbtModal({ setCreateModal }) {
                                     viewItem && viewItem[2].optionItem.length > 0
                                         ? (
                                             <section className="lbt-content">
-                                                <h4 className="lbt-content-title"><Icon icon={"lbt3"} />{viewItem[2].option}</h4>
+                                                <h4 className="lbt-content-title d-flex"><Icon icon={"lbt3"} />
+                                                    <span className="mr-10">
+                                                        {viewItem[2].option}
+                                                    </span>
+                                                    <p className="lbt-text">*  각 평가의 평균 점수는 평균 산출 일자에 따라 달라질 수 있습니다.</p>
+                                                </h4>
 
                                                 {
                                                     viewItem[2].optionItem.some(a => a.label === "단원평가 분석") && (
-                                                        <h5 className="lbt-content-sub-title">단원평가 분석</h5>
+                                                        <>
+
+                                                            <div className="fa-end" style={{ marginBottom: "50px" }}>
+                                                                <div style={{ width: "60%" }}>
+                                                                    <div className="fj fa-end">
+                                                                        <h5 className="lbt-content-sub-title">
+                                                                            단원평가 분석
+                                                                        </h5>
+                                                                        <p className="lbt-text">평균 산출 시점 : 2023.04.30</p>
+                                                                    </div>
+                                                                    <table className="lbt-table" >
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>평가명</th>
+                                                                                <th>평가 일자</th>
+                                                                                <th>나의 점수</th>
+                                                                                <th>평균</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>중등 뜨레스 단원 단원평가</td>
+                                                                                <td>2023.04.28</td>
+                                                                                <td>87점 (26/30)</td>
+                                                                                <td>80점</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>중등 뜨레스 단원 단원평가</td>
+                                                                                <td>2023.04.14</td>
+                                                                                <td>80점 (24/30)</td>
+                                                                                <td>70점</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>중등 뜨레스 단원 단원평가</td>
+                                                                                <td>2023.04.08</td>
+                                                                                <td>93점 (28/30)</td>
+                                                                                <td>85점</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+
+                                                                <div>
+                                                                    <div className="legend2">
+                                                                        <div className="yellow">나의 점수</div>
+                                                                        <div className="red">평균</div>
+                                                                    </div>
+                                                                    <div className="lbt-graph3">
+                                                                        <span className="lbt-graph2-bg"></span>
+                                                                        <span className="lbt-graph2-bg"></span>
+                                                                        <span className="lbt-graph2-bg"></span>
+                                                                        <span className="lbt-graph2-bg"></span>
+                                                                        <span className="lbt-graph2-bg"></span>
+
+                                                                        <div className="lbt-graph2-bar" style={{ width: "93%" }}>
+
+                                                                        </div>
+                                                                        <div className="lbt-graph2-bar" style={{ width: "80%" }}>
+                                                                        </div>
+                                                                        <div className="lbt-graph2-bar" style={{ width: "90%" }}>
+                                                                        </div>
+                                                                        {/* 퍼센트 == 평균 */}
+                                                                        <strong className="common-bar" style={{ left: "calc(80% - 4px)" }}></strong>
+                                                                        <strong className="common-bar" style={{ left: "calc(70% - 4px)" }}></strong>
+                                                                        <strong className="common-bar" style={{ left: "calc(85% - 4px)" }}></strong>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </>
                                                     )
                                                 }
                                                 {
                                                     viewItem[2].optionItem.some(a => a.label === "총괄평가 분석") && (
-                                                        <h5 className="lbt-content-sub-title">총괄평가 분석</h5>
+                                                        <div className="fa-end" style={{ marginBottom: "50px" }}>
+                                                            <div style={{ width: "60%" }}>
+                                                                <div className="fj fa-end">
+                                                                    <h5 className="lbt-content-sub-title">
+                                                                        총괄평가 분석
+                                                                    </h5>
+                                                                    <p className="lbt-text">평균 산출 시점 : 2023.04.30</p>
+                                                                </div>
+                                                                <table className="lbt-table" >
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>평가명</th>
+                                                                            <th>평가 일자</th>
+                                                                            <th>성취도</th>
+                                                                            <th>성취도 평균</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>중등 뜨레스 총괄평가</td>
+                                                                            <td>2023.04.28</td>
+                                                                            <td>87점 (26/30)</td>
+                                                                            <td>80점</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>중등 뜨레스 총괄평가</td>
+                                                                            <td>2023.04.14</td>
+                                                                            <td>80점 (24/30)</td>
+                                                                            <td>70점</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>중등 뜨레스 총괄평가</td>
+                                                                            <td>2023.04.08</td>
+                                                                            <td>93점 (28/30)</td>
+                                                                            <td>85점</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>중등 진단평가</td>
+                                                                            <td>2023.04.08</td>
+                                                                            <td>93점 (28/30)</td>
+                                                                            <td>85점</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+
+                                                            <div className="lbt-graph4">
+                                                                <div className="legend1 d-flex">
+                                                                    <div className="yellow">성취도</div>
+                                                                    <div className="red">성취도 평균</div>
+                                                                    <div className="line">선형(성취도)</div>
+                                                                </div>
+                                                                <canvas id="canvas2" width="212px" height="100px" ref={canvas2} ></canvas>
+
+                                                                <span className="list">
+                                                                    중등2-2 뜨레스
+                                                                    <br />
+                                                                    총괄평가</span>
+                                                                <span className="list">
+                                                                    중등2-1 엑사스
+                                                                    <br />
+                                                                    총괄평가</span>
+                                                                <span className="list">
+                                                                    중등2-1 엑사스
+                                                                    <br />
+                                                                    총괄평가</span>
+                                                                <span className="list">중등1-2
+                                                                    <br />
+                                                                    진단 평가</span>
+                                                            </div>
+                                                        </div>
                                                     )
                                                 }
                                             </section>
@@ -668,17 +864,91 @@ function LbtModal({ setCreateModal }) {
 
                                                 {
                                                     viewItem[3].optionItem.some(a => a.label === "학원 출결 상황") && (
-                                                        <h5 className="lbt-content-sub-title">학원 출결 상황</h5>
+                                                        <>
+                                                            <div className="fa">
+                                                                <h5 className="lbt-content-sub-title mr-10">학원 출결 상황</h5>
+                                                                <span className="lbt-text mr-10">
+                                                                    출석 : 20일
+                                                                </span>
+                                                                <span className="lbt-text mr-10">
+                                                                    지각 : 2일
+                                                                </span>
+                                                                <span className="lbt-text mr-10">
+                                                                    조퇴 : 1일
+                                                                </span>
+                                                                <span className="lbt-text">
+                                                                    결석 : 0일
+                                                                </span>
+                                                            </div>
+                                                            <table className="lbt-table" style={{ marginBottom: "20px" }}>
+                                                                <colgroup>
+                                                                    <col style={{ width: "30%" }} />
+                                                                    <col style={{ width: "70%" }} />
+                                                                </colgroup>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <th>출결 사유</th>
+                                                                        <td className="text-left p-5">2023.04.07 ( 감기기운 가정 학습 진행 ) <br />
+                                                                            2023.04.22 가족 행사 <br />
+                                                                            2023.04.15  복통으로 30분 일찍 조퇴함. 다음 시간(목) 일찍 등원해서 보강하기로 함. 복통으로 30분 일찍 <br />
+                                                                            조퇴 함. 다음 시간(목) 일찍 등원해서 보강하기로 함. </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </>
                                                     )
                                                 }
                                                 {
                                                     viewItem[3].optionItem.some(a => a.label === "온라인 학습 분석") && (
-                                                        <h5 className="lbt-content-sub-title">온라인 학습 분석</h5>
+                                                        <div>
+                                                            <h5 className="lbt-content-sub-title">온라인 학습 분석</h5>
+                                                            <table className="lbt-table" style={{ marginBottom: "20px" }}>
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>총 온라인 학습 시간</th>
+                                                                        <th>온라인 학습일 수</th>
+                                                                        <th>하루 평균 온라인 학습 시간</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>17시간 45분</td>
+                                                                        <td>15일</td>
+                                                                        <td>1시간 11분</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
                                                     )
                                                 }
                                                 {
                                                     viewItem[3].optionItem.some(a => a.label === "획득한 학습 포인트") && (
-                                                        <h5 className="lbt-content-sub-title">획득한 학습 포인트</h5>
+                                                        <div className="row">
+                                                            <div className="col-5">
+                                                                <h5 className="lbt-content-sub-title">획득한 학습 포인트</h5>
+                                                                <table className="lbt-table">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>캐럿</th>
+                                                                            <th>미네랄</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>20개</td>
+                                                                            <td>25개</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div className="col-7">
+                                                                <div className="lbt-graph5">
+                                                                    <span></span>
+                                                                    <span></span>
+                                                                    <span></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     )
                                                 }
                                                 {
