@@ -129,7 +129,7 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
 
         let arr = [];
         files.length > 0 &&
-        files.forEach(file=>{
+        files.forEach(file => {
             const fileReader = new FileReader();
             fileReader.readAsDataURL(file);
             fileReader.onload = function(e) { 

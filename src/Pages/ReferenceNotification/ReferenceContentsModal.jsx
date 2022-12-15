@@ -41,7 +41,7 @@ function ReferenceContentsModal({seq,setModal}) {
     
     return ( 
         <div className="modal">
-            <div className="modal-content ReferenceContentsModal">
+            <div className="modal-content referenceContentsModal">
                 <div className="modal-header fj">
                         <h2 className="modal-title">게시물 확인</h2>
                         <button className="btn" onClick={(e) => {
