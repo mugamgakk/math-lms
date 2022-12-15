@@ -201,12 +201,23 @@
         &-title {
             font-weight: 700;
             color: $brown;
-            @include flex(start);
             margin-bottom: 10px;
             font-size: 18px;
             i {
                 margin-right: 8px;
             }
+        }
+
+        &-sub-title{
+            width: 130px;
+            height: 24px;
+            border-top-right-radius: $radius;
+            border-top-left-radius: $radius;
+            background-color: $brown;
+            @include flex;
+            font-weight: 600;
+            font-size: 15px;
+            color: $white;
         }
 
         .lbt-table-title {
@@ -251,7 +262,30 @@
             background-color: #c41b09;
         }
     }
+
+    .line{
+        &::before{
+            content: "";
+            display: inline-block;
+            width: 10px;
+            height: 1px;
+            background-color: transparent;
+            border-bottom: 2px dashed red;
+        }
+    }
 }
+
+.legend2{
+    @extend .legend1;
+    text-align: right;
+    position: relative;
+    top: -20px;
+    & > div{
+        display: inline-block;
+    }
+
+}
+
 .lbt-table1 {
     .bg-area-wrap {
         width: 100%;
@@ -377,10 +411,12 @@
     display: flex;
     margin-left:40px;
     position: relative;
+    align-items: flex-end;
 
     &-bg {
         width: 20%;
         border-right: 1px solid #ddd;
+        height: 100%;
         display: block;
         position: relative;
         &::before {
@@ -449,3 +485,156 @@
     }
 }
 
+
+.lbt-graph3{
+    @extend .lbt-graph2; 
+    height: 100px;
+    position: relative;
+
+    span:nth-of-type(1){
+        &::before{
+            content: "0";
+        }
+    }
+    span:nth-of-type(2){
+        &::before{
+            content: "20점";
+        }
+    }
+    span:nth-of-type(3){
+        &::before{
+            content: "40점";
+        }
+    }
+    span:nth-of-type(4){
+        &::before{
+            content: "60점";
+        }
+    }
+    span:nth-of-type(5){
+        &::before{
+            content: "80점";
+        }
+        &::after{
+            content: "100점" 
+        }
+    }
+    .common-bar{
+        width: 10px;
+        height: 15px;
+        background-color:#c41b09;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    .lbt-graph2-bar:nth-of-type(1){
+        top: 24px;
+    }
+    .lbt-graph2-bar:nth-of-type(2){
+        top: 51px;
+    }
+    .lbt-graph2-bar:nth-of-type(3){
+        top: 77px;
+    }
+    .common-bar:nth-of-type(1){
+        top: 24px;
+    }
+    .common-bar:nth-of-type(2){
+        top: 51px;
+    }
+    .common-bar:nth-of-type(3){
+        top: 77px;
+    }
+}
+
+.lbt-text{
+    font-size: 14px;
+    color: $brown;
+    font-weight: 500;
+}
+
+.lbt-graph4{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-left: 40px;
+    position: relative;
+
+    .legend1{
+        & >div{ white-space: nowrap; }
+    }
+
+    .list{
+        font-size: 8px;
+        position: absolute;
+        color: #664e3d;
+        bottom: 0;
+        text-align: center;
+        line-height: 15px;
+    }
+
+    .list:nth-of-type(1){
+        left: 20px;
+        bottom: -31px;
+    }
+    .list:nth-of-type(2){
+        left: 80px;
+        bottom: -31px;
+    }
+    .list:nth-of-type(3){
+        left: 140px;
+        bottom: -31px;
+    }
+    .list:nth-of-type(4){
+        left: 200px;
+        bottom: -31px;
+    }
+}
+
+.lbt-graph5{
+    margin-left: 50px;
+    span{
+        display: block;
+        height: 26px;
+        width: 212px;
+        border-bottom: 1px solid #ddd;
+        position: relative;
+
+        &:nth-last-of-type(1){
+            &::before{
+                content: "0";
+                font-size: 10px;
+                font-weight: 400;
+                color: #444;
+                position: absolute;
+                left: -10px;
+                bottom: -13px;
+            }
+        }
+        &:nth-last-of-type(2){
+            @extend span:nth-last-of-type(1);
+            &::before{
+                content: "10개";
+                left: -15px;
+            }
+        }
+        &:nth-last-of-type(3){
+            border-top: 1px solid #ddd;
+            @extend span:nth-last-of-type(1);
+            &::before{
+                content: "20개";
+                left: -15px;
+            }
+            &::after{
+                content: "30개";
+                font-size: 10px;
+                font-weight: 400;
+                color: #444;
+                position: absolute;
+                top: -12px;
+                left: -15px;
+            }
+        }
+    }
+    
+}
