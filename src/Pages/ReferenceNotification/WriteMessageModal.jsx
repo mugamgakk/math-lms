@@ -9,6 +9,8 @@ import CheckBox from '../../components/Checkbox'
 import Icon from '../../components/Icon';
 import CustomDatePicker from '../../components/CustomDatePicker';
 import dayjs from 'dayjs';
+import { falseModal } from '../../methods/methods'
+
 // const 시간 = Array.from({length: 24}, (v,i) => `${i}시`);
 
 const 시간 = [];
@@ -277,7 +279,7 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
         }
     }
 return (
-        <div className="modal">
+        <div className="modal" onClick={(e)=>falseModal(e,setWriteModal)}>
             <div className='modal-content writeMessageModal'>
                 <div className="modal-header fj">
                       <h2 className="modal-title">[학습 알림] 메시지 보내기</h2>

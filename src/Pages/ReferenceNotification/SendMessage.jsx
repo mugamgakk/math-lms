@@ -39,7 +39,7 @@ function SendMessage() {
             mode: "notice_list_send",
             qcate : coToState,
             qstr : searchInput,
-            listnum : 30,
+            // listnum : 2,
             page : 1
         };
 
@@ -53,9 +53,9 @@ function SendMessage() {
 
     const checkState = (checked, seq) => {
         if(checked){
-            setCheckList([...checkList, seq])
+            setCheckList([...checkList, parseInt(seq)])
         }else{
-            setCheckList(checkList.filter(item=> item !== seq))
+            setCheckList(checkList.filter(item=> item !== parseInt(seq)))
         }
     }
 
@@ -70,17 +70,30 @@ function SendMessage() {
         setCheckList([]);
     }
    }
+
+   const deleteList = async (checkList) => {
+    let url = "/notice.php";
+    let query = {
+        mode: "notice_delete",
+        delete_num : checkList
+    };
+
+    let res = await ajax(url, {data: query});
+    console.log(res);
+
+ }
+
    
-   const deleteList = (checkList) => {
-    console.log(checkList);
-    checkList.length === 0 ? window.alert('1개 이상 선택바람') 
-    : (window.confirm('삭제?') &&
-        ajax("/notice.php/?mode=notice_delete", {
-            delete_no : checkList
-        }).then(res=>{
-            window.alert('삭제 성공');
-        }))
-    }
+//    const deleteList = (checkList) => {
+//     console.log(checkList);
+//     checkList.length === 0 ? window.alert('1개 이상 선택바람') 
+//     : (window.confirm('삭제?') &&
+//         ajax("/notice.php/?mode=notice_delete", {
+//             delete_no : checkList
+//         }).then(res=>{
+//             window.alert('삭제 성공');
+//         }))
+//     }
 
     return (  
         <>
