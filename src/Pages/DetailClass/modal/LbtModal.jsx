@@ -1,7 +1,6 @@
 import React, { useState, useRef } from "react";
 import LbtCheckbox from "../LbtCheckbox";
 import useLbtStore from "../../../store/useLbtStore";
-import { falseModal } from "../../../methods/methods";
 import Icon from "../../../components/Icon";
 import Checkbox from "../../../components/Checkbox";
 import { useEffect } from "react";
@@ -1039,8 +1038,9 @@ function LbtModal({ setCreateModal }) {
                                         : null
                                 }
 
+                                {/* 선생님 의견 */}
                                 {
-                                    viewItem[4].optionItem.some(a => a.label === "선생님의견") && (
+                                    viewItem && viewItem[4].optionItem.some(a => a.label === "선생님의견") && (
 
                                         <section className="lbt-content" style={{marginBottom : "20px"}}>
                                             <h4 className="lbt-content-title"><Icon icon={"lbt4"} />선생님 의견</h4>
@@ -1056,8 +1056,9 @@ function LbtModal({ setCreateModal }) {
                                         </section>
                                     )
                                 }
+                                {/* ai 분석 */}
                                 {
-                                    viewItem[4].optionItem.some(a => a.label === "AI분석") && (
+                                    viewItem && viewItem[4].optionItem.some(a => a.label === "AI분석") && (
                                         <section className="lbt-content">
                                             <h4 className="lbt-content-title"><Icon icon={"lbt4"} />종합 분석 의견</h4>
                                             <div className="ai-box">
