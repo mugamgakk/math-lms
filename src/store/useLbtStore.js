@@ -35,7 +35,7 @@ const dataLists = [
         ],
     },
     {
-        option: "선생님의견",
+        option: "comment",
         optionItem: [
             { label: "선생님의견", value: "tch_comm" },
             { label: "AI분석", value: "art_an" },

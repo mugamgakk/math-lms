@@ -114,16 +114,26 @@ function LbtModal({ setCreateModal }) {
         ctx.fillStyle = '#ea77512f';
         ctx.fill();
 
-        // 글자
-        ctx.font = "10px Pretendard";
-        ctx.fillStyle = "#444";
-        ctx.fillText("100", 75, 15);
-        ctx.font = "10px Pretendard";
-        ctx.fillStyle = "#444";
-        ctx.fillText("50", 80, 55);
-        ctx.font = "10px Pretendard";
-        ctx.fillStyle = "#444";
-        ctx.fillText("0", 85, 90);
+        class Text {
+            constructor(text, x, y) {
+                this.text = text;
+                this.x = x;
+                this.y = y;
+            }
+
+            make() {
+                ctx.font = "10px Pretendard";
+                ctx.fillStyle = "#444";
+                ctx.fillText(this.text, this.x, this.y);
+            }
+        }
+
+        let font1 = new Text("100", 75, 15);
+        font1.make();
+        let font2 = new Text("50", 80, 55);
+        font2.make();
+        let font3 = new Text("0", 85, 90);
+        font3.make();
 
         // 위 사각형
         ctx.fillStyle = '#ea7851';
@@ -201,15 +211,12 @@ function LbtModal({ setCreateModal }) {
         setTimeout(() => {
             draw1();
             draw2();
-        }, 500)
+        }, 200)
     }, [draw1])
 
     return (
         <div
             className="modal LbtModal"
-            onClick={(e) => {
-                falseModal(e, setCreateModal);
-            }}
         >
             <div className="modal-content">
                 <div className="modal-header">
@@ -865,7 +872,7 @@ function LbtModal({ setCreateModal }) {
                                                 {
                                                     viewItem[3].optionItem.some(a => a.label === "학원 출결 상황") && (
                                                         <>
-                                                            <div className="fa">
+                                                            <div className="fa-end">
                                                                 <h5 className="lbt-content-sub-title mr-10">학원 출결 상황</h5>
                                                                 <span className="lbt-text mr-10">
                                                                     출석 : 20일
@@ -923,7 +930,7 @@ function LbtModal({ setCreateModal }) {
                                                 }
                                                 {
                                                     viewItem[3].optionItem.some(a => a.label === "획득한 학습 포인트") && (
-                                                        <div className="row">
+                                                        <div className="row" style={{ marginBottom: "20px" }}>
                                                             <div className="col-5">
                                                                 <h5 className="lbt-content-sub-title">획득한 학습 포인트</h5>
                                                                 <table className="lbt-table">
@@ -943,9 +950,43 @@ function LbtModal({ setCreateModal }) {
                                                             </div>
                                                             <div className="col-7">
                                                                 <div className="lbt-graph5">
+                                                                    {/* 선 */}
                                                                     <span></span>
                                                                     <span></span>
                                                                     <span></span>
+                                                                    {/* 갯수 */}
+
+                                                                    <em>30개</em>
+                                                                    <em>20개</em>
+                                                                    <em>10개</em>
+                                                                    <em>0</em>
+
+                                                                    <strong className="lbt-graph5-bar">
+                                                                        {/* 현재갯수 * ( 100/ 최대갯수 ) */}
+                                                                        <div className="ornage-bar" style={{ height: `${20 * (100 / 30)}%` }}></div>
+                                                                        <div className="red-bar" style={{ height: `${25 * (100 / 30)}%` }}></div>
+                                                                        <span className="month">1월</span>
+                                                                    </strong>
+                                                                    <strong className="lbt-graph5-bar">
+                                                                        <div className="ornage-bar" style={{ height: `${10 * (100 / 30)}%` }}></div>
+                                                                        <div className="red-bar" style={{ height: `${20 * (100 / 30)}%` }}></div>
+                                                                        <span className="month">2월</span>
+                                                                    </strong>
+                                                                    <strong className="lbt-graph5-bar">
+                                                                        <div className="ornage-bar" style={{ height: `${15 * (100 / 30)}%` }}></div>
+                                                                        <div className="red-bar" style={{ height: `${30 * (100 / 30)}%` }}></div>
+                                                                        <span className="month">3월</span>
+                                                                    </strong>
+                                                                    <strong className="lbt-graph5-bar">
+                                                                        <div className="ornage-bar" style={{ height: `${20 * (100 / 30)}%` }}></div>
+                                                                        <div className="red-bar" style={{ height: `${25 * (100 / 30)}%` }}></div>
+                                                                        <span className="month">4월</span>
+                                                                    </strong>
+
+                                                                    <div className="legend1">
+                                                                        <div className="yellow">캐럴</div>
+                                                                        <div className="red">미네랄</div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -953,12 +994,77 @@ function LbtModal({ setCreateModal }) {
                                                 }
                                                 {
                                                     viewItem[3].optionItem.some(a => a.label === "학습 태도 평가") && (
-                                                        <h5 className="lbt-content-sub-title">학습 태도 평가</h5>
+                                                        <div className="col-8" style={{ marginBottom: "20px" }}>
+                                                            <h5 className="lbt-content-sub-title">학습 태도 평가</h5>
+                                                            <div className="lbt-graph6">
+                                                                <div className="lbt-graph6-left">
+                                                                    <span>학습 집중도</span>
+                                                                    <span>수업 참여 적극성</span>
+                                                                    <span>과제 수행</span>
+                                                                    <span>개념 노트 정리</span>
+                                                                    <span>오답 노트 정리</span>
+                                                                </div>
+                                                                <div className="lbt-graph6-area">
+                                                                    <span></span>
+                                                                    <span></span>
+                                                                    <span></span>
+                                                                    <span></span>
+                                                                    <span></span>
+
+                                                                    <div className="lbt-graph6-bar" style={{ width: "100%" }} ></div>
+                                                                    <div className="lbt-graph6-bar" style={{ width: "80%" }} ></div>
+                                                                    <div className="lbt-graph6-bar" style={{ width: "60%" }} ></div>
+                                                                    <div className="lbt-graph6-bar" style={{ width: "50%" }} ></div>
+                                                                    <div className="lbt-graph6-bar" style={{ width: "30%" }} ></div>
+                                                                </div>
+                                                                <div className="lbt-graph6-right">
+                                                                    <span>매우 우수</span>
+                                                                    <span>우수</span>
+                                                                    <span>보통</span>
+                                                                    <span>우수</span>
+                                                                    <span>우수</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     )
                                                 }
                                             </section>
                                         )
                                         : null
+                                }
+
+                                {
+                                    viewItem[4].optionItem.some(a => a.label === "선생님의견") && (
+
+                                        <section className="lbt-content" style={{marginBottom : "20px"}}>
+                                            <h4 className="lbt-content-title"><Icon icon={"lbt4"} />선생님 의견</h4>
+                                            <div className="opinion-box">
+                                                <p>
+                                                    강수학 학생은  2022년 03월 02일 ~2022년 04월 12일 기간 동안 진행한 초등 뜨레스 5-1 학습에 대하여 2022년 04월 13일 총괄평가를 실시하였습니다. 해당 평가의 전국 평균은 75점이며, 강수학 학생이 얻은 점수는 85점으로 우수한 학습 성취를 보였습니다.
+                                                    (* 평가별  세부  분석은  표를  참고해  주세요.)
+                                                    <br />
+                                                    <br />
+                                                    (학생의 학원 생활 및 학습 진행과 관련한 선생님 의견 자유 입력)
+                                                </p>
+                                            </div>
+                                        </section>
+                                    )
+                                }
+                                {
+                                    viewItem[4].optionItem.some(a => a.label === "AI분석") && (
+                                        <section className="lbt-content">
+                                            <h4 className="lbt-content-title"><Icon icon={"lbt4"} />종합 분석 의견</h4>
+                                            <div className="ai-box">
+                                                <p>
+                                                    강수학 학생은  2022년 4월 1일 ~2022년 4월 30일 기간  중  18일  출석하였고 ( 지각 0회, 조퇴 0회, 결석 1일) 지플럼  온라인  학습은 총 124시간 28분을  진행하였습니다. 이를 통해 캐럿 32개, 미네랄 11개를  획득하여 총 375 캐럿포인트를  쌓았습니다. (강수학 학생이  획득한  캐럿포인트는  2022년 4월 기준,  전국 85등에  해당합니다.)
+                                                </p>
+                                                <p>
+                                                    <h4 className="ai-box-title">교재 학습 분석</h4>
+                                                    강수학 학생은  2022년 4월 1일 ~2022년 4월 30일 기간  중  18일  출석하였고 ( 지각 0회, 조퇴 0회, 결석 1일) 지플럼  온라인  학습은 총 124시간 28분을  진행하였습니다. 이를 통해 캐럿 32개, 미네랄 11개를  획득하여 총 375 캐럿포인트를  쌓았습니다. (강수학 학생이  획득한  캐럿포인트는  2022년 4월 기준,  전국 85등에  해당합니다.)
+                                                </p>
+                                            </div>
+                                        </section>
+                                    )
                                 }
 
                             </div>

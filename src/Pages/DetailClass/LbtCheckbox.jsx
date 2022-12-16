@@ -34,7 +34,7 @@ function LbtCheckbox({ ele, checkedItem }) {
 
     return (
         <div className="part" key={ele.option}>
-            <div className="part-title">
+            <div className="part-title" style={{display : ele.option === "comment" ? "none" : "block"}} >
                 <Checkbox
                     color="orange"
                     id={ele.option}
@@ -45,7 +45,7 @@ function LbtCheckbox({ ele, checkedItem }) {
                 />
                 <label htmlFor={ele.option}>{ele.option}</label>
             </div>
-            <ul className="part-list">
+            <ul className={`part-list ${ele.option === "comment" ? "part-list-comment" : ""}`}>
                 {ele.optionItem.map((a) => {
                     return (
                         <li key={a.label}>
