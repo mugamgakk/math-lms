@@ -8,6 +8,7 @@ import { getByteSize } from "../../methods/methods";
 import CheckBox from '../../components/Checkbox'
 import Icon from '../../components/Icon';
 import CustomDatePicker from '../../components/CustomDatePicker';
+import dayjs from 'dayjs';
 // const 시간 = Array.from({length: 24}, (v,i) => `${i}시`);
 
 const 시간 = [];
@@ -24,10 +25,10 @@ for(let i=0; i<12; i++){
 
 function WriteMessageModal({setWriteModal,setViewModal, toName}) {
     let [stuList, setStuList] = useState();
-    let [classOption, setClassOption] = useState('반 선택');
 
     // 반학생 리스트
     let [classList,setClassList] = useState(null);
+    let [classValue, setClassValue] = useState();
 
     // 반학생 리스트에서 받는사람 선택 체크 배열
     let [checkState,setCheckState] = useState([]);
@@ -53,24 +54,32 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
     let [regexDate, setRegexDate] = useState('');
     let [selectDisabled, setSelectDisabled]  = useState(true);
     let [date,setDate] = useState(new Date());
-        // 반학생 리스트
-    useEffect(()=>{
-    
-        ajax("/notice.php/?mode=notice_usr", {
-            class_cd : 123123
-        }).then(res=>{
-                let arr = [];
-                
-                res.data.class_list.map(list=>{
-                    arr.push(list.class_name);
-                })
 
-                setClassList([...arr]);
-                setStuList(res.data.usr_list);
-            })   
+    useEffect(()=>{
+        getList();
+    },[])
+
+    
+    const getList = async () => {
+
+        let url = "/notice.php/?mode=notice_usr";
+        let query = {
+            class_cd : 123123
+        };
         
-    },[]);
-   
+        let res = await ajax(url, query);
+        console.log(res);
+
+        let arr = [];
+                
+        res.data.class_list.map(list=>{
+            arr.push({value : list.class_cd, label : list.class_name});
+        })
+
+        setClassList([...arr]);
+        setStuList(res.data.usr_list);
+     }
+
     useEffect(()=>{
         if(ref.current){
             if(toName){
@@ -110,8 +119,6 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
             window.alert('내용을 입력하세요')
             return;
         }
-     
-
         return validation;
     }
 
@@ -237,16 +244,21 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
     );
 
     const submitForm = () => {
-        let newDate = `20${regexDate}`;
-        let newHour = hour.label.replace('시','');
-        let newMinute = minute.label.replace('분','');
-        let nt_reserve = `${newDate} ${newHour}:${newMinute}`;
+        let nt_reserve;
+        if(rCheck){
+            let newDate = dayjs(date).format('YYYY-MM-DD');
+            let newHour = hour.label.replace('시','') < 10 ? `0${hour.label.replace('시','')}` : hour.label.replace('시','') ;
+            let newMinute = minute.label.replace('분','') < 10 ? `0${minute.label.replace('분','')}` : minute.label.replace('분','');
+            nt_reserve = `${newDate} ${newHour}:${newMinute}`;
+        }else{
+            nt_reserve = null;
 
-        
+        }
+
         if(!checkForm()){
             return false;
         }else{
-            
+            console.log(nt_reserve);
             if(!window.confirm('저장하시겠습니까?')) return false;
             
             ajax("/notice.php", { data : {
@@ -255,7 +267,7 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
                 nt_title : writeTit,
                 nt_content : JSON.stringify(editorContents),
                 nt_files : encodingFiles,
-                nt_reserve : '2022-01-01 12:12'
+                nt_reserve : nt_reserve
             }}).then(res=>{
                 console.log(res);
                 setWriteModal(false);
@@ -268,7 +280,7 @@ return (
         <div className="modal">
             <div className='modal-content writeMessageModal'>
                 <div className="modal-header fj">
-                      <h2 className="modal-title">[학습 알림]메시지 보내기</h2>
+                      <h2 className="modal-title">[학습 알림] 메시지 보내기</h2>
                     <button className="btn" onClick={(e) => {
                         e.stopPropagation();
                         setWriteModal(false)
@@ -278,13 +290,14 @@ return (
                 </div>
                 <div className="modal-body">
                     <div className="left">
-                        {/* <SelectBase 
-                        onChange={(ele)=>setClassOption(ele)}
-                        options={classList}
-                        value={classOption && classOption}
+                        <SelectBase 
+                        onChange={(ele)=>setClassValue(ele)}
+                        options={classList && classList}
+                        value={classValue && classValue}
                         defaultValue='반 선택'
-                        width={'150px'}
-                        /> */}
+                        width={'100%'}
+                        className={'mb-10'}
+                        />
                         <table className='table tableB'>
                             <thead>
                                 <tr>
@@ -297,7 +310,7 @@ return (
                                     <th style={{ width: '150px' }}>이름</th>
                                 </tr>
                             </thead>
-                            <tbody className='scroll'>
+                            <tbody className='scroll' style={{ height: '584px' }}>
                                 {
                                     stuList && stuList.map(list=>{
                                         return(
@@ -320,16 +333,16 @@ return (
                         </table>
                     </div>
                     <div className="right">
-                        <div>
-                            <span>받는 사람 ({(checkState && checkState.length > 0 ) && checkState.length})</span>
+                        <div className='mb-10'>
+                            <span className='tit'>받는 사람 ({(checkState && checkState.length > 0 ) && checkState.length})</span>
                             <input type='text' className='textInput' value={to} readOnly/>
                         </div>
-                        <div>
-                            <span>제목</span>
+                        <div className='mb-10'>
+                            <span className='tit'>제목</span>
                             <input type='text' className='textInput' placeholder='제목을 입력하세요.' onChange={(e)=>setWriteTit(e.target.value)}/>
                         </div>
-                        <div>
-                            <span>내용</span>
+                        <div className='mb-20'>
+                            <span className='tit'>내용</span>
                             <CKEditor
                                 editor={ClassicEditor}
                                 config={{placeholder: "내용을 입력하세요."}} 
@@ -347,67 +360,65 @@ return (
                                 }}
                             />
                         </div>
-                        <table>
-                            <tbody>
-                               
-                                <tr>
-                                    <th>첨부파일</th>
-                                    <td className="fileArea fj">
-                                        <div>
-                                            <input
-                                                type="file"
-                                                id="file"
-                                                onChange={(e) => {
-                                                    upload(e.target.files);
-                                                }}
-                                                className="d-none"
-                                                multiple
-                                            />
-                                            <div
-                                                style={{ padding: "10px", border: "1px solid #ccc" }}
-                                                onDragOver={(e) => {
-                                                    e.preventDefault();
-                                                    e.stopPropagation();
-                                                }}
-                                                // 리액트에서 드래그 오버 이벤트를 넣지 않으면 드롭이벤트가 먹지 않음 !
-                                                onDrop={(e) => {
-                                                    e.preventDefault();
-                                                    e.stopPropagation();
+                        <div className="fileArea fj">
+                            <input
+                                type="file"
+                                id="file"
+                                onChange={(e) => {
+                                    upload(e.target.files);
+                                }}
+                                className="d-none"
+                                multiple
+                            />
+                          
+                            <div className='scroll' onDragOver={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                }}
+                                // 리액트에서 드래그 오버 이벤트를 넣지 않으면 드롭이벤트가 먹지 않음 !
+                                onDrop={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
 
-                                                    var 파일 = e.dataTransfer.files;
-                                                    // 드롭한 파일들이 모두 들어있음
-                                                    if (파일.length === 0) {
-                                                        return;
-                                                    }
+                                    var 파일 = e.dataTransfer.files;
+                                    // 드롭한 파일들이 모두 들어있음
+                                    if (파일.length === 0) {
+                                        return;
+                                    }
 
-                                                    upload(파일);
-                                                    // console.log("드롭됨");
-                                                }}
-                                            >
-                                            {files.length === 0 && (
-                                                <p style={{ textAlign: "center" }}>여기에 첨부파일을 끌어오세요</p>
-                                            )}
-                                            {files.map((a, i) => {
-                                                return (
-                                                    <div key={i}>
-                                                        <input type="checkbox"
-                                                        onChange={(e)=>checkFile(e.target.checked,a.name)}
-                                                        checked={fileCheck.includes(a.name)}
-                                                        />
-                                                        {a.name} ( {getByteSize(a.size)} )
-                                                    </div>
-                                                );
-                                            })}
-                                            </div>
+                                    upload(파일);
+                                    // console.log("드롭됨");
+                                }}
+                            >
+                                {files.length === 0 && (
+                                    <p className='fc' style={{ textAlign: "center" }}>여기에 첨부파일을 끌어오세요</p>
+                                )}
+                                {files.map((a, i) => {
+                                    return (
+                                        <div key={i}>
+                                              <CheckBox 
+                                                color='orange' 
+                                                id={i}
+                                                onChange={(e)=>checkFile(e.target.checked,a.name)}
+                                                checked={fileCheck.includes(a.name)}
+                                                className={'mr-10'}
+                                                />
+                                            <label htmlFor={i}>{a.name} ( {getByteSize(a.size)} )</label>
                                         </div>
-                                        <div className="fileBtn">
-                                            <label htmlFor="file" className="btn">파일 찾기</label>
-                                            <button className="btn" onClick={()=>removeFile(fileCheck)}>파일삭제</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                    );
+                                })}
+                            </div>
+                            <div className="fileBtn fs f-column">
+                                <label htmlFor="file" className="btn-grey-border">파일 찾기</label>
+                                <button 
+                                    className="btn-grey btn-icon" 
+                                    onClick={()=>removeFile(fileCheck)}
+                                    disabled={files.length === 0}
+                                    >
+                                        <Icon icon={"remove"} />
+                                    삭제</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className="modal-footer">
@@ -416,8 +427,8 @@ return (
                         setWriteModal(false);
                         setViewModal && setViewModal(false);
                     }}>취소</button>
-                    <button className={ `btn-orange mr-4 ${rCheck ? 'disabled' : ''}` } onClick={submitForm}>발송하기</button>
-                    <button className={ `btn-brown mr-4 ${rCheck ? '' : 'disabled'}` } onClick={submitForm}>예약 발송</button>
+                    <button className='btn-orange mr-4' disabled={rCheck} onClick={submitForm}>발송하기</button>
+                    <button className='btn-brown mr-4' disabled={!rCheck} onClick={submitForm}>예약 발송</button>
                         <CheckBox 
                         color={'orange'} 
                         onChange={(e)=>rCheckFunc(e.target.checked)}
