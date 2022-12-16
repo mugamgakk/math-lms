@@ -636,7 +636,7 @@ function LbtModal({ setCreateModal }) {
                                             <section className="lbt-content" style={{ marginBottom: "20px" }}>
                                                 <h4 className="lbt-content-title fa fj">
                                                     <span>
-                                                        <Icon icon={"lbt2"} />{viewItem[1].option}
+                                                    <Icon icon={"lbt2"} />{viewItem[1].option}
                                                     </span>
                                                     <p className="lbt-text">*  플러스 학습은 패럴랙스 수학 학원 선생님을 통해서만 학습이 가능합니다.</p>
                                                 </h4>
@@ -1043,7 +1043,7 @@ function LbtModal({ setCreateModal }) {
                                     viewItem && viewItem[4].optionItem.some(a => a.label === "선생님의견") && (
 
                                         <section className="lbt-content" style={{marginBottom : "20px"}}>
-                                            <h4 className="lbt-content-title"><Icon icon={"lbt4"} />선생님 의견</h4>
+                                            <h4 className="lbt-content-title"><Icon icon={"lbt6"} />선생님 의견</h4>
                                             <div className="opinion-box">
                                                 <p>
                                                     강수학 학생은  2022년 03월 02일 ~2022년 04월 12일 기간 동안 진행한 초등 뜨레스 5-1 학습에 대하여 2022년 04월 13일 총괄평가를 실시하였습니다. 해당 평가의 전국 평균은 75점이며, 강수학 학생이 얻은 점수는 85점으로 우수한 학습 성취를 보였습니다.
@@ -1060,7 +1060,7 @@ function LbtModal({ setCreateModal }) {
                                 {
                                     viewItem && viewItem[4].optionItem.some(a => a.label === "AI분석") && (
                                         <section className="lbt-content">
-                                            <h4 className="lbt-content-title"><Icon icon={"lbt4"} />종합 분석 의견</h4>
+                                            <h4 className="lbt-content-title"><Icon icon={"lbt5"} />종합 분석 의견</h4>
                                             <div className="ai-box">
                                                 <p>
                                                     강수학 학생은  2022년 4월 1일 ~2022년 4월 30일 기간  중  18일  출석하였고 ( 지각 0회, 조퇴 0회, 결석 1일) 지플럼  온라인  학습은 총 124시간 28분을  진행하였습니다. 이를 통해 캐럿 32개, 미네랄 11개를  획득하여 총 375 캐럿포인트를  쌓았습니다. (강수학 학생이  획득한  캐럿포인트는  2022년 4월 기준,  전국 85등에  해당합니다.)

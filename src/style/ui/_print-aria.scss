@@ -1,3 +1,14 @@
+// 프린트 모달 css
+.print-modal{
+    .modal-content{
+        height: 100vh;
+    }
+    .modal-body{
+        height: 100%;
+    }
+}
+
+
 .print-aria {
     // position: fixed;
     // z-index: 100;
@@ -62,18 +73,24 @@
     height: 297mm;
     width: 210mm;
 
+    &-header{
+        // position: absolute;
+        img{
+            width: 100%;
+        }
+    }
+
 
     &-body {
         display: flex;
         flex-direction: column;
-        flex-wrap: wrap;
-        align-content: space-between;
+ 
         height: 297mm;
 
         .problem {
-            width: 50%;
+            width: 100%;
             padding: 20px;
-            // border: 1px solid #ccc;
+            // padding-top: 0;
             overflow: hidden;
 
             &-header{
@@ -103,7 +120,7 @@
             .item{
                 display: flex;
                 align-items: center;
-                margin-bottom: 10px;
+                margin-bottom: 5px;
                 &:last-child{
                     margin-bottom: 0;
                 }

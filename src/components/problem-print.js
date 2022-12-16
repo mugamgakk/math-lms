@@ -100,10 +100,10 @@ export const 풀이보기높이구하기 = async (list, 초기값 = 0) => {
 };
 
 // 1페이지 들어갈 문제를 분할한다. limit은 한페이지의 반의 크기를 말한다.
-export const 분할하기 = (list, limit = 1120) => {
+export const 분할하기 = (list, 초기값 = 100, limit = 1120) => {
     let count = 0;
-    let 왼쪽높이 = 0;
-    let 오른쪽높이 = 0;
+    let 왼쪽높이 = 초기값;
+    let 오른쪽높이 = 초기값;
     let arr = [];
     let 방향 = "left"
 
@@ -111,10 +111,10 @@ export const 분할하기 = (list, limit = 1120) => {
 
         // 상단 메뉴 높이 빼기
         if(count === 0){
-            if(왼쪽높이 + a.height > (limit)){
+            if(왼쪽높이 + a.height > (limit )){
                 방향 = "right";
             }
-            if(오른쪽높이 + a.height > (limit)){
+            if(오른쪽높이 + a.height > (limit )){
                 방향 = "left";
                 왼쪽높이 = 0;
                 오른쪽높이 = 0;
