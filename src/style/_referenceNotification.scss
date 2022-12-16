@@ -154,7 +154,23 @@
             }
         }
     }
+}
+
+.writeMessageModal{
+    .modal-body{
+        padding: 20px 35px;
+        display:flex;
+        .left{
+            width: 200px;
+        }
+        .right{
+            width: 570px;
+        }
+    }
     .modal-footer{
-        
+        .check-orange{
+            align-self: end;
+            top: 4px;
+        }
     }
 }

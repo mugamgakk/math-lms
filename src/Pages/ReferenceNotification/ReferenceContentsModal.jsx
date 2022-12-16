@@ -76,7 +76,7 @@ function ReferenceContentsModal({seq,setModal}) {
                                         {
                                             contents.files.length > 0 && contents.files.map(file=>{
                                                 return(
-                                                        <div key={file.bf_seq} onClick={()=>fileDown(file.fileurl,file.filename)}>{file.filename}({file.filesize})</div>
+                                                    <div key={file.bf_seq} onClick={()=>fileDown(file.fileurl,file.filename)}>{file.filename}({file.filesize})</div>
                                                 )
                                             })
                                         }
@@ -89,7 +89,6 @@ function ReferenceContentsModal({seq,setModal}) {
                         )
                     }
                 </div>
-
                 <div className="modal-footer">
                     <button className='btn-brown mr-4'>이전 글 보기</button>
                     <button className='btn-orange-border mr-4'>수정</button>

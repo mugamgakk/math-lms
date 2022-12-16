@@ -3,27 +3,21 @@ import { useEffect } from "react";
 import { useState } from "react";
 import Icon from "../../components/Icon";
 
-const arr = [
-    'apple',             'arrowA',
-    'attendence',        'calendar',
-    'close',             'download',
-    'downloadB',         'mute',
-    'evaluation',        'fast',
-    'file',              'hamburger',
-    'info',              'lnbDetail',
-    'logout',            'menu_btn(close)',
-    'more',              'notification',
-    'pencil',            'play',
-    'plus',              'plusLearning',
-    'point',             'print',
-    'reload',            'remove',
-    'search',            'select_typeA',
-    'select_typeB',      'select_typeC',
-    'studentManagement', 'todayClass',
-    'volume',            'warning',
-    'lbt1',               'lbt2',
-    'lbt3',               'lbt4',
-    'lbt5',               'clip'
+const arr =[
+    'apple',             'arrowA',       'attendence',
+    'calendar',          'clip',         'close',
+    'download',          'downloadB',    'evaluation',
+    'fast',              'file',         'hamburger',
+    'info',              'lbt1',         'lbt2',
+    'lbt3',              'lbt4',         'lbt5',
+    'lnbDetail',         'logout',       'menu_btn(close)',
+    'more',              'notification', 'pencil',
+    'play',              'plus',         'plusLearning',
+    'point',             'print',        'reload',
+    'remove',            'search',       'selct_typeC',
+    'select_typeA',      'select_typeB', 'select_typeC',
+    'studentManagement', 'todayClass',   'volume',
+    'warning'
   ];
 
 function IconPage() {

@@ -1,13 +1,13 @@
 // yeonju
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, { useEffect, useState, useRef, useCallback, useMemo } from 'react';
 import ajax from "../../ajax";
 import SelectBase from "../../components/ui/select/SelectBase";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { getByteSize } from "../../methods/methods";
-import { useMemo } from 'react';
-
-
+import CheckBox from '../../components/Checkbox'
+import Icon from '../../components/Icon';
+import CustomDatePicker from '../../components/CustomDatePicker';
 // const 시간 = Array.from({length: 24}, (v,i) => `${i}시`);
 
 const 시간 = [];
@@ -52,7 +52,7 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
     let [dateInput , setDateInput] = useState('');
     let [regexDate, setRegexDate] = useState('');
     let [selectDisabled, setSelectDisabled]  = useState(true);
-
+    let [date,setDate] = useState(new Date());
         // 반학생 리스트
     useEffect(()=>{
     
@@ -266,12 +266,15 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
     }
 return (
         <div className="modal">
-            <div className='modal-content'>
-                <div className="modal-header">
-                    <div className="tit">
-                            <strong>[학습 알림]메시지 보내기</strong>
-                    </div>
-                    <button className='closeBtn' onClick={()=>setWriteModal(false)}>x</button>
+            <div className='modal-content writeMessageModal'>
+                <div className="modal-header fj">
+                      <h2 className="modal-title">[학습 알림]메시지 보내기</h2>
+                    <button className="btn" onClick={(e) => {
+                        e.stopPropagation();
+                        setWriteModal(false)
+                    }}>
+                        <Icon icon={"close"} />
+                    </button>
                 </div>
                 <div className="modal-body">
                     <div className="left">
@@ -282,73 +285,70 @@ return (
                         defaultValue='반 선택'
                         width={'150px'}
                         /> */}
-                       <div className="left-check">
-                        <div className="check-wrap">
-                            <input 
-                            type="checkbox" 
-                            name="" 
-                            className='checkAll' 
-                            id='checkAll' 
-                            onChange={(e)=>allCheckState(e.target.checked)}
-                            checked={stuList ? stuList.length === checkState.length : false}
-                            />
-                            <label htmlFor='checkAll' className='checkAll pl-20'>전체선택</label>
-                        </div> 
-
-                        {
-                            stuList && stuList.map(list=>{
-                                return(
-                                    <div className="check-wrap" key={list.usr_seq}>
-                                        <input 
-                                        type="checkbox" 
-                                        id={list.usr_seq}
-                                        onChange={(e)=>changeCheckState(e.target.checked,list)}
-                                        checked={checkState.includes(list.usr_name)}
+                        <table className='table tableB'>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <CheckBox 
+                                            id={'all'}
+                                            onChange={(e)=>allCheckState(e.target.checked)}
+                                            checked={ stuList?.length === checkState.length}
                                         />
-                                    <label htmlFor={list.usr_seq}>{list.usr_name}</label>
-                                    </div>
-                                )
-                            })
-                        }
-
-                       </div>
+                                        <label htmlFor='all'>전체선택</label>
+                                    </th>
+                                    <th>이름</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    stuList && stuList.map(list=>{
+                                        return(
+                                            <tr className="check-wrap" key={list.usr_seq}>
+                                                <CheckBox 
+                                                    id={list.usr_seq}
+                                                    onChange={(e)=>changeCheckState(e.target.checked,list)}
+                                                    checked={checkState.includes(list.usr_name)}
+                                                />
+                                                <label htmlFor={list.usr_seq}>{list.usr_name}</label>
+                                            </tr>
+                                        )
+                                    })
+                                }
+                            </tbody>
+                        </table>
                     </div>
                     <div className="right">
+                        <div>
+                            <span>받는 사람 ({(checkState && checkState.length > 0 ) && checkState.length})</span>
+                            <input type='text' className='textInput' value={to} readOnly/>
+                            <Icon icon={"lbt1"} />
+                        </div>
+                        <div>
+                            <span>제목</span>
+                            <input type='text' className='textInput' placeholder='제목을 입력하세요.' onChange={(e)=>setWriteTit(e.target.value)}/>
+                        </div>
+                        <div>
+                            <span>내용</span>
+                            <CKEditor
+                                editor={ClassicEditor}
+                                config={{placeholder: "내용을 입력하세요."}} 
+                                data=""
+                                onReady={(editor) => {
+                                    // You can store the "editor" and use when it is needed.
+                                    // console.log("Editor is ready to use!", editor);
+                                }}
+                                onChange={(event, editor) => editorCon(event,editor)}
+                                onBlur={(event, editor) => {
+                                    // console.log("Blur.", editor);
+                                }}
+                                onFocus={(event, editor) => {
+                                    // console.log("Focus.", editor);
+                                }}
+                            />
+                        </div>
                         <table>
                             <tbody>
-                                <tr>
-                                    <th>받는 사람{(checkState && checkState.length > 0 ) && checkState.length}</th>
-                                    <td>{to}</td>
-                                </tr>
-                                <tr>
-                                    <th>제목</th>
-                                    <td className='title'>
-                                        <input type="text" placeholder='제목을 입력하세요' onChange={(e)=>setWriteTit(e.target.value)}/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>내용</th>
-                                    <td>
-                                    <div className='editor' style={{ width:'542px' }}>
-                                    <CKEditor
-                                        editor={ClassicEditor}
-                                        config={{placeholder: "내용을 입력하세요."}} 
-                                        data=""
-                                        onReady={(editor) => {
-                                            // You can store the "editor" and use when it is needed.
-                                            // console.log("Editor is ready to use!", editor);
-                                        }}
-                                        onChange={(event, editor) => editorCon(event,editor)}
-                                        onBlur={(event, editor) => {
-                                            // console.log("Blur.", editor);
-                                        }}
-                                        onFocus={(event, editor) => {
-                                            // console.log("Focus.", editor);
-                                        }}
-                                    />
-                                     </div>
-                                    </td>
-                                </tr>
+                               
                                 <tr>
                                     <th>첨부파일</th>
                                     <td className="fileArea fj">
@@ -411,45 +411,46 @@ return (
                 </div>
                 <div className="modal-footer">
                     <div className='reserveWrap fj'>
-                        <input 
-                        type="tel" 
-                        className='form-control'
-                        placeholder='00-00-00' 
-                        maxLength={8}
-                        value={regexDate}
-                        onChange={(e)=>{
-                            setDateInput(e.target.value);
+                    <button className='btn-grey mr-4' onClick={()=>{
+                        setWriteModal(false);
+                        setViewModal && setViewModal(false);
+                    }}>취소</button>
+                    <button className={ `btn-orange mr-4 ${rCheck ? 'disabled' : ''}` } onClick={submitForm}>발송하기</button>
+                    <button className={ `btn-brown mr-4 ${rCheck ? '' : 'disabled'}` } onClick={submitForm}>예약 발송</button>
+                        <CheckBox 
+                        color={'orange'} 
+                        onChange={(e)=>rCheckFunc(e.target.checked)}
+                        className={'mr-20'} 
+                        />
+                          <CustomDatePicker
+                        value={date}
+                        onChange={(day) => {
+                            setDate(day);
                         }}
-                        style={{ width:'100px' }}
-                        disabled={selectDisabled}
+                        minDate={new Date()}
+                        label={true}
+                        className={'mr-4'}
                         />
                         <SelectBase 
                         onChange={(ele)=>setHour(ele)}
                         options={시간}
                         value={hour}
                         defaultValue='0시'
-                        width={'150px'}
+                        width={'90px'}
                         disabled={selectDisabled}
+                        className={'mr-4'}
                         />
                         <SelectBase 
                         onChange={(ele)=>setMinute(ele)}
                         options={분}
                         value={minute}
                         defaultValue='00분'
-                        width={'150px'}
+                        width={'90px'}
                         disabled={selectDisabled}
                         />
-                        <input 
-                        className='rCheck' 
-                        type="checkbox" 
-                        onChange={(e)=>rCheckFunc(e.target.checked)}/>
+                        
                     </div>
-                    <button className={ rCheck ? 'btn' : 'btn disabled'} onClick={submitForm}>예약 발송</button>
-                    <button className={rCheck ? 'btn disabled' : 'btn'} onClick={submitForm}>발송하기</button>
-                    <button className='btn' onClick={()=>{
-                        setWriteModal(false);
-                        setViewModal && setViewModal(false);
-                    }}>취소</button>
+                  
                 </div>
 
             </div>
