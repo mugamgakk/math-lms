@@ -288,28 +288,30 @@ return (
                         <table className='table tableB'>
                             <thead>
                                 <tr>
-                                    <th>
+                                    <th style={{ width: '50px' }}>
                                         <CheckBox 
-                                            id={'all'}
                                             onChange={(e)=>allCheckState(e.target.checked)}
                                             checked={ stuList?.length === checkState.length}
                                         />
-                                        <label htmlFor='all'>전체선택</label>
                                     </th>
-                                    <th>이름</th>
+                                    <th style={{ width: '150px' }}>이름</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody className='scroll'>
                                 {
                                     stuList && stuList.map(list=>{
                                         return(
                                             <tr className="check-wrap" key={list.usr_seq}>
+                                                <td style={{ width: '40px' }}>
                                                 <CheckBox 
                                                     id={list.usr_seq}
                                                     onChange={(e)=>changeCheckState(e.target.checked,list)}
                                                     checked={checkState.includes(list.usr_name)}
-                                                />
-                                                <label htmlFor={list.usr_seq}>{list.usr_name}</label>
+                                                    />
+                                                </td>
+                                                <td style={{ width: 'calc(100% - 40px)' }}>
+                                                    <label htmlFor={list.usr_seq}>{list.usr_name}</label>
+                                                </td>
                                             </tr>
                                         )
                                     })
@@ -321,7 +323,6 @@ return (
                         <div>
                             <span>받는 사람 ({(checkState && checkState.length > 0 ) && checkState.length})</span>
                             <input type='text' className='textInput' value={to} readOnly/>
-                            <Icon icon={"lbt1"} />
                         </div>
                         <div>
                             <span>제목</span>
