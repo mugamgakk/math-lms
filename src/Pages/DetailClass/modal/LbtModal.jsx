@@ -341,6 +341,13 @@ function LbtModal({ setCreateModal }) {
                                                                 <div className="red">맞춤 클리닉 향상</div>
                                                             </div>
                                                             <table className="lbt-table lbt-table1" style={{ marginBottom: "20px" }}>
+                                                                <colgroup>
+                                                                    <col style={{width : "100px"}} />
+                                                                    <col style={{width : "auto"}} />
+                                                                    <col style={{width : "150px"}} />
+                                                                    <col style={{width : "70px"}} />
+                                                                    <col style={{width : "70px"}} />
+                                                                </colgroup>
                                                                 <thead>
                                                                     <tr>
                                                                         <th colSpan={3}>단원별 정답률 및 향상도</th>
@@ -363,8 +370,7 @@ function LbtModal({ setCreateModal }) {
                                                                             삼각형의 두 변의 중점을 연결한 선 분의 성질<br />
                                                                             평행선과 선분의 길이의 비<br />
                                                                             삼각형의 무게 중심<br />
-                                                                            닮음의 활용<br />
-                                                                            단원 마무리
+                                                                            닮음의 활용
                                                                         </td>
                                                                         <td style={{ padding: "0" }}>
                                                                             <div className="bg-area-wrap">
