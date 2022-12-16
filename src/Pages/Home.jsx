@@ -75,7 +75,7 @@ function Home() {
             }else{
                 removeCookie("gplumLMSlogin");
                 alert("로그인이 만료되었습니다.");
-                navigate("/login");
+                window.location = "/login";
             }
         });
     }, [location.pathname]);
