@@ -252,7 +252,7 @@ const Tr = ({data,studyDone,ucode,retry,setCheckList,wrongPopList}) => {
                                     <Icon icon={"print"} style={{color:'#666',marginRight:'6px'}}/>
                                     인쇄</button>
                                     {
-                                        printMo && <PrintModal_clinic closeModal={setPrintMo}/>
+                                        printMo && <PrintModal_clinic closeModal={setPrintMo} title="맞춤 클리닉" />
                                     }
                                 <button className="btn-orange wh-103">재응시({data.state5.retry})</button>
                             </div>

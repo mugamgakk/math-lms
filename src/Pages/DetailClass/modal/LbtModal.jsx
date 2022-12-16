@@ -12,12 +12,17 @@ function LbtModal({ setCreateModal }) {
     const checkedList = useLbtStore((state) => state.checkedList);
     const allCheckfnL = useLbtStore((state) => state.allCheckfnL);
 
+    // ui
     let [viewItem, setViewItem] = useState(null);
+    let [lbtData, setLbtData] = useState(null);
 
+    // 그래프
     let canvas1 = useRef();
     let canvas2 = useRef();
 
     const getRegult = async () => {
+
+
         const data = {
             mode: "get_analytics_tot",
             avg: 1, //평균표시
@@ -42,7 +47,8 @@ function LbtModal({ setCreateModal }) {
 
         let res = await ajax("/class_result.php", { data });
 
-        // console.log(res);
+        console.log(res.data);
+        setLbtData(res.data);
 
         setViewItem(checkedList)
     };
@@ -203,7 +209,7 @@ function LbtModal({ setCreateModal }) {
 
     useEffect(() => {
         getRegult();
-    }, []);
+    }, [checkedList]);
 
     useEffect(() => {
         // 행동 영역 분석 그래프
@@ -311,19 +317,19 @@ function LbtModal({ setCreateModal }) {
                                                                 <tbody>
                                                                     <tr>
                                                                         <th>교재 학습 문항 수</th>
-                                                                        <td>540 문항</td>
+                                                                        <td>{lbtData?.lec_stat.unit_tot} 문항</td>
                                                                         <th>맞힌 문항 수</th>
-                                                                        <td>478 문항</td>
+                                                                        <td>{lbtData?.lec_stat.unit_crt} 문항</td>
                                                                         <th>정답률</th>
-                                                                        <td>88.5%</td>
+                                                                        <td>{lbtData?.lec_stat.unit_per}%</td>
                                                                     </tr>
                                                                     <tr>
                                                                         <th>클리닉 학습 문항 수</th>
-                                                                        <td>540 문항</td>
+                                                                        <td>{lbtData?.lec_stat.clinic_tot} 문항</td>
                                                                         <th>맞힌 문항 수</th>
-                                                                        <td>478 문항</td>
+                                                                        <td>{lbtData?.lec_stat.clinic_crt} 문항</td>
                                                                         <th>정답률</th>
-                                                                        <td>88.5%</td>
+                                                                        <td>{lbtData?.lec_stat.clinic_per}%</td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
@@ -341,11 +347,11 @@ function LbtModal({ setCreateModal }) {
                                                             </div>
                                                             <table className="lbt-table lbt-table1" style={{ marginBottom: "20px" }}>
                                                                 <colgroup>
-                                                                    <col style={{width : "100px"}} />
-                                                                    <col style={{width : "auto"}} />
-                                                                    <col style={{width : "150px"}} />
-                                                                    <col style={{width : "70px"}} />
-                                                                    <col style={{width : "70px"}} />
+                                                                    <col style={{ width: "100px" }} />
+                                                                    <col style={{ width: "auto" }} />
+                                                                    <col style={{ width: "150px" }} />
+                                                                    <col style={{ width: "70px" }} />
+                                                                    <col style={{ width: "70px" }} />
                                                                 </colgroup>
                                                                 <thead>
                                                                     <tr>
@@ -361,71 +367,77 @@ function LbtModal({ setCreateModal }) {
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <tr>
-                                                                        <td>Ⅰ. 도형의 성질</td>
-                                                                        <td className="text-right">
-                                                                            닮은 도형<br />
-                                                                            삼각형과 평행선<br />
-                                                                            삼각형의 두 변의 중점을 연결한 선 분의 성질<br />
-                                                                            평행선과 선분의 길이의 비<br />
-                                                                            삼각형의 무게 중심<br />
-                                                                            닮음의 활용
-                                                                        </td>
-                                                                        <td style={{ padding: "0" }}>
-                                                                            <div className="bg-area-wrap">
-                                                                                <span className="bg-area"></span>
-                                                                                <span className="bg-area"></span>
-                                                                                <span className="bg-area"></span>
-                                                                                <span className="bg-area"></span>
-                                                                                <span className="bg-area"></span>
+                                                                    {
+                                                                        lbtData?.lec_assa.map((a,index) => {
+                                                                            return (
+                                                                                <tr key={index}>
+                                                                                    <td>{a.unit1}</td>
+                                                                                    <td className="text-right">
+                                                                                        {
+                                                                                            a.unit2.map((s,i)=>{
+                                                                                                return  <div key={i}> {s.title}</div>
+                                                                                            })
+                                                                                        }
+                                                                                    </td>
+                                                                                    <td style={{ padding: "0" }}>
+                                                                                        <div className="bg-area-wrap">
+                                                                                            <span className="bg-area"></span>
+                                                                                            <span className="bg-area"></span>
+                                                                                            <span className="bg-area"></span>
+                                                                                            <span className="bg-area"></span>
+                                                                                            <span className="bg-area"></span>
 
-                                                                                <div className="area-list">
-                                                                                    <div className="area-list-item" style={{ width: "80%" }}></div>
-                                                                                    <div className="area-list-item" style={{ width: "70%" }}></div>
-                                                                                    <div className="area-list-item" style={{ width: "90%" }}></div>
-                                                                                </div>
-                                                                                <div className="area-list">
-                                                                                    <div className="area-list-item" style={{ width: "80%" }}></div>
-                                                                                    <div className="area-list-item" style={{ width: "70%" }}></div>
-                                                                                    <div className="area-list-item" style={{ width: "90%" }}></div>
-                                                                                </div>
-                                                                                <div className="area-list">
-                                                                                    <div className="area-list-item" style={{ width: "80%" }}></div>
-                                                                                    <div className="area-list-item" style={{ width: "70%" }}></div>
-                                                                                    <div className="area-list-item" style={{ width: "90%" }}></div>
-                                                                                </div>
-                                                                                <div className="area-list">
-                                                                                    <div className="area-list-item" style={{ width: "80%" }}></div>
-                                                                                    <div className="area-list-item" style={{ width: "70%" }}></div>
-                                                                                    <div className="area-list-item" style={{ width: "90%" }}></div>
-                                                                                </div>
-                                                                                <div className="area-list">
-                                                                                    <div className="area-list-item" style={{ width: "80%" }}></div>
-                                                                                    <div className="area-list-item" style={{ width: "70%" }}></div>
-                                                                                    <div className="area-list-item" style={{ width: "90%" }}></div>
-                                                                                </div>
-                                                                                <div className="area-list">
-                                                                                    <div className="area-list-item" style={{ width: "80%" }}></div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </td>
-                                                                        <td>
-                                                                            8점<br />
-                                                                            8점<br />
-                                                                            8점<br />
-                                                                            8점<br />
-                                                                            10점<br />
-                                                                            -
-                                                                        </td>
-                                                                        <td>
-                                                                            8점<br />
-                                                                            8점<br />
-                                                                            8점<br />
-                                                                            8점<br />
-                                                                            10점<br />
-                                                                            -
-                                                                        </td>
-                                                                    </tr>
+                                                                                            <div className="area-list">
+                                                                                                <div className="area-list-item" style={{ width: "80%" }}></div>
+                                                                                                <div className="area-list-item" style={{ width: "70%" }}></div>
+                                                                                                <div className="area-list-item" style={{ width: "90%" }}></div>
+                                                                                            </div>
+                                                                                            <div className="area-list">
+                                                                                                <div className="area-list-item" style={{ width: "80%" }}></div>
+                                                                                                <div className="area-list-item" style={{ width: "70%" }}></div>
+                                                                                                <div className="area-list-item" style={{ width: "90%" }}></div>
+                                                                                            </div>
+                                                                                            <div className="area-list">
+                                                                                                <div className="area-list-item" style={{ width: "80%" }}></div>
+                                                                                                <div className="area-list-item" style={{ width: "70%" }}></div>
+                                                                                                <div className="area-list-item" style={{ width: "90%" }}></div>
+                                                                                            </div>
+                                                                                            <div className="area-list">
+                                                                                                <div className="area-list-item" style={{ width: "80%" }}></div>
+                                                                                                <div className="area-list-item" style={{ width: "70%" }}></div>
+                                                                                                <div className="area-list-item" style={{ width: "90%" }}></div>
+                                                                                            </div>
+                                                                                            <div className="area-list">
+                                                                                                <div className="area-list-item" style={{ width: "80%" }}></div>
+                                                                                                <div className="area-list-item" style={{ width: "70%" }}></div>
+                                                                                                <div className="area-list-item" style={{ width: "90%" }}></div>
+                                                                                            </div>
+                                                                                            <div className="area-list">
+                                                                                                <div className="area-list-item" style={{ width: "80%" }}></div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        8점<br />
+                                                                                        8점<br />
+                                                                                        8점<br />
+                                                                                        8점<br />
+                                                                                        10점<br />
+                                                                                        -
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        8점<br />
+                                                                                        8점<br />
+                                                                                        8점<br />
+                                                                                        8점<br />
+                                                                                        10점<br />
+                                                                                        -
+                                                                                    </td>
+                                                                                </tr>
+                                                                            )
+                                                                        })
+                                                                    }
+
                                                                     <tr>
                                                                         <td>Ⅱ. 도형의 닮음</td>
                                                                         <td className="text-right">
@@ -636,7 +648,7 @@ function LbtModal({ setCreateModal }) {
                                             <section className="lbt-content" style={{ marginBottom: "20px" }}>
                                                 <h4 className="lbt-content-title fa fj">
                                                     <span>
-                                                    <Icon icon={"lbt2"} />{viewItem[1].option}
+                                                        <Icon icon={"lbt2"} />{viewItem[1].option}
                                                     </span>
                                                     <p className="lbt-text">*  플러스 학습은 패럴랙스 수학 학원 선생님을 통해서만 학습이 가능합니다.</p>
                                                 </h4>
@@ -1042,7 +1054,7 @@ function LbtModal({ setCreateModal }) {
                                 {
                                     viewItem && viewItem[4].optionItem.some(a => a.label === "선생님의견") && (
 
-                                        <section className="lbt-content" style={{marginBottom : "20px"}}>
+                                        <section className="lbt-content" style={{ marginBottom: "20px" }}>
                                             <h4 className="lbt-content-title"><Icon icon={"lbt6"} />선생님 의견</h4>
                                             <div className="opinion-box">
                                                 <p>

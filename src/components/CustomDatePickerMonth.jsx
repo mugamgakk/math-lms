@@ -47,7 +47,7 @@ function CustomDatePickerMonth({
         onChange && onChange(선택날짜);
     };
 
-    
+
     // 현재 날짜 선택
     const isSameDate = (month) => {
 
@@ -59,9 +59,9 @@ function CustomDatePickerMonth({
 
         const 달력달 = dayjs(선택날짜).format("YYYYMM");
 
-        if(값날짜 === 달력달){
+        if (값날짜 === 달력달) {
             return true
-        }else{
+        } else {
             return false
         }
 
@@ -77,15 +77,15 @@ function CustomDatePickerMonth({
 
         let 선택날짜 = new Date(aliasDate.setMonth(month - 1));
 
-            let a = dayjs(선택날짜).format("YYYYMM")
-            let b = dayjs(maxDate).format("YYYYMM")
+        let a = dayjs(선택날짜).format("YYYYMM")
+        let b = dayjs(maxDate).format("YYYYMM")
 
-            if(a === b){
-                return false
-            }
+        if (a === b) {
+            return false
+        }
 
-            return a < b;
-    },[dateValue]);
+        return a < b;
+    }, [dateValue]);
 
     // 최대날짜
     const maxDateFn = useCallback(
@@ -101,7 +101,7 @@ function CustomDatePickerMonth({
             let a = dayjs(선택날짜).format("YYYYMM")
             let b = dayjs(maxDate).format("YYYYMM")
 
-            if(a === b){
+            if (a === b) {
                 return false
             }
 
@@ -110,9 +110,9 @@ function CustomDatePickerMonth({
         [dateValue]
     );
 
-    useEffect(()=>{
+    useEffect(() => {
         setDateValue(value)
-    },[value])
+    }, [value])
 
     return (
         <button
@@ -130,7 +130,7 @@ function CustomDatePickerMonth({
             </span>
             {open && (
                 <div className={`CustomDatePicker ${className}`} style={style}>
-                    <div className="CustomDatePicker-header" style={{marginBottom : "20px"}}>
+                    <div className="CustomDatePicker-header" style={{ marginBottom: "20px" }}>
                         <div
                             onClick={() => {
                                 dateChange(-1);
@@ -159,13 +159,12 @@ function CustomDatePickerMonth({
                             {month.map((a, i) => {
                                 return (
                                     <div
-                                        className={`month-item ${
-                                            isSameDate(a) ? "current-month" : ""
-                                        } ${minDateFn(a) ? "disabled" : ""} ${
-                                            maxDateFn(a) ? "disabled" : ""
-                                        }`}
+                                        className={`month-item ${isSameDate(a) ? "current-month" : ""
+                                            } ${minDateFn(a) ? "disabled" : ""} ${maxDateFn(a) ? "disabled" : ""
+                                            }`}
                                         onClick={(e) => {
                                             choiceMonth(e, a);
+                                            setOpen(false);
                                         }}
                                         key={i}
                                     >

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import AssessmentModal from "./AssessmentModal";
 import AttModal from "./AttModal";
-import PrintModal from "../../components/PrintModal";
+import PrintModal_clinic from "../../components/PrintModal_clinic";
 import Icon from "../../components/Icon";
 import { toggleBodyScroll } from "../../methods/methods";
 function TodayClassTr({ data }) {
@@ -107,7 +107,7 @@ function TodayClassTr({ data }) {
                 {attModal ? <AttModal setAttModal={setAttModal} /> : null}
                 {assModal ? <AssessmentModal closeModal={setAssModal} /> : null}
                 {printModal ? (
-                    <PrintModal
+                    <PrintModal_clinic
                         title="맞춤 클리닉"
                         closeModal={closeModal}
                         cls_seq={data.cls_seq}

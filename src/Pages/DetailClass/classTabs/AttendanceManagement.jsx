@@ -208,6 +208,7 @@ function AttendanceManagement() {
                                     changeData={changeData}
                                     setModal={setModal}
                                     setClickDay={setClickDay}
+                                    currentMonth={ dayjs(month).format("YYYYMMDD")}
                                 />
                             );
                         })}

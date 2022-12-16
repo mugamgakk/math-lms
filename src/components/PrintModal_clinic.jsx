@@ -7,6 +7,8 @@ import { falseModal, _cloneDeep } from "../methods/methods";
 import { useEffect } from "react";
 import ajax from "../ajax";
 import { getProblemHeight, 풀이보기높이구하기, 분할하기 } from "./problem-print";
+import clinicprint from "../assets/img/clinicprint.png"
+
 
 function PrintModal({ closeModal, title = "제목임", cls_seq }) {
     const printComponent = React.useRef();
@@ -44,7 +46,7 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
 
         let res = await ajax(url, { data: query });
 
-        let 문제보기 = await getProblemHeight(_cloneDeep(res.data), 250);
+        let 문제보기 = await getProblemHeight(_cloneDeep(res.data), 180);
         let 풀이보기 = await 풀이보기높이구하기(_cloneDeep(res.data), 150);
 
         let 문제보기결과 = 분할하기(문제보기);
@@ -65,8 +67,8 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
     }, []);
 
     return (
-        <div className="modal">
-            <div className="modal-content printModal printModalClinic">
+        <div className="modal print-modal">
+            <div className="modal-content">
                 <div className="modal-header fj">
                     <h2 className="modal-title">{title}</h2>
                     <button className="btn" onClick={() => closeModal(false)}>
@@ -82,22 +84,20 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
                             <li>번호, 주제</li>
                         </ul>
                     </div>
-                    <div style={{ padding: "20px" }}>
+                    <div style={{ padding: "20px", height: "calc(100% - 50px)" }}>
                         <div className="fj" style={{ marginBottom: "10px" }}>
                             <div>
                                 <button
-                                    className={`${
-                                        viewState === "question" ? "btn-brown" : "btn-grey"
-                                    }`}
+                                    className={`${viewState === "question" ? "btn-brown" : "btn-grey"
+                                        }`}
                                     onClick={() => setViewState("question")}
                                     style={{ minWidth: "100px", marginRight: "4px" }}
                                 >
                                     문제 보기
                                 </button>
                                 <button
-                                    className={`${
-                                        viewState === "solution" ? "btn-brown" : "btn-grey"
-                                    }`}
+                                    className={`${viewState === "solution" ? "btn-brown" : "btn-grey"
+                                        }`}
                                     onClick={() => setViewState("solution")}
                                     style={{ minWidth: "100px" }}
                                 >
@@ -141,181 +141,197 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
                         {/* view */}
                         <div
                             className="print-aria"
-                            style={{ maxHeight: "500px", overflow: "auto" }}
+                            style={{ height: "calc(100% - 50px)", overflow: "auto" }}
                         >
                             {viewState === "question" && (
                                 <div className="print-aria-body">
-                                    {lists?.[page - 1][0].map((a, i) => {
-                                        return (
-                                            <article
-                                                className="problem"
-                                                key={i}
-                                                style={{ height: a.height }}
-                                            >
-                                                <div className="problem-header">
-                                                    <h4>
-                                                        <div className="num">
-                                                            {parseInt(a.qseq) < 10
-                                                                ? "0" + a.qseq
-                                                                : a.qseq}
+                                    <div className="print-aria-header">
+                                        <img src={clinicprint} alt="" />
+                                    </div>
+                                    <div className="d-flex">
+                                        <div className="print-aria-left">
+                                            {lists?.[page - 1][0].map((a, i) => {
+                                                return (
+                                                    <article
+                                                        className="problem"
+                                                        key={i}
+                                                        style={{ height: a.height }}
+                                                    >
+                                                        <div className="problem-header">
+                                                            <h4>
+                                                                <div className="num">
+                                                                    {parseInt(a.qseq) < 10
+                                                                        ? "0" + a.qseq
+                                                                        : a.qseq}
+                                                                </div>
+                                                                <strong>{a.qa_keyword}</strong>
+                                                            </h4>
                                                         </div>
-                                                        <strong>{a.qa_keyword}</strong>
-                                                    </h4>
-                                                </div>
-                                                <div className="problem-body">
-                                                    <img
-                                                        src={a.qa_path}
-                                                        alt=""
-                                                        style={{
-                                                            height: a.문제높이,
-                                                        }}
-                                                    />
-                                                    {["①", "②", "③", "④", "⑤"].map((dd, i) => {
-                                                        return (
-                                                            <div className="item" key={i}>
-                                                                <span
-                                                                    style={{
-                                                                        marginRight: "15px",
-                                                                    }}
-                                                                >
-                                                                    {dd}
-                                                                </span>{" "}
-                                                                <img
-                                                                    style={{
-                                                                        height: a[
-                                                                            `선지높이${i + 1}`
-                                                                        ],
-                                                                    }}
-                                                                    key={i}
-                                                                    src={`https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${
-                                                                        a.qa_code
-                                                                    }_${i + 1}.png`}
-                                                                    alt=""
-                                                                />
-                                                            </div>
-                                                        );
-                                                    })}
-                                                </div>
-                                            </article>
-                                        );
-                                    })}
-                                    {lists?.[page - 1][1].map((a, i) => {
-                                        return (
-                                            <article
-                                                className="problem"
-                                                key={i}
-                                                style={{ height: a.height }}
-                                            >
-                                                <div className="problem-header">
-                                                    <h4>
-                                                        <div className="num">
-                                                            {parseInt(a.qseq) < 10
-                                                                ? "0" + a.qseq
-                                                                : a.qseq}
+                                                        <div className="problem-body">
+                                                            <img
+                                                                src={a.qa_path}
+                                                                alt=""
+                                                                style={{
+                                                                    height: a.문제높이,
+                                                                }}
+                                                            />
+                                                            {["①", "②", "③", "④", "⑤"].map((dd, i) => {
+                                                                return (
+                                                                    <div className="item" key={i}>
+                                                                        <span
+                                                                            style={{
+                                                                                marginRight: "15px",
+                                                                            }}
+                                                                        >
+                                                                            {dd}
+                                                                        </span>{" "}
+                                                                        <img
+                                                                            style={{
+                                                                                height: a[
+                                                                                    `선지높이${i + 1}`
+                                                                                ],
+                                                                            }}
+                                                                            key={i}
+                                                                            src={`https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${a.qa_code
+                                                                                }_${i + 1}.png`}
+                                                                            alt=""
+                                                                        />
+                                                                    </div>
+                                                                );
+                                                            })}
                                                         </div>
-                                                        <strong>{a.qa_keyword}</strong>
-                                                    </h4>
-                                                </div>
-                                                <div className="problem-body">
-                                                    <img
-                                                        src={a.qa_path}
-                                                        alt=""
-                                                        style={{
-                                                            height: a.문제높이,
-                                                        }}
-                                                    />
-                                                    {["①", "②", "③", "④", "⑤"].map((dd, i) => {
-                                                        return (
-                                                            <div className="item" key={i}>
-                                                                <span
-                                                                    style={{
-                                                                        marginRight: "15px",
-                                                                    }}
-                                                                >
-                                                                    {dd}
-                                                                </span>{" "}
-                                                                <img
-                                                                    style={{
-                                                                        height: a[
-                                                                            `선지높이${i + 1}`
-                                                                        ],
-                                                                    }}
-                                                                    key={i}
-                                                                    src={`https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${
-                                                                        a.qa_code
-                                                                    }_${i + 1}.png`}
-                                                                    alt=""
-                                                                />
-                                                            </div>
-                                                        );
-                                                    })}
-                                                </div>
-                                            </article>
-                                        );
-                                    })}
+                                                    </article>
+                                                );
+                                            })}
+                                        </div>
+                                        <div className="print-aria-right">
+                                            {lists?.[page - 1][1].map((a, i) => {
+                                                return (
+                                                    <article
+                                                        className="problem"
+                                                        key={i}
+                                                        style={{ height: a.height }}
+                                                    >
+                                                        <div className="problem-header">
+                                                            <h4>
+                                                                <div className="num">
+                                                                    {parseInt(a.qseq) < 10
+                                                                        ? "0" + a.qseq
+                                                                        : a.qseq}
+                                                                </div>
+                                                                <strong>{a.qa_keyword}</strong>
+                                                            </h4>
+                                                        </div>
+                                                        <div className="problem-body">
+                                                            <img
+                                                                src={a.qa_path}
+                                                                alt=""
+                                                                style={{
+                                                                    height: a.문제높이,
+                                                                }}
+                                                            />
+                                                            {["①", "②", "③", "④", "⑤"].map((dd, i) => {
+                                                                return (
+                                                                    <div className="item" key={i}>
+                                                                        <span
+                                                                            style={{
+                                                                                marginRight: "15px",
+                                                                            }}
+                                                                        >
+                                                                            {dd}
+                                                                        </span>{" "}
+                                                                        <img
+                                                                            style={{
+                                                                                height: a[
+                                                                                    `선지높이${i + 1}`
+                                                                                ],
+                                                                            }}
+                                                                            key={i}
+                                                                            src={`https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${a.qa_code
+                                                                                }_${i + 1}.png`}
+                                                                            alt=""
+                                                                        />
+                                                                    </div>
+                                                                );
+                                                            })}
+                                                        </div>
+                                                    </article>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
                                 </div>
                             )}
                             {/* 풀이보기 */}
                             {viewState === "solution" && (
                                 <div className="print-aria-body">
-                                    {solveList?.[page - 1][0].map((a, i) => {
-                                        return (
-                                            <article
-                                                className="problem"
-                                                key={i}
-                                                style={{ height: a.height }}
-                                            >
-                                                <div className="problem-header">
-                                                    <h4>
-                                                        <div className="num">
-                                                            {parseInt(a.qseq) < 10
-                                                                ? "0" + a.qseq
-                                                                : a.qseq}
+                                    <div className="print-aria-header">
+                                        <img src={clinicprint} alt="" />
+                                    </div>
+                                    <div className="d-flex">
+                                        <div className="print-aria-left">
+                                            {solveList?.[page - 1][0].map((a, i) => {
+                                                return (
+                                                    <article
+                                                        className="problem"
+                                                        key={i}
+                                                        style={{ height: a.height }}
+                                                    >
+                                                        <div className="problem-header">
+                                                            <h4>
+                                                                <div className="num">
+                                                                    {parseInt(a.qseq) < 10
+                                                                        ? "0" + a.qseq
+                                                                        : a.qseq}
+                                                                </div>
+                                                                <strong>{a.qa_keyword}</strong>
+                                                            </h4>
                                                         </div>
-                                                        <strong>{a.qa_keyword}</strong>
-                                                    </h4>
-                                                </div>
-                                                <div className="problem-body">
-                                                    <img
-                                                        src={a.qa_path}
-                                                        alt=""
-                                                        style={{
-                                                            height: a.문제높이,
-                                                        }}
-                                                    />
-                                                </div>
-                                            </article>
-                                        );
-                                    })}
-                                    {solveList?.[page - 1][1].map((a, i) => {
-                                        return (
-                                            <article
-                                                className="problem"
-                                                key={i}
-                                                style={{ height: a.height }}
-                                            >
-                                                <div className="problem-header">
-                                                    <h4>
-                                                        <div className="num">
-                                                            {parseInt(a.qseq) < 10
-                                                                ? "0" + a.qseq
-                                                                : a.qseq}
+                                                        <div className="problem-body">
+                                                            <img
+                                                                src={a.qa_path}
+                                                                alt=""
+                                                                style={{
+                                                                    height: a.문제높이,
+                                                                }}
+                                                            />
                                                         </div>
-                                                        <strong>{a.qa_keyword}</strong>
-                                                    </h4>
-                                                </div>
-                                                <div className="problem-body">
-                                                    <img
-                                                        src={a.qa_path}
-                                                        alt=""
-                                                        style={{
-                                                            height: a.문제높이,
-                                                        }}
-                                                    />
-                                                </div>
-                                            </article>
-                                        );
-                                    })}
+                                                    </article>
+                                                );
+                                            })}
+                                        </div>
+                                        <div className="print-aria-right">
+                                            {solveList?.[page - 1][1].map((a, i) => {
+                                                return (
+                                                    <article
+                                                        className="problem"
+                                                        key={i}
+                                                        style={{ height: a.height }}
+                                                    >
+                                                        <div className="problem-header">
+                                                            <h4>
+                                                                <div className="num">
+                                                                    {parseInt(a.qseq) < 10
+                                                                        ? "0" + a.qseq
+                                                                        : a.qseq}
+                                                                </div>
+                                                                <strong>{a.qa_keyword}</strong>
+                                                            </h4>
+                                                        </div>
+                                                        <div className="problem-body">
+                                                            <img
+                                                                src={a.qa_path}
+                                                                alt=""
+                                                                style={{
+                                                                    height: a.문제높이,
+                                                                }}
+                                                            />
+                                                        </div>
+                                                    </article>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
                                 </div>
                             )}
                         </div>
@@ -324,172 +340,170 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
                         <div>
                             <div className="d-none">
                                 <div ref={printComponent}>
+
                                     {checkData.includes("question") && (
                                         <>
                                             {lists?.map((c, i) => {
                                                 return (
                                                     <div key={i} className="print-aria">
                                                         {i === 0 && (
-                                                            <div
-                                                                style={{
-                                                                    height: "200px",
-                                                                    backgroundColor: "blue",
-                                                                }}
-                                                            >
-                                                                메뉴
+                                                            <div className="print-aria-header">
+                                                                <img src={clinicprint} alt="" />
                                                             </div>
                                                         )}
                                                         <div className="print-aria-body">
-                                                            {c[0].map((a, i) => {
-                                                                return (
-                                                                    <article
-                                                                        className="problem"
-                                                                        key={i}
-                                                                        style={{ height: a.height }}
-                                                                    >
-                                                                        <div className="problem-header">
-                                                                            <h4>
-                                                                                <div className="num">
-                                                                                    {parseInt(
-                                                                                        a.qseq
-                                                                                    ) < 10
-                                                                                        ? "0" +
-                                                                                          a.qseq
-                                                                                        : a.qseq}
+                                                            <div className="d-flex">
+                                                                <div className="print-aria-left">
+
+                                                                    {c[0].map((a, i) => {
+                                                                        return (
+                                                                            <article
+                                                                                className="problem"
+                                                                                key={i}
+                                                                                style={{ height: a.height }}
+                                                                            >
+                                                                                <div className="problem-header">
+                                                                                    <h4>
+                                                                                        <div className="num">
+                                                                                            {parseInt(
+                                                                                                a.qseq
+                                                                                            ) < 10
+                                                                                                ? "0" +
+                                                                                                a.qseq
+                                                                                                : a.qseq}
+                                                                                        </div>
+                                                                                        <strong>
+                                                                                            {a.qa_keyword}
+                                                                                        </strong>
+                                                                                    </h4>
                                                                                 </div>
-                                                                                <strong>
-                                                                                    {a.qa_keyword}
-                                                                                </strong>
-                                                                            </h4>
-                                                                        </div>
-                                                                        <div className="problem-body">
-                                                                            <img
-                                                                                src={a.qa_path}
-                                                                                alt=""
-                                                                                style={{
-                                                                                    height: a.문제높이,
-                                                                                }}
-                                                                            />
-                                                                            {[
-                                                                                "①",
-                                                                                "②",
-                                                                                "③",
-                                                                                "④",
-                                                                                "⑤",
-                                                                            ].map((dd, i) => {
-                                                                                return (
-                                                                                    <div
-                                                                                        className="item"
-                                                                                        key={i}
-                                                                                    >
-                                                                                        <span
-                                                                                            style={{
-                                                                                                marginRight:
-                                                                                                    "15px",
-                                                                                            }}
-                                                                                        >
-                                                                                            {dd}
-                                                                                        </span>{" "}
-                                                                                        <img
-                                                                                            style={{
-                                                                                                height: a[
-                                                                                                    `선지높이${
-                                                                                                        i +
+                                                                                <div className="problem-body">
+                                                                                    <img
+                                                                                        src={a.qa_path}
+                                                                                        alt=""
+                                                                                        style={{
+                                                                                            height: a.문제높이,
+                                                                                        }}
+                                                                                    />
+                                                                                    {[
+                                                                                        "①",
+                                                                                        "②",
+                                                                                        "③",
+                                                                                        "④",
+                                                                                        "⑤",
+                                                                                    ].map((dd, i) => {
+                                                                                        return (
+                                                                                            <div
+                                                                                                className="item"
+                                                                                                key={i}
+                                                                                            >
+                                                                                                <span
+                                                                                                    style={{
+                                                                                                        marginRight:
+                                                                                                            "15px",
+                                                                                                    }}
+                                                                                                >
+                                                                                                    {dd}
+                                                                                                </span>{" "}
+                                                                                                <img
+                                                                                                    style={{
+                                                                                                        height: a[
+                                                                                                            `선지높이${i +
+                                                                                                            1
+                                                                                                            }`
+                                                                                                        ],
+                                                                                                    }}
+                                                                                                    key={i}
+                                                                                                    src={`https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${a.qa_code
+                                                                                                        }_${i +
                                                                                                         1
-                                                                                                    }`
-                                                                                                ],
-                                                                                            }}
-                                                                                            key={i}
-                                                                                            src={`https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${
-                                                                                                a.qa_code
-                                                                                            }_${
-                                                                                                i +
-                                                                                                1
-                                                                                            }.png`}
-                                                                                            alt=""
-                                                                                        />
-                                                                                    </div>
-                                                                                );
-                                                                            })}
-                                                                        </div>
-                                                                    </article>
-                                                                );
-                                                            })}
-                                                            {c[1].map((a, i) => {
-                                                                return (
-                                                                    <article
-                                                                        className="problem"
-                                                                        key={i}
-                                                                        style={{ height: a.height }}
-                                                                    >
-                                                                        <div className="problem-header">
-                                                                            <h4>
-                                                                                <div className="num">
-                                                                                    {parseInt(
-                                                                                        a.qseq
-                                                                                    ) < 10
-                                                                                        ? "0" +
-                                                                                          a.qseq
-                                                                                        : a.qseq}
+                                                                                                        }.png`}
+                                                                                                    alt=""
+                                                                                                />
+                                                                                            </div>
+                                                                                        );
+                                                                                    })}
                                                                                 </div>
-                                                                                <strong>
-                                                                                    {a.qa_keyword}
-                                                                                </strong>
-                                                                            </h4>
-                                                                        </div>
-                                                                        <div className="problem-body">
-                                                                            <img
-                                                                                src={a.qa_path}
-                                                                                alt=""
-                                                                                style={{
-                                                                                    height: a.문제높이,
-                                                                                }}
-                                                                            />
-                                                                            {[
-                                                                                "①",
-                                                                                "②",
-                                                                                "③",
-                                                                                "④",
-                                                                                "⑤",
-                                                                            ].map((dd, i) => {
-                                                                                return (
-                                                                                    <div
-                                                                                        className="item"
-                                                                                        key={i}
-                                                                                    >
-                                                                                        <span
-                                                                                            style={{
-                                                                                                marginRight:
-                                                                                                    "15px",
-                                                                                            }}
-                                                                                        >
-                                                                                            {dd}
-                                                                                        </span>{" "}
-                                                                                        <img
-                                                                                            style={{
-                                                                                                height: a[
-                                                                                                    `선지높이${
-                                                                                                        i +
+                                                                            </article>
+                                                                        );
+                                                                    })}
+                                                                </div>
+                                                                <div className="print-aria-right">
+
+                                                                    {c[1].map((a, i) => {
+                                                                        return (
+                                                                            <article
+                                                                                className="problem"
+                                                                                key={i}
+                                                                                style={{ height: a.height }}
+                                                                            >
+                                                                                <div className="problem-header">
+                                                                                    <h4>
+                                                                                        <div className="num">
+                                                                                            {parseInt(
+                                                                                                a.qseq
+                                                                                            ) < 10
+                                                                                                ? "0" +
+                                                                                                a.qseq
+                                                                                                : a.qseq}
+                                                                                        </div>
+                                                                                        <strong>
+                                                                                            {a.qa_keyword}
+                                                                                        </strong>
+                                                                                    </h4>
+                                                                                </div>
+                                                                                <div className="problem-body">
+                                                                                    <img
+                                                                                        src={a.qa_path}
+                                                                                        alt=""
+                                                                                        style={{
+                                                                                            height: a.문제높이,
+                                                                                        }}
+                                                                                    />
+                                                                                    {[
+                                                                                        "①",
+                                                                                        "②",
+                                                                                        "③",
+                                                                                        "④",
+                                                                                        "⑤",
+                                                                                    ].map((dd, i) => {
+                                                                                        return (
+                                                                                            <div
+                                                                                                className="item"
+                                                                                                key={i}
+                                                                                            >
+                                                                                                <span
+                                                                                                    style={{
+                                                                                                        marginRight:
+                                                                                                            "15px",
+                                                                                                    }}
+                                                                                                >
+                                                                                                    {dd}
+                                                                                                </span>{" "}
+                                                                                                <img
+                                                                                                    style={{
+                                                                                                        height: a[
+                                                                                                            `선지높이${i +
+                                                                                                            1
+                                                                                                            }`
+                                                                                                        ],
+                                                                                                    }}
+                                                                                                    key={i}
+                                                                                                    src={`https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${a.qa_code
+                                                                                                        }_${i +
                                                                                                         1
-                                                                                                    }`
-                                                                                                ],
-                                                                                            }}
-                                                                                            key={i}
-                                                                                            src={`https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${
-                                                                                                a.qa_code
-                                                                                            }_${
-                                                                                                i +
-                                                                                                1
-                                                                                            }.png`}
-                                                                                            alt=""
-                                                                                        />
-                                                                                    </div>
-                                                                                );
-                                                                            })}
-                                                                        </div>
-                                                                    </article>
-                                                                );
-                                                            })}
+                                                                                                        }.png`}
+                                                                                                    alt=""
+                                                                                                />
+                                                                                            </div>
+                                                                                        );
+                                                                                    })}
+                                                                                </div>
+                                                                            </article>
+                                                                        );
+                                                                    })}
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 );
@@ -502,84 +516,86 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
                                                 return (
                                                     <div key={i} className="print-aria">
                                                         {i === 0 && (
-                                                            <div
-                                                                style={{
-                                                                    height: "200px",
-                                                                    backgroundColor: "blue",
-                                                                }}
-                                                            >
-                                                                메뉴
+                                                            <div className="print-aria-header">
+                                                                <img src={clinicprint} alt="" />
                                                             </div>
                                                         )}
                                                         <div className="print-aria-body">
-                                                            {c[0].map((a, i) => {
-                                                                return (
-                                                                    <article
-                                                                        className="problem"
-                                                                        key={i}
-                                                                        style={{ height: a.height }}
-                                                                    >
-                                                                        <div className="problem-header">
-                                                                            <h4>
-                                                                                <div className="num">
-                                                                                    {parseInt(
-                                                                                        a.qseq
-                                                                                    ) < 10
-                                                                                        ? "0" +
-                                                                                          a.qseq
-                                                                                        : a.qseq}
+                                                            <div className="d-flex">
+                                                                <div className="print-aria-left">
+                                                                    {c[0].map((a, i) => {
+                                                                        return (
+                                                                            <article
+                                                                                className="problem"
+                                                                                key={i}
+                                                                                style={{ height: a.height }}
+                                                                            >
+                                                                                <div className="problem-header">
+                                                                                    <h4>
+                                                                                        <div className="num">
+                                                                                            {parseInt(
+                                                                                                a.qseq
+                                                                                            ) < 10
+                                                                                                ? "0" +
+                                                                                                a.qseq
+                                                                                                : a.qseq}
+                                                                                        </div>
+                                                                                        <strong>
+                                                                                            {a.qa_keyword}
+                                                                                        </strong>
+                                                                                    </h4>
                                                                                 </div>
-                                                                                <strong>
-                                                                                    {a.qa_keyword}
-                                                                                </strong>
-                                                                            </h4>
-                                                                        </div>
-                                                                        <div className="problem-body">
-                                                                            <img
-                                                                                src={a.qa_path}
-                                                                                alt=""
-                                                                                style={{
-                                                                                    height: a.문제높이,
-                                                                                }}
-                                                                            />
-                                                                        </div>
-                                                                    </article>
-                                                                );
-                                                            })}
-                                                            {c[1].map((a, i) => {
-                                                                return (
-                                                                    <article
-                                                                        className="problem"
-                                                                        key={i}
-                                                                        style={{ height: a.height }}
-                                                                    >
-                                                                        <div className="problem-header">
-                                                                            <h4>
-                                                                                <div className="num">
-                                                                                    {parseInt(
-                                                                                        a.qseq
-                                                                                    ) < 10
-                                                                                        ? "0" +
-                                                                                          a.qseq
-                                                                                        : a.qseq}
+                                                                                <div className="problem-body">
+                                                                                    <img
+                                                                                        src={a.qa_path}
+                                                                                        alt=""
+                                                                                        style={{
+                                                                                            height: a.문제높이,
+                                                                                        }}
+                                                                                    />
                                                                                 </div>
-                                                                                <strong>
-                                                                                    {a.qa_keyword}
-                                                                                </strong>
-                                                                            </h4>
-                                                                        </div>
-                                                                        <div className="problem-body">
-                                                                            <img
-                                                                                src={a.qa_path}
-                                                                                alt=""
-                                                                                style={{
-                                                                                    height: a.문제높이,
-                                                                                }}
-                                                                            />
-                                                                        </div>
-                                                                    </article>
-                                                                );
-                                                            })}
+                                                                            </article>
+                                                                        );
+                                                                    })}
+                                                                </div>
+                                                                <div className="print-aria-right">
+
+                                                                    {c[1].map((a, i) => {
+                                                                        return (
+                                                                            <article
+                                                                                className="problem"
+                                                                                key={i}
+                                                                                style={{ height: a.height }}
+                                                                            >
+                                                                                <div className="problem-header">
+                                                                                    <h4>
+                                                                                        <div className="num">
+                                                                                            {parseInt(
+                                                                                                a.qseq
+                                                                                            ) < 10
+                                                                                                ? "0" +
+                                                                                                a.qseq
+                                                                                                : a.qseq}
+                                                                                        </div>
+                                                                                        <strong>
+                                                                                            {a.qa_keyword}
+                                                                                        </strong>
+                                                                                    </h4>
+                                                                                </div>
+                                                                                <div className="problem-body">
+                                                                                    <img
+                                                                                        src={a.qa_path}
+                                                                                        alt=""
+                                                                                        style={{
+                                                                                            height: a.문제높이,
+                                                                                        }}
+                                                                                    />
+                                                                                </div>
+                                                                            </article>
+                                                                        );
+                                                                    })}
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 );
@@ -591,7 +607,7 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
                         </div>
                     </div>
                 </div>
-                <div>
+                <div className="modal-footer">
                     {viewState === "question" ? (
                         <PrintPagination
                             totalPage={lists && lists.length}
@@ -674,3 +690,4 @@ const PrintPagination = ({ totalPage = 20, pageLength = 10, page, setPage }) => 
 };
 
 export default PrintModal;
+

@@ -26,7 +26,7 @@ const options = [
     },
 ]
 
-function SelectAttan({value, onChange}) {
+function SelectAttan({value, onChange, disabled}) {
 
     let [active, setActive] = useState(false);
     let [choice, setChoice] = useState()
@@ -44,7 +44,7 @@ function SelectAttan({value, onChange}) {
     },[value])
 
     return ( 
-        <div className={`SelectAttan ${active ? "active" : ""}`}>
+        <div className={`SelectAttan ${active ? "active" : ""}${disabled ? "disabled" : ""}`}>
             <div className="SelectAttan-view" style={{backgroundColor : choice?.color}}>
                 {choice ? choice.label : "선택"}
             </div>

@@ -37,6 +37,13 @@
             border-bottom: 1px solid #eee;
             border-right: 1px solid #eee;
 
+            &.today{
+                background-color: #fff0eb;
+                .num{
+                    background-color: #fff;
+                }
+            }
+
             &:nth-last-child(7n){
                 &:not(.not-day){
 

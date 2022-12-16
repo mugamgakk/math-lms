@@ -182,6 +182,16 @@
     position: relative;
     border-bottom-left-radius: 0;
 
+    &.disabled{
+        &::after{
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(256,256,256,0.7);
+        }
+    }
+
     &.active{
         .SelectAttan-option{
             height: 108px;
