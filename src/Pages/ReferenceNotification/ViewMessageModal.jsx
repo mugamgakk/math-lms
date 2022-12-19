@@ -8,17 +8,38 @@ import Icon from '../../components/Icon';
 function ViewMessageModal({setViewModal, setWriteModal, type, seq}) {
     let [data,setData] = useState(null);
     console.log(seq,type)
+
     useEffect(()=>{
-        ajax("/notice.php", {data: {
-            mode: 'notice_view',
+        getList();
+    },[])
+
+    // useEffect(()=>{
+
+    //     ajax("/notice.php", {data: {
+    //         mode: 'notice_view',
+    //         nt_seq : seq,
+    //         nt_type : type
+    //     }
+    //     }).then(res=>{
+    //         console.log(res);
+    //         // setData(res.data);
+    //     })   
+    // },[]);
+
+    const getList = async () => {
+
+        let url = "/notice.php";
+        let query = {
+            mode : 'notice_view',
             nt_seq : seq,
             nt_type : type
-        }
-        }).then(res=>{
-            console.log(res);
-            // setData(res.data);
-        })   
-    },[]);
+        };
+        
+        let res = await ajax(url,{ data : query});
+        console.log(res);
+
+     }
+
 
     return ( 
         <div className="modal">
