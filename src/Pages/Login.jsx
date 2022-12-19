@@ -44,21 +44,17 @@ function Login() {
             data: data,
         }).then((res) => {
 
-            // console.log(res);
-
-            switch (res.data.ok) {
-                // 로그인 완료
-                case 1:
-                    // 프론트에서 로그인 확인 쿠키
-                    setCookie("gplumLMSlogin", "true");
-                    navigate("/");
-                    break;
-                // 로그인 중복
-                case -2:
-                    const alert = `로그인된 계정이 있습니다. 기존 로그인 된 계정을 로그아웃 하시겠습니까.`;
+            if(res.data.ok == 1){
+                // 이미 로그인
+                // 프론트에서 로그인 확인 쿠키
+                setCookie("gplumLMSlogin", "true");
+                navigate("/");
+            }
+            if(res.data.ok == -2){
+                // 중복계정
+                const alert = `로그인된 계정이 있습니다. 기존 로그인 된 계정을 로그아웃 하시겠습니까.`;
                     if (window.confirm(alert)) {
                         data.force_mode = "Y";
-
                         ajax("/user.php", {
                             data: data,
                         }).then((res) => {
@@ -66,21 +62,18 @@ function Login() {
                             navigate("/");
 
                         });
-                    } else {
-                        setLoading(false);
-                        return;
-                    }
-                    break;
-                case -1:
-                    setCookie("gplumLMSlogin", "true")
-                    navigate("/");
-
-                    break;
-                case 0:
-                    setLoading(false);
-                    alert(res.data.msg);
-                    return;
+                    } 
             }
+            if(res.data.ok == -1){
+                // 이미 로그인
+                setCookie("gplumLMSlogin", "true")
+                navigate("/");
+            }
+            if(res.data.ok == 0){
+                // 에러
+                alert(res.data.msg);
+            }
+
             setLoading(false);
 
         });
