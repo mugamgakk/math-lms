@@ -60,7 +60,7 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
         setSolveList(풀이보기결과);
         // array, 문제 최대넓이, 문제여백
         let 문제보기2 = await getProblemHeight(_cloneDeep(res.data), 323, 190);
-        let 풀이보기2 = await 풀이보기높이구하기(_cloneDeep(res.data), 323, 150);
+        let 풀이보기2 = await 풀이보기높이구하기(_cloneDeep(res.data), 323, 130);
         let 문제보기결과2 = 분할하기(문제보기2, 100, 1120);
         let 풀이보기결과2 = 분할하기(풀이보기2, 100, 1120);
         setListsPrint(문제보기결과2);
