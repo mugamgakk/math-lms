@@ -20,12 +20,12 @@ export const getImgSize = (param) => {
 };
 
 // 넓이 380px에 따라 이미지 높이값을 리턴한다.
-export const proportionHeight = (width, height, x = 380) => {
+export const proportionHeight = (width, height, x) => {
     return (height * x) / width;
 };
 
 // 문제의 총 높이 값을 구하는 함수
-export const getProblemHeight = async (list, 초기값 = 0) => {
+export const getProblemHeight = async (list, 최대넓이, 초기값 = 0) => {
     let arr = [];
 
     for (let i = 0; i < list.length; i++) {
@@ -35,11 +35,11 @@ export const getProblemHeight = async (list, 초기값 = 0) => {
         let res = await getImgSize(list[i].qa_path);
 
         if(res === "imgerr"){
-            list[i].height += 20;
-            list[i].문제높이 = 20;
+            list[i].height += 22;
+            list[i].문제높이 = 22;
         }else{
             // 비율에 맞춘 높이값
-            let problemHeight = proportionHeight(res.width, res.height);
+            let problemHeight = proportionHeight(res.width, res.height, 최대넓이);
 
             list[i].height += problemHeight;
             list[i].문제높이 = problemHeight;
@@ -51,11 +51,11 @@ export const getProblemHeight = async (list, 초기값 = 0) => {
             let res = await getImgSize(선지이미지);
 
             if(res === "imgerr"){
-                list[i].height += 20;
-                list[i][`문제높이${p}`] = 20;
+                list[i].height += 22;
+                list[i][`문제높이${p}`] = 22;
             }else{
                 // 비율에 맞춘 높이값
-                let problemHeight = proportionHeight(res.width, res.height);
+                let problemHeight = proportionHeight(res.width, res.height, 최대넓이);
 
                 list[i].height += problemHeight;
                 list[i][`문제높이${p}`] = problemHeight;
@@ -70,7 +70,7 @@ export const getProblemHeight = async (list, 초기값 = 0) => {
     return arr;
 };
 
-export const 풀이보기높이구하기 = async (list, 초기값 = 0) => {
+export const 풀이보기높이구하기 = async (list,최대넓이, 초기값 = 0) => {
     let arr = [];
 
     for (let i = 0; i < list.length; i++) {
@@ -81,11 +81,11 @@ export const 풀이보기높이구하기 = async (list, 초기값 = 0) => {
         let res = await getImgSize(list[i].qa_path);
 
         if(res === "imgerr"){
-            list[i].height += 20;
-            list[i].문제높이 = 20;
+            list[i].height += 22;
+            list[i].문제높이 = 22;
         }else{
             // 비율에 맞춘 높이값
-            let problemHeight = proportionHeight(res.width, res.height);
+            let problemHeight = proportionHeight(res.width, res.height, 최대넓이);
 
             list[i].height += problemHeight;
             list[i].문제높이 = problemHeight;
@@ -100,6 +100,7 @@ export const 풀이보기높이구하기 = async (list, 초기값 = 0) => {
 };
 
 // 1페이지 들어갈 문제를 분할한다. limit은 한페이지의 반의 크기를 말한다.
+// 초기값은 상단의 head값
 export const 분할하기 = (list, 초기값 = 100, limit = 1120) => {
     let count = 0;
     let 왼쪽높이 = 초기값;
@@ -109,27 +110,15 @@ export const 분할하기 = (list, 초기값 = 100, limit = 1120) => {
 
     list.forEach(a=>{
 
-        // 상단 메뉴 높이 빼기
-        if(count === 0){
-            if(왼쪽높이 + a.height > (limit )){
-                방향 = "right";
-            }
-            if(오른쪽높이 + a.height > (limit )){
-                방향 = "left";
-                왼쪽높이 = 0;
-                오른쪽높이 = 0;
-                count++
-            }
-        }else{
-            if(왼쪽높이 + a.height > limit){
-                방향 = "right";
-            }
-            if(오른쪽높이 + a.height > limit){
-                방향 = "left";
-                왼쪽높이 = 0;
-                오른쪽높이 = 0;
-                count++
-            }
+        if(왼쪽높이 + a.height > limit){
+            방향 = "right";
+        }
+        if(오른쪽높이 + a.height > limit){
+            방향 = "left";
+            // 상단 메뉴 높이 빼기
+            왼쪽높이 = 초기값;
+            오른쪽높이 = 초기값;
+            count++
         }
 
         

@@ -10,88 +10,34 @@
 
 
 .print-aria {
-    // position: fixed;
-    // z-index: 100;
-    // left: 0;
-    // top: -10px;
-    // height: 297mm;
-    // width: 210mm;
-    .page {
-        width: 1150px;
-        margin-bottom: 100px;
-        display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
-        align-content: space-between;
-        height: 1625px;
-
-        .card {
-            width: 50%;
-            padding: 20px;
-
-            &-head {
-                @include flex(sb);
-                margin-bottom: 20px;
-                strong {
-                    @include font-style(36);
-                    color: $green;
-                }
-                span {
-                    @include font-style(20);
-                    font-weight: 600;
-                }
-            }
-
-            .img-bottom {
-                span {
-                    margin-right: 10px;
-                }
-            }
-
-            img {
-                width: 100%;
-            }
-        }
-
-        // &::after{
-        //     content: "";
-        //     width: 1px;
-        //     height: 100%;
-        //     background-color: #ccc;
-        //     position: absolute;
-        //     left: 50%;
-        //     top: 0;
-        //     transform: translateX(-50%);
-        // }
-    }
-}
-
-.print-aria {
-    border: 1px solid #eee;
     display: flex;
     flex-direction: column;
     height: 297mm;
     width: 210mm;
+    padding: 0 30px 20px 30px;
+    background-color: $white;
 
     &-header{
-        // position: absolute;
+        padding-top: 20px;
         img{
             width: 100%;
         }
     }
 
+    &-right, &-left{
+        width: 50%;
+    }
 
     &-body {
         display: flex;
         flex-direction: column;
- 
         height: 297mm;
 
         .problem {
             width: 100%;
-            padding: 20px;
-            // padding-top: 0;
             overflow: hidden;
+            padding-left: 10px;
+            padding-right: 33.84px;
 
             &-header{
                 margin-bottom: 20px;
@@ -100,12 +46,12 @@
                 }
 
                 .num{
-                    font-size: 32px;
+                    font-size: 25px;
                     color: $green;
                     font-weight: 700;
                 }
                 strong{
-                    font-size: 20px;
+                    font-size: 16px;
                     font-weight: 600;
                     color: #444;
                 }
@@ -120,15 +66,60 @@
             .item{
                 display: flex;
                 align-items: center;
-                margin-bottom: 5px;
+                margin-bottom: 10px;
                 &:last-child{
                     margin-bottom: 0;
                 }
+
+                img{
+                    width: calc(100% - 38px);
+                }
+            }
+
+            &-num{
+                font-size: 16px;
             }
 
             img{
                 width: 100%;
             }
+        }
+    }
+}
+
+// view 버전
+
+.print-aria.print-aria-view{
+    width: 1024px;
+    border: 1px solid #eee;
+
+
+    .problem{
+        &-num{
+            font-size: 22px;
+        }
+        
+        &-header{
+            .num{
+                font-size: 32px;
+            }
+            strong{
+                font-size: 20px;
+            }
+        }
+    }
+
+
+    .print-aria-left{
+        position: relative;
+        &::after{
+            content: "";
+            position: absolute;
+            width: 1px;
+            height: 100%;
+            border-right: 3px rgba(221, 221, 221, 0.452) dotted;
+            top: 0;
+            right: -2px;
         }
     }
 }

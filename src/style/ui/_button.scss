@@ -16,13 +16,13 @@
         cursor: not-allowed;
     }
 
-    &.btn-icon{
+    &.btn-icon {
         @include flex;
         display: inline-flex;
-        
-        i{
+
+        i {
             font-size: 16px;
-            margin-right: 6px
+            margin-right: 6px;
         }
     }
 }
@@ -36,8 +36,7 @@
     }
 
     &:disabled {
-
-        color: rgba($white,0.5);
+        color: rgba($white, 0.5);
 
         &:hover {
             background-color: $green;
@@ -56,7 +55,7 @@
     }
 
     &:disabled {
-        color: rgba($green,0.5);
+        color: rgba($green, 0.5);
 
         &:hover {
             background-color: #fff;
@@ -68,11 +67,10 @@
     background-color: $green-light;
     color: $green;
 
-    &:disabled{
-        color: rgba($green,0.2)
+    &:disabled {
+        color: rgba($green, 0.2);
     }
 }
-
 
 .btn-orange {
     @extend %button-base;
@@ -83,7 +81,7 @@
     }
 
     &:disabled {
-        color: rgba($white,0.4);
+        color: rgba($white, 0.4);
 
         &:hover {
             background-color: $orange;
@@ -103,7 +101,7 @@
     }
 
     &:disabled {
-        color: rgba($orange,0.4);
+        color: rgba($orange, 0.4);
 
         &:hover {
             background-color: #fff;
@@ -115,23 +113,21 @@
     background-color: $orange-light;
     color: $orange;
 
-    &:disabled{
-        color: rgba($orange,0.4);
-
+    &:disabled {
+        color: rgba($orange, 0.4);
     }
 }
-
 
 .btn-brown {
     @extend %button-base;
     background-color: $brown;
 
     &:hover {
-        background-color: #473326
+        background-color: #473326;
     }
 
     &:disabled {
-        color: rgba($white,0.4);
+        color: rgba($white, 0.4);
 
         &:hover {
             background-color: $brown;
@@ -139,7 +135,7 @@
     }
 }
 
-.btn-table{
+.btn-table {
     @extend %button-base;
     height: 30px;
     border: 1px solid $border;
@@ -147,7 +143,7 @@
     background: #fff;
     min-width: 100px;
 
-    &:hover{
+    &:hover {
         background-color: #eee;
     }
 }
@@ -180,10 +176,10 @@
         background-color: $grey;
     }
 
-    &:disabled{
+    &:disabled {
         color: #ccc;
 
-        &:hover{
+        &:hover {
             background-color: #fff;
         }
     }
@@ -198,11 +194,11 @@
 //         top: -2px;
 //     }
 // }
-.btn-reload{
+.btn-reload {
     min-width: 107px;
 }
 
-.btn-arrow{
+.btn-arrow {
     border: 1px solid #ccc;
     background: #eee;
     border-radius: 4px;
@@ -210,8 +206,7 @@
     height: 40px;
 }
 
-
-.pageNum{
+.pageNum {
     @include font-style(16);
     color: #666;
     width: 30px;
@@ -222,10 +217,53 @@
     background: #fff;
     border-radius: $radius;
     margin: 0 2px;
-    &.active{
+    &.active {
         background: #ea7851;
         color: #fff;
         border: none;
-
     }
+
+    &.arrow-one {
+        position: relative;
+        &::after {
+            content: "";
+            width: 0;
+            height: 0;
+            position: absolute;
+            top: 31%;
+            left: 34%;
+            border-bottom: 5px solid transparent;
+            border-top: 5px solid transparent;
+            border-left: 9px solid #444;
+            border-right: 9px solid transparent;
+        }
+    }
+    &.arrow-two {
+        position: relative;
+        &::before{
+            content: "";
+            width: 0;
+            height: 0;
+            position: absolute;
+            top: 31%;
+            left: 5px;
+            border-bottom: 5px solid transparent;
+            border-top: 5px solid transparent;
+            border-left: 9px solid #444;
+            border-right: 9px solid transparent;
+        }
+        &::after {
+            content: "";
+            width: 0;
+            height: 0;
+            position: absolute;
+            top: 31%;
+            left: 16px;
+            border-bottom: 5px solid transparent;
+            border-top: 5px solid transparent;
+            border-left: 9px solid #444;
+            border-right: 9px solid transparent;
+        }
+    }
+
 }

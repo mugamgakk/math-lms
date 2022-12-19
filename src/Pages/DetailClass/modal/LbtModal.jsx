@@ -368,64 +368,49 @@ function LbtModal({ setCreateModal }) {
                                                                 </thead>
                                                                 <tbody>
                                                                     {
-                                                                        lbtData?.lec_assa.map((a,index) => {
+                                                                        lbtData?.lec_assa.map((a, index) => {
                                                                             return (
                                                                                 <tr key={index}>
                                                                                     <td>{a.unit1}</td>
-                                                                                    <td className="text-right">
+                                                                                    <td className="text-right" style={{ verticalAlign: "top", paddingTop: "5px", paddingRight: "5px" }}>
                                                                                         {
-                                                                                            a.unit2.map((s,i)=>{
-                                                                                                return  <div key={i}> {s.title}</div>
+                                                                                            a.unit2.map((s, i) => {
+                                                                                                return <div key={i}> {s.title}</div>
                                                                                             })
                                                                                         }
                                                                                     </td>
                                                                                     <td style={{ padding: "0" }}>
                                                                                         <div className="bg-area-wrap">
-                                                                                            <span className="bg-area"></span>
-                                                                                            <span className="bg-area"></span>
-                                                                                            <span className="bg-area"></span>
-                                                                                            <span className="bg-area"></span>
-                                                                                            <span className="bg-area"></span>
 
-                                                                                            <div className="area-list">
-                                                                                                <div className="area-list-item" style={{ width: "80%" }}></div>
-                                                                                                <div className="area-list-item" style={{ width: "70%" }}></div>
-                                                                                                <div className="area-list-item" style={{ width: "90%" }}></div>
-                                                                                            </div>
-                                                                                            <div className="area-list">
-                                                                                                <div className="area-list-item" style={{ width: "80%" }}></div>
-                                                                                                <div className="area-list-item" style={{ width: "70%" }}></div>
-                                                                                                <div className="area-list-item" style={{ width: "90%" }}></div>
-                                                                                            </div>
-                                                                                            <div className="area-list">
-                                                                                                <div className="area-list-item" style={{ width: "80%" }}></div>
-                                                                                                <div className="area-list-item" style={{ width: "70%" }}></div>
-                                                                                                <div className="area-list-item" style={{ width: "90%" }}></div>
-                                                                                            </div>
-                                                                                            <div className="area-list">
-                                                                                                <div className="area-list-item" style={{ width: "80%" }}></div>
-                                                                                                <div className="area-list-item" style={{ width: "70%" }}></div>
-                                                                                                <div className="area-list-item" style={{ width: "90%" }}></div>
-                                                                                            </div>
-                                                                                            <div className="area-list">
-                                                                                                <div className="area-list-item" style={{ width: "80%" }}></div>
-                                                                                                <div className="area-list-item" style={{ width: "70%" }}></div>
-                                                                                                <div className="area-list-item" style={{ width: "90%" }}></div>
-                                                                                            </div>
-                                                                                            <div className="area-list">
-                                                                                                <div className="area-list-item" style={{ width: "80%" }}></div>
-                                                                                            </div>
+                                                                                            {
+                                                                                                a.unit2.map((s, i) => {
+                                                                                                    return (
+                                                                                                        <div className="area-list">
+                                                                                                            <div className="area-list-item" style={{ width: `${s.co}%` }}></div>
+                                                                                                            <div className="area-list-item" style={{ width: "70%" }}></div>
+                                                                                                            <div className="area-list-item" style={{ width: "90%" }}></div>
+                                                                                                        </div>
+                                                                                                    )
+                                                                                                })
+                                                                                            }
+
+                                                                                            <span className="bg-area"></span>
+                                                                                            <span className="bg-area"></span>
+                                                                                            <span className="bg-area"></span>
+                                                                                            <span className="bg-area"></span>
+                                                                                            <span className="bg-area"></span>
                                                                                         </div>
                                                                                     </td>
-                                                                                    <td>
-                                                                                        8점<br />
-                                                                                        8점<br />
-                                                                                        8점<br />
-                                                                                        8점<br />
-                                                                                        10점<br />
-                                                                                        -
+                                                                                    <td style={{verticalAlign : "top", paddingTop : "5px"}}>
+                                                                                        {
+                                                                                            a.unit2.map((s, i) => {
+                                                                                                return (
+                                                                                                    <span key={i}>{s.und}점</span>
+                                                                                                )
+                                                                                            })
+                                                                                        }
                                                                                     </td>
-                                                                                    <td>
+                                                                                    <td style={{verticalAlign : "top"}}>
                                                                                         8점<br />
                                                                                         8점<br />
                                                                                         8점<br />

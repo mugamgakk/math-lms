@@ -1,9 +1,8 @@
-import React, { useState, useRef } from "react";
-import Pagination from "./Pagination";
+import React, { useState } from "react";
 import ReactToPrint from "react-to-print"; // pdf, 인쇄
 import Icon from "./Icon";
 import Checkbox from "./Checkbox";
-import { falseModal, _cloneDeep } from "../methods/methods";
+import { _cloneDeep } from "../methods/methods";
 import { useEffect } from "react";
 import ajax from "../ajax";
 import { getProblemHeight, 풀이보기높이구하기, 분할하기 } from "./problem-print";
@@ -17,10 +16,16 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
     let [viewState, setViewState] = useState("question");
     let [checkData, setCheckData] = useState(["question"]);
 
-    // 문제보기
+    // 문제보기 view
     let [lists, setLists] = useState(null);
-    // 풀이보기
-    let [solveList, setSolceLists] = useState(null);
+    // 풀이보기 view
+    let [solveList, setSolveList] = useState(null);
+
+    // 문제보기 print
+    let [listsPrint, setListsPrint] = useState(null);
+    // 풀이보기 print
+    let [solveListPrint, setSolveListPrint] = useState(null);
+
 
     const checkState = (checked, ele) => {
         if (checked) {
@@ -46,14 +51,20 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
 
         let res = await ajax(url, { data: query });
 
-        let 문제보기 = await getProblemHeight(_cloneDeep(res.data), 180);
-        let 풀이보기 = await 풀이보기높이구하기(_cloneDeep(res.data), 150);
-
-        let 문제보기결과 = 분할하기(문제보기);
-        let 풀이보기결과 = 분할하기(풀이보기);
-
+        // array, 문제 최대넓이, 문제여백
+        let 문제보기 = await getProblemHeight(_cloneDeep(res.data), 426, 190);
+        let 풀이보기 = await 풀이보기높이구하기(_cloneDeep(res.data), 426, 150);
+        let 문제보기결과 = 분할하기(문제보기, 100, 1500);
+        let 풀이보기결과 = 분할하기(풀이보기, 100, 1300);
         setLists(문제보기결과);
-        setSolceLists(풀이보기결과);
+        setSolveList(풀이보기결과);
+        // array, 문제 최대넓이, 문제여백
+        let 문제보기2 = await getProblemHeight(_cloneDeep(res.data), 323, 190);
+        let 풀이보기2 = await 풀이보기높이구하기(_cloneDeep(res.data), 323, 150);
+        let 문제보기결과2 = 분할하기(문제보기2, 100, 1120);
+        let 풀이보기결과2 = 분할하기(풀이보기2, 100, 1120);
+        setListsPrint(문제보기결과2);
+        setSolveListPrint(풀이보기결과2);
     };
 
     // 탭변경 페이지 초기화
@@ -140,7 +151,7 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
 
                         {/* view */}
                         <div
-                            className="print-aria"
+                            className="print-aria print-aria-view"
                             style={{ height: "calc(100% - 50px)", overflow: "auto" }}
                         >
                             {viewState === "question" && (
@@ -179,6 +190,7 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
                                                                 return (
                                                                     <div className="item" key={i}>
                                                                         <span
+                                                                            className="problem-num"
                                                                             style={{
                                                                                 marginRight: "15px",
                                                                             }}
@@ -234,6 +246,7 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
                                                                 return (
                                                                     <div className="item" key={i}>
                                                                         <span
+                                                                            className="problem-num"
                                                                             style={{
                                                                                 marginRight: "15px",
                                                                             }}
@@ -270,7 +283,7 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
                                     </div>
                                     <div className="d-flex">
                                         <div className="print-aria-left">
-                                            {solveList?.[page - 1][0].map((a, i) => {
+                                            {solveList?.[page - 1]?.[0].map((a, i) => {
                                                 return (
                                                     <article
                                                         className="problem"
@@ -301,7 +314,7 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
                                             })}
                                         </div>
                                         <div className="print-aria-right">
-                                            {solveList?.[page - 1][1].map((a, i) => {
+                                            {solveList?.[page - 1]?.[1].map((a, i) => {
                                                 return (
                                                     <article
                                                         className="problem"
@@ -343,14 +356,12 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
 
                                     {checkData.includes("question") && (
                                         <>
-                                            {lists?.map((c, i) => {
+                                            {listsPrint?.map((c, i) => {
                                                 return (
                                                     <div key={i} className="print-aria">
-                                                        {i === 0 && (
-                                                            <div className="print-aria-header">
-                                                                <img src={clinicprint} alt="" />
-                                                            </div>
-                                                        )}
+                                                        <div className="print-aria-header">
+                                                            <img src={clinicprint} alt="" />
+                                                        </div>
                                                         <div className="print-aria-body">
                                                             <div className="d-flex">
                                                                 <div className="print-aria-left">
@@ -398,6 +409,8 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
                                                                                                 key={i}
                                                                                             >
                                                                                                 <span
+                                                                                                    className="problem-num"
+
                                                                                                     style={{
                                                                                                         marginRight:
                                                                                                             "15px",
@@ -473,6 +486,8 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
                                                                                                 key={i}
                                                                                             >
                                                                                                 <span
+                                                                                                    className="problem-num"
+
                                                                                                     style={{
                                                                                                         marginRight:
                                                                                                             "15px",
@@ -512,14 +527,12 @@ function PrintModal({ closeModal, title = "제목임", cls_seq }) {
                                     )}
                                     {checkData.includes("solution") && (
                                         <>
-                                            {solveList?.map((c, i) => {
+                                            {solveListPrint?.map((c, i) => {
                                                 return (
                                                     <div key={i} className="print-aria">
-                                                        {i === 0 && (
                                                             <div className="print-aria-header">
                                                                 <img src={clinicprint} alt="" />
                                                             </div>
-                                                        )}
                                                         <div className="print-aria-body">
                                                             <div className="d-flex">
                                                                 <div className="print-aria-left">
@@ -631,7 +644,7 @@ const PrintPagination = ({ totalPage = 20, pageLength = 10, page, setPage }) => 
     const PageRender = () => {
         let pageGroup = Math.ceil(page / pageLength);
         let lastPage = pageGroup * pageLength;
-        let firstPage = lastPage - 9;
+        let firstPage = lastPage - (pageLength - 1);
 
         if (totalPage < lastPage) {
             lastPage = totalPage;
@@ -659,31 +672,57 @@ const PrintPagination = ({ totalPage = 20, pageLength = 10, page, setPage }) => 
         }
 
         if (totalPage > pageLength) {
-            result.unshift(
-                <button
-                    onClick={() => {
-                        page > 1 && setPage(page - 1);
-                    }}
-                >
-                    좌로
-                </button>
-            );
-            result.push(
-                <button
-                    onClick={() => {
-                        page < totalPage && setPage(page + 1);
-                    }}
-                >
-                    우로
-                </button>
-            );
+            if(page !== 1){
+                result.unshift(
+                    <>
+                    <button
+                        className="pageNum arrow-two"
+                        style={{transform : "rotate(180deg)"}}
+                        onClick={() => {
+                            page > 1 && setPage(1);
+                        }}
+                    >
+                    </button>
+                    <button
+                        className="pageNum arrow-one"
+                        style={{transform : "rotate(180deg)"}}
+                        onClick={() => {
+                            page > 1 && setPage(page - 1);
+                        }}
+                    >
+                    </button>
+                    </>
+                );
+            }
+
+            if(page !== totalPage){
+                result.push(
+                    <>
+                    <button
+                        className="pageNum arrow-one"
+                        onClick={() => {
+                            page < totalPage && setPage(page + 1);
+                        }}
+                    >
+                    </button>
+                    <button
+                        className="pageNum arrow-two"
+                        onClick={() => {
+                            page < totalPage && setPage(totalPage);
+                        }}
+                    >
+                    </button>
+                    </>
+                );
+            }
+            
         }
 
         return result;
     };
 
     return (
-        <div>
+        <div className="fa">
             <PageRender />
         </div>
     );

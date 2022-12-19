@@ -1,15 +1,6 @@
 import dayjs from "dayjs";
 import React, { memo } from "react";
 import SelectAttan from "../../components/ui/select/SelectAttan";
-import SelectBase from "../../components/ui/select/SelectBase";
-import { Box } from "./classTabs/AttendanceManagement";
-
-const options = [
-    { value: 'P', label: '출석' },
-    { value: 'L', label: '지각' },
-    { value: 'E', label: '조퇴' },
-    { value: 'A', label: '결석' },
-];
 
 const 오늘 = dayjs(new Date()).format("YYYYMM"); 
 
@@ -22,11 +13,6 @@ const AttendanceDay = memo(({ item, changeData, setModal, setClickDay, currentMo
 
         return numSet2
     }
-
-    formatCurrentDate()
-
-    
-
 
     return (
         <div className={`day ${formatCurrentDate() == currentMonth ? "today" : ""}`}>
