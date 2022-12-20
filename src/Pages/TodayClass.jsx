@@ -83,7 +83,6 @@ function TodayClass() {
                                     setGroup(ele);
                                 }}
                             />
-
                             <input
                                 type="text"
                                 className="textInput mr-10 ml-10"

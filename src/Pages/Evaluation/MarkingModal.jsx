@@ -2,31 +2,32 @@
 import React, { useState, useEffect }from 'react';
 import useStudentsStore from "../../store/useStudentsStore";
 import ajax from "../../ajax";
+import Icon from '../../components/Icon';
 
-function MarkingModal({data,title,setMarkingModal}) {
+function MarkingModal({data,setMarkingModal}) {
     const clickStudent = useStudentsStore((state) => state.clickStudent);
-
+    let [answerList, setAnswerList] = useState(null);
     // 리렌더링 조건
     // 새로운 props 가 들어올때
     // 부모 컴포넌트 랜더링
     // state변경이 있을때
 
-    let getAnswer = [];
-    
-    for (let i = 0; i < 30; i++) {
-        getAnswer[i] = { no : i + 1, crt_ans: [Math.floor(Math.random() * 5) + 1] };
+    useEffect(()=>{
+        getList();
+    },[])
+
+    const getList = async () => {
+        let url = "/evaluation.php/";
+        let query = {
+            mode : 'ut_score',
+            usr_seq : clickStudent.usr_seq
+        };
+        
+        let res = await ajax(url, { data: query });
+        console.log(res);
+        setAnswerList([res.data.slice(0,10),res.data.slice(10,20),res.data.slice(20,30)])
     }
-    
-    getAnswer[16].crt_ans = [1, 2, 3];
 
-    getAnswer.forEach(a => {
-        a.std_ans = [];
-    })
-
-
-    let [answerList, setAnswerList] = useState([getAnswer.slice(0,10),getAnswer.slice(10,20),getAnswer.slice(20,30)]);
-
-    
     const sendAnswer = async () => {
 
         if(!window.confirm('전송?')) return;
@@ -46,7 +47,7 @@ function MarkingModal({data,title,setMarkingModal}) {
         };
         
         let res = await ajax(url, { data: query });
-    
+        
         setMarkingModal(false);
 
     };
@@ -54,45 +55,69 @@ function MarkingModal({data,title,setMarkingModal}) {
     
     return (
         <div className="modal">
-            <div className='modal-body'>
-                <div className="modal-head">
-                    <div className="tit">
-                        <strong>{title}</strong>
-                    </div>
-                    <button className="close" onClick={() => setMarkingModal(false)}>X</button>
+            <div className='modal-content markingModal'>
+                <div className="modal-header fj">
+                <h2 className="modal-title">단원 평가</h2>
+                    <button className="btn" onClick={(e) => {
+                        e.stopPropagation();
+                        setMarkingModal(false)
+                    }}>
+                    <Icon icon={"close"} />
+                    </button>
                 </div>
-                <div className="markingModal-body cmmnModal-body">
-                    <h5>※ 평가 응시는 1회만 가능합니다. 아래 기본 정보와 학생 답안을 정확히 확인한 후 입력 완료해 주세요. (제출 후 수정 불가)</h5>
-                    <table className='headTable'>
-                        <tbody>
-                            <tr>
-                                <th>학생명</th>
-                                <td>{clickStudent.um_nm}</td>
-                                <th>학년/학기</th>
-                                <td>{clickStudent.school_grade}</td>
-                                <th>반</th>
-                                <td>수학A</td>
-                                <th>교재명</th>
-                                <td>{data.tb_name}</td>
-                            </tr>
-                            <tr>
-                                <th>평가명</th>
-                                <td>{data.kind}</td>
-                                <th>문항 수</th>
-                                <td>30문항</td>
-                                <th>평가일</th>
-                                <td>{data.ev_date}</td>
-                                <th>단원명</th>
-                                <td>{data.ltitle}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <h5>평가 결과 등록</h5>
-                    <MarkingTable answerList={answerList} setAnswerList={setAnswerList} />
+                <div className="modal-body">
+                    <div className="modal-name" style={{ paddingLeft:'20px' }}>
+                        <strong className="name">{clickStudent.um_nm}</strong>
+                        <ul className="list">
+                            <li>{clickStudent.school_grade}</li>
+                            <li>I. 수와 식의 계산</li>
+                            <li>번호, 주제</li>
+                        </ul>
+                    </div>
+                    <div className="contents">
+                        <h5 className='warning mb-10'>※ 평가 응시는 1회만 가능합니다. 아래 기본 정보와 학생 답안을 정확히 확인한 후 입력 완료해 주세요. (제출 후 수정 불가)</h5>
+                        <table className='table-head'>
+                            <colgroup>
+                                <col width='10%'/>
+                                <col width='15%'/>
+                                <col width='10%'/>
+                                <col width='15%'/>
+                                <col width='10%'/>
+                                <col width='15%'/>
+                                <col width='10%'/>
+                                <col width='15%'/>
+                            </colgroup>
+                            <tbody>
+                                <tr>
+                                    <th>학생명</th>
+                                    <td>{clickStudent.um_nm}</td>
+                                    <th>학년/학기</th>
+                                    <td>{clickStudent.school_grade}</td>
+                                    <th>반</th>
+                                    <td>수학A</td>
+                                    <th>교재명</th>
+                                    <td>{data.tb_name}</td>
+                                </tr>
+                                <tr>
+                                    <th>평가명</th>
+                                    <td>{data.kind}</td>
+                                    <th>문항 수</th>
+                                    <td>30문항</td>
+                                    <th>평가일</th>
+                                    <td>{data.ev_date}</td>
+                                    <th>단원명</th>
+                                    <td>{data.ltitle}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        {
+                            answerList && <MarkingTable answerList={answerList} setAnswerList={setAnswerList} />
+                        }
+                    </div>
                 </div>
                 <div className="modal-footer">
-                    <button className='btn' onClick={sendAnswer}>입력 완료</button>
-                    <button className='btn' onClick={()=>setMarkingModal(false)}>취소</button>
+                    <button className='btn-grey mr-4' onClick={()=>setMarkingModal(false)}>취소</button>
+                    <button className='btn-orange' onClick={sendAnswer}>입력 완료</button>
                 </div>
             </div>
         </div>
@@ -129,9 +154,8 @@ function MarkingTable({answerList,setAnswerList}){
       
     };
  
-
     return(
-        <div className='marking'>
+        <div className='marking fj'>
         {
             answerList.map((list,a)=>{
 
@@ -139,7 +163,39 @@ function MarkingTable({answerList,setAnswerList}){
                     return(
                         <tr key={item.no}>
                             <td className='num'>{item.no}</td>
-                            <td className='answer'>{item.crt_ans}</td>
+                            <td className='answer'>
+                                {
+                                    item.crt_ans.length < 2 ? (
+                                        { 
+                                            1 : '①',
+                                            2 : '②',
+                                            3 : '③',
+                                            4 : '④',
+                                            5 : '⑤',
+                                        }[item.crt_ans]
+                                    ) : (
+                                        item.crt_ans.map((a,i) => {
+                                            return (
+                                                <>
+                                                {
+                                                    {
+                                                        1 : '①',
+                                                        2 : '②',
+                                                        3 : '③',
+                                                        4 : '④',
+                                                        5 : '⑤',  
+                                                    }[a]
+                                                }
+                                                {
+                                                    i < item.crt_ans.length - 1 && ',' 
+                                                }
+                                                </>
+                                            )
+
+                                        })
+                                    )
+                                }
+                            </td>
                             <td className='stuAnswer'>
                                 <button className={ item.std_ans ? (item.std_ans.includes(1) ? 'numBtn active' : 'numBtn') : 'numBtn'} onClick={()=>clickBtn(a,b,1)}>①</button>
                                 <button className={ item.std_ans ? (item.std_ans.includes(2) ? 'numBtn active' : 'numBtn') : 'numBtn'} onClick={()=>clickBtn(a,b,2)}>②</button>
@@ -152,7 +208,7 @@ function MarkingTable({answerList,setAnswerList}){
                     })
 
             return(
-                <table className="marking-block" key={a}>
+                <table className="table-body" key={a}>
                     <colgroup>
                         <col style={{ width: "20%" }} />
                         <col style={{ width: "20%" }} />
@@ -160,9 +216,9 @@ function MarkingTable({answerList,setAnswerList}){
                     </colgroup>
                     <thead>
                         <tr className="marking-block__head">
-                            <td className='num'>번호</td>
-                            <td className='answer'>정답</td>
-                            <td className='stuAnswer'>학생답</td>
+                            <th className='num'>번호</th>
+                            <th className='answer'>정답</th>
+                            <th className='stuAnswer'>학생답</th>
                         </tr>
                     </thead>
                         <tbody className="marking-block__body">

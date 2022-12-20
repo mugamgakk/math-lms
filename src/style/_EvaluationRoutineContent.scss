@@ -12,3 +12,83 @@
 
     }
 }
+
+.markingModal{
+    width: 1280px;
+    .modal-body{
+        .contents{
+            padding: 15px 35px;
+            .warning{
+                @include font-style(18);
+                font-weight: 600;
+            }
+            table{
+                width: 100%;
+                border-top: 2px solid #664e3d;
+                text-align: center;
+                th{
+                    background: #e6ddd8;
+                    color: #664e3d;
+                    @include font-style(17);
+                }
+                tr{
+                    height: 50px;
+                }
+                &.table-head{
+                    margin-bottom: 25px;
+                    border-right: 1px solid #eee;
+                    tr{
+                        th,td{
+                            border-bottom: 1px solid #cfbfb7;
+                        }
+                        &:last-child{
+                            td{
+                                border-bottom: 1px solid #eee;
+                            }
+                        }
+                    }
+                }
+                &.table-body{
+                    thead{
+                        border-bottom: 2px solid #a19893;
+                        th{
+                            border-right: 1px solid #cfbfb7;
+                        }
+                    }
+                    tbody{
+                        tr{
+                            border-bottom: 1px solid #eee;
+                            td{
+                                border-right: 1px solid #eee;
+                            }
+                            .num{
+                                @include font-style(18);
+                                font-weight: 500;
+                            }
+                            .answer,
+                            .stuAnswer > button{
+                                @include font-style(30);
+                                color: #664e3d;
+                            }
+                            .numBtn{
+                                margin: 0 7px;
+                                &.active{
+                                    position: relative;
+                                    &::before{
+                                        content:'';
+                                        display: inline-block;
+                                        width: calc(100% + 4px);
+                                        height: calc(100% + 4px);
+                                        background: #fedada;
+                                        border-radius: 50%;
+                                        @include pos-center;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

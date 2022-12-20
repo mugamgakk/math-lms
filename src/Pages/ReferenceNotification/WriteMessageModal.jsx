@@ -337,11 +337,11 @@ return (
                     <div className="right">
                         <div className='mb-10'>
                             <span className='tit'>받는 사람 ({(checkState && checkState.length > 0 ) && checkState.length})</span>
-                            <input type='text' className='textInput' value={to} readOnly/>
+                            <input type='text' className='textInput' value={to && to} readOnly/>
                         </div>
                         <div className='mb-10'>
                             <span className='tit'>제목</span>
-                            <input type='text' className='textInput' placeholder='제목을 입력하세요.' onChange={(e)=>setWriteTit(e.target.value)}/>
+                            <input type='text' className='textInput' value={writeTit} placeholder='제목을 입력하세요.' onChange={(e)=>setWriteTit(e.target.value)}/>
                         </div>
                         <div className='mb-20'>
                             <span className='tit'>내용</span>
@@ -432,9 +432,9 @@ return (
                     <button className='btn-orange mr-4' disabled={rCheck} onClick={submitForm}>발송하기</button>
                     <button className='btn-brown mr-4' disabled={!rCheck} onClick={submitForm}>예약 발송</button>
                         <CheckBox 
-                        color={'orange'} 
-                        onChange={(e)=>rCheckFunc(e.target.checked)}
-                        className={'mr-20'} 
+                            color={'orange'} 
+                            onChange={(e)=>rCheckFunc(e.target.checked)}
+                            className={'mr-20'} 
                         />
                           <CustomDatePicker
                         value={date}

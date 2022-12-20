@@ -161,7 +161,7 @@ function ClassManagement(){
                                         {data && data[0].unit1}
                                     </td>
                                     <td style={{ width:'8.91%' }}>
-                                        <Checkbox color='green' id='all' checked={(data && wrongPopList.length == data[0]?.unit2.length)} onChange={(e) => allCheck(e.target.checked)}/>
+                                        <Checkbox color='green' id='all' checked={(data && (wrongPopList?.length == data[0]?.unit2.length))} onChange={(e) => allCheck(e.target.checked)}/>
                                     </td>
                                 </tr>
                                 {
