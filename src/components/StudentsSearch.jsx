@@ -42,7 +42,6 @@ function StudentsSearch({ children }) {
         <div className="bg bg-list student-list">
             <header className="student-list-header">
                 <h3 className="title fj">
-                    학생 선택
                     {children}
                 </h3>
                 <div className="fj">
@@ -80,7 +79,7 @@ function StudentsSearch({ children }) {
                     <thead>
                         <tr>
                             <th style={{ width: "9.52380%" }}>번호</th>
-                            <th style={{ width: "42.85714%" }}>이름(아이디)</th>
+                            <th style={{ width: "42.85714%" }}>학생명(아이디)</th>
                             <th style={{ width: "14.28571%" }}>학년</th>
                             <th style={{ width: "33.33333%" }}>학생 화면</th>
                         </tr>

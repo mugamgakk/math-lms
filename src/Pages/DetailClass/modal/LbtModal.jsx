@@ -56,7 +56,6 @@ function LbtModal({ setCreateModal, sendLBTData }) {
 
         let res = await ajax("/class_result.php", { data });
 
-        // console.log(res.data.lec_assa[0].unit2[0]);
         console.log(res.data.lec_assa);
 
         setLbtData(res.data);
@@ -873,9 +872,9 @@ function LbtModal({ setCreateModal, sendLBTData }) {
                                                                         <th>출결 사유</th>
                                                                         <td className="text-left p-5">
                                                                             {
-                                                                                lbtData?.attd_stat.reason.map(a => {
+                                                                                lbtData?.attd_stat.reason.map((a,i) => {
                                                                                     return (
-                                                                                        <p>{a}</p>
+                                                                                        <p key={i}>{a}</p>
                                                                                     )
                                                                                 })
                                                                             }

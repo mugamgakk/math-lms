@@ -28,7 +28,7 @@ function EvaluationRoutine() {
                 current="재원생 정기평가"
             />
 
-            <div className="row">
+            <div className="row layout-height">
                 <StudentsSearch>
                     <ul className="content-tabs2">
                         <li

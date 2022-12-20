@@ -109,7 +109,7 @@ function Statistics() {
                 icon="point"
             />
 
-            <div className="bg Statistics">
+            <div className="bg Statistics layout-height">
                 <div className="tabs-header">
                     <strong>&lt;지플럼 수학 학습 포인트 지급 기준 &gt;</strong>
                     <button className="btn-orange" onClick={()=>{setStandard(true)}}>확인</button>

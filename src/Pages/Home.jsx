@@ -105,7 +105,7 @@ function Home() {
                     </div>
                 </div>
             </header>
-            <div className="row">
+            <div id="body">
                 <nav className={`lnb ${burger ? "active" : ""}`}>
                     <div className="lnb-content">
                         <div className="lnb-toggle">

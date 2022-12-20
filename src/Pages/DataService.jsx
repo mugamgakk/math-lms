@@ -16,14 +16,13 @@ function DataService() {
         <>
             {location.pathname === "/data-service" && <Navigate to="/data-service/reference" />}
 
-            <div className="referenceNotification">
                 <ContentHeader
                     title={"자료 및 알림"}
                     location={["마이페이지", "수학 학습 관리", "자료 및 알림"]}
                     current={tab}
                     icon="notification"
                 />
-                <div className="bg contents pt-10">
+                <div className="bg contents pt-10 layout-height">
                     <div className="contents-head">
                         <ul className="content-tabs">
                             <li
@@ -47,7 +46,6 @@ function DataService() {
 
                     <Outlet />
                 </div>
-            </div>
         </>
     );
 }

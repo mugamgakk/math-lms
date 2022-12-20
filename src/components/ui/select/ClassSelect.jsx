@@ -20,8 +20,6 @@ function ClassSelect({
     let [text, setText] = useState("");
     let [options, setOptions] = useState([]);
 
-    console.log(options)
-
     // 1개 체크 함수
     const checkedItem = (checked, ele) => {
         if (checked) {
@@ -86,7 +84,7 @@ function ClassSelect({
         }
 
         if (options.length === choiceArr.length) {
-            setText("반 선택 (전체)");
+            setText("반 선택");
         }
 
         if (choiceArr.length === 0) {

@@ -101,7 +101,7 @@ function Attendance() {
                 current="출석 체크"
             />
 
-            <div className="attendence bg">
+            <div className="attendence bg layout-height">
                 <div className="attendence-head d-flex">
                     <DateNext
                         value={date}
@@ -151,7 +151,7 @@ function Attendance() {
                         </button>
                         <button className="btn-grey btn-icon" onClick={getData}>
                             <Icon icon={"reload"} />
-                            새로고침
+                            새로 고침
                         </button>
                     </div>
 

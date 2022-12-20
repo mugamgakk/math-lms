@@ -55,9 +55,13 @@
     }
 }
 
+#body{
+    display: flex;
+    min-height: calc(100vh - 60px);
+}
+
 .lnb {
     width: 320px;
-    min-height: calc(100vh - 60px);
     background-color: #333A3D;
 
     .lnb-content{
@@ -400,9 +404,12 @@
     }
 }
 
+.layout-height{
+    height: calc(100% - 41px);
+}
+
 .bg {
     background-color: #fff;
-    min-height: 750px;
     border-radius: $radius;
     padding: 20px 30px;
 

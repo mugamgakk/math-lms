@@ -39,7 +39,7 @@ function DetailClass() {
                 icon="studentManagement"
                 current={current}
             />
-            <div className="row">
+            <div className="row layout-height">
                 <StudentsSearch />
                 <div className="bg bg-content student-content">
                     {clickStudent === null ? (

@@ -33,7 +33,7 @@ function PlusLearning() {
                 icon="plusLearning"
                 current={current}
             />
-            <div className="row">
+            <div className="row layout-height">
                 <StudentsSearch>
                     <ul className="content-tabs2">
                         <li
