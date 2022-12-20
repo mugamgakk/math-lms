@@ -54,10 +54,17 @@ const LbtDayOption = memo(() => {
         setBookList([...bk_list]);
     };
 
+    const sendLBTData = {
+        clickStudent : clickStudent,
+        startDay,
+        endDay,
+        checkList
+    }
+
     return (
         <div className="LbtDayOption">
             
-            {createModal && <LbtModal setCreateModal={setCreateModal} />}
+            {createModal && <LbtModal setCreateModal={setCreateModal} sendLBTData={sendLBTData} />}
 
             <div className="option">
                 <div className="fa fj" style={{ marginBottom: "20px" }}>

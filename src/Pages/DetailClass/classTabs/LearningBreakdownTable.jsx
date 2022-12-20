@@ -1,9 +1,6 @@
-import axios from "axios";
 import React, { useState, useEffect } from "react";
 import ajax from "../../../ajax";
 import Checkbox from "../../../components/Checkbox";
-import SkeletonTable from "../../../components/SkeletonTable";
-import useLbtStore from "../../../store/useLbtStore";
 import useStudentsStore from "../../../store/useStudentsStore";
 import LbtDayOption from "../LbtDayOption";
 import LbtResultModal from "../modal/LbtResultModal";
@@ -44,8 +41,8 @@ function LearningBreakdownTable() {
         };
 
         try {
-            // const res = await ajax("/class_result.php", { data });
-            const res = await axios("/json/detailclass_table.json");
+            const res = await ajax("/class_result.php", { data });
+            // const res = await axios("/json/detailclass_table.json");
 
             setLbtList(res.data);
         } catch (errMsg) {

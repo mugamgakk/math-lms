@@ -20,6 +20,8 @@ function ClassSelect({
     let [text, setText] = useState("");
     let [options, setOptions] = useState([]);
 
+    console.log(options)
+
     // 1개 체크 함수
     const checkedItem = (checked, ele) => {
         if (checked) {
@@ -53,7 +55,7 @@ function ClassSelect({
 
         const res = await ajax("/class.php", {data});
         
-        const classList = res.data.class_list;
+        const classList = res.data.class_list ?? [];
 
         setOptions(classList);
         setChoiceArr(classList)
