@@ -18,9 +18,9 @@ const viewList = [
 
 function SendMessage() {
     let [sendList, setSendList] = useState(null);
+    let [checkList, setCheckList] = useState([]);
     let [coToState,setCoToState] = useState('co');
     let [viewListState,setViewListState] = useState();
-    let [checkList, setCheckList] = useState([]);
     let [writeModal, setWriteModal] = useState(false);
     let [searchInput, setSearchInput] = useState('');
     
@@ -55,7 +55,7 @@ function SendMessage() {
         if(checked){
             setCheckList([...checkList, parseInt(seq)])
         }else{
-            setCheckList(checkList.filter(item=> item !== parseInt(seq)))
+            setCheckList(checkList.filter(item=> item != parseInt(seq)))
         }
     }
 
@@ -165,7 +165,13 @@ function SendMessage() {
                         {
                             sendList && sendList.map((list,i)=> {
                                 return(
-                                   <Tr list={list} key={i} checkState={checkState} checkList={checkList} />
+                                   <Tr 
+                                    list={list}
+                                    key={i} 
+                                    checkState={checkState} 
+                                    checkList={checkList} 
+                                    sendList={sendList}
+                                   />
                                 )
                             })
                         }
@@ -177,7 +183,7 @@ function SendMessage() {
     );
 }
 
-const Tr = memo(({list, checkState, checkList }) => {
+const Tr = memo(({list, checkState, checkList, sendList }) => {
     let [afterReadModal,setAfterReadModal] = useState(false);
     let [viewModal,setViewModal] = useState(false);
 
@@ -185,8 +191,8 @@ const Tr = memo(({list, checkState, checkList }) => {
         <tr>
             <td style={{ width:'3.33%' }}>
                  <Checkbox
+                  checked={ checkList.includes(parseInt(list.seq)) }
                   onChange={(e)=>checkState(e.target.checked,list.seq)}
-                  checked={checkList.includes(list.seq)}
                  />
             </td>
             <td style={{ width:'13.33%' }}>{list.send_date}</td>

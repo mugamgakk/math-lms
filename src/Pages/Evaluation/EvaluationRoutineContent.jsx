@@ -224,7 +224,7 @@ function EvaluationRoutineContent() {
 const Tr = memo(({ item, check, setCheck }) => {
     let [viewModal, setViewModal] = useState(false);
     let [printModal, setPrintModal] = useState(false);
-    let [markingModal, setMarkingModal] = useState(true);
+    let [markingModal, setMarkingModal] = useState(false);
     const clickStudent = useStudentsStore((state) => state.clickStudent);
     let bookList = useStudentsStore((state) => state.bookList);
     let title = `[${item.kind}]/${clickStudent.um_nm}/${bookList.label}/${item.ltitle}`;

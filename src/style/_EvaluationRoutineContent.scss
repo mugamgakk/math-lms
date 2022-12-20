@@ -74,14 +74,17 @@
                                 margin: 0 7px;
                                 &.active{
                                     position: relative;
+                                    color: #fa4646;
                                     &::before{
                                         content:'';
                                         display: inline-block;
-                                        width: calc(100% + 4px);
-                                        height: calc(100% + 4px);
+                                        width: 27px;
+                                        height: 27px;
                                         background: #fedada;
                                         border-radius: 50%;
+                                        z-index: -1;
                                         @include pos-center;
+                                        transform: translate(-48%, -50%);
                                     }
                                 }
                             }
