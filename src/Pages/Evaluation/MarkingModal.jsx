@@ -7,10 +7,12 @@ import Icon from '../../components/Icon';
 function MarkingModal({data,setMarkingModal}) {
     const clickStudent = useStudentsStore((state) => state.clickStudent);
     let [answerList, setAnswerList] = useState(null);
+
     // 리렌더링 조건
     // 새로운 props 가 들어올때
     // 부모 컴포넌트 랜더링
     // state변경이 있을때
+
 
     useEffect(()=>{
         getList();
@@ -24,9 +26,18 @@ function MarkingModal({data,setMarkingModal}) {
         };
         
         let res = await ajax(url, { data: query });
-        console.log(res);
-        setAnswerList([res.data.slice(0,10),res.data.slice(10,20),res.data.slice(20,30)])
+        
+        let arr = [...res.data];
+       
+        arr.forEach(item=>{
+            item.std_ans = [];
+        });
+
+        setAnswerList([arr.slice(0,10),arr.slice(10,20),arr.slice(20,30)]);
+        
+
     }
+
 
     const sendAnswer = async () => {
 
@@ -48,7 +59,9 @@ function MarkingModal({data,setMarkingModal}) {
         
         let res = await ajax(url, { data: query });
         
+        console.log(res);
         setMarkingModal(false);
+
 
     };
 
@@ -111,7 +124,12 @@ function MarkingModal({data,setMarkingModal}) {
                             </tbody>
                         </table>
                         {
-                            answerList && <MarkingTable answerList={answerList} setAnswerList={setAnswerList} />
+                            answerList && 
+                            <MarkingTable 
+                            answerList={answerList} 
+                            setAnswerList={setAnswerList} 
+                           
+                            />
                         }
                     </div>
                 </div>
@@ -128,7 +146,7 @@ function MarkingTable({answerList,setAnswerList}){
 
     const clickBtn = (a,b,num) => {
 
-        let copy = [...answerList]
+        let copy = [...answerList];
         let answer = copy[a][b].crt_ans;
         let newAnswer = copy[a][b].std_ans;
    
@@ -161,7 +179,7 @@ function MarkingTable({answerList,setAnswerList}){
 
                const itemWrap = list.map((item,b)=>{
                     return(
-                        <tr key={item.no}>
+                        <tr key={b}>
                             <td className='num'>{item.no}</td>
                             <td className='answer'>
                                 {
@@ -207,25 +225,25 @@ function MarkingTable({answerList,setAnswerList}){
                         )
                     })
 
-            return(
-                <table className="table-body" key={a}>
-                    <colgroup>
-                        <col style={{ width: "20%" }} />
-                        <col style={{ width: "20%" }} />
-                        <col style={{ width: "60%" }} />
-                    </colgroup>
-                    <thead>
-                        <tr className="marking-block__head">
-                            <th className='num'>번호</th>
-                            <th className='answer'>정답</th>
-                            <th className='stuAnswer'>학생답</th>
-                        </tr>
-                    </thead>
-                        <tbody className="marking-block__body">
-                        {itemWrap}
-                        </tbody>
-                </table>
-              )
+                return(
+                    <table className="table-body" key={a}>
+                        <colgroup>
+                            <col style={{ width: "20%" }} />
+                            <col style={{ width: "20%" }} />
+                            <col style={{ width: "60%" }} />
+                        </colgroup>
+                        <thead>
+                            <tr className="marking-block__head">
+                                <th className='num'>번호</th>
+                                <th className='answer'>정답</th>
+                                <th className='stuAnswer'>학생답</th>
+                            </tr>
+                        </thead>
+                            <tbody className="marking-block__body">
+                            {itemWrap}
+                            </tbody>
+                    </table>
+                )
             })
             }
     </div>

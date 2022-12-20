@@ -76,13 +76,13 @@ function TodayClass() {
                         </div>
 
                         <div className="d-flex">
-                            <ClassSelect
+                            {/* <ClassSelect
                                 width={"200px"}
                                 value={group}
                                 onChange={(ele) => {
                                     setGroup(ele);
                                 }}
-                            />
+                            /> */}
                             <input
                                 type="text"
                                 className="textInput mr-10 ml-10"

@@ -54,7 +54,7 @@ function ViewMessageModal({setViewModal, setWriteModal, type, seq}) {
                     </button>
                 </div>
                 <div className='modal-body'>
-                {
+                    {
                         data && (
                             <>
                             <div className='top'>
