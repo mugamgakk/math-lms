@@ -53,9 +53,9 @@ function SendMessage() {
 
     const checkState = (checked, seq) => {
         if(checked){
-            setCheckList([...checkList, parseInt(seq)])
+            setCheckList([...checkList, seq])
         }else{
-            setCheckList(checkList.filter(item=> item != parseInt(seq)))
+            setCheckList(checkList.filter(item=> item != seq))
         }
     }
 
@@ -72,10 +72,16 @@ function SendMessage() {
    }
 
    const deleteList = async (checkList) => {
+
+    let arr = [];
+    checkList.forEach(a=>{
+        arr.push(parseInt(a));
+    });
+
     let url = "/notice.php";
     let query = {
         mode: "notice_delete",
-        delete_num : checkList
+        delete_num : arr
     };
 
     let res = await ajax(url, {data: query});
@@ -191,7 +197,7 @@ const Tr = memo(({list, checkState, checkList, sendList }) => {
         <tr>
             <td style={{ width:'3.33%' }}>
                  <Checkbox
-                  checked={ checkList.includes(parseInt(list.seq)) }
+                  checked={ checkList.includes(list.seq) }
                   onChange={(e)=>checkState(e.target.checked,list.seq)}
                  />
             </td>
