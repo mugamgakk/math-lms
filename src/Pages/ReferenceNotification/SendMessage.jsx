@@ -39,7 +39,7 @@ function SendMessage() {
             mode: "notice_list_send",
             qcate : coToState,
             qstr : searchInput,
-            // listnum : 2,
+            listnum : 30,
             page : 1
         };
 

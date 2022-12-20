@@ -168,7 +168,7 @@ function EvaluationRoutineContent() {
                         className="mr-10"
                     />
                     <button className='btn-search btn-green ml-10 mr-10' onClick={getList}><Icon icon={"search"} />조회</button>
-                    <button class="btn-grey btn-icon"><Icon icon={"reload"} />새로고침</button>
+                    <button className="btn-grey btn-icon"><Icon icon={"reload"} />새로고침</button>
 
                 </div>
             </div>
@@ -217,13 +217,14 @@ function EvaluationRoutineContent() {
                 </tbody>
             </table>
         </div>
+        
     );
 }
 
 const Tr = memo(({ item, check, setCheck }) => {
     let [viewModal, setViewModal] = useState(false);
     let [printModal, setPrintModal] = useState(false);
-    let [markingModal, setMarkingModal] = useState(false);
+    let [markingModal, setMarkingModal] = useState(true);
     const clickStudent = useStudentsStore((state) => state.clickStudent);
     let bookList = useStudentsStore((state) => state.bookList);
     let title = `[${item.kind}]/${clickStudent.um_nm}/${bookList.label}/${item.ltitle}`;
@@ -278,7 +279,8 @@ const Tr = memo(({ item, check, setCheck }) => {
                         채점하기
                     </button>
                 )}
-                {markingModal && (
+                {
+                    markingModal && (
                     <MarkingModal setMarkingModal={setMarkingModal} data={item} title={title} />
                 )}
             </td>

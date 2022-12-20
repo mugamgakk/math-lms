@@ -43,7 +43,7 @@ function ViewMessageModal({setViewModal, setWriteModal, type, seq}) {
 
     return ( 
         <div className="modal">
-            <div className='modal-content'>
+            <div className='modal-content viewMessageModal'>
                 <div className="modal-header fj">
                       <h2 className="modal-title">보낸 메세지 보기</h2>
                     <button className="btn" onClick={(e) => {
@@ -90,7 +90,7 @@ function ViewMessageModal({setViewModal, setWriteModal, type, seq}) {
                     }
                 </div>
                 <div className="modal-footer">
-                    <button className='btn' 
+                    <button className='btn-orange' 
                     onClick={(e)=>{
                         e.stopPropagation();
                         setViewModal(false);

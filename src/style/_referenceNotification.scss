@@ -230,3 +230,13 @@
 
     }
 }
+
+.viewMessageModal{
+    width: 870px;
+    .top{
+        h3{
+            @include font-style(24);
+            font-weight: 600;
+        }
+    }
+}
