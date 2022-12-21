@@ -17,11 +17,49 @@
     &-header {
         margin-bottom: 20px;
 
-        .title {
-            @include font-style(24);
-            color: #222;
-            font-weight: 600;
-            margin-bottom: 20px;
+        .student-list-tab{
+            position: relative;
+            padding-bottom: 5px;
+            margin-bottom: 18px;
+
+            &::after{
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: -30px;
+                width: calc(100% + 60px);
+                height: 1px;
+                background-color: #eee;
+            }
+            ul{
+                display: flex;
+                li{
+                    font-size: 20px;
+                    color: #aaa;
+                    font-weight: 500;
+                    cursor: pointer;
+
+                    &.active{
+                        font-weight: 600;
+                        color: #222;
+                        position: relative;
+                        &::after{
+                            content: "";
+                            position: absolute;
+                            width: 100%;
+                            left: 0;
+                            bottom: -5px;
+                            height: 1px;
+                            background-color: $green;
+                            z-index: 1;
+                        }
+                    }
+
+                    &:first-child{
+                        margin-right: 20px;
+                    }
+                }
+            }
         }
     }
 
@@ -31,9 +69,6 @@
         }
         .btn-table{
             min-width: 80px;
-        }
-        tr:hover{
-
         }
     }
 

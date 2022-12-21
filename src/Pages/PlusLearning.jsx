@@ -15,13 +15,13 @@ function PlusLearning() {
     let [current, setCurrent] = useState("")
 
     // url 변화
-    useEffect(()=>{
+    useEffect(() => {
         resetStudent();
 
         location.pathname.includes("narrative")
-        ? setCurrent("서술형 따라잡기")
-        : setCurrent("교과서 적중문제")
-    },[location.pathname])
+            ? setCurrent("서술형 따라잡기")
+            : setCurrent("교과서 적중문제")
+    }, [location.pathname])
 
     return (
         <>
@@ -35,16 +35,16 @@ function PlusLearning() {
             />
             <div className="row layout-height">
                 <StudentsSearch>
-                    <ul className="content-tabs2">
-                        <li
-                            className={`${current === "서술형 따라잡기" ? " active" : ""}`}
-                            onClick={() => {
-                                navigate("/plus-learning/narrative");
-                            }}
-                        >
-                            서술형 따라잡기
-                        </li>
-                        <li
+                    <div className="student-list-tab">
+                        <ul>
+                            <li
+                                className={`${current === "서술형 따라잡기" ? " active" : ""}`}
+                                onClick={() => {
+                                    navigate("/plus-learning/narrative");
+                                }}>
+                                서술형 따라잡기
+                            </li>
+                            <li
                             className={`${current === "교과서 적중문제" ? " active" : ""}`}
                             onClick={() => {
                                 navigate("/plus-learning/textBook");
@@ -52,7 +52,8 @@ function PlusLearning() {
                         >
                             교과서 적중문제
                         </li>
-                    </ul>
+                        </ul>
+                    </div>
                 </StudentsSearch>
                 <div className="bg bg-content">
                     {clickStudent === null ? (

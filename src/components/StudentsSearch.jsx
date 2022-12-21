@@ -41,9 +41,9 @@ function StudentsSearch({ children }) {
     return (
         <div className="bg bg-list student-list">
             <header className="student-list-header">
-                <h3 className="title fj">
-                    {children}
-                </h3>
+
+                {children}
+                
                 <div className="fj">
                     <ClassSelect
                         onChange={(ele) => {

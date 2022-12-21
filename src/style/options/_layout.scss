@@ -491,17 +491,3 @@
         }
     }
 }
-
-.content-tabs2{
-    @extend .content-tabs;
-    position: relative;
-    top: -7px;
-
-    li{
-        &.active{
-            &::after{
-                bottom: -5px;
-            }
-        }
-    }
-}

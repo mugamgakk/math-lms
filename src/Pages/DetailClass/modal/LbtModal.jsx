@@ -11,6 +11,9 @@ import { arrSort, _cloneDeep } from "../../../methods/methods";
 
 const { $y: todayYear, $M: todayMonth } = dayjs(new Date());
 const 산출시점 = dayjs(new Date()).format("YYYY.MM.DD");
+const paramList = [
+    "lec_stat", "lec_assa", "an_act", "an_con", "plus_ct", "plus_tb", "an_ut", "an_bt", "attd_stat", "an_online", "point", "attd_eval", "tch_comm", "art_an"
+]
 
 
 function LbtModal({ setCreateModal, sendLBTData }) {
@@ -30,38 +33,50 @@ function LbtModal({ setCreateModal, sendLBTData }) {
     let canvas2 = useRef();
 
     const getRegult = async () => {
+        const data = createDataParam();
 
-
-        const data = {
-            mode: "get_analytics_tot",
-            avg: 1, //평균표시
-            lec_stat: 1, // 단원별 학습
-            lec_assa: 0, //단원별 정답률 향상도/수행병가
-            an_act: 1, //행동 영역 분석
-            an_con: 1, //내용 영역 분석
-            plus_ct: 1, //플러스 서술
-            plus_tb: 1, //플러스 내신
-            an_ut: 1, //단원평가분석
-            an_bt: 1, //총괄평가분석
-            attd_stat: 1, //학원 출결상황
-            an_online: 1, //온라인 학습분석
-            point: 1, //획득 학습포인트
-            attd_eval: 1, //학습태도 평가
-            tch_comm: 1, //선생님의견,
-            art_an: 1, //AI분석,
-            arr_bk_cd: ["m11-co1", "m11-no1"], //교재코드 배열
-            sdate: "2022-01-01", //분석표 생성시 선택된 기간
-            edate: "2022-01-01", //분석표 생성시 선택된 기간
-        };
+        // console.log(data);
 
         let res = await ajax("/class_result.php", { data });
+        console.log(res.data.lec_assa[0].unit2[0])
+        render(res.data);
 
-        console.log(res.data.lec_assa);
+    };
 
-        setLbtData(res.data);
+    const createDataParam = () => {
+        let obj = { arr_bk_cd: [] };
+        for (let ele of checkedList) {
+            ele.optionItem.forEach(a => {
+                obj[a.value] = 1
+            })
+        }
 
+        paramList.forEach(a => {
+            if (a in obj) {
+                // console.log(a);
+            } else {
+                obj[a] = 0
+            }
+        })
+
+        sendLBTData.checkList.forEach(a => {
+            obj.arr_bk_cd.push(a.bk_cd);
+        })
+
+        obj.mode = "get_analytics_tot";
+        obj.avg = 1;
+        obj.sdate = dayjs(sendLBTData.startDay).format("YYYY-MM-DD");
+        obj.edate = dayjs(sendLBTData.endDay).format("YYYY-MM-DD");
+
+        return obj;
+    }
+
+    const render = (data) => {
+        setLbtData(data);
+
+        setViewItem(checkedList);
         setTimeout(() => {
-            let { calc, fig, sol, und } = res.data.an_act;
+            let { calc, fig, sol, und } = data.an_act;
             let 계산력 = calc[2].replace("%", "");
             let 추론력 = fig[2].replace("%", "");
             let 문제해결력 = sol[2].replace("%", "");
@@ -70,15 +85,14 @@ function LbtModal({ setCreateModal, sendLBTData }) {
             draw1(계산력, 이해력, 추론력, 문제해결력);
 
             let arr = []
-            res.data.an_bt.forEach(a => {
+            data.an_bt.forEach(a => {
                 arr.push(a.graph);
             })
 
+            // 총괄평가 분석
             draw2(...arr, arr.length);
         }, 200)
-
-        setViewItem(checkedList)
-    };
+    }
 
     const isAllCheck = () => {
         let result1 = 0;
@@ -421,15 +435,22 @@ function LbtModal({ setCreateModal, sendLBTData }) {
                                                                                     </td>
                                                                                     <td style={{ padding: "0" }}>
                                                                                         <div>
-                                                                                            <div className="bg-area-wrap" style={{height : `${30 + 15 * a.unit2.length}px`}}>
+                                                                                            <div className="bg-area-wrap" style={{ height: `${30 + 15 * a.unit2.length}px` }}>
 
                                                                                                 {
                                                                                                     a.unit2.map((s, i) => {
                                                                                                         return (
                                                                                                             <div className="area-list" key={i}>
                                                                                                                 <div className="area-list-item" style={{ width: `${s.co}%` }}></div>
-                                                                                                                <div className="area-list-item" style={{ width: "70%" }}></div>
-                                                                                                                <div className="area-list-item" style={{ width: "90%" }}></div>
+                                                                                                                <div className="area-list-item" style={{ width: `${s.pa_tr[0]}%` }}>
+                                                                                                                <div className="area-list-item-clinic" style={{ width: `${s.pa_tr[1]}%` }}></div>
+                                                                                                                </div>
+                                                                                                                <div className="area-list-item" style={{ width: `${s.pa_he[0]}%` }}>
+                                                                                                                <div className="area-list-item-clinic" style={{ width: `${s.pa_he[1]}%` }}></div>
+                                                                                                                </div>
+                                                                                                                <div className="area-list-item" style={{ width: `${s.pa_no[0]}%` }}>
+                                                                                                                <div className="area-list-item-clinic" style={{ width: `${s.pa_no[1]}%` }}></div>
+                                                                                                                </div>
                                                                                                             </div>
                                                                                                         )
                                                                                                     })
@@ -872,7 +893,7 @@ function LbtModal({ setCreateModal, sendLBTData }) {
                                                                         <th>출결 사유</th>
                                                                         <td className="text-left p-5">
                                                                             {
-                                                                                lbtData?.attd_stat.reason.map((a,i) => {
+                                                                                lbtData?.attd_stat.reason.map((a, i) => {
                                                                                     return (
                                                                                         <p key={i}>{a}</p>
                                                                                     )

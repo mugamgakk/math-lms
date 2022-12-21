@@ -387,43 +387,79 @@
         position: absolute;
         width: 100%;
         left: 0;
+        top: 0;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        height: 15px;
+        height: 20px;
         z-index: 1;
 
         &-item {
             height: 5px;
+            position: relative;
+            display: flex;
+            justify-content: flex-end;
+
+            &-clinic{
+                height: 5px;
+                background-color:#c41b09;
+            }
+
+            &::after{
+                content: "";
+                position: absolute;
+                right: -11px;
+                top: -13px;
+                font-size: 9px;
+                color: #444;
+                font-weight: 400;
+                z-index: 1;
+            }
 
             &:nth-child(1) {
                 background-color: #ea7851;
             }
             &:nth-child(2) {
                 background-color: #057064;
+                &::after{
+                    content: "TR";
+                }
             }
             &:nth-child(3) {
                 background-color: #8fc799;
+                &::after{
+                    right: -13px;
+                    top: -11px;
+                    content: "HE";
+                }
+            }
+            &:nth-child(4) {
+                background-color: #bdffde;
+                &::after{
+                    content: "NO";
+                    right: -15px;
+                    top: -8px;
+                }
             }
         }
 
         &:nth-of-type(1) {
-            top: 12px;
+            top: 10px;
         }
         &:nth-of-type(2) {
-            top: 36px;
+            top: 34px;
         }
         &:nth-of-type(3) {
-            top: 62px;
+            top: 60px;
         }
         &:nth-of-type(4) {
-            top: 87px;
+            top: 85px;
         }
         &:nth-of-type(5) {
-            top: 113px;
+            top: 111px;
         }
         &:nth-of-type(6) {
-            top: 140px;
+            top: 138px;
         }
     }
 }
