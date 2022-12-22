@@ -3,8 +3,6 @@ import { useState } from "react";
 import ReactAudioPlayer from "react-audio-player";
 import SelectBase from "../../components/ui/select/SelectBase";
 import 오디오입니동 from "../../test.mp3";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileArrowDown, faPlay, faPause, faBackwardFast } from "@fortawesome/free-solid-svg-icons";
 import { fileDown } from "../../methods/methods";
 
 const speedOption = [1, 1.25, 1.5, 1.75, 2];
@@ -22,7 +20,7 @@ function AudioPage() {
     let [listenSpeed, setListenSpeed] = useState(1000); // 1초에 한번
 
     let [speenValue, setSpeedValue] = useState(speedOption[0]);
-    let [stateIcon, setStateIcon] = useState(faPause);
+    // let [stateIcon, setStateIcon] = useState(faPause);
 
     let allTime = useRef(0);
 
@@ -31,7 +29,7 @@ function AudioPage() {
         let 오디오 = audio.current.audioEl.current;
 
         오디오.paused ? 오디오.play() : 오디오.pause();
-        오디오.paused ? setStateIcon(faPlay) : setStateIcon(faPause);
+        // 오디오.paused ? setStateIcon(faPlay) : setStateIcon(faPause);
     };
 
     // 오디오파일 준비 됐을시
@@ -121,7 +119,7 @@ function AudioPage() {
                 onEnded={() => {
                     audioBar.current.style.width = `${100}%`;
                     setMinTime(maxTime);
-                    setStateIcon(faPlay);
+                    // setStateIcon(faPlay);
                 }}
             />
 
@@ -148,10 +146,8 @@ function AudioPage() {
                         forwardRadio(-5);
                     }}
                 >
-                    <FontAwesomeIcon icon={faBackwardFast} size="2x" />
                 </button>
                 <button className="mx-15" onClick={start}>
-                    <FontAwesomeIcon icon={stateIcon} size="2x" />
                 </button>
                 <button
                     onClick={() => {
@@ -159,7 +155,6 @@ function AudioPage() {
                     }}
                     style={{ transform: "rotate(180deg)" }}
                 >
-                    <FontAwesomeIcon icon={faBackwardFast} size="2x" />
                 </button>
                 <SelectBase
                     width={"100px"}
@@ -173,7 +168,6 @@ function AudioPage() {
                         fileDown(오디오입니동);
                     }}
                 >
-                    <FontAwesomeIcon icon={faFileArrowDown} size="2x" />
                 </button>
             </div>
 
