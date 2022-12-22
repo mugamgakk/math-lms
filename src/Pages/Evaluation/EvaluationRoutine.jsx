@@ -15,7 +15,6 @@ const Box = styled.div`
 `;
 
 function EvaluationRoutine() {
-    const location = useLocation();
     const navigate = useNavigate();
     const clickStudent = useStudentsStore((state) => state.clickStudent);
 

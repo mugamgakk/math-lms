@@ -7,7 +7,7 @@ import Icon from "../../Icon";
 function SelectBase({
     width = "130px",
     onChange,
-    options,
+    options = [],
     value,
     defaultValue = "선택하세요",
     disabled,
@@ -20,17 +20,18 @@ function SelectBase({
         setSelectOpen(!selectOpen);
     }, [disabled, selectOpen]);
 
-    const setTitle = useMemo(() => {
-        if (value === undefined || value === null) {
+    const setTitle = () => {
+        if (value === undefined || value === null || value === "") {
             return defaultValue;
         } else {
             for (let ele of options) {
+                console.log(value)
                 if (ele.value === value || ele.value === value.value) {
                     return ele.label;
                 }
             }
         }
-    }, [value]);
+    }
 
     return (
         <div
@@ -44,7 +45,7 @@ function SelectBase({
             }}
         >
             <div className="select-view" onClick={openSelect}>
-                <h4>{setTitle}</h4>
+                <h4>{setTitle()}</h4>
             </div>
             <div className="select-btn" onClick={openSelect}>
                 <Icon icon={"select_typeA"} />

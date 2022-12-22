@@ -143,7 +143,7 @@ function EvaluationRoutineContent() {
                     <SelectBase
                         defaultValue="단원"
                         value={selectOption.단원}
-                        options={filterList && filterList}
+                        options={filterList ? filterList : []}
                         width={"150px"}
                         onChange={(ele) => {
                             setSelecOtion({ ...selectOption, 단원: ele });
