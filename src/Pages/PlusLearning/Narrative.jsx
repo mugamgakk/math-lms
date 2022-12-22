@@ -100,6 +100,7 @@ function Narrative() {
 
             setSkeleton(false);
         } catch (msg) {
+            console.error(msg);
             setSkeleton(false);
         }
     };

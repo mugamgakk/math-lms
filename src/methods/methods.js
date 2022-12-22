@@ -18,6 +18,20 @@ export function falseModal(e, target) {
     }
 }
 
+export function getBase64(param) {
+    return new Promise((resolve) => {
+        if (typeof param === "string") {
+            resolve(btoa(param));
+        } else {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(param);
+            fileReader.onload = function (e) {
+                resolve(e.target.result);
+            };
+        }
+    });
+}
+
 function weekChange(param) {
     switch (param) {
         case 0:
@@ -125,7 +139,7 @@ export const getUrlFileSize = async (url) => {
         return size;
     } catch (err) {
         console.log("cors 에러");
-        return 0
+        return 0;
     }
 };
 

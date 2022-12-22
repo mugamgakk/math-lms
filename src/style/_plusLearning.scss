@@ -6,119 +6,135 @@
 }
 
 .PlusLearningGradingModal{
-    .modal-container{
-        width: 1200px;
+    .modal-content{
+        width: 1240px;
+        height: 98vh;
     }
-    .layout{
-        width: 50%;
+
+    .modal-body{
+        height: calc(100% - 110px);
+    }
+
+    .grading-content{
+        height: calc(100% - 50px);
+        overflow: auto;
         padding: 20px;
-        border-right: 1px solid #ddd;
-
-        &:last-child{
-            border-right: none;
-        }
     }
 
-    .problem-btn{
-        margin-bottom: 20px;
-
+    .button-group{
+        padding-bottom: 20px;
         button{
             min-width: 100px;
         }
     }
 
-    .problem{
-        border: 1px solid #ddd;
+    .grading-problem{
         height: 240px;
-        overflow-y: auto;
-        margin-bottom: 20px;
-    }
-
-    .option-wrap{
-        height: 390px;
         overflow: auto;
-    }
-
-    table{
-        width: 100%;
+        border: 1px solid #ddd;
         margin-bottom: 20px;
 
-        thead{
-            background-color:#e6ddd8;
-            border-top: 2px solid $brown;
-            border-bottom: 2px solid#a19893;
-            height: 35px;
+        img{
+            width: 100%
+        }
+    }
 
-            th{
-                font-size: 17px;
-                font-weight: 600;
-                color: $brown;
+    .alert-msg{
+        font-size: 20px;
+        color: #ccc;
+        font-weight: 400;
+        @include pos-center;
+    }
+
+    .grading-table{
+        margin-bottom: 25px;
+        table{
+            width: 100%;
+            td{
+                border-right: 1px solid #eee;
                 text-align: center;
-                border-right: 1px solid #cfbfb7;
-
+                padding: 5px;
                 &:last-child{
                     border-right: none;
                 }
             }
-        }
-        tbody{
-            td{
-                font-size: 20px;
-                font-weight: 400;
-                color: #444;height: 44px;
-                border-right: 1px solid #ccc;
-                text-align: center;
+            thead{
+                background-color: #e6ddd8;
+                border-top: 2px solid#664e3d;
+                border-bottom: 2px solid#a19893;
+                height: 33px;
+
+                th{
+                    color: $brown;
+                    font-size: 17px;
+                    font-weight: 600;
+                    border-right: 1px solid #cfbfb7;
+                    text-align: center;
+                    &:last-child{
+                        border-right: none
+                    }
+                }
+            }
+
+            tbody{
+                td:first-child{
+                    text-align: left;
+                }
 
                 .select{
                     text-align: left;
+                    min-width: 70px;
                     height: 30px;
-                    &.active{
-                        .select-list-box{
-                            top: 29px;
+                    .select-list-box{
+                        top: 29px;
+
+                        .select-list{
+                            li{
+                                height: 28px;
+                                line-height: 28px;
+                            }
                         }
+                    }
+                    &.active{
                         
                         .select-btn{
-                            top: 6px;
+                            top: 2px
                         }
                     }
                     &-btn{
-                        top: 3px;
+                        top: 2px;
+                        right: 5px;
+                        transform: scale(0.7);
                     }
                 }
-                &:first-child{
-                    text-align: left;
-                }
-                &:last-child{
-                    border-right: none;
-                }
-            }
-            tr{
-                border-bottom: 1px solid #eee;
-                &:last-child{
-                    border-bottom: none;
+                
+                tr{
+                    border-bottom:1px solid #eee;
+                    &:last-child{
+                        border-bottom: none
+                    }
                 }
             }
 
-            
-        }
+            tfoot{
+                background-color: #f2eeeb;
+                border-top: 2px solid#b9a89c;
+                border-bottom: 2px solid #b9a89c;
+                height: 42px;
+                td{
+                    border-right: 1px solid #cfbfb7;
 
-        tfoot{
-            background-color: #f2eeeb;
-            border-top: 2px solid #b9a89c;
-            border-bottom: 2px solid #b9a89c;
-            height: 45px;
-
-            td{
-                border-right: 1px solid#eed8d1;
-                text-align: center;
-                &:last-child{
-                    border-right: none;
+                    &:last-child{
+                        background-color: $brown;
+                        color: #ea7851;
+                    }
                 }
             }
         }
     }
 
-    .opinion{
+    .grading-opinion{
+        position: relative;
         h5{
             background-color: #e6ddd8;
             border-top: 2px solid #664e3d;
@@ -132,7 +148,7 @@
         }
 
         textarea{
-            height: 100px;
+            height: 150px;
             border-top: none;
             padding: 10px;
             @include font-style();
@@ -142,6 +158,11 @@
 
     .upload{
         display: flex;
+        margin-bottom: 10px;
+        &:last-child{
+            margin-bottom: 0;
+        }
+
         button, label{
             height: 40px;
         }
@@ -181,6 +202,12 @@
         }
     }
 
+    .options-wrap{
+        height: 390px;
+        overflow: auto;
+        border: 1px solid #ccc;
+    }
+
     .answer{
         height: 340px;
         border: 1px solid #ddd;
@@ -188,7 +215,8 @@
         border-radius: 8px;
         overflow: hidden;
         margin-bottom: 30px;
-        
+        position: relative;
+
         &-header{
             height: 40px;
             padding-left: 10px;
@@ -212,6 +240,7 @@
                 background-color: rgba(0,0,0,0.6);
                 border-radius: 50%;
                 color: $white;
+                font-size: 18px;
             }
 
             // .minus{
@@ -225,6 +254,9 @@
                 color: #000;
                 background-color: rgba(256,256,256,0.8);
                 font-size: 17px;
+                background-color: #fff;
+                border: 1px solid #ccc;
+
                 i{
                     transform: rotate(180deg);
                 }
@@ -236,6 +268,7 @@
         }
     }
 }
+
 
 .PlusLearningGradingTextBookModal{
     .text-alert{

@@ -1,40 +1,58 @@
 import React from "react";
+import { useMemo } from "react";
 import { useCallback } from "react";
 import { useState } from "react";
 import Icon from "../../Icon";
 
-function SelectBase({ width = "130px", onChange, options, value, defaultValue = "선택하세요", disabled, className = "" }) {
+function SelectBase({
+    width = "130px",
+    onChange,
+    options,
+    value,
+    defaultValue = "선택하세요",
+    disabled,
+    className = "",
+}) {
     let [selectOpen, setSelectOpen] = useState(false);
-    
+
     const openSelect = useCallback(() => {
         if (disabled) return false;
         setSelectOpen(!selectOpen);
-    },[disabled, selectOpen]);
+    }, [disabled, selectOpen]);
 
-    const setTitle = useCallback(()=>{
-        for(let ele of options){
-            if(ele.value === value || ele.value === value.value){
-                return ele.label
+    const setTitle = useMemo(() => {
+        if (value === undefined || value === null) {
+            return defaultValue;
+        } else {
+            for (let ele of options) {
+                if (ele.value === value || ele.value === value.value) {
+                    return ele.label;
+                }
             }
         }
-    },[value])
+    }, [value]);
 
     return (
-        <div tabIndex={1}
+        <div
+            tabIndex={1}
             style={{ width: width }}
-            className={`select ${selectOpen ? "active" : ""} ${disabled ? "disabled" : ""} ${className}`} 
-            onBlur={() => { setSelectOpen(false) }}
+            className={`select ${selectOpen ? "active" : ""} ${
+                disabled ? "disabled" : ""
+            } ${className}`}
+            onBlur={() => {
+                setSelectOpen(false);
+            }}
         >
             <div className="select-view" onClick={openSelect}>
-                <h4>{value ? setTitle() : defaultValue}</h4>
+                <h4>{setTitle}</h4>
             </div>
             <div className="select-btn" onClick={openSelect}>
                 <Icon icon={"select_typeA"} />
             </div>
             <div className="select-list-box">
                 <ul className="select-list">
-                    {
-                        options && options.map((a, i) => {
+                    {options &&
+                        options.map((a, i) => {
                             return (
                                 <li
                                     key={i}
@@ -42,10 +60,11 @@ function SelectBase({ width = "130px", onChange, options, value, defaultValue = 
                                         onChange && onChange(a);
                                         setSelectOpen(false);
                                     }}
-                                >{a.label}</li>
-                            )
-                        })
-                    }
+                                >
+                                    {a.label}
+                                </li>
+                            );
+                        })}
                 </ul>
             </div>
         </div>
