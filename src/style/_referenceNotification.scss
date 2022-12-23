@@ -25,6 +25,16 @@
         }
     }
 }
+%top-tit{
+    @include font-style(18);
+    color: #666;
+    background: #eee;
+    width: 84px;
+    display: inline-block;
+    text-align: center;
+    border-radius: $radius;
+    margin-right: 8px;
+}
 .referenceContentsModal{
     width: 870px;
     .top{
@@ -37,14 +47,7 @@
             font-weight: 600;
         }   
         &-tit{
-            @include font-style(18);
-            color: #666;
-            background: #eee;
-            width: 84px;
-            display: inline-block;
-            text-align: center;
-            border-radius: $radius;
-            margin-right: 8px;
+            @extend %top-tit;
         }
     }
     .mid{
@@ -234,9 +237,38 @@
 .viewMessageModal{
     width: 870px;
     .top{
+        padding: 20px;
         h3{
             @include font-style(24);
             font-weight: 600;
+            margin-bottom: 20px;
+        }
+        &-tit{
+            @extend %top-tit;
+        }
+        .date{
+            color: #888;
+        }
+        border-bottom: 1px solid #eee;
+    }
+    .mid{
+        padding: 20px;
+        height: 530px;
+    }
+    .foot{
+        padding: 20px;
+        .file{
+            border-radius: $radius;
+            border: 1px solid #aaa;
+            padding: 10px 0 10px 40px;
+            position: relative;
+            height: 100px;
+            overflow-y: auto;
+            i{
+                position: absolute;
+                left: 15px;
+                top: 10px;
+            }
         }
     }
 }
