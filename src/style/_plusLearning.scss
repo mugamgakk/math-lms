@@ -343,3 +343,24 @@
         color: #eb615a;
     }
 }
+
+
+.narrative-print{
+    width: 100%;
+    height: calc(100% - 50px);
+    overflow: auto;
+    border: 1px solid #eee;
+    img{
+        width: 100%;
+    }
+
+}
+
+.narrative-print-a4{
+    width: 210mm;
+    height: 297mm;
+    padding: 20px;
+    img{
+        width: 100%;
+    }
+}

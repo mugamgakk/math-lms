@@ -17,6 +17,7 @@ function NarrativeTr({ ele, checkOne, checkedList }) {
     let [gradingModal, setGradingModal] = useState(false);
     let [printModal, setPrintModal] = useState(false);
 
+
     // 재응시
     const reTry = async () => {
         const data = {
@@ -99,7 +100,7 @@ function NarrativeTr({ ele, checkOne, checkedList }) {
                 </div>
             </td>
             <td style={{ width: "12.37487%" }}>
-                {printModal && <NarrativePrint closeModal={setPrintModal} />}
+                {printModal && <NarrativePrint closeModal={setPrintModal} sc_seq={[ele.sc_seq]} />}
                 <button
                     className="btn-table"
                     onClick={() => {

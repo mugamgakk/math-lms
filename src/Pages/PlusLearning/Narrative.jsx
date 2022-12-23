@@ -8,7 +8,6 @@ import ajax from "../../ajax";
 import NarrativeTr from "./NarrativeTr";
 import { _cloneDeep } from "../../methods/methods";
 import Checkbox from "../../components/Checkbox";
-import axios from "axios";
 import NarrativePrint from "../../components/NarrativePrint";
 
 const 단원 = [
