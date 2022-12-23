@@ -25,7 +25,6 @@ function SelectBase({
             return defaultValue;
         } else {
             for (let ele of options) {
-                console.log(value)
                 if (ele.value === value || ele.value === value.value) {
                     return ele.label;
                 }

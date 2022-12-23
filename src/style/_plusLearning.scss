@@ -87,6 +87,7 @@
                     height: 30px;
                     .select-list-box{
                         top: 29px;
+                        transition: all 0.6s;
 
                         .select-list{
                             li{
@@ -96,6 +97,9 @@
                         }
                     }
                     &.active{
+                        .select-list-box{
+                            max-height: none;
+                        }
                         
                         .select-btn{
                             top: 2px

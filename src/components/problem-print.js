@@ -19,7 +19,7 @@ export const getImgSize = (param) => {
     });
 };
 
-// 넓이 380px에 따라 이미지 높이값을 리턴한다.
+// 넓이 x에 따라 이미지 높이값을 리턴한다.
 export const proportionHeight = (width, height, x) => {
     return (height * x) / width;
 };

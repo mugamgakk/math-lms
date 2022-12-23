@@ -9,7 +9,7 @@ import NarrativeTr from "./NarrativeTr";
 import { _cloneDeep } from "../../methods/methods";
 import Checkbox from "../../components/Checkbox";
 import axios from "axios";
-import PrintModal from "../../components/PrintModal_clinic";
+import NarrativePrint from "../../components/NarrativePrint";
 
 const 단원 = [
     { value: 1, label: "수와 식의 계산" },
@@ -67,11 +67,13 @@ function Narrative() {
 
             isOpen ? (data.mode = "ct_open") : (data.mode = "ct_close");
 
-            let res = await ajax("class_plus.php", { data });
+            // console.log(data);
 
-            // console.log(res);
+            let res = await ajax("class_plus.php", { data });
+            // console.log(res)
+
         } catch (err) {
-            // console.log(err);
+            console.log(err);
         }
     };
 
@@ -89,10 +91,10 @@ function Narrative() {
         // console.log(data);
 
         try {
-            // let res = await ajax("/class_plus.php", { data });
-            let res = await axios("/json/pluslearning_narrative.json");
+            let res = await ajax("/class_plus.php", { data });
+            // let res = await axios("/json/pluslearning_narrative.json");
 
-            console.log(res.data);
+            // console.log(res.data);
 
             setPlusData(_cloneDeep(res.data));
 
@@ -112,7 +114,7 @@ function Narrative() {
     return (
         <div className="Narrative">
             {
-                printModal && <PrintModal closeModal={setPrintModal}/>
+                printModal && <NarrativePrint closeModal={setPrintModal}/>
             }
             <UserInfo clickStudent={clickStudent} />
             <p className="alert-text" style={{ marginTop: "20px" }}>

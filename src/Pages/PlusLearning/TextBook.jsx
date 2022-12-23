@@ -16,7 +16,8 @@ const data = [
         대단원: "1. 수와 식",
         소단원: "1. 유리수와 순환소수",
         상태: "학습완료",
-        채점: { totalScore: 25, score: 8, point: "64점", 재응시: 2 }
+        채점: { totalScore: 25, score: 8, point: "64점", 재응시: 2 },
+        tb_seq : 124
     },
     {
         id: 2,
@@ -24,7 +25,8 @@ const data = [
         대단원: "1. 수와 식",
         소단원: "1. 유리수와 순환소수",
         상태: "학습완료",
-        채점: { totalScore: 25, score: 8, point: "64점", 재응시: 2 }
+        채점: { totalScore: 25, score: 8, point: "64점", 재응시: 2 },
+        tb_seq : 254
     },
     {
         id: 3,
@@ -32,7 +34,8 @@ const data = [
         대단원: "1. 수와 식",
         소단원: "1. 유리수와 순환소수",
         상태: "학습완료",
-        채점: { totalScore: 25, score: 8, point: "64점", 재응시: 2 }
+        채점: { totalScore: 25, score: 8, point: "64점", 재응시: 2 },
+        tb_seq : 322
     }
 ];
 
@@ -172,7 +175,7 @@ const Tr = ({ ele }) => {
                     <button className="btn-table mb-5">재응시({ele.채점.재응시})</button>
                     <button className="btn-table" onClick={() => { setModal(!modal) }}>채점하기</button>
                     {
-                        modal && <PlusLearningGradingTextBookModal setModal={setModal} />
+                        modal && <PlusLearningGradingTextBookModal setModal={setModal} tb_seq={ele.tb_seq} />
                     }
                 </div>
             </td>

@@ -3,42 +3,67 @@ import { useState } from "react";
 import Icon from "../../components/Icon";
 import ajax from "../../ajax";
 import { useEffect } from "react";
-import {_cloneDeep } from "../../methods/methods"
+import { _cloneDeep } from "../../methods/methods";
 
+// 오답 0 정답 1
 
+const currect = ["①", "②", "③", "④", "⑤"];
 
-function PlusLearningGradingTextBookModal({ setModal }) {
-    
+function PlusLearningGradingTextBookModal({ setModal, tb_seq }) {
     let [list, setList] = useState(null);
 
     // 모두 정답, 모두오답 바꿔주는 함수
-    const allChange = (param)=>{
+    const allChange = (param) => {
         let copy = _cloneDeep(list);
 
-        if(param){
-            setList(copy.map(a=> a.is_correct = 1 ))
-        }else{
-            setList(copy.map(a=> a.is_correct = 0 ))
+        if (param) {
+            setList(copy.map((a) => (a.is_correct = "1")));
+        } else {
+            setList(copy.map((a) => (a.is_correct = "0")));
         }
         setList(copy);
-    }
+    };
 
-    const toggleBtn = ({num, state})=>{
+    const toggleBtn = ({ num, state }) => {
         let copy = _cloneDeep(list);
-        
-        copy.forEach(a=>{
-            if(a.no == num){
-                a.is_correct = state
+
+        copy.forEach((a) => {
+            if (a.no == num) {
+                if (state == 0 || state == null) {
+                    a.is_correct = "1";
+                } else {
+                    a.is_correct = "0";
+                }
             }
-        })
+        });
 
         setList(copy);
+    };
+
+    const soreSave = async ()=>{
+        const data = {
+            mode : "tb_score_save",
+            tb_seq : tb_seq,
+            arr_crt : []
+        }
+
+        // 정답여부, 정오답 순차값
+        data.arr_crt = list.map(a=> ({sod_seq : a.sod_seq, is_correct : a.is_correct}) );
+
+        let res = await ajax("/class_plus.php", {data});
+
+        alert("저장이 완료되었습니다.");
+        setModal(false);
     }
 
     const getList = async () => {
-        let res = await ajax("/class_plus.php", { data: { mode: "tb_score_view", tb_seq: 124 } });
+        const data = {
+            mode: "tb_score_view",
+            tb_seq: tb_seq,
+        };
 
-        console.log(res.data)
+        let res = await ajax("/class_plus.php", { data });
+
         setList(res.data);
     };
 
@@ -107,14 +132,14 @@ function PlusLearningGradingTextBookModal({ setModal }) {
                                 <div>정답</div>
                                 <div>채점</div>
                             </li>
-                            {list?.map(function (a) {
-                                return <Tr item={a} toggleBtn={toggleBtn} />;
+                            {list?.map(function (a, i) {
+                                return <Tr item={a} key={i} toggleBtn={toggleBtn} />;
                             })}
                         </ol>
                     </div>
                 </div>
                 <div className="modal-footer">
-                    <button className="btn-orange mr-10" style={{ width: "100px" }}>
+                    <button className="btn-orange mr-10" style={{ width: "100px" }} onClick={soreSave}>
                         채점 완료
                     </button>
                     <button
@@ -133,15 +158,39 @@ function PlusLearningGradingTextBookModal({ setModal }) {
 }
 
 const Tr = ({ item, toggleBtn }) => {
-    
+
+    let [toggleImg, setToggleImg] = useState(false);
 
     return (
         <li>
             <div>{item.no}</div>
-            <div>{item.crt_ans}</div>
             <div>
-                <button className={`${item.is_correct == 1 ? "btn-red" : "btn-red-border"}`} onClick={()=>{ toggleBtn({num : item.no, state : item.is_correct == 1 ? 0 : 1} ) }}>
-                    {item.is_correct == 1 ? "정답" : "오답"}
+                {item.crt_ans &&
+                    item.crt_ans
+                        .map((a, i) => {
+                            return currect[parseInt(a)];
+                        })
+                        .join(",")}
+
+                        {
+                            toggleImg && <div><img src={item.crt_ans_file}/></div>
+                        }
+                        
+
+                {item.crt_ans_file && <button className="btn-red-border" onClick={()=>{ setToggleImg(!toggleImg) }}>보기</button>}
+            </div>
+            <div>
+                <button
+                    className={`${item.is_correct == 1 ? "btn-red" : "btn-red-border"}`}
+                    onClick={() => {
+                        toggleBtn({ num: item.no, state: item.is_correct });
+                    }}
+                >
+                    {typeof item.is_correct === "string"
+                        ? item.is_correct == "1"
+                            ? "정답"
+                            : "오답"
+                        : "입력"}
                 </button>
             </div>
         </li>

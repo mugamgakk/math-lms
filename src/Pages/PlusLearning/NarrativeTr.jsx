@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import ajax from "../../ajax";
 import Checkbox from "../../components/Checkbox";
 import Icon from "../../components/Icon";
-import PrintModal from "../../components/PrintModal_clinic";
+import NarrativePrint from "../../components/NarrativePrint";
 import { toggleBodyScroll } from "../../methods/methods";
 import PlusLearningGradingModal from "./PlusLearningGradingModal";
 
@@ -99,7 +99,7 @@ function NarrativeTr({ ele, checkOne, checkedList }) {
                 </div>
             </td>
             <td style={{ width: "12.37487%" }}>
-                {printModal && <PrintModal closeModal={setPrintModal} />}
+                {printModal && <NarrativePrint closeModal={setPrintModal} />}
                 <button
                     className="btn-table"
                     onClick={() => {
