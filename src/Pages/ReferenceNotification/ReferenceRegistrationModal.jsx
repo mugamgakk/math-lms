@@ -104,7 +104,9 @@ function ReferenceRegistrationModal({setModal}) {
 
         files.forEach(file=>{
             const fileReader = new FileReader();
+
             fileReader.readAsDataURL(file);
+            console.log(fileReader)
             fileReader.onload = function(e) { 
               encodingFiles.push({
                 filename : file.name,

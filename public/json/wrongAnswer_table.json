@@ -1,35 +1,16 @@
 {
-    "bk_list" : [
-        { "bk_cd" : "M12_C12", "bk_name": "중2-1노벰"},
-        { "bk_cd" : "M12_C12", "bk_name": "중2-1노벰"}
-    ],
-    "wrong_list" : [
-        {
-            "wa_seq" : "1",
-            "reg_dt" : "2021-01-01",
-            "bk_name" : "중2-1 뜨레스",
-            "wa_title" : "제목 중2-1뜨레스 _강수학 말줄임표 없이",
-            "wa_range" : ["I-1.소인수분해","I-2.최대공약수","I-3.최소공배수"],
-            "wa_qnum" : "30",
-            "wa_status" : "학습 중"
-        },
-        {
-            "wa_seq" : "2",
-            "reg_dt" : "2021-01-01",
-            "bk_name" : "중2-1 s노벰",
-            "wa_title" : "제목 중2-1노벰 _강수학 말줄임표 없이",
-            "wa_range" : ["I-1.소인수분해","I-3.최소공배수"],
-            "wa_qnum" : "30",
-            "wa_status" : "학습 완료"
-        },
-        {
-            "wa_seq" : "3",
-            "reg_dt" : "2021-01-01",
-            "bk_name" : "중2-1 s노벰",
-            "wa_title" : "제목 중2-1노벰 _강수학 말줄임표 없이",
-            "wa_range" : ["I-1.소인수분해","I-3.최소공배수"],
-            "wa_qnum" : "30",
-            "wa_status" : "인쇄 전"
-        }
-    ]
+    "seq": "46",
+    "send_date": "2022/12/16",
+    "reserved": "1111/11/11",
+    "to_name": "",
+    "from_name": "78",
+    "files": null,
+    "subject": "sdfs",
+    "content": "\\\"sdfs\\\"",
+    "status": "1/1",
+    "btn_stat": "cancel",
+    "nt_from_name": "관리자",
+    "nt_to_name": null,
+    "nt_to_cnt": "1",
+    "nt_to_send_cnt": "1"
 }
