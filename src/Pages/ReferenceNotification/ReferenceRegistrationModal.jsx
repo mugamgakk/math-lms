@@ -1,7 +1,7 @@
 // yeonju
 import React, { useState, useMemo, useCallback, useRef } from 'react';
 import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import CkeditorCustom from "@ckeditor/ckeditor5-custom";
 import { getByteSize } from "../../methods/methods";
 import SelectBase from "../../components/ui/select/SelectBase";
 import ajax from "../../ajax";
@@ -217,7 +217,7 @@ function ReferenceRegistrationModal({setModal}) {
                         <div className="th">내용</div>
                         <div className="td scroll">
                             <CKEditor
-                                editor={ClassicEditor}
+                                editor={CkeditorCustom}
                                 config={{placeholder: "내용을 입력하세요."}} 
                                 data=""
                                 onReady={(editor) => {

@@ -4,7 +4,6 @@
     "private": true,
     "proxy": "http://218.50.0.41:8080",
     "dependencies": {
-        "@ckeditor/ckeditor5-build-classic": "^35.1.0",
         "@ckeditor/ckeditor5-react": "^5.0.2",
         "@testing-library/jest-dom": "^5.16.4",
         "@testing-library/react": "^13.3.0",
@@ -14,7 +13,6 @@
         "file-saver": "^2.0.5",
         "fontagon": "^1.1.1",
         "force": "0.0.3",
-        "html2pdf.js": "^0.9.0",
         "jszip": "^3.10.1",
         "node-sass": "^7.0.1",
         "react": "^18.2.0",

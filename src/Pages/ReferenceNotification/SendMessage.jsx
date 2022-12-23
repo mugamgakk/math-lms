@@ -77,16 +77,19 @@ function SendMessage() {
     checkList.forEach(a=>{
         arr.push(parseInt(a));
     });
-
+    console.log(arr);
     let url = "/notice.php";
     let query = {
-        mode: "notice_delete",
-        delete_num : arr
+        data : {
+            mode : 'notice_delete',
+            delete_no : arr
+        }
     };
 
-    let res = await ajax(url, {data: query});
-    console.log(res);
+    let res = await ajax(url, query);
 
+    window.alert('성공');
+    console.log(res);
  }
 
    
@@ -206,7 +209,7 @@ const Tr = memo(({list, checkState, checkList, sendList }) => {
             <td style={{ width:'8%' }}>
                 { list.files > 0 && <span className='file'><Icon icon={"clip"} style={{ fontSize:'30px' }}/></span> }
             </td>
-            <td style={{ width:'38.66%' }} onClick={(e)=>{
+            <td style={{ width:'38.66%' }} className='fs' onClick={(e)=>{
                 e.stopPropagation();
                 setViewModal(true);
             }}>{list.subject}
@@ -230,7 +233,10 @@ const Tr = memo(({list, checkState, checkList, sendList }) => {
             </td>
             <td style={{ width:'10.73%' }}>
                 {
-                    list.btn_stat == 'cancel' ? <button className='btn-table'>발송 취소</button> : '-'
+                    list.btn_stat == 'cancel' && <button className='btn-table'>발송 취소</button> 
+                }
+                {
+                    list.btn_stat == 'repost' && <button className='btn-table'>다시보내기</button>
                 }
             </td>
         </tr>

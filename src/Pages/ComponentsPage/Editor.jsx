@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { useState } from "react";
+import CkeditorCustom from "@ckeditor/ckeditor5-custom";
 import axios from "axios";
 
 function Editor() {
@@ -43,7 +42,7 @@ function Editor() {
         <div>
             <h2>텍스트 에디터</h2>
             <CKEditor
-                editor={ClassicEditor}
+                editor={CkeditorCustom}
                 config={{
                     extraPlugins: [uploadPlugin],
                 }}

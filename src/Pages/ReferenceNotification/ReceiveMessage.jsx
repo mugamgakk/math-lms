@@ -154,7 +154,7 @@ const Tr = memo(({list, checkState, checkList}) => {
             <td style={{ width:'13.33%' }}>{list.send_date}</td>
             <td style={{ width:'10.66%' }}>{list.from_name}</td>
             <td style={{ width:'8%' }}>{list.grade}</td>
-            <td style={{ width:'54%' }} onClick={(e)=>{
+            <td style={{ width:'54%' }} className='fs' onClick={(e)=>{
                 e.stopPropagation();
                 setViewModal(true);
                 }}>{list.subject}
@@ -162,16 +162,14 @@ const Tr = memo(({list, checkState, checkList}) => {
                 viewModal && 
                 <ViewMessageModal 
                 setViewModal={setViewModal} 
-                viewModal={viewModal} 
-                tit='받은'
+                setWriteModal={setWriteModal}
                 type='receive'
                 seq={list.seq}
-                setWriteModal={setWriteModal}
                 />
             }
             </td>
             <td style={{ width:'10.66%' }}>
-                <button className='btn' onClick={()=>{
+                <button className='btn-brown' onClick={()=>{
                     setWriteModal(true);
                     }}>답장 쓰기</button>
                 {

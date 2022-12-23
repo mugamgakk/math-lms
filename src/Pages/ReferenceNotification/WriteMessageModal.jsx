@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef, useCallback, useMemo } from 'react'
 import ajax from "../../ajax";
 import SelectBase from "../../components/ui/select/SelectBase";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import CkeditorCustom from "@ckeditor/ckeditor5-custom";
 import { getByteSize } from "../../methods/methods";
 import CheckBox from '../../components/Checkbox'
 import Icon from '../../components/Icon';
@@ -64,8 +64,9 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
     
     const getList = async () => {
 
-        let url = "/notice.php/?mode=notice_usr";
+        let url = "/notice.php";
         let query = {
+            mode : 'notice_usr',
             class_cd : 123123
         };
         
@@ -337,16 +338,16 @@ return (
                     <div className="right">
                         <div className='mb-10'>
                             <span className='tit'>받는 사람 ({(checkState && checkState.length > 0 ) && checkState.length})</span>
-                            <input type='text' className='textInput' value={to && to} readOnly/>
+                            <input type='text' className='textInput' value={to ? to : ''} readOnly/>
                         </div>
                         <div className='mb-10'>
                             <span className='tit'>제목</span>
-                            <input type='text' className='textInput' value={writeTit} placeholder='제목을 입력하세요.' onChange={(e)=>setWriteTit(e.target.value)}/>
+                            <input type='text' className='textInput' value={writeTit ? writeTit : ''} placeholder='제목을 입력하세요.' onChange={(e)=>setWriteTit(e.target.value)}/>
                         </div>
                         <div className='mb-20'>
                             <span className='tit'>내용</span>
                             <CKEditor
-                                editor={ClassicEditor}
+                                editor={CkeditorCustom}
                                 config={{placeholder: "내용을 입력하세요."}} 
                                 data=""
                                 onReady={(editor) => {
