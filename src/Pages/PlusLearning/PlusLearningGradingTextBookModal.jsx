@@ -40,21 +40,21 @@ function PlusLearningGradingTextBookModal({ setModal, tb_seq }) {
         setList(copy);
     };
 
-    const soreSave = async ()=>{
+    const soreSave = async () => {
         const data = {
-            mode : "tb_score_save",
-            tb_seq : tb_seq,
-            arr_crt : []
-        }
+            mode: "tb_score_save",
+            tb_seq: tb_seq,
+            arr_crt: [],
+        };
 
         // 정답여부, 정오답 순차값
-        data.arr_crt = list.map(a=> ({sod_seq : a.sod_seq, is_correct : a.is_correct}) );
+        data.arr_crt = list.map((a) => ({ sod_seq: a.sod_seq, is_correct: a.is_correct }));
 
-        let res = await ajax("/class_plus.php", {data});
+        let res = await ajax("/class_plus.php", { data });
 
         alert("저장이 완료되었습니다.");
         setModal(false);
-    }
+    };
 
     const getList = async () => {
         const data = {
@@ -139,7 +139,11 @@ function PlusLearningGradingTextBookModal({ setModal, tb_seq }) {
                     </div>
                 </div>
                 <div className="modal-footer">
-                    <button className="btn-orange mr-10" style={{ width: "100px" }} onClick={soreSave}>
+                    <button
+                        className="btn-orange mr-10"
+                        style={{ width: "100px" }}
+                        onClick={soreSave}
+                    >
                         채점 완료
                     </button>
                     <button
@@ -158,26 +162,30 @@ function PlusLearningGradingTextBookModal({ setModal, tb_seq }) {
 }
 
 const Tr = ({ item, toggleBtn }) => {
-
     let [toggleImg, setToggleImg] = useState(false);
+
+    console.log(item);
 
     return (
         <li>
             <div>{item.no}</div>
             <div>
-                {item.crt_ans &&
-                    item.crt_ans
-                        .map((a, i) => {
-                            return currect[parseInt(a)];
-                        })
-                        .join(",")}
+                {item.crt_ans}
 
-                        {
-                            toggleImg && <div><img src={item.crt_ans_file}/></div>
-                        }
-                        
+                {
+                    toggleImg && <img src={item.crt_ans_file} alt="" />
+                }
 
-                {item.crt_ans_file && <button className="btn-red-border" onClick={()=>{ setToggleImg(!toggleImg) }}>보기</button>}
+                {item.crt_ans_file && (
+                    <button
+                        className="btn-red-border"
+                        onClick={() => {
+                            setToggleImg(!toggleImg);
+                        }}
+                    >
+                        보기
+                    </button>
+                )}
             </div>
             <div>
                 <button

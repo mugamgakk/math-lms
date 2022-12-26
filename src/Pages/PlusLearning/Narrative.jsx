@@ -39,8 +39,6 @@ function Narrative() {
 
     const [initialData, setInitialData] = useState([]);;
 
-
-
     const checkAll = (e) => {
         e.target.checked ? setCheckedList(plusData) : setCheckedList([]);
     };
@@ -113,7 +111,7 @@ function Narrative() {
     return (
         <div className="Narrative">
             {
-                printModal && <NarrativePrint closeModal={setPrintModal}/>
+                printModal && <NarrativePrint closeModal={setPrintModal} sc_seq={checkedList.map(a=> a.sc_seq )} />
             }
             <UserInfo clickStudent={clickStudent} />
             <p className="alert-text" style={{ marginTop: "20px" }}>

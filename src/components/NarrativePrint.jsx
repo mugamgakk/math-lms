@@ -5,9 +5,8 @@ import Checkbox from "./Checkbox";
 import { _cloneDeep } from "../methods/methods";
 import { useEffect } from "react";
 import ajax from "../ajax";
-import { getProblemHeight, 풀이보기높이구하기, 분할하기 } from "./problem-print";
 
-function PrintModal({ closeModal, cls_seq, sc_seq }) {
+function NarrativePrint({ closeModal, sc_seq }) {
     const printComponent = React.useRef();
 
     let [page, setPage] = useState(1);
@@ -40,7 +39,7 @@ function PrintModal({ closeModal, cls_seq, sc_seq }) {
         setLists(문제);
         setSolveList(답);
 
-        console.log(res.data);
+        // console.log(res.data);
     };
 
     // 탭변경 페이지 초기화
@@ -136,9 +135,10 @@ function PrintModal({ closeModal, cls_seq, sc_seq }) {
 
                         <div ref={printComponent}>
                             {checkData.includes("question") &&
-                                lists?.map((a) => {
+                                lists?.map((a,i) => {
                                     return (
                                         <div
+                                            key={i}
                                             className="narrative-print-a4"
                                             style={{ width: "210mm", height: "297mm" }}
                                         >
@@ -147,9 +147,10 @@ function PrintModal({ closeModal, cls_seq, sc_seq }) {
                                     );
                                 })}
                             {checkData.includes("solution") &&
-                                solveList?.map((a) => {
+                                solveList?.map((a,i) => {
                                     return (
                                         <div
+                                            key={i}
                                             className="narrative-print-a4"
                                             style={{ width: "210mm", height: "297mm" }}
                                         >
@@ -263,4 +264,4 @@ const PrintPagination = ({ totalPage = 20, pageLength = 10, page, setPage }) => 
     );
 };
 
-export default PrintModal;
+export default NarrativePrint;

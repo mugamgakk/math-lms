@@ -3,7 +3,7 @@ import React, { useState, useMemo, useEffect} from "react";
 import SelectBase from '../../../components/ui/select/SelectBase';
 import ajax from "../../../ajax";
 import DatePicker from "react-date-picker";
-import PrintModal_clinic from '../../../components/PrintModal_clinic';
+import PrintModalWrongAnswer from '../../../components/PrintModalWrongAnswer';
 import dayjs from "dayjs"
 import useStudentsStore from "../../../store/useStudentsStore";
 import Icon from "../../../components/Icon";
@@ -29,7 +29,6 @@ function WrongAnswer() {
     const clickStudent = useStudentsStore(state=>state.clickStudent);
     let [date,setDate] = useState(new Date());
 
-   console.log(selectOption)
     useEffect(()=>{
         console.log(checkData);
     },[checkData])
@@ -50,7 +49,6 @@ function WrongAnswer() {
         let res = await ajax(url, {data: query});
         // const res = await axios("/json/wrongAnswer_table.json");
 
-        console.log(res.data);
         setWrongList(res.data.wrong_list);
         setFilterData(res.data.wrong_list);
 
@@ -231,7 +229,7 @@ const Tr = ({data,checkData,checkFunc})=>{
             </td>
             <td style={{ width:'11.82%' }}><button className="btn-table" onClick={()=> setPrintModal(true)}><Icon icon={"print"} style={{ marginRight:'5px' }} />인쇄</button>
             {
-                printModal && <PrintModal_clinic closeModal={setPrintModal}/>
+                printModal && <PrintModalWrongAnswer closeModal={setPrintModal} wa_seq={data.wa_seq} />
             }
             </td>
         </tr>

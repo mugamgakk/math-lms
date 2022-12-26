@@ -11,18 +11,17 @@
 //학습 포인트
 @import "./statistics";
 
-
 // 학생별 수업관리 학생 리스트
 .student-list {
     &-header {
         margin-bottom: 20px;
 
-        .student-list-tab{
+        .student-list-tab {
             position: relative;
             padding-bottom: 5px;
             margin-bottom: 18px;
 
-            &::after{
+            &::after {
                 content: "";
                 position: absolute;
                 bottom: 0;
@@ -31,19 +30,19 @@
                 height: 1px;
                 background-color: #eee;
             }
-            ul{
+            ul {
                 display: flex;
-                li{
+                li {
                     font-size: 20px;
                     color: #aaa;
                     font-weight: 500;
                     cursor: pointer;
 
-                    &.active{
+                    &.active {
                         font-weight: 600;
                         color: #222;
                         position: relative;
-                        &::after{
+                        &::after {
                             content: "";
                             position: absolute;
                             width: 100%;
@@ -55,7 +54,7 @@
                         }
                     }
 
-                    &:first-child{
+                    &:first-child {
                         margin-right: 20px;
                     }
                 }
@@ -63,11 +62,11 @@
         }
     }
 
-    table{
-        td:nth-child(2){
+    table {
+        td:nth-child(2) {
             font-weight: 500;
         }
-        .btn-table{
+        .btn-table {
             min-width: 80px;
         }
     }
@@ -77,8 +76,6 @@
         text-align: center;
     }
 }
-
-
 
 .AttendanceManagement-header {
     position: relative;
@@ -105,7 +102,7 @@
     bottom: 0px;
     position: static;
 
-    .title{
+    .title {
         height: 50px;
         border-bottom: 1px solid #ddd;
         @include font-style(24);
@@ -115,7 +112,7 @@
         padding-left: 24px;
     }
 
-    .modal-content{
+    .modal-content {
         position: fixed;
         z-index: 1;
         left: auto;
@@ -126,9 +123,9 @@
         box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.24);
     }
 
-    .text-area{
+    .text-area {
         padding: 23px;
-        textarea{
+        textarea {
             width: 300px;
             height: 100px;
             border-radius: $radius;
@@ -139,28 +136,25 @@
     }
 }
 
-
-
-
 // 진단평가
-.JinDanSearch{
-    &-header{
+.JinDanSearch {
+    &-header {
         @include flex(sb);
 
-        h4{
+        h4 {
             @include font-style(24);
             color: #222;
             font-weight: 600;
         }
     }
 
-    & > table{
-        td{
+    & > table {
+        td {
             font-size: 17px;
             font-weight: 400;
             color: #444;
         }
-        td:first-child{
+        td:first-child {
             font-size: 18px;
             cursor: pointer;
             font-weight: 500;
@@ -169,27 +163,27 @@
     }
 }
 
-.jindan-order{
-    background-color:#f2eeeb;
+.jindan-order {
+    background-color: #f2eeeb;
     padding: 10px;
     margin-bottom: 16px;
 
-    h4{
+    h4 {
         font-weight: 600px;
         color: #664e3d;
         margin-bottom: 30px;
     }
-    p{
+    p {
         color: #664e3d;
         font-size: 16px;
         font-weight: 600;
     }
-    .text-alert{
+    .text-alert {
         color: #eb615a;
     }
 }
 
-.EvaluationPrint{
+.EvaluationPrint {
     @include flex;
     height: 70px;
     border-radius: $radius;
@@ -197,67 +191,75 @@
     border: 1px solid #ccc;
     margin-bottom: 16px;
 
-    h4{
+    h4 {
         margin-right: 10px;
     }
 
-    .select{
+    .select {
         margin-right: 10px;
     }
 }
 
-.jindan-table{
-    td{
+.jindan-table {
+    td {
         @include flex;
     }
 }
 
-.MemberLinkModal{
-    th{
+.MemberLinkModal {
+    th {
         text-align: center;
     }
-    td:first-child{
+    td:first-child {
         font-weight: 500;
         color: $green;
         cursor: pointer;
     }
 }
 
-.ReservationModal-modal{
-    .modal-content{
+.ReservationModal-modal {
+    .modal-content {
         min-width: 660px;
     }
 
-    table{
-        td{
-            padding: 10px;
-        }
-        td:first-child{
-            font-weight: 600;
-            width: 147px;
+    table {
+        width: 100%;
+        th {
             text-align: center;
+            font-weight: 500;
+            color: $green;
+        }
+        td {
+            padding: 10px;
+            background: $white !important;
+        }
+        tr{
+            background-color: $white !important;
         }
 
-        .btn-box{
+        .btn-box {
             min-width: 40px;
             width: 40px;
             height: 40px;
             border: 1px solid #666;
             border-radius: $radius;
+            font-size: 17px;
+            font-weight: 500;
+            color: #444;
         }
 
-        textarea{
+        textarea {
             height: 100px;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: $radius;
             @include font-style;
 
-            &::placeholder{
+            &::placeholder {
                 color: #aaa;
             }
         }
-        .dash{
+        .dash {
             margin: 0 10px;
         }
         // tr{

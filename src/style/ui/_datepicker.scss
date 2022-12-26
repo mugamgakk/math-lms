@@ -1,18 +1,18 @@
-.datepicker{
+.datepicker {
     display: inline-flex;
 
-    &-body{
+    &-body {
         height: 0;
-        .react-date-picker__wrapper{
+        .react-date-picker__wrapper {
             visibility: hidden;
         }
 
-        .react-date-picker__calendar{
+        .react-date-picker__calendar {
             top: 43px !important;
         }
     }
 
-    &-btn{
+    &-btn {
         height: 40px;
         @include flex();
         border: 1px solid #666;
@@ -26,22 +26,20 @@
     }
 }
 
-.next-date{
+.next-date {
     @include font-style(24);
     font-weight: 600;
     color: #222;
     margin: 0 15px;
 }
 
-.ChangeMonth{
-    h4{
+.ChangeMonth {
+    h4 {
         @extend .next-date;
     }
 }
 
-
-
-.CustomDatePicker-btn{
+.CustomDatePicker-btn {
     position: relative;
     height: 40px;
     min-width: 146px;
@@ -49,23 +47,22 @@
     border: 1px solid #666;
     border-radius: $radius;
 
-    & > span{
+    & > span {
         @include flex;
         @include font-style(17);
         font-weight: 500;
         color: #444;
         height: 100%;
-        i{
+        i {
             font-size: 18px;
             margin-left: 10px;
         }
     }
 }
 
-
-.CustomDatePicker{
+.CustomDatePicker {
     position: absolute;
-    cursor:default;
+    cursor: default;
     left: 0;
     top: 40px;
     z-index: 1;
@@ -74,11 +71,11 @@
     border-radius: 8px;
     padding: 20px;
 
-    &-header{
+    &-header {
         @include flex;
         margin-bottom: 12px;
 
-        .btn{
+        .btn {
             cursor: pointer;
             width: 18px;
             height: 18px;
@@ -87,13 +84,13 @@
             border-radius: 4px;
             border: solid 1px #ccc;
 
-            i{
+            i {
                 position: relative;
                 top: 1px;
             }
         }
 
-        .format{
+        .format {
             font-size: 15px;
             color: $brown;
             margin: 0 17px;
@@ -103,31 +100,29 @@
         }
     }
 
-    .date{
-        &-header{
+    .date {
+        &-header {
             display: flex;
-            
 
-            &>div{
+            & > div {
                 color: $brown;
                 font-size: 15px;
                 font-weight: 600;
                 width: 30px;
                 height: 30px;
 
-                &:first-child{
+                &:first-child {
                     color: #fa4646;
                 }
             }
         }
 
-
-        &-body{
+        &-body {
             width: 210px;
             display: flex;
             flex-wrap: wrap;
 
-            .day{
+            .day {
                 color: #666;
                 font-size: 13px;
                 font-weight: 400;
@@ -136,33 +131,31 @@
                 cursor: pointer;
                 @include flex;
 
-                &:nth-last-child(7n){
-                    color: #fa4646 ;
+                &:nth-last-child(7n) {
+                    color: #fa4646;
                 }
 
-                &.current-day{
+                &.current-day {
                     font-weight: 600;
                     background-color: #ddd;
                     border-radius: 50%;
                     color: #fa4646 !important;
                 }
 
-                &.disabled{
+                &.disabled {
                     color: #ddd;
                     cursor: default;
                 }
             }
-
-            
         }
     }
 
-    .month{
+    .month {
         display: flex;
         flex-wrap: wrap;
         width: 180px;
 
-        &-item{
+        &-item {
             width: 60px;
             height: 40px;
             font-size: 15px;
@@ -170,18 +163,122 @@
             color: #666;
             cursor: pointer;
 
-            &.disabled{
+            &.disabled {
                 color: #ddd;
                 cursor: default;
             }
         }
 
-        .current-month{
+        .current-month {
             color: $orange;
             font-weight: 600;
         }
+    }
+}
 
-        
+.CustomDatePicker-btn.CustomDatePickerReservation {
+    min-width: auto;
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
+
+    & > span {
+        i {
+            margin-left: 0;
+        }
     }
 
+    .CustomDatePicker {
+        position: initial;
+        border: none;
+        border-radius: 0;
+        position: relative;
+        left: 0;
+        top: 0;
+        &::after {
+            content: "";
+            width: 1px;
+            height: 70%;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            border-right: 2px dashed #ccc;
+        }
+    }
+
+    .CustomDatePickerReservation-content {
+        display: flex;
+        position: absolute;
+        cursor: default;
+        left: 0;
+        top: 40px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .CustomDatePicker-time {
+        background-color: $white;
+        position: relative;
+        left: -1px;
+        padding: 23px 20px 26px 23px;
+        text-align: left;
+
+        .time-label {
+            font-size: 15px;
+            font-weight: 600;
+            color: $brown;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .timeDay{
+            font-size: 14px;
+            font-weight: 600;
+            color:#514c4a;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        .timetime{
+            font-weight: 600;
+            font-size: 16px;
+            color: #514c4a;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .time-btn{
+            button{
+                width: 40px;
+                min-width: auto;
+                height: 25px;
+                font-size: 13px;
+                &:first-child{margin-right: 5px;}
+            }
+        }
+
+        .select {
+            height: 20px;
+            h4{
+                text-align: left;
+                font-size: 14px;
+            }
+            &-btn {
+                transform: scale(0.7);
+                top: -2px;
+                right: 3px;
+            }
+
+            .select-list-box{
+                top: 19px;
+                li{
+                    font-size: 14px;
+                    height: 18px;
+                    @include flex;
+                }
+            }
+        }
+    }
 }

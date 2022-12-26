@@ -44,6 +44,8 @@ function LearningBreakdownTable() {
             const res = await ajax("/class_result.php", { data });
             // const res = await axios("/json/detailclass_table.json");
 
+            console.log(res.data);
+
             setLbtList(res.data);
         } catch (errMsg) {
             console.log(errMsg);
@@ -52,7 +54,7 @@ function LearningBreakdownTable() {
 
     useEffect(() => {
         getAnalyticsList();
-    }, []);
+    }, [clickStudent]);
 
     return (
         <div>
