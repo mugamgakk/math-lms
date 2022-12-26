@@ -272,3 +272,16 @@
         }
     }  
 }
+
+.afterReadModal{
+    .modal-content{
+        width: 310px;
+        position: absolute;
+        z-index: 1;
+    .modal-body{
+        // height: 300px;
+        overflow-y: auto;
+        }
+    }
+}
+

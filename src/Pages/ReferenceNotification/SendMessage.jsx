@@ -1,6 +1,5 @@
 // yeonju
 import React, {useState,useEffect,memo} from 'react';
-import SearchBtn from '../../components/ui/button/SearchBtn';
 import SelectBase from '../../components/ui/select/SelectBase';
 import ajax from "../../ajax";
 import ViewMessageModal from './ViewMessageModal';
@@ -8,6 +7,9 @@ import WriteMessageModal from './WriteMessageModal';
 import Icon from '../../components/Icon';
 import RadioBox from '../../components/RadioBox';
 import Checkbox from '../../components/Checkbox';
+import Pagination from '../../components/Pagination';
+
+
 
 const viewList = [
     { value: 30, label: '30개' },
@@ -20,9 +22,10 @@ function SendMessage() {
     let [sendList, setSendList] = useState(null);
     let [checkList, setCheckList] = useState([]);
     let [coToState,setCoToState] = useState('co');
-    let [viewListState,setViewListState] = useState();
+    let [viewListState,setViewListState] = useState(30);
     let [writeModal, setWriteModal] = useState(false);
     let [searchInput, setSearchInput] = useState('');
+    let [page, setPage] = useState(1);
     
     useEffect(()=>{
         getList();
@@ -186,14 +189,19 @@ function SendMessage() {
                         }
                     </tbody>
                 </table>
+                <Pagination 
+                setPage={setPage}
+                page={page}
+                totalPage={sendList && sendList.length}
+                />
 
             </div>
         </>
     );
 }
 
-const Tr = memo(({list, checkState, checkList, sendList }) => {
-    let [afterReadModal,setAfterReadModal] = useState(false);
+const Tr = memo(({list, checkState, checkList }) => {
+    let [afterReadModal,setAfterReadModal] = useState(true);
     let [viewModal,setViewModal] = useState(false);
 
     return(
@@ -223,13 +231,14 @@ const Tr = memo(({list, checkState, checkList, sendList }) => {
             }
             </td>
             <td style={{ width:'15.26%' }} onClick={()=>setAfterReadModal(true)}>{list.status}
-                {/* {
-                    (list.status.includes('/') && afterReadModal) && 
+                {
+                    afterReadModal && 
                     <AfterReadingModal 
                     setAfterReadModal={setAfterReadModal}
                     afterReadModal={afterReadModal}
+                    seq={list.seq}
                     />
-                } */}
+                }
             </td>
             <td style={{ width:'10.73%' }}>
                 {
@@ -243,47 +252,60 @@ const Tr = memo(({list, checkState, checkList, sendList }) => {
     )
 });
 
-function AfterReadingModal({setAfterReadModal,afterReadModal}){
+function AfterReadingModal({setAfterReadModal,afterReadModal,seq}){
     let [list,setList] = useState(null);
 
-    if(afterReadModal){
-        ajax("/notice.php/?mode=notice_read_detail", {
-        }).then(res=>{
-            console.log(res);
+    useEffect(()=>{
+        getList();
+    });
+
+        const getList = async () => {
+            let url = "/notice.php";
+            let query = {
+                mode: "notice_read_detail",
+                nt_seq : 0
+            };
+            
+            let res = await ajax(url, {data: query});
+
             setList(res.data);
-        })
-    }
+        }
 
     return(
-        <div className="afterReadingModal">
-            <button className='btn'
-             onClick={(e)=>{
-                setAfterReadModal(false)
-                e.stopPropagation();
-            }}
-             >X</button>
-            <table>
-                <thead>
-                    <tr>
-                        <th>이름</th>
-                        <th>학년</th>
-                        <th>상태</th>
-                    </tr>
-                </thead>
-                <tbody>
+        <div className="afterReadModal">
+            <div className="modal-content">
+                <div className="modal-header fj">
+                    <h2 className='modal-title'>상태</h2>
+                    <button className='btn'
+                     onClick={(e)=>{
+                        setAfterReadModal(false)
+                        e.stopPropagation();
+                    }} >
+                        <Icon icon={"close"}/>
+                    </button>
+                </div>
+                <div className="modal-body scroll">
+                    <div className='head'>
+                        <div>이름</div>
+                        <div>학년</div>
+                        <div>상태</div>
+                    </div>
+                    <ul>
                     {
-                        list && list.map((student,i)=>{
+                        list && list.map(a=>{
                             return(
-                                <tr key={i}>
-                                    <td>{student.to_name}</td>
-                                    <td>{student.grade}</td>
-                                    <td>{student.status}</td>
-                                </tr>
+                                <li>
+                                    <div>{a.to_name}</div>
+                                    <div>{a.grade}</div>
+                                    <div>{a.status}</div>
+                                </li>
                             )
                         })
                     }
-                </tbody>
-            </table>
+                    </ul>
+                </div>
+            </div>
+          
         </div>
     )
 
