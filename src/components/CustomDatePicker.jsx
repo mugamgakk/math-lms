@@ -98,7 +98,10 @@ function CustomDatePicker({
 
             let 선택날짜 = new Date(aliasDate.setDate(day));
 
-            return 선택날짜 < minDate;
+            선택날짜 = dayjs(선택날짜).format("YYYYMMDD");
+            let 최소날짜 = dayjs(minDate).format("YYYYMMDD");
+
+            return 선택날짜 < 최소날짜;
         },
         [dateValue]
     );
@@ -114,7 +117,10 @@ function CustomDatePicker({
 
             let 선택날짜 = new Date(aliasDate.setDate(day));
 
-            return 선택날짜 > maxDate;
+            선택날짜 = dayjs(선택날짜).format("YYYYMMDD");
+            let 최대날짜 = dayjs(maxDate).format("YYYYMMDD");
+
+            return 선택날짜 > 최대날짜;
         },
         [dateValue]
     );

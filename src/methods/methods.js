@@ -1,7 +1,6 @@
 import FileSaver from "file-saver";
 import JSZip from "jszip";
 import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
 
 export function toggleBodyScroll(param) {
     if (param === true) {

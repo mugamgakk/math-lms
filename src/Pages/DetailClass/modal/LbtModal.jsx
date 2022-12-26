@@ -38,7 +38,7 @@ function LbtModal({ setCreateModal, sendLBTData }) {
         // console.log(data);
 
         let res = await ajax("/class_result.php", { data });
-        console.log(res.data.lec_assa[0].unit2[0])
+        // console.log(res.data.lec_assa[0].unit2[0])
         render(res.data);
 
     };
@@ -107,7 +107,7 @@ function LbtModal({ setCreateModal, sendLBTData }) {
         return result1 === result2
     }
 
-    const draw1 = (위 = 90, 우 = 75, 아래 = 83, 좌 = 84) => {
+    const draw1 = (위 = 0, 우 = 0, 아래 = 0, 좌 = 0) => {
         const ctx = canvas1.current.getContext("2d");
         // 초기화
         ctx.clearRect(0, 0, canvas1.current.width, canvas1.current.height);
@@ -261,6 +261,8 @@ function LbtModal({ setCreateModal, sendLBTData }) {
     }
 
     useEffect(() => {
+        // 첫 로드시 모두체크
+        allCheckfnL(true);
         getRegult();
     }, []);
 
