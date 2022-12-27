@@ -26,6 +26,7 @@ function SendMessage() {
     let [writeModal, setWriteModal] = useState(false);
     let [searchInput, setSearchInput] = useState('');
     let [page, setPage] = useState(1);
+    let [afterReadModal,setAfterReadModal] = useState(true);
     
     useEffect(()=>{
         getList();
@@ -153,7 +154,7 @@ function SendMessage() {
                 </div>
             </div>
             <div className="messageList">
-                <table className='table tableA'>
+                <table className='custom-table'>
                     <thead>
                         <tr>
                             <th style={{ width:'3.33%' }}>
@@ -194,14 +195,20 @@ function SendMessage() {
                 page={page}
                 totalPage={sendList && sendList.length}
                 />
-
+                {/* {
+                    afterReadModal && 
+                    <AfterReadingModal 
+                    setAfterReadModal={setAfterReadModal}
+                    afterReadModal={afterReadModal}
+                    seq={list.seq}
+                    />
+                } */}
             </div>
         </>
     );
 }
 
 const Tr = memo(({list, checkState, checkList }) => {
-    let [afterReadModal,setAfterReadModal] = useState(true);
     let [viewModal,setViewModal] = useState(false);
 
     return(
@@ -230,15 +237,8 @@ const Tr = memo(({list, checkState, checkList }) => {
                 />
             }
             </td>
-            <td style={{ width:'15.26%' }} onClick={()=>setAfterReadModal(true)}>{list.status}
-                {
-                    afterReadModal && 
-                    <AfterReadingModal 
-                    setAfterReadModal={setAfterReadModal}
-                    afterReadModal={afterReadModal}
-                    seq={list.seq}
-                    />
-                }
+            {/* <td style={{ width:'15.26%' }} onClick={()=>setAfterReadModal(true)}>{list.status} */}
+            <td style={{ width:'15.26%' }}>{list.status}
             </td>
             <td style={{ width:'10.73%' }}>
                 {

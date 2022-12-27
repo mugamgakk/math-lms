@@ -10,6 +10,7 @@ import Icon from "../../../components/Icon";
 import Checkbox from "../../../components/Checkbox";
 import PrintModal_clinic from "../../../components/PrintModal_clinic";
 import AssessmentModal from "../../TodayClass/AssessmentModal";
+import { _isScroll } from "../../../methods/methods";
 
 function ClassManagement(){
     let [progressMo, setProgressState] = useState(false);
@@ -18,6 +19,7 @@ function ClassManagement(){
 
     let [data, setData] = useState(null);
     let [wrongPopList, setWrongPopList] = useState([]);
+    let [scroll,setScroll] = useState();
     let [bk_cd, setBkCd] = useState();
     const clickStudent = useStudentsStore((state) => state.clickStudent);
 
@@ -43,6 +45,8 @@ function ClassManagement(){
 
         console.log(res);
         setData(res.data);
+        setScroll(_isScroll(482, 'custom-table'))
+        
     
     };
 
@@ -136,6 +140,7 @@ function ClassManagement(){
                         <col width='11.88%'/>
                         <col width='11.88%'/>
                         <col width='8.91%'/>
+                        <col width='17px'/>
                     </colgroup>
                     <thead>
                         <tr>
@@ -143,6 +148,11 @@ function ClassManagement(){
                             <th colSpan={5} className='bb'>수행 현황</th>
                             <th rowSpan={2}>학습 완료</th>
                             <th rowSpan={2} className='b-none'>오답<br />정복하기<button className="btn-creation" onClick={()=>confirmWrongModal(wrongPopList.length)}>생성</button></th>
+                            <th rowSpan={2}></th>
+                            
+                            {/* {
+                                scroll && <th style={{ width:"17px" }}></th>
+                            } */}
                         </tr>
                         <tr>
                             <th>개념 강의</th>
@@ -150,11 +160,14 @@ function ClassManagement(){
                             <th>개념 설명</th>
                             <th>유형 학습</th>
                             <th>맞춤 클리닉</th>
+                            {/* {
+                                scroll && <th style={{ width:"17px" }}></th>
+                            } */}
                         </tr>
                     </thead>
                     </table>
-                    <table className="table tableA">
-                        <tbody className="scroll">
+                    <table className="custom-table">
+                        <tbody>
                             <>
                                 <tr className='unit1'>
                                     <td className="fs" style={{ width:'91.09%' }}>

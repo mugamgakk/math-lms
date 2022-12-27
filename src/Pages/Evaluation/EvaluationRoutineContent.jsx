@@ -10,6 +10,7 @@ import CustomDatePicker from "../../components/CustomDatePicker";
 import Checkbox from "../../components/Checkbox";
 import ViewTranscriptsModal from "./ViewTranscriptsModal";
 import PrintModal_clinic from '../../components/PrintModal_clinic';
+import { _isScroll } from "../../methods/methods";
 
 const 평가종류 = [
     { value: "총괄 평가", label: "총괄 평가" },
@@ -23,7 +24,9 @@ function EvaluationRoutineContent() {
     let [lectureList, setLectureList] = useState(null);
     let [filterList, setFilterList] = useState(null);
     const clickStudent = useStudentsStore((state) => state.clickStudent);
+    let [scroll,setScroll] = useState();
 
+    console.log(scroll)
     let [checkItem, setCheckItem] = useState([]);
     let [sort, setSort] = useState({
         ltitle: true,
@@ -66,6 +69,8 @@ function EvaluationRoutineContent() {
         console.log(ut_list);
         setList(ut_list);
         setLectureList(lecture_list);
+        setScroll(_isScroll('custom-table',292 ))
+
     };
 
     const ref = useRef(false);
@@ -173,7 +178,7 @@ function EvaluationRoutineContent() {
                 </div>
             </div>
 
-            <table className="table tableA"> 
+            <table className="custom-table"> 
                 <thead>
                     <tr>
                         <th style={{ width:'8.82%' }}>
@@ -205,9 +210,12 @@ function EvaluationRoutineContent() {
                             ></button>
                         </th>
                         <th style={{ width:'13.88%' }}>결과</th>
+                        {
+                            scroll && <th style={{ width: '17px' }}></th>
+                        }
                     </tr>
                 </thead>
-                <tbody className="scroll">
+                <tbody>
                     {list &&
                         list.map((a, i) => {
                             return (

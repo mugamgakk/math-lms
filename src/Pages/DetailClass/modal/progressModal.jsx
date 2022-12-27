@@ -4,6 +4,7 @@ import ajax from "../../../ajax";
 import { falseModal } from '../../../methods/methods';
 import Icon from '../../../components/Icon';
 import useStudentsStore from "../../../store/useStudentsStore";
+import { _isScroll } from "../../../methods/methods";
 
 const progress = {개념 : '34.8%', 유형 : '71.6%'}
 const per = ['20%','40%','60%','80%','100%']
@@ -12,7 +13,8 @@ function ProgressModal({setProgressState,name}){
     let [progressData,setProgressData] = useState(null);
     const clickStudent = useStudentsStore((state) => state.clickStudent);
     let bookList = useStudentsStore((state) => state.bookList);
-
+    let [scroll,setScroll] = useState();
+    console.log(scroll);
     useEffect(()=>{
         getData();
     },[]);
@@ -27,8 +29,8 @@ function ProgressModal({setProgressState,name}){
         };
         
         let res = await ajax(url, {data: query});
-        console.log(res);
         setProgressData(res.data);
+        setScroll(_isScroll(400, 'custom-table'))
         
     }
 
@@ -121,12 +123,12 @@ function ProgressModal({setProgressState,name}){
                     <div className="contents">
                         <table className="tableC">
                             <colgroup>
-                            <col width='42.30%'/>
-                            <col width='11.53%'/>
-                            <col width='11.53%'/>
-                            <col width='11.53%'/>
-                            <col width='11.53%'/>
-                            <col width='11.53%'/>
+                                <col width='42.30%'/>
+                                <col width='11.53%'/>
+                                <col width='11.53%'/>
+                                <col width='11.53%'/>
+                                <col width='11.53%'/>
+                                <col width='11.53%'/>
                             </colgroup>
                             <thead>
                                 <tr>
@@ -134,6 +136,9 @@ function ProgressModal({setProgressState,name}){
                                     <th colSpan={2}>개념 학습</th>
                                     <th colSpan={2}>유형 학습</th>
                                     <th>맞춤 클리닉</th>
+                                    {
+                                        scroll && <th style={{ width:"17px",border:'none' }}></th>
+                                    }
                                 </tr>
                                 <tr>
                                     <th>학습일자</th>
@@ -141,6 +146,9 @@ function ProgressModal({setProgressState,name}){
                                     <th>학습일자</th>
                                     <th>결과</th>
                                     <th>결과</th>
+                                    {
+                                        scroll && <th style={{ width:"17px",border:'none' }}></th>
+                                    }
                                 </tr>
                             </thead>
 
@@ -161,9 +169,8 @@ function ProgressModal({setProgressState,name}){
                                 </tr>
                             </thead> */}
                             </table>
-                            <table className="table tableA">
-                                <tbody className="scroll">
-
+                            <table className="custom-table">
+                                <tbody>
                                 {
                                 progressData && progressData.prog_list.map(list=>{
                                     return (
@@ -173,7 +180,6 @@ function ProgressModal({setProgressState,name}){
                                                     list.unit2.map(a=>{
                                                         return(
                                                             <tr>
-                                                                
                                                                 <td className='fs' style={{ width:'42.30%' }}>{a.title}</td>
                                                                 <td style={{ width:'11.53%' }}>{a.date_co}</td>
                                                                 <td style={{ width:'11.53%' }}>{a.score_co}</td>

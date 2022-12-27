@@ -2,23 +2,14 @@
 import React, { useState, useMemo, useEffect} from "react";
 import SelectBase from '../../../components/ui/select/SelectBase';
 import ajax from "../../../ajax";
-import DatePicker from "react-date-picker";
 import PrintModalWrongAnswer from '../../../components/PrintModalWrongAnswer';
 import dayjs from "dayjs"
 import useStudentsStore from "../../../store/useStudentsStore";
 import Icon from "../../../components/Icon";
 import Checkbox from "../../../components/Checkbox";
-import LmsDatePicker from "../../../components/LmsDatePicker";
 import CreationModal_detail from "../modal/CreationModal_detail";
 import CustomDatePicker from "../../../components/CustomDatePicker";
-import { useNavigate } from "react-router-dom";
-const options = [
-    { value: null, label: "전체" },
-    { value: '중2-1노벰', label: '중2-1노벰' },
-    { value: '중2-2뜨레스', label: '중2-2뜨레스' },
-    { value: '중2-2노벰', label: '중2-2노벰' },
-];
-
+import { _isScroll } from "../../../methods/methods";
 
 function WrongAnswer() {
     let [checkData,setCheckData] = useState([]);
@@ -26,9 +17,11 @@ function WrongAnswer() {
     let [filterData, setFilterData] = useState(null);
     let [selectChoice,setSelecChoice] = useState(null);
     let [selectOption, setSelectOption] = useState(null);
-    const clickStudent = useStudentsStore(state=>state.clickStudent);
     let [date,setDate] = useState(new Date());
+    let [scroll,setScroll] = useState();
+    const clickStudent = useStudentsStore(state=>state.clickStudent);
 
+    console.log(scroll);
     useEffect(()=>{
         console.log(checkData);
     },[checkData])
@@ -60,6 +53,8 @@ function WrongAnswer() {
 
         setSelectOption(arr);
         setSelecChoice(arr[0])
+
+        setScroll(_isScroll('custom-table',554))
 
     }
 
@@ -160,7 +155,7 @@ function WrongAnswer() {
                 <button className='btn-search btn-green' onClick={optionBtn}><Icon icon={"search"} />조회</button>
                 </div>
             </div>
-            <table className="table tableA">
+            <table className="custom-table">
                 <thead>
                         <tr>
                             <th style={{ width:'6.95%' }}>
@@ -174,9 +169,12 @@ function WrongAnswer() {
                             <th style={{ width:'7.85%' }}>문항 수</th>
                             <th style={{ width:'11.72%' }}>상태</th>
                             <th style={{ width:'11.82%' }}>시험지</th>
+                            {
+                                scroll && <th style={{ width:'17px', border:"none" }}></th>
+                            }
                         </tr>
                 </thead>
-                <tbody className="scroll"> 
+                <tbody style={{ maxHeight:'554px' }}> 
                     {
                         wrongList && wrongList.map((data,i)=>{
                             return <Tr key={i} data={data} checkData={checkData} checkFunc={checkFunc} setCheckData={setCheckData} />
