@@ -155,31 +155,25 @@ function Attendance() {
                         </button>
                     </div>
 
-                    <table className="table tableA">
+                    <table className="custom-table">
                         <thead>
                             <tr>
-                                <th scope="col" style={{ width: "13%" }}>
-                                    학생명 (아이디)
-                                </th>
-                                <th scope="col" style={{ width: "26%" }} className="f-column">
-                                    <div>출결 체크</div>
+                                <th>학생명 (아이디)</th>
+                                <th>
+                                    출결 체크
                                     <button className="btn-allcheck" onClick={allCheckAttd}>
                                         모두 출석
                                     </button>
                                 </th>
-                                <th scope="col" style={{ width: "61%" }}>
-                                    출결 사유
-                                </th>
+                                <th>출결 사유</th>
                             </tr>
                         </thead>
-                        <tbody className="scroll" style={{ maxHeight: "462px" }}>
-                            {loading ? (
-                                <SkeletonTable R={7} width={["13%", "26%", "61%"]} />
-                            ) : (
+                        <tbody style={{ maxHeight: "162px" }}>
+                            {
                                 studentList?.map((ele, i) => {
                                     return <Tr ele={ele} date={date} key={"index" + i} />;
                                 })
-                            )}
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -239,13 +233,13 @@ const Tr = memo(({ ele, date }) => {
 
     return (
         <tr>
-            <td style={{ width: "13%", paddingLeft: "30px" }} className="fs">
+            <td  className="fs">
                 <div>
                     <div className="user-name">{ele.um_nm}</div>
                     <div className="user-id">{ele.um_id}</div>
                 </div>
             </td>
-            <td style={{ width: "26%" }}>
+            <td>
                 {att.map((a) => {
                     return (
                         <button
@@ -263,7 +257,7 @@ const Tr = memo(({ ele, date }) => {
                     );
                 })}
             </td>
-            <td style={{ width: "61%" }} className="fs">
+            <td  className="fs">
                 <div className="pencil-input mr-10">
                     <button
                         type="button"

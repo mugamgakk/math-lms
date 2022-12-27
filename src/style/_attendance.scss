@@ -64,6 +64,19 @@
                     }
                 }
             }
+
+            td:nth-child(1),
+            th:nth-child(1){
+                width: 200px;
+            }
+            td:nth-child(2),
+            th:nth-child(2){
+                width: 400px;
+            }
+            td:nth-child(3),
+            th:nth-child(3){
+                width: calc(100% - 600px);
+            }
         }
     }
 
