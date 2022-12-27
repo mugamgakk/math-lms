@@ -31,6 +31,21 @@ export function getBase64(param) {
     });
 }
 
+export const _isScroll = (dom = "d", maxHeight)=>{
+    let TR = document.querySelectorAll("." + dom + " tbody>tr");
+
+    let height = 0;
+    for(let ele of TR){
+        height += ele.clientHeight
+    }
+
+    if(maxHeight <= height){
+        return true
+    }else{
+        return false
+    }
+}
+
 function weekChange(param) {
     switch (param) {
         case 0:

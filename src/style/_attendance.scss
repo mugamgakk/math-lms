@@ -27,6 +27,9 @@
                 padding: 4px !important;
                 font-size: 18px !important;
             }
+            td{
+                padding: 12px;
+            }
             td:first-child{
                 .user-name{
                     font-weight: 600;
@@ -65,18 +68,6 @@
                 }
             }
 
-            td:nth-child(1),
-            th:nth-child(1){
-                width: 200px;
-            }
-            td:nth-child(2),
-            th:nth-child(2){
-                width: 400px;
-            }
-            td:nth-child(3),
-            th:nth-child(3){
-                width: calc(100% - 600px);
-            }
         }
     }
 
@@ -93,7 +84,6 @@
         background-color:#8f7361;
         font-weight: 500;
         @include font-style(16);
-        margin-top: 6px;
     }
 }
 

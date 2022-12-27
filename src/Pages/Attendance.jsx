@@ -9,9 +9,9 @@ import ContentHeader from "../components/ContentHeader";
 import CustomDatePicker from "../components/CustomDatePicker";
 import DateNext from "../components/DateNext";
 import Icon from "../components/Icon";
-import SkeletonTable from "../components/SkeletonTable";
 import ClassSelect from "../components/ui/select/ClassSelect";
 import { _cloneDeep } from "../methods/methods";
+import { _isScroll } from "../methods/methods";
 
 const att = [
     { value: "P", label: "출석" },
@@ -25,6 +25,8 @@ function Attendance() {
     let [classList, setClassList] = useState([]);
     let [studentList, setStudentList] = useState([]);
     let [searchText, setSearchText] = useState("");
+
+    let [scroll, setScroll] = useState(false);
 
     let [loading, setLoading] = useState(true);
 
@@ -48,7 +50,7 @@ function Attendance() {
             }
 
             // 리스트 값
-            setStudentList(student_list);
+            setStudentList(student_list.slice(0));
 
             setSearchText("");
             setLoading(false);
@@ -89,8 +91,12 @@ function Attendance() {
     };
 
     useEffect(() => {
-        getData();
+        getData();   
     }, [date, classList]);
+
+    useEffect(()=>{
+        setScroll(_isScroll("custom-table", 200))
+    })
 
     return (
         <>
@@ -158,17 +164,24 @@ function Attendance() {
                     <table className="custom-table">
                         <thead>
                             <tr>
-                                <th>학생명 (아이디)</th>
-                                <th>
-                                    출결 체크
+                                <th style={{width : "20%"}}>학생명 (아이디)</th>
+                                <th style={{width : "30%"}}>
+                                    <div>
+                                    <div>출결 체크</div>
                                     <button className="btn-allcheck" onClick={allCheckAttd}>
                                         모두 출석
                                     </button>
+                                    </div>
                                 </th>
-                                <th>출결 사유</th>
+                                <th style={{width : "50%"}}>출결 사유</th>
+
+                                {
+                                    scroll && <th style={{width : "17px"}}></th>
+                                }
+
                             </tr>
                         </thead>
-                        <tbody style={{ maxHeight: "162px" }}>
+                        <tbody style={{ maxHeight: "200px" }}>
                             {
                                 studentList?.map((ele, i) => {
                                     return <Tr ele={ele} date={date} key={"index" + i} />;
@@ -233,13 +246,13 @@ const Tr = memo(({ ele, date }) => {
 
     return (
         <tr>
-            <td  className="fs">
+            <td style={{width : "20%"}} className="t-start">
                 <div>
                     <div className="user-name">{ele.um_nm}</div>
                     <div className="user-id">{ele.um_id}</div>
                 </div>
             </td>
-            <td>
+            <td style={{width : "30%"}}>
                 {att.map((a) => {
                     return (
                         <button
@@ -257,7 +270,7 @@ const Tr = memo(({ ele, date }) => {
                     );
                 })}
             </td>
-            <td  className="fs">
+            <td style={{width : "50%"}} className="t-start">
                 <div className="pencil-input mr-10">
                     <button
                         type="button"
@@ -288,6 +301,8 @@ const Tr = memo(({ ele, date }) => {
     );
 });
 
+
+ 
 function resizeaa(e) {
     e.target.style.height = "1px";
     e.target.style.height = 2 + e.target.scrollHeight + "px";

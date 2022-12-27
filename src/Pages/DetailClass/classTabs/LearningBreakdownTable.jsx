@@ -77,10 +77,10 @@ function LearningBreakdownTable() {
                 </strong>
             </div>
 
-            <table className="table tableA">
+            <table className="custom-table lbt-list-table">
                 <thead>
                     <tr>
-                        <th style={{ width: "8.8206%" }}>
+                    <th style={{ width: "8.8206%" }}>
                             <Checkbox
                                 color="orange"
                                 onChange={(e) => {
@@ -97,12 +97,15 @@ function LearningBreakdownTable() {
                         <th style={{ width: "11.7938%" }}>학습 분석표</th>
                     </tr>
                 </thead>
-                <tbody className="scroll" style={{maxHeight : "250px"}}>
-                    {lbtList?.map((item,i) => {
+                <tbody style={{maxHeight : "250px"}}>
+                {lbtList?.map((item,i) => {
                         return <Tr key={i} item={item} choiceArr={choiceArr} oneCheck={oneCheck} />;
                     })}
                 </tbody>
             </table>
+
+            
+                    
         </div>
     );
 }
@@ -112,7 +115,7 @@ const Tr = ({ item, choiceArr, oneCheck }) => {
 
     return (
         <tr>
-            <td style={{ width: "8.8206%" }}>
+             <td style={{ width: "8.8206%" }}>
                 <Checkbox color="orange" checked={choiceArr.includes(item)} onChange={e=> { oneCheck(e.target.checked, item) }} />
             </td>
             <td style={{ width: "24.6778%" }}>{item.prt_period}</td>
