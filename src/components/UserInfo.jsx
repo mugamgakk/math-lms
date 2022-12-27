@@ -75,6 +75,7 @@ function UserInfo({ clickStudent }) {
                     setMultiSelect(arr);
                     choiceBook(arr);
                 }}
+                width="160px"
                 onChange={(ele) => {
                     setChiceItem(ele);
                     setBookList(ele);

@@ -142,9 +142,9 @@ function CustomDatePicker({
     return (
         <button
             className={`CustomDatePicker-btn ${className}`}
-            // onBlur={() => {
-            //     setOpen(false);
-            // }}
+            onBlur={() => {
+                setOpen(false);
+            }}
         >
             <span
                 onClick={() => {
@@ -193,7 +193,7 @@ function CustomDatePicker({
                                     // 숫자 넣으려면 변수넣으면 됨
                                     return (
                                         <div key={i} className="day disabled">
-                                            {a}
+                                            {/* {a} */}
                                         </div>
                                     );
                                 })}
@@ -218,7 +218,7 @@ function CustomDatePicker({
                                     // 숫자 넣으려면 변수넣으면 됨
                                     return (
                                         <div key={i} className="day disabled">
-                                            {a}
+                                            {/* {a} */}
                                         </div>
                                     );
                                 })}

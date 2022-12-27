@@ -44,7 +44,7 @@ function PrintModalWrongAnswer({ closeModal, wa_seq }) {
 
         let res = await ajax("/class_wrong.php", {data : {mode : "wa_print", wa_seq }});
 
-        // console.log("asdasdasd",res.data)
+        console.log("asdasdasd",res.data)
 
         // array, 문제 최대넓이 , 문제여백
         let 문제보기 = await getProblemHeight(_cloneDeep(res.data.qa_list), 426, 190);

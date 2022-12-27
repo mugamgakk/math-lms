@@ -1,8 +1,8 @@
 import * as React from "react";
 import ReactToPrint from "react-to-print"; // pdf, 인쇄
 import { htmlToImg } from "../../methods/methods";
-
-
+import html2pdf from "html2pdf.js";
+import {htmlToPdf} from "../../methods/methods"
 
 function PrintPage() {
     const printComponent = React.useRef();
@@ -13,25 +13,26 @@ function PrintPage() {
             <ReactToPrint
                 trigger={() => <button className="btn">프린트 버튼</button>} //  trigger : 인쇄를 명령할 컴포넌트를 넣어주기
                 content={() => printComponent.current} // content : 인쇄 대상 ref를 넘겨주기
-            // documentTitle= "pdf이름" //pdf 로 저장할때 이름
+                // documentTitle= "pdf이름" //pdf 로 저장할때 이름
             />
 
             <button
                 className="btn"
                 onClick={() => {
-                    htmlToImg(printComponent.current)
+                    htmlToImg(printComponent.current);
                 }}
             >
                 jpg다운로드
             </button>
 
+            <button className="btn-orange" onClick={()=>{ htmlToPdf(printComponent.current) }}>버튼</button>
+
             {/* // A4 사이즈를 width 210 mm 를 px로 793.701px 이다 */}
-            <div ref={printComponent} style={{ width: "210mm" }} className="asdf">
-                프린트 될 내용 입니다.!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            <div ref={printComponent} style={{ width: "210mm" }} className="texttext">
+                프린트 될 내용 입니다.!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!asdasdasdasd
             </div>
 
-            <pre >
-
+            <pre>
                 {`
         <h2>Pdf 만들기</h2>
         <ReactToPrint
@@ -76,7 +77,8 @@ function PrintPage() {
                 `}
             </pre>
 
-            <style>{`
+            <style>
+                {`
                 .asdf{
                     color : red;
                     font-size : 3rem

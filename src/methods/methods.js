@@ -1,6 +1,7 @@
 import FileSaver from "file-saver";
 import JSZip from "jszip";
 import html2canvas from "html2canvas";
+import html2pdf from "html2pdf.js";
 
 export function toggleBodyScroll(param) {
     if (param === true) {
@@ -163,9 +164,19 @@ export function htmlToImg(target, filName = "download", format = "jpeg") {
         const imgFile = canvas.toDataURL("image/" + format);
         // png로 바꾸면 png로 됨
         const imgName = filName;
+        
+        console.log(imgFile)
 
         FileSaver.saveAs(imgFile, imgName);
     });
+}
+
+export function htmlToPdf(target, fileName = "download"){
+    html2pdf().from(target).set({filename : fileName}).outputImg()
+    .then(data=>{
+        console.log(data.src)
+    })
+
 }
 
 export function _map(list, fn) {
