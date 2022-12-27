@@ -7,29 +7,29 @@ function Editor() {
     let [content, setContent] = useState("");
 
     function uploadAdapter(loader) {
-        return {
-            upload: () => {
-                return new Promise((resolve, reject) => {
-                    const body = new FormData();
-                    loader.file.then((file) => {
-                        body.append("file", file);
-                        fetch(`http://192.168.11.178:8080/upload`, {
-                          method: "post",
-                          body: body
-                        })
-                          .then((res) => res.json())
-                          .then((res) => {
-                            resolve({
-                              default: `http://192.168.11.178:8080/images/${res.filename}`
-                            });
-                          })
-                          .catch((err) => {
-                            reject(err);
-                          });
-                        });
-                    });
-                },
-            };
+        // return {
+        //     upload: () => {
+        //         return new Promise((resolve, reject) => {
+        //             const body = new FormData();
+        //             loader.file.then((file) => {
+        //                 body.append("file", file);
+        //                 fetch(`http://192.168.11.178:8080/upload`, {
+        //                   method: "post",
+        //                   body: body
+        //                 })
+        //                   .then((res) => res.json())
+        //                   .then((res) => {
+        //                     resolve({
+        //                       default: `http://192.168.11.178:8080/images/${res.filename}`
+        //                     });
+        //                   })
+        //                   .catch((err) => {
+        //                     reject(err);
+        //                   });
+        //                 });
+        //             });
+        //         },
+        //     };
         }
         
     function uploadPlugin(editor) {

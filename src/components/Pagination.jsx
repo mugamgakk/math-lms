@@ -1,14 +1,11 @@
 import React, { useRef, useState } from 'react';
-import style from '../style/style-module/pagination.module.scss';
-
-
 
 // 총 페이지 넣기 
 
-function Pagination({totalPage = 30, pageLength = 5}) {
+function Pagination({totalPage = 30, pageLength = 5,page,setPage}) {
 
     // 현재 페이지
-    let [page, setPage] = useState(1);
+    // let [page, setPage] = useState(1);
 
     const pageNum = ()=>{
         let pageGroup = Math.ceil(page / pageLength);
@@ -28,7 +25,7 @@ function Pagination({totalPage = 30, pageLength = 5}) {
         const result = [];
         
         for(let i = firstPage; i <= lastPage; i++ ){
-            result.push(<li key={i} className={page === i ? style.active : ''} onClick={()=>{setPage(i)}} >{i}</li>)
+            result.push(<li key={i} className={page === i ? 'active' : ''} onClick={()=>{setPage(i)}} >{i}</li>)
         }
 
         return result;
@@ -36,15 +33,15 @@ function Pagination({totalPage = 30, pageLength = 5}) {
 
 
     return ( 
-        <div className={style.pagination}>
-            <div className={style.box}>
-                <button onClick={()=>{setPage(1)}}>&lt;&lt;</button>
+        <div className='pagination'>
+            <div className='box'>
+                <button onClick={()=>{setPage(1)}}>◀◀</button>
                 <button onClick={()=>{
                     page <= pageLength
                     ? setPage(1)
                     : setPage(page - pageLength)
                 }}
-                    >&lt;</button>
+                    >◀</button>
                 <ol>
                     {pageNum()}
                 </ol>
@@ -52,10 +49,10 @@ function Pagination({totalPage = 30, pageLength = 5}) {
                     page > (totalPage - pageLength) && page <= totalPage
                     ? setPage(totalPage)
                     : setPage(page + pageLength)
-                }}>&gt;</button>
-                <button className={style.mx} onClick={()=>{
+                }}>▶</button>
+                <button className='mx' onClick={()=>{
                     setPage(totalPage)
-                }} >&gt;&gt;</button>
+                }} >▶▶</button>
             </div>
         </div>
      );
