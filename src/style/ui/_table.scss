@@ -305,15 +305,11 @@
                 @include flex;
             }
             & > th {
-                border-right: 1px solid #cfbfb7;
+                border-left: 1px solid #cfbfb7;
                 font-weight: 600;
                 color: $brown;
-
-                &:nth-last-child(2){
-                    border-right: none;
-                }
-                &:last-child{
-                    border-right: none;
+                &:first-child{
+                    border-left: none;
                 }
             }
         }
@@ -332,11 +328,11 @@
                 @include flex;
             }
             & > td {
-                border-right: 1px solid #ddd;
+                border-left: 1px solid #ddd;
                 font-weight: 400;
                 color: #444;
-                &:last-child {
-                    border-right: none;
+                &:first-child {
+                    border-left: none;
                 }
             }
             &:last-child {

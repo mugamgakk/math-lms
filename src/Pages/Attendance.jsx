@@ -91,12 +91,12 @@ function Attendance() {
     };
 
     useEffect(() => {
-        getData();   
+        getData();
     }, [date, classList]);
 
-    useEffect(()=>{
-        setScroll(_isScroll("custom-table", 200))
-    })
+    useEffect(() => {
+        setScroll(_isScroll("attendence-table", 500));
+    });
 
     return (
         <>
@@ -133,7 +133,7 @@ function Attendance() {
                             value={classList}
                             onChange={(ele) => {
                                 console.log(ele);
-                                setClassList(ele)
+                                setClassList(ele);
                             }}
                             width="160px"
                         />
@@ -161,32 +161,27 @@ function Attendance() {
                         </button>
                     </div>
 
-                    <table className="custom-table">
+                    <table className="attendence-table custom-table">
                         <thead>
                             <tr>
-                                <th style={{width : "20%"}}>학생명 (아이디)</th>
-                                <th style={{width : "30%"}}>
+                                <th style={{ width: "10%" }}>학생명 (아이디)</th>
+                                <th style={{ width: "30%" }}>
                                     <div>
-                                    <div>출결 체크</div>
-                                    <button className="btn-allcheck" onClick={allCheckAttd}>
-                                        모두 출석
-                                    </button>
+                                        <div>출결 체크</div>
+                                        <button className="btn-allcheck" onClick={allCheckAttd}>
+                                            모두 출석
+                                        </button>
                                     </div>
                                 </th>
-                                <th style={{width : "50%"}}>출결 사유</th>
+                                <th style={{ width: "60%" }}>출결 사유</th>
 
-                                {
-                                    scroll && <th style={{width : "17px"}}></th>
-                                }
-
+                                {scroll && <th style={{ width: "17px", border: "none" }}></th>}
                             </tr>
                         </thead>
-                        <tbody style={{ maxHeight: "200px" }}>
-                            {
-                                studentList?.map((ele, i) => {
-                                    return <Tr ele={ele} date={date} key={"index" + i} />;
-                                })
-                            }
+                        <tbody style={{ maxHeight: "500px" }}>
+                            {studentList?.map((ele, i) => {
+                                return <Tr ele={ele} date={date} key={"index" + i} />;
+                            })}
                         </tbody>
                     </table>
                 </div>
@@ -199,7 +194,6 @@ const Tr = memo(({ ele, date }) => {
     let [text, setText] = useState((ele.reason ??= ""));
     let [state, setSTate] = useState(ele.attd);
     let [pen, setPen] = useState(ele.reason ? true : false);
-
 
     // 사유 저장
     const saveReason = async () => {
@@ -228,11 +222,10 @@ const Tr = memo(({ ele, date }) => {
         let res = await ajax("/class_daily.php", { data });
         // console.log(res);
 
-        if (res.data.ok == 1){
-
-        }else{
+        if (res.data.ok == 1) {
+        } else {
             alert("잠시후에 시도해주세요");
-            setSTate(state)
+            setSTate(state);
         }
     };
 
@@ -246,19 +239,18 @@ const Tr = memo(({ ele, date }) => {
 
     return (
         <tr>
-            <td style={{width : "20%"}} className="t-start">
+            <td style={{ width: "10%" }} className="t-start">
                 <div>
                     <div className="user-name">{ele.um_nm}</div>
                     <div className="user-id">{ele.um_id}</div>
                 </div>
             </td>
-            <td style={{width : "30%"}}>
+            <td style={{ width: "30%" }}>
                 {att.map((a) => {
                     return (
                         <button
                             key={a.value}
                             onClick={() => {
-                                
                                 saveAtte(a.value);
                             }}
                             className={`btn-grey-border ${
@@ -270,7 +262,7 @@ const Tr = memo(({ ele, date }) => {
                     );
                 })}
             </td>
-            <td style={{width : "50%"}} className="t-start">
+            <td style={{ width: "60%" }} className="t-start">
                 <div className="pencil-input mr-10">
                     <button
                         type="button"
@@ -280,8 +272,8 @@ const Tr = memo(({ ele, date }) => {
                         }}
                     ></button>
                     <textarea
-                        onChange={(e)=>{
-                            setText(e.target.value)
+                        onChange={(e) => {
+                            setText(e.target.value);
                         }}
                         placeholder="사유 입력(50자 이내)"
                         value={text}
@@ -301,8 +293,6 @@ const Tr = memo(({ ele, date }) => {
     );
 });
 
-
- 
 function resizeaa(e) {
     e.target.style.height = "1px";
     e.target.style.height = 2 + e.target.scrollHeight + "px";
