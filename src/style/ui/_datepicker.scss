@@ -64,10 +64,10 @@
     position: absolute;
     cursor: default;
     left: 0;
-    top: 40px;
+    top: 38px;
     z-index: 1;
     background-color: #fff;
-    border: 1px solid #ccc;
+    border: 1px solid #666;
     border-radius: 8px;
     padding: 20px;
 
@@ -135,16 +135,23 @@
                     color: #fa4646;
                 }
 
-                &.current-day {
+                &.today{
                     font-weight: 600;
-                    background-color: #ddd;
-                    border-radius: 50%;
-                    color: #fa4646 !important;
+                    color: $brown;
                 }
 
+                &.current-day {
+                    font-weight: 600;
+                    background-color: $green;
+                    border-radius: 50%;
+                    color: $white;
+                }
+                
+
                 &.disabled {
-                    color: #ddd;
+                    color: #666;
                     cursor: default;
+                    opacity: 0.4;
                 }
             }
         }

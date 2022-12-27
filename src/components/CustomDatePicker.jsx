@@ -125,6 +125,16 @@ function CustomDatePicker({
         [dateValue]
     );
 
+
+    const todayFn = (day)=>{
+
+        let d = day < 10 ? "0" + day : day.toString();
+        let currentDay = dayjs(dateValue).format("YYYYMM") + d;
+        
+        return dayjs(오늘).format("YYYYMMDD") === currentDay
+
+    }
+
     useEffect(()=>{
         setDateValue(value)
     },[value])
@@ -132,9 +142,9 @@ function CustomDatePicker({
     return (
         <button
             className={`CustomDatePicker-btn ${className}`}
-            onBlur={() => {
-                setOpen(false);
-            }}
+            // onBlur={() => {
+            //     setOpen(false);
+            // }}
         >
             <span
                 onClick={() => {
@@ -194,7 +204,7 @@ function CustomDatePicker({
                                             key={i}
                                             className={`day ${isSameDate(a) ? "current-day" : ""} ${
                                                 minDateFn(a) ? "disabled" : ""
-                                            } ${maxDateFn(a) ? "disabled" : ""}`}
+                                            } ${maxDateFn(a) ? "disabled" : ""} ${todayFn(a) ? "today" : ""}`}
                                             onClick={(e) => {
                                                 choiceDay(e, a);
                                                 setOpen(false);

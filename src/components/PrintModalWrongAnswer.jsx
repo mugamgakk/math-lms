@@ -6,10 +6,10 @@ import { _cloneDeep } from "../methods/methods";
 import { useEffect } from "react";
 import ajax from "../ajax";
 import { getProblemHeight, 풀이보기높이구하기, 분할하기 } from "./problem-print";
-import clinicprint from "../assets/img/clinicprint.png"
+import wrongprint from "../assets/img/wrongprint.jpg"
 
 
-function PrintModalWrongAnswer({ closeModal, cls_seq, wa_seq }) {
+function PrintModalWrongAnswer({ closeModal, wa_seq }) {
     const printComponent = React.useRef();
 
     let [page, setPage] = useState(1);
@@ -42,35 +42,22 @@ function PrintModalWrongAnswer({ closeModal, cls_seq, wa_seq }) {
 
     const getPrint = async () => {
 
-        let a = await ajax("/class_wrong.php", {data : {mode : "wa_print", wa_seq }});
+        let res = await ajax("/class_wrong.php", {data : {mode : "wa_print", wa_seq }});
 
-        console.log("@@@",a);
+        // console.log("asdasdasd",res.data)
 
-
-        let url = "/print.php";
-        let query = {
-            mode: "print",
-            cls_seq: cls_seq,
-            ucode: "15M11TRA32",
-            kind: "CC",
-        };
-
-        let res = await ajax(url, { data: query });
-
-        console.log(res.data)
-
-        // array, 문제 최대넓이, 문제여백
-        let 문제보기 = await getProblemHeight(_cloneDeep(res.data), 426, 190);
-        let 풀이보기 = await 풀이보기높이구하기(_cloneDeep(res.data), 426, 150);
-        let 문제보기결과 = 분할하기(문제보기, 100, 1500);
-        let 풀이보기결과 = 분할하기(풀이보기, 100, 1300);
+        // array, 문제 최대넓이 , 문제여백
+        let 문제보기 = await getProblemHeight(_cloneDeep(res.data.qa_list), 426, 190);
+        let 풀이보기 = await 풀이보기높이구하기(_cloneDeep(res.data.qa_list), 426, 150);
+        let 문제보기결과 = 분할하기(문제보기, 150, 1500);
+        let 풀이보기결과 = 분할하기(풀이보기, 150, 1300);
         setLists(문제보기결과);
         setSolveList(풀이보기결과);
         // array, 문제 최대넓이, 문제여백
-        let 문제보기2 = await getProblemHeight(_cloneDeep(res.data), 323, 190);
-        let 풀이보기2 = await 풀이보기높이구하기(_cloneDeep(res.data), 323, 130);
-        let 문제보기결과2 = 분할하기(문제보기2, 100, 1120);
-        let 풀이보기결과2 = 분할하기(풀이보기2, 100, 1120);
+        let 문제보기2 = await getProblemHeight(_cloneDeep(res.data.qa_list), 323, 190);
+        let 풀이보기2 = await 풀이보기높이구하기(_cloneDeep(res.data.qa_list), 323, 130);
+        let 문제보기결과2 = 분할하기(문제보기2, 150, 1120);
+        let 풀이보기결과2 = 분할하기(풀이보기2, 150, 1120);
         setListsPrint(문제보기결과2);
         setSolveListPrint(풀이보기결과2);
     };
@@ -165,7 +152,7 @@ function PrintModalWrongAnswer({ closeModal, cls_seq, wa_seq }) {
                             {viewState === "question" && (
                                 <div className="print-aria-body">
                                     <div className="print-aria-header">
-                                        <img src={clinicprint} alt="" />
+                                        <img src={wrongprint} alt="" />
                                     </div>
                                     <div className="d-flex">
                                         <div className="print-aria-left">
@@ -287,7 +274,7 @@ function PrintModalWrongAnswer({ closeModal, cls_seq, wa_seq }) {
                             {viewState === "solution" && (
                                 <div className="print-aria-body">
                                     <div className="print-aria-header">
-                                        <img src={clinicprint} alt="" />
+                                        <img src={wrongprint} alt="" />
                                     </div>
                                     <div className="d-flex">
                                         <div className="print-aria-left">
@@ -368,7 +355,7 @@ function PrintModalWrongAnswer({ closeModal, cls_seq, wa_seq }) {
                                                 return (
                                                     <div key={i} className="print-aria">
                                                         <div className="print-aria-header">
-                                                            <img src={clinicprint} alt="" />
+                                                            <img src={wrongprint} alt="" />
                                                         </div>
                                                         <div className="print-aria-body">
                                                             <div className="d-flex">
@@ -539,7 +526,7 @@ function PrintModalWrongAnswer({ closeModal, cls_seq, wa_seq }) {
                                                 return (
                                                     <div key={i} className="print-aria">
                                                             <div className="print-aria-header">
-                                                                <img src={clinicprint} alt="" />
+                                                                <img src={wrongprint} alt="" />
                                                             </div>
                                                         <div className="print-aria-body">
                                                             <div className="d-flex">

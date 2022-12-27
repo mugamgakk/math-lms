@@ -25,6 +25,7 @@ export const proportionHeight = (width, height, x) => {
 };
 
 // 문제의 총 높이 값을 구하는 함수
+// (넓이값에 따른 높이 구하기)
 export const getProblemHeight = async (list, 최대넓이, 초기값 = 0) => {
     let arr = [];
 
