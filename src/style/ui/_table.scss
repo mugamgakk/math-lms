@@ -317,7 +317,7 @@
     & > tbody {
         display: block;
         width: 100%;
-        overflow: auto;
+        overflow-y: auto;
         border-bottom: 1px solid #ddd;
 
         & > tr {
