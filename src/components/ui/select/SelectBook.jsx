@@ -61,10 +61,10 @@ function SelectBook({
                     <strong className="mr-2">
                     {chiceItem ? chiceItem.label : defaultValue}
                     </strong>
-                    <div className={`checkbox ${
+                    {/* <div className={`checkbox ${
                                         choiceArr.some((c) => c.value === chiceItem.value) ? "active" : ""
                                     }`} 
-                          ></div>
+                          ></div> */}
                 </h4>
             </div>
             <div

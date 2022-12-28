@@ -9,6 +9,7 @@ import NarrativeTr from "./NarrativeTr";
 import { _cloneDeep, _isScroll } from "../../methods/methods";
 import Checkbox from "../../components/Checkbox";
 import NarrativePrint from "../../components/NarrativePrint";
+import Icon from "../../components/Icon";
 
 const 단원 = [
     { value: 1, label: "수와 식의 계산" },
@@ -41,16 +42,6 @@ function Narrative() {
 
     let [scroll, setScroll] = useState(false);
 
-    const checkAll = (e) => {
-        e.target.checked ? setCheckedList(plusData) : setCheckedList([]);
-    };
-
-    const checkOne = (checked, ele) => {
-        checked
-            ? setCheckedList([...checkedList, ele])
-            : setCheckedList(checkedList.filter((a) => a !== ele));
-    };
-
     // 선택오픈, 오픈 취소
     const openState = async (isOpen) => {
         try {
@@ -59,11 +50,19 @@ function Narrative() {
                 return;
             }
 
+            if(checkedList.every(a=> a.sc_status === "S")){
+                // 복수 오픈 시 , 오픈 전 시험지가 하나라도 있으면 정상 작동
+                // 오픈된시험지만 선택된 경우 , 알럿 이미 오픈된 시험지입니다 . 확인
+                alert("이미 오픈된 시험지입니다.");
+                return 
+            }
+
             const idData = checkedList.map((id) => id.sc_seq);
             const data = {
                 arr_sc_seq: idData,
             };
 
+            // 선택오픈, 오픈 취소
             isOpen ? (data.mode = "ct_open") : (data.mode = "ct_close");
 
             // console.log(data);
@@ -106,6 +105,16 @@ function Narrative() {
         }
     };
 
+    const checkAll = (e) => {
+        e.target.checked ? setCheckedList(plusData) : setCheckedList([]);
+    };
+
+    const checkOne = (checked, ele) => {
+        checked
+            ? setCheckedList([...checkedList, ele])
+            : setCheckedList(checkedList.filter((a) => a !== ele));
+    };
+
     useEffect(() => {
         getList();
     }, [clickStudent]);
@@ -116,18 +125,19 @@ function Narrative() {
 
     return (
         <div className="Narrative">
+            <button className="btn-grey btn-icon btn-retry"><Icon icon={"reload"} />새로 고침</button>
             {
                 printModal && <NarrativePrint closeModal={setPrintModal} sc_seq={checkedList.map(a=> a.sc_seq )} />
             }
             <UserInfo clickStudent={clickStudent} />
-            <p className="alert-text" style={{ marginTop: "20px" }}>
-                학습하는 교재의 학년, 학기에 해당하는 서술형 문제를 오픈, 출력할 수
-                있습니다.(학년-학기별 공통)
+            <p className="alert-text" style={{ marginTop: "28px", marginBottom : "55px" }}>
+            ※ 학습하는 교재의 학년, 학기에 해당하는 서술형 문제를 오픈, 출력할 수 있습니다.(학년-학기별 공통)
             </p>
             <div className="fj" style={{ margin: "10px 0px" }}>
                 <div>
                     <button
                         className="btn-grey-border mr-10"
+                        style={{width : "100px"}}
                         onClick={() => {
                             openState(true);
                         }}
@@ -136,12 +146,19 @@ function Narrative() {
                     </button>
                     <button
                         className="btn-grey-border"
+                        style={{width : "100px"}}
                         onClick={() => {
                             if (checkedList.length === 0){
                                 alert("1개이상 선택하세요");
-                            } else{
-                                setPrintModal(true)
+                                return    
                             }
+
+                            if(checkedList.some(a=> a.sc_status === "P" )){
+                                alert("서술형 따라잡기 학습지를 먼저 오픈해 주세요.");
+                                return
+                            }
+
+                            setPrintModal(true)
                         }}
                     >
                         선택 인쇄
@@ -159,7 +176,7 @@ function Narrative() {
                         defaultValue="대단원"
                     />
                     <SelectBase
-                        width="100px"
+                        width="150px"
                         options={stateOptions}
                         value={situation}
                         onChange={(ele) => {
@@ -168,8 +185,8 @@ function Narrative() {
                         className="mr-10"
                         defaultValue="상태"
                     />
-                    <button className="btn-grey" onClick={getList}>
-                        조회
+                    <button className="btn-green btn-icon" style={{width : "81px"}} onClick={getList}>
+                    <Icon icon={"search"} />조회
                     </button>
                 </div>
             </div>

@@ -75,7 +75,7 @@ function LearningBreakdownTable() {
 
     return (
         <div>
-            <LbtDayOption />
+            <LbtDayOption lbtListNum={lbtList.length} />
 
             <strong className="alert-text">
                 ❖ 분석표 목록에는 학생별로 최대 50개까지 저장됩니다.({lbtList?.length}/50)

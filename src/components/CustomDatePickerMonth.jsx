@@ -14,6 +14,7 @@ function CustomDatePickerMonth({
     className = "",
     maxDate,
     minDate,
+    label = false
 }) {
     let [open, setOpen] = useState(false);
     let [dateValue, setDateValue] = useState(value);
@@ -117,6 +118,7 @@ function CustomDatePickerMonth({
     return (
         <button
             className="CustomDatePicker-btn"
+            style={style}
             onBlur={() => {
                 setOpen(false);
             }}
@@ -126,10 +128,17 @@ function CustomDatePickerMonth({
                     setOpen(!open);
                 }}
             >
-                달력에서 선택 <Icon icon={"calendar"} />
+                {
+                    label 
+                    ? dayjs(value).format("YYYY-MM")
+                    : "달력에서 선택"
+
+                }
+                
+                <Icon icon={"calendar"} />
             </span>
             {open && (
-                <div className={`CustomDatePicker ${className}`} style={style}>
+                <div className={`CustomDatePicker ${className}`}>
                     <div className="CustomDatePicker-header" style={{ marginBottom: "20px" }}>
                         <div
                             onClick={() => {

@@ -61,7 +61,7 @@ function LbtModal({ setCreateModal, sendLBTData }) {
             sdate: dayjs(sendLBTData.startDay).format("YYYY-MM-DD"),
             edate: dayjs(sendLBTData.endDay).format("YYYY-MM-DD"),
         };
-        data.arr_bk_cd = sendLBTData.checkList.map(a=> a.bk_cd );
+        data.arr_bk_cd = sendLBTData.checkList.map((a) => a.bk_cd);
         // console.log(data);
         const res = await ajax("/class_result.php", { data });
 
@@ -1405,7 +1405,9 @@ function LbtModal({ setCreateModal, sendLBTData }) {
                     >
                         닫기
                     </button>
-                    <button className="btn-orange mr-10" onClick={createAnalytics}>생성하기</button>
+                    <button className="btn-orange mr-10" onClick={createAnalytics}>
+                        생성하기
+                    </button>
                 </div>
             </div>
         </div>

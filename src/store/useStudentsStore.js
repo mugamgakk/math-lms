@@ -23,7 +23,7 @@ const useStudentsStore = create(set=>({
         qgrd : grade
       }
 
-      console.log(data);
+      // console.log(data);
 
       const res = await ajax(url, {data});
       // console.log(res);

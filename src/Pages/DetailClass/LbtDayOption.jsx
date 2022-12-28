@@ -4,17 +4,14 @@ import LbtModal from "./modal/LbtModal";
 import useStudentsStore from "../../store/useStudentsStore";
 import Checkbox from "../../components/Checkbox";
 import ajax from "../../ajax";
-import CustomDatePicker from "../../components/CustomDatePicker";
-import axios from "axios";
+import CustomDatePickerMonth from "../../components/CustomDatePickerMonth";
 
 const today = new Date();
-const oneMonthAgo = dayjs(today).subtract(1, "M").$d;
 
-const LbtDayOption = memo(() => {
+const LbtDayOption = memo(({ lbtListNum }) => {
     let clickStudent = useStudentsStore((state) => state.clickStudent);
     // 날짜
-    let [startDay, setStartDay] = useState(oneMonthAgo);
-    let [endDay, setEndDay] = useState(today);
+    let [month, setMonth] = useState(today);
 
     // 생성 모달
     let [createModal, setCreateModal] = useState(false);
@@ -38,8 +35,8 @@ const LbtDayOption = memo(() => {
     const bookOption = async () => {
         const data = {
             mode: "analytics_book",
-            sdate: dayjs(startDay).format("YYYY-MM-DD"),
-            edate: dayjs(endDay).format("YYYY-MM-DD"),
+            sdate: dateFormat().start,
+            edate: dateFormat().end,
             usr_seq: clickStudent.usr_seq,
         };
 
@@ -54,10 +51,27 @@ const LbtDayOption = memo(() => {
         setBookList([...bk_list]);
     };
 
+    const dateFormat = () => {
+        let obj = {
+            start: dayjs(month).format("YYYY-MM") + "-01",
+        };
+
+        let a = dayjs(month).format("YYYY-MM");
+        let b = dayjs(new Date()).format("YYYY-MM");
+
+        if (a === b) {
+            obj.end = dayjs(new Date()).format("YYYY-MM-DD");
+        } else {
+            obj.end = dayjs(month).format("YYYY-MM") + "-" + dayjs(month).daysInMonth();
+        }
+
+        return obj;
+    };
+
     const sendLBTData = {
         clickStudent: clickStudent,
-        startDay,
-        endDay,
+        startDay: dateFormat().start,
+        endDay: dateFormat().end,
         checkList,
     };
 
@@ -69,21 +83,16 @@ const LbtDayOption = memo(() => {
                 <div className="option-left">
                     <div>
                         <div className="fa" style={{ marginBottom: "18px" }}>
-                            <CustomDatePicker
-                                value={startDay}
-                                onChange={(day) => setStartDay(day)}
-                                maxDate={endDay}
-                                minDate={dayjs(new Date()).subtract(1, "M").$d}
+                            <CustomDatePickerMonth
+                                value={month}
+                                onChange={(day) => {
+                                    setMonth(day);
+                                    setBookList([]);
+                                }}
+                                maxDate={today}
                                 label={true}
-                            />
-                            <span className="water">~</span>
-                            <CustomDatePicker
-                                value={endDay}
-                                onChange={(day) => setEndDay(day)}
                                 className="mr-10"
-                                maxDate={new Date()}
-                                minDate={startDay}
-                                label={true}
+                                style={{ marginRight: "10px" }}
                             />
                             <button
                                 className="btn-grey-border"
@@ -94,45 +103,44 @@ const LbtDayOption = memo(() => {
                             </button>
                         </div>
                         <div className="option-box">
-                        {bookList.length === 0 ? (
-                        <p className="option-box-alert">학습 기간을 먼저 설정해 주세요.</p>
-                    ) : (
-                        <div className="book-list">
-                            <div className="title">
-                                <label htmlFor="학습한교재" className="mr-10">
-                                    학습한 교재
-                                </label>
-                                <Checkbox
-                                    id="학습한교재"
-                                    color="orange"
-                                    checked={checkList.length === bookList.length}
-                                    onChange={(e) => {
-                                        allCheck(e.currentTarget.checked);
-                                    }}
-                                />
-                            </div>
-                            <ul className="book">
-                                {bookList.map((ele) => {
-                                    return (
-                                        <li key={ele.bk_cd}>
-                                            <Checkbox
-                                                type="checkbox"
-                                                color="orange"
-                                                id={ele.bk_cd}
-                                                className="mr-10"
-                                                checked={checkList.includes(ele)}
-                                                onChange={(e) => {
-                                                    oneCheck(e.currentTarget.checked, ele);
-                                                }}
-                                            />
-                                            <label htmlFor={ele.bk_cd}>{ele.bk_name}</label>
-                                        </li>
-                                    );
-                                })}
-                            </ul>
-                        </div>
-                    )}
-                            
+                            {bookList.length === 0 ? (
+                                <p className="option-box-alert">학습 기간을 먼저 설정해 주세요.</p>
+                            ) : (
+                                <div className="book-list">
+                                    <div className="title">
+                                        <label htmlFor="학습한교재" className="mr-10">
+                                            학습한 교재
+                                        </label>
+                                        <Checkbox
+                                            id="학습한교재"
+                                            color="orange"
+                                            checked={checkList.length === bookList.length}
+                                            onChange={(e) => {
+                                                allCheck(e.currentTarget.checked);
+                                            }}
+                                        />
+                                    </div>
+                                    <ul className="book">
+                                        {bookList.map((ele) => {
+                                            return (
+                                                <li key={ele.bk_cd}>
+                                                    <Checkbox
+                                                        type="checkbox"
+                                                        color="orange"
+                                                        id={ele.bk_cd}
+                                                        className="mr-10"
+                                                        checked={checkList.includes(ele)}
+                                                        onChange={(e) => {
+                                                            oneCheck(e.currentTarget.checked, ele);
+                                                        }}
+                                                    />
+                                                    <label htmlFor={ele.bk_cd}>{ele.bk_name}</label>
+                                                </li>
+                                            );
+                                        })}
+                                    </ul>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -140,25 +148,34 @@ const LbtDayOption = memo(() => {
                     <p>1. 학습 기간을 설정해 주세요.</p>
                     <p>2. 학습 분석표를 생성할 교재를 선택해 주세요. </p>
                     <div>
-                        <button 
-                        className="btn-grey-border mr-10"
-                        onClick={() => {
-                            setBookList([]);
-                        }}
-                        >초기화</button>
-                        <button 
-                        className="btn-green"
-                        onClick={() => {
-                            if (bookList.length === 0) {
-                                alert("학습기간을 설정 후 교재를 선택해주세요");
-                                return;
-                            }
-                            setCreateModal(true);
-                        }}
-                        >생성</button>
+                        <button
+                            className="btn-grey-border mr-10"
+                            onClick={() => {
+                                setBookList([]);
+                            }}
+                        >
+                            초기화
+                        </button>
+                        <button
+                            className="btn-green"
+                            onClick={() => {
+                                if (bookList.length === 0) {
+                                    alert("학습기간을 설정 후 교재를 선택해주세요");
+                                    return;
+                                }
+                                if (lbtListNum === 50) {
+                                    alert(
+                                        "종합 학습 분석표는 최대 50개까지 저장 가능합니다. 목륵을 정리해 주세요"
+                                    );
+                                    return 
+                                }
+                                setCreateModal(true);
+                            }}
+                        >
+                            생성
+                        </button>
                     </div>
                 </div>
-
             </div>
         </div>
     );

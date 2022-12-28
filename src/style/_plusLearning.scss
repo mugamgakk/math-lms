@@ -8,6 +8,16 @@
     }
 }
 
+.Narrative{
+    position: relative;
+    
+    .btn-retry{
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+}
+
 .PlusLearningGradingModal{
     .modal-content{
         width: 1240px;

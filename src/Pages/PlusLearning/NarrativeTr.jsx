@@ -59,7 +59,7 @@ function NarrativeTr({ ele, checkOne, checkedList }) {
                                 학습 중<button className="btn-table">오픈 취소</button>
                             </div>
                         ),
-                        C: "학습완료",
+                        C:  <span className="text-orange">학습완료</span> ,
                     }[ele.sc_status]
                 }
             </td>
