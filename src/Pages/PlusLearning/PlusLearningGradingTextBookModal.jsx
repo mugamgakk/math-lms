@@ -164,8 +164,6 @@ function PlusLearningGradingTextBookModal({ setModal, tb_seq }) {
 const Tr = ({ item, toggleBtn }) => {
     let [toggleImg, setToggleImg] = useState(false);
 
-    console.log(item);
-
     return (
         <li>
             <div>{item.no}</div>

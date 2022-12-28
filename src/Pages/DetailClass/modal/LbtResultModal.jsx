@@ -32,10 +32,6 @@ function LbtModal({ setCreateModal, sendLBTData }) {
     const dataLists = useLbtStore((state) => state.dataLists);
     const checkedList = useLbtStore((state) => state.checkedList);
     const allCheckfnL = useLbtStore((state) => state.allCheckfnL);
-
-    const startFormat = dayjs(sendLBTData.startDay);
-    const endFormat = dayjs(sendLBTData.endDay);
-
     // ui
     let [viewItem, setViewItem] = useState(null);
     let [lbtData, setLbtData] = useState(null);
@@ -44,14 +40,33 @@ function LbtModal({ setCreateModal, sendLBTData }) {
     let canvas1 = useRef();
     let canvas2 = useRef();
 
+    const gdet = ()=>{
+        ajax("/class_result.php", {data : {mode : "get_analytics", prt_seq : 123}})
+        .then(data=>{
+            console.log(data)
+        })
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
     const getRegult = async () => {
         const data = createDataParam();
 
         // console.log(data);
 
-        let res = await ajax("/class_result.php", { data });
-        // console.log(res.data.lec_assa[0].unit2[0])
-        render(res.data);
+        // let res = await ajax("/class_result.php", { data });
+        // // console.log(res.data.lec_assa[0].unit2[0])
+        // render(res.data);
     };
 
     //
@@ -85,9 +100,9 @@ function LbtModal({ setCreateModal, sendLBTData }) {
             }
         });
 
-        sendLBTData.checkList.forEach((a) => {
-            obj.arr_bk_cd.push(a.bk_cd);
-        });
+        // sendLBTData.checkList.forEach((a) => {
+        //     obj.arr_bk_cd.push(a.bk_cd);
+        // });
 
         obj.mode = "get_analytics_tot";
         obj.avg = 1;
@@ -293,6 +308,8 @@ function LbtModal({ setCreateModal, sendLBTData }) {
         // 첫 로드시 모두체크
         allCheckfnL(true);
         getRegult();
+
+        gdet()
     }, []);
 
     return (
@@ -377,38 +394,19 @@ function LbtModal({ setCreateModal, sendLBTData }) {
                                     <tbody>
                                         <tr>
                                             <th>이름</th>
-                                            <td>{sendLBTData.clickStudent.um_nm}</td>
+                                            {/* <td>{sendLBTData.clickStudent.um_nm}</td> */}
                                             <th>학년</th>
-                                            <td>{sendLBTData.clickStudent.school_grade}</td>
+                                            {/* <td>{sendLBTData.clickStudent.school_grade}</td> */}
                                             <th>학습기간</th>
-                                            <td>
-                                                {`${startFormat.$y}년 ${
-                                                    startFormat.$M < 10
-                                                        ? "0" + (startFormat.$M + 1)
-                                                        : startFormat.$M + 1
-                                                }월 ${
-                                                    startFormat.$D < 10
-                                                        ? "0" + startFormat.$D
-                                                        : startFormat.$D
-                                                }일 ~ `}
-                                                {`${endFormat.$y}년 ${
-                                                    endFormat.$M < 10
-                                                        ? "0" + (endFormat.$M + 1)
-                                                        : endFormat.$M + 1
-                                                }월 ${
-                                                    endFormat.$D < 10
-                                                        ? "0" + endFormat.$D
-                                                        : endFormat.$D
-                                                }일`}
-                                            </td>
+                                         
                                         </tr>
                                         <tr>
                                             <th>학습 교재</th>
-                                            <td className="text-left" colSpan={5}>
+                                            {/* <td className="text-left" colSpan={5}>
                                                 {sendLBTData.checkList
                                                     .map((a) => a.bk_name)
                                                     .join(",")}
-                                            </td>
+                                            </td> */}
                                         </tr>
                                     </tbody>
                                 </table>

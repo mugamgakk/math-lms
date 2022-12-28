@@ -1,7 +1,10 @@
 // 플러스 러닝
-.Narrative-table, .TextBook-table{
-    td{
-        // @include flex;
+.narrative-table, .TextBook-table{
+    & > thead th{
+        padding: 23px 0;
+    }
+    & > tbody > tr > td{
+        padding: 9px 0;
     }
 }
 

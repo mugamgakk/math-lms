@@ -11,6 +11,7 @@ import ReportModal from "./ReportModal";
 import ajax from "../../ajax";
 import dayjs from "dayjs";
 import { useEffect } from "react";
+import { _isScroll } from "../../methods/methods";
 
 const data = [
     {
@@ -76,6 +77,8 @@ function TextBook() {
 
     let [reportModal, setReportModal] = useState(false);
 
+    let [scroll, setScroll] = useState(false);
+
     const getData = async () => {
         const data = {
             mode: "tb_list",
@@ -94,6 +97,10 @@ function TextBook() {
     useEffect(() => {
         getData();
     }, []);
+
+    useEffect(() => {
+        setScroll(_isScroll("narrative-table", 365));
+    });
 
     return (
         <div>
@@ -167,7 +174,7 @@ function TextBook() {
                 </div>
             </div>
 
-            <table className="table tableA TextBook-table" style={{ marginTop: "10px" }}>
+            <table className="custom-table TextBook-table" style={{ marginTop: "10px" }}>
                 <thead>
                     <tr>
                         <th style={{ width: "8%" }}>
@@ -179,9 +186,10 @@ function TextBook() {
                         <th style={{ width: "16.66666%" }}>상태</th>
                         <th style={{ width: "16.66666%" }}>채점</th>
                         <th style={{ width: "16.66666%" }}>시험지</th>
+                        {scroll && <th style={{ width: "17px", border: "none" }}></th>}
                     </tr>
                 </thead>
-                <tbody className="scroll">
+                <tbody style={{maxHeight : "365px"}}>
                     {plusData?.map((ele, i) => {
                         return <Tr ele={ele} key={i} />;
                     })}
@@ -192,7 +200,6 @@ function TextBook() {
 }
 
 const Tr = ({ ele }) => {
-    console.log(ele);
 
     let [modal, setModal] = useState(false);
     let [printModal, setPrintModal] = useState(false);

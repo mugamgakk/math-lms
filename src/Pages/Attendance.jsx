@@ -114,7 +114,7 @@ function Attendance() {
                         onChange={(day) => {
                             setDate(day);
                         }}
-                        style={{ marginRight: "4px" }}
+                        style={{marginRight : "10px"}}
                     />
 
                     <CustomDatePicker
@@ -275,12 +275,11 @@ const Tr = memo(({ ele, date }) => {
                         onChange={(e) => {
                             setText(e.target.value);
                         }}
-                        placeholder="사유 입력(50자 이내)"
+                        placeholder="사유 입력"
                         value={text}
                         disabled={!pen}
                         onKeyDown={resizeaa}
                         onKeyUp={resizeaa}
-                        maxLength="50"
                     ></textarea>
                     {pen && (
                         <button className="btn-grey-border" onClick={saveReason}>

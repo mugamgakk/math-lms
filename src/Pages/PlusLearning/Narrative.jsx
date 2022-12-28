@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import SkeletonTable from "../../components/SkeletonTable";
 import ajax from "../../ajax";
 import NarrativeTr from "./NarrativeTr";
-import { _cloneDeep } from "../../methods/methods";
+import { _cloneDeep, _isScroll } from "../../methods/methods";
 import Checkbox from "../../components/Checkbox";
 import NarrativePrint from "../../components/NarrativePrint";
 
@@ -37,7 +37,9 @@ function Narrative() {
 
     let [printModal, setPrintModal] = useState(false);
 
-    const [initialData, setInitialData] = useState([]);;
+    const [initialData, setInitialData] = useState([]);
+
+    let [scroll, setScroll] = useState(false);
 
     const checkAll = (e) => {
         e.target.checked ? setCheckedList(plusData) : setCheckedList([]);
@@ -108,6 +110,10 @@ function Narrative() {
         getList();
     }, [clickStudent]);
 
+    useEffect(() => {
+        setScroll(_isScroll("narrative-table", 365));
+    });
+
     return (
         <div className="Narrative">
             {
@@ -168,7 +174,7 @@ function Narrative() {
                 </div>
             </div>
 
-            <table className="table tableA Narrative-table">
+            <table className="custom-table narrative-table">
                 <thead>
                     <tr>
                         <th scope="row" style={{ width: "8.80316%" }}>
@@ -196,9 +202,10 @@ function Narrative() {
                         <th scope="row" style={{ width: "12.37487%" }}>
                             시험지
                         </th>
+                        {scroll && <th style={{ width: "17px", border: "none" }}></th>}
                     </tr>
                 </thead>
-                <tbody className="scroll">
+                <tbody style={{maxHeight : "365px"}}>
                     {skeleton ? (
                         <SkeletonTable
                             R={6}

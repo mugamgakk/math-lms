@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import React, { useState, useEffect } from "react";
 import ajax from "../../../ajax";
 import Checkbox from "../../../components/Checkbox";
@@ -127,6 +128,8 @@ function LearningBreakdownTable() {
 const Tr = ({ item, choiceArr, oneCheck }) => {
     let [modal, setModal] = useState(false);
 
+    const [startDay, endDay] = item.prt_period.split("~")
+
     return (
         <tr>
             <td style={{ width: "8.8206%" }}>
@@ -138,7 +141,7 @@ const Tr = ({ item, choiceArr, oneCheck }) => {
                     }}
                 />
             </td>
-            <td style={{ width: "24.6778%" }}>{item.prt_period}</td>
+            <td style={{ width: "24.6778%" }}>{dayjs(startDay).format("YYYY-MM-DD")} ~ {dayjs(endDay).format("YYYY-MM-DD")}</td>
             <td style={{ width: "12.7849%" }}>{item.reg_dt.replace(/\//g, "-")}</td>
             <td style={{ width: "32.6065%", wordBreak: "keep-all" }}>{item.bk_name}</td>
             <td style={{ width: "9.8116%" }}>{item.reg_nm}</td>
