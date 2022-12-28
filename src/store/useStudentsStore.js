@@ -12,15 +12,18 @@ const useStudentsStore = create(set=>({
     bookList : {},
     // 교재 6종 선택
     setBookList  : (param)=> set(state=> ({bookList : param})),
-    getStudentsData : async (classCd = [], queryStr = "")=>{
+    getStudentsData : async ({grade, classOption, nameSearch})=>{
       // 리스트 가져오기
       
       const url = "/class_st.php"
       const data = {
         mode: "student_list",
-        class_cd : classCd,
-        qstr : queryStr
+        class_cd : classOption,
+        qstr : nameSearch,
+        qgrd : grade
       }
+
+      console.log(data);
 
       const res = await ajax(url, {data});
       // console.log(res);

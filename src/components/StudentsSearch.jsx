@@ -7,7 +7,7 @@ import { memo } from "react";
 import { useCallback } from "react";
 import Icon from "./Icon";
 
-function StudentsSearch({ children }) {
+function StudentsSearch({ children, grade }) {
     let { user, setClickStudent, clickStudent, getStudentsData, resetStudent } =
         useStudentsStore();
 
@@ -24,9 +24,9 @@ function StudentsSearch({ children }) {
     }, []);
 
     useEffect(() => {
-        resetStudent();
-        getStudentsData();
-    }, []);
+        // resetStudent();
+        getStudentsData({grade});
+    }, [grade]);
 
     useEffect(() => {
         // 학생 리스트
@@ -59,7 +59,7 @@ function StudentsSearch({ children }) {
 
     }
 
-    console.log(scroll);
+    // console.log(scroll);
     return (
         <div className="bg bg-list student-list">
             <header className="student-list-header">
@@ -69,7 +69,7 @@ function StudentsSearch({ children }) {
                 <div className="fj">
                     <ClassSelect
                         onChange={(ele) => {
-                            getStudentsData(classOption, nameSearch);
+                            getStudentsData({classOption, nameSearch});
                             setClassOption(ele);
                         }}
                         value={classOption}
@@ -86,11 +86,11 @@ function StudentsSearch({ children }) {
                         }}
                         onKeyUp={(e) => {
                             if (e.key === "Enter") {
-                                getStudentsData(classOption, nameSearch);
+                                getStudentsData({classOption, nameSearch});
                             }
                         }}
                     />
-                    <button className="btn-search btn-green" style={{ width:'81px' }} onClick={()=>{ getStudentsData(classOption, nameSearch); }}>
+                    <button className="btn-search btn-green" style={{ width:'81px' }} onClick={()=>{ getStudentsData({classOption, nameSearch}); }}>
                         <Icon icon={"search"} />
                         검색
                     </button>

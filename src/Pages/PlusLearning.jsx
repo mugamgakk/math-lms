@@ -5,6 +5,7 @@ import useStudentsStore from "../store/useStudentsStore";
 import AlertBox from "../components/AlertBox";
 import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import ajax from "../ajax";
 
 function PlusLearning() {
     const navigate = useNavigate();
@@ -12,16 +13,14 @@ function PlusLearning() {
 
     const clickStudent = useStudentsStore((state) => state.clickStudent);
     let { resetStudent } = useStudentsStore((state) => state);
-    let [current, setCurrent] = useState("")
+    let [current, setCurrent] = useState("");
 
     // url 변화
     useEffect(() => {
-        resetStudent();
-
-        location.pathname.includes("narrative")
+        location.pathname.includes("plus-learning/narrative")
             ? setCurrent("서술형 따라잡기")
-            : setCurrent("교과서 적중문제")
-    }, [location.pathname])
+            : setCurrent("교과서 내신적중");
+    }, [location.pathname]);
 
     return (
         <>
@@ -34,30 +33,42 @@ function PlusLearning() {
                 current={current}
             />
             <div className="row layout-height">
-                <StudentsSearch>
+                <StudentsSearch grade={current === "교과서 내신적중" ? "M" : null }>
                     <div className="student-list-tab">
                         <ul>
                             <li
                                 className={`${current === "서술형 따라잡기" ? " active" : ""}`}
                                 onClick={() => {
                                     navigate("/plus-learning/narrative");
-                                }}>
+                                }}
+                            >
                                 서술형 따라잡기
                             </li>
-                            <li
-                            className={`${current === "교과서 적중문제" ? " active" : ""}`}
-                            onClick={() => {
-                                navigate("/plus-learning/textBook");
-                            }}
-                        >
-                            교과서 적중문제
-                        </li>
+                            {clickStudent?.school_grade.includes("중") && (
+                                <li
+                                    className={`${current === "교과서 내신적중" ? " active" : ""}`}
+                                    onClick={() => {
+                                        navigate("/plus-learning/textBook");
+                                    }}
+                                >
+                                    교과서 적중문제
+                                </li>
+                            )}
                         </ul>
                     </div>
                 </StudentsSearch>
                 <div className="bg bg-content">
                     {clickStudent === null ? (
-                        <AlertBox bg="pink" name={current} />
+                        <AlertBox name={current}>
+                            <div className="plus-learning-alert">
+                                <div className="msg-wrap">
+                                    <p className="alert-msg">
+                                        ※ [플러스 학습] 학생명(아이디) 클릭 시 학생별 추가 학습
+                                        자료의 오픈 및 출력이 가능합니다.
+                                    </p>
+                                </div>
+                            </div>
+                        </AlertBox>
                     ) : (
                         <>
                             <Outlet />

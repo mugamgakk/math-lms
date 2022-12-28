@@ -282,7 +282,7 @@ const Tr = memo(({ ele, date }) => {
                         onKeyUp={resizeaa}
                     ></textarea>
                     {pen && (
-                        <button className="btn-grey-border" onClick={saveReason}>
+                        <button className="btn-grey-border" onClick={saveReason} style={{width : "80px"}}>
                             저장
                         </button>
                     )}

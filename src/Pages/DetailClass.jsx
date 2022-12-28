@@ -7,9 +7,10 @@ import UserInfo from "../components/UserInfo";
 import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
+import Icon from "../components/Icon";
 
 const classItems = [
-    { name: "수업관리", href: "management" },
+    { name: "수업 관리", href: "management" },
     { name: "오답 정복하기", href: "wrong-answer" },
     { name: "학습 분석표", href: "table" },
     { name: "출결 관리", href: "attend" },
@@ -21,13 +22,13 @@ function DetailClass() {
     const clickStudent = useStudentsStore((state) => state.clickStudent);
     let [current, setCurrent] = useState("");
 
-    useEffect(()=>{
-        classItems.forEach(ele=>{
-            if(location.pathname.includes(ele.href)){
-                setCurrent(ele.name)
+    useEffect(() => {
+        classItems.forEach((ele) => {
+            if (location.pathname.includes(ele.href)) {
+                setCurrent(ele.name);
             }
-        })
-    },[location.pathname])
+        });
+    }, [location.pathname]);
 
     return (
         <>
@@ -40,33 +41,50 @@ function DetailClass() {
                 current={current}
             />
             <div className="row layout-height">
-                <StudentsSearch />
+                <StudentsSearch>
+                    <div style={{ height: "50px" }}></div>
+                </StudentsSearch>
                 <div className="bg bg-content student-content">
+                    <div className="tabs-header">
+                        <ul className="content-tabs">
+                            {classItems.map((a, i) => {
+                                return (
+                                    <li
+                                        key={i}
+                                        onClick={() => {
+                                            navigate("/detail-class/" + a.href);
+                                        }}
+                                        className={`${
+                                            location.pathname.includes(a.href) ? "active" : ""
+                                        }`}
+                                    >
+                                        {a.name}
+                                    </li>
+                                );
+                            })}
+                        </ul>
+                    </div>
                     {clickStudent === null ? (
-                        <AlertBox name={current} />
+                        <AlertBox>
+                            <div className="detail-class-alert">
+                                <p className="alert-msg">
+                                    <Icon icon={"warning"} /> 학생명(아이디) 클릭 시 학생 교재별 상세 보기에서 오답 정복하기와
+                                    학습 분석표 생성 및 출력이 가능합니다.
+                                </p>
+                                <div className="alert-box">
+                                    <h4>
+                                        <strong>[{current} 시작]</strong>
+                                        학생명(아이디)을 클릭하세요.
+                                    </h4>
+                                    <p>
+                                        * 학생 화면 ‘로그인’을 클릭하면 학생의 학습 화면을 확인할 수
+                                        있습니다.
+                                    </p>
+                                </div>
+                            </div>
+                        </AlertBox>
                     ) : (
                         <>
-                            <div className="tabs-header">
-                                <ul className="content-tabs">
-                                    {classItems.map((a,i) => {
-                                        return (
-                                            <li
-                                                key={i}
-                                                onClick={()=>{
-                                                    navigate("/detail-class/" + a.href)
-                                                }}
-                                                className={`${
-                                                    location.pathname.includes(a.href)
-                                                        ? "active"
-                                                        : ""
-                                                }`}
-                                            >
-                                                {a.name}
-                                            </li>
-                                        );
-                                    })}
-                                </ul>
-                            </div>
                             <UserInfo clickStudent={clickStudent} />
                             <Outlet />
                         </>

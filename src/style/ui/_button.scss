@@ -12,7 +12,7 @@
     display: inline-flex;
 
     &:disabled {
-        cursor: not-allowed;
+        cursor: default;
     }
 
     &.btn-icon {
@@ -140,10 +140,50 @@
     border: 1px solid $border;
     color: #444;
     background: #fff;
-    min-width: 100px;
+    width: 100px;
 
     &:hover {
         background-color: #eee;
+    }
+}
+.btn-table-orange {
+    @extend %button-base;
+    height: 30px;
+    color: $white;
+    background: $orange;
+    width: 100px;
+
+    &:hover {
+        background-color: #e05836;
+    }
+
+    &:disabled {
+        color: rgba($white, 0.4);
+
+        &:hover {
+            background-color: $orange;
+        }
+    }
+}
+.btn-table-orange-border {
+    @extend %button-base;
+    height: 30px;
+    color: $orange;
+    background: $white;
+    width: 100px;
+    border: 1px solid $orange;
+
+    &:hover {
+        background-color: $orange;
+        color: $white;
+    }
+
+    &:disabled {
+        color: rgba($orange, 0.4);
+
+        &:hover {
+            background-color: #fff;
+        }
     }
 }
 

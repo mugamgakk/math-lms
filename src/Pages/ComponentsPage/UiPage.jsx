@@ -136,6 +136,8 @@ function UiPage() {
                 </div>
                 <div>
                     <button className="btn-table">btn-table</button>
+                    <button className="btn-table-orange">btn-table-orange</button>
+                    <button className="btn-table-orange-border">btn-table-orange</button>
                 </div>
                 <div>
                     <button className="btn-grey">btn-grey</button>
