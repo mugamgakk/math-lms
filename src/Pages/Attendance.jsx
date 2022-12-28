@@ -151,7 +151,7 @@ function Attendance() {
                                 }
                             }}
                         />
-                        <button className="btn-green btn-icon mr-10" onClick={getData}>
+                        <button className="btn-green btn-icon mr-10" style={{width : "81px"}} onClick={getData}>
                             <Icon icon={"search"} />
                             검색
                         </button>

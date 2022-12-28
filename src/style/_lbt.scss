@@ -1,35 +1,66 @@
 // 학습기간 설정
 .LbtDayOption {
-    .option {
-        background-color: #f2eeeb;
-        padding: 20px;
-        margin-top: 15px;
-        margin-bottom: 20px;
+    height: 220px;
+    padding: 20px 15px;
+    background-color:#f2eeeb;
+    margin-top: 15px;
+    margin-bottom: 22px;
 
-        p {
-            font-weight: 600;
-            @include font-style(18);
-            color: #664e3d;
+    .option{
+        display: flex;
+        &-left{
+            width: 404px;
+            margin-right: 50px;
+
+            .book-list{
+                display: flex;
+                height: 100%;
+                overflow: hidden;
+
+                .title{
+                    padding: 20px;
+                    border-right: 1px solid #666;
+                }
+                .book{
+                    height: 120px;
+                    overflow: auto;
+                    padding: 20px;
+                    width: 256px;
+                }
+            }
         }
 
-        .book-list {
-            display: flex;
-            height: 120px;
-            overflow-y: auto;
-            .title {
-                width: 146px;
-                padding: 20px 15px;
-                background-color: #e6ddd8;
+        &-right{
+            padding-top: 60px;
+            button{
+                width: 70px;
             }
+            p{
+                color: $brown;
+                font-weight: 600;
+                margin-bottom: 10px;
+                &:last-child{
+                    margin-bottom: 20px;
+                }
+            }
+        }
 
-            .book {
-                width: 262px;
-                background-color: $white;
-                padding: 15px 5px;
-                overflow-y: auto;
+        &-box{
+            height: 120px;
+            border: 1px solid #666;
+            background-color: #fff;
+            border-radius: $radius;
+            position: relative;
+
+            &-alert{
+                @include pos-center;
+                width: 100%;
+                text-align: center;
+                color: #444;
             }
         }
     }
+
 }
 
 .lbt-list-table{
@@ -39,34 +70,8 @@
             padding: 23px 0;
         }
         & > td{
-            padding: 15px 0;
+            padding: 15px 18px;
         }
-
-
-    & > th:nth-child(1),
-    & > td:nth-child(1){
-        width: 80px;
-    }
-    & > th:nth-child(2),
-    & > td:nth-child(2){
-        width: 250px;
-    }
-    & > th:nth-child(3),
-    & > td:nth-child(3){
-        width: 120px;
-    }
-    & > th:nth-child(4),
-    & > td:nth-child(4){
-        width: 350px;
-    }
-    & > th:nth-child(5),
-    & > td:nth-child(5){
-        width: 100px;
-    }
-    & > th:nth-child(6),
-    & > td:nth-child(6){
-        width: calc(100% - 900px)
-    }
 }
 
 }

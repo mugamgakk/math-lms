@@ -55,70 +55,47 @@ const LbtDayOption = memo(() => {
     };
 
     const sendLBTData = {
-        clickStudent : clickStudent,
+        clickStudent: clickStudent,
         startDay,
         endDay,
-        checkList
-    }
+        checkList,
+    };
 
     return (
         <div className="LbtDayOption">
-            
             {createModal && <LbtModal setCreateModal={setCreateModal} sendLBTData={sendLBTData} />}
 
             <div className="option">
-                <div className="fa fj" style={{ marginBottom: "20px" }}>
-                    <p>1. 학습기간을 설정해 주세요.</p>
-                    <div className="fa">
-                        <CustomDatePicker
-                            value={startDay}
-                            onChange={(day) => setStartDay(day)}
-                            maxDate={endDay}
-                            minDate={dayjs(new Date()).subtract(1, "M").$d}
-                            label={true}
-                        />
-                        <span className="water">~</span>
-                        <CustomDatePicker
-                            value={endDay}
-                            onChange={(day) => setEndDay(day)}
-                            className="mr-10"
-                            maxDate={new Date()}
-                            minDate={startDay}
-                            label={true}
-                        />
-                        <button className="btn-grey" onClick={bookOption}>
-                            설정
-                        </button>
-                    </div>
-                </div>
-                <div className="fj" style={{ alignItems: "flex-start" }}>
+                <div className="option-left">
                     <div>
-                        <p>2. 학습 분석표를 생성할 교재를 선택해 주세요.</p>
-                        <div style={{ marginTop: "54px" }}>
+                        <div className="fa" style={{ marginBottom: "18px" }}>
+                            <CustomDatePicker
+                                value={startDay}
+                                onChange={(day) => setStartDay(day)}
+                                maxDate={endDay}
+                                minDate={dayjs(new Date()).subtract(1, "M").$d}
+                                label={true}
+                            />
+                            <span className="water">~</span>
+                            <CustomDatePicker
+                                value={endDay}
+                                onChange={(day) => setEndDay(day)}
+                                className="mr-10"
+                                maxDate={new Date()}
+                                minDate={startDay}
+                                label={true}
+                            />
                             <button
-                                className="btn-grey mr-10"
-                                onClick={() => {
-                                    setBookList([]);
-                                }}
+                                className="btn-grey-border"
+                                style={{ width: "70px" }}
+                                onClick={bookOption}
                             >
-                                초기화
-                            </button>
-                            <button
-                                className="btn-green"
-                                onClick={() => {
-                                    if (bookList.length === 0) {
-                                        alert("학습기간을 설정 후 교재를 선택해주세요");
-                                        return;
-                                    }
-                                    setCreateModal(true);
-                                }}
-                            >
-                                생성
+                                설정
                             </button>
                         </div>
-                    </div>
-                    {bookList.length === 0 ? (
-                        <p>학습 기간을 설정해 주세요.</p>
+                        <div className="option-box">
+                        {bookList.length === 0 ? (
+                        <p className="option-box-alert">학습 기간을 먼저 설정해 주세요.</p>
                     ) : (
                         <div className="book-list">
                             <div className="title">
@@ -155,7 +132,33 @@ const LbtDayOption = memo(() => {
                             </ul>
                         </div>
                     )}
+                            
+                        </div>
+                    </div>
                 </div>
+                <div className="option-right">
+                    <p>1. 학습 기간을 설정해 주세요.</p>
+                    <p>2. 학습 분석표를 생성할 교재를 선택해 주세요. </p>
+                    <div>
+                        <button 
+                        className="btn-grey-border mr-10"
+                        onClick={() => {
+                            setBookList([]);
+                        }}
+                        >초기화</button>
+                        <button 
+                        className="btn-green"
+                        onClick={() => {
+                            if (bookList.length === 0) {
+                                alert("학습기간을 설정 후 교재를 선택해주세요");
+                                return;
+                            }
+                            setCreateModal(true);
+                        }}
+                        >생성</button>
+                    </div>
+                </div>
+
             </div>
         </div>
     );

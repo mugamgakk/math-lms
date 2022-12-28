@@ -51,13 +51,13 @@ function StudentsSearch({ children }) {
                             setClassOption(ele);
                         }}
                         value={classOption}
-                        width="50%"
+                        width="160px"
                     />
                     <input
                         type="text"
                         className="textInput"
                         placeholder="학생명을 입력하세요"
-                        style={{ width: "50%", margin: "0 4px" }}
+                        style={{ width: "170px", margin: "0 4px" }}
                         value={nameSearch}
                         onChange={(e) => {
                             setNameSearch(e.target.value);
@@ -68,7 +68,7 @@ function StudentsSearch({ children }) {
                             }
                         }}
                     />
-                    <button className="btn-search btn-green" onClick={()=>{ getStudentsData(classOption, nameSearch); }}>
+                    <button className="btn-icon btn-green" onClick={()=>{ getStudentsData(classOption, nameSearch); }}>
                         <Icon icon={"search"} />
                         검색
                     </button>

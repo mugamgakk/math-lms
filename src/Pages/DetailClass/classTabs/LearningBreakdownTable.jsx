@@ -81,7 +81,7 @@ function LearningBreakdownTable() {
                 ❖ 분석표 목록에는 학생별로 최대 50개까지 저장됩니다.({lbtList?.length}/50)
             </strong>
             <br />
-            <div className="mb-10">
+            <div style={{marginBottom : "20px"}}>
                 <button
                     className="btn-grey-border mr-10"
                     onClick={removeList}
@@ -143,7 +143,7 @@ const Tr = ({ item, choiceArr, oneCheck }) => {
             </td>
             <td style={{ width: "24.6778%" }}>{dayjs(startDay).format("YYYY-MM-DD")} ~ {dayjs(endDay).format("YYYY-MM-DD")}</td>
             <td style={{ width: "12.7849%" }}>{item.reg_dt.replace(/\//g, "-")}</td>
-            <td style={{ width: "32.6065%", wordBreak: "keep-all" }}>{item.bk_name}</td>
+            <td style={{ width: "32.6065%" }} className="text-center">{item.bk_name}</td>
             <td style={{ width: "9.8116%" }}>{item.reg_nm}</td>
             <td style={{ width: "11.7938%" }}>
                 {modal && <LbtResultModal setCreateModal={setModal} />}
