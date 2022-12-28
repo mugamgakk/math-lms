@@ -45,7 +45,6 @@ function ClassManagement(){
 
         console.log(res);
         setData(res.data);
-        setScroll(_isScroll(482, 'custom-table'))
         
     
     };
@@ -110,6 +109,9 @@ function ClassManagement(){
         }
     }
 
+    useEffect(()=>{
+        setScroll(_isScroll('classManagement-table',482))
+    });
     return(
         <div className='detailClass classManagement'>
             <div className="fj mb-10">
@@ -166,7 +168,7 @@ function ClassManagement(){
                         </tr>
                     </thead>
                     </table>
-                    <table className="custom-table">
+                    <table className="custom-table classManagement-table ">
                         <tbody>
                             <>
                                 <tr className='unit1'>

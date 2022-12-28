@@ -8,6 +8,7 @@ import Icon from "../../../components/Icon";
 import { falseModal } from '../../../methods/methods';
 import axios from "axios";
 import Checkbox from "../../../components/Checkbox";
+import { _isScroll } from "../../../methods/methods";
 
 const source = ['개념서', '뜨레스', '엑사스','노벰','맞춤클리닉'];
 const type = ['객관식','주관식','서술형','정오 체크'];
@@ -22,9 +23,6 @@ function CreationModal({setCreationMo,ucode}){
     const clickStudent = useStudentsStore((state) => state.clickStudent);
     let bookList = useStudentsStore((state) => state.bookList);
     let ref = useRef(false);
-
-    console.log(clickStudent);
-    console.log(newList);
 
         let [obj,setObj] = useState({
         source : source,
@@ -47,9 +45,11 @@ function CreationModal({setCreationMo,ucode}){
         // let res = await ajax(url, { data: query });
         const res = await axios("/json/creationModal_table.json");
 
-
+        console.log(res);
         setDataList(res.data);
         setNewList(res.data);
+
+
     }
 
  
@@ -140,6 +140,11 @@ function CreationModal({setCreationMo,ucode}){
     },[])
     
     let [title,setTitle] = useState(`${bookList.label}_오답 정복하기_${today}`);
+    let [scroll,setScroll] = useState(false);
+
+    useEffect(()=>{
+        setScroll(_isScroll('creationModal-table', 429))
+    });
 
     return(
         <div className="modal" onClick={(e)=>falseModal(e,setCreationMo)}>
@@ -163,7 +168,7 @@ function CreationModal({setCreationMo,ucode}){
                             </div>
                         </div>
                         <div className="contents-table">
-                        <table className="table tableA">
+                        <table className="creationModal-table custom-table">
                             <thead>
                                 <tr>
                                     <th style={{ width:'6.73%',flexDirection:'column' }}>
@@ -193,22 +198,24 @@ function CreationModal({setCreationMo,ucode}){
                                             setObj={setObj}
                                             keyName='type'
                                             tit='문제 형식'
-
                                             />
                                     </th>
                                     <th style={{ width:'8.65%' }}>
-                                            <CreationCheck 
+                                        <CreationCheck 
                                             data={level}
                                             obj={obj}
                                             setObj={setObj}
                                             keyName='level'
                                             tit='난이도'
-                                            />
+                                        />
                                     </th>
                                     <th style={{ width:'10.57%' }}>문제 보기</th>
+                                    {
+                                        scroll && <th style={{ width: '17px', border:'none' }}></th>
+                                    }
                                 </tr>
                             </thead>
-                            <tbody className="scroll" style={{ height:'429px' }}>
+                            <tbody style={{ maxHeight:'429px' }}>
                                 {
                                     newList && newList.map(data=>{
                                         return(
@@ -234,22 +241,22 @@ function CreationModal({setCreationMo,ucode}){
 const Tr = ({data,changeCheckState,checkState}) => {
     return(
         <tr key={data.qa_seq}>
-        <td style={{ width:'6.73%' }}>
-            <div className="check-wrap">
-                <Checkbox color='orange' checked={ checkState.includes(data.qa_seq) } onChange={(e)=>changeCheckState(e.target.checked,data.qa_seq)} />  
-            </div>
-        </td>
-        <td style={{ width:'14.51%' }}>{data.ltitle}</td>
-        <td style={{ width:'17.3%' }}>{data.utitle}</td>
-        <td style={{ width:'17.4%' }}>{data.keyword}</td>
-        <td style={{ width:'9.61%' }}>{data.source}</td>
-        <td style={{ width:'5.76%' }}>{data.no}</td>
-        <td style={{ width:'9.61%' }}>{data.type}</td>
-        <td style={{ width:'8.65%' }}>{data.level}</td>
-        <td style={{ width:'10.57%' }}>
-            <button className='btn-table'>보기</button>
-        </td>
-    </tr>
+            <td style={{ width:'6.73%' }}>
+                <div className="check-wrap">
+                    <Checkbox color='orange' checked={ checkState.includes(data.qa_seq) } onChange={(e)=>changeCheckState(e.target.checked,data.qa_seq)} />  
+                </div>
+            </td>
+            <td style={{ width:'14.51%' }}>{data.ltitle}</td>
+            <td style={{ width:'17.3%' }}>{data.utitle}</td>
+            <td style={{ width:'17.4%' }}>{data.keyword}</td>
+            <td style={{ width:'9.61%' }}>{data.source}</td>
+            <td style={{ width:'5.76%' }}>{data.no}</td>
+            <td style={{ width:'9.61%' }}>{data.type}</td>
+            <td style={{ width:'8.65%' }}>{data.level}</td>
+            <td style={{ width:'10.57%' }}>
+                <button className='btn-table'>보기</button>
+            </td>
+        </tr>
     )
 };
 export default CreationModal;

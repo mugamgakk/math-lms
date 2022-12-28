@@ -275,13 +275,68 @@
 
 .afterReadModal{
     .modal-content{
-        width: 310px;
+        width: 350px;
         position: absolute;
         z-index: 1;
+        right: 5%;
+        bottom: 10%;
+        transform: none;
+        top: unset;
+        left: unset;
+        box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.24);
+
     .modal-body{
         // height: 300px;
         overflow-y: auto;
+        height: 300px;
+        padding: 10px;
+        .head{
+            display: flex;
+            border-top: 2px solid #664e3d;
+            border-bottom: 2px solid #a19893;
+            background: #e6ddd8;
+            margin-bottom: 10px;
+            > div{
+                @include font-style(17);
+                font-weight: 600;
+                color: #664e3d;
+                border-right: 1px solid #cfbfb7;
+                padding: 6px 0;
+                text-align: center;
+            }
+        }
+        ul{
+            li{
+                display: flex;
+                border-radius: 4px;
+                border: solid 1px #ddd;
+                padding: 10px 0;
+                margin-bottom: 2px;
+                > *{
+                    border-right: 1px solid #ddd;
+                    text-align: center;
+                }
+                .name{
+                    color: #0a9e7d;
+                    font-weight: 500;
+                }
+            }
+        }
         }
     }
 }
 
+.messageList{
+    tbody{
+        max-height: 500px;
+    }
+    th{
+        padding: 13px 0;
+    }
+    td{
+        padding: 15px 0;
+    }
+    .pagination{
+        margin-top: 20px;
+    }
+}

@@ -8,7 +8,7 @@ import Icon from '../../components/Icon';
 import RadioBox from '../../components/RadioBox';
 import Checkbox from '../../components/Checkbox';
 import Pagination from '../../components/Pagination';
-
+import { _isScroll } from '../../methods/methods';
 
 
 const viewList = [
@@ -25,17 +25,13 @@ function SendMessage() {
     let [viewListState,setViewListState] = useState(30);
     let [writeModal, setWriteModal] = useState(false);
     let [searchInput, setSearchInput] = useState('');
+    let [scroll, setScroll] = useState();
     let [page, setPage] = useState(1);
-    let [afterReadModal,setAfterReadModal] = useState(true);
     
     useEffect(()=>{
         getList();
+
     },[]);
-
-    useEffect(()=>{
-        console.log(checkList);
-    },[checkList])
-
  
     const getList = async () => {
         let url = "/notice.php";
@@ -108,6 +104,10 @@ function SendMessage() {
 //         }))
 //     }
 
+useEffect(()=>{
+    setScroll(_isScroll('sendMessage-table',500));
+});
+
     return (  
         <>
             <div className="filters fj mt-20 mb-20"> 
@@ -154,7 +154,7 @@ function SendMessage() {
                 </div>
             </div>
             <div className="messageList">
-                <table className='custom-table'>
+                <table className='sendMessage-table custom-table'>
                     <thead>
                         <tr>
                             <th style={{ width:'3.33%' }}>
@@ -172,9 +172,12 @@ function SendMessage() {
                             <th style={{ width:'38.66%' }}>제목</th>
                             <th style={{ width:'15.26%' }}>상태</th>
                             <th style={{ width:'10.73%' }}>발송 취소</th>
+                            {
+                                scroll && <th style={{ width: '17px',border:'none' }}></th>
+                            }
                         </tr>
                     </thead>
-                    <tbody className='scroll'>
+                    <tbody>
                         {
                             sendList && sendList.map((list,i)=> {
                                 return(
@@ -193,16 +196,8 @@ function SendMessage() {
                 <Pagination 
                 setPage={setPage}
                 page={page}
-                totalPage={sendList && sendList.length}
                 />
-                {/* {
-                    afterReadModal && 
-                    <AfterReadingModal 
-                    setAfterReadModal={setAfterReadModal}
-                    afterReadModal={afterReadModal}
-                    seq={list.seq}
-                    />
-                } */}
+              
             </div>
         </>
     );
@@ -210,6 +205,7 @@ function SendMessage() {
 
 const Tr = memo(({list, checkState, checkList }) => {
     let [viewModal,setViewModal] = useState(false);
+    let [afterReadModal,setAfterReadModal] = useState(false);
 
     return(
         <tr>
@@ -236,9 +232,18 @@ const Tr = memo(({list, checkState, checkList }) => {
                 seq={list.seq}
                 />
             }
+             
             </td>
-            {/* <td style={{ width:'15.26%' }} onClick={()=>setAfterReadModal(true)}>{list.status} */}
-            <td style={{ width:'15.26%' }}>{list.status}
+            <td style={{ width:'15.26%' }} onClick={()=>setAfterReadModal(true)}>{list.status}
+            {/* <td style={{ width:'15.26%' }}>{list.status} */}
+            {
+                    afterReadModal && 
+                    <AfterReadingModal 
+                    setAfterReadModal={setAfterReadModal}
+                    afterReadModal={afterReadModal}
+                    seq={list.seq}
+                    />
+                }
             </td>
             <td style={{ width:'10.73%' }}>
                 {
@@ -252,7 +257,7 @@ const Tr = memo(({list, checkState, checkList }) => {
     )
 });
 
-function AfterReadingModal({setAfterReadModal,afterReadModal,seq}){
+function AfterReadingModal({setAfterReadModal,seq}){
     let [list,setList] = useState(null);
 
     useEffect(()=>{
@@ -286,18 +291,18 @@ function AfterReadingModal({setAfterReadModal,afterReadModal,seq}){
                 </div>
                 <div className="modal-body scroll">
                     <div className='head'>
-                        <div>이름</div>
-                        <div>학년</div>
-                        <div>상태</div>
+                        <div style={{ width: '30%' }}>이름</div>
+                        <div style={{ width: '20%' }}>학년</div>
+                        <div className='b-none' style={{ width: '50%' }}>상태</div>
                     </div>
                     <ul>
                     {
-                        list && list.map(a=>{
+                        list && list.map((a,i)=>{
                             return(
-                                <li>
-                                    <div>{a.to_name}</div>
-                                    <div>{a.grade}</div>
-                                    <div>{a.status}</div>
+                                <li key={i}>
+                                    <strong className='name' style={{ width: '30%' }}>{a.to_name}</strong>
+                                    <div style={{ width: '20%' }}>{a.grade}</div>
+                                    <div className='b-none' style={{ width: '50%' }}>{a.status}</div>
                                 </li>
                             )
                         })

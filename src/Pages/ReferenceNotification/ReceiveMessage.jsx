@@ -8,6 +8,7 @@ import WriteMessageModal from './WriteMessageModal';
 import RadioBox from '../../components/RadioBox';
 import Icon from '../../components/Icon';
 import Checkbox from '../../components/Checkbox';
+import { _isScroll } from '../../methods/methods';
 
 const viewList = [
     { value: 30, label: '30개' },
@@ -21,22 +22,27 @@ function GetMessage() {
     let [viewListState,setViewListState] = useState();
     let [checkList, setCheckList] = useState([]);
     let [searchInput, setSearchInput] = useState();
+    let [scroll, setScroll] = useState();
 
     useEffect(()=>{
-        ajax("/notice.php", { data: {
-            mode : 'notice_list_receive',
+       getList();
+    },[]);
+    
+    const getList = async () => {
+        let url = "/notice.php";
+        let query = {
+            mode: "notice_list_receive",
             qcate : coToState,
             qstr : '박',
             listnum : 30,
             page : 1
-        }
-        }).then(res=>{
-            console.log(res);
-            setSendList(res.data.list);
-        })
-    },[]);
+        };
 
-    
+        let res = await ajax(url, {data: query});
+
+        setSendList(res.data.list);
+     }
+
     const checkState = (checked, seq) => {
         if(checked){
             setCheckList([...checkList, seq])
@@ -66,6 +72,10 @@ function GetMessage() {
         window.alert('삭제 성공');
      }))
     }
+
+    useEffect(()=>{
+        setScroll(_isScroll('custom-table',500));
+    });
 
     return (  
         <>
@@ -106,7 +116,7 @@ function GetMessage() {
                 </div>
             </div>
             <div className="messageList">
-                <table className='table tableA'>
+                <table className='custom-table'>
                     <thead>
                         <tr>
                             <th style={{ width:'3.33%' }}>
@@ -122,6 +132,9 @@ function GetMessage() {
                             <th style={{ width:'8%' }}>학년</th>
                             <th style={{ width:'54%' }}>제목</th>
                             <th style={{ width:'10.66%' }}>답장</th>
+                            {
+                                scroll && <th style={{ width: '17px',border:'none' }}></th>
+                            }
                         </tr>
                     </thead>
                     <tbody>

@@ -16,6 +16,7 @@ function StudentsSearch({ children }) {
     let [skeleton, setSkeleton] = useState(true);
     // 반선택
     let [classOption, setClassOption] = useState([]);
+    let [scroll, setScroll] = useState();
 
     //  클릭한 데이터
     const getUser = useCallback((list) => {
@@ -38,6 +39,27 @@ function StudentsSearch({ children }) {
         }
     }, [userList]);
 
+    useEffect(()=>{
+        setScroll(scrollState());
+    });
+
+    const scrollState = () => {
+        let TR = document.querySelectorAll('.tableB tbody>tr');
+        let height = 22;
+
+        for(let ele of TR){
+            height += ele.clientHeight + 2;
+        }
+
+        if(height < 550){
+            return false;
+        }else{
+            return true;
+        }
+
+    }
+
+    console.log(scroll);
     return (
         <div className="bg bg-list student-list">
             <header className="student-list-header">
@@ -51,13 +73,13 @@ function StudentsSearch({ children }) {
                             setClassOption(ele);
                         }}
                         value={classOption}
-                        width="160px"
+                        width="50%"
                     />
                     <input
                         type="text"
                         className="textInput"
                         placeholder="학생명을 입력하세요"
-                        style={{ width: "170px", margin: "0 4px" }}
+                        style={{ width: "50%", margin: "0 4px" }}
                         value={nameSearch}
                         onChange={(e) => {
                             setNameSearch(e.target.value);
@@ -68,7 +90,7 @@ function StudentsSearch({ children }) {
                             }
                         }}
                     />
-                    <button className="btn-icon btn-green" style={{width : "81px"}} onClick={()=>{ getStudentsData(classOption, nameSearch); }}>
+                    <button className="btn-search btn-green" style={{ width:'81px' }} onClick={()=>{ getStudentsData(classOption, nameSearch); }}>
                         <Icon icon={"search"} />
                         검색
                     </button>
@@ -78,14 +100,14 @@ function StudentsSearch({ children }) {
                 <table className="table tableB">
                     <thead>
                         <tr>
-                            <th style={{ width: "9.52380%" }}>번호</th>
-                            <th style={{ width: "42.85714%" }}>학생명(아이디)</th>
-                            <th style={{ width: "14.28571%" }}>학년</th>
-                            <th style={{ width: "33.33333%" }}>학생 화면</th>
+                            <th style={{ width: '50px' }}>번호</th>
+                            <th style={{ width: "170px" }}>학생명(아이디)</th>
+                            <th style={{ width: "60px" }}>학년</th>
+                            <th style={{ width: "140px" }}>학생 화면</th>
                         </tr>
                     </thead>
 
-                    <tbody className='scroll' style={{ maxHeight: "550px" }}>
+                    <tbody className='' style={{ maxHeight: "550px" }}>
                         {
                             skeleton
                                 ? <SkeletonTable R={10} width={["9.52380%", "42.85714%", "14.28571%", "33.33333%"]} />
@@ -98,6 +120,7 @@ function StudentsSearch({ children }) {
                                                 index={i}
                                                 getUser={getUser}
                                                 clickStudent={clickStudent}
+                                                scroll={scroll}
                                             />
                                         );
                                     })
@@ -125,12 +148,12 @@ function StudentsSearch({ children }) {
     );
 }
 
-const Tr = memo(({ res, clickStudent, getUser, index }) => {
+const Tr = memo(({ res, clickStudent, getUser, index, scroll }) => {
     return (
         <tr className={res.usr_seq === clickStudent?.usr_seq ? "active" : ""}>
-            <td style={{ width: "9.52380%" }}>{index + 1}</td>
+            <td style={{ width: "38px" }}>{index + 1}</td>
             <td
-                style={{ cursor: "pointer", width: "42.85714%" }}
+                style={{ cursor: "pointer", width: "170px" }}
                 onClick={() => {
                     getUser(res);
                 }}
@@ -139,8 +162,8 @@ const Tr = memo(({ res, clickStudent, getUser, index }) => {
                 {res.um_nm}(
                 {res.um_id.length > 10 ? res.um_id.substr(0, 10) + ".".repeat(3) : res.um_id})
             </td>
-            <td style={{ width: "14.28571%" }}>{res.school_grade}</td>
-            <td style={{ width: "33.33333%" }}>
+            <td style={{ width: "60px" }}>{res.school_grade}</td>
+            <td style={ scroll ? { width: "109px" } : { width: '126px'}}>
                 <button className="btn-table">로그인</button>
             </td>
         </tr>

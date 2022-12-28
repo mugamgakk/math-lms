@@ -21,7 +21,6 @@
     tbody{
         max-height: 482px;
         >tr{
-            width: calc(100% + 8px);
             >td {
                 padding: 5px 0 !important;
                 >div{
@@ -111,7 +110,6 @@
                         width: 100px;
                         border-bottom: 1px solid #eee;
                         border-right: 1px solid #eee;
-                        
                     }
                 }
             }
@@ -188,13 +186,12 @@
             }
             tbody{
                 border-left: 1px solid #ddd;
+                border-right: 1px solid #ddd;
               tr{
                 &:last-child{
                     border-bottom: 1px solid #ddd;
                 }
-                td{
-                    border-left: none !important;
-                }
+              
               }
             }
             .btn-table{
