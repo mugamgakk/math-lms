@@ -414,12 +414,12 @@
     padding: 20px 30px;
 
     &.bg-list{
-        width: 30.9677%;
-        margin-right: 0.6451%;
+        width: 480px;
+        margin-right: 10px;
     }
 
     &.bg-content{
-        width: 69.0322%;
+        width: calc(100% - 490px);
     }
 
 }
