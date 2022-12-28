@@ -102,7 +102,7 @@ function Reference() {
                     </div>
                 </div>
                 <div className="contents-body__middle pt-10">
-                    <table className='table tableA'>
+                    <table className='custom-table'>
                         <thead>
                             <tr>
                                 <th style={{ width:'6.93%' }}>번호</th>
@@ -114,7 +114,7 @@ function Reference() {
                                 <th style={{ width:'9.73%' }}>조회수</th>
                             </tr>
                         </thead>
-                        <tbody className='scroll' style={{ height:"588px" }}>
+                        <tbody style={{ maxHeight:"588px" }}>
                             {
                                 lenderList ? lenderList.map((list,i)=>{
                                     return(

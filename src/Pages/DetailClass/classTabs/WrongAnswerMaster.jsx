@@ -155,10 +155,10 @@ function WrongAnswer() {
                 <button className='btn-search btn-green' onClick={optionBtn}><Icon icon={"search"} />조회</button>
                 </div>
             </div>
-            <table className="custom-table">
+            <table className="wrongAnswerMaster-table custom-table">
                 <thead>
                         <tr>
-                            <th style={{ width:'6.95%' }}>
+                            <th style={{ width:"6.91%" }}>
                                 <Checkbox color='orange' onChange={(e)=>allCheck(e.target.checked)} checked={ checkData.length == filterData?.length }/>
                                 선택
                             </th>
@@ -195,7 +195,7 @@ const Tr = ({data,checkData,checkFunc})=>{
 
     return(
         <tr key={data.wa_seq}>
-            <td style={{ width:'6.95%' }}>
+            <td style={{ width:"6.91%" }}>
                 <Checkbox color='orange' onChange={(e)=>checkFunc(e.target.checked,data.wa_seq)} checked={checkData.includes(data.wa_seq)}/>
             </td>
             <td style={{ width:'11.82%' }}>{data.reg_dt}</td>
@@ -208,7 +208,7 @@ const Tr = ({data,checkData,checkFunc})=>{
                     creationMo && <CreationModal_detail setCreationMo={setCreationMo} seq={data.wa_seq}/>
                 }
             </td>
-            <td style={{ width:'16.3%',flexDirection:'column' }}>
+            <td style={{ flexDirection:'column',width:'16.3%'  }}>
                 {/* {
                     data.wa_range.map((range,i)=>{
                         return(
@@ -219,7 +219,7 @@ const Tr = ({data,checkData,checkFunc})=>{
                  {data.wa_range}
             </td>
             <td style={{ width:'7.85%' }}>{data.wa_seq}</td>
-            <td style={{ width:'11.72%',flexDirection:'column' }}>
+            <td style={{ flexDirection:'column', width:'11.72%' }}>
                 <div className={data.wa_status == '학습 완료' ? 'done' : ''}>{data.wa_status}</div>
                 { 
                     data.wa_status == '학습 중' && <button className="btn-orange">완료</button>

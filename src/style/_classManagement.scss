@@ -243,4 +243,9 @@
     }
    
 }
-
+.wrongAnswerMaster{
+   .wrongAnswerMaster-table > thead > tr > th,
+   .wrongAnswerMaster-table > tbody > tr > td{
+    padding: 21px 0;
+   }   
+}

@@ -2,58 +2,69 @@ import React, { useState } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import CkeditorCustom from "@ckeditor/ckeditor5-custom";
 import axios from "axios";
-
-function Editor() {
-    let [content, setContent] = useState("");
-
-    function uploadAdapter(loader) {
-        // return {
-        //     upload: () => {
-        //         return new Promise((resolve, reject) => {
-        //             const body = new FormData();
-        //             loader.file.then((file) => {
-        //                 body.append("file", file);
-        //                 fetch(`http://192.168.11.178:8080/upload`, {
-        //                   method: "post",
-        //                   body: body
-        //                 })
-        //                   .then((res) => res.json())
-        //                   .then((res) => {
-        //                     resolve({
-        //                       default: `http://192.168.11.178:8080/images/${res.filename}`
-        //                     });
-        //                   })
-        //                   .catch((err) => {
-        //                     reject(err);
-        //                   });
-        //                 });
-        //             });
-        //         },
-        //     };
+ 
+function Editor({contents,setContents}) {
+    class UploadAdapter {
+        constructor(loader, t) {
+            this.loader = loader;
+            this.t = t;
         }
-        
-    function uploadPlugin(editor) {
-        editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
-            return uploadAdapter(loader);
+    
+        upload() {
+            return new Promise((resolve, reject) => {
+                const reader = this.reader = new FileReader();
+    
+                reader.onload = function () {
+                    resolve({ default: reader.result });
+                };
+    
+                reader.onerror = function (error) {
+                    reject(error);
+                };
+    
+                reader.onabort = function () {
+                    reject();
+                };
+    
+                this.loader.file.then(file => {
+                    // var size = 1024 * 1024;
+                    // if (file.size > size) {
+                    //     reject('Image files can only be up to 1MB.');
+                    //     return;
+                    // }
+    
+                    reader.readAsDataURL(file);
+                });
+            });
+        }
+    
+        abort() {
+            if (this.reader) {
+                this.reader.abort();
+            }
+        }
+    }
+    function Base64UploaderPlugin(editor) {
+        editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+            return new UploadAdapter(loader, editor.t);
         };
     }
-
     return (
         <div>
-            <h2>텍스트 에디터</h2>
             <CKEditor
                 editor={CkeditorCustom}
+            
                 config={{
-                    extraPlugins: [uploadPlugin],
+                    extraPlugins: [Base64UploaderPlugin],
                 }}
-                data={content}
+                data={contents && contents}
                 onReady={(editor) => {
                     // You can store the "editor" and use when it is needed.
                     console.log("Editor is ready to use!", editor);
                 }}
                 onChange={(event, editor) => {
                     const data = editor.getData();
-                    setContent(data);
+                     setContents(data);
                     // data === 작성된 값
                     console.log({ event, editor, data });
                 }}

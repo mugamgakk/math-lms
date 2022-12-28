@@ -220,7 +220,7 @@ const Tr = memo(({list, checkState, checkList }) => {
             <td style={{ width:'8%' }}>
                 { list.files > 0 && <span className='file'><Icon icon={"clip"} style={{ fontSize:'30px' }}/></span> }
             </td>
-            <td style={{ width:'38.66%' }} className='fs' onClick={(e)=>{
+            <td style={{ width:'38.66%',paddingLeft:'16px' }} className='t-start' onClick={(e)=>{
                 e.stopPropagation();
                 setViewModal(true);
             }}>{list.subject}

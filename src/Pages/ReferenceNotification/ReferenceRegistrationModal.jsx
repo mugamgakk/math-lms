@@ -1,14 +1,13 @@
 // yeonju
-import React, { useState, useMemo, useCallback, useRef } from 'react';
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import CkeditorCustom from "@ckeditor/ckeditor5-custom";
+import React, { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import { getByteSize } from "../../methods/methods";
 import SelectBase from "../../components/ui/select/SelectBase";
 import ajax from "../../ajax";
-import { useEffect } from 'react';
 import Icon from '../../components/Icon';
 import RadioBox from '../../components/RadioBox';
 import CheckBox from '../../components/Checkbox';
+import Editor from '../ComponentsPage/Editor';
+
 
 const 대상 = [
     { value: null, label: '전체'},
@@ -16,21 +15,23 @@ const 대상 = [
     { value: '중등', label: '중등'},
     { value: '고등', label: '고등'},
 ];
-const 유형 = ['일반','필독','공지','이벤트'];
+const 유형 = [
+    {label: '일반', value: 'G'},
+    {label: '필독', value: 'H'},
+    {label: '공지', value: 'N'},
+    {label: '이벤트', value: 'E'}
+];
 
 function ReferenceRegistrationModal({setModal}) {
     let [target,setTarget] = useState();
-    let [category,setCategory] = useState('일반');
+    let [category,setCategory] = useState(유형[0]);
     let [title, setTitle] = useState('');
-    let [editorContents, setEditorContents] = useState();
+    let [contents, setContents] = useState();
     let [fileCheck,setFileCheck] = useState([]);
     let ref = useRef(false);
 
 
-    const editorCon = (event, editor) => {
-        setEditorContents(editor.getData());
-        console.log(JSON.stringify(editorContents));
-    }
+    console.log(category.value);
 
   const checkFile = (checked,file) => {
         if(checked){
@@ -75,13 +76,22 @@ function ReferenceRegistrationModal({setModal}) {
     // 글쓰기 전송
 
     const formSubmit = () => {
+
+        console.log(target.label);
+        console.log(category.value);
+        console.log(title);
+        console.log(JSON.stringify(contents));
+        console.log(encodingFiles);
+
         if(!window.confirm('저장하시겠습니까?')) return false;
-     
-        ajax("/notice.php", { data : {
+
+        ajax("/board.php?mode=write", { data : {
             mode : 'write',
-            bd_notice : 'N',
+            bd_seq : 1243,
+            bd_cate: target.label,
+            bd_notice : category.value,
             bd_title : title,
-            bd_content : JSON.stringify(editorContents),
+            bd_content : JSON.stringify(contents),
             files : encodingFiles,
         }
         }).then(res=>{
@@ -196,10 +206,10 @@ function ReferenceRegistrationModal({setModal}) {
                                 유형.map(item=>{
                                     return(
                                         <RadioBox
-                                        checked={category === item}
+                                        checked={category.label === item.label}
                                         name={'modalRadio'}
                                         onChange={(e)=> {e.target.checked && setCategory(item)}}
-                                        label={item}
+                                        label={item.label}
                                         className={'category'}
                                         />
                                         )
@@ -216,22 +226,7 @@ function ReferenceRegistrationModal({setModal}) {
                     <div className='tr editor fs mb-20'>
                         <div className="th">내용</div>
                         <div className="td scroll">
-                            <CKEditor
-                                editor={CkeditorCustom}
-                                config={{placeholder: "내용을 입력하세요."}} 
-                                data=""
-                                onReady={(editor) => {
-                                    // You can store the "editor" and use when it is needed.
-                                    console.log("Editor is ready to use!", editor);
-                                }}
-                                onChange={(event, editor) => editorCon(event,editor)}
-                                onBlur={(event, editor) => {
-                                    console.log("Blur.", editor);
-                                }}
-                                onFocus={(event, editor) => {
-                                    console.log("Focus.", editor);
-                                }}
-                            />
+                        <Editor contents={contents} setContents={setContents}/>
                         </div>
                     </div>
                     <div>
