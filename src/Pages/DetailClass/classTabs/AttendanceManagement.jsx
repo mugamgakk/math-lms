@@ -174,6 +174,7 @@ function AttendanceManagement() {
                     </button>
                     <button
                         className="btn-green"
+                        style={{width : "100px"}}
                         onClick={() => {
                             if (window.confirm("저장하시겠습니까?") === false) {
                                 return;
@@ -182,7 +183,7 @@ function AttendanceManagement() {
                             }
                         }}
                     >
-                        출결저장
+                        출결 저장
                     </button>
                 </div>
             </div>

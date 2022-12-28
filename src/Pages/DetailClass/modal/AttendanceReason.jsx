@@ -57,27 +57,27 @@ function AttendanceReason({ setModal, clickStudent, month, clickDay }) {
         <div className="modal AttendanceReason">
             <div className="modal-content">
                 <div className="modal-header">
-                    <h4 className="modal-title">[진단 평가] 회원 연동</h4>
-                    <button className="btn" onClick={()=>{
+                    <h4 className="modal-title">출결 사유 입력</h4>
+                    <button
+                        className="btn"
+                        onClick={() => {
                             setModal(false);
-                    }}>
+                        }}
+                    >
                         <Icon icon={"close"} />
                     </button>
                 </div>
                 <div className="modal-body">
-                    <h4 className="title">
-                         출결 사유
-                    </h4>
                     <div className="text-area">
-                    <textarea
-                        rows="10"
-                        cols={40}
-                        value={reason}
-                        placeholder="사유를 입력해 주세요."
-                        onChange={(e) => {
-                            setReason(e.target.value);
-                        }}
-                    ></textarea>
+                        <textarea
+                            rows="10"
+                            cols={40}
+                            value={reason}
+                            placeholder="사유를 입력해 주세요."
+                            onChange={(e) => {
+                                setReason(e.target.value);
+                            }}
+                        ></textarea>
                     </div>
                 </div>
                 <div className="modal-footer">
@@ -86,7 +86,7 @@ function AttendanceReason({ setModal, clickStudent, month, clickDay }) {
                         onClick={() => {
                             setModal(false);
                         }}
-                        style={{marginRight : "20px"}}
+                        style={{ marginRight: "20px" }}
                     >
                         취소
                     </button>

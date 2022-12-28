@@ -82,7 +82,7 @@
     padding-bottom: 20px;
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 
     &::after {
         content: "";
@@ -124,7 +124,8 @@
     }
 
     .text-area {
-        padding: 23px;
+        padding: 20px 15px;
+        
         textarea {
             width: 300px;
             height: 100px;

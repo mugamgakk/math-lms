@@ -68,7 +68,7 @@ function StudentsSearch({ children }) {
                             }
                         }}
                     />
-                    <button className="btn-icon btn-green" onClick={()=>{ getStudentsData(classOption, nameSearch); }}>
+                    <button className="btn-icon btn-green" style={{width : "81px"}} onClick={()=>{ getStudentsData(classOption, nameSearch); }}>
                         <Icon icon={"search"} />
                         검색
                     </button>
