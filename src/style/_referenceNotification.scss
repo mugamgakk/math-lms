@@ -1,6 +1,10 @@
 .reference{
     margin-top: 79px;
-    .table{
+    .custom-table >thead >tr > th,
+    .custom-table >tbody >tr > th{
+        padding: 13px 0;
+    }
+    .custom-table{
         .title{
             padding: 18px 0 18px 15px !important;
         }
@@ -286,7 +290,7 @@
         box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.24);
 
     .modal-body{
-        // height: 300px;
+        height: 300px;
         overflow-y: auto;
         height: 300px;
         padding: 10px;

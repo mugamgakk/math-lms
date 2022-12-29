@@ -167,7 +167,7 @@ const Tr = memo(({list, checkState, checkList}) => {
             <td style={{ width:'13.33%' }}>{list.send_date}</td>
             <td style={{ width:'10.66%' }}>{list.from_name}</td>
             <td style={{ width:'8%' }}>{list.grade}</td>
-            <td style={{ width:'54%' }} className='fs' onClick={(e)=>{
+            <td style={{ width:'54%',paddingLeft:"16px" }} className='t-start' onClick={(e)=>{
                 e.stopPropagation();
                 setViewModal(true);
                 }}>{list.subject}

@@ -2,14 +2,13 @@
 import React, { useEffect, useState, useRef, useCallback, useMemo } from 'react';
 import ajax from "../../ajax";
 import SelectBase from "../../components/ui/select/SelectBase";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import CkeditorCustom from "@ckeditor/ckeditor5-custom";
 import { getByteSize } from "../../methods/methods";
 import CheckBox from '../../components/Checkbox'
 import Icon from '../../components/Icon';
 import CustomDatePicker from '../../components/CustomDatePicker';
 import dayjs from 'dayjs';
 import { falseModal } from '../../methods/methods'
+import Editor from '../ComponentsPage/Editor';
 
 // const 시간 = Array.from({length: 24}, (v,i) => `${i}시`);
 
@@ -38,7 +37,7 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
     let [checkSeq,setCheckSeq] = useState([]);
 
     
-    let [editorContents, setEditorContents] = useState();
+    let [contents, setContents] = useState();
     let [writeTit,setWriteTit] = useState('');
     let [to,setTo] = useState(toName);
     let [fileCheck,setFileCheck] = useState([]);
@@ -61,6 +60,8 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
         getList();
     },[])
 
+
+    console.log(contents);
     
     const getList = async () => {
 
@@ -118,7 +119,7 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
             window.alert('받는 사람을 입력하세요')
             return;
         }
-        if(!editorContents){
+        if(!contents){
             window.alert('내용을 입력하세요')
             return;
         }
@@ -177,10 +178,7 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
         }
     }
 
-    const editorCon = (event, editor) => {
-        setEditorContents(editor.getData());
-    }
-    
+
     const checkFile = (checked,file) => {
         if(checked){
             setFileCheck([...fileCheck,file]);
@@ -268,7 +266,7 @@ function WriteMessageModal({setWriteModal,setViewModal, toName}) {
                 mode : 'notice_write',
                 nt_to : checkSeq,
                 nt_title : writeTit,
-                nt_content : JSON.stringify(editorContents),
+                nt_content : JSON.stringify(contents),
                 nt_files : encodingFiles,
                 nt_reserve : nt_reserve
             }}).then(res=>{
@@ -346,22 +344,7 @@ return (
                         </div>
                         <div className='mb-20'>
                             <span className='tit'>내용</span>
-                            <CKEditor
-                                editor={CkeditorCustom}
-                                config={{placeholder: "내용을 입력하세요."}} 
-                                data=""
-                                onReady={(editor) => {
-                                    // You can store the "editor" and use when it is needed.
-                                    // console.log("Editor is ready to use!", editor);
-                                }}
-                                onChange={(event, editor) => editorCon(event,editor)}
-                                onBlur={(event, editor) => {
-                                    // console.log("Blur.", editor);
-                                }}
-                                onFocus={(event, editor) => {
-                                    // console.log("Focus.", editor);
-                                }}
-                            />
+                            <Editor contents={contents} setContents={setContents}/>
                         </div>
                         <div className="fileArea fj">
                             <input
