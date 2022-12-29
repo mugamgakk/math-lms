@@ -212,63 +212,10 @@
         font-weight: 600;
         color: #fff;
     }
-    .body {
-        padding: 20px 40px;
+    
+    .body{
         height: 742px;
         overflow-y: auto;
-
-        &-title {
-            margin-bottom: 20px;
-            h3 {
-                @include font-style(24);
-            }
-        }
-
-        .lbt-table {
-            border-top: 2px solid $brown;
-            border-bottom: 1px solid #d0c0b8;
-            width: 100%;
-
-            th,
-            td {
-                // padding: 5px;
-            }
-
-            tr {
-                border-bottom: 1px solid #eee;
-            }
-
-            th {
-                @include font-style(13);
-                color: $brown;
-                font-weight: 600;
-                background-color: #eae0d9;
-                text-align: center;
-            }
-
-            .text-left {
-                text-align: left;
-            }
-
-            thead {
-                th {
-                    &:last-child {
-                        border-right: none;
-                    }
-                }
-            }
-
-            td {
-                @include font-style(14);
-                font-weight: 500;
-                text-align: center;
-                border-right: 1px solid #eee;
-
-                &:last-child {
-                    border-right: none;
-                }
-            }
-        }
     }
 
     .lbt-content {
@@ -300,6 +247,63 @@
             font-weight: 700;
             color: $brown;
             margin-bottom: 10px;
+        }
+    }
+}
+
+.print-section {
+    padding: 20px 40px;
+
+    .body-title {
+        margin-bottom: 20px;
+        h3 {
+            @include font-style(24);
+        }
+    }
+
+    .lbt-table {
+        border-top: 2px solid $brown;
+        border-bottom: 1px solid #d0c0b8;
+        width: 100%;
+
+        th,
+        td {
+            // padding: 5px;
+        }
+
+        tr {
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            @include font-style(13);
+            color: $brown;
+            font-weight: 600;
+            background-color: #eae0d9;
+            text-align: center;
+        }
+
+        .text-left {
+            text-align: left;
+        }
+
+        thead {
+            th {
+                &:last-child {
+                    border-right: none;
+                }
+            }
+        }
+
+        td {
+            @include font-style(14);
+            font-weight: 500;
+            text-align: center;
+            border-right: 1px solid #eee;
+
+            &:last-child {
+                border-right: none;
+            }
         }
     }
 }

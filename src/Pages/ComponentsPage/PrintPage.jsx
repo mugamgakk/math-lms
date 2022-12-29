@@ -25,7 +25,9 @@ function PrintPage() {
                 jpg다운로드
             </button>
 
-            <button className="btn-orange" onClick={()=>{ htmlToPdf(printComponent.current) }}>버튼</button>
+            <button className="btn-orange" onClick={()=>{ htmlToPdf(printComponent.current, function(p){
+                console.log(p)
+            }) }}>pdf base 64버튼</button>
 
             {/* // A4 사이즈를 width 210 mm 를 px로 793.701px 이다 */}
             <div ref={printComponent} style={{ width: "210mm" }} className="texttext">

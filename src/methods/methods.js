@@ -3,6 +3,7 @@ import JSZip from "jszip";
 import html2canvas from "html2canvas";
 import html2pdf from "html2pdf.js";
 
+
 export function toggleBodyScroll(param) {
     if (param === true) {
         document.body.style.overflow = "hidden";
@@ -171,11 +172,30 @@ export function htmlToImg(target, filName = "download", format = "jpeg") {
     });
 }
 
-export function htmlToPdf(target, fileName = "download"){
-    html2pdf().from(target).set({filename : fileName}).outputImg()
-    .then(data=>{
-        console.log(data.src)
-    })
+export async function htmlToPdf(target){
+    // 저장
+    // html2pdf().from(target).save();
+
+    // data URI
+    let pdfAsString = await html2pdf().from(target).toPdf().output('datauristring');
+    
+    let result = pdfAsString.replace(/filename=generated.pdf;/, "");
+
+    return result
+
+    // base64
+    html2pdf().from(target).outputPdf().then(function(pdf) {
+    // This logs the right base64
+    // console.log(pdf);
+        // console.log(btoa(pdf))
+        // console.log(btoa(pdf));
+    });
+
+
+    // html2pdf().from(target).outputImg()
+    // .then(data=>{
+    //     console.log(data.src)
+    // })
 
 }
 
