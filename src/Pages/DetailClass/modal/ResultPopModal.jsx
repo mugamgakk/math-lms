@@ -30,7 +30,9 @@ function ResultPopMoal({setResultPop,ucode}) {
             }
 
             const res = await ajax( url, { data: query} );
+            
             console.log(res);
+
             setDataList(res.data);
 
         }
@@ -77,8 +79,8 @@ function ResultPopMoal({setResultPop,ucode}) {
                                         </tr>
                                     </thead>
                                     <tbody className='scroll' style={{ height: '480px' }}>
-                                        {/* {
-                                            dataList && dataList.map((item,i) => {
+                                        {
+                                            dataList && dataList.qa_result.map((item,i) => {
                                                 return(
                                                     <>
                                                     <tr key={i} className={clickState == i ? 'active' : ''}>
@@ -99,7 +101,7 @@ function ResultPopMoal({setResultPop,ucode}) {
                                                     </>
                                                 )
                                             })
-                                        } */}
+                                        }
                                     </tbody>
                                 </table>
                             </div>
@@ -109,8 +111,8 @@ function ResultPopMoal({setResultPop,ucode}) {
                                         <h1>{clickState < 9 ? `0${clickState+1}` : clickState+1}</h1>
                                         <span>소인수분해</span>
                                     </div>
-                                    
-                                    <img className='img-q' src={`https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${dataList && dataList.qa_code}_Q.png`} alt="" style={{marginBottom:'20px'}}/>
+                                                                        
+                                    {/* <img className='img-q' src={`https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${dataList && dataList.qa_code}_Q.png`} alt="" style={{marginBottom:'20px'}}/>
                                     {
                                         ['①','②','③','④','⑤'].map((b,i)=>{
                                             return(
@@ -119,7 +121,7 @@ function ResultPopMoal({setResultPop,ucode}) {
                                                 </div>
                                             )
                                         })
-                                    }
+                                    } */}
                                 </div>
                             </div>
                         </div>

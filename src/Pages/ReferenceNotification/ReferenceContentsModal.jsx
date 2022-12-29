@@ -91,7 +91,9 @@ function ReferenceContentsModal({seq,setModal}) {
                 </div>
                 <div className="modal-footer">
                     <button className='btn-brown mr-4'>이전 글 보기</button>
-                    <button className='btn-orange-border mr-4'>수정</button>
+                    <button className='btn-orange-border mr-4' onClick={()=>{
+
+                    }}>수정</button>
                     <button className='btn-orange mr-4'>삭제</button>
                     <button className='btn-grey mr-4' 
                     onClick={(e)=>{

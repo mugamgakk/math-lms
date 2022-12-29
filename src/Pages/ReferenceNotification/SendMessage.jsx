@@ -9,14 +9,13 @@ import RadioBox from '../../components/RadioBox';
 import Checkbox from '../../components/Checkbox';
 import Pagination from '../../components/Pagination';
 import { _isScroll } from '../../methods/methods';
-
+import { useQuery, useMutation, useQueryClient, QueryClient, QueryClientProvider } from 'react-query';
 
 const viewList = [
     { value: 30, label: '30개' },
     { value: 50, label: '50개' },
     { value: 100, label: '100개' },
 ];
-
 
 function SendMessage() {
     let [sendList, setSendList] = useState(null);
@@ -30,7 +29,6 @@ function SendMessage() {
     
     useEffect(()=>{
         getList();
-
     },[]);
  
     const getList = async () => {

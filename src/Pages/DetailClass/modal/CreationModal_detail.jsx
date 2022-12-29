@@ -7,6 +7,7 @@ import useStudentsStore from "../../../store/useStudentsStore";
 import Icon from "../../../components/Icon";
 import { falseModal } from '../../../methods/methods';
 import axios from "axios";
+import { _isScroll } from "../../../methods/methods";
 
 
 function CreationModal({setCreationMo,seq}){

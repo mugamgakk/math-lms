@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
-import CkeditorCustom from "@ckeditor/ckeditor5-custom";
+import CkeditorCustom from "ckeditor5-custom-build";
 import axios from "axios";
  
 function Editor({contents,setContents}) {

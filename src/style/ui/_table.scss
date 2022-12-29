@@ -305,7 +305,7 @@
         background-color: #e6ddd8;
         border-top: 2px solid $brown;
         border-bottom: 2px solid #a19893;
-
+        
         & > tr {
             display: flex;
             & > th,
@@ -347,7 +347,6 @@
             &:last-child {
                 border-bottom: none;
             }
-            
         }
     }
 }

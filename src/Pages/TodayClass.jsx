@@ -109,35 +109,25 @@ function TodayClass() {
                         </div>
                     </header>
                     <table className="tableC">
-                        <colgroup>
-                            <col width="9.33%" />
-                            <col width="9.33%" />
-                            <col width="32%" />
-                            <col width="8%" />
-                            <col width="8%" />
-                            <col width="8%" />
-                            <col width="8%" />
-                            <col width="8%" />
-                            <col width="9.33%" />
-                        </colgroup>
                         <thead>
                             <tr>
-                                <th rowSpan={2}>학생명 (아이디)</th>
-                                <th rowSpan={2}>교재</th>
-                                <th rowSpan={2}>단원</th>
-                                <th colSpan={5} className="bb">
+                                <th style={{ width: 'calc(100% - 17px) * 0.933' }} rowSpan={2}>학생명 (아이디)</th>
+                                <th style={{ width: '9.33%' }} rowSpan={2}>교재</th>
+                                <th style={{ width: '32%' }} rowSpan={2}>단원</th>
+                                <th style={{ width: '40%' }} colSpan={5} className="bb">
                                     수행 현황
                                 </th>
-                                <th rowSpan={2} className="b-none">
+                                <th style={{ width: '9.33%' }} rowSpan={2} className="b-none">
                                     학습 완료
                                 </th>
+                                <th style={{ width:"17px" }} rowSpan={2}></th>
                             </tr>
                             <tr>
-                                <th>개념 강의</th>
-                                <th>개념 확인</th>
-                                <th>개념 설명</th>
-                                <th>유형 학습</th>
-                                <th>맞춤 클리닉</th>
+                                <th style={{ width: '8%' }}>개념 강의</th>
+                                <th style={{ width: '8%' }}>개념 확인</th>
+                                <th style={{ width: '8%' }}>개념 설명</th>
+                                <th style={{ width: '8%' }}>유형 학습</th>
+                                <th style={{ width: '8%' }}>맞춤 클리닉</th>
                             </tr>
                         </thead>
                     </table>

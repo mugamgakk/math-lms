@@ -10,7 +10,7 @@ import Editor from '../ComponentsPage/Editor';
 
 
 const 대상 = [
-    { value: null, label: '전체'},
+    { value: '전체', label: '전체'},
     { value: '초등', label: '초등'},
     { value: '중등', label: '중등'},
     { value: '고등', label: '고등'},
@@ -23,7 +23,7 @@ const 유형 = [
 ];
 
 function ReferenceRegistrationModal({setModal}) {
-    let [target,setTarget] = useState();
+    let [target,setTarget] = useState(대상[0]);
     let [category,setCategory] = useState(유형[0]);
     let [title, setTitle] = useState('');
     let [contents, setContents] = useState();
@@ -31,7 +31,7 @@ function ReferenceRegistrationModal({setModal}) {
     let ref = useRef(false);
 
 
-    console.log(category.value);
+    console.log(target);
 
   const checkFile = (checked,file) => {
         if(checked){
@@ -85,9 +85,9 @@ function ReferenceRegistrationModal({setModal}) {
 
         if(!window.confirm('저장하시겠습니까?')) return false;
 
-        ajax("/board.php?mode=write", { data : {
+        ajax("/board.php?", { data : {
             mode : 'write',
-            bd_seq : 1243,
+            bd_seq : '',
             bd_cate: target.label,
             bd_notice : category.value,
             bd_title : title,
@@ -190,7 +190,6 @@ function ReferenceRegistrationModal({setModal}) {
                         onChange={(ele)=>setTarget(ele)}
                         options={대상}
                         value={target}
-                        defaultValue='전체'
                         width={'150px'}
                     />
                         </div>

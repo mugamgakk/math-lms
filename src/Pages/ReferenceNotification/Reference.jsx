@@ -6,6 +6,7 @@ import ReferenceContentsModal from './ReferenceContentsModal';
 import ReferenceRegistrationModal from './ReferenceRegistrationModal';
 import styled from 'styled-components';
 import Icon from '../../components/Icon';
+import { _isScroll } from '../../methods/methods';
 
 const 학년 = [
     { value: '전체', label: '전체' },
@@ -36,13 +37,13 @@ const NewBadge = styled.span`
 
 `
 function Reference() {
-    let [gradeOption, setGradeOption] = useState('전체');
+    let [gradeOption, setGradeOption] = useState('중등');
     let [qcate, setQcate] = useState('제목');
     let [searchInput, setSearchInput] = useState('');
     
     let [lenderList, setLenderList] = useState(null);
     let [registModal, setRegistModal] = useState(false);
-
+    let [scroll, setScroll] = useState();
 
     useEffect(()=>{
       getList();
@@ -52,22 +53,24 @@ function Reference() {
 
         let url = "/board.php";
         let query = {
-            mode: "list",
-            divide : '초등',
-            qcate : 'ti',
+            mode : 'list',
+            divide : '',
+            qcate : '',
             qstr : searchInput,
             page : 1
         };
-        
         
         let res = await ajax(url, {data: query});
         let { list } = res.data;
 
         console.log(res);
-
         setLenderList(list);
-     }
+    
+    }
 
+    useEffect(()=>{
+        setScroll(_isScroll('reference-table', 565));
+    });
     return (
             <div className="reference">
                 <div className="top fj mb-20">
@@ -102,7 +105,7 @@ function Reference() {
                     </div>
                 </div>
                 <div className="contents-body__middle pt-10">
-                    <table className='custom-table'>
+                    <table className='reference-table custom-table'>
                         <thead>
                             <tr>
                                 <th style={{ width:'6.93%' }}>번호</th>
@@ -112,9 +115,12 @@ function Reference() {
                                 <th style={{ width:'9.33%' }}>작성자</th>
                                 <th style={{ width:'9.33%' }}>작성일</th>
                                 <th style={{ width:'9.73%' }}>조회수</th>
+                               {
+                                    scroll && <th style={{ width: '17px', border:'none' }}></th>
+                               }
                             </tr>
                         </thead>
-                        <tbody style={{ maxHeight:"588px" }}>
+                        <tbody style={{ maxHeight:"565px" }}>
                             {
                                 lenderList ? lenderList.map((list,i)=>{
                                     return(
@@ -129,7 +135,6 @@ function Reference() {
                     registModal && <ReferenceRegistrationModal setModal={setRegistModal}/>
                 }
 
-               
             </div>
     );
 }
