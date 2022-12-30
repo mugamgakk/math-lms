@@ -49,7 +49,7 @@ function NarrativeTr({ ele, checkOne, checkedList }) {
                 />
             </td>
             <td style={{ width: "17.60633%" }}>{ele.ltitle}</td>
-            <td style={{ width: "34.11374%" }}>{ele.sc_title}</td>
+            <td style={{ width: "34.11374%" }} className="t-start">{ele.sc_title}</td>
             <td style={{ width: "13.84767%" }}>
                 {
                     {

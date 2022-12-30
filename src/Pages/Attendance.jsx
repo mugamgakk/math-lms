@@ -9,6 +9,7 @@ import ContentHeader from "../components/ContentHeader";
 import CustomDatePicker from "../components/CustomDatePicker";
 import DateNext from "../components/DateNext";
 import Icon from "../components/Icon";
+import SkeletonTable from "../components/SkeletonTable";
 import ClassSelect from "../components/ui/select/ClassSelect";
 import { _cloneDeep } from "../methods/methods";
 import { _isScroll } from "../methods/methods";
@@ -179,9 +180,14 @@ function Attendance() {
                             </tr>
                         </thead>
                         <tbody style={{ maxHeight: "500px" }}>
-                            {studentList?.map((ele, i) => {
-                                return <Tr ele={ele} date={date} key={"index" + i} />;
-                            })}
+                            {
+                                loading ? <SkeletonTable R={10} width={["10%","30%","60%"]}/> : (
+                                    studentList?.map((ele, i) => {
+                                        return <Tr ele={ele} date={date} key={"index" + i} />;
+                                    })
+                                )
+                            }
+                            
                         </tbody>
                     </table>
                 </div>

@@ -59,6 +59,10 @@ function StudentsSearch({ children, grade }) {
 
     }
 
+    useEffect(()=>{
+        resetStudent()
+    },[])
+
     // console.log(scroll);
     return (
         <div className="bg bg-list student-list">
