@@ -1,0 +1,55 @@
+{
+    "tb_list" : [
+        {
+            "tb_seq" : 21,
+            "tb_name" : "교학사",
+            "ltitle" : "Ⅰ. 수와 식",
+            "utitle" : "1. 유리수와 순환소수",
+            "tb_status" : "S",
+            "tb_std_score" : "18",
+            "tb_max_score" : "20",
+            "tb_per_score" : "80"
+        },
+        {
+            "tb_seq" : 120,
+            "tb_name" : "동아(박)",
+            "ltitle" : "Ⅰ. 수와 식",
+            "utitle" : "1. 유리수와 순환소수",
+            "tb_status" : "S",
+            "tb_std_score" : null,
+            "tb_max_score" : null,
+            "tb_per_score" : null
+        },
+        {
+            "tb_seq" : 510,
+            "tb_name" : "미래엔",
+            "ltitle" : "1. 유리수와 소수",
+            "utitle" : "(전체)",
+            "tb_status" : "C",
+            "tb_std_score" : "18",
+            "tb_max_score" : "20",
+            "tb_per_score" : "80"
+        },
+        {
+            "tb_seq" : 156,
+            "tb_name" : "신사고",
+            "ltitle" : "Ⅰ. 수와 식의 계산",
+            "utitle" : "1. 유리수와 순환소수",
+            "tb_status" : "S",
+            "tb_std_score" : null,
+            "tb_max_score" : null,
+            "tb_per_score" : null
+        },
+        {
+            "tb_seq" : 654,
+            "tb_name" : "비엔",
+            "ltitle" : "Ⅰ. 수와 식",
+            "utitle" : "1. 유리수와 순환소수",
+            "tb_status" : "P",
+            "tb_std_score" : null,
+            "tb_max_score" : null,
+            "tb_per_score" : null
+        }
+    
+    ]
+}

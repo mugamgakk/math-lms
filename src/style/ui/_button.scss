@@ -26,6 +26,13 @@
     }
 }
 
+.btn-score{
+    &:hover{
+       color : $orange;
+       cursor: pointer;           
+    }
+}
+
 .btn-green {
     @extend %button-base;
     background-color: $green;
