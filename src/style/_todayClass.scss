@@ -29,13 +29,37 @@
             padding: 6px 0;
         }
     }
+    .tableHead{
+        display: flex;
+        border-top: 2px solid #664e3d;
+        border-bottom: 2px solid #a19893;
+        color: #664e3d;
+        background: #e6ddd8;
+        font-weight: 600;
+        > div{
+            height: 70px;
+            line-height: 70px;
+            >div{
+                height: 35px;
+                line-height: 35px;
+
+            }
+        }
+        div{
+            border-right: 1px solid #cfbfb7;
+            text-align: center;
+        }
+        .state{
+            border-right: none;
+            border-bottom: 1px solid #cfbfb7;
+        }
+    }
     .scrollWrap{
         border-bottom: 1px solid #ddd;
         max-height:550px;
         overflow-y: scroll;
         overflow-x: hidden;
         .item{
-            width: calc(100% + 10px);
             .name{
                 @include flex(center,start);
                 flex-direction: column;

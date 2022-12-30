@@ -19,7 +19,9 @@ function TodayClass() {
     // 검색
     let [search, setSearch] = useState('');
     // 반선택
-    let [group, setGroup] = useState();
+    // let [group, setGroup] = useState();
+    let [classList, setClassList] = useState([]);
+    let [scroll, setScroll] = useState();
 
     const getList = async () => {
         const data = {
@@ -31,7 +33,7 @@ function TodayClass() {
 
         let res = await ajax("/class.php", { data });
 
-        // console.log(res);
+        console.log(res);
         let { today_list } = res.data;
 
         setTodayList(today_list);
@@ -39,7 +41,27 @@ function TodayClass() {
 
     useEffect(() => {
         getList();
-    }, [date, group]);
+    }, [date,classList]);
+
+    useEffect(()=>{
+        setScroll(scrollCheck);
+    });
+
+    const scrollCheck = () => {
+
+        let TR = document.querySelectorAll('.scrollWrap > .item');
+        let height = 0;
+
+        for(let ele of TR){
+            height += ele.clientHeight
+        }
+    
+        if(550 <= height){
+            return true
+        }else{
+            return false
+        }
+    }
 
     return (
         <>
@@ -76,16 +98,18 @@ function TodayClass() {
                         </div>
 
                         <div className="d-flex">
-                            {/* <ClassSelect
-                                width={"200px"}
-                                value={group}
+                              <ClassSelect
+                                className={"mr-10"}
+                                defaultValue="반 선택"
+                                value={classList}
                                 onChange={(ele) => {
-                                    setGroup(ele);
+                                    setClassList(ele);
                                 }}
-                            /> */}
+                                width="160px"
+                            />
                             <input
                                 type="text"
-                                className="textInput mr-10 ml-10"
+                                className="textInput mr-10"
                                 placeholder="학생명(아이디)"
                                 style={{ width: "200px" }}
                                 value={search}
@@ -98,20 +122,20 @@ function TodayClass() {
                                     setSearch(e.target.value);
                                 }}
                             />
-                            <button type="button" className="btn-search btn-green mr-10" onClick={getList}>
+                            <button type="button" className="btn-search btn-green btn-icon mr-10" onClick={getList}>
                                 <Icon icon={"search"} />
                                 검색
                             </button>
                             <button className="btn-grey btn-icon" onClick={getList}>
                                 <Icon icon={"reload"} />
-                                새로고침
+                                새로 고침
                             </button>
                         </div>
                     </header>
-                    <table className="tableC">
+                    {/* <table className="tableC">
                         <thead>
                             <tr>
-                                <th style={{ width: 'calc(100% - 17px) * 0.933' }} rowSpan={2}>학생명 (아이디)</th>
+                                <th style={{ width: '9.33%' }} rowSpan={2}>학생명 (아이디)</th>
                                 <th style={{ width: '9.33%' }} rowSpan={2}>교재</th>
                                 <th style={{ width: '32%' }} rowSpan={2}>단원</th>
                                 <th style={{ width: '40%' }} colSpan={5} className="bb">
@@ -130,8 +154,27 @@ function TodayClass() {
                                 <th style={{ width: '8%' }}>맞춤 클리닉</th>
                             </tr>
                         </thead>
-                    </table>
-                    <div className="scrollWrap scroll">
+                    </table> */}
+                    <div className="tableHead fa">
+                        <div style={{ width: '9.33%' }}>학생명 (아이디)</div>
+                        <div style={{ width: '9.33%' }}>교재</div>
+                        <div style={{ width: '32%' }}>단원</div>
+                        <div style={{ width: '40%' }} className="row f-column">
+                            <div className="state">수행 현황</div>
+                            <div className="row b-none">
+                                <div style={{ width: '20%' }}>개념 강의</div>
+                                <div style={{ width: '20%' }}>개념 확인</div>
+                                <div style={{ width: '20%' }}>개념 설명</div>
+                                <div style={{ width: '20%' }}>유형 학습</div>
+                                <div className='b-none' style={{ width: '20%' }}>맞춤 클리닉</div>
+                            </div>
+                        </div>
+                        <div className='b-none' style={{ width: '9.33%' }}>학습 완료</div>
+                        {
+                            scroll && <div className='b-none' style={{ width: '15px' }}></div>
+                        }
+                    </div>
+                    <div className="scrollWrap">
                         {todayList &&
                             todayList.map((a, i) => {
                                 return (
@@ -145,20 +188,20 @@ function TodayClass() {
                                             {a.nickName}
                                         </div>
                                         <div style={{ width: "90.67%" }}>
-                                            {a.book.map((a, i) => {
+                                            {a.book.map((b, i) => {
                                                 return (
                                                     <div className="book flex" key={i}>
                                                         <span
                                                             className="book-name fc br bb"
                                                             style={{ width: "10.29%" }}
                                                         >
-                                                            {a.bookTit}
+                                                            {b.bookTit}
                                                         </span>
                                                         <div
                                                             className="classTitWrap"
                                                             style={{ width: "89.71%" }}
                                                         >
-                                                            {a.className.map((a, i) => {
+                                                            {b.className.map((c, i) => {
                                                                 return (
                                                                     <div
                                                                         className="stateWrap flex bb"
@@ -171,9 +214,9 @@ function TodayClass() {
                                                                                 paddingLeft: "9px",
                                                                             }}
                                                                         >
-                                                                            {a.tit}
+                                                                            {c.tit}
                                                                         </span>
-                                                                        <Tr key={a.tit} data={a} />
+                                                                        <Tr key={c.tit} data={c} bookTit={b.bookTit} />
                                                                     </div>
                                                                 );
                                                             })}

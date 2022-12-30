@@ -7,6 +7,7 @@ import ReferenceRegistrationModal from './ReferenceRegistrationModal';
 import styled from 'styled-components';
 import Icon from '../../components/Icon';
 import { _isScroll } from '../../methods/methods';
+import Pagination from '../../components/Pagination';
 
 const 학년 = [
     { value: '전체', label: '전체' },
@@ -44,6 +45,7 @@ function Reference() {
     let [lenderList, setLenderList] = useState(null);
     let [registModal, setRegistModal] = useState(false);
     let [scroll, setScroll] = useState();
+    let [page, setPage] = useState(1);
 
     useEffect(()=>{
       getList();
@@ -69,7 +71,7 @@ function Reference() {
     }
 
     useEffect(()=>{
-        setScroll(_isScroll('reference-table', 565));
+        setScroll(_isScroll('reference-table', 500));
     });
     return (
             <div className="reference">
@@ -105,7 +107,7 @@ function Reference() {
                     </div>
                 </div>
                 <div className="contents-body__middle pt-10">
-                    <table className='reference-table custom-table'>
+                    <table className='reference-table custom-table mb-20'>
                         <thead>
                             <tr>
                                 <th style={{ width:'6.93%' }}>번호</th>
@@ -120,7 +122,7 @@ function Reference() {
                                }
                             </tr>
                         </thead>
-                        <tbody style={{ maxHeight:"565px" }}>
+                        <tbody style={{ maxHeight:"500px" }}>
                             {
                                 lenderList ? lenderList.map((list,i)=>{
                                     return(
@@ -134,7 +136,10 @@ function Reference() {
                 {
                     registModal && <ReferenceRegistrationModal setModal={setRegistModal}/>
                 }
-
+                <Pagination 
+                setPage={setPage}
+                page={page}
+                />
             </div>
     );
 }
@@ -147,7 +152,7 @@ const Tr = memo(({list})=>{
             <td style={{ width:'6.93%' }}>{list.bd_seq}</td>         
             <td style={{ width:'9.33%' }}>{list.bd_cate}</td>        
             {/* 제목 클릭하여 글내용 팝업 오픈 */}
-            <td className="title fs" style={{ width:'48.73%' }} onClick={()=>setModal(true)}>
+            <td className="title t-start" style={{ width:'48.73%' }} onClick={()=>setModal(true)}>
                 {
                     modal && <ReferenceContentsModal seq={list.bd_seq} setModal={setModal}/>
                 }

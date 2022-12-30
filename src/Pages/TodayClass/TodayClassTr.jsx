@@ -5,7 +5,7 @@ import AttModal from "./AttModal";
 import PrintModal_clinic from "../../components/PrintModal_clinic";
 import Icon from "../../components/Icon";
 import { toggleBodyScroll } from "../../methods/methods";
-function TodayClassTr({ data }) {
+function TodayClassTr({ data, bookTit }) {
     // 모달 상태 관리
     let [attModal, setAttModal] = useState(false);
     let [assModal, setAssModal] = useState(false);
@@ -19,30 +19,12 @@ function TodayClassTr({ data }) {
         }
     }, [attModal, assModal, printModal]);
 
+    console.log(bookTit)
     return (
         <>
-            <div
-                className={`state1 fc br ${
-                    data.state1 ? data.state1 == "100%" && "active" : "disabled"
-                }`}
-                style={{ width: "9.846%" }}
-            >
-                {data.state1}
-            </div>
-            <div
-                className={`state2 fc br ${
-                    data.state2 ? data.state1 == "100%" && "active" : "disabled"
-                }`}
-                style={{ width: "9.846%" }}
-            >
-                {data.state2}
-            </div>
-            <div
-                className={`state3 fc br ${
-                    data.state3 ? data.state1 == "100%" && "active" : "disabled"
-                }`}
-                style={{ width: "9.846%", flexDirection: "column" }}
-            >
+            <div className={`state1 fc br ${data.state1 ? 'active' : 'disabled'}`} style={{ width: "9.846%" }}>{data.state1}</div>
+            <div className={`state2 fc br ${bookTit.includes('아르케') ? 'disabled' : (data.state2 ? 'active' : 'disabled')}`} style={{ width: "9.846%" }}>{data.state2}</div>
+            <div className={`state3 fc br ${data.state3 ? 'active' : ''}`} style={{ width: "9.846%", flexDirection: "column" }}>
                 {data.state3 && (
                     <button
                         className={`playBtn ${data.state3.newplay ? "new" : ""}`}
@@ -51,9 +33,9 @@ function TodayClassTr({ data }) {
                         <Icon icon={"play"} style={{ fontSize: "14px", color: "#444" }} />
                     </button>
                 )}
-                {data.state3 ? (
+                {
                     data.state3?.assessment ? (
-                        <div className={data.state1 === "100%" ? "active" : ""}>
+                        <div>
                             <button
                                 className="asse btn-orange"
                                 onClick={() => setAssModal(true)}
@@ -68,38 +50,40 @@ function TodayClassTr({ data }) {
                             수행 평가
                         </button>
                     )
-                ) : null}
+                }
             </div>
-            <div
-                className={`state4 fc br ${
-                    data.state4 ? data.state1 == "100%" && "active" : "disabled"
-                }`}
-                style={{ width: "9.846%" }}
-            >
+            <div className={`state4 fc br ${data.state4 ? 'active' : ''}`} style={{ width: "9.846%" }}>
                 {data.state4}
             </div>
-            <div
-                className={`state5 fc br ${data.state5 ? "" : "disabled"}`}
-                style={{ width: "9.846%" }}
-            >
-                {data.state5 ? (
-                    data.state5 == "Pass" ? (
-                        "Pass"
-                    ) : (
-                        <>
-                            <div style={{}}>{data.state5}</div>
-                            <button
-                                className="btn-table btn-icon"
-                                onClick={() => closeModal(true)}
-                                style={{ width: "100px" }}
-                            >
-                                <Icon icon={"print"} style={{ color: "#666" }} />
-                                인쇄
-                            </button>
-                        </>
-                    )
-                ) : null}
-            </div>
+         
+            {
+                bookTit.includes('아르케') ? (
+                    <div className='state5 fc br disabled' style={{ width: "9.846%" }}></div>
+                ) : (
+                    <>
+                    {
+                        data.state5 == 'Pass' ? (
+                            <div className='state5 fc br active' style={{ width: "9.846%" }}>
+                                <div>Pass</div>
+                            </div>
+                        ) : (
+                            <div className='state5 fc br' style={{ width: "9.846%" }}>
+                                <div>{data.state5}</div>
+                                <button
+                                    className="btn-table btn-icon"
+                                    onClick={() => closeModal(true)}
+                                    style={{ width: "100px" }} >
+                                    <Icon icon={"print"} style={{ color: "#666" }} />
+                                    인쇄
+                                </button>
+                            </div>
+    
+                        )
+                    }
+                    </>
+                )
+            }
+
             <div className="fc" style={{ width: "11.37%" }}>
                 <button className="btn-table" onClick={() => setAttModal(true)}>
                     학습 태도

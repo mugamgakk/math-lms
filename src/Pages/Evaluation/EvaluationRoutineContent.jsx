@@ -63,7 +63,6 @@ function EvaluationRoutineContent() {
         };
 
         let res = await ajax(url, { data: query });
-
         let { lecture_list, ut_list } = res.data;
 
         console.log(ut_list);
@@ -111,9 +110,7 @@ function EvaluationRoutineContent() {
             }
 
             setList(arr);
-        },
-        [sort, list]
-    );
+        },[sort, list]);
 
     useEffect(()=>{
         setScroll(_isScroll('evaluationRoutine-table',300 ))
