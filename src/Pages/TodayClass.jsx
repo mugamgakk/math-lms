@@ -71,7 +71,7 @@ function TodayClass() {
                                 icon={"warning"}
                                 style={{ color: "#eb615a", marginRight: "6px" }}
                             />
-                            학생 이름 클릭 시 학생 교재별 상세 보기에서 오답 정복하기와 학습분석표
+                            학생명(아이디) 클릭 시 학생 교재별 상세 보기에서 오답 정복하기와 학습 분석표
                             생성 및 출력이 가능합니다.
                         </div>
 

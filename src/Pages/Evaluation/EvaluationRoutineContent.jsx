@@ -23,10 +23,10 @@ function EvaluationRoutineContent() {
     let [list, setList] = useState(null);
     let [lectureList, setLectureList] = useState(null);
     let [filterList, setFilterList] = useState(null);
+
     const clickStudent = useStudentsStore((state) => state.clickStudent);
     let [scroll,setScroll] = useState();
 
-    console.log(scroll)
     let [checkItem, setCheckItem] = useState([]);
     let [sort, setSort] = useState({
         ltitle: true,
@@ -69,7 +69,6 @@ function EvaluationRoutineContent() {
         console.log(ut_list);
         setList(ut_list);
         setLectureList(lecture_list);
-        setScroll(_isScroll('custom-table',292 ))
 
     };
 
@@ -81,11 +80,12 @@ function EvaluationRoutineContent() {
         return oneMonthAgo;
     }, []);
 
+    
+
     let [startDay, setStartDay] = useState(oneMonthAgo);
     let [endDay, setEndDay] = useState(new Date());
 
-    const dateSortFunc = useCallback(
-        (sortName) => {
+    const dateSortFunc = useCallback((sortName) => {
             let arr = [...list];
 
             if (sort[sortName]) {
@@ -114,6 +114,10 @@ function EvaluationRoutineContent() {
         },
         [sort, list]
     );
+
+    useEffect(()=>{
+        setScroll(_isScroll('evaluationRoutine-table',300 ))
+    })
 
     return (
         <div className="EvaluationRoutineContent">
@@ -178,7 +182,7 @@ function EvaluationRoutineContent() {
                 </div>
             </div>
 
-            <table className="custom-table"> 
+            <table className="evaluationRoutine-table custom-table"> 
                 <thead>
                     <tr>
                         <th style={{ width:'8.82%' }}>
@@ -195,27 +199,31 @@ function EvaluationRoutineContent() {
                         <th style={{ width:'17.65%' }}>교재</th>
                         <th style={{ width:'19.84%' }}>
                             단원
-                            <button
-                                className={"btn-sort" + `${sort.ltitle ? " asc" : ""}`}
-                                onClick={() => dateSortFunc("ltitle")}
-                            ></button>
+                                <button 
+                                className={`btn-sort ${sort.ltitle ? '' : 'dsc'}`} 
+                                onClick={()=>dateSortFunc('ltitle')}
+                                >
+                                    <Icon icon={"select_typeC"} />
+                                </button>
                         </th>
                         <th style={{ width:'14.88%' }}>평가 종류</th>
                         <th style={{ width:'11.4%' }}>시험지</th>
                         <th style={{ width:'13.49%' }}>
                             평가일
-                            <button
-                                className={"btn-sort" + `${sort.ev_date ? " asc" : ""}`}
-                                onClick={() => dateSortFunc("ev_date")}
-                            ></button>
+                            <button 
+                            className={`btn-sort ${sort.ev_date ? '' : 'dsc'}`}
+                            onClick={()=>dateSortFunc('ev_date')}
+                            >
+                                <Icon icon={"select_typeC"} />
+                            </button>
                         </th>
                         <th style={{ width:'13.88%' }}>결과</th>
                         {
-                            scroll && <th style={{ width: '17px' }}></th>
+                            scroll && <th style={{ width: '17px',border:'none' }}></th>
                         }
                     </tr>
                 </thead>
-                <tbody>
+                <tbody style={{ maxHeight:'300px'}}>
                     {list &&
                         list.map((a, i) => {
                             return (
@@ -274,7 +282,7 @@ const Tr = memo(({ item, check, setCheck }) => {
             <td style={{ flexDirection:'column',width:'13.88%' }}>
                 {item.ev_per_score ? (
                     <>
-                        <p>
+                        <p style={{ marginBottom:'3px' }}>
                             {item.ev_per_score}점({item.ev_std_score}/{item.ev_max_score})
                         </p>
                         <button className="btn-table" onClick={() => setViewModal(true)}>

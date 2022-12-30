@@ -1,11 +1,14 @@
 // yeonju
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import ajax from "../../../ajax";
 import Icon from '../../../components/Icon';
 import { falseModal } from '../../../methods/methods';
 import ReactPlayer from 'react-player';
 import useStudentsStore from '../../../store/useStudentsStore';
-let data = new Array(20).fill().map((v,i)=> i );
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { fetchData } from '../../../methods/methods';
+
+// let data = new Array(20).fill().map((v,i)=> i );
 
 function ResultPopMoal({setResultPop,ucode}) {
 
@@ -13,6 +16,24 @@ function ResultPopMoal({setResultPop,ucode}) {
     let [dataList,setDataList] = useState(null);
     let [clickState,setClickState] = useState(0);
     let [video, setVideo] = useState(false);
+    const queryClient = useQueryClient();
+
+    const data = useMemo(() => {
+        return {
+            mode : 'qa_result',
+            usr_seq : clickStudent.usr_seq,
+            ucode: ucode,
+            sd_kind : 'QA',
+            qseq : 1
+        };
+    },[clickStudent.usr_seq]);
+
+    // get Data
+    const list = useQuery(["lists"], () => fetchData("class_result", data), {
+        refetchOnWindowFocus : false
+    });
+
+    console.log(list);
 
    useEffect(()=>{
         getData();
@@ -85,11 +106,47 @@ function ResultPopMoal({setResultPop,ucode}) {
                                                     <>
                                                     <tr key={i} className={clickState == i ? 'active' : ''}>
                                                         <td onClick={()=> setClickState(i)} style={{ width: '15%',fontWeight:'600',cursor:'pointer'}}>{i+1}</td>
-                                                        <td style={{ width: '20%'}}>{item.answer}</td>
-                                                        <td style={{ width: '20%'}}>{item.stu_answer}</td>
                                                         <td style={{ width: '20%'}}>
-                                                            <button className={item.state ? 'btn-correct' : 'btn-incorrect'}>
-                                                            {item.state ? '정답' : '오답'}
+                                                            {
+                                                                item.crt_ans.map(a=>{
+                                                                    return(
+                                                                        <>
+                                                                            {
+                                                                                {
+                                                                                    1: '①',
+                                                                                    2: '②',
+                                                                                    3: '③',
+                                                                                    4: '④',
+                                                                                    5: '⑤',
+                                                                                }[a]
+                                                                            }
+                                                                        </>
+                                                                    )
+                                                                })
+                                                            }
+                                                        </td>
+                                                        <td style={{ width: '20%'}}>
+                                                            {
+                                                                item.std_and.map(a=>{
+                                                                    return(
+                                                                        <>
+                                                                            {
+                                                                                {
+                                                                                    1: '①',
+                                                                                    2: '②',
+                                                                                    3: '③',
+                                                                                    4: '④',
+                                                                                    5: '⑤',
+                                                                                }[a]
+                                                                            }
+                                                                        </>
+                                                                    )
+                                                                })
+                                                            }
+                                                        </td>
+                                                        <td style={{ width: '20%'}}>
+                                                            <button className={item.is_correct == 'Y' ? 'btn-correct' : 'btn-incorrect'}>
+                                                            {item.is_correct == 'Y' ? '정답' : '오답'}
                                                             </button></td>
                                                         <td style={{ width: '25%'}}>
                                                             <button className='btnPlay' onClick={()=>setVideo(true)}></button>
@@ -109,19 +166,19 @@ function ResultPopMoal({setResultPop,ucode}) {
                                 <div>
                                     <div className='top fj' style={{ marginBottom:'15px' }}>
                                         <h1>{clickState < 9 ? `0${clickState+1}` : clickState+1}</h1>
-                                        <span>소인수분해</span>
+                                        <span>{ dataList && dataList.qa_result[clickState].qa_keyword }</span>
                                     </div>
                                                                         
-                                    {/* <img className='img-q' src={`https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${dataList && dataList.qa_code}_Q.png`} alt="" style={{marginBottom:'20px'}}/>
+                                    <img className='img-q' src={`${dataList && dataList.qa_result[clickState].qa_path}${dataList && dataList.qa_result[clickState].qa_code}_Q.png`} alt="" style={{marginBottom:'20px'}}/>
                                     {
                                         ['①','②','③','④','⑤'].map((b,i)=>{
                                             return(
                                                 <div className='choice fa'>
-                                                <span>{b}</span><img className='img-f' src={`https://file.parallaxedu.com/pxm/gplum/data/M11/tres/${dataList && dataList[clickState].qa_code}_${i+1}.png`}/>
+                                                <span>{b}</span><img className='img-f' src={`${dataList && dataList.qa_result[clickState].qa_path}${dataList && dataList.qa_result[clickState].qa_code}_${i+1}.png`}/>
                                                 </div>
                                             )
                                         })
-                                    } */}
+                                    }
                                 </div>
                             </div>
                         </div>
