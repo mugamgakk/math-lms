@@ -16,6 +16,19 @@
         right: 0;
         top: 0;
     }
+
+    .btn-score{
+        &:hover{
+           color : $orange;
+           cursor: pointer;           
+        }
+    }
+
+    .narrative-table{
+        &>tbody > tr > td{
+            height: 74px;
+        }
+    }
 }
 
 .PlusLearningGradingModal{
@@ -46,6 +59,7 @@
         overflow: auto;
         border: 1px solid #ddd;
         margin-bottom: 20px;
+        padding: 20px;
 
         img{
             width: 100%
@@ -244,6 +258,8 @@
         &-body{
             position: relative;
             height: calc(100% - 40px);
+            overflow: auto;
+            padding: 20px;
             img{
                 width: 100%;
             }

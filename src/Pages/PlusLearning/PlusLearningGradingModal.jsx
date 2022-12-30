@@ -11,7 +11,7 @@ import useStudentsStore from "../../store/useStudentsStore";
 import { useEffect } from "react";
 import { getBase64, getUrlFileSize } from "../../methods/methods";
 
-function PlusLearningGradingModal({ setModal, sc_seq }) {
+function PlusLearningGradingModal({ setModal, sc_seq, edit }) {
     const clickStudent = useStudentsStore((state) => state.clickStudent);
     let prizmaZoom = useRef();
 
@@ -36,7 +36,10 @@ function PlusLearningGradingModal({ setModal, sc_seq }) {
         // 파일 이름과 확장자 나누기
         for (let i = 0; i < res.data[0].files.length; i++) {
             let file = res.data[0].files[i];
-            res.data[0].files[i] = { ...res.data[0].files[i], ...fileEXtentionDetail(file.file_name) };
+            res.data[0].files[i] = {
+                ...res.data[0].files[i],
+                ...fileEXtentionDetail(file.file_name),
+            };
             res.data[0].files[i].size = await getUrlFileSize(file.file_url);
             arr.push(new Array(res.data[0].files[i]));
         }
@@ -57,8 +60,8 @@ function PlusLearningGradingModal({ setModal, sc_seq }) {
         (file, index) => {
             const $5mb = 1024 * 1024 * 5; // 5mb
 
-            if(!file[0]){
-                return 
+            if (!file[0]) {
+                return;
             }
 
             if (/\.(pdf|jpg|png)$/i.test(file[0].name) === false) {
@@ -68,18 +71,18 @@ function PlusLearningGradingModal({ setModal, sc_seq }) {
 
             // 총파일 검사
             let allCount = 0;
-            for(let i = 0; i < files.length; i++){
-                // 파일이 들어있을때, 해당 index 파일 예외 총 용량 
-                if(i !== index && files[i].length === 1){
-                        allCount += files[i][0].size;
+            for (let i = 0; i < files.length; i++) {
+                // 파일이 들어있을때, 해당 index 파일 예외 총 용량
+                if (i !== index && files[i].length === 1) {
+                    allCount += files[i][0].size;
                 }
             }
-            
+
             // console.log("5메가", $5mb);
             // console.log("allCount", allCount);
             // console.log("올리려는파일", file[0].size);
 
-            if((allCount + file[0].size) >=  $5mb){
+            if (allCount + file[0].size >= $5mb) {
                 alert("총 파일 용량을 초과하였습니다 (5mb)");
                 return;
             }
@@ -381,9 +384,16 @@ function PlusLearningGradingModal({ setModal, sc_seq }) {
                     </div>
                 </div>
                 <div className="modal-footer">
-                    <button className="btn-grey-border mr-10" onClick={()=>{ setModal(false) }}>취소</button>
+                    <button
+                        className="btn-grey-border mr-10"
+                        onClick={() => {
+                            setModal(false);
+                        }}
+                    >
+                        취소
+                    </button>
                     <button className="btn-orange" onClick={savePlus}>
-                        수정
+                        {edit ? "수정" : "채점 완료"}
                     </button>
                 </div>
             </div>

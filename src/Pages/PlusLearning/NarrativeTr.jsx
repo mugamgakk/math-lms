@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { useEffect } from "react";
+import { useMutation, useQueryClient } from "react-query";
 import ajax from "../../ajax";
 import Checkbox from "../../components/Checkbox";
 import Icon from "../../components/Icon";
 import NarrativePrint from "../../components/NarrativePrint";
-import { toggleBodyScroll } from "../../methods/methods";
 import PlusLearningGradingModal from "./PlusLearningGradingModal";
 
 const scStatus = {
@@ -17,26 +16,27 @@ function NarrativeTr({ ele, checkOne, checkedList }) {
     let [gradingModal, setGradingModal] = useState(false);
     let [printModal, setPrintModal] = useState(false);
 
+    const queryClient = useQueryClient();
 
     // 재응시
-    const reTry = async () => {
-        const data = {
-            mode: "ct_retry",
-            sc_seq: ele.sc_seq,
-        };
-        console.log(data);
-        try {
-            let res = await ajax("class_plus.php", data);
-        } catch (err) {}
-    };
+    let retryMutation = useMutation((param) => ajax("/class_plus.php", { data: param }), {
+        onSuccess: (data) => {
+            // console.log(data);
+            // Invalidate and refetch
+            queryClient.invalidateQueries("lists");
+        },
+        onError: (err) => {
+            console.log(err);
+        },
+    });
 
-    useEffect(() => {
-        if (gradingModal) {
-            toggleBodyScroll(true);
-        } else {
-            toggleBodyScroll(false);
+    // 오픈취소
+    let openCancle = useMutation(param=> ajax("/class_plus.php", {data : param}),{
+        onSuccess: (data) => {
+            // Invalidate and refetch
+            queryClient.invalidateQueries("lists");
         }
-    }, [gradingModal]);
+    })
 
     return (
         <tr>
@@ -53,13 +53,24 @@ function NarrativeTr({ ele, checkOne, checkedList }) {
             <td style={{ width: "13.84767%" }}>
                 {
                     {
-                        P: "오픈전",
+                        P:  <span style={{color : "#ccc"}}>오픈 전</span>,
                         S: (
                             <div className="text-center">
-                                학습 중<button className="btn-table">오픈 취소</button>
+                                <p>학습 중</p>
+                                {/* 답안 제출 안했을시 보여주기*/}
+                                {!ele.sendResult && (
+                                    <button className="btn-table"
+                                        onClick={()=>{
+                                            openCancle.mutate({
+                                                mode : "ct_close",
+                                                arr_sc_seq : [ele.sc_seq]
+                                            })
+                                        }}
+                                    >오픈 취소</button>
+                                )}
                             </div>
                         ),
-                        C:  <span className="text-orange">학습완료</span> ,
+                        C: <span className="text-orange">학습완료</span>,
                     }[ele.sc_status]
                 }
             </td>
@@ -67,8 +78,8 @@ function NarrativeTr({ ele, checkOne, checkedList }) {
                 <div>
                     {
                         {
-                            S: "-",
-                            P: (
+                            P: "-",
+                            S: (
                                 <div className="text-center">
                                     {gradingModal && (
                                         <PlusLearningGradingModal
@@ -76,9 +87,9 @@ function NarrativeTr({ ele, checkOne, checkedList }) {
                                             setModal={setGradingModal}
                                         />
                                     )}
-                                    시험지채점
+                                    {ele.sendResult ? "온라인 채점" : "시험지 채점"}
                                     <button
-                                        className="btn-table"
+                                        className="btn-table-orange"
                                         onClick={() => {
                                             setGradingModal(true);
                                         }}
@@ -89,8 +100,30 @@ function NarrativeTr({ ele, checkOne, checkedList }) {
                             ),
                             C: (
                                 <div className="text-center">
-                                    {ele.sc_std_score} / {ele.sc_max_score}
-                                    <button className="btn-table" onClick={reTry}>
+                                    {gradingModal && (
+                                        <PlusLearningGradingModal
+                                            sc_seq={ele.sc_seq}
+                                            setModal={setGradingModal}
+                                            edit={true}
+                                        />
+                                    )}
+                                    <span className="btn-score" onClick={()=>{
+                                        setGradingModal(true);
+                                    }}>
+                                        {ele.sc_std_score}점 / {ele.sc_max_score}점
+                                    </span>
+                                    <button
+                                        className="btn-table-orange-border"
+                                        onClick={() => {
+                                            const msg = "재응시하면 학생의 이전 답안이 삭제됩니다. 진행하시겠습니까?"
+                                            if(window.confirm(msg)){
+                                                retryMutation.mutate({
+                                                    mode: "ct_retry",
+                                                    sc_seq: ele.sc_seq,
+                                                });
+                                            }
+                                        }}
+                                    >
                                         재응시(2)
                                     </button>
                                 </div>
@@ -102,7 +135,7 @@ function NarrativeTr({ ele, checkOne, checkedList }) {
             <td style={{ width: "12.37487%" }}>
                 {printModal && <NarrativePrint closeModal={setPrintModal} sc_seq={[ele.sc_seq]} />}
                 <button
-                    className="btn-table"
+                    className="btn-table-orange-border"
                     onClick={() => {
                         setPrintModal(true);
                     }}

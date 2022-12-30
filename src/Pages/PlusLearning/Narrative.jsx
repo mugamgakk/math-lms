@@ -12,7 +12,8 @@ import NarrativePrint from "../../components/NarrativePrint";
 import Icon from "../../components/Icon";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useMemo } from "react";
-import { fetchData } from "../../methods/methods";
+import axios from "axios";
+// import { fetchData } from "../../methods/methods";
 
 const 단원 = [
     { value: 1, label: "수와 식의 계산" },
@@ -23,6 +24,12 @@ const stateOptions = [
     { value: "S", label: "학습중" },
     { value: "C", label: "완료" },
 ];
+
+const fetchData = async (url, param) => {
+    // console.log(param);
+    let res = await axios("/json/pluslearning_narrative.json");
+    return res.data;
+};
 
 
 
@@ -181,7 +188,9 @@ function Narrative() {
                     <button
                         className="btn-green btn-icon"
                         style={{ width: "81px" }}
-                        // onClick={getList}
+                        onClick={()=>{
+                            list.refetch();
+                        }}
                     >
                         <Icon icon={"search"} />
                         조회

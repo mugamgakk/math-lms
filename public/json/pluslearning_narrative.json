@@ -1,47 +1,52 @@
 [
     {
-        "sc_seq": "123",
+        "sc_seq": "1123",
         "ltitle": "I. 수와 식의 계산",
         "sc_title": "01> 거듭제곱 ⑴",
         "sc_status": "P",
-        "sc_std_score": "18",
-        "sc_max_score": "20",
-        "sc_per_score": "90"
+        "sc_std_score": null,
+        "sc_max_score": null,
+        "sc_per_score": null,
+        "sendResult" : false
     },
     {
-        "sc_seq": "123",
+        "sc_seq": "13",
         "ltitle": "I. 수와 연산",
         "sc_title": "02> 거듭제곱 ⑵",
-        "sc_status": "P",
-        "sc_std_score": "18",
-        "sc_max_score": "20",
-        "sc_per_score": "90"
+        "sc_status": "S",
+        "sc_std_score": null,
+        "sc_max_score": null,
+        "sc_per_score": null,
+        "sendResult" : false
     },
     {
-        "sc_seq": "123",
+        "sc_seq": "113",
         "ltitle": "I. 수와 연산",
         "sc_title": "03> 제곱인 수 만들기",
         "sc_status": "S",
-        "sc_std_score": "18",
-        "sc_max_score": "20",
-        "sc_per_score": "90"
+        "sc_std_score": null,
+        "sc_max_score": null,
+        "sc_per_score": null,
+        "sendResult" : true
     },
     {
-        "sc_seq": "123",
+        "sc_seq": "23",
         "ltitle": "I. 수와 연산",
         "sc_title": "04> 약수의 개수 구하기",
-        "sc_status": "P",
-        "sc_std_score": "18",
-        "sc_max_score": "20",
-        "sc_per_score": "90"
+        "sc_status": "S",
+        "sc_std_score": null,
+        "sc_max_score": null,
+        "sc_per_score": null,
+        "sendResult" : false
     },
     {
-        "sc_seq": "123",
+        "sc_seq": "3",
         "ltitle": "I. 수와 연산",
         "sc_title": "05> 약수의 개수가 주어질 때 미지수 구하기 ",
         "sc_status": "C",
         "sc_std_score": "18",
         "sc_max_score": "20",
-        "sc_per_score": "90"
+        "sc_per_score": "90",
+        "sendResult" : false
     }
 ]
