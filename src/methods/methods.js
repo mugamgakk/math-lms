@@ -2,7 +2,13 @@ import FileSaver from "file-saver";
 import JSZip from "jszip";
 import html2canvas from "html2canvas";
 import html2pdf from "html2pdf.js";
+import ajax from "../ajax";
 
+export const fetchData = async (url, param) => {
+    // console.log(param);
+    let res = await ajax("/" + url + ".php", { data: param });
+    return res.data;
+};
 
 export function toggleBodyScroll(param) {
     if (param === true) {

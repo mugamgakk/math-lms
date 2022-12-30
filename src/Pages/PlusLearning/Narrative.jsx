@@ -10,6 +10,9 @@ import { _cloneDeep, _isScroll } from "../../methods/methods";
 import Checkbox from "../../components/Checkbox";
 import NarrativePrint from "../../components/NarrativePrint";
 import Icon from "../../components/Icon";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMemo } from "react";
+import { fetchData } from "../../methods/methods";
 
 const 단원 = [
     { value: 1, label: "수와 식의 계산" },
@@ -22,11 +25,10 @@ const stateOptions = [
 ];
 
 
+
 function Narrative() {
     const { clickStudent, bookList } = useStudentsStore((state) => state);
-
-    // tr data
-    let [plusData, setPlusData] = useState([]);
+    const queryClient = useQueryClient();
 
     // 단원
     let [unit, setUnit] = useState();
@@ -34,79 +36,64 @@ function Narrative() {
     let [situation, setSituation] = useState();
 
     let [checkedList, setCheckedList] = useState([]);
-    let [skeleton, setSkeleton] = useState(true);
 
     let [printModal, setPrintModal] = useState(false);
 
-    const [initialData, setInitialData] = useState([]);
-
     let [scroll, setScroll] = useState(false);
 
-    // 선택오픈, 오픈 취소
-    const openState = async (isOpen) => {
-        try {
-            if (checkedList.length === 0) {
-                alert("1개이상 선택하세요");
-                return;
-            }
+    // Queries
 
-            if(checkedList.every(a=> a.sc_status === "S")){
-                // 복수 오픈 시 , 오픈 전 시험지가 하나라도 있으면 정상 작동
-                // 오픈된시험지만 선택된 경우 , 알럿 이미 오픈된 시험지입니다 . 확인
-                alert("이미 오픈된 시험지입니다.");
-                return 
-            }
-
-            const idData = checkedList.map((id) => id.sc_seq);
-            const data = {
-                arr_sc_seq: idData,
-            };
-
-            // 선택오픈, 오픈 취소
-            isOpen ? (data.mode = "ct_open") : (data.mode = "ct_close");
-
-            // console.log(data);
-
-            let res = await ajax("class_plus.php", { data });
-            // console.log(res)
-
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
-    const getList = async () => {
-        setSkeleton(true);
-
-        const data = {
+    const data = useMemo(() => {
+        return {
             mode: "ct_list",
             usr_seq: clickStudent.usr_seq,
             qlno: unit?.value,
             qstatus: situation?.value,
             qbkcd: bookList.value,
         };
+    }, [clickStudent.usr_seq, unit, situation, bookList]);
 
-        // console.log(data);
+    // get Data
+    const list = useQuery(["lists"], () => fetchData("class_plus", data), {
+        refetchOnWindowFocus : false
+    });
 
-        try {
-            let res = await ajax("/class_plus.php", { data });
-            // let res = await axios("/json/pluslearning_narrative.json");
+    // send Data
+    const openMutation = useMutation((param) => {
+        console.log(param);
+        return ajax("/class_plus.php", { data: param });
+    }, {
+        onSuccess: (data) => {
+            // Invalidate and refetch
+            queryClient.invalidateQueries("lists");
+        },
+    });
 
-            // console.log(res.data);
-
-            setPlusData(_cloneDeep(res.data));
-
-            setInitialData(_cloneDeep(res.data));
-
-            setSkeleton(false);
-        } catch (msg) {
-            console.error(msg);
-            setSkeleton(false);
+    // 선택오픈
+    const openState = () => {
+        if (checkedList.length === 0) {
+            alert("1개이상 선택하세요");
+            return;
         }
+
+        if (checkedList.every((a) => a.sc_status === "S")) {
+            // 복수 오픈 시 , 오픈 전 시험지가 하나라도 있으면 정상 작동
+            // 오픈된시험지만 선택된 경우 , 알럿 이미 오픈된 시험지입니다 . 확인
+            alert("이미 오픈된 시험지입니다.");
+            return;
+        }
+
+        const idData = checkedList.map((id) => id.sc_seq);
+        const data = {
+            mode: "ct_open",
+            arr_sc_seq: idData,
+        };
+
+        openMutation.mutate(data);
     };
 
     const checkAll = (e) => {
-        e.target.checked ? setCheckedList(plusData) : setCheckedList([]);
+        e.target.checked ? setCheckedList(list.data) : setCheckedList([]);
     };
 
     const checkOne = (checked, ele) => {
@@ -116,49 +103,55 @@ function Narrative() {
     };
 
     useEffect(() => {
-        getList();
-    }, [clickStudent]);
-
-    useEffect(() => {
         setScroll(_isScroll("narrative-table", 365));
     });
 
     return (
         <div className="Narrative">
-            <button className="btn-grey btn-icon btn-retry"><Icon icon={"reload"} />새로 고침</button>
-            {
-                printModal && <NarrativePrint closeModal={setPrintModal} sc_seq={checkedList.map(a=> a.sc_seq )} />
-            }
+            <button
+                className="btn-grey btn-icon btn-retry"
+                onClick={() => {
+                    list.refetch();
+                }}
+            >
+                <Icon icon={"reload"} />
+                새로 고침
+            </button>
+            {printModal && (
+                <NarrativePrint
+                    closeModal={setPrintModal}
+                    sc_seq={checkedList.map((a) => a.sc_seq)}
+                />
+            )}
             <UserInfo clickStudent={clickStudent} />
-            <p className="alert-text" style={{ marginTop: "28px", marginBottom : "55px" }}>
-            ※ 학습하는 교재의 학년, 학기에 해당하는 서술형 문제를 오픈, 출력할 수 있습니다.(학년-학기별 공통)
+            <p className="alert-text" style={{ marginTop: "28px", marginBottom: "55px" }}>
+                ※ 학습하는 교재의 학년, 학기에 해당하는 서술형 문제를 오픈, 출력할 수
+                있습니다.(학년-학기별 공통)
             </p>
             <div className="fj" style={{ margin: "10px 0px" }}>
                 <div>
                     <button
                         className="btn-grey-border mr-10"
-                        style={{width : "100px"}}
-                        onClick={() => {
-                            openState(true);
-                        }}
+                        style={{ width: "100px" }}
+                        onClick={openState}
                     >
                         선택 오픈
                     </button>
                     <button
                         className="btn-grey-border"
-                        style={{width : "100px"}}
+                        style={{ width: "100px" }}
                         onClick={() => {
-                            if (checkedList.length === 0){
+                            if (checkedList.length === 0) {
                                 alert("1개이상 선택하세요");
-                                return    
+                                return;
                             }
 
-                            if(checkedList.some(a=> a.sc_status === "P" )){
+                            if (checkedList.some((a) => a.sc_status === "P")) {
                                 alert("서술형 따라잡기 학습지를 먼저 오픈해 주세요.");
-                                return
+                                return;
                             }
 
-                            setPrintModal(true)
+                            setPrintModal(true);
                         }}
                     >
                         선택 인쇄
@@ -185,8 +178,13 @@ function Narrative() {
                         className="mr-10"
                         defaultValue="상태"
                     />
-                    <button className="btn-green btn-icon" style={{width : "81px"}} onClick={getList}>
-                    <Icon icon={"search"} />조회
+                    <button
+                        className="btn-green btn-icon"
+                        style={{ width: "81px" }}
+                        // onClick={getList}
+                    >
+                        <Icon icon={"search"} />
+                        조회
                     </button>
                 </div>
             </div>
@@ -196,10 +194,7 @@ function Narrative() {
                     <tr>
                         <th scope="row" style={{ width: "8.80316%" }}>
                             <Checkbox
-                                checked={
-                                    initialData.length === checkedList.length &&
-                                    checkedList.length !== 0
-                                }
+                                checked={list.data?.length === checkedList.length}
                                 onChange={checkAll}
                             />
                             선택
@@ -222,8 +217,8 @@ function Narrative() {
                         {scroll && <th style={{ width: "17px", border: "none" }}></th>}
                     </tr>
                 </thead>
-                <tbody style={{maxHeight : "365px"}}>
-                    {skeleton ? (
+                <tbody style={{ maxHeight: "365px" }}>
+                    {list.isFetching ? (
                         <SkeletonTable
                             R={6}
                             width={[
@@ -236,7 +231,7 @@ function Narrative() {
                             ]}
                         />
                     ) : (
-                        plusData.map((ele, i) => {
+                        list.data?.map((ele, i) => {
                             return (
                                 <NarrativeTr
                                     ele={ele}
