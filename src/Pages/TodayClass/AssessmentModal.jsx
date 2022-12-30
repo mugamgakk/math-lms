@@ -34,7 +34,6 @@ function AssessmentModal ({closeModal}) {
         const 이해력 = res.data.uds;
         const 전달력 = res.data.send;
 
-        console.log()
 
         setTotalData([이해력,전달력]);
         setTitle(title.split("/").slice(1));

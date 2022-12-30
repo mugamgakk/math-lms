@@ -9,7 +9,24 @@
             margin-bottom: 3px;
             font-weight: 500;
         }
-
+    }
+    .evaluationRoutine-table > thead > tr > th,
+    .evaluationRoutine-table > tbody > tr > td{
+        padding: 20px 0;
+    }
+    .evaluationRoutine-table{
+        .btn-sort{
+            margin-left: 2px;
+            i{
+                transform: scale(0.5);
+                color: #664e3d;
+            }
+            &.dsc{
+                i{
+                    transform: scale(0.5) rotate(180deg);
+                }
+            }
+        }
     }
 }
 
