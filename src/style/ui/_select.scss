@@ -56,8 +56,13 @@
             width: 80%;
             overflow: hidden;
             text-overflow: ellipsis;
-            font-weight: 400;
             padding-left: 10px;
+            font-size: 17px;
+            font-weight: 400;
+            strong{
+                font-size: 17px;
+                font-weight: 400;
+            }
         }
     }
 
@@ -96,6 +101,10 @@
             line-height: 30px;
             overflow: hidden;
             text-overflow: ellipsis;
+            strong{
+                font-size: 17px;
+                font-weight: 400;
+            }
 
             &:hover{
                 background-color: #eee;

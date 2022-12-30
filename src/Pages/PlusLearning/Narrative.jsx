@@ -61,13 +61,12 @@ function Narrative() {
     }, [clickStudent.usr_seq, unit, situation, bookList]);
 
     // get Data
-    const list = useQuery(["lists"], () => fetchData("class_plus", data), {
+    const list = useQuery(["lists", clickStudent.usr_seq], () => fetchData("class_plus", data), {
         refetchOnWindowFocus : false
     });
 
     // send Data
     const openMutation = useMutation((param) => {
-        console.log(param);
         return ajax("/class_plus.php", { data: param });
     }, {
         onSuccess: (data) => {
@@ -135,7 +134,7 @@ function Narrative() {
                 ※ 학습하는 교재의 학년, 학기에 해당하는 서술형 문제를 오픈, 출력할 수
                 있습니다.(학년-학기별 공통)
             </p>
-            <div className="fj" style={{ margin: "10px 0px" }}>
+            <div className="fj">
                 <div>
                     <button
                         className="btn-grey-border mr-10"
@@ -198,7 +197,7 @@ function Narrative() {
                 </div>
             </div>
 
-            <table className="custom-table narrative-table">
+            <table className="custom-table narrative-table" style={{marginTop : "20px"}}>
                 <thead>
                     <tr>
                         <th scope="row" style={{ width: "8.80316%" }}>

@@ -7,7 +7,7 @@ function SelectBook({
     onCheck,
     onChange,
     options,
-    checkValue = [],
+    checkValue,
     defaultValue = "선택하세요",
     limit,
     disabled,
@@ -93,7 +93,6 @@ function SelectBook({
                                     onClick={(e)=>{
                                         let isClass = e.target.classList.contains("active");
                                             checkedItem(isClass, a);
-
                                     }}></div>
                                 </li>
                             );

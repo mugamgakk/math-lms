@@ -44,7 +44,7 @@ const data = [
 ];
 
 const studyBook = [
-    { value: null, label: "교과서 (전체)" },
+    { value: null, label: "교과서" },
     { value: "H", label: "교학사" },
     { value: "G", label: "금성" },
     { value: "K", label: "동아(강)" },
@@ -99,32 +99,33 @@ function TextBook() {
     }, []);
 
     useEffect(() => {
-        setScroll(_isScroll("narrative-table", 365));
+        setScroll(_isScroll("TextBook-table", 365));
     });
 
     return (
-        <div>
+        <div className="TextBook">
             <UserInfo clickStudent={clickStudent} />
 
             {reportModal && <ReportModal setModal={setReportModal} />}
 
             <div className="fj" style={{ margin: "20px 0" }}>
-                <p className="text-alert">
+                <p className="TextBook-text-alert">
                     ※ 학습하는 교재의 학년 , 학기에 해당하는 교과서별 내신적중 를 오픈 , 출력할 수
                     있습니다 학년 학기별 공통
                     <br />※ 기간을 설정하여 결과 리포트를 인쇄할 수 있습니다. (저장되지 않음)
                 </p>
-                <button className="btn-grey btn-icon">
-                    <Icon icon={"reload"} /> 조회 초기화
+                <button className="btn-grey btn-icon btn-retry">
+                    <Icon icon={"reload"} /> 새로 고침
                 </button>
             </div>
 
             <div className="fj">
                 <div>
-                    <button className="btn-grey-border mr-10">선택 오픈</button>
-                    <button className="btn-grey-border mr-10">선택 인쇄</button>
+                    <button className="btn-grey-border mr-10" style={{width : "97px"}} >선택 오픈</button>
+                    <button className="btn-grey-border mr-10" style={{width : "97px"}}>선택 인쇄</button>
                     <button
                         className="btn-green mr-10"
+                        style={{width : "97px"}}
                         onClick={() => {
                             setReportModal(true);
                         }}
@@ -135,7 +136,7 @@ function TextBook() {
                         onChange={(ele) => {
                             setSelectBook(ele);
                         }}
-                        width="130px"
+                        width="120px"
                         options={studyBook}
                         value={selectBook}
                         className="mr-10"
@@ -144,7 +145,7 @@ function TextBook() {
                         onChange={(ele) => {
                             setSelectState(ele);
                         }}
-                        width="130px"
+                        width="120px"
                         options={studyState}
                         value={selectState}
                         defaultValue="상태"
@@ -170,11 +171,11 @@ function TextBook() {
                         label={true}
                         className="mr-10"
                     />
-                    <button className="btn-grey">조회</button>
+                    <button className="btn-green" style={{width : "81px"}}>조회</button>
                 </div>
             </div>
 
-            <table className="custom-table TextBook-table" style={{ marginTop: "10px" }}>
+            <table className="custom-table TextBook-table" style={{ marginTop: "20px" }}>
                 <thead>
                     <tr>
                         <th style={{ width: "8%" }}>
@@ -190,6 +191,12 @@ function TextBook() {
                     </tr>
                 </thead>
                 <tbody style={{maxHeight : "365px"}}>
+                    {plusData?.map((ele, i) => {
+                        return <Tr ele={ele} key={i} />;
+                    })}
+                    {plusData?.map((ele, i) => {
+                        return <Tr ele={ele} key={i} />;
+                    })}
                     {plusData?.map((ele, i) => {
                         return <Tr ele={ele} key={i} />;
                     })}

@@ -11,7 +11,7 @@ function UserInfo({ clickStudent }) {
     let [chiceItem, setChiceItem] = useState();
     
     // 셀렉트 체크값
-    let [multiSelect, setMultiSelect] = useState();
+    let [multiSelect, setMultiSelect] = useState([]);
     // 셀렉트 옵션값
     let [optionsDefault, setoptionsDefault] = useState();
 

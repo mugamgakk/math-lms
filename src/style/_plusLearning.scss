@@ -24,10 +24,28 @@
         }
     }
 
-    .narrative-table{
-        &>tbody > tr > td{
-            height: 74px;
-        }
+    
+
+}
+
+.TextBook{
+    position: relative;
+
+    .CustomDatePicker-btn{
+        min-width: auto;
+        padding: 10px;
+        border-color: #e5e5e5;
+    }
+    
+    .btn-retry{
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+    &-text-alert{
+        font-weight: 600;
+        color: #eb615a;
     }
 }
 
