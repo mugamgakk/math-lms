@@ -19,7 +19,6 @@ function TodayClass() {
     // 검색
     let [search, setSearch] = useState('');
     // 반선택
-    // let [group, setGroup] = useState();
     let [classList, setClassList] = useState([]);
     let [scroll, setScroll] = useState();
 
@@ -27,25 +26,18 @@ function TodayClass() {
         const data = {
             mode: "get_today_class",
             ymd: dayjs(date).format("YYYY-MM-DD"),
-            class_cd: 137283785634112704,
+            class_cd: classList.map(a=> a.class_cd ),
             qstr: search,
         };
 
         let res = await ajax("/class.php", { data });
 
-        console.log(res);
+        // console.log(res);
         let { today_list } = res.data;
 
         setTodayList(today_list);
+        setSearch("")
     };
-
-    useEffect(() => {
-        getList();
-    }, [date,classList]);
-
-    useEffect(()=>{
-        setScroll(scrollCheck);
-    });
 
     const scrollCheck = () => {
 
@@ -63,6 +55,16 @@ function TodayClass() {
         }
     }
 
+    useEffect(() => {
+        getList();
+    }, [date,classList]);
+
+    useEffect(()=>{
+        setScroll(scrollCheck);
+    });
+
+    
+
     return (
         <>
             <ContentHeader
@@ -76,7 +78,7 @@ function TodayClass() {
                     <DateNext
                         value={date}
                         onChange={(day) => setDate(day)}
-                        style={{ marginRight: "4px" }}
+                        style={{ marginRight: "10px"}}
                     />
                     <CustomDatePicker
                         value={date}
@@ -105,7 +107,7 @@ function TodayClass() {
                                 onChange={(ele) => {
                                     setClassList(ele);
                                 }}
-                                width="160px"
+                                width="212px"
                             />
                             <input
                                 type="text"
@@ -122,7 +124,7 @@ function TodayClass() {
                                     setSearch(e.target.value);
                                 }}
                             />
-                            <button type="button" className="btn-search btn-green btn-icon mr-10" onClick={getList}>
+                            <button type="button" className="btn-search btn-green btn-icon mr-10" style={{width : "81px"}} onClick={getList}>
                                 <Icon icon={"search"} />
                                 검색
                             </button>

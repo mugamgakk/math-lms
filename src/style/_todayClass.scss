@@ -14,11 +14,12 @@
     }
     .date-area{
         display: flex;
+        padding-bottom: 20px;
+        margin-bottom: 55px;
     }
 
     .table-top{
-        margin-top: 50px;
-        margin-bottom: 10px;
+        margin-bottom: 20px;
         .update{
             vertical-align: middle;
             margin-left: 5px;
@@ -66,7 +67,8 @@
                 padding-left:9px;
                 strong{
                     color: #00a37f;
-                    font-weight: bold;
+                    font-weight: 600;
+                    cursor: pointer;
                 }
             }
             .stateWrap{

@@ -19,7 +19,6 @@ function TodayClassTr({ data, bookTit }) {
         }
     }, [attModal, assModal, printModal]);
 
-    console.log(bookTit)
     return (
         <>
             <div className={`state1 fc br ${data.state1 ? 'active' : 'disabled'}`} style={{ width: "9.846%" }}>{data.state1}</div>

@@ -25,40 +25,41 @@ function ClassSelect({
         if (checked) {
             // 삭제
             let result = choiceArr.filter((a) => a.class_cd !== ele.class_cd);
-            onChange && onChange(result);
             setChoiceArr(result);
         } else {
             // 추가
             let result = [...choiceArr, ele];
-            onChange && onChange(result);
             setChoiceArr(result);
         }
-    }
+    };
 
     // 전체 체크 함수
     const allCheck = useCallback(() => {
-        if(options.length === choiceArr.length){
+        if (options.length === choiceArr.length) {
             setChoiceArr([]);
-            onChange && onChange([]);
-        }else{
+        } else {
             setChoiceArr(options);
-            onChange && onChange(options);
         }
     }, [choiceArr]);
 
-    const getOptions = async ()=>{
+    const getOptions = async () => {
         const data = {
-            mode : "get_tch_class"
-        }
+            mode: "get_tch_class",
+        };
 
-        const res = await ajax("/class.php", {data});
-        
-        const classList = res.data.class_list ?? [];
+        const res = await ajax("/class.php", { data });
+
+        // const classList = res.data.class_list ?? [];
+
+        const classList = [
+            { class_cd: "123123", class_name: "중등 월화수목금 A" },
+            { class_cd: "54357", class_name: "중등 월화수 b" },
+            { class_cd: "5454654", class_name: "중등 월화수 c" },
+        ];
 
         setOptions(classList);
-        setChoiceArr(classList)
-    }
-
+        setChoiceArr(classList);
+    };
 
     useEffect(() => {
         if (value.length !== 0) {
@@ -92,16 +93,18 @@ function ClassSelect({
         }
     }, [choiceArr]);
 
-    useEffect(()=>{
+    useEffect(() => {
         // option 호출
-        getOptions()
-    },[])
+        getOptions();
+    }, []);
 
     return (
         <div
             tabIndex={1}
             style={{ width: width }}
-            className={`ClassSelect select ${selectOpen ? "active" : ""} ${disabled ? "disabled" : ""} ${className}`}
+            className={`ClassSelect select ${selectOpen ? "active" : ""} ${
+                disabled ? "disabled" : ""
+            } ${className}`}
             onBlur={() => {
                 setSelectOpen(false);
             }}
@@ -124,20 +127,26 @@ function ClassSelect({
             </div>
             <div className="select-list-box">
                 <ul className="select-list">
-                    {/* <li className="fa">
-                        <div className="lookup">조회</div>
-                    </li> */}
+                    <li className="fa" onClick={() => {
+                                onChange && onChange(choiceArr);
+                            }}>
+                        <div
+                            className="lookup"
+                        >
+                            조회
+                        </div>
+                    </li>
                     <li className="fa" onClick={allCheck}>
                         <div
-                            className={`check-state ${options.length === choiceArr.length ? "all" : ""
-                                } ${choiceArr.length > 0 && choiceArr.length < options.length
+                            className={`check-state ${
+                                options.length === choiceArr.length ? "all" : ""
+                            } ${
+                                choiceArr.length > 0 && choiceArr.length < options.length
                                     ? "is-item"
                                     : ""
-                                }`}
+                            }`}
                         ></div>
-                        <div className="label">
-                            (전체 선택)
-                        </div>
+                        <div className="label">(전체 선택)</div>
                     </li>
                     {options &&
                         options.map((a, i) => {
@@ -148,11 +157,13 @@ function ClassSelect({
                                         let isClass = e.currentTarget.classList.contains("active");
                                         checkedItem(isClass, a);
                                     }}
-                                    className={`fa ${choiceArr.some(ele => a.class_cd === ele.class_cd) ? "active" : ""}`}
+                                    className={`fa ${
+                                        choiceArr.some((ele) => a.class_cd === ele.class_cd)
+                                            ? "active"
+                                            : ""
+                                    }`}
                                 >
-                                    <div className="label">
-                                        {a.class_name}
-                                    </div>
+                                    <div className="label">{a.class_name}</div>
                                     <div className="checkbox"></div>
                                 </li>
                             );
