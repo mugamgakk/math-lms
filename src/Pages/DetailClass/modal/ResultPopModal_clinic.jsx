@@ -6,13 +6,12 @@ let data = new Array(20).fill().map((v,i)=> i );
 function ResultPopMoal({setResultPopMo,title='강수학/중2-1개념서/I. 수와 연산/1. 소인수분해/개념 확인'}) {
     return ( 
             <div className="modal">
-                <div className="dim"></div>
-                <div className='resultPopModal cmmnModal'>
-                    <div className="resultPopModal-head cmmnModal-head">
+                <div className='modal-content resultPopModal'>
+                    <div className="modal-head">
                         <div className="tit">[학습 결과]{title}</div>
                         <button className="close" onClick={()=>setResultPopMo(false)}>X</button>
                     </div>
-                    <div className="resultPopModal-body cmmnModal-body">
+                    <div className="modal-body">
                         <h5 className='mb-10'>결과: 10/12</h5>
                         <div className='contents'>
                             <div className="contents-l">
@@ -46,7 +45,7 @@ function ResultPopMoal({setResultPopMo,title='강수학/중2-1개념서/I. 수�
                             </div>
                         </div>
                     </div>
-                    <div className="resultPopModal-foot cmmnModal-foot">
+                    <div className="modal-footer">
                         <button className="btn" onClick={()=>setResultPopMo(false)}>확인</button>
                     </div>
                 </div>

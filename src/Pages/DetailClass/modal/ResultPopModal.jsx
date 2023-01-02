@@ -18,22 +18,22 @@ function ResultPopMoal({setResultPop,ucode}) {
     let [video, setVideo] = useState(false);
     const queryClient = useQueryClient();
 
-    const data = useMemo(() => {
-        return {
-            mode : 'qa_result',
-            usr_seq : clickStudent.usr_seq,
-            ucode: ucode,
-            sd_kind : 'QA',
-            qseq : 1
-        };
-    },[clickStudent.usr_seq]);
+    // const data = useMemo(() => {
+    //     return {
+    //         mode : 'qa_result',
+    //         usr_seq : clickStudent.usr_seq,
+    //         ucode: ucode,
+    //         sd_kind : 'QA',
+    //         qseq : 1
+    //     };
+    // },[clickStudent.usr_seq]);
 
-    // get Data
-    const list = useQuery(["lists"], () => fetchData("class_result", data), {
-        refetchOnWindowFocus : false
-    });
+    // // get Data
+    // const list = useQuery(["lists"], () => fetchData("class_result", data), {
+    //     refetchOnWindowFocus : false
+    // });
 
-    console.log(list);
+    // console.log(list);
 
    useEffect(()=>{
         getData();
@@ -84,29 +84,47 @@ function ResultPopMoal({setResultPop,ucode}) {
                         </div>
                         <div className='contents'>
                             <div className="contents-l">
-                                <div className="top mb-10">
-                                    맞힌 
-                                    <strong>{dataList && dataList.length} 개</strong>
+                                <div className="top fs mb-10" style={{ fontWeight:'600' }}>
+                                    맞힌 개수
+                                    {
+                                        dataList && (
+                                            <strong>{dataList.qa_result[0].correct_a} / {dataList.qa_result.length} 개</strong>
+                                        )
+                                    }
                                     2022. 7. 12
+                                    {/* 문항 학습 결과 팝업 - 아르케(초등) */}
+                                    <div className='fc' style={{ marginLeft:'6px' }}>
+                                        <button className='btn-correct mr-4' >모두 정답</button>
+                                        <button className='btn-incorrect' >모두 오답</button>
+                                    </div>
                                 </div>
                                 <table className='table tableA'>
-                                    <thead>
+                                    {/* 문항 학습 결과 팝업 - 아르케(초등) */}
+                                        <thead>
+                                            <tr>
+                                                <th style={{ width: '20%', borderRadius:'8px 0 0 0' }}>번호</th>
+                                                <th style={{ width: '40%' }}>채점</th>
+                                                <th style={{ width: '40%', borderRadius:'0 8px 0 0' }}>동영상</th>
+                                            </tr>
+                                        </thead>
+                                    {/* <thead>
                                         <tr>
-                                            <th style={{ width: '15%', borderRadius:'8px 0 0 0' }}>번호</th>
-                                            <th style={{ width: '20%' }}>정답</th>
-                                            <th style={{ width: '20%' }}>학생 답</th>
+                                            <th style={{ width: '16%', borderRadius:'8px 0 0 0' }}>번호</th>
+                                            <th style={{ width: '22%' }}>정답</th>
+                                            <th style={{ width: '22%' }}>학생 답</th>
                                             <th style={{ width: '20%' }}>채점</th>
-                                            <th style={{ width: '25%', borderRadius:'0 8px 0 0' }}>동영상</th>
+                                            <th style={{ width: '20%', borderRadius:'0 8px 0 0' }}>동영상</th>
                                         </tr>
-                                    </thead>
+                                    </thead> */}
+
                                     <tbody className='scroll' style={{ height: '480px' }}>
                                         {
                                             dataList && dataList.qa_result.map((item,i) => {
                                                 return(
                                                     <>
-                                                    <tr key={i} className={clickState == i ? 'active' : ''}>
-                                                        <td onClick={()=> setClickState(i)} style={{ width: '15%',fontWeight:'600',cursor:'pointer'}}>{i+1}</td>
-                                                        <td style={{ width: '20%'}}>
+                                                    {/* <tr key={i} className={clickState == i ? 'active' : ''}>
+                                                        <td onClick={()=> setClickState(i)} style={{ width: '16%',fontWeight:'600',cursor:'pointer'}}>{i+1}</td>
+                                                        <td style={{ width: '22%',fontSize:'26px'}}>
                                                             {
                                                                 item.crt_ans.map(a=>{
                                                                     return(
@@ -125,7 +143,7 @@ function ResultPopMoal({setResultPop,ucode}) {
                                                                 })
                                                             }
                                                         </td>
-                                                        <td style={{ width: '20%'}}>
+                                                        <td style={{ width: '22%',fontSize:'26px'}}>
                                                             {
                                                                 item.std_and.map(a=>{
                                                                     return(
@@ -148,7 +166,22 @@ function ResultPopMoal({setResultPop,ucode}) {
                                                             <button className={item.is_correct == 'Y' ? 'btn-correct' : 'btn-incorrect'}>
                                                             {item.is_correct == 'Y' ? '정답' : '오답'}
                                                             </button></td>
-                                                        <td style={{ width: '25%'}}>
+                                                        <td style={{ width: '20%'}}>
+                                                            <button className='btnPlay' onClick={()=>setVideo(true)}></button>
+                                                        {
+                                                            video && <VideoPlayer closeModal={setVideo} />
+                                                        }
+                                                        </td>
+                                                    </tr> */}
+                                                        {/* 문항 학습 결과 팝업 - 아르케(초등) */}
+                                                    <tr>
+                                                        <td onClick={()=> setClickState(i)} style={{ width: '20%',fontWeight:'600',cursor:'pointer'}}>{i+1}</td>
+                                                        <td style={{ width: '40%'}}>
+                                                            <button className={item.is_correct == 'Y' ? 'btn-correct' : 'btn-incorrect'}>
+                                                            {item.is_correct == 'Y' ? '정답' : '오답'}
+                                                            </button>
+                                                        </td>
+                                                        <td style={{ width: '40%'}}>
                                                             <button className='btnPlay' onClick={()=>setVideo(true)}></button>
                                                         {
                                                             video && <VideoPlayer closeModal={setVideo} />
@@ -179,6 +212,7 @@ function ResultPopMoal({setResultPop,ucode}) {
                                             )
                                         })
                                     }
+                                    <img className='img-q mt-20' src={`${dataList && dataList.qa_result[clickState].qa_path}${dataList && dataList.qa_result[clickState].qa_code}_S.png`} alt="" style={{marginBottom:'20px'}}/>
                                 </div>
                             </div>
                         </div>

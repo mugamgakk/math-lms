@@ -9,6 +9,7 @@ import Icon from "../components/Icon";
 import CustomDatePicker from "../components/CustomDatePicker";
 import ClassSelect from "../components/ui/select/ClassSelect";
 import dayjs from "dayjs";
+import axios from "axios";
 
 function TodayClass() {
     const navigate = useNavigate();
@@ -23,19 +24,24 @@ function TodayClass() {
     let [scroll, setScroll] = useState();
 
     const getList = async () => {
-        const data = {
-            mode: "get_today_class",
-            ymd: dayjs(date).format("YYYY-MM-DD"),
-            class_cd: classList.map(a=> a.class_cd ),
-            qstr: search,
-        };
+        // const data = {
+        //     mode: "get_today_class",
+        //     ymd: dayjs(date).format("YYYY-MM-DD"),
+        //     class_cd: classList.map(a=> a.class_cd ),
+        //     qstr: search,
+        // };
 
-        let res = await ajax("/class.php", { data });
+        // let res = await ajax("/class.php", { data });
 
         // console.log(res);
-        let { today_list } = res.data;
+        // let { today_list } = res.data;
 
-        setTodayList(today_list);
+        // setTodayList(today_list);
+        
+        let res = await axios("/json/todayClass_table.json");
+        console.log(res);
+        setTodayList(res.data);
+
         setSearch("")
     };
 
@@ -173,7 +179,7 @@ function TodayClass() {
                         </div>
                         <div className='b-none' style={{ width: '9.33%' }}>학습 완료</div>
                         {
-                            scroll && <div className='b-none' style={{ width: '15px' }}></div>
+                            scroll && <div className='b-none' style={{ width: '17px' }}></div>
                         }
                     </div>
                     <div className="scrollWrap">

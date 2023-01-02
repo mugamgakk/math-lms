@@ -1,0 +1,285 @@
+[
+    {
+        "id": 2,
+        "name": "김민찬",
+        "nickName": "minck",
+        "book": [
+            {
+                "bookTit": "중1-1 뜨레스",
+                "className": [
+                    {
+                        "cls_seq": 12425,
+                        "tit": "11-3. 정수와 유리수의 곱셈",
+                        "state1": {
+                            "per" : "33%",
+                            "status" : -1
+                        },
+                        "state2": {
+                            "per" : "-/12",
+                            "status" : 0
+                        },
+                        "state3": {
+                            "status" : 0,
+                            "audio" : 0,
+                            "assessment" : true,
+                            "uds" : 5,
+                            "send" : 10,
+                            "new" : false
+                        },
+                        "state4": {
+                            "per" : "25/30",
+                            "status" : 1
+                        },
+                        "state5": {
+                            "per" : "-",
+                            "status" : 0
+                        },
+                        "tedo": {
+                            "status": 1,
+                            "active" : false
+                        }
+                    },
+                    {
+                        "cls_seq": 12435,
+                        "tit": "Ⅱ-4. 정수와 유리수의 나눗셈",
+                        "state1": {
+                            "per" : "100%",
+                            "status" : 1
+                        },
+                        "state2": {
+                            "per" : "12/12",
+                            "status" : 1
+                        },
+                        "state3": {
+                            "status" : 1,
+                            "audio" : 1,
+                            "assessment" : false,
+                            "uds" : "",
+                            "send" : "",
+                            "new" : true
+                        },
+                        "state4": {
+                            "per" : "30/30",
+                            "status" : 1
+                        },
+                        "state5": {
+                            "per" : "Pass",
+                            "status" : 1
+                        },
+                        "tedo": {
+                            "status": 1,
+                            "active" : false
+                        }
+                    }
+                ]
+            },
+            {
+                "bookTit": "중1-1 아르케 1",
+                "className": [
+                    {
+                        "cls_seq": 12437,
+                        "tit": "11-3. 정수와 유리수의 곱셈",
+                        "state1": {
+                            "per" : "33%",
+                            "status" : 1
+                        },
+                        "state2": {
+                            "per" : "",
+                            "status" : -1
+                        },
+                        "state3": {
+                            "status" : 0,
+                            "audio" : 0,
+                            "assessment" : false,
+                            "uds" : "",
+                            "send" : "",
+                            "new" : false
+                        },
+                        "state4": {
+                            "per" : "-/25",
+                            "status" : 0
+                        },
+                        "state5": {
+                            "per" : "",
+                            "status" : -1
+                        },
+                        "tedo": {
+                            "status": 0,
+                            "active" : false
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "name": "오지연",
+        "nickName": "yonnii",
+        "book": [
+            {
+                "bookTit": "중 2-2 뜨레스 ",
+                "className": [
+                    {
+                        "cls_seq": 12438,
+                        "tit": "Ⅰ-1. 이등변 삼각형",
+                        "state1": {
+                            "per" : "75%",
+                            "status" : 1
+                        },
+                        "state2": {
+                            "per" : "-/12",
+                            "status" : 0
+                        },
+                        "state3": {
+                            "status" : 0,
+                            "audio" : 0,
+                            "assessment" : true,
+                            "uds" : 10,
+                            "send" : 10,
+                            "new" : false
+                        },
+                        "state4": {
+                            "per" : "20/25",
+                            "status" : 1
+                        },
+                        "state5": {
+                            "per" : "-/8",
+                            "status" : 0
+                        },
+                        "tedo": {
+                            "status": 0,
+                            "active" : false
+                        }
+                    }
+                ]
+            },
+            {
+                "bookTit": "중 2-1 엑사스 ",
+                "className": [
+                    {
+                        "cls_seq": 12439,
+                        "tit": "Ⅰ-3. (가분수) ÷ (자연수)",
+                        "state1": {
+                            "per" : "",
+                            "status" : -1
+                        },
+                        "state2": {
+                            "per" : "",
+                            "status" : -1
+                        },
+                        "state3": {
+                            "status" : -1,
+                            "audio" : 0,
+                            "assessment" : false,
+                            "uds" : "",
+                            "send" : "",
+                            "new" : false
+                        },
+                        "state4": {
+                            "per" : "24/30",
+                            "status" : 1
+                        },
+                        "state5": {
+                            "per" : "-/4",
+                            "status" : 0
+                        },
+                        "tedo": {
+                            "status": 0,
+                            "active" : true
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "name": "이샛별",
+        "nickName": "lsb***",
+        "book": [
+            {
+                "bookTit": "중1-1 뜨레스 ",
+                "className": [
+                    {
+                        "cls_seq": 12440,
+                        "tit": "Ⅱ-3. 정수와 유리수의 곱셈",
+                        "state1": {
+                            "per" : "35%",
+                            "status" : 1
+                        },
+                        "state2": {
+                            "per" : "10/12",
+                            "status" : 1
+                        },
+                        "state3": {
+                            "status" : 1,
+                            "audio" : 1,
+                            "assessment" : true,
+                            "uds" : "3",
+                            "send" : "7",
+                            "new" : true
+                        },
+                        "state4": {
+                            "per" : "-/30",
+                            "status" : 0
+                        },
+                        "state5": {
+                            "per" : "-",
+                            "status" : 0
+                        },
+                        "tedo": {
+                            "status": 0,
+                            "active" : false
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "name": "조현준",
+        "nickName": "hjcho",
+        "book": [
+            {
+                "bookTit": "중2-1 노벰 ",
+                "className": [
+                    {
+                        "cls_seq": 1243,
+                        "tit": "Ⅱ-3. 공배수와 최소공배수",
+                        "state1": {
+                            "per" : "75%",
+                            "status" : 1
+                        },
+                        "state2": {
+                            "per" : "-/12",
+                            "status" : 0
+                        },
+                        "state3": {
+                            "status" : 0,
+                            "audio" : 0,
+                            "assessment" : true,
+                            "uds" : "9",
+                            "send" : "9",
+                            "new" : false
+                        },
+                        "state4": {
+                            "per" : "24/30",
+                            "status" : 1
+                        },
+                        "state5": {
+                            "per" : "-",
+                            "status" : 0
+                        },
+                        "tedo": {
+                            "status": 0,
+                            "active" : false
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+]
+

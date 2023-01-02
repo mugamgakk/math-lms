@@ -132,7 +132,7 @@ function ClassManagement(){
             }
            <div className="table-wrap">
 
-                <table className='tableC'>
+                {/* <table className='tableC'>
                     <colgroup>
                         <col width='19.71%'/>
                         <col width='11.88%'/>
@@ -142,7 +142,6 @@ function ClassManagement(){
                         <col width='11.88%'/>
                         <col width='11.88%'/>
                         <col width='8.91%'/>
-                        <col width='17px'/>
                     </colgroup>
                     <thead>
                         <tr>
@@ -151,10 +150,6 @@ function ClassManagement(){
                             <th rowSpan={2}>학습 완료</th>
                             <th rowSpan={2} className='b-none'>오답<br />정복하기<button className="btn-creation" onClick={()=>confirmWrongModal(wrongPopList.length)}>생성</button></th>
                             <th rowSpan={2}></th>
-                            
-                            {/* {
-                                scroll && <th style={{ width:"17px" }}></th>
-                            } */}
                         </tr>
                         <tr>
                             <th>개념 강의</th>
@@ -162,12 +157,36 @@ function ClassManagement(){
                             <th>개념 설명</th>
                             <th>유형 학습</th>
                             <th>맞춤 클리닉</th>
-                            {/* {
-                                scroll && <th style={{ width:"17px" }}></th>
-                            } */}
                         </tr>
                     </thead>
-                    </table>
+                </table> */}
+
+                <div className="tableHead fa">
+                        <div className='fc' style={{ width: '19.8%' }}>단원</div>
+                        <div style={{ width: '59.4%' }} className="row f-column">
+                            <div className="state fc">수행 현황</div>
+                            <div className="row b-none">
+                                <div className='fc' style={{ width: '20%' }}>개념 강의</div>
+                                <div className='fc f-column' style={{ width: '20%' }}>
+                                    개념 확인
+                                    <button className="btn-creation">일괄 재응시</button>
+                                </div>
+                                <div className='fc' style={{ width: '20%' }}>개념 설명</div>
+                                <div className='fc' style={{ width: '20%' }}>유형 학습</div>
+                                <div className='b-none fc' style={{ width: '20%' }}>맞춤 클리닉</div>
+                            </div>
+                        </div>
+                        <div className='fc' style={{ width: '11.88%' }}>학습 완료</div>
+                        <div className='b-none fc' style={{ width: '8.91%' }}>
+                            오답<br />정복하기
+                            <button className="btn-creation" onClick={()=>confirmWrongModal(wrongPopList.length)}>생성</button>
+                        </div>
+                        {
+                            scroll && <div className='b-none' style={{ width: '15px' }}></div>
+                        }
+                        
+                    </div>
+
                     <table className="custom-table classManagement-table ">
                         <tbody>
                             <>

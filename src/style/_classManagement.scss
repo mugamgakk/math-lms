@@ -1,21 +1,30 @@
 // 학생별 수업관리 - 수업관리
 .classManagement{
-    table{
-        thead{
-            th{
-                padding: 8px 0;
+    .tableHead{
+        display: flex;
+        border-top: 2px solid #664e3d;
+        border-bottom: 2px solid #a19893;
+        color: #664e3d;
+        background: #e6ddd8;
+        font-weight: 600;
+        > div{
+            height: 107px;
+            flex-direction: column;
+            .state{
+                height: 35px;
+            }
+            .row > div{
+                height: 72px;
             }
         }
-        .unit1{
-            td{
-                background: #f2eeeb;
-                @include font-style(20);
-                padding: 9px 0 9px 10px;
-                border: none !important;
-            }
-           
+        div{
+            border-right: 1px solid #cfbfb7;
+            text-align: center;
         }
-        
+        .state{
+            border-right: none;
+            border-bottom: 1px solid #cfbfb7;
+        }
     }
 
     tbody{
