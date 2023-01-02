@@ -44,9 +44,9 @@ function SelectAttan({ value, onChange, disabled }) {
     }, [value]);
 
     return (
-        <div className={`SelectAttan ${active ? "active" : ""}${disabled ? "disabled" : ""}`} tabIndex="1" onBlur={()=>{setActive(false)}} onFocus={()=>{ console.log("포커스됨") }} >
-            <div className="SelectAttan-view" style={{ backgroundColor: choice?.color }}>
-                {choice ? choice.label : "선택"}
+        <div className={`SelectAttan ${active ? "active" : ""}${disabled ? "disabled" : ""}`} tabIndex="1" onBlur={()=>{setActive(false)}}>
+            <div className="SelectAttan-view" style={value ?  { backgroundColor: choice?.color } : {}}>
+                {value ? choice?.label : "선택"}
             </div>
             <div
                 className="SelectAttan-button"

@@ -78,12 +78,12 @@
     }
     .select-list-box{
         position: absolute;
-        top: 42px;
+        top: 39px;
         left: 0;
         min-width: 100%;
         z-index: 1;
         overflow: hidden;
-        transition: max-height 0.3s;
+        transition: max-height 0.4s;
         max-height: 0;
         border-radius: 0;
     }
@@ -91,6 +91,11 @@
     .select-list{
         padding: 4px;
         background-color: $white;
+        max-height: 200px;
+        overflow: auto;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+
 
         li{
             height: 30px;
@@ -118,9 +123,7 @@
 
         .select-list-box {
             border-radius: $radius;
-            max-height: 100px;
-            border: 1px solid #ccc;
-            overflow-y: auto;
+            max-height: 200px;
         }
 
         .select-btn{
@@ -224,12 +227,12 @@
 
     .select-list-box{
         position: absolute;
-        top: 42px;
+        top: 39px;
         left: 0;
         min-width: 100%;
         z-index: 1;
         overflow: hidden;
-        transition: max-height 0.3s;
+        transition: max-height 0.4s;
         max-height: 0;
         border-radius: 0;
         background-color: $white;
@@ -239,6 +242,10 @@
         flex-direction: column;
         align-items: center;
         padding: 10px 0;
+        max-height: 200px;
+        overflow: auto;
+        border: 1px solid #ccc;
+        border-radius: $radius;
         li{
             width: 150px;
         }
@@ -250,10 +257,6 @@
         .select-list-box {
             border-radius: $radius;
             max-height: 200px;
-            border: 1px solid #ccc;
-            overflow-y: auto;
-
-            
         }
 
         .select-btn{

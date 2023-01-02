@@ -77,13 +77,13 @@ function StudentsSearch({ children, grade }) {
                             setClassOption(ele);
                         }}
                         value={classOption}
-                        width="50%"
+                        width="212px"
                     />
                     <input
                         type="text"
                         className="textInput"
-                        placeholder="학생명을 입력하세요"
-                        style={{ width: "50%", margin: "0 4px" }}
+                        placeholder="학생명(아이디)"
+                        style={{ width: "118px", margin: "0 4px" }}
                         value={nameSearch}
                         onChange={(e) => {
                             setNameSearch(e.target.value);

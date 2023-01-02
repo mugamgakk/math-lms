@@ -40,9 +40,8 @@ const bg = {
 
 function AttendanceManagement() {
     const clickStudent = useStudentsStore((state) => state.clickStudent);
-    let [data, setData] = useState();
     // 데이터
-    let [firstDay, setFirstDay] = useState(new Date());
+    let [data, setData] = useState();
     // 사유 모달
     let [modal, setModal] = useState(false);
 
@@ -55,6 +54,8 @@ function AttendanceManagement() {
     let changeState = useRef(false);
 
     let [month, setMonth] = useState(new Date());
+
+    let [test, setTest] = useState("");
 
     // 셀렉트 변경시
     const changeData = ({ day, attd }) => {
@@ -87,20 +88,27 @@ function AttendanceManagement() {
             usr_seq: clickStudent.usr_seq,
             ym: 날짜,
         };
-        const res = await ajax("/class_daily.php", { data });
 
-        for (let i = 1; i <= 마지막날짜; i++) {
-            for (const key of res.data) {
-                if (i === parseInt(key.daynum)) {
-                    dataArr[i - 1] = key;
+        try {
+            const res = await ajax("/class_daily.php", { data });
+
+            for (let i = 1; i <= 마지막날짜; i++) {
+                for (const key of res.data) {
+                    // key.attd = "choice"
+                    if (i === parseInt(key.daynum)) {
+                        dataArr[i - 1] = key;
+                    }
                 }
             }
-        }
 
-        setData(dataArr);
-        setTimeout(() => {
+
+            setData(dataArr);
             setSpin(false);
-        }, 300);
+        } catch {
+            alert("다시 시도해주세요.");
+            setSpin(false);
+        }
+        
     };
 
     // 저장
@@ -124,8 +132,11 @@ function AttendanceManagement() {
     };
 
     useEffect(() => {
-        getData(month);
-    }, [month, clickStudent]);
+        setTimeout(()=>{
+            getData(month);
+        },500)
+    }, [month, clickStudent.usr_seq]);
+    console.log(data);
 
     return (
         <>
@@ -161,9 +172,9 @@ function AttendanceManagement() {
                         onClick={() => {
                             let copy = [...data];
 
-                            for (let key of copy) {
-                                if (typeof key === "object") {
-                                    key.attd = "P";
+                            for (let ele of copy) {
+                                if (typeof ele === "object" && ele.attd === null) {
+                                    ele.attd = "P";
                                 }
                             }
 
@@ -174,7 +185,7 @@ function AttendanceManagement() {
                     </button>
                     <button
                         className="btn-green"
-                        style={{width : "100px"}}
+                        style={{ width: "100px" }}
                         onClick={() => {
                             if (window.confirm("저장하시겠습니까?") === false) {
                                 return;
@@ -209,7 +220,7 @@ function AttendanceManagement() {
                                     changeData={changeData}
                                     setModal={setModal}
                                     setClickDay={setClickDay}
-                                    currentMonth={ dayjs(month).format("YYYYMMDD")}
+                                    currentMonth={dayjs(month).format("YYYYMMDD")}
                                 />
                             );
                         })}
