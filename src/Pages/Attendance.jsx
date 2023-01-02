@@ -115,7 +115,7 @@ function Attendance() {
                         onChange={(day) => {
                             setDate(day);
                         }}
-                        style={{marginRight : "10px"}}
+                        style={{ marginRight: "10px" }}
                     />
 
                     <CustomDatePicker
@@ -133,10 +133,9 @@ function Attendance() {
                             defaultValue="반 선택"
                             value={classList}
                             onChange={(ele) => {
-                                console.log(ele);
                                 setClassList(ele);
                             }}
-                            width="160px"
+                            width="212px"
                         />
                         <input
                             type="text"
@@ -152,7 +151,11 @@ function Attendance() {
                                 }
                             }}
                         />
-                        <button className="btn-green btn-icon mr-10" style={{width : "81px"}} onClick={getData}>
+                        <button
+                            className="btn-green btn-icon mr-10"
+                            style={{ width: "81px" }}
+                            onClick={getData}
+                        >
                             <Icon icon={"search"} />
                             검색
                         </button>
@@ -165,29 +168,28 @@ function Attendance() {
                     <table className="attendence-table custom-table">
                         <thead>
                             <tr>
-                                <th style={{ width: "10%" }}>학생명 (아이디)</th>
-                                <th style={{ width: "30%" }}>
-                                    <div>
-                                        <div>출결 체크</div>
+                                <th style={{ width: "8.66666%" }}>학생명 (아이디)</th>
+                                <th style={{ width: "26%" }}>
+                                    <div className="fa">
+                                        <div className="mr-10">출결 체크</div>
                                         <button className="btn-allcheck" onClick={allCheckAttd}>
                                             모두 출석
                                         </button>
                                     </div>
                                 </th>
-                                <th style={{ width: "60%" }}>출결 사유</th>
+                                <th style={{ width: "65.33333%" }}>출결 사유</th>
 
                                 {scroll && <th style={{ width: "17px", border: "none" }}></th>}
                             </tr>
                         </thead>
                         <tbody style={{ maxHeight: "500px" }}>
-                            {
-                                loading ? <SkeletonTable R={10} width={["10%","30%","60%"]}/> : (
-                                    studentList?.map((ele, i) => {
-                                        return <Tr ele={ele} date={date} key={"index" + i} />;
-                                    })
-                                )
-                            }
-                            
+                            {loading ? (
+                                <SkeletonTable R={10} width={["8.66666%", "26%", "65.33333%"]} />
+                            ) : (
+                                studentList?.map((ele, i) => {
+                                    return <Tr ele={ele} date={date} key={"index" + i} />;
+                                })
+                            )}
                         </tbody>
                     </table>
                 </div>
@@ -245,13 +247,13 @@ const Tr = memo(({ ele, date }) => {
 
     return (
         <tr>
-            <td style={{ width: "10%" }} className="t-start">
+            <td style={{ width: "8.66666%" }} className="t-start">
                 <div>
                     <div className="user-name">{ele.um_nm}</div>
                     <div className="user-id">{ele.um_id}</div>
                 </div>
             </td>
-            <td style={{ width: "30%" }}>
+            <td style={{ width: "26%" }}>
                 {att.map((a) => {
                     return (
                         <button
@@ -268,7 +270,7 @@ const Tr = memo(({ ele, date }) => {
                     );
                 })}
             </td>
-            <td style={{ width: "60%" }} className="t-start">
+            <td style={{ width: "65.33333%" }} className="t-start">
                 <div className="pencil-input mr-10">
                     <button
                         type="button"
@@ -287,8 +289,14 @@ const Tr = memo(({ ele, date }) => {
                         onKeyDown={resizeaa}
                         onKeyUp={resizeaa}
                     ></textarea>
+                </div>
+                <div className="pencil-save" style={{width : "80px"}}>
                     {pen && (
-                        <button className="btn-grey-border" onClick={saveReason} style={{width : "80px"}}>
+                        <button
+                            className="btn-grey-border"
+                            onClick={saveReason}
+                            style={{ width: "80px" }}
+                        >
                             저장
                         </button>
                     )}

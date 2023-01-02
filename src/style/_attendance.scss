@@ -22,13 +22,15 @@
             margin-bottom: 20px;
         }
 
-        table {
+        .attendence-table {
+            
             th{
                 padding: 4px !important;
                 font-size: 18px !important;
+                height: 70px;
             }
             td{
-                padding: 12px;
+                padding: 6px 10px;
             }
             td:first-child{
                 .user-name{
@@ -90,12 +92,13 @@
 
 .pencil-input {
     display:inline-flex;
-    width: 95%;
     position: relative;
+    width: calc(100% - 90px);
 
     textarea {
-        padding: 11px 50px;
-        height: 50px;
+        
+        padding: 6px 40px;
+        height: 40px;
         @include font-style();
         font-weight: 400;
         border: 1px solid #ccc;
@@ -126,8 +129,8 @@
     }
     
     .btn-pencil {
-        width: 50px;
-        height: 50px;
+        width: 40px;
+        height: 40px;
         background-image: url("../assets/pencil.svg");
         background-position: center;
         background-repeat: no-repeat;

@@ -49,13 +49,7 @@ function ClassSelect({
 
         const res = await ajax("/class.php", { data });
 
-        // const classList = res.data.class_list ?? [];
-
-        const classList = [
-            { class_cd: "123123", class_name: "중등 월화수목금 A" },
-            { class_cd: "54357", class_name: "중등 월화수 b" },
-            { class_cd: "5454654", class_name: "중등 월화수 c" },
-        ];
+        const classList = res.data.class_list ?? [];
 
         setOptions(classList);
         setChoiceArr(classList);
@@ -102,7 +96,7 @@ function ClassSelect({
         <div
             tabIndex={1}
             style={{ width: width }}
-            className={`ClassSelect select ${selectOpen ? "active" : ""} ${
+            className={`ClassSelect ${selectOpen ? "active" : ""} ${
                 disabled ? "disabled" : ""
             } ${className}`}
             onBlur={() => {
@@ -127,23 +121,21 @@ function ClassSelect({
             </div>
             <div className="select-list-box">
                 <ul className="select-list">
-                    <li className="fa" onClick={() => {
-                                onChange && onChange(choiceArr);
-                            }}>
+                    <li className="fa">
                         <div
                             className="lookup"
+                            onClick={() => {
+                                onChange && onChange(choiceArr);
+                                setSelectOpen(false);
+                            }}
                         >
                             조회
                         </div>
                     </li>
                     <li className="fa" onClick={allCheck}>
                         <div
-                            className={`check-state ${
-                                options.length === choiceArr.length ? "all" : ""
-                            } ${
-                                choiceArr.length > 0 && choiceArr.length < options.length
-                                    ? "is-item"
-                                    : ""
+                            className={`checkbox ${
+                                options.length === choiceArr.length ? "active" : ""
                             }`}
                         ></div>
                         <div className="label">(전체 선택)</div>
@@ -163,8 +155,8 @@ function ClassSelect({
                                             : ""
                                     }`}
                                 >
-                                    <div className="label">{a.class_name}</div>
                                     <div className="checkbox"></div>
+                                    <div className="label">{a.class_name}</div>
                                 </li>
                             );
                         })}

@@ -181,6 +181,190 @@
     }
 }
 
+.ClassSelect{
+    height: 40px;
+    border-radius: $radius;
+    @include font-style(17);
+    border: 1px solid #ccc;
+    color: #666;
+    background-color: #fff;
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+
+    .select-view{
+        height: 100%;
+        
+        @include flex(start);
+        h4{
+            white-space: nowrap;
+            width: 80%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding-left: 10px;
+            font-size: 17px;
+            font-weight: 400;
+            strong{
+                font-size: 17px;
+                font-weight: 400;
+            }
+        }
+    }
+
+    .select-btn{
+        position: absolute;
+        top: 7px;
+        right: 10px;
+        i{
+            font-size: 1px;
+            color: #444;
+            transform: scale(0.8);
+        }
+    }
+
+    .select-list-box{
+        position: absolute;
+        top: 42px;
+        left: 0;
+        min-width: 100%;
+        z-index: 1;
+        overflow: hidden;
+        transition: max-height 0.3s;
+        max-height: 0;
+        border-radius: 0;
+        background-color: $white;
+    }
+    .select-list{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 0;
+        li{
+            width: 150px;
+        }
+    }
+
+    &.active {
+        border-color: $border;
+
+        .select-list-box {
+            border-radius: $radius;
+            max-height: 200px;
+            border: 1px solid #ccc;
+            overflow-y: auto;
+
+            
+        }
+
+        .select-btn{
+            top: 10px;
+            transform: rotate(180deg);
+        }
+    }
+
+    &.disabled{
+        h4{
+            color: #ccc;
+        }
+        i{
+            color: #ccc;
+        }
+        cursor: default
+    }
+
+    .lookup{
+        width: 150px;
+        height: 30px;
+        border-radius: $radius;
+        background-color: #eee;
+        border: 1px solid #ccc;
+        line-height: 30px;
+        text-align: center;
+    }
+
+    li{
+        margin-bottom: 10px;
+        &:last-child{
+            margin-bottom: 0;
+        }
+        .checkbox{
+            margin-right: 10px;
+        }
+        &.active{
+            .checkbox{
+                background-color: $orange;
+                border: none;
+
+            &::before {
+                content: "";
+                position: absolute;
+                width: 2.2px;
+                height: 7px;
+                transform: rotate(132deg);
+                background-color: $white;
+                top: 6px;
+                left: 22%;
+            }
+            &::after {
+                content: "";
+                position: absolute;
+                width: 2.2px;
+                height: 11px;
+                left: 58%;
+                transform: rotate(38deg);
+                background-color: $white;
+                top: 2px;
+            }
+            }
+        }
+    }
+
+    .label{
+        width: calc(100% - 31px);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .checkbox{
+        width: 16px;
+        height: 16px;
+        border-radius: $radius;
+        border: solid 1px #ccc;
+        display: inline-block;
+        position: relative;
+        
+        &.active{
+            background-color: $orange;
+            border: none;
+
+            &::before {
+                content: "";
+                position: absolute;
+                width: 2.2px;
+                height: 7px;
+                transform: rotate(132deg);
+                background-color: $white;
+                top: 6px;
+                left: 22%;
+            }
+            &::after {
+                content: "";
+                position: absolute;
+                width: 2.2px;
+                height: 11px;
+                left: 58%;
+                transform: rotate(38deg);
+                background-color: $white;
+                top: 2px;
+            }
+        }
+
+        
+    }
+}
+
+
 .SelectAttan{
     width: 100px;
     height: 30px;
