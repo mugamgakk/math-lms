@@ -28,7 +28,7 @@ const paramList = [
     "art_an",
 ];
 
-function LbtModal({ setCreateModal, sendLBTData }) {
+function LbtModal({ setCreateModal, sendLBTData, setResultLbtModal }) {
     const dataLists = useLbtStore((state) => state.dataLists);
     const checkedList = useLbtStore((state) => state.checkedList);
     const allCheckfnL = useLbtStore((state) => state.allCheckfnL);
@@ -72,24 +72,30 @@ function LbtModal({ setCreateModal, sendLBTData }) {
             return;
         }
 
-        let dataURI = await htmlToPdf(printSection.current)
+        let dataURI = await htmlToPdf(printSection.current);
 
-        const data = {
-            mode: "set_analytics",
-            sdate: dayjs(sendLBTData.startDay).format("YYYY-MM-DD"),
-            edate: dayjs(sendLBTData.endDay).format("YYYY-MM-DD"),
-            arr_chk: checkedArr,
-            file: dataURI,
-        };
-        data.arr_bk_cd = sendLBTData.checkList.map((a) => a.bk_cd);
-        console.log(data);
-        const res = await ajax("/class_result.php", { data });
+        try {
+            const data = {
+                mode: "set_analytics",
+                sdate: dayjs(sendLBTData.startDay).format("YYYY-MM-DD"),
+                edate: dayjs(sendLBTData.endDay).format("YYYY-MM-DD"),
+                arr_chk: checkedArr,
+                file: dataURI,
+            };
+            data.arr_bk_cd = sendLBTData.checkList.map((a) => a.bk_cd);
+            // console.log(data);
+            const res = await ajax("/class_result.php", { data, timeout: 2000 });
 
-        console.log(res.data);
-
-        alert("생성 완료");
-
-        setCreateModal(false);
+            if (res.data.ok === 1) {
+                alert("생성 완료");
+                setResultLbtModal(true);
+                setCreateModal(false);
+            } else {
+                throw new Error();
+            }
+        } catch {
+            alert("잠시후에 시도해주세요.")
+        }
     };
 
     // 파라미터 생성
@@ -326,11 +332,7 @@ function LbtModal({ setCreateModal, sendLBTData }) {
         <div className="modal LbtModal">
             <div className="modal-content">
                 <div className="modal-header">
-                    <h4
-                        className="modal-title"
-                    >
-                        종합 학습 분석표 생성
-                    </h4>
+                    <h4 className="modal-title">종합 학습 분석표 생성</h4>
                     <button
                         className="btn"
                         onClick={() => {
@@ -344,11 +346,11 @@ function LbtModal({ setCreateModal, sendLBTData }) {
                     <div className="LbtModal-body">
                         <div className="left">
                             <div className="head">
-                                <span style={{ marginRight: "12px" }}>※ 평균 표시</span>{" "}
+                                <span style={{ marginRight: "12px" }}>※ 평균 표시</span>
                                 <span className="fa">
-                                    {" "}
+                                    
                                     ( <span className="head-y">Y</span>
-                                    <span className="head-n">N </span> ){" "}
+                                    <span className="head-n">N </span> )
                                 </span>
                             </div>
                             <div className="body">
@@ -389,11 +391,11 @@ function LbtModal({ setCreateModal, sendLBTData }) {
                                 <span className="mr-10">사유하고 질문하라.</span>
                                 Parallax Thingking!
                             </div>
-                            <div className="body" >
+                            <div className="body">
                                 <div className="print-section" ref={printSection}>
                                     <div className="body-title fj">
                                         <h3>
-                                            {todayYear}년 {todayMonth + 1}월 강수학의 패럴랙스 수학{" "}
+                                            {todayYear}년 {todayMonth + 1}월 강수학의 패럴랙스 수학
                                             <span className="text-orange">종합 학습 분석표</span>
                                         </h3>
                                         <img src={logo} alt="" />
@@ -468,12 +470,12 @@ function LbtModal({ setCreateModal, sendLBTData }) {
                                                             <tr>
                                                                 <th>교재 학습 문항 수</th>
                                                                 <td>
-                                                                    {lbtData?.lec_stat.unit_tot}{" "}
+                                                                    {lbtData?.lec_stat.unit_tot}
                                                                     문항
                                                                 </td>
                                                                 <th>맞힌 문항 수</th>
                                                                 <td>
-                                                                    {lbtData?.lec_stat.unit_crt}{" "}
+                                                                    {lbtData?.lec_stat.unit_crt}
                                                                     문항
                                                                 </td>
                                                                 <th>정답률</th>
@@ -484,12 +486,12 @@ function LbtModal({ setCreateModal, sendLBTData }) {
                                                             <tr>
                                                                 <th>클리닉 학습 문항 수</th>
                                                                 <td>
-                                                                    {lbtData?.lec_stat.clinic_tot}{" "}
+                                                                    {lbtData?.lec_stat.clinic_tot}
                                                                     문항
                                                                 </td>
                                                                 <th>맞힌 문항 수</th>
                                                                 <td>
-                                                                    {lbtData?.lec_stat.clinic_crt}{" "}
+                                                                    {lbtData?.lec_stat.clinic_crt}
                                                                     문항
                                                                 </td>
                                                                 <th>정답률</th>
@@ -554,7 +556,7 @@ function LbtModal({ setCreateModal, sendLBTData }) {
                                                                             {a.unit2.map((s, i) => {
                                                                                 return (
                                                                                     <div key={i}>
-                                                                                        {" "}
+                                                                                        
                                                                                         {s.title}
                                                                                     </div>
                                                                                 );

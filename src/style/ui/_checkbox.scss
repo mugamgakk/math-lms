@@ -36,11 +36,12 @@
                 background-color: #eee;
             }
         }
-
+        
         &:disabled + label {
             background-color: #eee;
             border: 1px solid #ccc;
-            cursor: not-allowed;
+            cursor: default !important;
+
 
             &::before, &::after{
                 background-color: #ccc;

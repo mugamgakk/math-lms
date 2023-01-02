@@ -132,11 +132,8 @@ function AttendanceManagement() {
     };
 
     useEffect(() => {
-        setTimeout(()=>{
-            getData(month);
-        },500)
+        getData(month);
     }, [month, clickStudent.usr_seq]);
-    console.log(data);
 
     return (
         <>

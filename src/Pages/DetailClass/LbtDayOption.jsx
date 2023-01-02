@@ -1,10 +1,12 @@
 import dayjs from "dayjs";
 import React, { useState, memo } from "react";
 import LbtModal from "./modal/LbtModal";
+import LbtResultModal from "./modal/LbtResultModal";
 import useStudentsStore from "../../store/useStudentsStore";
 import Checkbox from "../../components/Checkbox";
 import ajax from "../../ajax";
 import CustomDatePickerMonth from "../../components/CustomDatePickerMonth";
+
 
 const today = new Date();
 
@@ -15,6 +17,8 @@ const LbtDayOption = memo(({ lbtListNum }) => {
 
     // 생성 모달
     let [createModal, setCreateModal] = useState(false);
+    // 결과 모달
+    let [resultLbtModal, setResultLbtModal] = useState(false);
 
     // 학습교재
     let [bookList, setBookList] = useState([]);
@@ -77,7 +81,12 @@ const LbtDayOption = memo(({ lbtListNum }) => {
 
     return (
         <div className="LbtDayOption">
-            {createModal && <LbtModal setCreateModal={setCreateModal} sendLBTData={sendLBTData} />}
+            {createModal && <LbtModal setCreateModal={setCreateModal} sendLBTData={sendLBTData} setResultLbtModal={setResultLbtModal} />}
+
+            {/* 학습분석표 결과 */}
+            {
+                resultLbtModal && <LbtResultModal/>
+            }
 
             <div className="option">
                 <div className="option-left">

@@ -6,7 +6,6 @@ const 오늘 = dayjs(new Date()).format("YYYYMM");
 
 const AttendanceDay = memo(({ item, changeData, setModal, setClickDay, currentMonth}) => {
 
-    console.log(item);
     const formatCurrentDate = ()=>{
         var numDay = item.daynum ? item.daynum : item;
         var numSet = parseInt(numDay) < 10 ? "0" + numDay : numDay;
