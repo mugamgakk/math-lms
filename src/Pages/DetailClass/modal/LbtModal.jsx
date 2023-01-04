@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import ajax from "../../../ajax";
 import logo from "../../../assets/img/parallax-logo.png";
 import dayjs from "dayjs";
-import { arrSort, _cloneDeep, htmlToPdf } from "../../../methods/methods";
+import { _cloneDeep, htmlToPdf } from "../../../methods/methods";
 
 const { $y: todayYear, $M: todayMonth } = dayjs(new Date());
 const 산출시점 = dayjs(new Date()).format("YYYY.MM.DD");
@@ -28,7 +28,7 @@ const paramList = [
     "art_an",
 ];
 
-function LbtModal({ setCreateModal, sendLBTData, setResultLbtModal }) {
+function LbtModal({ setCreateModal, sendLBTData, afterCraeteModal }) {
     const dataLists = useLbtStore((state) => state.dataLists);
     const checkedList = useLbtStore((state) => state.checkedList);
     const allCheckfnL = useLbtStore((state) => state.allCheckfnL);
@@ -40,19 +40,20 @@ function LbtModal({ setCreateModal, sendLBTData, setResultLbtModal }) {
     let [viewItem, setViewItem] = useState(null);
     // 통신데이터
     let [lbtData, setLbtData] = useState(null);
+    let [teacherOpinion, setTeacherOpinion] = useState("");
 
     // 그래프
     let canvas1 = useRef();
     let canvas2 = useRef();
 
-    const getRegult = async () => {
+    const getRegult = async (checkedParam) => {
         const data = createDataParam();
 
         // console.log(data);
 
         let res = await ajax("/class_result.php", { data });
         // console.log(res.data.lec_assa[0].unit2[0])
-        render(res.data);
+        render(res.data, checkedParam);
     };
 
     // 생성하기
@@ -67,9 +68,9 @@ function LbtModal({ setCreateModal, sendLBTData, setResultLbtModal }) {
             checkedArr = [...checkedArr, ...arr];
         });
 
-        if (lbtData.tch_comm === "" || lbtData.tch_comm === null) {
+        if(teacherOpinion === ""){
             alert("선생님 의견을 입력해 주세요.");
-            return;
+            return 
         }
 
         let dataURI = await htmlToPdf(printSection.current);
@@ -81,6 +82,7 @@ function LbtModal({ setCreateModal, sendLBTData, setResultLbtModal }) {
                 edate: dayjs(sendLBTData.endDay).format("YYYY-MM-DD"),
                 arr_chk: checkedArr,
                 file: dataURI,
+                tch_comm : teacherOpinion
             };
             data.arr_bk_cd = sendLBTData.checkList.map((a) => a.bk_cd);
             // console.log(data);
@@ -88,8 +90,7 @@ function LbtModal({ setCreateModal, sendLBTData, setResultLbtModal }) {
 
             if (res.data.ok === 1) {
                 alert("생성 완료");
-                setResultLbtModal(true);
-                setCreateModal(false);
+                afterCraeteModal();
             } else {
                 throw new Error();
             }
@@ -128,10 +129,12 @@ function LbtModal({ setCreateModal, sendLBTData, setResultLbtModal }) {
     };
 
     // 그려주기
-    const render = (data) => {
+    const render = (data, checkedParam) => {
         setLbtData(data);
+        // 선생님 의견
+        setTeacherOpinion(data?.tch_comm)
+        setViewItem(checkedParam);
 
-        setViewItem(checkedList);
         setTimeout(() => {
             let { calc, fig, sol, und } = data.an_act;
             let 계산력 = calc[2].replace("%", "");
@@ -323,7 +326,7 @@ function LbtModal({ setCreateModal, sendLBTData, setResultLbtModal }) {
     useEffect(() => {
         // 첫 로드시 모두체크
         allCheckfnL(true);
-        getRegult();
+        getRegult(dataLists);
     }, []);
 
     let printSection = useRef();
@@ -377,7 +380,7 @@ function LbtModal({ setCreateModal, sendLBTData, setResultLbtModal }) {
                                         className="btn-grey-border"
                                         style={{ minWidth: "100px" }}
                                         onClick={() => {
-                                            getRegult();
+                                            getRegult(checkedList);
                                         }}
                                     >
                                         적용
@@ -1478,7 +1481,7 @@ function LbtModal({ setCreateModal, sendLBTData, setResultLbtModal }) {
                                                     선생님 의견
                                                 </h4>
                                                 <div className="opinion-box">
-                                                    <p>{lbtData.tch_comm}</p>
+                                                    <textarea rows="5" value={teacherOpinion} onChange={(e)=>{setTeacherOpinion(e.target.value)}}></textarea>
                                                 </div>
                                             </section>
                                         )}
@@ -1493,7 +1496,7 @@ function LbtModal({ setCreateModal, sendLBTData, setResultLbtModal }) {
                                                     종합 분석 의견
                                                 </h4>
                                                 <div className="ai-box">
-                                                    <p>{lbtData.art_an}</p>
+                                                    <p>{lbtData?.art_an}</p>
                                                 </div>
                                             </section>
                                         )}

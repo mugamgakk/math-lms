@@ -35,6 +35,30 @@ function LearningBreakdownTable() {
         }
     };
 
+   
+
+
+    // 리스트 함수
+    const getAnalyticsList = async () => {
+        const data = {
+            mode: "analytics_list_i",
+            usr_seq: clickStudent.usr_seq,
+        };
+
+        console.log("parameter", data);
+
+        try {
+            const res = await ajax("/class_result.php", { data });
+            // const res = await axios("/json/detailclass_table.json");
+
+            console.log("response",res.data);
+
+            // setLbtList(res.data.list);
+        } catch (errMsg) {
+            console.log(errMsg);
+        }
+    };
+
     const allCheck = (checked) => {
         checked ? setChoiceArr(lbtList) : setChoiceArr([]);
     };
@@ -43,26 +67,6 @@ function LearningBreakdownTable() {
         checked
             ? setChoiceArr([...choiceArr, ele])
             : setChoiceArr(choiceArr.filter((a) => a !== ele));
-    };
-
-
-    // 리스트 함수
-    const getAnalyticsList = async () => {
-        const data = {
-            mode: "analytics_list",
-            usr_seq: clickStudent.usr_seq,
-        };
-
-        try {
-            const res = await ajax("/class_result.php", { data });
-            // const res = await axios("/json/detailclass_table.json");
-
-            // console.log(res.data);
-
-            setLbtList(res.data);
-        } catch (errMsg) {
-            console.log(errMsg);
-        }
     };
 
     useEffect(() => {
@@ -75,7 +79,7 @@ function LearningBreakdownTable() {
 
     return (
         <div>
-            <LbtDayOption lbtListNum={lbtList.length} />
+            <LbtDayOption lbtListNum={lbtList.length} getAnalyticsList={getAnalyticsList} />
 
             <strong className="alert-text">
                 ❖ 분석표 목록에는 학생별로 최대 50개까지 저장됩니다.({lbtList?.length}/50)

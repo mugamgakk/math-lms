@@ -24,22 +24,24 @@ function TodayClass() {
     let [scroll, setScroll] = useState();
 
     const getList = async () => {
-        // const data = {
-        //     mode: "get_today_class",
-        //     ymd: dayjs(date).format("YYYY-MM-DD"),
-        //     class_cd: classList.map(a=> a.class_cd ),
-        //     qstr: search,
-        // };
+        const data = {
+            mode: "get_today_class_i",
+            ymd: dayjs(date).format("YYYY-MM-DD"),
+            class_cd: classList.map(a=> a.class_cd ),
+            qstr: search,
+        };
 
-        // let res = await ajax("/class.php", { data });
+        console.log("param",data);
 
-        // console.log(res);
-        // let { today_list } = res.data;
+        let test = await ajax("/class.php", { data });
+
+        console.log("response",test.data.today_list);
+        // let { today_list } = test.data;
 
         // setTodayList(today_list);
         
         let res = await axios("/json/todayClass_table.json");
-        console.log(res);
+        // console.log(res);
         setTodayList(res.data);
 
         setSearch("")
@@ -79,7 +81,7 @@ function TodayClass() {
                 icon="todayClass"
                 current={"오늘의 수업"}
             />
-            <div className="TodayClass bg">
+            <div className="TodayClass bg layout-height">
                 <div className="date-area">
                     <DateNext
                         value={date}

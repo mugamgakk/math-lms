@@ -13,23 +13,25 @@ import Icon from "../../components/Icon";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useMemo } from "react";
 import axios from "axios";
-// import { fetchData } from "../../methods/methods";
+import { fetchData } from "../../methods/methods";
 
 const 단원 = [
+    {value : null, label : "대단원"},
     { value: 1, label: "수와 식의 계산" },
-    { value: 2, label: "수와 수의 곱샘" },
+    { value: 2, label: "수와 수의 곱샘" }
 ];
 const stateOptions = [
+    {value : null, label : "상태"},
     { value: "P", label: "오픈전" },
     { value: "S", label: "학습중" },
     { value: "C", label: "완료" },
 ];
 
-const fetchData = async (url, param) => {
-    // console.log(param);
-    let res = await axios("/json/pluslearning_narrative.json");
-    return res.data;
-};
+// const fetchData = async (url, param) => {
+//     // console.log(param);
+//     let res = await axios("/json/pluslearning_narrative.json");
+//     return res.data;
+// };
 
 
 
@@ -61,7 +63,7 @@ function Narrative() {
     }, [clickStudent.usr_seq, unit, situation, bookList]);
 
     // get Data
-    const list = useQuery(["lists", clickStudent.usr_seq], () => fetchData("class_plus", data), {
+    const list = useQuery(["lists", clickStudent.usr_seq, bookList], () => fetchData("class_plus", data), {
         refetchOnWindowFocus : false
     });
 

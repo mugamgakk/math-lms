@@ -29,7 +29,7 @@ const paramList = [
     "art_an",
 ];
 
-function LbtResultModal({ setCreateModal }) {
+function LbtResultModal({ setResultLbtModal, printSeq }) {
     const dataLists = useLbtStore((state) => state.dataLists);
     // ui
     let [viewItem, setViewItem] = useState(null);
@@ -41,7 +41,7 @@ function LbtResultModal({ setCreateModal }) {
 
     const dataParam = {
         mode : "get_analytics",
-        prt_seq : 123
+        prt_seq : printSeq
     }
 
     const getList = useQuery("lbtChecked", ()=> fetchData("class_result",dataParam), {
@@ -238,7 +238,7 @@ function LbtResultModal({ setCreateModal }) {
                     <button
                         className="btn"
                         onClick={() => {
-                            setCreateModal(false);
+                            setResultLbtModal();
                         }}
                     >
                         <Icon icon={"close"} />
@@ -292,7 +292,7 @@ function LbtResultModal({ setCreateModal }) {
                     <button
                         className="btn-grey-border mr-10"
                         onClick={() => {
-                            setCreateModal(false);
+                            setResultLbtModal(false);
                         }}
                     >
                         닫기

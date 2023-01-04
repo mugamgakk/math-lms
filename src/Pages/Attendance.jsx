@@ -33,22 +33,24 @@ function Attendance() {
 
     const getData = async () => {
         setLoading(true);
+
         const param = {
             mode: "get_daily",
             ymd: dayjs(date).format("YYYYMMDD"),
-            class_cd: classList,
+            class_cd: classList.map(a=>a.class_cd ),
             qstr: searchText,
         };
 
+        // console.log("parameter",param)
+
         try {
-            let res = await ajax("class_daily.php", { data: param });
-            // let res = await axios("/json/attendance.json");
+            // let res = await ajax("class_daily.php", { data: param });
+
+            // console.log("response",res.data)
+
+            let res = await axios("/json/attendance.json");
 
             const { student_list } = res.data;
-
-            if (!student_list) {
-                throw new Error("잠시후에 시도해주세요");
-            }
 
             // 리스트 값
             setStudentList(student_list.slice(0));
@@ -56,7 +58,6 @@ function Attendance() {
             setSearchText("");
             setLoading(false);
         } catch (err) {
-            alert(err);
             setLoading(false);
         }
     };
@@ -130,7 +131,7 @@ function Attendance() {
                     <div className="search">
                         <ClassSelect
                             className={"mr-10"}
-                            defaultValue="반 선택"
+                            defaultValue="반을 선택하세요."
                             value={classList}
                             onChange={(ele) => {
                                 setClassList(ele);

@@ -6,12 +6,13 @@ import useStudentsStore from "../../store/useStudentsStore";
 import Checkbox from "../../components/Checkbox";
 import ajax from "../../ajax";
 import CustomDatePickerMonth from "../../components/CustomDatePickerMonth";
-
+import { useRef } from "react";
 
 const today = new Date();
 
-const LbtDayOption = memo(({ lbtListNum }) => {
+const LbtDayOption = memo(({ lbtListNum, getAnalyticsList }) => {
     let clickStudent = useStudentsStore((state) => state.clickStudent);
+
     // 날짜
     let [month, setMonth] = useState(today);
 
@@ -38,7 +39,7 @@ const LbtDayOption = memo(({ lbtListNum }) => {
 
     const bookOption = async () => {
         const data = {
-            mode: "analytics_book",
+            mode: "analytics_book_i",
             sdate: dateFormat().start,
             edate: dateFormat().end,
             usr_seq: clickStudent.usr_seq,
@@ -46,8 +47,6 @@ const LbtDayOption = memo(({ lbtListNum }) => {
 
         const res = await ajax("/class_result.php", { data });
         // const res = await axios("/json/detailclass_table_book.json");
-
-        // console.log(res);
 
         const { bk_list, wrong_list } = res.data;
 
@@ -79,14 +78,49 @@ const LbtDayOption = memo(({ lbtListNum }) => {
         checkList,
     };
 
+    let printSeqNum = useRef(0);
+
+    // 생성후 함수
+    const afterCraeteModal = () => {
+        // 모달 닫기
+        setCreateModal(false);
+
+        // 생성후 리스트 데이터 다시 호출
+        getAnalyticsList();
+
+        ajax("/class_result.php", {
+            data: {
+                mode: "analytics_list",
+                usr_seq: clickStudent.usr_seq,
+            },
+        }).then((res) => {
+            console.log(res.data)
+            // 새로 생성된 첫번째 데이터 prt_seq
+            let createdData = res.data[0];
+            printSeqNum.current = createdData.prt_seq;
+
+            // 결과 모달 오픈
+            setResultLbtModal(true);
+        });
+    };
+
     return (
         <div className="LbtDayOption">
-            {createModal && <LbtModal setCreateModal={setCreateModal} sendLBTData={sendLBTData} setResultLbtModal={setResultLbtModal} />}
+            {createModal && (
+                <LbtModal
+                    setCreateModal={setCreateModal}
+                    sendLBTData={sendLBTData}
+                    afterCraeteModal={afterCraeteModal}
+                />
+            )}
 
             {/* 학습분석표 결과 */}
-            {
-                resultLbtModal && <LbtResultModal/>
-            }
+            {resultLbtModal && (
+                <LbtResultModal
+                    setResultLbtModal={setResultLbtModal}
+                    printSeq={printSeqNum.current}
+                />
+            )}
 
             <div className="option">
                 <div className="option-left">
@@ -176,7 +210,7 @@ const LbtDayOption = memo(({ lbtListNum }) => {
                                     alert(
                                         "종합 학습 분석표는 최대 50개까지 저장 가능합니다. 목륵을 정리해 주세요"
                                     );
-                                    return 
+                                    return;
                                 }
                                 setCreateModal(true);
                             }}

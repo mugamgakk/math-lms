@@ -29,23 +29,21 @@ function EvaluationRoutine() {
 
             <div className="row layout-height">
                 <StudentsSearch>
-                    <ul className="content-tabs2">
-                        <li
-                            onClick={() => {
-                                navigate("/evaluation/routine");
-                            }}
-                            className={`active`}
-                        >
-                            재원생 정기평가
-                        </li>
-                        <li
-                            onClick={() => {
-                                navigate("/evaluation/jindan");
-                            }}
-                        >
-                            진단평가
-                        </li>
-                    </ul>
+                    <div className="student-list-tab">
+                        <ul>
+                            <li
+                                onClick={() => {
+                                    navigate("/evaluation/routine");
+                                }}
+                                className={`active`}
+                            >재원생 정기평가</li>
+                            <li
+                                onClick={() => {
+                                    navigate("/evaluation/jindan");
+                                }}
+                            >진단평가</li>
+                        </ul>
+                    </div>
                 </StudentsSearch>
 
                 <div className="bg bg-content">

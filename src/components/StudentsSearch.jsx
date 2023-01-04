@@ -25,7 +25,9 @@ function StudentsSearch({ children, grade }) {
 
     useEffect(() => {
         // resetStudent();
-        getStudentsData({grade});
+        if(classOption.length !== 0){
+            getStudentsData({grade, classOption, nameSearch});
+        }
     }, [grade]);
 
     useEffect(() => {
@@ -73,7 +75,7 @@ function StudentsSearch({ children, grade }) {
                 <div className="fj">
                     <ClassSelect
                         onChange={(ele) => {
-                            getStudentsData({classOption, nameSearch});
+                            getStudentsData({classOption : ele, nameSearch});
                             setClassOption(ele);
                         }}
                         value={classOption}

@@ -125,7 +125,6 @@ function TextBook() {
                 <div>
                     <button
                         className="btn-grey-border mr-10"
-                        style={{ width: "97px" }}
                         onClick={() => {
                             if (checkedList.length === 0) {
                                 alert("시험지를 선택하세요.");
@@ -147,7 +146,6 @@ function TextBook() {
                     </button>
                     <button
                         className="btn-grey-border mr-10"
-                        style={{ width: "97px" }}
                         onClick={() => {
                             if (checkedList.length === 0) {
                                 alert("시험지를 선택하세요.");

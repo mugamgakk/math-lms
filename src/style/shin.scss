@@ -139,15 +139,6 @@
 
 // 진단평가
 .JinDanSearch {
-    &-header {
-        @include flex(sb);
-
-        h4 {
-            @include font-style(24);
-            color: #222;
-            font-weight: 600;
-        }
-    }
 
     & > table {
         td {

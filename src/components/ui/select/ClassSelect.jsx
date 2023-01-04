@@ -44,13 +44,14 @@ function ClassSelect({
 
     const getOptions = async () => {
         const data = {
-            mode: "get_tch_class",
+            mode: "get_tch_class_i",
         };
 
         const res = await ajax("/class.php", { data });
 
         const classList = res.data.class_list ?? [];
 
+        onChange && onChange(classList)
         setOptions(classList);
         setChoiceArr(classList);
     };

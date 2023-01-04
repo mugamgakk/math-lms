@@ -15,7 +15,7 @@ function EvaluationJindan() {
                 icon="evaluation"
                 current="진단평가"
             />
-            <div className="row">
+            <div className="row layout-height">
                 <JinDanSearch />
 
                 {jindanStudent === null ? <div className="bg bg-content"> <AlertBox name="진단평가" /> </div>: <JindanContent />}

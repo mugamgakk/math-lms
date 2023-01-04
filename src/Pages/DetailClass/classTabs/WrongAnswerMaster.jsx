@@ -21,9 +21,9 @@ function WrongAnswer() {
     let [scroll,setScroll] = useState();
     const clickStudent = useStudentsStore(state=>state.clickStudent);
 
-    console.log(scroll);
+    // console.log(scroll);
     useEffect(()=>{
-        console.log(checkData);
+        // console.log(checkData);
     },[checkData])
     
     useEffect(()=>{

@@ -24,9 +24,9 @@ function ClassManagement(){
     const clickStudent = useStudentsStore((state) => state.clickStudent);
 
     useEffect(()=>{
-        console.log(wrongPopList);
+        // console.log(wrongPopList);
     },[wrongPopList])
-    console.log(wrongPopList);
+    // console.log(wrongPopList);
 
     useEffect(()=>{
         getList();
@@ -36,7 +36,7 @@ function ClassManagement(){
 
         let url = "/class_manage.php/";
         let query = {
-            mode: "unit_list",
+            mode: "unit_list_i",
             usr_seq : clickStudent.usr_seq,
             bk_cd : bookList.value
         };
@@ -44,7 +44,7 @@ function ClassManagement(){
         let res = await ajax(url, { data: query });
 
         console.log(res);
-        setData(res.data);
+        // setData(res.data);
         
     
     };
