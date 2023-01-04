@@ -4,6 +4,18 @@ import ContentHeader from "../../components/ContentHeader";
 import jindanStore from "../../store/jindanStore";
 import JindanContent from "./JindanContent";
 import JinDanSearch from "./JinDanSearch";
+import styled from "styled-components";
+
+const Box = styled.div`
+    height : 61px;
+    background-color : #f2eeeb;
+    padding : 20px 18px;
+    margin-top : 123px;
+    p{
+        color : #eb615a;
+        font-weight : 600
+    }
+`
 
 function EvaluationJindan() {
     const jindanStudent = jindanStore(state=>state.jindanStudent);
@@ -18,7 +30,7 @@ function EvaluationJindan() {
             <div className="row layout-height">
                 <JinDanSearch />
 
-                {jindanStudent === null ? <div className="bg bg-content"> <AlertBox name="진단평가" /> </div>: <JindanContent />}
+                {jindanStudent === null ? <div className="bg bg-content"> <Box><p>※ [진단평가] 학생명(아이디)를 클릭하세요.</p></Box></div>: <JindanContent />}
                 
             </div>
         </>

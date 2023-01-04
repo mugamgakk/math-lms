@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import CheckBox from "../../components/Checkbox";
 import JindanLBT from "./JindanLBT"
+import { _isScroll } from "../../methods/methods";
 
 function JindanContent() {
     let [value, setValue] = useState({
@@ -20,6 +21,7 @@ function JindanContent() {
     let [data, setData] = useState(null);
 
     let [resultModal, setResultModal] = useState(false);
+    let [scroll, setScroll] = useState(false);
 
     const getList = async ()=>{
         let res = await axios("/json/jindan_list.json");
@@ -31,6 +33,10 @@ function JindanContent() {
     useEffect(() => {
         getList();
     }, []);
+
+    useEffect(() => {
+        setScroll(_isScroll("jindan-user-list", 351));
+    });
     return (
         <div className="bg bg-content">
             <div className="jindan-order">
@@ -101,11 +107,11 @@ function JindanContent() {
                     </button>
                 </div>
             </div>
-            <table className="table tableA jindan-table">
+            <table className="custom-table jindan-user-list">
                 <thead>
                     <tr>
                         <th style={{ width: "8.8293%" }}>
-                            <CheckBox /> 선택
+                            <CheckBox style={{marginRight : "5px"}} /> 선택
                         </th>
                         <th style={{ width: "13.8888%" }}>평가 일자</th>
                         <th style={{ width: "9.8214%" }}>학생 명</th>
@@ -115,9 +121,10 @@ function JindanContent() {
                         <th style={{ width: "8.8293%" }}>점수</th>
                         <th style={{ width: "11.8055%" }}>분석표</th>
                         <th style={{ width: "13.8888%" }}>회원 연동</th>
+                        {scroll && <th style={{ width: "17px", border: "none" }}></th>}
                     </tr>
                 </thead>
-                <tbody className="scroll">
+                <tbody style={{maxHeight : "351px"}}>
                     {data?.map((a, i) => {
                         return <Tr item={a} key={i} />;
                     })}

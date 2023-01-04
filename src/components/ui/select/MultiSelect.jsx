@@ -97,7 +97,9 @@ function MultiSelect({
                                                 ? "active"
                                                 : ""
                                         }`}
-                                    ></div>
+                                    >
+                                        <Icon icon={"checkboxarrow"} />
+                                    </div>
                                 </li>
                             );
                         })}

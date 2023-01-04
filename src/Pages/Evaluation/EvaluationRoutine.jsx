@@ -1,18 +1,22 @@
 import React from "react";
 import EvaluationRoutineContent from "./EvaluationRoutineContent";
 import styled from "styled-components";
-import style from "../../style/style-module/EvaluationOrder.module.scss";
 import StudentsSearch from "../../components/StudentsSearch";
-import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import ContentHeader from "../../components/ContentHeader";
 import AlertBox from "../../components/AlertBox";
-import UserInfo from "../../components/UserInfo";
 import useStudentsStore from "../../store/useStudentsStore";
 
 const Box = styled.div`
-    padding: 5px;
-    background: #ccc;
-`;
+    height : 61px;
+    background-color : #f2eeeb;
+    padding : 20px 18px;
+    margin-top : 123px;
+    p{
+        color : #eb615a;
+        font-weight : 600
+    }
+`
 
 function EvaluationRoutine() {
     const navigate = useNavigate();
@@ -47,7 +51,11 @@ function EvaluationRoutine() {
                 </StudentsSearch>
 
                 <div className="bg bg-content">
-                    {clickStudent === null ? <AlertBox name="재원생 정기평가" /> : <EvaluationRoutineContent />}
+                    {clickStudent === null 
+                    ? <AlertBox>
+                        <Box><p>※ [재원생 정기평가 관리] 학생명(아이디)를 클릭하세요.</p></Box>
+                    </AlertBox>
+                    : <EvaluationRoutineContent />}
                 </div>
             </div>
         </>

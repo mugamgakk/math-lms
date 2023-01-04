@@ -93,7 +93,9 @@ function SelectBook({
                                     onClick={(e)=>{
                                         let isClass = e.target.classList.contains("active");
                                             checkedItem(isClass, a);
-                                    }}></div>
+                                    }}>
+                                        <Icon icon={"checkboxarrow"} />
+                                    </div>
                                 </li>
                             );
                         })}

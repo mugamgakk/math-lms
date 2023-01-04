@@ -6,29 +6,20 @@
     input[type="checkbox"] {
         display: none;
 
+        & + label{
+            i{display: none;}
+        }
+
         &:checked + label {
             position: relative;
 
-            &::before {
-                content: "";
-                position: absolute;
-                width: 2.2px;
-                height: 7px;
-                transform: rotate(132deg);
-                background-color: white;
-                top: 6px;
-                left: 22%;
+            i{
+                display: block;
+                @include pos-center;
+                color: #fff;
+                transform: translate(-50%,-50%) scale(0.5);
             }
-            &::after {
-                content: "";
-                position: absolute;
-                width: 2.2px;
-                height: 11px;
-                left: 52%;
-                transform: rotate(38deg);
-                background-color: white;
-                top: 2px;
-            }
+
         }
         &:disabled{
             &:checked + label{
@@ -42,10 +33,10 @@
             border: 1px solid #ccc;
             cursor: default !important;
 
-
-            &::before, &::after{
-                background-color: #ccc;
+            i{
+                color: #ccc;
             }
+            
         }
     }
 

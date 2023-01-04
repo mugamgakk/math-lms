@@ -142,6 +142,7 @@ function CustomDatePicker({
     return (
         <button
             className={`CustomDatePicker-btn ${className}`}
+            style={style}
             onBlur={() => {
                 setOpen(false);
             }}
@@ -155,7 +156,7 @@ function CustomDatePicker({
             </span>
 
             {open && (
-                <div className={`CustomDatePicker ${className}`} style={style}>
+                <div className={`CustomDatePicker ${className}`}>
                     <div className="CustomDatePicker-header">
                         <div
                             onClick={() => {

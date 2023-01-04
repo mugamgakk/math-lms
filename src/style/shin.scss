@@ -259,3 +259,47 @@
         // }
     }
 }
+
+.jindan-user-list{
+    th{
+        height: 65px;
+    }
+    td{
+        padding: 10px 20px;
+    }
+}
+
+.result-reg-list{
+    tr{
+        border-bottom: 1px solid #a19893;
+    }
+    th{
+        min-width: 120px;
+        border-right: none;
+    }
+    td{
+        padding: 5px 15px;
+    }
+}
+
+.result-list-table{
+    tbody{
+        border-right: 1px solid #eee;
+    }
+    thead{
+        height: 46px;
+        border-right: 1px solid #cfbfb7;
+    }
+    td{
+        height: 50px;
+        &:first-child{
+            color: #222;
+            font-weight: 600;
+        }
+        &:nth-child(2){
+            button{
+                cursor: default;
+            }
+        }
+    }
+}

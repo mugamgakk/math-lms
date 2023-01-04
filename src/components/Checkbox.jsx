@@ -1,4 +1,5 @@
 import React from "react";
+import Icon from "./Icon";
 
 const guidGenerator = ()=>{
     var S4 = function() {
@@ -7,9 +8,9 @@ const guidGenerator = ()=>{
     return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
 }
 
-function Checkbox({ color = "green", id = guidGenerator(), checked, onChange, disabled, className="" }) {
+function Checkbox({ color = "green", id = guidGenerator(), checked, onChange, disabled, className="", style }) {
     return (
-        <div className={`check-${color} ${className}`}>
+        <div className={`check-${color} ${className}`} style={style}>
             <input
                 type="checkbox"
                 id={id}
@@ -19,7 +20,9 @@ function Checkbox({ color = "green", id = guidGenerator(), checked, onChange, di
                 }}
                 disabled={disabled}
             />
-            <label htmlFor={id}></label>
+            <label htmlFor={id}>
+                <Icon icon={"checkboxarrow"} />
+            </label>
         </div> 
     );
 }

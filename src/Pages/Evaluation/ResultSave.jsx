@@ -9,12 +9,28 @@ import Icon from "../../components/Icon";
 import CustomDatePicker from "../../components/CustomDatePicker";
 
 const Btn = styled.button`
-    width: 15px;
-    height: 15px;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
-    border: 1px solid #ccc;
-    margin-right: 5px;
-    background: ${(props) => props.bg};
+    border: 2px solid #664e3d;
+    background-color : #fff;
+    color : #664e3d;
+    font-weight : 600;
+    margin-right : 17.5px;
+
+    &:last-child{
+        margin-right : 0;
+    }
+
+    &.active{
+        color : #fa4646;
+        border-color : #fa4646;
+        position : relative;
+        background-color : #fedada;
+        box-shadow : 0px 0px 0px 3px #fedada;
+    }
+
+
 `;
 
 const data = [];
@@ -51,7 +67,7 @@ function ResultSave({ setModal }) {
         // console.log(테이블인덱스, 배열인덱스, 답)
 
         let copyArr = [...result];
-        console.log(copyArr);
+        // console.log(copyArr);
 
         if (Array.isArray(답)) {
             let 기존값 = copyArr[테이블인덱스][배열인덱스].학생답;
@@ -88,101 +104,51 @@ function ResultSave({ setModal }) {
                     </button>
                 </div>
                 <div className="modal-body" style={{ padding: "35px" }}>
-                    <table className="table-base">
+                    <table className="table-base result-reg-list">
                         <tbody>
                             <tr>
-                                <th>예약 명단</th>
-                                <td style={{ textAlign: "left" }}>
+                                <th colSpan={2}>예약 명단</th>
+                                <td colSpan={6} style={{ textAlign: "left" }}>
                                     <CustomDatePicker
                                         onChange={(el) => {
                                             setInfo({ ...info, resDay: el });
                                         }}
                                         value={info.resDay}
+                                        style={{marginRight : "20px"}}
                                     />
                                     <SelectBase defaultValue="이름" width={"200px"} />
                                 </td>
                             </tr>
                             <tr>
-                                <th colSpan={2}>평가지 정보</th>
-                                <td style={{ textAlign: "left" }} colSpan={3}>
-                                    <SelectBase
-                                        defaultValue="학년"
-                                        value={info.grade}
-                                        onChange={(el) => setInfo({ ...info, grade: el })}
-                                        options={학년}
-                                        width={"200px"}
-                                    />
-                                    <SelectBase
-                                        defaultValue="학기"
-                                        value={info.semester}
-                                        onChange={(el) => setInfo({ ...info, semester: el })}
-                                        options={["1학기", "2학기"]}
-                                        width={"200px"}
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <th rowSpan={3}>학생정보</th>
-                                <th>이름</th>
+                                <th>학생명</th>
                                 <td>
-                                    <input
-                                        type="text"
-                                        onChange={(e) => {
-                                            setInfo({ ...info, name: e.target.value });
-                                        }}
-                                        className="textInput"
-                                    />
+                                    <input type="text" className="textInput" />
                                 </td>
-                                <th>평가일</th>
-                                <td style={{ textAlign: "left" }}>
-                                    <DatePicker
-                                        className="datepicker-base"
-                                        clearIcon={null}
-                                        openCalendarOnFocus={false}
-                                        format={"yyyy-MM-dd"}
-                                        value={new Date()}
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
                                 <th>학교</th>
                                 <td>
-                                    <input
-                                        type="text"
-                                        className="textInput"
-                                        onChange={(e) => {
-                                            setInfo({ ...info, school: e.target.value });
-                                        }}
-                                    />
+                                    <input type="text" className="textInput" />
                                 </td>
                                 <th>학년</th>
                                 <td>
-                                    <SelectBase options={학년} />
+                                    <SelectBase/>
+                                </td>
+                                <th>평가일</th>
+                                <td>
+                                    <CustomDatePicker
+                                    label={true}/>
                                 </td>
                             </tr>
                             <tr>
-                                <th>연락처(전화번호)</th>
-                                <td colSpan={3}>
-                                    <input
-                                        type="text"
-                                        className="textInput"
-                                        maxLength={13}
-                                        value={info.call}
-                                        onChange={(e) => {
-                                            let target = e.target.value;
-                                            let dd = target
-                                                .replace(/[^0-9]/g, "")
-                                                .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
-                                            console.log(dd);
-                                            setInfo({ ...info, call: dd });
-                                        }}
-                                    />
+                                <th>평가지</th>
+                                <td style={{textAlign : "left"}} colSpan={3}>
+                                    <SelectBase defaultValue="학년" width="150px"/>
+                                    <SelectBase defaultValue="학기" width="150px"/>
                                 </td>
+                                <th>연락처</th>
+                                <td colSpan={3}><input type="text" className="textInput" /></td>
                             </tr>
                         </tbody>
                     </table>
-
-                    <h4 className="my-10">[ 진단평가 결과 등록]</h4>
 
                     <div className="fj">
                         {result.map((a, arrIndex) => {
@@ -231,7 +197,7 @@ function ResultSave({ setModal }) {
 
 const Table = memo(({ tableList, checkResult, arrIndex }) => {
     return (
-        <table className="table-base">
+        <table className="table-base result-list-table">
             <thead>
                 <tr>
                     <th>번호</th>
@@ -244,25 +210,25 @@ const Table = memo(({ tableList, checkResult, arrIndex }) => {
                     return (
                         <tr key={dd.id}>
                             <td>{dd.id}</td>
-                            <td>{Array.isArray(dd.정답) ? dd.정답.join(", ") : dd.정답}</td>
+                            <td>{Array.isArray(dd.정답) ? dd.정답.join(", ") : <Btn>{dd.정답}</Btn> }</td>
                             <td className="result-button">
                                     {
                                         Array.isArray(dd.정답)
                                         ? (
                                             <>
-                                                <Btn bg={dd.학생답?.includes(1) && "red"} onClick={()=>{checkResult(arrIndex ,index, [1])}}>1</Btn>
-                                                <Btn bg={dd.학생답?.includes(2) && "red"} onClick={()=>{checkResult(arrIndex ,index, [2])}}>2</Btn>
-                                                <Btn bg={dd.학생답?.includes(3) && "red"} onClick={()=>{checkResult(arrIndex ,index, [3])}}>3</Btn>
-                                                <Btn bg={dd.학생답?.includes(4) && "red"} onClick={()=>{checkResult(arrIndex ,index, [4])}}>4</Btn>
-                                                <Btn bg={dd.학생답?.includes(5) && "red"} onClick={()=>{checkResult(arrIndex ,index, [5])}}>5</Btn>
+                                                <Btn className={dd.학생답?.includes(1) ? "active" : ""} onClick={()=>{checkResult(arrIndex ,index, [1])}}>1</Btn>
+                                                <Btn className={dd.학생답?.includes(2) ? "active" : ""} onClick={()=>{checkResult(arrIndex ,index, [2])}}>2</Btn>
+                                                <Btn className={dd.학생답?.includes(3) ? "active" : ""} onClick={()=>{checkResult(arrIndex ,index, [3])}}>3</Btn>
+                                                <Btn className={dd.학생답?.includes(4) ? "active" : ""} onClick={()=>{checkResult(arrIndex ,index, [4])}}>4</Btn>
+                                                <Btn className={dd.학생답?.includes(5) ? "active" : ""} onClick={()=>{checkResult(arrIndex ,index, [5])}}>5</Btn>
                                             </>
                                         )
                                         : (<>
-                                            <Btn bg={dd.학생답 === 1 && "red"} onClick={()=>{checkResult(arrIndex ,index, 1)}}>1</Btn>
-                                            <Btn bg={dd.학생답 === 2 && "red"} onClick={()=>{checkResult(arrIndex ,index, 2)}}>2</Btn>
-                                            <Btn bg={dd.학생답 === 3 && "red"} onClick={()=>{checkResult(arrIndex ,index, 3)}}>3</Btn>
-                                            <Btn bg={dd.학생답 === 4 && "red"} onClick={()=>{checkResult(arrIndex ,index, 4)}}>4</Btn>
-                                            <Btn bg={dd.학생답 === 5 && "red"} onClick={()=>{checkResult(arrIndex ,index, 5)}}>5</Btn>
+                                            <Btn className={dd.학생답 === 1 ? "active" : ""} onClick={()=>{checkResult(arrIndex ,index, 1)}}>1</Btn>
+                                            <Btn className={dd.학생답 === 2 ? "active" : ""} onClick={()=>{checkResult(arrIndex ,index, 2)}}>2</Btn>
+                                            <Btn className={dd.학생답 === 3 ? "active" : ""} onClick={()=>{checkResult(arrIndex ,index, 3)}}>3</Btn>
+                                            <Btn className={dd.학생답 === 4 ? "active" : ""} onClick={()=>{checkResult(arrIndex ,index, 4)}}>4</Btn>
+                                            <Btn className={dd.학생답 === 5 ? "active" : ""} onClick={()=>{checkResult(arrIndex ,index, 5)}}>5</Btn>
                                     </>
                                         )
                                     }

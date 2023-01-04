@@ -193,6 +193,25 @@
         }
     }
 }
+.btn-table-brown {
+    @extend %button-base;
+    height: 30px;
+    color: $white;
+    background: $brown;
+    width: 100px;
+
+    &:hover {
+        background-color: #473326;
+    }
+
+    &:disabled {
+        color: rgba($white, 0.4);
+
+        &:hover {
+            background-color: $brown;
+        }
+    }
+}
 
 .btn-grey {
     @extend %button-base;
@@ -231,15 +250,6 @@
     }
 }
 
-// .btn-search{
-//     width: 81px;
-//     i{
-//         font-size: 16px;
-//         margin-right: 5px;
-//         position: relative;
-//         top: -2px;
-//     }
-// }
 .btn-reload {
     min-width: 107px;
 }

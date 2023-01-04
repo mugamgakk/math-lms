@@ -138,7 +138,9 @@ function ClassSelect({
                             className={`checkbox ${
                                 options.length === choiceArr.length ? "active" : ""
                             }`}
-                        ></div>
+                        >
+                            <Icon icon={"checkboxarrow"} />
+                        </div>
                         <div className="label">(전체 선택)</div>
                     </li>
                     {options &&
@@ -156,7 +158,7 @@ function ClassSelect({
                                             : ""
                                     }`}
                                 >
-                                    <div className="checkbox"></div>
+                                    <div className="checkbox"><Icon icon={"checkboxarrow"} /></div>
                                     <div className="label">{a.class_name}</div>
                                 </li>
                             );
