@@ -47,9 +47,9 @@ function SelectBook({
             tabIndex={1}
             style={{ width: width }}
             className={`select ${selectOpen ? "active" : ""} ${disabled ? "disabled" : ""}`}
-            onBlur={()=>{
-                setSelectOpen(false);
-            }}
+            // onBlur={()=>{
+            //     setSelectOpen(false);
+            // }}
         >
             <div
                 className="select-view"
@@ -84,9 +84,6 @@ function SelectBook({
                                     key={i}
                                     className={`fa`}
                                 >
-                                    <strong className="mr-2" onClick={()=>{ setChiceItem(a); onChange && onChange(a) }}>
-                                        {a.label}
-                                    </strong>
                                     <div className={`checkbox ${
                                         choiceArr.some((c) => c.value === a.value) ? "active" : ""
                                     }`} 
@@ -96,6 +93,10 @@ function SelectBook({
                                     }}>
                                         <Icon icon={"checkboxarrow"} />
                                     </div>
+                                    <strong className="mr-2" onClick={()=>{ setChiceItem(a); onChange && onChange(a) }}>
+                                        {a.label}
+                                    </strong>
+                                    
                                 </li>
                             );
                         })}

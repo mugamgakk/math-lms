@@ -29,6 +29,8 @@ function UserInfo({ clickStudent }) {
 
         let res = await ajax("class_manage.php", { data });
 
+
+
         // console.log("교재 6종",data);
         // console.log("교재 6종 선택",res);
 
@@ -41,6 +43,8 @@ function UserInfo({ clickStudent }) {
         }
 
         let res = await ajax("/class_manage.php", {data});
+
+        console.log(res.data)
 
         const bookList = res.data.bk_list.map(a=> ({value : a.bk_cd, label : a.bk_name}));
 

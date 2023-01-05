@@ -6,14 +6,15 @@ import SkeletonTable from "./SkeletonTable";
 import { memo } from "react";
 import { useCallback } from "react";
 import Icon from "./Icon";
+import { useQuery } from "react-query";
+import { fetchData } from "../methods/methods";
 
 function StudentsSearch({ children, grade }) {
-    let { user, setClickStudent, clickStudent, getStudentsData, resetStudent } =
+    let { setClickStudent, clickStudent, getStudentsData, resetStudent } =
         useStudentsStore();
 
-    let [userList, setUserList] = useState(null);
     let [nameSearch, setNameSearch] = useState("");
-    let [skeleton, setSkeleton] = useState(true);
+
     // 반선택
     let [classOption, setClassOption] = useState([]);
     let [scroll, setScroll] = useState();
@@ -23,23 +24,19 @@ function StudentsSearch({ children, grade }) {
         setClickStudent(list);
     }, []);
 
-    useEffect(() => {
-        // resetStudent();
-        if(classOption.length !== 0){
-            getStudentsData({grade, classOption, nameSearch});
-        }
-    }, [grade]);
+    const param = {
+        mode : "student_list",
+        class_cd : classOption.map(a=> a.class_cd ),
+        qstr : nameSearch,
+        qgrd : grade
+    }
 
-    useEffect(() => {
-        // 학생 리스트
-        user && setUserList(user);
-    }, [user]);
-
-    useEffect(() => {
-        if (userList) {
-            setSkeleton(false);
+    let stuList = useQuery(["stuList",classOption], ()=> fetchData("class_st", param),{
+        refetchOnWindowFocus : false,
+        onSuccess : function(){
+            setNameSearch("");
         }
-    }, [userList]);
+    })
 
     useEffect(()=>{
         setScroll(scrollState());
@@ -75,7 +72,6 @@ function StudentsSearch({ children, grade }) {
                 <div className="fj">
                     <ClassSelect
                         onChange={(ele) => {
-                            getStudentsData({classOption : ele, nameSearch});
                             setClassOption(ele);
                         }}
                         value={classOption}
@@ -92,11 +88,11 @@ function StudentsSearch({ children, grade }) {
                         }}
                         onKeyUp={(e) => {
                             if (e.key === "Enter") {
-                                getStudentsData({classOption, nameSearch});
+                              stuList.refetch()
                             }
                         }}
                     />
-                    <button className="btn-search btn-green" style={{ width:'81px' }} onClick={()=>{ getStudentsData({classOption, nameSearch}); }}>
+                    <button className="btn-search btn-green" style={{ width:'81px' }} onClick={()=>{ stuList.refetch() }}>
                         <Icon icon={"search"} />
                         검색
                     </button>
@@ -115,10 +111,10 @@ function StudentsSearch({ children, grade }) {
 
                     <tbody className='' style={{ maxHeight: "550px" }}>
                         {
-                            skeleton
+                            stuList.isFetching
                                 ? <SkeletonTable R={10} width={["9.52380%", "42.85714%", "14.28571%", "33.33333%"]} />
                                 : (
-                                    userList?.map((res, i) => {
+                                    stuList.data?.student_list.map((res, i) => {
                                         return (
                                             <Tr
                                                 res={res}
@@ -134,8 +130,9 @@ function StudentsSearch({ children, grade }) {
                         }
                     </tbody>
                 </table>
-
-                {userList?.length === 0 && <div className="text-center">학생이 없습니다</div>}
+                {
+                    stuList.isError && <div className="text-center">학생이 없습니다</div>
+                }
             </div>
 
             <div className="student-list-footer">
@@ -163,10 +160,12 @@ const Tr = memo(({ res, clickStudent, getUser, index, scroll }) => {
                 onClick={() => {
                     getUser(res);
                 }}
-                className="text-green"
+                className="text-green t-start"
             >
+                <div style={{width : "100%", paddingLeft : "10px"}}>
                 {res.um_nm}(
                 {res.um_id.length > 10 ? res.um_id.substr(0, 10) + ".".repeat(3) : res.um_id})
+                </div>
             </td>
             <td style={{ width: "60px" }}>{res.school_grade}</td>
             <td style={ scroll ? { width: "109px" } : { width: '126px'}}>

@@ -15,14 +15,14 @@
         border-radius: $radius;
         border: solid 1px #ccc;
         display: inline-block;
-        margin-left: 15px;
         position: relative;
+        margin-right: 10px;
         i{
             display: none;
         }
         
         &.active{
-            background-color: $green;
+            background-color: $orange;
             border: none;
 
           

@@ -32,6 +32,10 @@
         >tr{
             >td {
                 padding: 5px 0 !important;
+
+                &:first-child{
+                    padding: 5px 10px !important;
+                }
                 >div{
                     @include flex(center);
                     flex-direction: column;
@@ -60,6 +64,13 @@
         @include font-style(16);
         margin-top: 4px;
     }
+}
+
+.unit1{
+    background-color:#f2eeeb;
+    font-size: 20px;
+    color: #222;
+    font-weight: 500;
 }
 
 .progressModal{

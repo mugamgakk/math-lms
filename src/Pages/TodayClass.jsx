@@ -41,7 +41,7 @@ function TodayClass() {
         // setTodayList(today_list);
         
         let res = await axios("/json/todayClass_table.json");
-        // console.log(res);
+        console.log(res.data[0].book[0].className[0]);
         setTodayList(res.data);
 
         setSearch("")
@@ -142,29 +142,7 @@ function TodayClass() {
                             </button>
                         </div>
                     </header>
-                    {/* <table className="tableC">
-                        <thead>
-                            <tr>
-                                <th style={{ width: '9.33%' }} rowSpan={2}>학생명 (아이디)</th>
-                                <th style={{ width: '9.33%' }} rowSpan={2}>교재</th>
-                                <th style={{ width: '32%' }} rowSpan={2}>단원</th>
-                                <th style={{ width: '40%' }} colSpan={5} className="bb">
-                                    수행 현황
-                                </th>
-                                <th style={{ width: '9.33%' }} rowSpan={2} className="b-none">
-                                    학습 완료
-                                </th>
-                                <th style={{ width:"17px" }} rowSpan={2}></th>
-                            </tr>
-                            <tr>
-                                <th style={{ width: '8%' }}>개념 강의</th>
-                                <th style={{ width: '8%' }}>개념 확인</th>
-                                <th style={{ width: '8%' }}>개념 설명</th>
-                                <th style={{ width: '8%' }}>유형 학습</th>
-                                <th style={{ width: '8%' }}>맞춤 클리닉</th>
-                            </tr>
-                        </thead>
-                    </table> */}
+              
                     <div className="tableHead fa">
                         <div style={{ width: '9.33%' }}>학생명 (아이디)</div>
                         <div style={{ width: '9.33%' }}>교재</div>

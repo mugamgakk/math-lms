@@ -73,7 +73,7 @@ function TodayClassTr({ data, bookTit }) {
             <div className={`state4 fc br f-column ${data.state5.status === 1 ? 'active' : (data.state5.status === -1 ? 'disabled' : '')}`} style={{ width: "9.846%" }}>
                     {data.state5.per}
                 {
-                    data.state5.per.includes('/') && (
+                    data.state5.per?.includes('/') && (
                         <button
                             className="btn-table btn-icon"
                             onClick={() => closeModal(true)}
