@@ -58,7 +58,7 @@
     .scrollWrap{
         border-bottom: 1px solid #ddd;
         max-height:480px;
-        overflow-y: scroll;
+        overflow-y: auto;
         overflow-x: hidden;
         .item{
             .name{
@@ -114,6 +114,25 @@
         }
         .flex{
             display: flex;
+        }
+    }
+}
+
+.today-class-table{
+    text-align: center;
+
+    .head{
+        background-color: #e6ddd8;
+        border-top: 2px solid $brown;
+        height: 50px;
+        &>div{
+            height: 100%;
+            line-height: 50px;
+            color: $brown;
+            font-weight: 600;
+        }
+        div{
+            border-right: 1px solid #cfbfb7;
         }
     }
 }
