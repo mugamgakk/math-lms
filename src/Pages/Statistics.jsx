@@ -41,7 +41,7 @@ const monthOption = createMonthOption();
 
 function Statistics() {
     // sort
-    let [sortPoint, setSortPoint] = useState("desc");
+    let [sortPoint, setSortPoint] = useState("asc");
 
     // class list
     let [classList, setClassList] = useState([]);
@@ -101,7 +101,7 @@ function Statistics() {
         sdate: dayFormat.start,
         edate: dayFormat.end,
         qstr: studentName,
-        order: "desc",
+        order: sortPoint,
     };
 
     // console.log("parameter",param)
@@ -250,7 +250,7 @@ function Statistics() {
                                 <div style={{ display: "inline-flex" }}>
                                     획득 포인트(CP){" "}
                                     <button
-                                        className="sort-btn"
+                                        className={`sort-btn ${sortPoint === "desc" ? "active" : ""}`}
                                         onClick={() => {
                                             setSortPoint(sortPoint === "desc" ? "asc" : "desc");
                                         }}

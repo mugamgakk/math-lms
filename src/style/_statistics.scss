@@ -45,6 +45,10 @@
 
     .sort-btn {
         transform: scale(0.5);
+
+        &.active{
+            transform: scale(0.5) rotate(180deg);
+        }
         i {
             color: $brown;
         }
