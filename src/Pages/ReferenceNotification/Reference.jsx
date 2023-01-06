@@ -19,7 +19,6 @@ const 학년 = [
 ];
 
 const search = [
-    { value: "", label: "검색기준" },
     { value: "ti", label: "제목" },
     { value: "tc", label: "제목+내용" },
     { value: "co", label: "대상" },
@@ -60,28 +59,13 @@ function Reference() {
         page: page,
     };
 
-    const referList = useQuery("getList", () => fetchData("board", param), {
+    console.log(param)
+    const referList = useQuery(["getList",gradeOption, page], () => fetchData("board", param), {
         refetchOnWindowFocus: false,
     });
 
-    const importantListSetting = ()=>{
-        if(referList.data){
-            const {list} = referList.data;
-            let arr = [];
+    console.log(referList.data)
 
-            for(let i = 0; i < list.length; i++){
-                if(list[i].bd_notice){
-
-                }
-                console.log(list[i]);
-            }
-        }
-    }
-
-    importantListSetting();
-
-
-    // console.log(referList.data?.list);
 
     useEffect(() => {
         setScroll(_isScroll("reference-table", 500));
@@ -160,7 +144,7 @@ function Reference() {
                 </table>
             </div>
             
-            <Pagination setPage={setPage} page={page} />
+            <Pagination setPage={setPage} page={page} totalPage={referList.data?.page_total} />
         </div>
     );
 }

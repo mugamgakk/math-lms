@@ -62,8 +62,8 @@ function Statistics() {
     // 라이브러리때문에 3번 재랜더링 됨
     const { onDownload } = useDownloadExcel({
         currentTableRef: tableRef.current,
-        filename: "Users table",
-        sheet: "Users",
+        filename: "학습 포인트 현황 목록",
+        sheet: "학습 포인트 현황 목록",
     });
 
     // 내림 : desc // 오름 : asc
@@ -86,12 +86,11 @@ function Statistics() {
     }, [year, month]);
 
     const resetPoint = async () => {
+        const res = await ajax("/class.php", { data: { mode: "get_tch_class_i" } });
+
         setStudentName("");
         setYear(yearOption[0]);
         setMonth(monthOption[0]);
-
-        const res = await ajax("/class.php", { data: { mode: "get_tch_class_i" } });
-
         setClassList(res.data.class_list);
     };
 
@@ -105,17 +104,18 @@ function Statistics() {
     };
 
     // console.log("parameter",param)
+
     let pointList = useQuery(["point", classList, sortPoint], () => fetchData("point", param), {
         refetchOnWindowFocus: false,
         onSuccess: function () {
             setStudentName("");
         },
     });
+    
     // console.log("response",pointList.data)
     useEffect(() => {
         setScroll(_isScroll("point-list-table", 550));
     });
-
 
     return (
         <>
@@ -130,14 +130,15 @@ function Statistics() {
                 <div className="tabs-header">
                     <strong>&lt;지플럼 수학 학습 포인트 지급 기준 &gt;</strong>
 
-                    <div className="standardBtn"
+                    <div
+                        className="standardBtn"
                         tabIndex={1}
                         onClick={(e) => {
-                            if(e.currentTarget === e.target){
+                            if (e.currentTarget === e.target) {
                                 setStandard(!standard);
                             }
                         }}
-                        onBlur={()=>{
+                        onBlur={() => {
                             setStandard(false);
                         }}
                     >
@@ -229,7 +230,6 @@ function Statistics() {
                 </div>
 
                 <table
-                    ref={tableRef}
                     className="custom-table point-list-table"
                     style={{ marginTop: "10px" }}
                 >
@@ -250,7 +250,9 @@ function Statistics() {
                                 <div style={{ display: "inline-flex" }}>
                                     획득 포인트(CP){" "}
                                     <button
-                                        className={`sort-btn ${sortPoint === "desc" ? "active" : ""}`}
+                                        className={`sort-btn ${
+                                            sortPoint === "desc" ? "active" : ""
+                                        }`}
                                         onClick={() => {
                                             setSortPoint(sortPoint === "desc" ? "asc" : "desc");
                                         }}
@@ -271,13 +273,50 @@ function Statistics() {
                                 width={["4%", "27%", "9%", "12%", "12%", "12%", "12%", "12%"]}
                             />
                         ) : (
-                            pointList.data.point_list.map((a, i) => {
+                            pointList.data.point_list?.map((a, i) => {
                                 return <Tr key={i} list={a} index={i} />;
                             })
                         )}
-
                     </tbody>
                 </table>
+
+
+                <div className="d-none">
+                    <table
+                        ref={tableRef}
+                    >
+                        <thead>
+                            <tr>
+                                <th>번호</th>
+                                <th>학생명(아이디)</th>
+                                <th>학년</th>
+                                <th>캐럿(개)</th>
+                                <th>미네랄(개)</th>
+                                <th>획들 포인드(CP)</th>
+                                <th>충 누적 포인트(점)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                pointList.data?.point_list?.map((a, i) => {
+                                    return (
+                                        <tr key={i}>
+                                            <td>{i + 1}</td>
+                                            <td className="text-left">
+                                                {a.um_nm} ({a.um_id})
+                                            </td>
+                                            <td>{a.school_grade}</td>
+                                            <td>{a.ct}</td>
+                                            <td>{a.mi}</td>
+                                            <td>{comma(a.point)}</td>
+                                            <td>{comma(a.total_point)}</td>
+                                        </tr>
+                                    )
+                                })
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </>
     );
