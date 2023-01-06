@@ -1,10 +1,11 @@
-import React, { useRef, useState } from "react";
+import React from 'react';
 
 // 총 페이지 넣기
 
-function Pagination({ totalPage = 30, pageLength = 5, page, setPage }) {
+function Pagination({ totalPage = 1, pageLength = 5, page, setPage }) {
     // 현재 페이지
     // let [page, setPage] = useState(1);
+
 
     const pageNum = () => {
         let pageGroup = Math.ceil(page / pageLength);
@@ -42,7 +43,7 @@ function Pagination({ totalPage = 30, pageLength = 5, page, setPage }) {
     return (
         <div className="pagination">
             <div className="box">
-                {page !== 1 && (
+                {page !== 1 && pageLength < totalPage && (
                     <>
                         <button
                             onClick={() => {
@@ -63,7 +64,7 @@ function Pagination({ totalPage = 30, pageLength = 5, page, setPage }) {
 
                 <ol>{pageNum()}</ol>
 
-                {page !== totalPage && (
+                {page !== totalPage && pageLength < totalPage && (
                     <>
                         <button
                             onClick={() => {

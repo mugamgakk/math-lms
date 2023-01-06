@@ -33,8 +33,7 @@ function ReferenceRegistrationModal({setModal}) {
 
     const queryClient = useQueryClient();
 
-
-    console.log(target);
+    // console.log(target);
 
   const checkFile = (checked,file) => {
         if(checked){
@@ -88,7 +87,7 @@ function ReferenceRegistrationModal({setModal}) {
 
         if(!window.confirm('저장하시겠습니까?')) return false;
 
-        ajax("/board.php?", { data : {
+        ajax("/board.php", { data : {
             mode : 'write',
             bd_seq : '',
             bd_cate: target.label,
@@ -206,9 +205,10 @@ function ReferenceRegistrationModal({setModal}) {
                         <div className="th">게시글 유형</div>
                         <div className="td fa" style={{ paddingLeft:'10px' }}>
                             {
-                                유형.map(item=>{
+                                유형.map((item,i)=>{
                                     return(
                                         <RadioBox
+                                        key={i}
                                         checked={category.label === item.label}
                                         name={'modalRadio'}
                                         onChange={(e)=> {e.target.checked && setCategory(item)}}

@@ -10,6 +10,18 @@
         }
     }
 }
+.content-tabs{
+    position: relative;
+    &::after{
+        content: "";
+        position: absolute;
+        width: calc(100% + 60px);
+        height: 1px;
+        background-color: #eee;
+        left: -30px;
+        bottom: -10px;
+    }
+}
 .notification{
     padding-top: 40px;
     .choice{
@@ -348,6 +360,6 @@
 .reference-table-text{
     cursor: pointer;
     &:hover{
-        color: $orange;
+        color: $green;
     }
 }
