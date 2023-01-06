@@ -35,25 +35,22 @@ function LearningBreakdownTable() {
         }
     };
 
-   
-
-
     // 리스트 함수
     const getAnalyticsList = async () => {
         const data = {
-            mode: "analytics_list_i",
+            mode: "analytics_list",
             usr_seq: clickStudent.usr_seq,
         };
 
-        console.log("parameter", data);
+        // console.log("parameter", data);
 
         try {
             const res = await ajax("/class_result.php", { data });
             // const res = await axios("/json/detailclass_table.json");
 
-            console.log("response",res.data);
+            // console.log("response",res.data);
 
-            // setLbtList(res.data.list);
+            setLbtList(res.data.list);
         } catch (errMsg) {
             console.log(errMsg);
         }

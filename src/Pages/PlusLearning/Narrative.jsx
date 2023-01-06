@@ -13,7 +13,7 @@ import Icon from "../../components/Icon";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useMemo } from "react";
 import axios from "axios";
-import { fetchData } from "../../methods/methods";
+// import { fetchData } from "../../methods/methods";
 
 const 단원 = [
     {value : null, label : "대단원"},
@@ -27,11 +27,11 @@ const stateOptions = [
     { value: "C", label: "완료" },
 ];
 
-// const fetchData = async (url, param) => {
-//     // console.log(param);
-//     let res = await axios("/json/pluslearning_narrative.json");
-//     return res.data;
-// };
+const fetchData = async (url, param) => {
+    // console.log(param);
+    let res = await axios("/json/pluslearning_narrative.json");
+    return res.data;
+};
 
 
 

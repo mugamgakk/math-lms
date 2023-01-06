@@ -39,7 +39,7 @@ const LbtDayOption = memo(({ lbtListNum, getAnalyticsList }) => {
 
     const bookOption = async () => {
         const data = {
-            mode: "analytics_book_i",
+            mode: "analytics_book",
             sdate: dateFormat().start,
             edate: dateFormat().end,
             usr_seq: clickStudent.usr_seq,

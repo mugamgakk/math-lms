@@ -47,9 +47,9 @@ function SelectBook({
             tabIndex={1}
             style={{ width: width }}
             className={`select ${selectOpen ? "active" : ""} ${disabled ? "disabled" : ""}`}
-            // onBlur={()=>{
-            //     setSelectOpen(false);
-            // }}
+            onBlur={()=>{
+                setSelectOpen(false);
+            }}
         >
             <div
                 className="select-view"

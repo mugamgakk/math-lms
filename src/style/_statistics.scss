@@ -60,6 +60,7 @@
     width: 1000px;
     top: 50px;
     left: 0;
+    cursor: default;
 
     th,
     td {
@@ -97,56 +98,73 @@
     }
 }
 
+.standardBtn{
+    width: 70px;
+    height: 40px;
+    border-radius: $radius;
+    background-color: $orange;
+    color: $white;
+    @include flex;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+}
+
 .PointModal {
     &-body {
-        padding: 20px;
+        padding: 20px 50px;
     }
 
     .modal-content {
         width: 1040px;
     }
-    table {
-        width: 100%;
-        margin-top: 14px;
-        border-bottom: 1px solid #ddd;
-        thead {
-            background-color: #e6ddd8;
-            border-top: 2px solid $brown;
-            border-bottom: 2px solid #a19893;
-            th {
-                @include font-style(17);
-                color: $brown;
-                font-weight: 600;
-                height: 35px;
-                text-align: center;
-                border-right: 1px solid #cfbfb7;
 
-                &:last-child {
-                    border-right: none;
+    th{
+        padding: 5px 0 ;
+    }
+
+    td{
+        padding: 10px 0;
+    }
+
+    .mineral{
+        width: 24px;
+        height: 24px;
+    }
+
+    .carat{
+        width: 26px;
+        height: 22px;
+    }
+    table{
+        margin-top: 15px;
+
+        tbody{
+            td{
+                padding: 10px 15px;
+            }
+            td:last-child{
+                div:last-child{
+                    margin-left: 5px;
                 }
             }
         }
-        td {
-            height: 40px;
-            text-align: center;
-            border-right: 1px solid #ddd;
-            color: #444;
-            font-weight: 400;
-            &:nth-child(2) {
-                font-weight: 400 !important;
-            }
-        }
-        tr {
-            border-bottom: 1px solid #ddd;
-            border-left: 1px solid #ddd;
-        }
+    }
 
-        tfoot {
-            td:first-child {
-                background-color: #f2eeeb;
-                color: $brown;
-                @include font-style(17);
-                font-weight: 600;
+    tfoot{
+        tr{
+            display: flex;
+            border-top: 1px solid #cfbfb7;
+            border-bottom: 1px solid #cfbfb7;
+
+            td{
+                @include flex;
+                &:first-child{
+                    background-color:#f2eeeb;
+                    border-right: 1px solid #cfbfb7;
+                    color: $brown;
+                    font-weight: 600;
+                }
             }
         }
     }

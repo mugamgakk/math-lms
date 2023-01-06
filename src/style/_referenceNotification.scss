@@ -344,3 +344,10 @@
         margin-top: 20px;
     }
 }
+
+.reference-table-text{
+    cursor: pointer;
+    &:hover{
+        color: $orange;
+    }
+}

@@ -44,7 +44,7 @@ function UserInfo({ clickStudent }) {
 
         let res = await ajax("/class_manage.php", {data});
 
-        console.log(res.data)
+        // console.log(res.data)
 
         const bookList = res.data.bk_list.map(a=> ({value : a.bk_cd, label : a.bk_name}));
 

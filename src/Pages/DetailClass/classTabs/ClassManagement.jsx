@@ -11,7 +11,7 @@ import Checkbox from "../../../components/Checkbox";
 import PrintModal_clinic from "../../../components/PrintModal_clinic";
 import AssessmentModal from "../../TodayClass/AssessmentModal";
 import { fetchData, _isScroll } from "../../../methods/methods";
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 
 function ClassManagement() {
     const bookList = useStudentsStore((state) => state.bookList);
@@ -20,7 +20,8 @@ function ClassManagement() {
     let [progressMo, setProgressState] = useState(false);
     let [creationMo, setCreationMo] = useState(false);
 
-    let [wrongPopList, setWrongPopList] = useState([]);
+    let [checkedList, setCheckedList] = useState([]);
+
     let [scroll, setScroll] = useState();
 
     const param = {
@@ -29,28 +30,32 @@ function ClassManagement() {
         bk_cd: bookList.value,
     };
 
-    const getList = useQuery(["classManage", bookList, clickStudent], () => fetchData("class_manage", param), {
-        refetchOnWindowFocus: false,
-        onSuccess : function(){
-            // console.log("다시 가져옴");
+    const getList = useQuery(
+        ["classManage", bookList, clickStudent],
+        () => fetchData("class_manage", param),
+        {
+            refetchOnWindowFocus: false,
+            onSuccess: function () {
+                // console.log("다시 가져옴");
+            },
         }
-    });
+    );
 
-    // console.log(getList)
-
+    const allRetryMutaion = useMutation(
+        (param) => {
+            return ajax("/class_manage.php", { data: param });
+        },
+        {
+            onSuccess: function () {
+                alert("모두 재응시");
+            },
+        }
+    );
 
     // 오답정복하기 생성 - ucode 배열
-
-    const createWrongResult = ()=>{
-
-    }
+    const createWrongResult = () => {};
 
     // 오답정복하기 클릭
-
-    const confirmWrongModal = (length) => {
-        if (length == 0) return window.alert("1개 이상 선택해주세요.");
-        setCreationMo(true);
-    };
 
     useEffect(() => {
         setScroll(_isScroll("classManagement-table", 482));
@@ -63,10 +68,20 @@ function ClassManagement() {
                     (최대 6 종)
                 </p>
                 <div className="table-top fa">
-                    <button className="btn-orange mr-10" style={{width : "146px"}} onClick={() => setProgressState(true)}>
+                    <button
+                        className="btn-orange mr-10"
+                        style={{ width: "146px" }}
+                        onClick={() => setProgressState(true)}
+                    >
                         학습 진행률 보기
                     </button>
-                    <button className="btn-grey btn-icon" style={{width : "107px"}} onClick={()=>{ getList.refetch(); }}>
+                    <button
+                        className="btn-grey btn-icon"
+                        style={{ width: "107px" }}
+                        onClick={() => {
+                            getList.refetch();
+                        }}
+                    >
                         <Icon icon={"reload"} />
                         새로고침
                     </button>
@@ -79,7 +94,8 @@ function ClassManagement() {
             )}
 
             {/* 오답 정복하기 생성 */}
-            {creationMo && <CreationModal setCreationMo={setCreationMo} ucode={wrongPopList} />}
+            {/* {creationMo && <CreationModal setCreationMo={setCreationMo} ucode={wrongPopList} />} */}
+
             <div className="table-wrap">
                 <div className="tableHead fa">
                     <div className="fc" style={{ width: "19.8%" }}>
@@ -93,7 +109,19 @@ function ClassManagement() {
                             </div>
                             <div className="fc f-column" style={{ width: "20%" }}>
                                 개념 확인
-                                <button className="btn-creation">일괄 재응시</button>
+                                <button
+                                    className="btn-creation"
+                                    onClick={() => {
+                                        allRetryMutaion.mutate({
+                                            mode: "set_retry",
+                                            ucode: getList.data?.[0].unit2.map((a) => a.ucode),
+                                            sa_kind: "QA",
+                                            usr_seq: clickStudent.usr_seq,
+                                        });
+                                    }}
+                                >
+                                    일괄 재응시
+                                </button>
                             </div>
                             <div className="fc" style={{ width: "20%" }}>
                                 개념 설명
@@ -113,12 +141,7 @@ function ClassManagement() {
                         오답
                         <br />
                         정복하기
-                        <button
-                            className="btn-creation"
-                            onClick={() => confirmWrongModal(wrongPopList.length)}
-                        >
-                            생성
-                        </button>
+                        <button className="btn-creation">생성</button>
                     </div>
                     {scroll && <div className="b-none" style={{ width: "15px" }}></div>}
                 </div>
@@ -126,7 +149,14 @@ function ClassManagement() {
                 <table className="custom-table classManagement-table ">
                     <tbody>
                         {getList.data?.map((a, i) => {
-                            return <Unit ele={a} key={i} />;
+                            return (
+                                <Unit
+                                    ele={a}
+                                    key={i}
+                                    checkedList={checkedList}
+                                    setCheckedList={setCheckedList}
+                                />
+                            );
                         })}
                     </tbody>
                 </table>
@@ -150,13 +180,11 @@ const Unit = ({ ele }) => {
 
     return (
         <>
-            <tr className="unit1" style={{height : "44px"}}>
+            <tr className="unit1" style={{ height: "44px" }}>
                 <td className="t-start b-none" style={{ width: "19.8%" }}>
-                <span>{ele.unit1}</span>
+                    <span>{ele.unit1}</span>
                 </td>
-                <td style={{ width: "71.29%" }} className="b-none">
-
-                </td>
+                <td style={{ width: "71.29%" }} className="b-none"></td>
                 <td style={{ width: "8.91%" }} className="b-none">
                     <Checkbox
                         color="green"
@@ -174,22 +202,38 @@ const Unit = ({ ele }) => {
 };
 
 const Tr = ({ ele, checkedItem, oneCheck }) => {
+    const clickStudent = useStudentsStore((state) => state.clickStudent);
+
     let [resultPop, setResultPop] = useState(false);
     let [printMo, setPrintMo] = useState(false);
     let [audioModal, setAudioModal] = useState(false);
 
-    // console.log(ele);
+    const queryClient = useQueryClient();
 
-    const retry = (sdKind) => {
-        const param = {
-            mode: "set_retry",
-            ucode: ele.ucode,
-            sd_kind: sdKind,
-        };
-        ajax("/class_manage.php", { data: param }).then((res) => {
-            // console.log(res.data);
-        });
-    };
+    const retryMutation = useMutation(
+        (param) => {
+            return ajax("/class_manage.php", { data: param });
+        },
+        {
+            onSuccess: (res) => {
+                alert("재응시");
+                console.log(res);
+                queryClient.invalidateQueries("classManage");
+            },
+        }
+    );
+
+    const finishMutaion = useMutation(
+        (param) => {
+            return ajax("/class_manage.php", { data: param });
+        },
+        {
+            onSuccess: function (res) {
+                console.log(res);
+                alert("완료");
+            },
+        }
+    );
 
     return (
         <tr>
@@ -210,7 +254,11 @@ const Tr = ({ ele, checkedItem, oneCheck }) => {
                     <button
                         className={`btn-orange wh-103 ${ele.state2.avail ? "" : "disabled"}`}
                         onClick={() => {
-                            retry("QA");
+                            retryMutation.mutate({
+                                mode: "set_retry",
+                                ucode: [ele.ucode],
+                                sd_kind: "QA",
+                            });
                         }}
                     >
                         재응시({ele.state2.retry})
@@ -254,18 +302,23 @@ const Tr = ({ ele, checkedItem, oneCheck }) => {
                     )
                 ) : null}
             </td>
-            <td
-                style={{ width: "11.88%" }}
-                onClick={() => setResultPop(true)}
-                className={ele.state1 === "100%" ? "active" : ""}
-            >
+            <td style={{ width: "11.88%" }} className={ele.state1 === "100%" ? "active" : ""}>
                 <div>
-                    {ele.state4.score}
+                    <span
+                        onClick={() => {
+                            setResultPop(true);
+                        }}
+                    >
+                        {ele.state4.score}
+                    </span>
                     <button
                         className={`btn-orange wh-103 ${ele.state4.avail ? "btn" : "btn disabled"}`}
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            //  retry(ucode);
+                        onClick={() => {
+                            retryMutation.mutate({
+                                mode: "set_retry",
+                                ucode: [ele.ucode],
+                                sd_kind: "QA",
+                            });
                         }}
                     >
                         재응시({ele.state4.retry})
@@ -301,7 +354,16 @@ const Tr = ({ ele, checkedItem, oneCheck }) => {
                             {printMo && (
                                 <PrintModal_clinic closeModal={setPrintMo} title="맞춤 클리닉" />
                             )}
-                            <button className="btn-orange wh-103">
+                            <button
+                                className="btn-orange wh-103"
+                                onClick={() => {
+                                    retryMutation.mutate({
+                                        mode: "set_retry",
+                                        ucode: [ele.ucode],
+                                        sd_kind: "WC",
+                                    });
+                                }}
+                            >
                                 재응시({ele.state5.retry})
                             </button>
                         </div>
@@ -312,7 +374,18 @@ const Tr = ({ ele, checkedItem, oneCheck }) => {
             </td>
             <td style={{ width: "11.88%" }}>
                 <div>
-                    <button className="btn-orange wh-103">학습 완료</button>
+                    <button
+                        className="btn-orange wh-103"
+                        onClick={() => {
+                            finishMutaion.mutate({
+                                mode: "set_passed",
+                                ucode: ele.ucode,
+                                usr_seq: clickStudent.usr_seq,
+                            });
+                        }}
+                    >
+                        학습 완료
+                    </button>
                     <button className="btn-table">학습 태도</button>
                 </div>
             </td>

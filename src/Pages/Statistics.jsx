@@ -50,13 +50,13 @@ function Statistics() {
     let [standard, setStandard] = useState(false);
 
     const tableRef = useRef(null);
-    
+
     // search name
     let [studentName, setStudentName] = useState("");
-    
+
     let [year, setYear] = useState(yearOption[0]);
     let [month, setMonth] = useState(monthOption[0]);
-    
+
     let [scroll, setScroll] = useState(false);
 
     // 라이브러리때문에 3번 재랜더링 됨
@@ -85,19 +85,19 @@ function Statistics() {
         }
     }, [year, month]);
 
-    const resetPoint = async ()=>{
+    const resetPoint = async () => {
         setStudentName("");
         setYear(yearOption[0]);
         setMonth(monthOption[0]);
 
-        const res = await ajax("/class.php", { data : {mode : "get_tch_class_i"} });
+        const res = await ajax("/class.php", { data: { mode: "get_tch_class_i" } });
 
-        setClassList(res.data.class_list)
-    }
+        setClassList(res.data.class_list);
+    };
 
     const param = {
         mode: "list",
-        class_cd: classList.map(a=> a.class_cd ),
+        class_cd: classList.map((a) => a.class_cd),
         sdate: dayFormat.start,
         edate: dayFormat.end,
         qstr: studentName,
@@ -107,19 +107,18 @@ function Statistics() {
     // console.log("parameter",param)
     let pointList = useQuery(["point", classList, sortPoint], () => fetchData("point", param), {
         refetchOnWindowFocus: false,
-        onSuccess : function(){
+        onSuccess: function () {
             setStudentName("");
-        }
+        },
     });
     // console.log("response",pointList.data)
     useEffect(() => {
         setScroll(_isScroll("point-list-table", 550));
     });
 
+
     return (
         <>
-            
-
             <ContentHeader
                 title={"학습 포인트"}
                 location={["마이페이지", "수학 학습 관리"]}
@@ -130,18 +129,22 @@ function Statistics() {
             <div className="bg Statistics layout-height">
                 <div className="tabs-header">
                     <strong>&lt;지플럼 수학 학습 포인트 지급 기준 &gt;</strong>
-                    <button
-                        className="btn-orange"
-                        onClick={() => {
-                            setStandard(!standard);
+
+                    <div className="standardBtn"
+                        tabIndex={1}
+                        onClick={(e) => {
+                            if(e.currentTarget === e.target){
+                                setStandard(!standard);
+                            }
+                        }}
+                        onBlur={()=>{
+                            setStandard(false);
                         }}
                     >
-                        {
-                            standard ? "닫기" : "확인"
-                        }
-                    </button>
+                        {standard ? "닫기" : "확인"}
+                        {standard && <StatisticsStandard />}
+                    </div>
                     {/* 지플럼 수학 학습 포인트 지급 기준 */}
-                    {standard && <StatisticsStandard />}
                 </div>
 
                 <div className="fj">
@@ -160,7 +163,11 @@ function Statistics() {
                             <Icon icon={"downloadB"} style={{ transform: "rotate(180deg)" }} />
                             다운로드
                         </button>
-                        <button className="btn-grey" style={{ minWidth: "100px" }} onClick={resetPoint}>
+                        <button
+                            className="btn-grey"
+                            style={{ minWidth: "100px" }}
+                            onClick={resetPoint}
+                        >
                             초기화
                         </button>
                     </div>
@@ -199,8 +206,8 @@ function Statistics() {
                             className="textInput mr-10"
                             placeholder="학생 이름을 입력하세요."
                             value={studentName}
-                            onKeyUp={(e)=>{
-                                if(e.key === "Enter") pointList.refetch()
+                            onKeyUp={(e) => {
+                                if (e.key === "Enter") pointList.refetch();
                             }}
                             onChange={(e) => {
                                 setStudentName(e.target.value);
@@ -211,7 +218,9 @@ function Statistics() {
                             type="button"
                             className="btn-green btn-icon"
                             style={{ width: "81px" }}
-                            onClick={()=>{ pointList.refetch() }}
+                            onClick={() => {
+                                pointList.refetch();
+                            }}
                         >
                             <Icon icon={"search"} />
                             조회
@@ -240,10 +249,12 @@ function Statistics() {
                             <th style={{ width: "12%" }}>
                                 <div style={{ display: "inline-flex" }}>
                                     획득 포인트(CP){" "}
-                                    <button className="sort-btn"
-                                        onClick={()=>{setSortPoint(sortPoint === "desc" ? "asc": "desc")}}
+                                    <button
+                                        className="sort-btn"
+                                        onClick={() => {
+                                            setSortPoint(sortPoint === "desc" ? "asc" : "desc");
+                                        }}
                                     >
-                                      
                                         <Icon icon={"selct_typeC"} />
                                     </button>
                                 </div>
@@ -264,6 +275,7 @@ function Statistics() {
                                 return <Tr key={i} list={a} index={i} />;
                             })
                         )}
+
                     </tbody>
                 </table>
             </div>

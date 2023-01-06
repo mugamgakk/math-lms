@@ -117,7 +117,7 @@ function CustomDatePickerMonth({
 
     return (
         <button
-            className="CustomDatePicker-btn"
+            className={`CustomDatePicker-btn ${className}`}
             style={style}
             onBlur={() => {
                 setOpen(false);
@@ -138,7 +138,7 @@ function CustomDatePickerMonth({
                 <Icon icon={"calendar"} />
             </span>
             {open && (
-                <div className={`CustomDatePicker ${className}`}>
+                <div className={`CustomDatePicker`}>
                     <div className="CustomDatePicker-header" style={{ marginBottom: "20px" }}>
                         <div
                             onClick={() => {

@@ -152,7 +152,11 @@ function WrongAnswer() {
                         className="mr-10"
                     />
               
-                <button className='btn-search btn-green' onClick={optionBtn}><Icon icon={"search"} />조회</button>
+                <button 
+                    className='btn-search btn-green' 
+                    onClick={optionBtn}
+                    style={{width : "81px"}}
+                    ><Icon icon={"search"} />조회</button>
                 </div>
             </div>
             <table className="wrongAnswerMaster-table custom-table">

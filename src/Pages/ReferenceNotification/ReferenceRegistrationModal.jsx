@@ -7,6 +7,7 @@ import Icon from '../../components/Icon';
 import RadioBox from '../../components/RadioBox';
 import CheckBox from '../../components/Checkbox';
 import Editor from '../ComponentsPage/Editor';
+import { useQueryClient } from 'react-query';
 
 
 const 대상 = [
@@ -29,6 +30,8 @@ function ReferenceRegistrationModal({setModal}) {
     let [contents, setContents] = useState();
     let [fileCheck,setFileCheck] = useState([]);
     let ref = useRef(false);
+
+    const queryClient = useQueryClient();
 
 
     console.log(target);
@@ -96,6 +99,7 @@ function ReferenceRegistrationModal({setModal}) {
         }
         }).then(res=>{
             console.log(res);
+            queryClient.invalidateQueries("getList");
             setModal(false);
         }).catch(error=>{
             console.log('error');
