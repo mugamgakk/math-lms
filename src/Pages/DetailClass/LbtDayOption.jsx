@@ -7,11 +7,13 @@ import Checkbox from "../../components/Checkbox";
 import ajax from "../../ajax";
 import CustomDatePickerMonth from "../../components/CustomDatePickerMonth";
 import { useRef } from "react";
+import { useQueryClient } from "react-query";
 
 const today = new Date();
 
-const LbtDayOption = memo(({ lbtListNum, getAnalyticsList }) => {
+const LbtDayOption = memo(({ lbtListNum }) => {
     let clickStudent = useStudentsStore((state) => state.clickStudent);
+    const queryClient = useQueryClient();
 
     // 날짜
     let [month, setMonth] = useState(today);
@@ -86,7 +88,7 @@ const LbtDayOption = memo(({ lbtListNum, getAnalyticsList }) => {
         setCreateModal(false);
 
         // 생성후 리스트 데이터 다시 호출
-        getAnalyticsList();
+        queryClient.invalidateQueries("analytics_list");
 
         ajax("/class_result.php", {
             data: {

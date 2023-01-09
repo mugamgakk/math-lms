@@ -1,74 +1,47 @@
 import dayjs from "dayjs";
 import React, { useState, useEffect } from "react";
+import { useQuery } from "react-query";
 import ajax from "../../../ajax";
 import Checkbox from "../../../components/Checkbox";
-import { _isScroll } from "../../../methods/methods";
+import useCheckBox from "../../../hooks/useCheck";
+import { fetchData, _isScroll } from "../../../methods/methods";
 import useStudentsStore from "../../../store/useStudentsStore";
 import LbtDayOption from "../LbtDayOption";
 import LbtResultModal from "../modal/LbtResultModal";
 
 function LearningBreakdownTable() {
-    let [lbtList, setLbtList] = useState([]);
-    let [choiceArr, setChoiceArr] = useState([]);
     const clickStudent = useStudentsStore((state) => state.clickStudent);
-
     let [scroll, setScroll] = useState(false);
 
     // 삭제
     const removeList = async () => {
-        console.log(choiceArr);
-        if (choiceArr.length === 0) {
+        if (checkboxState.checkedList.length === 0) {
             alert("학습 분석표를 선택하세요");
         } else {
             if (window.confirm("선택한 학습 분석표를 삭제하시겠습니까?")) {
                 let res = await ajax("/class_result.php", {
                     data: {
                         mode: "analytics_del",
-                        arr_prt_seq: choiceArr.map(a=> a.prt_seq ),
+                        arr_prt_seq: checkboxState.checkedList.map((a) => a.prt_seq),
                     },
                 });
 
-                setLbtList(lbtList.filter((a) => !choiceArr.includes(a)));
+                getList.refetch();
+
             } else {
                 return;
             }
         }
     };
 
-    // 리스트 함수
-    const getAnalyticsList = async () => {
-        const data = {
-            mode: "analytics_list",
-            usr_seq: clickStudent.usr_seq,
-        };
+    const param = {
+        mode : "analytics_list",
+        usr_seq: clickStudent.usr_seq
+    }
 
-        // console.log("parameter", data);
+    let getList = useQuery(["analytics_list", clickStudent], ()=> fetchData("class_result", param));
 
-        try {
-            const res = await ajax("/class_result.php", { data });
-            // const res = await axios("/json/detailclass_table.json");
-
-            // console.log("response",res.data);
-
-            setLbtList(res.data.list);
-        } catch (errMsg) {
-            console.log(errMsg);
-        }
-    };
-
-    const allCheck = (checked) => {
-        checked ? setChoiceArr(lbtList) : setChoiceArr([]);
-    };
-
-    const oneCheck = (checked, ele) => {
-        checked
-            ? setChoiceArr([...choiceArr, ele])
-            : setChoiceArr(choiceArr.filter((a) => a !== ele));
-    };
-
-    useEffect(() => {
-        getAnalyticsList();
-    }, [clickStudent]);
+    const checkboxState = useCheckBox(getList.data?.list);
 
     useEffect(() => {
         setScroll(_isScroll("lbt-list-table", 250));
@@ -76,13 +49,13 @@ function LearningBreakdownTable() {
 
     return (
         <div>
-            <LbtDayOption lbtListNum={lbtList.length} getAnalyticsList={getAnalyticsList} />
+            <LbtDayOption lbtListNum={getList.data?.list.length} />
 
             <strong className="alert-text">
-                ❖ 분석표 목록에는 학생별로 최대 50개까지 저장됩니다.({lbtList?.length}/50)
+                ❖ 분석표 목록에는 학생별로 최대 50개까지 저장됩니다.({getList.data?.list?.length}/50)
             </strong>
             <br />
-            <div style={{marginBottom : "20px"}}>
+            <div style={{ marginBottom: "20px" }}>
                 <button
                     className="btn-grey-border mr-10"
                     onClick={removeList}
@@ -101,10 +74,8 @@ function LearningBreakdownTable() {
                         <th style={{ width: "8.8206%" }}>
                             <Checkbox
                                 color="orange"
-                                onChange={(e) => {
-                                    allCheck(e.target.checked);
-                                }}
-                                checked={choiceArr.length === lbtList.length}
+                                onChange={checkboxState.allCheck}
+                                checked={checkboxState.checkedList.length === getList.data?.list.length}
                             />
                             선택
                         </th>
@@ -117,8 +88,15 @@ function LearningBreakdownTable() {
                     </tr>
                 </thead>
                 <tbody style={{ maxHeight: "250px" }}>
-                    {lbtList?.map((item, i) => {
-                        return <Tr key={i} item={item} choiceArr={choiceArr} oneCheck={oneCheck} />;
+                    {getList.data?.list?.map((item, i) => {
+                        return (
+                            <Tr
+                                key={i}
+                                item={item}
+                                choiceArr={checkboxState.checkedList}
+                                oneCheck={checkboxState.oneCheck}
+                            />
+                        );
                     })}
                 </tbody>
             </table>
@@ -129,7 +107,7 @@ function LearningBreakdownTable() {
 const Tr = ({ item, choiceArr, oneCheck }) => {
     let [modal, setModal] = useState(false);
 
-    const [startDay, endDay] = item.prt_period.split("~")
+    const [startDay, endDay] = item.prt_period.split("~");
 
     return (
         <tr>
@@ -138,13 +116,17 @@ const Tr = ({ item, choiceArr, oneCheck }) => {
                     color="orange"
                     checked={choiceArr.includes(item)}
                     onChange={(e) => {
-                        oneCheck(e.target.checked, item);
+                        oneCheck(e, item);
                     }}
                 />
             </td>
-            <td style={{ width: "24.6778%" }}>{dayjs(startDay).format("YYYY-MM-DD")} ~ {dayjs(endDay).format("YYYY-MM-DD")}</td>
+            <td style={{ width: "24.6778%" }}>
+                {dayjs(startDay).format("YYYY-MM-DD")} ~ {dayjs(endDay).format("YYYY-MM-DD")}
+            </td>
             <td style={{ width: "12.7849%" }}>{item.reg_dt.replace(/\//g, "-")}</td>
-            <td style={{ width: "32.6065%" }} className="text-center">{item.bk_name}</td>
+            <td style={{ width: "32.6065%" }} className="text-center">
+                {item.bk_name}
+            </td>
             <td style={{ width: "9.8116%" }}>{item.reg_nm}</td>
             <td style={{ width: "11.7938%" }}>
                 {modal && <LbtResultModal setCreateModal={setModal} />}
