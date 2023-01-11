@@ -51,6 +51,8 @@ function ClassSelect({
 
         const classList = res.data.class_list ?? [];
 
+        console.log(classList)
+
         onChange && onChange(classList)
         setOptions(classList);
         setChoiceArr(classList);

@@ -1,6 +1,5 @@
 // yeonju
 import React, { memo, useState, useEffect } from "react";
-import ajax from "../../ajax";
 import SelectBase from "../../components/ui/select/SelectBase";
 import ReferenceContentsModal from "./ReferenceContentsModal";
 import ReferenceRegistrationModal from "./ReferenceRegistrationModal";
@@ -10,6 +9,7 @@ import { fetchData, _isScroll } from "../../methods/methods";
 import Pagination from "../../components/Pagination";
 import { useQuery } from "react-query";
 import dayjs from "dayjs";
+import SkeletonTable from "../../components/SkeletonTable";
 
 const 학년 = [
     { value: "", label: "학년" },
@@ -72,10 +72,12 @@ function Reference() {
     };
 
     // console.log(param);
+
     const referList = useQuery(["getList", gradeOption, page], () => fetchData("board", param), {
         refetchOnWindowFocus: false,
     });
-    // console.log(referList.data);
+    
+    console.log(referList.data);
 
     const openPostModal = (index) => {
         setPostModal(true);
@@ -174,11 +176,15 @@ function Reference() {
                             </tr>
                         </thead>
                         <tbody style={{ maxHeight: "500px" }}>
-                            {referList.data?.list?.map((a, i) => {
-                                return (
-                                    <Tr list={a} index={i} key={i} openPostModal={openPostModal} />
-                                );
-                            })}
+                            {
+                                referList.isFetching
+                                ? <SkeletonTable R={8} width={["6.93%", "9.33%", "48.73%", "6.66%", "9.33%", "9.33%", "9.73%"]} />
+                                : referList.data?.list?.map((a, i) => {
+                                    return (
+                                        <Tr list={a} index={i} key={i} openPostModal={openPostModal} />
+                                    );
+                                })
+                            }
                         </tbody>
                     </table>
                 ) : (
@@ -193,11 +199,15 @@ function Reference() {
                             </tr>
                         </thead>
                         <tbody style={{ maxHeight: "500px" }}>
-                            {referList.data?.list?.map((a, i) => {
-                                return (
-                                    <Tr2 list={a} index={i} key={i} openPostModal={openPostModal} />
-                                );
-                            })}
+                        {
+                                referList.isFetching
+                                ? <SkeletonTable R={8} width={["6.93%", "9.33%", "48.73%", "6.66%", "9.33%", "9.33%", "9.73%"]} />
+                                : referList.data?.list?.map((a, i) => {
+                                    return (
+                                        <Tr list={a} index={i} key={i} openPostModal={openPostModal} />
+                                    );
+                                })
+                            }
                         </tbody>
                     </table>
                 )}

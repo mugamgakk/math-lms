@@ -41,14 +41,14 @@ function Attendance() {
             qstr: searchText,
         };
 
-        // console.log("parameter",param)
+            console.log("parameter",param)
 
         try {
-            // let res = await ajax("class_daily.php", { data: param });
+            let res = await ajax("class_daily.php", { data: param });
 
-            // console.log("response",res.data)
+            console.log("response",res.data)
 
-            let res = await axios("/json/attendance.json");
+            // let res = await axios("/json/attendance.json");
 
             const { student_list } = res.data;
 

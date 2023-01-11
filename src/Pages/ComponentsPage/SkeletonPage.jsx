@@ -14,19 +14,13 @@ function SkeletonPage() {
 
     return (
         <div>
-            <table>
-                <colgroup>
-                    <col style={{width : "20%"}} />
-                    <col style={{width : "20%"}} />
-                    <col style={{width : "20%"}} />
-                    <col style={{width : "40%"}} />
-                </colgroup>
+            <table className="custom-table">
                 <thead>
                     <tr>
-                        <th>No.</th>
-                        <th>Title</th>
-                        <th>Content</th>
-                        <th>Day</th>
+                        <th style={{width : "20%"}}>No.</th>
+                        <th style={{width : "20%"}}>Title</th>
+                        <th style={{width : "20%"}}>Content</th>
+                        <th style={{width : "20%"}}>Day</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,28 +30,28 @@ function SkeletonPage() {
                     {!skeleton && (
                         <>
                             <tr>
-                                <td>1</td>
-                                <td>글제목</td>
-                                <td>컨텐츠</td>
-                                <td>2022.12.22</td>
+                                <td style={{width : "20%"}}>1</td>
+                                <td style={{width : "20%"}}>글제목</td>
+                                <td style={{width : "20%"}}>컨텐츠</td>
+                                <td style={{width : "20%"}}>2022.12.22</td>
                             </tr>
                             <tr>
-                                <td>1</td>
-                                <td>글제목</td>
-                                <td>컨텐츠</td>
-                                <td>2022.12.22</td>
+                                <td style={{width : "20%"}}>1</td>
+                                <td style={{width : "20%"}}>글제목</td>
+                                <td style={{width : "20%"}}>컨텐츠</td>
+                                <td style={{width : "20%"}}>2022.12.22</td>
                             </tr>
                             <tr>
-                                <td>1</td>
-                                <td>글제목</td>
-                                <td>컨텐츠</td>
-                                <td>2022.12.22</td>
+                                <td style={{width : "20%"}}>1</td>
+                                <td style={{width : "20%"}}>글제목</td>
+                                <td style={{width : "20%"}}>컨텐츠</td>
+                                <td style={{width : "20%"}}>2022.12.22</td>
                             </tr>
                             <tr>
-                                <td>1</td>
-                                <td>글제목</td>
-                                <td>컨텐츠</td>
-                                <td>2022.12.22</td>
+                                <td style={{width : "20%"}}>1</td>
+                                <td style={{width : "20%"}}>글제목</td>
+                                <td style={{width : "20%"}}>컨텐츠</td>
+                                <td style={{width : "20%"}}>2022.12.22</td>
                             </tr>
                         </>
                     )}

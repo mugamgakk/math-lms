@@ -1,251 +1,282 @@
 // yeonju
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from "react";
 import ajax from "../../../ajax";
-import Icon from '../../../components/Icon';
-import { falseModal } from '../../../methods/methods';
-import ReactPlayer from 'react-player';
-import useStudentsStore from '../../../store/useStudentsStore';
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import { fetchData } from '../../../methods/methods';
+import Icon from "../../../components/Icon";
+import ReactPlayer from "react-player";
+import useStudentsStore from "../../../store/useStudentsStore";
+import styled from "styled-components";
+import useTable from "../../../hooks/useTable";
+import { useQuery } from "react-query";
+import { fetchData } from "../../../methods/methods";
 
-// let data = new Array(20).fill().map((v,i)=> i );
+const CorrectBtn = styled.button`
+    width: 60px;
+    height: 30px;
+    border-radius: 4px;
+    background-color: #eb615a;
+    font-weight: 500;
+    color: #fff;
+    font-size: 16px;
+    cursor: default;
 
-function ResultPopMoal({setResultPop,ucode}) {
+    &.not {
+        background-color: #fff;
+        border: 1px solid #eb615a;
+        color: #eb615a;
+    }
+`;
 
-    const clickStudent = useStudentsStore(state=>state.clickStudent);
-    let [dataList,setDataList] = useState(null);
-    let [clickState,setClickState] = useState(0);
-    let [video, setVideo] = useState(false);
-    const queryClient = useQueryClient();
+const VideoButton = styled.button`
+    width: 30px;
+    height: 30px;
+    background-color: rgba(0, 0, 0, 0.6);
+    position: relative;
+    border-radius: 50%;
+    cursor: pointer;
 
-    // const data = useMemo(() => {
-    //     return {
-    //         mode : 'qa_result',
-    //         usr_seq : clickStudent.usr_seq,
-    //         ucode: ucode,
-    //         sd_kind : 'QA',
-    //         qseq : 1
-    //     };
-    // },[clickStudent.usr_seq]);
+    &.disabled{
+        cursor: default;
+        background-color: #ddd;
+    }
 
-    // // get Data
-    // const list = useQuery(["lists"], () => fetchData("class_result", data), {
-    //     refetchOnWindowFocus : false
-    // });
+    &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 40%;
+        transform: translateY(-50%);
+        border-bottom: 6px solid transparent;
+        border-top: 6px solid transparent;
+        border-left: 9px solid #fff;
+        border-right: 9px solid transparent;
+    }
+`;
 
-    // console.log(list);
+const fiveArr = new Array(5).fill(1);
 
-   useEffect(()=>{
-        getData();
-   },[])
+const oneNumber = ["①", "②", "③", "④", "⑤"];
 
-        const getData = async() => {
+function ResultPopMoal({ setResultPop, ucode }) {
+    const clickStudent = useStudentsStore((state) => state.clickStudent);
 
-            let url = '/class_result.php';
-            let query = {
-                mode : 'qa_result',
-                usr_seq : clickStudent.usr_seq,
-                ucode: ucode,
-                sd_kind : 'QA',
-                qseq : 1,
-            }
+    // ele, true, false
+    let [ref, isTable] = useTable();
 
-            const res = await ajax( url, { data: query} );
-            
-            console.log(res);
+    // 클릭한 문제
+    let [clickState, setClickState] = useState(0);
 
-            setDataList(res.data);
+    let [videoModal, setVideoModal] = useState(false);
 
-        }
+    const param = {
+        mode: "qa_result",
+        usr_seq: clickStudent.usr_seq,
+        ucode: ucode,
+        sd_kind: "QA",
+        qseq: 1,
+    };
 
-    return ( 
-            <div className="modal" onClick={(e)=>{
-                e.stopPropagation();
-                falseModal(e,setResultPop);
-                }}>
-                <div className='modal-content resultPopModal'>
-                    <div className="modal-header fj">
-                        <h2 className="modal-title">학습 결과</h2>
-                        <button className="btn" onClick={(e) => {
-                            e.stopPropagation();
-                            setResultPop(false)
-                        }}>
-                            <Icon icon={"close"} />
-                        </button>
+    let list = useQuery("classList", () => fetchData("class_result", param), {
+        refetchOnWindowFocus: false,
+    });
+
+    // 점수
+    const score = list.data?.score.split("/");
+    // 제목
+    const title = list.data?.title.split("/");
+    title?.shift();
+
+    const imgUrlTitle =
+        list.data?.qa_result[clickState].qa_path +
+        list.data?.qa_result[clickState].qa_code +
+        "_Q.png";
+
+
+    // console.log(list.data?.qa_result.map(a=> a.vd_path));
+
+    return (
+        <div className="modal">
+            <div className="modal-content resultPopModal">
+                <div className="modal-header fj">
+                    <h2 className="modal-title">학습 결과</h2>
+                    <button
+                        className="btn"
+                        onClick={(e) => {
+                            setResultPop(false);
+                        }}
+                    >
+                        <Icon icon={"close"} />
+                    </button>
+                </div>
+                <div className="modal-body">
+                    <div className="modal-name" style={{ paddingLeft: "20px" }}>
+                        <strong className="name">{clickStudent.um_nm}</strong>
+                        <ul className="list">
+                            <li>{clickStudent.school_grade}</li>
+                            {title?.map((a, i) => {
+                                return <li key={i}>{a}</li>;
+                            })}
+                        </ul>
                     </div>
-                    <div className="modal-body">
-                        <div className="modal-name" style={{ paddingLeft: "20px" }}>
-                            <strong className="name">김수학</strong>
-                            <ul className="list">
-                                <li>중2-1</li>
-                                <li>I. 수와 식의 계산</li>
-                                <li>번호, 주제</li>
-                            </ul>
-                        </div>
-                        <div className='contents'>
-                            <div className="contents-l">
-                                <div className="top fs mb-10" style={{ fontWeight:'600' }}>
-                                    맞힌 개수
-                                    {
-                                        dataList && (
-                                            <strong>{dataList.qa_result[0].correct_a} / {dataList.qa_result.length} 개</strong>
-                                        )
-                                    }
-                                    2022. 7. 12
-                                    {/* 문항 학습 결과 팝업 - 아르케(초등) */}
-                                    <div className='fc' style={{ marginLeft:'6px' }}>
-                                        <button className='btn-correct mr-4' >모두 정답</button>
-                                        <button className='btn-incorrect' >모두 오답</button>
-                                    </div>
-                                </div>
-                                <table className='table tableA'>
-                                    {/* 문항 학습 결과 팝업 - 아르케(초등) */}
-                                        <thead>
-                                            <tr>
-                                                <th style={{ width: '20%', borderRadius:'8px 0 0 0' }}>번호</th>
-                                                <th style={{ width: '40%' }}>채점</th>
-                                                <th style={{ width: '40%', borderRadius:'0 8px 0 0' }}>동영상</th>
-                                            </tr>
-                                        </thead>
-                                    {/* <thead>
+                    <div className="resultPopModal-content">
+                        <div className="left">
+                            <div className="left-header">
+                                <span className="count-label">맞힘 개수</span>
+                                <strong className="count">
+                                    {score?.[0]}개 / {score?.[1]}개
+                                </strong>
+                                <span className="date">2022. 07. 12</span>
+                            </div>
+                            <div className="left-body">
+                                <table className="resultPopModal-table custom-table">
+                                    <thead>
                                         <tr>
-                                            <th style={{ width: '16%', borderRadius:'8px 0 0 0' }}>번호</th>
-                                            <th style={{ width: '22%' }}>정답</th>
-                                            <th style={{ width: '22%' }}>학생 답</th>
-                                            <th style={{ width: '20%' }}>채점</th>
-                                            <th style={{ width: '20%', borderRadius:'0 8px 0 0' }}>동영상</th>
+                                            <th style={{ width: "15%" }}>번호</th>
+                                            <th style={{ width: "20%" }}>정답</th>
+                                            <th style={{ width: "20%" }}>학생 답</th>
+                                            <th style={{ width: "20%" }}>채점</th>
+                                            <th style={{ width: "25%" }}>동영상</th>
+                                            {isTable && (
+                                                <th style={{ width: "17px", border: "none" }}></th>
+                                            )}
                                         </tr>
-                                    </thead> */}
+                                    </thead>
+                                    <tbody style={{ maxHeight: "480px" }} ref={ref}>
+                                        {list.data?.qa_result.map((a, i) => {
+                                            return (
+                                                <tr key={i}>
+                                                    <td
+                                                        style={{ width: "15%" }}
+                                                        onClick={() => {
+                                                            console.log(clickState, imgUrlTitle);
+                                                            setClickState(i);
+                                                        }}
+                                                    >
+                                                        {a.no}
+                                                    </td>
+                                                    <td style={{ width: "20%" }}>
+                                                        {
+                                                            a.correct_a
+                                                        }
+                                                    </td>
+                                                    <td style={{ width: "20%" }}>
+                                                        {
+                                                            a.std_and
+                                                        }
+                                                    </td>
+                                                    <td style={{ width: "20%" }}>
+                                                        <CorrectBtn>정답</CorrectBtn>
+                                                    </td>
+                                                    <td style={{ width: "25%" }}>
 
-                                    <tbody className='scroll' style={{ height: '480px' }}>
-                                        {
-                                            dataList && dataList.qa_result.map((item,i) => {
-                                                return(
-                                                    <>
-                                                    {/* <tr key={i} className={clickState == i ? 'active' : ''}>
-                                                        <td onClick={()=> setClickState(i)} style={{ width: '16%',fontWeight:'600',cursor:'pointer'}}>{i+1}</td>
-                                                        <td style={{ width: '22%',fontSize:'26px'}}>
-                                                            {
-                                                                item.crt_ans.map(a=>{
-                                                                    return(
-                                                                        <>
-                                                                            {
-                                                                                {
-                                                                                    1: '①',
-                                                                                    2: '②',
-                                                                                    3: '③',
-                                                                                    4: '④',
-                                                                                    5: '⑤',
-                                                                                }[a]
-                                                                            }
-                                                                        </>
-                                                                    )
-                                                                })
-                                                            }
-                                                        </td>
-                                                        <td style={{ width: '22%',fontSize:'26px'}}>
-                                                            {
-                                                                item.std_and.map(a=>{
-                                                                    return(
-                                                                        <>
-                                                                            {
-                                                                                {
-                                                                                    1: '①',
-                                                                                    2: '②',
-                                                                                    3: '③',
-                                                                                    4: '④',
-                                                                                    5: '⑤',
-                                                                                }[a]
-                                                                            }
-                                                                        </>
-                                                                    )
-                                                                })
-                                                            }
-                                                        </td>
-                                                        <td style={{ width: '20%'}}>
-                                                            <button className={item.is_correct == 'Y' ? 'btn-correct' : 'btn-incorrect'}>
-                                                            {item.is_correct == 'Y' ? '정답' : '오답'}
-                                                            </button></td>
-                                                        <td style={{ width: '20%'}}>
-                                                            <button className='btnPlay' onClick={()=>setVideo(true)}></button>
                                                         {
-                                                            video && <VideoPlayer closeModal={setVideo} />
+                                                            videoModal && <VideoPlayer/>
                                                         }
-                                                        </td>
-                                                    </tr> */}
-                                                        {/* 문항 학습 결과 팝업 - 아르케(초등) */}
-                                                    <tr>
-                                                        <td onClick={()=> setClickState(i)} style={{ width: '20%',fontWeight:'600',cursor:'pointer'}}>{i+1}</td>
-                                                        <td style={{ width: '40%'}}>
-                                                            <button className={item.is_correct == 'Y' ? 'btn-correct' : 'btn-incorrect'}>
-                                                            {item.is_correct == 'Y' ? '정답' : '오답'}
-                                                            </button>
-                                                        </td>
-                                                        <td style={{ width: '40%'}}>
-                                                            <button className='btnPlay' onClick={()=>setVideo(true)}></button>
+
                                                         {
-                                                            video && <VideoPlayer closeModal={setVideo} />
+                                                            a.vd_path 
+                                                            ? <VideoButton onClick={()=>{setVideoModal(true)}} />
+                                                            : <VideoButton className="disabled" />
                                                         }
-                                                        </td>
-                                                    </tr>
-                                                    </>
-                                                )
-                                            })
-                                        }
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })}
                                     </tbody>
                                 </table>
                             </div>
-                            <div className="contents-r scroll">
-                                <div>
-                                    <div className='top fj' style={{ marginBottom:'15px' }}>
-                                        <h1>{clickState < 9 ? `0${clickState+1}` : clickState+1}</h1>
-                                        <span>{ dataList && dataList.qa_result[clickState].qa_keyword }</span>
+                        </div>
+                        <div className="right">
+                            <div className="problem">
+                                <div className="problem-header">
+                                    <div className="problem-num">
+                                        {clickState + 1 < 10
+                                            ? "0" + (clickState + 1)
+                                            : clickState + 1}
                                     </div>
-                                                                        
-                                    <img className='img-q' src={`${dataList && dataList.qa_result[clickState].qa_path}${dataList && dataList.qa_result[clickState].qa_code}_Q.png`} alt="" style={{marginBottom:'20px'}}/>
-                                    {
-                                        ['①','②','③','④','⑤'].map((b,i)=>{
-                                            return(
-                                                <div className='choice fa'>
-                                                <span>{b}</span><img className='img-f' src={`${dataList && dataList.qa_result[clickState].qa_path}${dataList && dataList.qa_result[clickState].qa_code}_${i+1}.png`}/>
-                                                </div>
-                                            )
-                                        })
-                                    }
-                                    <img className='img-q mt-20' src={`${dataList && dataList.qa_result[clickState].qa_path}${dataList && dataList.qa_result[clickState].qa_code}_S.png`} alt="" style={{marginBottom:'20px'}}/>
+                                    <div className="problem-detail-title">
+                                        {list.data?.qa_result[clickState].qa_keyword}
+                                    </div>
+                                </div>
+                                <div className="problem-body">
+                                    <img
+                                        src={imgUrlTitle}
+                                        alt=""
+                                        style={{ width: "100%", marginBottom: "15px" }}
+                                    />
+                                    {fiveArr.map((a, i) => {
+                                        return (
+                                            <div
+                                                key={i}
+                                                className="fa"
+                                                style={{ marginBottom: "10px" }}
+                                            >
+                                                <span className="num">{oneNumber[i]}</span>
+                                                <img
+                                                    style={{ width: "calc(100% - 32.14px)" }}
+                                                    key={i}
+                                                    src={
+                                                        list.data?.qa_result[clickState].qa_path +
+                                                        list.data?.qa_result[clickState].qa_code +
+                                                        "_" +
+                                                        (i + 1) +
+                                                        ".png"
+                                                    }
+                                                    alt=""
+                                                />
+                                            </div>
+                                        );
+                                    })}
+                                    <img
+                                        src={
+                                            list.data?.qa_result[clickState].qa_path +
+                                            list.data?.qa_result[clickState].qa_code +
+                                            "_S.png"
+                                        }
+                                        alt=""
+                                        width={"100%"}
+                                        style={{ marginTop: "60px" }}
+                                    />
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="modal-footer">
-                        <button className="btn-orange" onClick={(e)=>{
+                </div>
+                <div className="modal-footer">
+                    <button
+                        className="btn-orange"
+                        onClick={(e) => {
                             e.stopPropagation();
                             setResultPop(false);
-                        }}>확인</button>
-                    </div>
+                        }}
+                    >
+                        확인
+                    </button>
                 </div>
             </div>
+        </div>
     );
 }
 
-function VideoPlayer ({closeModal}){
-    return(
-        <div className='videoPlayer'>
-            <div className='top'>
-            <button className='fc' onClick={()=>closeModal(false)}><Icon icon={"close"} style={{fontSize:'25px'}}/></button>
+function VideoPlayer({ closeModal }) {
+    return (
+        <div className="videoPlayer">
+            <div className="top">
+                <button className="fc" onClick={() => closeModal(false)}>
+                    <Icon icon={"close"} style={{ fontSize: "25px" }} />
+                </button>
             </div>
-            <ReactPlayer 
-            url='https://youtu.be/QoGyp3yeDkc' 
-            width='100%'       
-            height='500px'        
-            playing={true}       
-            // muted={true}        
-            controls={true}       
-            // light={false} 
+            <ReactPlayer
+                url="https://gnbedu.fms.wecandeo.com/100/2948/2021/10/27/17/V24001759.mp4?key=BtsH4AB921cwWjhQSx4eU7wpZ0LhEqKoyGk4l8AaAoo6QxOImYRgVAr11kpl3ePmXQ4lS8%2BmIRbl6Lo69NV4q2NcMOokZlQAWueM9LaPEbo%3D&packageId=1016125&videoId=12557707"
+                width="100%"
+                height="500px"
+                playing={true}
+                // muted={true}
+                controls={true}
+                // light={false}
             />
         </div>
-    )
-
+    );
 }
 
 export default ResultPopMoal;

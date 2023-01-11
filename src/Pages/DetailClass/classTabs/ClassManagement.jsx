@@ -12,6 +12,16 @@ import PrintModal_clinic from "../../../components/PrintModal_clinic";
 import AssessmentModal from "../../TodayClass/AssessmentModal";
 import { fetchData, _isScroll } from "../../../methods/methods";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import styled from "styled-components";
+
+const HoverOrange = styled.span`
+    font-weight: 400;
+    color: #444;
+    cursor: pointer;
+    &:hover {
+        color: #ea7851;
+    }
+`;
 
 function ClassManagement() {
     const bookList = useStudentsStore((state) => state.bookList);
@@ -30,6 +40,8 @@ function ClassManagement() {
         bk_cd: bookList.value,
     };
 
+
+
     const getList = useQuery(
         ["classManage", bookList, clickStudent],
         () => fetchData("class_manage", param),
@@ -40,6 +52,9 @@ function ClassManagement() {
             },
         }
     );
+
+    // console.log(param)
+    // console.log(getList.data)
 
     const allRetryMutaion = useMutation(
         (param) => {
@@ -252,7 +267,7 @@ const Tr = ({ ele, checkedItem, oneCheck }) => {
                 <div>
                     {ele.state2.score}
                     <button
-                        className={`btn-orange wh-103 ${ele.state2.avail ? "" : "disabled"}`}
+                        className={`btn-table-orange-border ${ele.state2.avail ? "" : "disabled"}`}
                         onClick={() => {
                             retryMutation.mutate({
                                 mode: "set_retry",
@@ -285,7 +300,7 @@ const Tr = ({ ele, checkedItem, oneCheck }) => {
                                 <Icon icon={"play"} style={{ fontSize: "14px", color: "#444" }} />
                             </button>
                             <button
-                                className={`btn-orange wh-103 ${
+                                className={`btn-table-orange ${
                                     ele.state3.avail ? "btn" : "btn disabled"
                                 }`}
                                 onClick={() => setAudioModal(true)}
@@ -297,22 +312,24 @@ const Tr = ({ ele, checkedItem, oneCheck }) => {
                     ) : (
                         <div>
                             <div>-</div>
-                            <button className="btn-table">수행 평가</button>
+                            <button className="btn-table-orange-border">수행 평가</button>
                         </div>
                     )
                 ) : null}
             </td>
             <td style={{ width: "11.88%" }} className={ele.state1 === "100%" ? "active" : ""}>
                 <div>
-                    <span
+                    <HoverOrange
                         onClick={() => {
                             setResultPop(true);
                         }}
                     >
                         {ele.state4.score}
-                    </span>
+                    </HoverOrange>
                     <button
-                        className={`btn-orange wh-103 ${ele.state4.avail ? "btn" : "btn disabled"}`}
+                        className={`btn-table-orange-border ${
+                            ele.state4.avail ? "btn" : "btn disabled"
+                        }`}
                         onClick={() => {
                             retryMutation.mutate({
                                 mode: "set_retry",
@@ -341,21 +358,18 @@ const Tr = ({ ele, checkedItem, oneCheck }) => {
                         <div>
                             <div>{ele.state5.score}</div>
                             <button
-                                className="btn-table"
+                                className="btn-table-orange-border btn-icon"
                                 style={{ marginBottom: "4px" }}
                                 onClick={() => setPrintMo(true)}
                             >
-                                <Icon
-                                    icon={"print"}
-                                    style={{ color: "#666", marginRight: "6px" }}
-                                />
+                                <Icon icon={"print"} />
                                 인쇄
                             </button>
                             {printMo && (
                                 <PrintModal_clinic closeModal={setPrintMo} title="맞춤 클리닉" />
                             )}
                             <button
-                                className="btn-orange wh-103"
+                                className="btn-table-orange-border"
                                 onClick={() => {
                                     retryMutation.mutate({
                                         mode: "set_retry",
@@ -375,7 +389,7 @@ const Tr = ({ ele, checkedItem, oneCheck }) => {
             <td style={{ width: "11.88%" }}>
                 <div>
                     <button
-                        className="btn-orange wh-103"
+                        className="btn-table"
                         onClick={() => {
                             finishMutaion.mutate({
                                 mode: "set_passed",
@@ -386,7 +400,9 @@ const Tr = ({ ele, checkedItem, oneCheck }) => {
                     >
                         학습 완료
                     </button>
-                    <button className="btn-table">학습 태도</button>
+                    <button className="btn-table-orange" style={{ marginTop: "4px" }}>
+                        학습 태도
+                    </button>
                 </div>
             </td>
             <td style={{ width: "8.91%" }}>

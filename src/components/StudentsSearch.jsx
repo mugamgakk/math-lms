@@ -25,11 +25,13 @@ function StudentsSearch({ children, grade }) {
     }, []);
 
     const param = {
-        mode : "student_list",
+        mode : "student_list_i",
         class_cd : classOption.map(a=> a.class_cd ),
         qstr : nameSearch,
-        qgrd : grade
+        qgrd : ""
     }
+
+    // console.log(param)
 
     let stuList = useQuery(["stuList",classOption], ()=> fetchData("class_st", param),{
         refetchOnWindowFocus : false,
@@ -37,6 +39,8 @@ function StudentsSearch({ children, grade }) {
             setNameSearch("");
         }
     })
+
+    // console.log(stuList)
 
     useEffect(()=>{
         setScroll(scrollState());

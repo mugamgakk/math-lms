@@ -2,9 +2,8 @@ import create from 'zustand'
 
 const useLoginStore = create(set=>({
     user_id: "",
-    getUserId : (param)=> set (state=> {
-        return ({user_id : param})
-    })
+    roleId : 0,
+    getUserData : (userId, roleId)=> set(state=> ({user_id : userId, roleId }))
 }))
 
 export default useLoginStore 

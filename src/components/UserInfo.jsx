@@ -21,7 +21,7 @@ function UserInfo({ clickStudent }) {
     // 교재 6종 선택
     const choiceBook = async (list) => {
         const data = {
-            mode: "bk_select",
+            mode: "bk_select_i",
             usr_seq: clickStudent.usr_seq
         }
 

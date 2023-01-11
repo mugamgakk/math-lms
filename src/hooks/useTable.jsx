@@ -1,23 +1,32 @@
-import React, {useState, useEffect} from 'react';
-import { _each } from '../methods/methods';
+import React from 'react';
+import { useRef } from 'react';
+import { useEffect } from 'react';
 
-const useTable = (target,defaultValue = false) =>{
-    let [a, b] = useState(defaultValue);
+function useTable() {
+    let ref = useRef();
 
-    useEffect(()=>{
-        let 총높이 = 0;
+    const tableTrue = () => {
+        const { current: element } = ref;
 
-        let bodyHeight = document.querySelector(target)?.clientHeight;
-        let tr = document.querySelectorAll(target + " tr");
+        if(!element){
+            return false
+        }
 
-        _each(tr, (ele) => 총높이 += ele.clientHeight);
+        let height = 0;
+        for(let i = 0; i < element.children.length; i++){
+                height += element.children[i].clientHeight;
+        }
 
-        bodyHeight < 총높이 ? b(true) : b(false)
-    },[])
+        let parentsHeight = parseFloat(element.style.maxHeight.replace(/px$/, ""));
 
+        if(parentsHeight <= height){
+            return true
+        }else{
+            return false
+        }
+    };
 
-    return a
-
+    return [ref, tableTrue()]
 }
 
 export default useTable;

@@ -79,8 +79,19 @@
             .asse{
                position: relative;
                display: flex;
-               width: 100px;
                height: 30px;
+
+                div:nth-of-type(1){
+                    font-size: 12px;
+                    position: absolute;
+                    left: 4px;
+                }
+                div:nth-of-type(2){
+                    @extend div:nth-of-type(1);
+                    left: auto;
+                    right: 4px;
+                }
+
                 &::after{
                     content:'';
                     display: block;
@@ -89,7 +100,6 @@
                     height: 20px;
                     background: #fff;
                     @include pos-center;
-                    left: 47.8%;
                 }
             }
             .state5{

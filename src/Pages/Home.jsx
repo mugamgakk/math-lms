@@ -8,6 +8,7 @@ import Icon from "../components/Icon";
 import logo from "../assets/logo.svg";
 import hamburger from "../assets/hamburger.svg";
 import { getCookie, removeCookie } from "../cookie";
+import useLoginStore from "../store/useLoginStore";
 
 const nav = [
     { icon: "attendence", name: "출석체크", href: "/attendance" },
@@ -49,6 +50,8 @@ const nav = [
 ];
 
 function Home() {
+    const getUserData = useLoginStore(state=>state.getUserData);
+
     let [userId, setUserId] = useState("");
     let [burger, setBurger] = useState(false);
     let location = useLocation();
@@ -71,6 +74,7 @@ function Home() {
         }).then((res) => {
             // console.log(res)
             if (res.data.ok === -1) {
+                getUserData(res.data.user_id);
                 setUserId(res.data.user_id);
             }else{
                 removeCookie("gplumLMSlogin");
