@@ -3,7 +3,8 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 
 // param : 전체 리스트, 초기값
-function useCheckBox(checkList, checkedItem = []) {
+// return : 체크된 리스트, 전체 체크(e), 하나체크(e, ele)
+function useCheckBox(checkList = [], checkedItem = []) {
 
     let [checkedList, setCheckcedList] = useState(checkedItem);
 

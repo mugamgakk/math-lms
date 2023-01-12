@@ -51,6 +51,8 @@
     border-radius: $radius;
     margin-right: 8px;
 }
+
+
 .referenceContentsModal{
     width: 870px;
     .top{
@@ -93,8 +95,13 @@
 }
 .referenceRegistrationModal{
     width: 1040px;
+    height: 100vh;
+
     .modal-body{
         padding: 50px 35px 20px 35px;
+        max-height: calc(100vh - 80px);
+        overflow-y: auto;
+
         .tr{
             height: 50px;
             border-top: 2px solid #664e3d;

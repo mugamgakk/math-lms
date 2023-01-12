@@ -1,136 +1,141 @@
-// yeonju
-import React, { useState, useMemo, useCallback, useRef, useEffect } from 'react';
+// 쓰기
+import React, { useState, useMemo, useCallback, useRef, useEffect } from "react";
 import { getByteSize } from "../../methods/methods";
 import SelectBase from "../../components/ui/select/SelectBase";
 import ajax from "../../ajax";
-import Icon from '../../components/Icon';
-import RadioBox from '../../components/RadioBox';
-import CheckBox from '../../components/Checkbox';
-import Editor from '../ComponentsPage/Editor';
-import { useQueryClient } from 'react-query';
-
+import Icon from "../../components/Icon";
+import RadioBox from "../../components/RadioBox";
+import CheckBox from "../../components/Checkbox";
+import Editor from "../ComponentsPage/Editor";
+import { useQueryClient } from "react-query";
+import useLoginStore from "../../store/useLoginStore";
+import dayjs from "dayjs";
 
 const 대상 = [
-    { value: '전체', label: '전체'},
-    { value: '초등', label: '초등'},
-    { value: '중등', label: '중등'},
-    { value: '고등', label: '고등'},
+    { value: "전체", label: "전체" },
+    { value: "초등", label: "초등" },
+    { value: "중등", label: "중등" },
+    { value: "고등", label: "고등" },
 ];
 const 유형 = [
-    {label: '일반', value: 'G'},
-    {label: '필독', value: 'H'},
-    {label: '공지', value: 'N'},
-    {label: '이벤트', value: 'E'}
+    { label: "일반", value: "G" },
+    { label: "필독", value: "H" },
+    { label: "공지", value: "N" },
+    { label: "이벤트", value: "E" },
 ];
 
-function ReferenceRegistrationModal({setModal}) {
-    let [target,setTarget] = useState(대상[0]);
-    let [category,setCategory] = useState(유형[0]);
-    let [title, setTitle] = useState('');
+// 앞뒤 따움표 제거
+const removeD = (a = "") => {
+    let d = a.replace(/^\"/, "");
+    d = d.replace(/\"$/, "");
+
+    return d;
+};
+
+function ReferenceRegistrationModal({ setModal, bd_seq = "", setSeq }) {
+    const userId = useLoginStore((state) => state.user_id);
+
+    let [target, setTarget] = useState(대상[0]);
+    let [category, setCategory] = useState(유형[0]);
+    let [title, setTitle] = useState("");
     let [contents, setContents] = useState();
-    let [fileCheck,setFileCheck] = useState([]);
-    let ref = useRef(false);
+    let [fileCheck, setFileCheck] = useState([]);
+
+    let [date, setDate] = useState(dayjs(new Date()).format("YYYY.MM.DD"));
+    let [files, setFiles] = useState([]);
+    let [writer, setWriter] = useState(userId);
 
     const queryClient = useQueryClient();
 
-    // console.log(target);
-
-  const checkFile = (checked,file) => {
-        if(checked){
-            setFileCheck([...fileCheck,file]);
-        }else{
-            setFileCheck(fileCheck.filter(a => a !== file));               
+    const checkFile = (checked, file) => {
+        if (checked) {
+            setFileCheck([...fileCheck, file]);
+        } else {
+            setFileCheck(fileCheck.filter((a) => a !== file));
         }
-    }
+    };
     const removeFile = (fileCheck) => {
-
         let arr = [];
 
-        files.forEach(file=>{
-            if(!fileCheck.includes(file.name)){
-                console.log(file);
+        files.forEach((file) => {
+            if (!fileCheck.includes(file.name)) {
+                // console.log(file);
                 arr.push(file);
-            }else{
+            } else {
                 총파일크기.current = 총파일크기.current - file.size;
-            }
-        })
-        
-        setFileCheck([]);
-        setFiles([...arr]);
-    }
-
-    let createToday = useMemo(()=>{
-        let today = new Date();
-        let year = today.getFullYear();
-        let month = today.getMonth() + 1;
-        let date = today.getDate();
-    
-        month = month < 10 ? '0' + month : month;
-    
-        let newToday = `${year}.${month}.${date}`;
-        
-        return newToday;
-
-    },[]);
-
-
-
-    // 글쓰기 전송
-
-    const formSubmit = () => {
-
-        console.log(target.label);
-        console.log(category.value);
-        console.log(title);
-        console.log(JSON.stringify(contents));
-        console.log(encodingFiles);
-
-        if(!window.confirm('저장하시겠습니까?')) return false;
-
-        ajax("/board.php", { data : {
-            mode : 'write',
-            bd_seq : '',
-            bd_cate: target.label,
-            bd_notice : category.value,
-            bd_title : title,
-            bd_content : JSON.stringify(contents),
-            files : encodingFiles,
-        }
-        }).then(res=>{
-            console.log(res);
-            queryClient.invalidateQueries("getList");
-            setModal(false);
-        }).catch(error=>{
-            console.log('error');
-        })
-
-    }
-
-
-    let [files, setFiles] = useState([]);
-    let encodingFiles = [];
-
-
-    useEffect(()=>{
-
-        files.length > 0 &&
-
-        files.forEach(file=>{
-            const fileReader = new FileReader();
-
-            fileReader.readAsDataURL(file);
-            console.log(fileReader)
-            fileReader.onload = function(e) { 
-              encodingFiles.push({
-                filename : file.name,
-                file : e.target.result
-            });
             }
         });
 
-        console.log(encodingFiles);
+        setFileCheck([]);
+        setFiles([...arr]);
+    };
 
-    },[files])
+    useEffect(() => {
+        if (bd_seq) {
+            ajax("/board.php", { data: { mode: "view", bd_seq: bd_seq } }).then((res) => {
+                const { bd_cate, bd_content, bd_title, bd_notice, write, reg_dt } = res.data[0];
+
+                setDate(dayjs(reg_dt).format("YYYY.MM.DD"))
+                setTarget({ label: bd_cate.trim(), value: bd_cate.trim() });
+                setCategory(유형.find((a) => a.value === bd_notice));
+                setTitle(bd_title);
+                setContents(removeD(bd_content));
+                setWriter(write);
+            });
+        }
+    }, [bd_seq]);
+
+    // 글쓰기 전송
+    const formSubmit = () => {
+
+        if (!window.confirm("저장하시겠습니까?")) return false;
+
+        const data = {
+            mode: "write",
+            bd_seq: bd_seq,
+            bd_cate: target.label,
+            bd_notice: category.value,
+            bd_title: title,
+            bd_content: contents,
+            files: encodingFiles,
+        }
+
+        
+        console.log(JSON.stringify(data));
+
+        ajax("/board.php", {data})
+            .then((res) => {
+                console.log(res);
+                queryClient.invalidateQueries("getList");
+                setModal(false);
+                setSeq("");
+            })
+            .catch((error) => {
+                // console.log("error");
+            });
+    };
+
+    
+    let encodingFiles = [];
+
+    useEffect(() => {
+        files.length > 0 &&
+            files.forEach((file) => {
+                const fileReader = new FileReader();
+
+                fileReader.readAsDataURL(file);
+
+                // console.log(fileReader);
+                fileReader.onload = function (e) {
+                    encodingFiles.push({
+                        filename: file.name,
+                        file: e.target.result,
+                    });
+                };
+            });
+
+        // console.log(encodingFiles);
+    }, [files]);
 
     let 총파일크기 = useRef(0);
 
@@ -173,15 +178,19 @@ function ReferenceRegistrationModal({setModal}) {
         },
         [files]
     );
-    return ( 
+    return (
         <div className="modal">
             <div className="modal-content referenceRegistrationModal">
                 <div className="modal-header fj">
-                    <h2 className="modal-title">게시물 등록</h2>
-                    <button className="btn" onClick={(e) => {
-                        e.stopPropagation();
-                        setModal(false)
-                    }}>
+                    <h2 className="modal-title"> {bd_seq ? "게시물 수정" : "게시물 등록"}</h2>
+                    <button
+                        className="btn"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setSeq("");
+                            setModal(false);
+                        }}
+                    >
                         <Icon icon={"close"} />
                     </button>
                 </div>
@@ -189,53 +198,58 @@ function ReferenceRegistrationModal({setModal}) {
                     <div className="tr fs mb-20">
                         <div className="th">대상</div>
                         <div className="td fc w-160">
-                        <SelectBase 
-                        onChange={(ele)=>setTarget(ele)}
-                        options={대상}
-                        value={target}
-                        width={'150px'}
-                    />
+                            <SelectBase
+                                onChange={(ele) => setTarget(ele)}
+                                options={대상}
+                                value={target}
+                                width={"150px"}
+                            />
                         </div>
                         <div className="th">작성자</div>
-                        <div className="td fc w-160">GNB패럴랙스</div>
+                        <div className="td fc w-160">{writer}</div>
                         <div className="th">작성일</div>
-                        <div className="td fc w-160">{createToday}</div>
+                        <div className="td fc w-160">{date}</div>
                     </div>
                     <div className="tr fs mb-20">
                         <div className="th">게시글 유형</div>
-                        <div className="td fa" style={{ paddingLeft:'10px' }}>
-                            {
-                                유형.map((item,i)=>{
-                                    return(
-                                        <RadioBox
+                        <div className="td fa" style={{ paddingLeft: "10px" }}>
+                            {유형.map((item, i) => {
+                                return (
+                                    <RadioBox
                                         key={i}
                                         checked={category.label === item.label}
-                                        name={'modalRadio'}
-                                        onChange={(e)=> {e.target.checked && setCategory(item)}}
+                                        name={"modalRadio"}
+                                        onChange={(e) => {
+                                            e.target.checked && setCategory(item);
+                                        }}
                                         label={item.label}
-                                        className={'category'}
-                                        />
-                                        )
-                                    })
-                                }
-                            </div>
+                                        className={"category"}
+                                    />
+                                );
+                            })}
+                        </div>
                     </div>
                     <div className="tr fs mb-20">
                         <div className="th">글제목</div>
                         <div className="td fc">
-                            <input type="text" className='textInput' onChange={(e)=>setTitle(e.target.value)} />
+                            <input
+                                type="text"
+                                className="textInput"
+                                value={title ?? ""}
+                                onChange={(e) => setTitle(e.target.value)}
+                            />
                         </div>
                     </div>
-                    <div className='tr editor fs mb-20'>
+                    <div className="tr editor fs mb-20">
                         <div className="th">내용</div>
                         <div className="td scroll">
-                        <Editor contents={contents} setContents={setContents}/>
+                            <Editor contents={contents} setContents={setContents} />
                         </div>
                     </div>
                     <div>
                         <span>첨부파일</span>
                         <div className="file td fj">
-                            <div className='fileArea scroll' style={{ padding:'10px' }}>
+                            <div className="fileArea scroll" style={{ padding: "10px" }}>
                                 <input
                                     type="file"
                                     id="file"
@@ -245,8 +259,10 @@ function ReferenceRegistrationModal({setModal}) {
                                     className="d-none"
                                     multiple
                                 />
-                
-                                <div style={{ height:'100%'}} onDragOver={(e) => {
+
+                                <div
+                                    style={{ height: "100%" }}
+                                    onDragOver={(e) => {
                                         e.preventDefault();
                                         e.stopPropagation();
                                     }}
@@ -263,43 +279,65 @@ function ReferenceRegistrationModal({setModal}) {
                                         }
 
                                         upload(파일);
-                                        console.log("드롭됨");
+                                        // console.log("드롭됨");
                                     }}
                                 >
-                                {files.length === 0 && (
-                                    <p className='fc' style={{height:"100%" }}>여기에 첨부파일을 끌어오세요.</p>
-                                )}
-                                {files.map((a, i) => {
-                                    return (
-                                        <div key={i}>
-                                                <CheckBox  
-                                                    color='orange'
-                                                    onChange={(e)=>checkFile(e.target.checked,a.name)}
+                                    {files.length === 0 && (
+                                        <p className="fc" style={{ height: "100%" }}>
+                                            여기에 첨부파일을 끌어오세요.
+                                        </p>
+                                    )}
+                                    {files.map((a, i) => {
+                                        return (
+                                            <div key={i}>
+                                                <CheckBox
+                                                    color="orange"
+                                                    onChange={(e) =>
+                                                        checkFile(e.target.checked, a.name)
+                                                    }
                                                     checked={fileCheck.includes(a.name)}
                                                 />
-                                            {a.name} ( {getByteSize(a.size)} )
-                                        </div>
-                                    );
-                                })}
+                                                {a.name} ( {getByteSize(a.size)} )
+                                            </div>
+                                        );
+                                    })}
                                 </div>
                             </div>
-                            <div className='fileBtn fa f-column' style={{ justifyContent: 'space-between' }}>
-                                <label htmlFor="file" className="btn-grey-border">파일 찾기</label>
-                                <button className="btn-grey btn-icon" onClick={()=>removeFile(fileCheck)}>
+                            <div
+                                className="fileBtn fa f-column"
+                                style={{ justifyContent: "space-between" }}
+                            >
+                                <label htmlFor="file" className="btn-grey-border">
+                                    파일 찾기
+                                </label>
+                                <button
+                                    className="btn-grey btn-icon"
+                                    onClick={() => removeFile(fileCheck)}
+                                >
                                     <Icon icon={"remove"} />
                                     삭제
                                 </button>
-                            </div>    
-                        </div> 
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className="modal-footer">
-                    <button className='btn-grey mr-4' onClick={()=>setModal(false)}>취소</button>
-                    <button className='btn-orange' onClick={formSubmit}>저장</button>
+                    <button
+                        className="btn-grey mr-4"
+                        onClick={() => {
+                            setSeq("");
+                            setModal(false);
+                        }}
+                    >
+                        취소
+                    </button>
+                    <button className="btn-orange" onClick={formSubmit}>
+                        저장
+                    </button>
                 </div>
             </div>
         </div>
-     );
+    );
 }
 
 export default ReferenceRegistrationModal;

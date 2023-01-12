@@ -34,7 +34,7 @@ const VideoButton = styled.button`
     border-radius: 50%;
     cursor: pointer;
 
-    &.disabled{
+    &.disabled {
         cursor: default;
         background-color: #ddd;
     }
@@ -90,7 +90,6 @@ function ResultPopMoal({ setResultPop, ucode }) {
         list.data?.qa_result[clickState].qa_path +
         list.data?.qa_result[clickState].qa_code +
         "_Q.png";
-
 
     // console.log(list.data?.qa_result.map(a=> a.vd_path));
 
@@ -154,36 +153,31 @@ function ResultPopMoal({ setResultPop, ucode }) {
                                                     >
                                                         {a.no}
                                                     </td>
-                                                    <td style={{ width: "20%" }}>
-                                                        {
-                                                            a.correct_a
-                                                        }
-                                                    </td>
-                                                    <td style={{ width: "20%" }}>
-                                                        {
-                                                            a.std_and
-                                                        }
-                                                    </td>
+                                                    <td style={{ width: "20%" }}>{a.correct_a}</td>
+                                                    <td style={{ width: "20%" }}>{a.std_and}</td>
                                                     <td style={{ width: "20%" }}>
                                                         <CorrectBtn>정답</CorrectBtn>
                                                     </td>
                                                     <td style={{ width: "25%" }}>
-
-                                                        {
-                                                            videoModal && <VideoPlayer/>
-                                                        }
-
-                                                        {
-                                                            a.vd_path 
-                                                            ? <VideoButton onClick={()=>{setVideoModal(true)}} />
-                                                            : <VideoButton className="disabled" />
-                                                        }
+                                                        {a.vd_path ? (
+                                                            <VideoButton
+                                                                onClick={() => {
+                                                                    setVideoModal(true);
+                                                                }}
+                                                            />
+                                                        ) : (
+                                                            <VideoButton className="disabled" />
+                                                        )}
                                                     </td>
                                                 </tr>
                                             );
                                         })}
                                     </tbody>
                                 </table>
+
+                                {/* {videoModal && (
+                                    <VideoPlayer videoPath={a.vd_path} closeModal={setVideoModal} />
+                                )} */}
                             </div>
                         </div>
                         <div className="right">
@@ -258,7 +252,8 @@ function ResultPopMoal({ setResultPop, ucode }) {
     );
 }
 
-function VideoPlayer({ closeModal }) {
+function VideoPlayer({ closeModal, videoPath }) {
+    console.log(videoPath);
     return (
         <div className="videoPlayer">
             <div className="top">
@@ -267,7 +262,7 @@ function VideoPlayer({ closeModal }) {
                 </button>
             </div>
             <ReactPlayer
-                url="https://gnbedu.fms.wecandeo.com/100/2948/2021/10/27/17/V24001759.mp4?key=BtsH4AB921cwWjhQSx4eU7wpZ0LhEqKoyGk4l8AaAoo6QxOImYRgVAr11kpl3ePmXQ4lS8%2BmIRbl6Lo69NV4q2NcMOokZlQAWueM9LaPEbo%3D&packageId=1016125&videoId=12557707"
+                url={videoPath}
                 width="100%"
                 height="500px"
                 playing={true}

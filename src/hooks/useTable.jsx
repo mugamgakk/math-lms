@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRef } from 'react';
-import { useEffect } from 'react';
 
+// ref는 tbody에
 function useTable() {
     let ref = useRef();
 

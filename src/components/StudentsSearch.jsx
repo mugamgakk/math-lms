@@ -9,8 +9,8 @@ import Icon from "./Icon";
 import { useQuery } from "react-query";
 import { fetchData } from "../methods/methods";
 
-function StudentsSearch({ children, grade }) {
-    let { setClickStudent, clickStudent, getStudentsData, resetStudent } =
+function StudentsSearch({ children, grade = "" }) {
+    let { setClickStudent, clickStudent, resetStudent } =
         useStudentsStore();
 
     let [nameSearch, setNameSearch] = useState("");
@@ -26,11 +26,10 @@ function StudentsSearch({ children, grade }) {
 
     const param = {
         mode : "student_list_i",
-        class_cd : classOption.map(a=> a.class_cd ),
+        class_cd : classOption.map(a=> a.class_cd),
         qstr : nameSearch,
-        qgrd : ""
+        qgrd : grade
     }
-
     // console.log(param)
 
     let stuList = useQuery(["stuList",classOption], ()=> fetchData("class_st", param),{
@@ -118,7 +117,7 @@ function StudentsSearch({ children, grade }) {
                             stuList.isFetching
                                 ? <SkeletonTable R={10} width={["9.52380%", "42.85714%", "14.28571%", "33.33333%"]} />
                                 : (
-                                    stuList.data?.student_list.map((res, i) => {
+                                    stuList.data?.student_list?.map((res, i) => {
                                         return (
                                             <Tr
                                                 res={res}
@@ -143,7 +142,6 @@ function StudentsSearch({ children, grade }) {
                 <button
                     className="btn-grey btn-icon"
                     onClick={() => {
-                        getStudentsData();
                         setNameSearch("");
                     }}
                 >

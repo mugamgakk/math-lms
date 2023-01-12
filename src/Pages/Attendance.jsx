@@ -34,14 +34,16 @@ function Attendance() {
     const getData = async () => {
         setLoading(true);
 
+        console.log(classList)
+
         const param = {
-            mode: "get_daily",
+            mode: "get_daily_i",
             ymd: dayjs(date).format("YYYYMMDD"),
-            class_cd: classList.map(a=>a.class_cd ),
+            class_cd: classList.map(a=> a.class_cd ),
             qstr: searchText,
         };
 
-            console.log("parameter",param)
+            // console.log("parameter",param)
 
         try {
             let res = await ajax("class_daily.php", { data: param });

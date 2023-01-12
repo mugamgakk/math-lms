@@ -1,351 +1,216 @@
 // yeonju
-import React, { useEffect, useState, useRef, useCallback, useMemo } from 'react';
+import React, { useEffect, useState, useRef, useCallback, useMemo } from "react";
 import ajax from "../../ajax";
 import SelectBase from "../../components/ui/select/SelectBase";
-import { getByteSize } from "../../methods/methods";
-import CheckBox from '../../components/Checkbox'
-import Icon from '../../components/Icon';
-import CustomDatePicker from '../../components/CustomDatePicker';
-import dayjs from 'dayjs';
-import { falseModal } from '../../methods/methods'
-import Editor from '../ComponentsPage/Editor';
+import { fetchData, getByteSize } from "../../methods/methods";
+import CheckBox from "../../components/Checkbox";
+import Icon from "../../components/Icon";
+import CustomDatePicker from "../../components/CustomDatePicker";
+import dayjs from "dayjs";
+import { falseModal } from "../../methods/methods";
+import Editor from "../ComponentsPage/Editor";
+import ClassSelect from "../../components/ui/select/ClassSelect";
+import { useQuery } from "react-query";
+import useCheckBox from "../../hooks/useCheck";
 
-// const 시간 = Array.from({length: 24}, (v,i) => `${i}시`);
+const 시간 = () => {
+    let arr = [];
+    for (let i = 0; i < 24; i++) {
+        arr.push({ label: `${i < 10 ? "0" + i : i}시`, value: i });
+    }
+    return arr.reverse();
+};
 
-const 시간 = [];
+const 분 = () => {
+    let arr = [];
 
- for(let i=0; i<24; i++){
-    시간[i] = { label : `${i}시`, value : `${i}시`};
- }
+    for (let i = 0; i <= 60; i += 5) {
+        arr.push({ label: `${i < 10 ? "0" + i : i}분`, value: i });
+    }
 
- const 분 = [];
+    return arr;
+};
 
-for(let i=0; i<12; i++){
-    i === 0 ? 분[i] = { value : '00분', label: '00분'} : 분[i] = { value : `${i*5}분`, label : `${i*5}분` }
-}
+function WriteMessageModal({ setWriteModal }) {
 
-function WriteMessageModal({setWriteModal,setViewModal, toName}) {
-    let [stuList, setStuList] = useState();
+    // 선택된 반
+    let [classList, setClassList] = useState([]);
 
-    // 반학생 리스트
-    let [classList,setClassList] = useState(null);
-    let [classValue, setClassValue] = useState();
-
-    // 반학생 리스트에서 받는사람 선택 체크 배열
-    let [checkState,setCheckState] = useState([]);
-    // 받는 사람 seq 배열
-    let [checkSeq,setCheckSeq] = useState([]);
-
-    
     let [contents, setContents] = useState();
-    let [writeTit,setWriteTit] = useState('');
-    let [to,setTo] = useState(toName);
-    let [fileCheck,setFileCheck] = useState([]);
+    let [writeTit, setWriteTit] = useState("");
 
-    // 예약발송 체크 
-    let [rCheck,setRcheck] = useState(false);
-    
-    let ref = useRef(false);
+    let [fileCheck, setFileCheck] = useState([]);
 
+    let [files, setFiles] = useState([]);
 
-    let [hour,setHour] = useState('0시');
-    let [minute,setMinute] = useState('00분');
+    let [time, setTime] = useState(시간()[0]);
+    let [miniute, setMiniute] = useState(분()[0]);
+    let [date, setDate] = useState(new Date());
 
-    let [dateInput , setDateInput] = useState('');
-    let [regexDate, setRegexDate] = useState('');
-    let [selectDisabled, setSelectDisabled]  = useState(true);
-    let [date,setDate] = useState(new Date());
+    const param = {
+        mode: "notice_usr",
+        class_cd: "137283785634112703",
+    };
 
-    useEffect(()=>{
-        getList();
-    },[])
+    // console.log(param)
+    let list = useQuery("stuList", () => fetchData("notice", param), {
+        refetchOnWindowFocus: false,
+    });
 
+    let { checkedList, allCheck, oneCheck } = useCheckBox(list.data?.usr_list);
 
-    console.log(contents);
-    
-    const getList = async () => {
+    let 총파일크기 = useRef(0);
 
-        let url = "/notice.php";
-        let query = {
-            mode : 'notice_usr',
-            class_cd : 123123
-        };
-        
-        let res = await ajax(url, query);
-        console.log(res);
+    // let encodingFiles = useMemo(() => {
+    //     let arr = [];
+    //     files.length > 0 &&
+    //         files.forEach((file) => {
+    //             const fileReader = new FileReader();
+    //             fileReader.readAsDataURL(file);
+    //             fileReader.onload = function (e) {
+    //                 arr.push({
+    //                     filename: file.name,
+    //                     file: e.target.result,
+    //                 });
+    //             };
+    //         });
+
+    //     return arr;
+    // }, [files]);
+
+    const checkFile = (checked, file) => {
+        if (checked) {
+            setFileCheck([...fileCheck, file]);
+        } else {
+            setFileCheck(fileCheck.filter((a) => a !== file));
+        }
+    };
+
+    const upload = (파일) => {
+        var 업로드파일정규식 = /\.(hwp|doc|docx|xls|xlsx|ppt|pptx|pdf|jpg|png|zip)$/i;
+        var 총파일사이즈 = 총파일크기.current;
+        var $100mb = 1024 * 1024 * 100; // 100mb
 
         let arr = [];
-                
-        res.data.class_list.map(list=>{
-            arr.push({value : list.class_cd, label : list.class_name});
-        })
 
-        setClassList([...arr]);
-        setStuList(res.data.usr_list);
-     }
-
-    useEffect(()=>{
-        if(ref.current){
-            if(toName){
-                setTo(`${toName},${checkState.join()}`);
-            }else{
-                setTo(checkState.join());
+        for (let value of 파일) {
+            for (let a of files) {
+                if (a.name === value.name) {
+                    alert("이미 업로드 된 파일입니다.");
+                    return;
+                }
             }
-        }else{
-            ref.current = true;
-        }
-    },[checkState]);
 
-    const rCheckFunc = (checked) => {
-        if(checked){
-            setRcheck(true); 
-            setSelectDisabled(false);
-        }else{
-            setRcheck(false);
-            setSelectDisabled(true);
+            if (총파일사이즈 >= $100mb) {
+                alert("총 파일 사이즈를 초과하였습니다 (100mb)");
+                return;
+            }
 
+            if (업로드파일정규식.test(value.name) === false) {
+                alert("일치하는 파일 형식이 아닙니다.");
+                return;
+            }
+
+            if (value.size >= $100mb) {
+                alert("파일이 너무 큽니다.");
+                return;
+            }
+
+            arr.push(value);
+            총파일크기.current = 총파일크기.current + value.size;
         }
-    }
+
+        setFiles([...files, ...arr]);
+    };
 
  
-    const checkForm = () => {
-        let validation = true;
-      
-        if(!writeTit){
-            window.alert('제목을 입력하세요')
-            return;
-        }
-        if(!to){
-            window.alert('받는 사람을 입력하세요')
-            return;
-        }
-        if(!contents){
-            window.alert('내용을 입력하세요')
-            return;
-        }
-        return validation;
-    }
 
-
-    useEffect(()=>{
-        setRegexDate(dateInput.replace(/(\d{2})(\d{2})(\d{2})/g, '$1-$2-$3'));
-    },[dateInput]);
-
-    
-    let [files, setFiles] = useState([]);
-    
-    let 총파일크기 = useRef(0);
-    
-    let encodingFiles = useMemo(()=>{
-
-        let arr = [];
-        files.length > 0 &&
-        files.forEach(file => {
-            const fileReader = new FileReader();
-            fileReader.readAsDataURL(file);
-            fileReader.onload = function(e) { 
-                arr.push({
-                filename : file.name,
-                file : e.target.result
-                });
-            }
-        });
-
-        return arr;
-
-    },[files]);
-
-
-    const changeCheckState = (checked,list) => {
-        if(checked){
-            setCheckState([...checkState, list.usr_name]);
-            setCheckSeq([...checkSeq, parseInt(list.usr_seq)])
-        }else{
-            setCheckState(checkState.filter(item => item !== list.usr_name));
-            setCheckSeq(checkSeq.filter(item => item !== parseInt(list.usr_seq)));
-        }
-    }
-
-    const allCheckState = (checked) => {
-        if(checked){
-            let arr = [];
-            stuList.map(list=>{
-                arr.push(list.usr_name);
-            });
-            setCheckState([...arr]);
-        }else{
-            setCheckState([]);
-        }
-    }
-
-
-    const checkFile = (checked,file) => {
-        if(checked){
-            setFileCheck([...fileCheck,file]);
-        }else{
-            setFileCheck(fileCheck.filter(a => a !== file));               
-        }
-    }
-    
-    const removeFile = (fileCheck) => {
-
-        let arr = [];
-
-        files.forEach(file=>{
-            if(!fileCheck.includes(file.name)){
-                arr.push(file);
-            }else{
-                총파일크기.current = 총파일크기.current - file.size;
-            }
-        })
-        
-        setFileCheck([]);
-        setFiles([...arr]);
-    }
-
-    
-    const upload = useCallback(
-        (파일) => {
-            var 업로드파일정규식 = /\.(hwp|doc|docx|xls|xlsx|ppt|pptx|pdf|jpg|png|zip)$/i;
-            var 총파일사이즈 = 총파일크기.current;
-            var $100mb = 1024 * 1024 * 100; // 100mb
-            
-            let arr = [];
-
-            for (let value of 파일) {
-                for (let a of files) {
-                    if (a.name === value.name) {
-                        alert("이미 업로드 된 파일입니다.");
-                        return;
-                    }
-                }
-
-                if (총파일사이즈 >= $100mb) {
-                    alert("총 파일 사이즈를 초과하였습니다 (100mb)");
-                    return;
-                }
-
-                if (업로드파일정규식.test(value.name) === false) {
-                    alert("일치하는 파일 형식이 아닙니다.");
-                    return;
-                }
-
-                if (value.size >= $100mb) {
-                    alert("파일이 너무 큽니다.");
-                    return;
-                }
-
-                arr.push(value);
-                총파일크기.current = 총파일크기.current + value.size;
-            }
-
-            setFiles([...files, ...arr]);
-        },
-        [files]
-    );
-
-    const submitForm = () => {
-        let nt_reserve;
-        if(rCheck){
-            let newDate = dayjs(date).format('YYYY-MM-DD');
-            let newHour = hour.label.replace('시','') < 10 ? `0${hour.label.replace('시','')}` : hour.label.replace('시','') ;
-            let newMinute = minute.label.replace('분','') < 10 ? `0${minute.label.replace('분','')}` : minute.label.replace('분','');
-            nt_reserve = `${newDate} ${newHour}:${newMinute}`;
-        }else{
-            nt_reserve = null;
-
-        }
-
-        if(!checkForm()){
-            return false;
-        }else{
-            console.log(nt_reserve);
-            if(!window.confirm('저장하시겠습니까?')) return false;
-            
-            ajax("/notice.php", { data : {
-                mode : 'notice_write',
-                nt_to : checkSeq,
-                nt_title : writeTit,
-                nt_content : JSON.stringify(contents),
-                nt_files : encodingFiles,
-                nt_reserve : nt_reserve
-            }}).then(res=>{
-                console.log(res);
-                setWriteModal(false);
-            }).catch(error=>{
-                console.log('error');
-            })
-        }
-    }
-return (
-        <div className="modal" onClick={(e)=>falseModal(e,setWriteModal)}>
-            <div className='modal-content writeMessageModal'>
+    return (
+        <div className="modal" onClick={(e) => falseModal(e, setWriteModal)}>
+            <div className="modal-content writeMessageModal">
                 <div className="modal-header fj">
-                      <h2 className="modal-title">[학습 알림] 메시지 보내기</h2>
-                    <button className="btn" onClick={(e) => {
-                        e.stopPropagation();
-                        setWriteModal(false)
-                    }}>
+                    <h2 className="modal-title">[학습 알림] 메시지 보내기</h2>
+                    <button
+                        className="btn"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setWriteModal(false);
+                        }}
+                    >
                         <Icon icon={"close"} />
                     </button>
                 </div>
                 <div className="modal-body">
                     <div className="left">
-                        <SelectBase 
-                        onChange={(ele)=>setClassValue(ele)}
-                        options={classList && classList}
-                        value={classValue && classValue}
-                        defaultValue='반 선택'
-                        width={'100%'}
-                        className={'mb-10'}
+                        <ClassSelect
+                            width="100%"
+                            className={"mb-10"}
+                            onChange={(e) => {
+                                console.log(e);
+                                setClassList(e);
+                            }}
                         />
-                        <table className='table tableB'>
+                        <table className="table tableB">
                             <thead>
                                 <tr>
-                                    <th style={{ width: '50px' }}>
-                                        <CheckBox 
-                                            onChange={(e)=>allCheckState(e.target.checked)}
-                                            checked={ stuList?.length === checkState.length}
+                                    <th style={{ width: "50px" }}>
+                                        <CheckBox
+                                            onChange={(e) => allCheck(e)}
+                                            checked={
+                                                list.data?.usr_list?.length === checkedList.length
+                                            }
                                         />
                                     </th>
-                                    <th style={{ width: '150px' }}>이름</th>
+                                    <th style={{ width: "150px" }}>이름</th>
                                 </tr>
                             </thead>
-                            <tbody className='scroll' style={{ height: '584px' }}>
-                                {
-                                    stuList && stuList.map(list=>{
-                                        return(
-                                            <tr className="check-wrap" key={list.usr_seq}>
-                                                <td style={{ width: '40px' }}>
-                                                <CheckBox 
+                            <tbody className="scroll" style={{ height: "584px" }}>
+                                {list.data?.usr_list?.map((list) => {
+                                    return (
+                                        <tr className="check-wrap" key={list.usr_seq}>
+                                            <td style={{ width: "40px" }}>
+                                                <CheckBox
                                                     id={list.usr_seq}
-                                                    onChange={(e)=>changeCheckState(e.target.checked,list)}
-                                                    checked={checkState.includes(list.usr_name)}
-                                                    />
-                                                </td>
-                                                <td style={{ width: 'calc(100% - 40px)' }}>
-                                                    <label htmlFor={list.usr_seq}>{list.usr_name}</label>
-                                                </td>
-                                            </tr>
-                                        )
-                                    })
-                                }
+                                                    onChange={(e) => oneCheck(e, list)}
+                                                    checked={checkedList.includes(list)}
+                                                />
+                                            </td>
+                                            <td style={{ width: "calc(100% - 40px)" }}>
+                                                <label htmlFor={list.usr_seq}>
+                                                    {list.usr_name}
+                                                </label>
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
                             </tbody>
                         </table>
                     </div>
                     <div className="right">
-                        <div className='mb-10'>
-                            <span className='tit'>받는 사람 ({(checkState && checkState.length > 0 ) && checkState.length})</span>
-                            <input type='text' className='textInput' value={to ? to : ''} readOnly/>
+                        <div className="mb-10">
+                            <span className="tit">받는 사람 ({checkedList.length}명)</span>
+                            <input
+                                type="text"
+                                className="textInput"
+                                value={checkedList.map((a) => a.usr_name).join(",")}
+                                readOnly
+                            />
                         </div>
-                        <div className='mb-10'>
-                            <span className='tit'>제목</span>
-                            <input type='text' className='textInput' value={writeTit ? writeTit : ''} placeholder='제목을 입력하세요.' onChange={(e)=>setWriteTit(e.target.value)}/>
+                        <div className="mb-10">
+                            <span className="tit">제목</span>
+                            <input
+                                type="text"
+                                className="textInput"
+                                value={writeTit}
+                                placeholder="제목을 입력하세요."
+                                onChange={(e) => setWriteTit(e.target.value)}
+                            />
                         </div>
-                        <div className='mb-20'>
-                            <span className='tit'>내용</span>
-                            <Editor contents={contents} setContents={setContents}/>
+                        <div className="mb-20">
+                            <span className="tit">내용</span>
+                            <Editor contents={contents} setContents={setContents} />
                         </div>
+
                         <div className="fileArea fj">
                             <input
                                 type="file"
@@ -356,8 +221,10 @@ return (
                                 className="d-none"
                                 multiple
                             />
-                          
-                            <div className='scroll' onDragOver={(e) => {
+
+                            <div
+                                className="scroll"
+                                onDragOver={(e) => {
                                     e.preventDefault();
                                     e.stopPropagation();
                                 }}
@@ -377,83 +244,86 @@ return (
                                 }}
                             >
                                 {files.length === 0 && (
-                                    <p className='fc' style={{ textAlign: "center" }}>여기에 첨부파일을 끌어오세요</p>
+                                    <p className="fc" style={{ textAlign: "center" }}>
+                                        여기에 첨부파일을 끌어오세요
+                                    </p>
                                 )}
                                 {files.map((a, i) => {
                                     return (
                                         <div key={i}>
-                                              <CheckBox 
-                                                color='orange' 
+                                            <CheckBox
+                                                color="orange"
                                                 id={i}
-                                                onChange={(e)=>checkFile(e.target.checked,a.name)}
+                                                onChange={(e) =>
+                                                    checkFile(e.target.checked, a.name)
+                                                }
                                                 checked={fileCheck.includes(a.name)}
-                                                className={'mr-10'}
-                                                />
-                                            <label htmlFor={i}>{a.name} ( {getByteSize(a.size)} )</label>
+                                                className={"mr-10"}
+                                            />
+                                            <label htmlFor={i}>
+                                                {a.name} ( {getByteSize(a.size)} )
+                                            </label>
                                         </div>
                                     );
                                 })}
                             </div>
                             <div className="fileBtn fs f-column">
-                                <label htmlFor="file" className="btn-grey-border">파일 찾기</label>
-                                <button 
-                                    className="btn-grey btn-icon" 
-                                    onClick={()=>removeFile(fileCheck)}
-                                    disabled={files.length === 0}
-                                    >
-                                        <Icon icon={"remove"} />
-                                    삭제</button>
+                                <label htmlFor="file" className="btn-grey-border">
+                                    파일 찾기
+                                </label>
+                                <button className="btn-grey btn-icon" disabled={files.length === 0}>
+                                    <Icon icon={"remove"} />
+                                    삭제
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="modal-footer">
-                    <div className='reserveWrap fj'>
-                    <button className='btn-grey mr-4' onClick={()=>{
-                        setWriteModal(false);
-                        setViewModal && setViewModal(false);
-                    }}>취소</button>
-                    <button className='btn-orange mr-4' disabled={rCheck} onClick={submitForm}>발송하기</button>
-                    <button className='btn-brown mr-4' disabled={!rCheck} onClick={submitForm}>예약 발송</button>
-                        <CheckBox 
-                            color={'orange'} 
-                            onChange={(e)=>rCheckFunc(e.target.checked)}
-                            className={'mr-20'} 
-                        />
-                          <CustomDatePicker
-                        value={date}
-                        onChange={(day) => {
-                            setDate(day);
-                        }}
-                        minDate={new Date()}
-                        label={true}
-                        className={'mr-4'}
-                        />
-                        <SelectBase 
-                        onChange={(ele)=>setHour(ele)}
-                        options={시간}
-                        value={hour}
-                        defaultValue='0시'
-                        width={'90px'}
-                        disabled={selectDisabled}
-                        className={'mr-4'}
-                        />
-                        <SelectBase 
-                        onChange={(ele)=>setMinute(ele)}
-                        options={분}
-                        value={minute}
-                        defaultValue='00분'
-                        width={'90px'}
-                        disabled={selectDisabled}
-                        />
-                        
-                    </div>
-                  
-                </div>
+                    <div className="reserveWrap fj">
+                        <button className="btn-grey mr-4">취소</button>
+                        <button className="btn-orange mr-4" >
+                            발송하기
+                        </button>
+                        <button className="btn-brown mr-4" >
+                            예약 발송
+                        </button>
 
+                        <CheckBox 
+                            style={{marginRight : "20px"}}
+                            color="orange"
+                        />
+
+                        <CustomDatePicker
+                            value={date}
+                            onChange={(e) => {
+                                setDate(e);
+                            }}
+                            label={true}
+                            style={{ marginRight: "4px" }}
+                        />
+                        <SelectBase
+                            width="90px"
+                            onChange={(e) => {
+                                setTime(e);
+                            }}
+                            options={시간()}
+                            value={time}
+                            className="mr-4"
+                        />
+                        <SelectBase
+                            width="90px"
+                            onChange={(e) => {
+                                setMiniute(e);
+                            }}
+                            options={분()}
+                            value={miniute}
+                        />
+                    </div>
+                </div>
             </div>
         </div>
-      );
+    );
 }
 
 export default WriteMessageModal;

@@ -10,6 +10,7 @@ import Pagination from "../../components/Pagination";
 import { useQuery } from "react-query";
 import dayjs from "dayjs";
 import SkeletonTable from "../../components/SkeletonTable";
+import useLoginStore from "../../store/useLoginStore";
 
 const 학년 = [
     { value: "", label: "학년" },
@@ -45,6 +46,8 @@ const NewBadge = styled.span`
     left: 5px;
 `;
 function Reference() {
+    const roleId = parseInt(useLoginStore(state=>state.roleId));
+
     // 학년 필터
     let [gradeOption, setGradeOption] = useState(학년[0]);
 
@@ -55,6 +58,8 @@ function Reference() {
 
     // 글쓰기 모달
     let [registModal, setRegistModal] = useState(false);
+    // 글쓰기 수정 seq
+    let [seq, setSeq] = useState("");
 
     let [scroll, setScroll] = useState();
     let [page, setPage] = useState(1);
@@ -74,10 +79,20 @@ function Reference() {
     // console.log(param);
 
     const referList = useQuery(["getList", gradeOption, page], () => fetchData("board", param), {
+        onSuccess : function(){
+            setSearchInput("");
+        },
         refetchOnWindowFocus: false,
     });
+
+    // 글수정
+    const editModal = (param)=>{
+        setSeq(param);
+        setPostModal(false);
+        setRegistModal(true);
+    }
     
-    console.log(referList.data);
+    // console.log(referList.data);
 
     const openPostModal = (index) => {
         setPostModal(true);
@@ -90,7 +105,7 @@ function Reference() {
     return (
         <div className="reference">
             {/* 글쓰기 모달 */}
-            {registModal && <ReferenceRegistrationModal setModal={setRegistModal} />}
+            {registModal && <ReferenceRegistrationModal setModal={setRegistModal} setSeq={setSeq} bd_seq={seq} />}
 
             {/* 글보기 */}
             {postMoal && (
@@ -100,12 +115,14 @@ function Reference() {
                     postNumber={postNumber}
                     setPostNumber={setPostNumber}
                     totalCount={referList.data?.list.length ?? 0}
+                    editModal={editModal}
+                    roleId={roleId}
                 />
             )}
 
             <div className="top fj mb-20">
                 {/* 관리자만 보이게 하기 */}
-                {true && (
+                {roleId >= 400 ? (
                     <button
                         className="btn-green btn-icon"
                         style={{ width: "100px" }}
@@ -114,7 +131,10 @@ function Reference() {
                         <Icon icon={"pencil"} />
                         글쓰기
                     </button>
-                )}
+                    
+                )
+                : <div></div>
+            }
 
                 <div className="btn-wrap d-flex">
                     <SelectBase
@@ -138,6 +158,7 @@ function Reference() {
                         type="text"
                         className="textInput mr-10"
                         placeholder="조회"
+                        value={searchInput}
                         style={{ width: "200px" }}
                         onChange={(e) => setSearchInput(e.target.value)}
                         onKeyUp={(e) => {
@@ -161,7 +182,7 @@ function Reference() {
             </div>
             <div className="contents-body__middle pt-10">
                 {/* 작성자 작성일 조회수는 관리자가 보는 목록에서만 표시 */}
-                {true ? (
+                {roleId >= 400 ? (
                     <table className="reference-table custom-table mb-20">
                         <thead>
                             <tr>
@@ -204,7 +225,7 @@ function Reference() {
                                 ? <SkeletonTable R={8} width={["6.93%", "9.33%", "48.73%", "6.66%", "9.33%", "9.33%", "9.73%"]} />
                                 : referList.data?.list?.map((a, i) => {
                                     return (
-                                        <Tr list={a} index={i} key={i} openPostModal={openPostModal} />
+                                        <Tr2 list={a} index={i} key={i} openPostModal={openPostModal} />
                                     );
                                 })
                             }

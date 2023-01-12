@@ -3,7 +3,7 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import CkeditorCustom from "ckeditor5-custom-build";
 import axios from "axios";
  
-function Editor({contents,setContents}) {
+function Editor({contents,setContents, placeholder = ""}) {
     class UploadAdapter {
         constructor(loader, t) {
             this.loader = loader;
@@ -53,9 +53,9 @@ function Editor({contents,setContents}) {
         <div>
             <CKEditor
                 editor={CkeditorCustom}
-            
                 config={{
                     extraPlugins: [Base64UploaderPlugin],
+                    placeholder:placeholder
                 }}
                 data={contents && contents}
                 onReady={(editor) => {

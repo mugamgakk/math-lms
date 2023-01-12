@@ -1,11 +1,12 @@
-// yeonju
+// 읽기
 import React from "react";
 import { fetchData, fileDown } from "../../methods/methods";
 import FileSaver from "file-saver";
 import JSZip from "jszip";
 import Icon from "../../components/Icon";
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import dayjs from "dayjs";
+import ajax from "../../ajax";
 
 // 앞뒤 따움표 제거
 const removeD = (a = "") => {
@@ -15,18 +16,25 @@ const removeD = (a = "") => {
     return d;
 };
 
-function ReferenceContentsModal({ seq, setModal, postNumber, setPostNumber, totalCount }) {
+function ReferenceContentsModal({
+    seq,
+    setModal,
+    postNumber,
+    setPostNumber,
+    totalCount,
+    editModal,
+    roleId,
+}) {
     const param = {
         mode: "view",
         bd_seq: seq,
     };
-    // console.log(seq, postNumber, totalCount);
+
+    const queryClient = useQueryClient();
 
     let postInfo = useQuery(["info", seq], () => fetchData("board", param), {
         refetchOnWindowFocus: false,
     });
-
-    // console.log(postInfo)
 
     const makeZip = async (filesArr, fileName = "download") => {
         if (filesArr.length === 0) {
@@ -40,7 +48,7 @@ function ReferenceContentsModal({ seq, setModal, postNumber, setPostNumber, tota
             for (let ele of filesArr) {
                 const response = await fetch(ele.fileurl);
 
-                if(response.status === 404){
+                if (response.status === 404) {
                     throw new Error("파일에 문제가 있습니다.");
                 }
 
@@ -59,10 +67,22 @@ function ReferenceContentsModal({ seq, setModal, postNumber, setPostNumber, tota
             zip.generateAsync({ type: "blob" }).then((content) => {
                 FileSaver.saveAs(content, fileName);
             });
-        } catch(err) {
+        } catch (err) {
             alert(err);
         }
     };
+
+    const removePost = useMutation(
+        (param) => {
+            return ajax("/board.php", { data: param });
+        },
+        {
+            onSuccess: function (data) {
+                console.log(data);
+                queryClient.invalidateQueries("getList");
+            },
+        }
+    );
 
     return (
         <div className="modal">
@@ -93,9 +113,7 @@ function ReferenceContentsModal({ seq, setModal, postNumber, setPostNumber, tota
                                 {postInfo.data?.[0].write}
                             </div>
                             <div className="date">
-                                {
-                                    dayjs(postInfo.data?.[0].reg_dt).format("YYYY.MM.DD") + " "
-                                } 
+                                {dayjs(postInfo.data?.[0].reg_dt).format("YYYY.MM.DD") + " "}
                             </div>
                         </div>
                     </div>
@@ -133,19 +151,45 @@ function ReferenceContentsModal({ seq, setModal, postNumber, setPostNumber, tota
                 <div className="modal-footer">
                     {postNumber !== 0 && (
                         <button
-                            className="btn-brown mr-4"
+                            className="btn-orange mr-4"
                             onClick={() => {
                                 setPostNumber(postNumber - 1);
                             }}
                         >
-                            이전 글 보기
+                            이전 글
                         </button>
                     )}
 
-                    <button className="btn-orange-border mr-4" onClick={() => {}}>
-                        수정
-                    </button>
-                    <button className="btn-orange mr-4">삭제</button>
+                    {roleId >= 400 && (
+                        <>
+                            <button
+                                className="btn-orange-border mr-4"
+                                onClick={() => {
+                                    editModal(seq);
+                                }}
+                            >
+                                수정
+                            </button>
+                            <button
+                                className="btn-orange mr-4"
+                                onClick={() => {
+                                    console.log(
+                                        JSON.stringify({
+                                            mode: "delete",
+                                            bd_seq: [seq],
+                                        })
+                                    );
+                                    removePost.mutate({
+                                        mode: "delete",
+                                        bd_seq: [seq],
+                                    });
+                                }}
+                            >
+                                삭제
+                            </button>
+                        </>
+                    )}
+
                     <button
                         className="btn-grey mr-4"
                         onClick={(e) => {
@@ -162,7 +206,7 @@ function ReferenceContentsModal({ seq, setModal, postNumber, setPostNumber, tota
                                 setPostNumber(postNumber + 1);
                             }}
                         >
-                            다음 글 보기
+                            다음 글
                         </button>
                     )}
                 </div>

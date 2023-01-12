@@ -41,7 +41,6 @@ function ClassManagement() {
     };
 
 
-
     const getList = useQuery(
         ["classManage", bookList, clickStudent],
         () => fetchData("class_manage", param),
@@ -54,7 +53,7 @@ function ClassManagement() {
     );
 
     // console.log(param)
-    // console.log(getList.data)
+    console.log(getList.data)
 
     const allRetryMutaion = useMutation(
         (param) => {

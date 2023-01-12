@@ -72,9 +72,9 @@ function Home() {
         ajax("/user.php", {
             data: { mode: "login" },
         }).then((res) => {
-            // console.log(res)
+            // console.log(res.data)
             if (res.data.ok === -1) {
-                getUserData(res.data.user_id);
+                getUserData(res.data.user_id, res.data.um_flag);
                 setUserId(res.data.user_id);
             }else{
                 removeCookie("gplumLMSlogin");
@@ -172,7 +172,7 @@ const Li = ({ ele, burger }) => {
             <div className={`lnb-item ${location.pathname.includes(ele.href) ? "active" : ""}`}>
                 <Link to={`${ele.href}`}>
                     <Icon icon={ele.icon} />
-                    <p className="item">{ele.name}</p>
+                    <p className="item new">{ele.name}</p>
                 </Link>
                 {ele.depth && (
                     <button
